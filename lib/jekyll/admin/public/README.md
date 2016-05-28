@@ -3,6 +3,13 @@ Jekyll Admin Front-end
 
 > GUI/Administrative interface for Jekyll
 
+# Start Development Server
+1. `git clone https://github.com/jekyll/jekyll-admin`
+2. Start mock server. (See: `jekyll-admin/mock-api/readme.md`)
+2. `cd lib/jekyll/admin/public`
+3. `npm install`
+4. `npm start`
+
 # Dependencies
 * [React.js](https://facebook.github.io/react/)
 * [Redux](http://redux.js.org/)
