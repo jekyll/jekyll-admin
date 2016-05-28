@@ -1,0 +1,47 @@
+@import './font-awesome/font-awesome.scss';
+
+body {
+  position: relative;
+  color: #444;
+  height: 100vh;
+  margin: 0;
+  font-family: lato, Helvetica, Helvetica Neue;
+  overflow-y: hidden;
+  background-color: #f7f7f7;
+}
+
+h2 {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: bold;
+  letter-spacing: -.025em;
+  color: #ddd;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+#root, #root > div {
+  height: 100vh;
+}
+
+.content {
+  display: flex;
+  padding: 20px;
+}
+
+@font-face {
+    font-family: "lato";
+    src: url(../assets/fonts/lato-regular.ttf);
+}
