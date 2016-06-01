@@ -10,5 +10,3 @@ _site/
 /pkg/
 /spec/reports/
 /tmp/
-node_modules
-npm-debug.log*

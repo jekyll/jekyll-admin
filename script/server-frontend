@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cd lib/jekyll/admin/public
+npm install -g json-server
+npm install
+npm start
