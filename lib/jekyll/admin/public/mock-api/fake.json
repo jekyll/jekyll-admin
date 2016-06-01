@@ -1,0 +1,90 @@
+{
+  "collections": [
+    {
+      "id": "2016-05-29-google-summer-of-code",
+      "collection_name": "posts",
+      "document_id": "2016-05-29-google-summer-of-code",
+      "body": "You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.",
+      "meta": {
+        "layout": "post",
+        "title": "Google Summer of Code!",
+        "date": "2016-05-20 01:10:46 +0300",
+        "categories": "gsoc"
+      }
+    },
+    {
+      "id": "2016-01-01-some-post",
+      "collection_name": "posts",
+      "document_id": "2016-01-01-some-post",
+      "body": "You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.",
+      "meta": {
+        "layout": "post",
+        "title": "Welcome to Jekyll!",
+        "date": "2016-05-20 01:10:46 +0300",
+        "categories": "jekyll update"
+      }
+    },
+    {
+      "id": "the-revenant",
+      "collection_name": "movies",
+      "document_id": "the-revenant",
+      "body": "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.",
+      "meta": {
+        "layout": "default",
+        "title": "The Revenant"
+      }
+    }
+  ],
+  "pages": [
+    {
+      "id": "about",
+      "page_id": "about",
+      "body": "This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)",
+      "meta": {
+        "layout": "page",
+        "title": "About",
+        "permalink": "/about/"
+      }
+    },
+    {
+      "id": "gsoc",
+      "page_id": "gsoc",
+      "body": "This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)",
+      "meta": {
+        "layout": "page",
+        "title": "GSoC",
+        "permalink": "/gsoc/"
+      }
+    }
+  ],
+  "configuration": {
+    "title": "Your awesome title",
+    "email": "your-email@domain.com",
+    "description": "Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.\n",
+    "baseurl": "",
+    "url": "http://yourdomain.com",
+    "twitter_username": "jekyllrb",
+    "github_username": "jekyll",
+    "markdown": "kramdown"
+  },
+  "static_files": [
+    {
+      "id": "awesome-path",
+      "path": "awesome-path"
+    },
+    {
+      "id": "awesome-path/awesome-file.txt",
+      "path": "awesome-path/awesome-file.txt"
+    }
+  ],
+  "data": [
+    {
+      "id": "members",
+      "data_file": "members"
+    }
+  ],
+  "git": {
+    "remote": "https://github.com/jekyll/jekyll.git",
+    "branch": "awesome-branch"
+  }
+}

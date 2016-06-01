@@ -1,0 +1,113 @@
+@import 'normalize';
+@import 'font-awesome/font-awesome';
+@import 'variables';
+@import 'mixins';
+@import 'theme';
+@import 'editor';
+
+body {
+  position: relative;
+  color: #444;
+  height: auto;
+  min-height: 100%;
+  margin: 0;
+  font-family: lato, Helvetica, Helvetica Neue;
+  background-color: #f7f7f7;
+}
+
+h1,h2,h3,h4,h5 {
+  font-weight: normal;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  color: $dark-orange;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.wrapper {
+  display: flex;
+}
+
+.container {
+  flex: 1;
+}
+
+.content {
+  padding: 20px;
+}
+.content-header {
+  display: flex;
+  align-items: center;
+  margin: 10px 0 25px 0;
+  h1 {
+    margin: 0 40px 0 0;
+    float: left;
+    text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.3);
+  }
+  .page-buttons {
+    display: flex;
+  }
+}
+
+.btn {
+  background-color: #aaaaaa;
+  border: 1px solid #828282;
+  -webkit-box-shadow: 0 1px 0 #828282;
+  box-shadow: 0 1px 0 #828282;
+  color: #fff;
+  text-decoration: none;
+  text-shadow: 0 -1px 1px #828282,1px 0 1px #828282,0 1px 1px #828282,-1px 0 1px #828282;
+  display: inline-block;
+  font-size: 14px;
+  line-height: 30px;
+  height: 32px;
+  margin: 0;
+  padding: 0 20px 1px;
+  -webkit-appearance: none;
+  -webkit-border-radius: 3px;
+  border-radius: 3px;
+  white-space: nowrap;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.btn-active {
+  background-color: #ff6e00;
+  border: 1px solid #dd5c00;
+  text-shadow: 0 -1px 1px #dd5c00,1px 0 1px #dd5c00,0 1px 1px #dd5c00,-1px 0 1px #dd5c00;
+  box-shadow: 0 1px 0 #dd5c00;
+  -webkit-box-shadow: 0 1px 0 #dd5c00;
+}
+
+.btn-success {
+  background-color: #68e510;
+  border: 1px solid #33ce33;
+  text-shadow: 0 -1px 1px #33ce33,1px 0 1px #33ce33,0 1px 1px #33ce33,-1px 0 1px #33ce33;
+  box-shadow: 0 1px 0 #33ce33;
+  -webkit-box-shadow: 0 1px 0 #33ce33;
+}
+
+.message {
+  margin-left: 20px;
+}
+
+@font-face {
+  font-family: "lato";
+  src: url(../assets/fonts/lato-regular.ttf);
+}
+
+@font-face {
+  font-family: "lato";
+  src: url(../assets/fonts/lato-bold.ttf);
+  font-weight: bold;
+}

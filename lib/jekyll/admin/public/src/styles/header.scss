@@ -1,0 +1,18 @@
+.header-container {
+  height: 75px;
+  background-color: white;
+  box-shadow: 0 2px 4px 0 rgba(204, 204, 204, 0.4);
+  .title {
+    font-weight: normal;
+    margin: 0;
+    a {
+      padding-left: 20px;
+      line-height: 75px;
+      color: #444444;
+      margin: 0;
+      &:hover {
+        color: black;
+      }
+    }
+  }
+}
