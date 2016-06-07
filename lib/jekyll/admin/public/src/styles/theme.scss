@@ -44,36 +44,6 @@ tbody tr:hover .row-actions{
   position: static;
 }
 
-td {
-  padding: 15px 12px;
-  vertical-align: top;
-}
-
-td.row-title {
-  strong a {
-    color: #444;
-    &:hover {
-      color: $dark-orange;
-    }
-  }
-}
-
-td.row-title .row-actions {
-  position: relative;
-  left: -9999em;
-  padding-top: 5px;
-  a {
-    padding-right: 3px;
-    &:hover {
-      color: $orange;
-    }
-    &:not(:last-child):after {
-      padding-left: 3px;
-      content: "|";
-    }
-  }
-}
-
 th {
   text-transform: uppercase;
   font-size: 16px;
@@ -83,6 +53,8 @@ th {
 }
 
 tbody td {
+  padding: 15px 12px;
+  vertical-align: top;
   border-top: 1px solid #747474;
   border-top: 1px solid rgba(0,0,0,.1);
   @include box-shadow(inset 0 1px 0 rgba(255,255,255,.1));
@@ -92,10 +64,28 @@ tbody td {
   background-image: -o-linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
   background-image: linear-gradient(to bottom, rgba(255,255,255,0.1) 0%,rgba(255,255,255,0) 100%);
   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1affffff', endColorstr='#00ffffff',GradientType=0 );
+}
 
-  p {
-    font-size: 16px;
-
-    code { font-size: 14px; }
+td.row-title {
+  .row-actions {
+    position: relative;
+    left: -9999em;
+    padding-top: 5px;
+    a {
+      padding-right: 3px;
+      &:hover {
+        color: $orange;
+      }
+      &:not(:last-child):after {
+        padding-left: 3px;
+        content: "|";
+      }
+    }
+  }
+  strong a {
+    color: #444;
+    &:hover {
+      color: $dark-orange;
+    }
   }
 }

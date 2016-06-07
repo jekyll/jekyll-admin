@@ -20,10 +20,10 @@ State;
 }
 ```
 
-## Posts
+## Collections
 State;
 ```
 {
-  posts: Array
+  collections: Object
 }
 ```
