@@ -1,10 +1,9 @@
 @import 'normalize';
-@import 'font-awesome/font-awesome';
 @import 'variables';
 @import 'mixins';
-@import 'theme';
-@import 'inputs';
-@import 'grid';
+@import 'font-awesome/font-awesome';
+@import 'content';
+@import 'form';
 @import "editor";
 
 body {
@@ -31,59 +30,18 @@ a:hover {
   cursor: pointer;
 }
 
+i {
+  display: inline-block;
+  padding-right: 10px;
+  width: 15px;
+}
+
 .wrapper {
   height: 100%;
 }
 
 .container {
   margin-left: $sidebar-width;
-}
-
-.content {
-  padding: 40px;
-
-  .content-header {
-    display: flex;
-    align-items: center;
-    margin: 0 0 35px 0;
-    h1 {
-      margin: 0 40px 0 0;
-      float: left;
-      text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.3);
-    }
-    .page-buttons {
-      display: flex;
-    }
-  }
-
-  .content-wrapper {
-    display: flex;
-    .content-body {
-      width: 100%;
-    }
-    .content-side {
-      width: 250px;
-      margin-left: 40px;
-      a {
-        width: 100%;
-        text-align: center;
-        margin-bottom: 20px;
-      }
-    }
-  }
-
-  .featured-wrapper {
-    h3 {
-      margin: 0 0 10px 0;
-    }
-    p {
-      color: #666;
-    }
-    padding: 20px;
-    background-color: white;
-    margin: .5em 0;
-    @include border-radius(4px);
-  }
 }
 
 .breadcrumbs {
@@ -118,6 +76,13 @@ a:hover {
   @include btn($btn-initial, $btn-initial-border);
 }
 
+.btn-fat {
+  width: 100%;
+  text-align: center;
+  height: 40px;
+  line-height: 40px;
+}
+
 .btn-active {
   @include btn($btn-active, $btn-active-border);
 }
@@ -132,6 +97,17 @@ a:hover {
 
 .message {
   margin-left: 20px;
+}
+
+.splitter {
+  background-color: $orange;
+  height: 1px;
+  width: 100%;
+  margin: 15px 0;
+}
+
+.hidden {
+  display: none;
 }
 
 @font-face {

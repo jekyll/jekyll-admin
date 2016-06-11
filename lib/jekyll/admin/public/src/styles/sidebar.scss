@@ -1,6 +1,6 @@
 @import 'variables';
 
-.sidebar-container{
+.sidebar{
   position: fixed;
   top: 0;
   bottom: 0;
@@ -20,19 +20,13 @@
       filter: brightness(1.2);
     }
   }
-  .links-container {
+  .routes {
     padding: 20px;
     background-color: #333;
     ul {
       padding: 0;
       margin: 0;
       list-style: none;
-      .splitter {
-        background-color: $orange;
-        height: 1px;
-        width: 100%;
-        margin: 15px 0;
-      }
       li {
         padding: 15px 0;
         a {
@@ -40,11 +34,6 @@
           width: 100%;
           font-size: 17px;
           color: $orange;
-          i {
-            display: inline-block;
-            padding-right: 10px;
-            width: 15px;
-          }
           &:hover {
             color: $dark-orange;
           }

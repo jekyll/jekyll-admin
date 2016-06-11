@@ -57,16 +57,6 @@
         "title": "About",
         "permalink": "/about/"
       }
-    },
-    {
-      "id": "gsoc",
-      "page_id": "gsoc",
-      "body": "This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)",
-      "meta": {
-        "layout": "page",
-        "title": "GSoC",
-        "permalink": "/gsoc/"
-      }
     }
   ],
   "configuration": {

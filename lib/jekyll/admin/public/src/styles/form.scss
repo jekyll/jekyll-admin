@@ -1,0 +1,112 @@
+@import 'mixins';
+@import 'variables';
+
+.field {
+  background-color: #fff;
+  color: #555;
+  outline: 0;
+  width: 100%;
+  height: 2.286em;
+  padding: .429em .857em;
+  border: #ccc 1px solid;
+  font-size: 14px;
+  @include box-sizing(border-box);
+  @include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075));
+  @include border-radius(4px);
+  &:focus {
+    border-color: $dark-orange;
+  }
+}
+
+.field-label {
+  width: 100%;
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
+  display: block;
+}
+
+input.input-title {
+  overflow-x: hidden;
+  word-wrap: break-word;
+  @include border-radius(2px);
+  -webkit-font-smoothing: antialiased;
+  box-shadow: none;
+  border: 0;
+  padding: 0;
+  background: none;
+  margin: 0 0 20px 0;
+  line-height: 1;
+  overflow-y: visible;;
+  resize: none;
+  width: 100%;
+  font-size: 48px;
+  outline: none;
+  height: 50px;
+  &:focus {
+    color: #000;
+  }
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  text-transform: uppercase;
+  .switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 30px;
+    margin-left: 20px;
+  }
+
+  .switch input {display:none;}
+
+  .slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    transition: .4s;
+    border-radius: 30px;
+  }
+
+  .slider:before {
+    position: absolute;
+    content: "";
+    height: 22px;
+    width: 22px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    @include border-radius(50%);
+  }
+
+  input:checked + .slider {
+    background-color: $dark-orange;
+  }
+
+  input:focus + .slider {
+    box-shadow: 0 0 1px $dark-orange;
+  }
+
+  input:checked + .slider:before {
+    @include translateX(20px);
+  }
+}
+
+.rw-datetimepicker {
+  box-shadow: none !important;
+  font-size: 14px !important;
+}
+.rw-state-focus {
+  border-color: $dark-orange !important;
+}
+.rw-calendar-popup {
+  left: auto !important;
+  right: -10px !important;
+}

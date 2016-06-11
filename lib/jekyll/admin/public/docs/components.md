@@ -1,4 +1,5 @@
 # Components
+Presentational components
 
 ## Sidebar
 Component for listing all of the main routes.
@@ -28,6 +29,9 @@ Component for simple YAML editor (Ace editor).
 ## MarkdownEditor
 Component for markdown editor (SimpleMDE).
 
+** PropTypes **
+Can have [all options of SimpleMDE](https://github.com/NextStepWebs/simplemde-markdown-editor#configuration) as prop types.
+
 ## ContentTable
 Generic component for listing contents (Collections, Posts, Pages).
 
@@ -43,6 +47,16 @@ Generic component for listing contents (Collections, Posts, Pages).
 
 ## ContentEdit
 Generic component for editing contents (Collections, Posts, Pages).
+
+** PropTypes **
+```
+{
+  contentType: String,
+  content: Object,
+  updateContent: Function,
+  deleteContent: Function
+}
+```
 
 ## Breadcrumbs
 Component for generating breadcrumbs

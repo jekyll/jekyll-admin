@@ -6,9 +6,10 @@ State;
 ```
 {
   config: Object,
+  error: String,
+  editorChanged: Boolean,
   updated: Boolean,
-  message: String,
-  editorChanged: Boolean
+  isFetching: Boolean
 }
 ```
 
