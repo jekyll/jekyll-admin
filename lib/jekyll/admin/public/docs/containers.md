@@ -1,6 +1,28 @@
 # Containers
 Container components which connect the presentational components to Redux.
 
+## Sidebar
+Container for listing all of the main routes.
+
+** PropTypes **
+```
+{
+  collections: Array,
+  fetchCollections: Function
+}
+```
+
+## Header
+Container for displaying header which includes title and homepage link.
+
+** PropTypes **
+```
+{
+  config: Object,
+  fetchConfig: Function
+}
+```
+
 ## Views
 Contains all of the views linked with the routes.
 
@@ -26,23 +48,20 @@ putConfig(config) # Create or update the site's _config.yml file in YAML
 onEditorChange # dispatched whenev the configuration is changed for the first time.
 ```
 
-### Posts
-Container for Posts view. Lists available posts.
-
-#### PostEdit
-
-#### PostNew
-
 ### Pages
 Container for Pages view. Lists available pages.
 
 #### PageEdit
+Container for editing pages.
 
 #### PageNew
+Container for creating pages.
 
-### Collections
-Container for Collections view. Lists available collections' names.
+### Collection
+Container for Collection view. Lists all collections documents (including posts).
 
 #### CollectionEdit
+Container for editing collections' documents.
 
 #### CollectionNew
+Container for creating collections' documents.

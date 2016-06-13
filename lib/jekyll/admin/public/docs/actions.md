@@ -36,14 +36,20 @@ Async action for fetching an array of the registered collections (including post
 ### `fetchCollection(collection_name)`
 Async action for fetching information about the requested collection
 
-### `fetchCollectionDocuments(collection_name)`
+### `fetchDocuments(collection_name)`
 Async action for fetching an array of document objects corresponding to the requested collection. The response does not include the document body.
 
-### `fetchCollectionDocument(collection_name, document_id)`
+### `fetchDocument(collection_name, document_id)`
 Async action for fetching the requested document. The response includes the document body.
 
-### `putCollectionDocument(document_id, doc)`
+### `putDocument(document_id, doc)`
 Async action for creating/updating the requested document. The response includes the document body.
 
-### `deleteCollectionDocument(document_id)`
+### `deleteDocument(document_id)`
 Async action for deleting the collection from disk.
+
+
+## Search
+
+### `searchByTitle(input)`
+Action for storing search input from the user

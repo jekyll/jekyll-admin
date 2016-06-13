@@ -31,7 +31,7 @@ state : {
         path: '/posts'
       }
     },
-    currentDocuments: [
+    currentDocuments: [ //GET /collections/:collection_name/documents
       {document_id, collection_name, meta},
       {document_id, collection_name, meta}
     ],
@@ -42,6 +42,10 @@ state : {
       meta
     },
     message: null
+  }
+
+  search: {
+    input: ''
   }
 
   static_files: {

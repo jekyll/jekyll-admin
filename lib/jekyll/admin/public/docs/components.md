@@ -1,19 +1,6 @@
 # Components
 Presentational components
 
-## Sidebar
-Component for listing all of the main routes.
-
-## Header
-Component for displaying header which includes title and homepage link.
-
-** PropTypes **
-```
-{
-  title:  String
-}
-```
-
 ## Editor
 Component for simple YAML editor (Ace editor).
 
@@ -70,3 +57,6 @@ Component for generating breadcrumbs
   }
 }
 ```
+
+## Splitter
+Component for divider
