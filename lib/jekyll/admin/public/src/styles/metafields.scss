@@ -1,0 +1,169 @@
+.metafields {
+  margin-bottom: 40px;
+  .metafield {
+    position: relative;
+    zoom: 1;
+    margin-bottom: 20px;
+    .meta-key {
+      .key-field {
+        margin: 0 0 5px;
+        max-width: 200px;
+        font-size: 16px;
+        font-weight: 700;
+        background: 0 0;
+        border: 2px solid transparent;
+        @include border-radius(2px);
+        padding: 5px 0;
+        box-shadow: none;
+        transition: padding 250ms ease;
+        &:focus {
+          padding: 5px;
+          border-color: $dark-orange;
+          color: #000 !important;
+        }
+        &:hover {
+          color: #000 !important;
+        }
+      }
+    }
+    .meta-value {
+      .value-field {
+        overflow: hidden;
+        word-wrap: break-word;
+        resize:vertical;
+        height: auto;
+        min-height: 46px;
+        margin-bottom: 0;
+        max-height: 500px;
+        vertical-align: bottom;
+        line-height: 1.5;
+        width: 100%;
+
+        @include border-radius(2px);
+        border-color: $border-color;
+        font-size: 16px;
+        padding: 11px 13px;
+        &:focus {
+          border: 2px solid $dark-orange;
+          background-color: transparent;
+        }
+      }
+    }
+    .meta-value-array {
+      padding: 10px 15px;
+      border: 1px solid $border-color;
+      @include border-radius(3px);
+      position: relative;
+      .array-item-wrap {
+        margin-bottom: 20px;
+        .array-header {
+          margin-bottom: 5px;
+          .array-field-num{
+            color: $orange;
+            line-height: 27px;
+            display: inline-block;
+            margin-right: 5px;
+          }
+          .meta-buttons {
+            position: static;
+            display: inline-block;
+          }
+        }
+      }
+      .add-field-array {
+        background: $dark-orange;
+        text-align: center;
+        color: #fff;
+        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+        font-size: 16px;
+        position: absolute;
+        bottom: -13px;
+        margin-left: -13px;
+        left: 50%;
+      }
+    }
+    .meta-value-object {
+      .object-item-wrap {
+        padding-left: 200px;
+        min-height: 50px;
+        position: relative;
+        margin-bottom: 20px;
+        .object-key {
+          width: 190px;
+          position: absolute;
+          top: 0;
+          left: 0;
+          max-width: 200px;
+          margin-bottom: 5px;
+          input {
+            width: 100%;
+            padding: 11px 55px 10px 11px;
+            font-size: 16px;
+            box-shadow: none;
+            min-height: 46px;
+            line-height: 1.5;
+            @include border-radius(2px);
+          }
+          .meta-buttons {
+            transform: translateY(-50%);
+            position: absolute;
+            top: 50%;
+            right: 5px;
+          }
+        }
+        .object-value {
+          position: relative;
+          transition: padding 250ms ease;
+        }
+      }
+      .add-field-object {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    .meta-buttons {
+      position: absolute;
+      top: 4px;
+      right: 0;
+      .meta-button {
+        color: #9098A3;
+        font-size: 13px;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+        border-radius: 50%;
+        display: inline-block;
+        text-align: center;
+        outline: 0;
+      }
+      .meta-button.move {
+        cursor: move;
+        &:hover, &:focus {
+          color: $dark-orange;
+        }
+      }
+      .meta-button.dropdown {
+        cursor: pointer;
+        border: 1px solid #d4d7d9;
+        &:hover, &:focus {
+          border-color: $dark-orange;
+          background: $dark-orange;
+          color: #fff;
+        }
+      }
+    }
+  }
+  .meta-new {
+    font-size: 20px;
+    i {
+      padding-right: 8px;
+    }
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
