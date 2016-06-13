@@ -6,8 +6,10 @@ State;
 ```
 {
   config: Object,
+  onEditorChange: Function,
+  putConfig: Function,
+  error: String,
   updated: Boolean,
-  message: String,
   editorChanged: Boolean
 }
 ```
@@ -16,14 +18,35 @@ State;
 State;
 ```
 {
-  pages: Array
+  pages: Array,
+  page: Object, // currently visited page
+  message: String,
+  isFetching: false
 }
 ```
 
-## Posts
+## Collections
 State;
 ```
 {
-  posts: Array
+  collections: Array,
+  currentCollection: Object,
+  currentDocuments: Array,
+  currentDocument: Object,
+  message: String,
+  isFetching: false
 }
+```
+
+## Search
+State;
+```
+{
+  input: String
+}
+```
+
+Selectors;
+```
+filterByTitle(list, input) # takes list to be filtered and input to filter by
 ```
