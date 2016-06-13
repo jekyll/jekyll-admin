@@ -4,6 +4,12 @@
           box-shadow: $shadow;
 }
 
+@mixin box-sizing($sizing...) {
+  -webkit-box-sizing: $sizing;
+     -moz-box-sizing: $sizing;
+          box-sizing: $sizing;
+}
+
 @mixin border-radius($radius...) {
   -webkit-border-radius: $radius;
      -moz-border-radius: $radius;
@@ -35,4 +41,17 @@
       -ms-user-select: $select;    /* IE 10+ */
        -o-user-select: $select;
           user-select: $select;
+}
+@mixin translateX($px) {
+  -webkit-transform: translateX($px);
+  -ms-transform: translateX($px);
+  transform: translateX($px);
+}
+
+@mixin btn($color, $border-color) {
+  background-color: $color;
+  @include box-shadow(0 1px 0 $border-color);
+  &:hover {
+    background-color: darken($color, 5%);
+  }
 }

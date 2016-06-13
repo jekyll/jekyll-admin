@@ -1,48 +1,47 @@
 @import 'variables';
 
-.sidebar-container{
-  float:left;
-  width: 180px;
-  height: 100vh;
+.sidebar{
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: $sidebar-width;
+  overflow-y: auto;
+  min-height: 100%;
   background-color: #333;
   .logo {
     display: block;
     height: 75px;
-    background-color: #222222;
-    background-image: url(../assets/images/logo.png);
-    background-position: center;
+    background: #222222 url(../assets/images/logo.png) no-repeat center;
     background-size: 110px 46px;
-    background-repeat: no-repeat;
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
     &:hover {
       -webkit-filter: brightness(1.2);
       filter: brightness(1.2);
     }
   }
-  .links-container {
+  .routes {
     padding: 20px;
+    background-color: #333;
     ul {
       padding: 0;
       margin: 0;
-      .splitter {
-        background-color: $orange;
-        height: 1px;
-        width: 100%;
-        margin: 20px 0;
-      }
+      list-style: none;
       li {
-        padding: 20px 0;
+        padding: 15px 0;
         a {
           display: inline-block;
           width: 100%;
           font-size: 17px;
           color: $orange;
-          i {
-            display: inline;
-            padding-right: 10px;
-          }
           &:hover {
             color: $dark-orange;
+          }
+          &.active {
+            color: $dark-orange;
+          }
+          i {
+            padding-right: 10px;
           }
         }
       }
