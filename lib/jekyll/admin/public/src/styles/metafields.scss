@@ -45,7 +45,6 @@
         padding: 11px 13px;
         &:focus {
           border: 2px solid $dark-orange;
-          background-color: transparent;
         }
       }
     }
@@ -117,6 +116,12 @@
         .object-value {
           position: relative;
           transition: padding 250ms ease;
+          .object-item-wrap {
+            padding: 0;
+            .object-key {
+              position: relative;
+            }
+          }
         }
       }
       .add-field-object {
@@ -165,9 +170,6 @@
         }
         .dropdown-wrap {
           &:before {
-            left: auto;
-            margin-left: 0;
-            right: 2px;
             width: 0;
             height: 0;
             border-style: solid;
@@ -176,16 +178,16 @@
             content: "";
             position: absolute;
             top: -10px;
+            left: 50%;
+            margin-left: -10px;
           }
-          display: none;
-          transform: none;
-          left: auto;
-          right: 0;
-          position: absolute;
+          transform: translateX(-50%);
           top: 35px;
+          left: 50%;
+          display: none;
+          position: absolute;
           z-index: 10;
           width: 185px;
-          margin-left: 2.5px;
           border: 1px solid #d4d7d9;
           border-radius: 2px;
           background: #fff;
