@@ -42,11 +42,29 @@ state : {
       meta
     },
     message: null
-  }
+  },
+
+  metadata: {
+    layout: "post",
+    categories: "gsoc",
+    students: [
+      {
+        name: "Mert Kahyaoğlu",
+        email: "mertkahyaoglu93@gmail.com",
+        username: "mertkahyaoglu"
+      },
+      {
+        name: "Ankur Singh",
+        email: "ankur13019@iiitd.ac.in",
+        username: "rush-skills"
+      }
+    ],
+    mentors: ["Ben Balter", "Jurgen Leschner", "Parker Moore"]
+  },
 
   search: {
     input: ''
-  }
+  },
 
   static_files: {
     files: [{path}, {path2}], // GET /static_files
@@ -56,7 +74,7 @@ state : {
   data: {
     files: [{path}, {path2}], // GET /data
     message: null
-  }
+  },
 
   git: {
     status, // GET /git/status
