@@ -31,6 +31,7 @@
     "moment": "^2.13.0",
     "react": "15.0.2",
     "react-ace": "^3.4.1",
+    "react-contenteditable": "^1.1.0",
     "react-dom": "15.0.2",
     "react-redux": "4.4.5",
     "react-router": "2.4.0",

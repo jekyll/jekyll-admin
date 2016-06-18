@@ -25,8 +25,9 @@
   display: block;
 }
 
-input.input-title {
-  overflow-x: hidden;
+div.input-title {
+  display:inline-block;
+  overflow: hidden;
   word-wrap: break-word;
   @include border-radius(2px);
   -webkit-font-smoothing: antialiased;
@@ -36,12 +37,9 @@ input.input-title {
   background: none;
   margin: 0 0 20px 0;
   line-height: 1;
-  overflow-y: visible;;
-  resize: none;
   width: 100%;
   font-size: 48px;
   outline: none;
-  height: 50px;
   &:focus {
     color: #000;
   }
