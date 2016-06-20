@@ -1,0 +1,3 @@
+language: node_js
+before_install:
+  - cd ./lib/jekyll/admin/public
