@@ -10,3 +10,4 @@ _site/
 /pkg/
 /spec/reports/
 /tmp/
+npm-debug.log

@@ -1,6 +1,9 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
+set -e
 
 script/branding
 script/return-to-pwd
 cd ./lib/jekyll/admin/public || exit
-npm start
+npm install -g json-server
+npm install
