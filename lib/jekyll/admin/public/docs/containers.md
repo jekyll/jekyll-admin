@@ -5,7 +5,7 @@ Container components which connect the presentational components to Redux.
 Container for listing all of the main routes.
 
 ** PropTypes **
-```
+``` javascript
 {
   collections: Array,
   fetchCollections: Function
@@ -16,7 +16,7 @@ Container for listing all of the main routes.
 Container for displaying header which includes title and homepage link.
 
 ** PropTypes **
-```
+``` javascript
 {
   config: Object,
   fetchConfig: Function
@@ -31,7 +31,7 @@ Container for Configuration view. Consists of a YAML editor and a save button.
 The button is activated when the editor changes.
 
 ** PropTypes **
-```
+``` javascript
 {
   config: Object,
   onEditorChange: Function,
@@ -43,9 +43,9 @@ The button is activated when the editor changes.
 ```
 
 ** Actions **
-```
-putConfig(config) # Create or update the site's _config.yml file in YAML
-onEditorChange # dispatched whenev the configuration is changed for the first time.
+``` javascript
+putConfig(config) // Create or update the site's _config.yml file in YAML
+onEditorChange() // dispatched whenever the configuration is changed.
 ```
 
 ### Pages
