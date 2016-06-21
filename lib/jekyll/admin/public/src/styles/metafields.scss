@@ -134,6 +134,7 @@
       position: absolute;
       top: 4px;
       right: 0;
+      z-index: 10;
       .meta-button {
         color: #9098A3;
         font-size: 13px;
@@ -186,7 +187,7 @@
           left: 50%;
           display: none;
           position: absolute;
-          z-index: 10;
+          z-index: 30;
           width: 185px;
           border: 1px solid #d4d7d9;
           border-radius: 2px;
@@ -218,10 +219,13 @@
       text-decoration: underline;
     }
   }
-  .sortable-chosen, sortable-chosen.sortable-ghost {
+  .sortable-chosen, .sortable-chosen.sortable-ghost {
     & div {
       opacity: 0;
     }
     border: 2px dashed $dark-orange !important;
+  }
+  .showing-dropdown {
+    z-index: 30;
   }
 }
