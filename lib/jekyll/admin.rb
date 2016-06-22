@@ -1,5 +1,6 @@
 require "jekyll/admin/version"
 require "jekyll/admin/admin_servlet"
+require "jekyll/admin/api_servlet"
 require_relative "commands/serve"
 module Jekyll
   module Admin
