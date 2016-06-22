@@ -4,5 +4,9 @@ set -e
 
 script/branding
 script/return-to-pwd
+
 cd ./lib/jekyll/admin/public || exit
 npm test
+cd_pwd
+
+bundle exec rubocop -S -D
