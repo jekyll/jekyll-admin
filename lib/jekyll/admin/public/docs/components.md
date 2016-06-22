@@ -46,15 +46,16 @@ Generic component for editing contents (Collections, Posts, Pages).
 ```
 
 ## Breadcrumbs
-Component for generating breadcrumbs.
+Component for generating breadcrumbs. First breadcrumb indicates the current content
+type and the second one which is editable is the path of current document.
 
 ** PropTypes **
 ``` javascript
 {
-  breadcrumbs: {
+  breadcrumbs: [{
     link: String, // optional
     text: String
-  }
+  }]
 }
 ```
 
@@ -89,7 +90,8 @@ All of the prop types below passed down to the children;
 Contains root attributes of the metadata.
 
 ### MetaSimple
-Leaf component that contains an input field.
+Leaf component that contains an simple input or date picker depending on the field's
+key. If the key is called `date`, it shows date picker for the value.
 
 ### MetaArray
 Contains sortable array items.
