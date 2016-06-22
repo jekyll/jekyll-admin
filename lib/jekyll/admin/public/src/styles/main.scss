@@ -1,12 +1,14 @@
+@import 'vendors/font-awesome/font-awesome';
+@import 'vendors/codemirror';
 @import 'normalize';
 @import 'variables';
 @import 'mixins';
-@import 'font-awesome/font-awesome';
 @import 'sidebar';
 @import 'header';
 @import 'content';
 @import 'form';
 @import 'metafields';
+@import 'breadcrumbs';
 @import "editor";
 
 body {
@@ -44,49 +46,6 @@ i {
 
 .container {
   margin-left: $sidebar-width;
-}
-
-.breadcrumbs {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
-  list-style: none;
-  padding: 0;
-  li {
-    font-size: 20px;
-    float: left;
-    position: relative;
-    &:not(:last-child):after {
-      content: " / ";
-      padding: 0 10px;
-    }
-    a {
-      color: #444;
-      &:hover {
-        color: $dark-orange;
-      }
-    }
-  }
-  li.path {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    input {
-      color: $dark-orange;
-      height: 30px;
-      width: 100%;
-      padding: 0 .4em;
-      border: none;
-      background: transparent;
-      outline: none;
-      &:focus {
-        color: #000 !important;
-      }
-      &:hover {
-        color: $orange;
-      }
-    }
-  }
 }
 
 .btn {
