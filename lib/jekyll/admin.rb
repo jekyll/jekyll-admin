@@ -4,6 +4,8 @@ require "jekyll/admin/api_servlet"
 require "jekyll/admin/api_handler"
 require "jekyll/admin/configuration/handler"
 require "jekyll/admin/configuration/servlet"
+require "jekyll/admin/pages/handler"
+require "jekyll/admin/pages/servlet"
 require_relative "commands/serve"
 module Jekyll
   module Admin
@@ -16,6 +18,7 @@ module Jekyll
       {
         "/api" => [Jekyll::Admin::ApiServlet, Jekyll.sites.first],
         "/api/configuration" => [Jekyll::Admin::Configuration::Servlet, Jekyll.sites.first],
+        "/api/pages" => [Jekyll::Admin::Pages::Servlet, Jekyll.sites.first],
       }
     end
   end
