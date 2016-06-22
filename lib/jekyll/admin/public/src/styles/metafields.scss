@@ -206,6 +206,17 @@
               color: #fff;
             }
           }
+          .remove-field {
+            &:hover {
+              background: $dark-red;
+              i {
+                color: white;
+              }
+            }
+            i {
+              color: $dark-red;
+            }
+          }
         }
       }
     }
