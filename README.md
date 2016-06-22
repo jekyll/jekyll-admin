@@ -1,5 +1,6 @@
 # Jekyll::Admin
 
+[![Build Status](https://travis-ci.org/jekyll/jekyll-admin.svg?branch=master)](https://travis-ci.org/jekyll/jekyll-admin)
 Jekyll::Admin is a drop in administrative framework for Jekyll.
 
 ## Installation
