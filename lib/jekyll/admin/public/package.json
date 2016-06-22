@@ -74,7 +74,6 @@
     "isparta": "4.0.0",
     "jsdom": "^9.2.1",
     "mocha": "2.4.5",
-    "mocha-jsdom": "^1.1.0",
     "nock": "^8.0.0",
     "node-sass": "3.7.0",
     "npm-run-all": "1.8.0",
