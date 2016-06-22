@@ -5,10 +5,9 @@ require 'pathname'
 # Jekyll plugin that auto-generates the `db.json` of a Jekyll project
 module JekyllExport
   class Generator < Jekyll::Generator
-
     def generate(site)
       File.open("db.json", "w") do |f|
-        config = parse_config()
+        config = parse_config
         collections = parse_collections(site)
         pages = parse_pages(site)
         static_files = parse_static_files(site)
@@ -98,7 +97,7 @@ module JekyllExport
 
     def parse_data_files(site)
       data_files = []
-      site.data.each do |k, v|
+      site.data.each do |k, _v|
         df_item = { "data_file" => k }
         data_files.push df_item
       end
@@ -113,6 +112,5 @@ module JekyllExport
       end
       meta
     end
-
   end
 end
