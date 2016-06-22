@@ -44,7 +44,7 @@
         font-size: 16px;
         padding: 11px 13px;
         &:focus {
-          border: 2px solid $dark-orange;
+          border: 1px solid $dark-orange;
         }
       }
     }
@@ -227,5 +227,24 @@
   }
   .showing-dropdown {
     z-index: 30;
+  }
+  .date-field {
+    @include border-radius(2px);
+    border-color: $border-color;
+    input {
+      padding: 11px 13px;
+      min-height: 46px;
+    }
+  }
+  .rw-datetimepicker {
+    box-shadow: none !important;
+    font-size: 16px !important;
+  }
+  .rw-calendar-popup {
+    left: auto !important;
+    right: -10px !important;
+  }
+  .rw-state-focus {
+    border: 1px solid $dark-orange !important;
   }
 }
