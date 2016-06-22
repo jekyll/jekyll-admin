@@ -41,7 +41,10 @@ div.input-title {
   font-size: 48px;
   outline: none;
   &:focus {
-    color: #000;
+    color: #000 !important;
+  }
+  &:hover {
+    color: #888;
   }
 }
 
