@@ -1,11 +1,11 @@
 # Components
-Presentational components
+Presentational components.
 
 ## Editor
 Component for simple YAML editor (Ace editor).
 
 ** PropTypes **
-```
+``` javascript
 {
   config: Object, // Jekyll config
   onEditorChange: Function,
@@ -23,7 +23,7 @@ Can have [all options of SimpleMDE](https://github.com/NextStepWebs/simplemde-ma
 Generic component for listing contents (Collections, Posts, Pages).
 
 ** PropTypes **
-```
+``` javascript
 {
   contentType: String, // (e.g 'posts', 'pages', 'collections')
   columns: Array,
@@ -36,7 +36,7 @@ Generic component for listing contents (Collections, Posts, Pages).
 Generic component for editing contents (Collections, Posts, Pages).
 
 ** PropTypes **
-```
+``` javascript
 {
   contentType: String,
   content: Object,
@@ -46,17 +46,65 @@ Generic component for editing contents (Collections, Posts, Pages).
 ```
 
 ## Breadcrumbs
-Component for generating breadcrumbs
+Component for generating breadcrumbs. First breadcrumb indicates the current content
+type and the second one which is editable is the path of current document.
 
 ** PropTypes **
-```
+``` javascript
 {
-  breadcrumbs: {
+  breadcrumbs: [{
     link: String, // optional
     text: String
-  }
+  }]
 }
 ```
 
 ## Splitter
-Component for divider
+Component for divider.
+
+## Metadata
+Set of components for handling documents' front matter(metafields).
+
+### MetaFields
+Main container for metafields.
+
+All of the prop types below passed down to the children;
+
+** PropTypes **
+``` javascript
+{
+  meta: Object, // passed from ContentEdit
+  metadata: Object, // passed from Redux store
+  key_prefix: String,
+  setupMetadata: Function,
+  addField: Function,
+  removeField: Function,
+  updateFieldKey: Function,
+  updateFieldValue: Function,
+  moveArrayItem: Function,
+  convertField: Function
+}
+```
+
+### MetaField
+Contains root attributes of the metadata.
+
+### MetaSimple
+Leaf component that contains an simple input or date picker depending on the field's
+key. If the key is called `date`, it shows date picker for the value.
+
+### MetaArray
+Contains sortable array items.
+
+### MetaArrayItem
+Convertible array item. Can be MetaArray, MetaObject or MetaSimple.
+
+### MetaObject
+Contains sortable object items. Items are sorted visually, not stored in the state.
+
+### MetaObjectItem
+Convertible object item. Can be MetaArray, MetaObject or MetaSimple.
+
+### MetaButtons
+Contains convert and delete buttons and sort handle. Dynamically shows the possible
+conversion types.

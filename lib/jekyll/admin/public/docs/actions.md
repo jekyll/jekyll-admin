@@ -49,6 +49,32 @@ Async action for creating/updating the requested document. The response includes
 Async action for deleting the collection from disk.
 
 
+## Metadata
+
+### `setupMetadata(meta)`
+Action that adds the current document's meta to redux store.
+
+### `addField(namePrefix)`
+Action that adds empty value to given path in metadata.
+
+### `removeField(namePrefix, key)`
+Action that removes the field with the given `key`. `key` can be object key or
+array index.
+
+### `updateFieldKey(namePrefix, fieldKey, newKey)`
+Action that updates the key of the field with given path in metadata.
+
+### `updateFieldValue(nameAttr, value)`
+Action that updates the value of the field with given path in metadata.
+
+### `moveArrayItem(namePrefix, srcInd, targetInd)`
+Action that moves the array item of the field with given path in metadata
+to the target index.
+
+### `convertField(nameAttr, convertType)`
+Action that converts the field to the given type.
+
+
 ## Search
 
 ### `searchByTitle(input)`
