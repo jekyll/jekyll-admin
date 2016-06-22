@@ -6,19 +6,26 @@ module Jekyll
       def initialize(server, site)
         super(server)
         @site = site
-        @data = ""
       end
       def do_GET(request, response)
-        response.status = 200
-        response['Content-Type'] = 'application/json'
-        response.body = {site: @site, data: @data}.to_json
+        hash = {site: @site, data: "Hello World"}
+        send_json_response(response, hash)
       end
       def do_POST(request, response)
-        data = JSON.parse(request.body)
-        @data = data["data"]
+        json_data = parse_json_data(request)
+        @data = json_data["data"]
+        hash = {site: @site, data: @data}
+        send_json_response(response, hash)
+      end
+
+      private
+      def send_json_response(response, hash)
         response.status = 200
         response['Content-Type'] = 'application/json'
-        response.body = {site: @site, data: @data}.to_json
+        response.body = hash.to_json
+      end
+      def parse_json_data(request)
+        JSON.parse(request.body)
       end
     end
   end
