@@ -1,0 +1,6 @@
+inherit_gem:
+  jekyll: .rubocop.yml
+
+AllCops:
+  Exclude:
+    - lib/jekyll/admin/public/**/*

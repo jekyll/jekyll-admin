@@ -25,8 +25,9 @@
   display: block;
 }
 
-input.input-title {
-  overflow-x: hidden;
+div.input-title {
+  display:inline-block;
+  overflow: hidden;
   word-wrap: break-word;
   @include border-radius(2px);
   -webkit-font-smoothing: antialiased;
@@ -35,15 +36,15 @@ input.input-title {
   padding: 0;
   background: none;
   margin: 0 0 20px 0;
-  line-height: 1;
-  overflow-y: visible;;
-  resize: none;
+  line-height: 1.2;
   width: 100%;
   font-size: 48px;
   outline: none;
-  height: 50px;
   &:focus {
-    color: #000;
+    color: #000 !important;
+  }
+  &:hover {
+    color: #888;
   }
 }
 
@@ -97,16 +98,4 @@ input.input-title {
   input:checked + .slider:before {
     @include translateX(20px);
   }
-}
-
-.rw-datetimepicker {
-  box-shadow: none !important;
-  font-size: 14px !important;
-}
-.rw-state-focus {
-  border-color: $dark-orange !important;
-}
-.rw-calendar-popup {
-  left: auto !important;
-  right: -10px !important;
 }

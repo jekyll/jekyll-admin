@@ -3,7 +3,7 @@ Specifies how the application’s state changes in response to action creators.
 
 ## Configuration
 State;
-```
+``` javascript
 {
   config: Object,
   onEditorChange: Function,
@@ -16,7 +16,7 @@ State;
 
 ## Pages
 State;
-```
+``` javascript
 {
   pages: Array,
   page: Object, // currently visited page
@@ -27,7 +27,7 @@ State;
 
 ## Collections
 State;
-```
+``` javascript
 {
   collections: Array,
   currentCollection: Object,
@@ -38,15 +38,25 @@ State;
 }
 ```
 
+## Metadata
+State;
+``` javascript
+{
+  metadata: Object, // stores current document's metadata(Front Matter)
+  new_field_count: Number, // for naming newly created fields
+  key_prefix: String // Unique component key for sorting MetaArrayItem's properly
+}
+```
+
 ## Search
 State;
-```
+``` javascript
 {
   input: String
 }
 ```
 
 Selectors;
-```
-filterByTitle(list, input) # takes list to be filtered and input to filter by
+``` javascript
+filterByTitle(list, input) // takes list to be filtered and input to filter by
 ```

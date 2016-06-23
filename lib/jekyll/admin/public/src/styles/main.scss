@@ -1,12 +1,14 @@
+@import 'vendors/font-awesome/font-awesome';
+@import 'vendors/codemirror';
 @import 'normalize';
 @import 'variables';
 @import 'mixins';
-@import 'font-awesome/font-awesome';
 @import 'sidebar';
 @import 'header';
 @import 'content';
 @import 'form';
 @import 'metafields';
+@import 'breadcrumbs';
 @import "editor";
 
 body {
@@ -44,21 +46,6 @@ i {
 
 .container {
   margin-left: $sidebar-width;
-}
-
-.breadcrumbs {
-  display: flex;
-  margin-bottom: 40px;
-  list-style: none;
-  padding: 0;
-  li {
-    font-size: 18px;
-    float: left;
-    &:not(:last-child):after {
-      content: " / ";
-      padding: 0 10px;
-    }
-  }
 }
 
 .btn {
