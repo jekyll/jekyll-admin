@@ -8,12 +8,12 @@ module Jekyll
         @site = site
       end
 
-      def do_GET(_request, response)
+      def do_GET(_request, response) # rubocop:disable Style/MethodName
         hash = { :site => @site, :data => "Hello World" }
         send_json_response(response, hash)
       end
 
-      def do_POST(request, response)
+      def do_POST(request, response) # rubocop:disable Style/MethodName
         json_data = parse_json_data(request)
         @data = json_data["data"]
         hash = { :site => @site, :data => @data }

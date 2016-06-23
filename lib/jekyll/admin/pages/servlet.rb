@@ -7,7 +7,7 @@ module Jekyll
           @handler = Handler.new @site
         end
 
-        def do_GET(request, response)
+        def do_GET(request, response) # rubocop:disable Style/MethodName
           if index?(request)
             pages = @handler.index
             hash = { :status => 200, :pages => pages }
@@ -19,7 +19,7 @@ module Jekyll
           send_json_response(response, hash)
         end
 
-        def do_POST(request, response)
+        def do_POST(request, response) # rubocop:disable Style/MethodName
           if index?(request)
             send_404
           else
@@ -32,7 +32,7 @@ module Jekyll
           end
         end
 
-        def do_DELETE(request, response)
+        def do_DELETE(request, response) # rubocop:disable Style/MethodName
           if index?(request)
             send_404
           else
