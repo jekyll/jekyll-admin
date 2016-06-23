@@ -13,12 +13,13 @@ module Jekyll
     def self.public_path
       File.join(File.dirname(Dir.pwd), 'jekyll-admin/lib/jekyll/admin/public/dist').to_s
     end
+
     # Returns a hash of route and the respective handler
     def self.api_servlet_bindings
       {
         "/api" => [Jekyll::Admin::ApiServlet, Jekyll.sites.first],
         "/api/configuration" => [Jekyll::Admin::Configuration::Servlet, Jekyll.sites.first],
-        "/api/pages" => [Jekyll::Admin::Pages::Servlet, Jekyll.sites.first],
+        "/api/pages" => [Jekyll::Admin::Pages::Servlet, Jekyll.sites.first]
       }
     end
   end

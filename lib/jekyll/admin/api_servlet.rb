@@ -3,21 +3,20 @@ require "json"
 module Jekyll
   module Admin
     class ApiServlet < WEBrick::HTTPServlet::AbstractServlet
-      
       def initialize(server, site)
         super(server)
         @site = site
       end
 
-      def do_GET(request, response)
-        hash = {site: @site, data: "Hello World"}
+      def do_GET(_request, response)
+        hash = { :site => @site, :data => "Hello World" }
         send_json_response(response, hash)
       end
 
       def do_POST(request, response)
         json_data = parse_json_data(request)
         @data = json_data["data"]
-        hash = {site: @site, data: @data}
+        hash = { :site => @site, :data => @data }
         send_json_response(response, hash)
       end
 
@@ -32,7 +31,7 @@ module Jekyll
       def send_404(response)
         response.status = 404
         response['Content-Type'] = 'application/json'
-        response.body = {status: 404,message: "Not found"}.to_json
+        response.body = { :status => 404, :message => "Not found" }.to_json
       end
 
       private

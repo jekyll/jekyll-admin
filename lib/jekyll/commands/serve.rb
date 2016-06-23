@@ -11,9 +11,10 @@ module Jekyll
           server = WEBrick::HTTPServer.new(webrick_opts(opts)).tap { |o| o.unmount("") }
           server.mount(opts["baseurl"], Servlet, destination, file_handler_opts)
           # Mount Admin Panel
-          server.mount(opts["baseurl"]+"/admin", Jekyll::Admin::AdminServlet, Jekyll::Admin.public_path, file_handler_opts)
+          server.mount(opts["baseurl"]+"/admin", Jekyll::Admin::AdminServlet,
+            Jekyll::Admin.public_path, file_handler_opts)
           # Mount the API Routes Servlets
-          Jekyll::Admin.api_servlet_bindings.each do |route,handler|
+          Jekyll::Admin.api_servlet_bindings.each do |route, handler|
             server.mount(opts["baseurl"]+route, *handler)
           end
           # Log the routes during startup

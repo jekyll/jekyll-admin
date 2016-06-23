@@ -2,7 +2,6 @@ module Jekyll
   module Admin
     module Pages
       class Handler < ApiHandler
-
         def index
           pages = []
           @site.pages.each do |page|
@@ -21,7 +20,7 @@ module Jekyll
         end
 
         def show(file)
-          page = Jekyll::Page.new(@site,@site.source,"",file)
+          page = Jekyll::Page.new(@site, @site.source, "", file)
           meta = parse_frontmatter(page.path)
           {
             "page_id" => page.basename,
@@ -31,11 +30,11 @@ module Jekyll
           }
         end
 
-        def post(file,data)
+        def post(file, data)
           body = data["body"]
           meta = data["meta"].to_yaml
           content = meta+"---\n"+body
-          write_file(file,content)
+          write_file(file, content)
         end
 
         def delete(file)
