@@ -9,7 +9,7 @@ module Jekyll
           destination = opts["destination"]
           setup(destination)
           server = WEBrick::HTTPServer.new(webrick_opts(opts)).tap { |o| o.unmount("") }
-          mount_admin_servlets(opts, server, destination)
+          mount_servlets(opts, server, destination)
           # Log the routes during startup
           log_routes server_address(server, opts)
           # From super
