@@ -148,8 +148,14 @@
         border: 1px dashed #f3cf9a;
       }
       .side-link.delete {
-        color: #cf3f3f;
+        color: $dark-red;
         border: 1px dashed #ffa7a7;
+        @include transition(background 0.3s ease);
+        &:hover {
+          color: white;
+          background-color: $dark-red;
+          border-style: solid;
+        }
       }
     }
   }
