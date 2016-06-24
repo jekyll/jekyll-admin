@@ -19,32 +19,6 @@ Component for markdown editor (SimpleMDE).
 ** PropTypes **
 Can have [all options of SimpleMDE](https://github.com/NextStepWebs/simplemde-markdown-editor#configuration) as prop types.
 
-## ContentTable
-Generic component for listing contents (Collections, Posts, Pages).
-
-** PropTypes **
-``` javascript
-{
-  contentType: String, // (e.g 'posts', 'pages', 'collections')
-  columns: Array,
-  rows: Array,
-  onClickDelete: Function
-}
-```
-
-## ContentEdit
-Generic component for editing contents (Collections, Posts, Pages).
-
-** PropTypes **
-``` javascript
-{
-  contentType: String,
-  content: Object,
-  updateContent: Function,
-  deleteContent: Function
-}
-```
-
 ## Breadcrumbs
 Component for generating breadcrumbs. First breadcrumb indicates the current content
 type and the second one which is editable is the path of current document.
@@ -61,6 +35,56 @@ type and the second one which is editable is the path of current document.
 
 ## Splitter
 Component for divider.
+
+## Content
+
+### ContentTable
+Generic component for listing contents (Collections, Posts, Pages).
+
+** PropTypes **
+``` javascript
+{
+  contentType: String, // (e.g 'posts', 'pages', 'collections')
+  columns: Array,
+  rows: Array,
+  onClickDelete: Function
+}
+```
+
+### ContentEdit
+Generic component for editing contents (Collections, Posts, Pages).
+
+** PropTypes **
+``` javascript
+{
+  contentType: String,
+  content: Object,
+  updateContent: Function,
+  deleteContent: Function
+}
+```
+
+## Form
+
+### Checkbox
+Checkbox wrapper
+
+** PropTypes **
+``` javascript
+{
+  text: String
+}
+```
+
+### InputTitle
+Editable title component
+
+** PropTypes **
+``` javascript
+{
+  title: String
+}
+```
 
 ## Metadata
 Set of components for handling documents' front matter(metafields).
