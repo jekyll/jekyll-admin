@@ -17,6 +17,10 @@ module Jekyll
           boot_or_detach server, opts
         end
 
+        # Mount the servlets on WEBrick server
+        # including the custom Jekyll::Admin servlets for
+        # /api and /admin paths
+        # the /api/* servlets are taken from Jekyll::Admin.api_servlet_bindings
         def mount_servlets(opts, server, destination)
           # Mount base jekyll server
           server.mount(opts["baseurl"], Servlet, destination, file_handler_opts)
@@ -29,6 +33,7 @@ module Jekyll
           end
         end
 
+        # Modify the existing startup message to display the admin and api routes.
         def log_routes(address)
           Jekyll.logger.info "Server address:", address
           Jekyll.logger.info "Admin Panel address:", address + "admin/"
