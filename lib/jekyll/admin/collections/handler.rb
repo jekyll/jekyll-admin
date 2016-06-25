@@ -31,11 +31,11 @@ module Jekyll
           if doc
             meta = parse_frontmatter(doc.path)
             document = {
-                :collection_name => collection_name,
-                :document_id => doc.basename,
-                :meta => meta,
-                # TODO: Return markdown after reading file?
-                :body => doc.content
+              :collection_name => collection_name,
+              :document_id => doc.basename,
+              :meta => meta,
+              # TODO: Return markdown after reading file?
+              :body => doc.content
             }
           else
             document = nil
@@ -46,7 +46,7 @@ module Jekyll
         def post(collection_name, document, data)
           collection = @collections[collection_name]
           path = collection.directory
-          document_path = File.join(path,document)
+          document_path = File.join(path, document)
           meta = data["meta"].to_yaml
           body = data["body"]
           content = meta+"---\n"+body.to_s
@@ -56,12 +56,12 @@ module Jekyll
         def delete(collection_name, document)
           collection = @collections[collection_name]
           path = collection.directory
-          document_path = File.join(path,document)
+          document_path = File.join(path, document)
           delete_file(document_path)
         end
 
         def present?(collection)
-          @collections.has_key? collection
+          @collections.key? collection
         end
 
         def find_document(collection, document)

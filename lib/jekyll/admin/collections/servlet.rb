@@ -35,7 +35,7 @@ module Jekyll
         end
 
         def do_POST(request, response) # rubocop:disable Style/MethodName
-          if index_collections?(request) or index_documents?(request)
+          if index_collections?(request) || index_documents?(request)
             send_404(response)
           else
             collection = get_collection(request)
@@ -53,7 +53,7 @@ module Jekyll
         end
 
         def do_DELETE(request, response) # rubocop:disable Style/MethodName
-          if index_collections?(request) or index_documents?(request)
+          if index_collections?(request) || index_documents?(request)
             send_404(response)
           else
             collection = get_collection(request)
@@ -75,7 +75,7 @@ module Jekyll
 
         private
         def index_documents?(request)
-          [3,4].include? request.path.split("/")[1..-1].size
+          [3, 4].include? request.path.split("/")[1..-1].size
         end
 
         private
