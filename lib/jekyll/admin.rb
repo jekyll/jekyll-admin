@@ -13,7 +13,7 @@ module Jekyll
   module Admin
     # Path to the compiled frontend folder
     def self.public_path
-      File.join(File.dirname(Dir.pwd), 'jekyll-admin/lib/jekyll/admin/public/dist').to_s
+      File.join(File.dirname(__FILE__), 'admin/public/dist').to_s
     end
 
     # Returns a hash of route and the respective handler
