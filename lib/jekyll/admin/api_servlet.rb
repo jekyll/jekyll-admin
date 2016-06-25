@@ -27,7 +27,7 @@ module Jekyll
         hash = {
           :status => 200,
           :data => "Welcome to Jekyll::Admin. \
-          Head over to http://github.com/jekyll/admin for api docs."
+          Head over to http://github.com/jekyll/jekyll-admin for api docs."
         }
         send_json_response(response, hash)
       end
