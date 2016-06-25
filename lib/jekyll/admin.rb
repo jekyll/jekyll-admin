@@ -6,6 +6,8 @@ require "jekyll/admin/configuration/handler"
 require "jekyll/admin/configuration/servlet"
 require "jekyll/admin/pages/handler"
 require "jekyll/admin/pages/servlet"
+require "jekyll/admin/collections/handler"
+require "jekyll/admin/collections/servlet"
 require_relative "commands/serve"
 module Jekyll
   module Admin
@@ -16,10 +18,12 @@ module Jekyll
 
     # Returns a hash of route and the respective handler
     def self.api_servlet_bindings
+      site = Jekyll.sites.first
       {
-        "/api" => [Jekyll::Admin::ApiServlet, Jekyll.sites.first],
-        "/api/configuration" => [Jekyll::Admin::Configuration::Servlet, Jekyll.sites.first],
-        "/api/pages" => [Jekyll::Admin::Pages::Servlet, Jekyll.sites.first]
+        "/api" => [Jekyll::Admin::ApiServlet, site],
+        "/api/configuration" => [Jekyll::Admin::Configuration::Servlet, site],
+        "/api/pages" => [Jekyll::Admin::Pages::Servlet, site],
+        "/api/collections" => [Jekyll::Admin::Collections::Servlet, site]
       }
     end
   end
