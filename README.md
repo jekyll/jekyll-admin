@@ -30,6 +30,10 @@ group :jekyll_plugins do
 end
 ```
 
+After this, run `bundle install` and the project should be ready to test. Run the `jekyll serve` command and you should be able to access the `/api` and `/admin` routes and the startup message will notify you of the routes as well.
+
+If you make any changes to the gem code, you will have to restart the server for them to take effect.
+
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at https://github.com/jekyll/jekyll-admin. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the [Contributor Covenant](http://contributor-covenant.org) code of conduct.
