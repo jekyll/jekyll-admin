@@ -24,7 +24,11 @@ module Jekyll
       #
       # Returns a json with help message in data and 200 status code
       def do_GET(_request, response) # rubocop:disable Style/MethodName
-        hash = { :status => 200, :data => "Welcome to Jekyll::Admin. Head over to http://github.com/jekyll/admin for api docs." }
+        hash = {
+          :status => 200,
+          :data => "Welcome to Jekyll::Admin. \
+          Head over to http://github.com/jekyll/admin for api docs."
+        }
         send_json_response(response, hash)
       end
 

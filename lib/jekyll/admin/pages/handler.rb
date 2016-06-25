@@ -2,7 +2,6 @@ module Jekyll
   module Admin
     module Pages
       class Handler < ApiHandler
-
         # Get the values for pages INDEX
         #
         # Returns an array of pages

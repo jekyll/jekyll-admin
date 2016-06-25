@@ -21,7 +21,6 @@ module Jekyll
         File.read(path)
       end
 
-
       # Write to a file given path and data
       #
       # path - path to file
@@ -32,7 +31,6 @@ module Jekyll
         File.write(path, data)
       end
 
-
       # Delete a file given path
       #
       # path - path to file
@@ -41,7 +39,6 @@ module Jekyll
       def delete_file(path)
         File.delete(path)
       end
-
 
       # Read the frontmatter of a file given path
       #
