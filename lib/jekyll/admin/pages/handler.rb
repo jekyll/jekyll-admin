@@ -15,11 +15,10 @@ module Jekyll
           @site.pages.each do |page|
             next if page.data["title"].nil?
             extname = File.extname(page.name)
-            page_id = File.basename(page.name, extname)
             path = File.join(@site.source, page.relative_path)
             meta = parse_frontmatter(path)
             page_item = {
-              "page_id" => page_id,
+              "id" => page.name,
               "ext" => extname,
               "meta" => meta
             }
@@ -44,7 +43,7 @@ module Jekyll
           path = File.join(@site.source, file)
           meta = parse_frontmatter(path)
           {
-            "page_id" => page.basename,
+            "id" => page.name,
             "ext" => page.ext,
             "body" => page.content,
             "meta" => meta

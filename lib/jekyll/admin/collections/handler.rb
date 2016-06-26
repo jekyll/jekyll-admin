@@ -36,7 +36,7 @@ module Jekyll
             meta = parse_frontmatter(doc.path)
             doc_item = {
               :collection_name => collection,
-              :document_id => doc.basename,
+              :id => doc.basename,
               :meta => meta
             }
             documents << doc_item
@@ -63,7 +63,7 @@ module Jekyll
             meta = parse_frontmatter(doc.path)
             document = {
               :collection_name => collection_name,
-              :document_id => doc.basename,
+              :id => doc.basename,
               :meta => meta,
               # TODO: Return markdown after reading file?
               :body => doc.content
