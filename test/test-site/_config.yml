@@ -19,3 +19,8 @@ github_username:  jekyll
 
 # Build settings
 markdown: kramdown
+
+collections:
+  collections_wow:
+    output: true
+    permalink: /awesome/:path/

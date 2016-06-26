@@ -1,0 +1,7 @@
+#!/bin/bash
+
+rm -rf test/source
+cp -r test/test-site test/source
+cd test/source/
+bundle install
+jekyll s
