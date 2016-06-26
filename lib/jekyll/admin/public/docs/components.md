@@ -89,27 +89,6 @@ Editable title component
 ## Metadata
 Set of components for handling documents' front matter(metafields).
 
-### MetaFields
-Main container for metafields.
-
-All of the prop types below passed down to the children;
-
-** PropTypes **
-``` javascript
-{
-  meta: Object, // passed from ContentEdit
-  metadata: Object, // passed from Redux store
-  key_prefix: String,
-  setupMetadata: Function,
-  addField: Function,
-  removeField: Function,
-  updateFieldKey: Function,
-  updateFieldValue: Function,
-  moveArrayItem: Function,
-  convertField: Function
-}
-```
-
 ### MetaField
 Contains root attributes of the metadata.
 
