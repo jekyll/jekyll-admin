@@ -51,7 +51,7 @@ Async action for deleting the collection from disk.
 
 ## Metadata
 
-### `setupMetadata(meta)`
+### `storeContentFields(meta)`
 Action that adds the current document's meta to redux store.
 
 ### `addField(namePrefix)`
