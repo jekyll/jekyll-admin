@@ -90,6 +90,7 @@ module Jekyll
           body = data["body"]
           content = meta+"---\n"+body.to_s
           write_file(document_path, content)
+          @site.process
         end
 
         # handles DELETE on collection/documents
@@ -104,6 +105,7 @@ module Jekyll
           path = collection.directory
           document_path = File.join(path, document)
           delete_file(document_path)
+          @site.process
         end
 
         # Checks if a collection name exists

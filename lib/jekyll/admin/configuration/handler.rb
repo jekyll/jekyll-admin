@@ -29,6 +29,7 @@ module Jekyll
           data = data.to_yaml
           file_name = Jekyll::Configuration.new.config_files({}).first
           write_file(file_name, data)
+          @site.process
         end
       end
     end

@@ -64,6 +64,7 @@ module Jekyll
           content = meta+"---\n"+body
           path = File.join(@site.source, file)
           write_file(path, content)
+          @site.process
         end
 
         # handles DELETE on pages
@@ -75,6 +76,7 @@ module Jekyll
         def delete(file)
           path = File.join(@site.source, file)
           delete_file(path)
+          @site.process
         end
       end
     end
