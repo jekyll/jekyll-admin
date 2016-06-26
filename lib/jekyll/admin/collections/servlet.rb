@@ -75,7 +75,7 @@ module Jekyll
               document_name = get_document(request)
               json_data = parse_json_data(request)
               @handler.post(collection, document_name, json_data)
-              document = @handler.show(collection, document)
+              document = @handler.show(collection, document_name)
               hash = { :status => 200, :collection => collection, :document => document }
               send_json_response(response, hash)
             else

@@ -34,7 +34,6 @@ describe "pages" do
   it "get INDEX /pages" do
     get '/pages'
     expect_json_types(:status => :int, :pages => :array_of_objects)
-    expect_json_types(:status => :int, :pages => :array_of_objects)
     expect_status 200
     expect_json("pages", @pages)
   end
