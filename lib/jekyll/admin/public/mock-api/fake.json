@@ -3,8 +3,7 @@
     {
       "id": "testing-posts",
       "collection_name": "posts",
-      "document_id": "testing-posts",
-      "body": "You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.",
+      "body": "You’ll find this post in your `_posts` directory.",
       "meta": {
         "layout": "post",
         "title": "Testing Posts",
@@ -16,7 +15,6 @@
     {
       "id": "2016-05-29-google-summer-of-code",
       "collection_name": "posts",
-      "document_id": "2016-05-29-google-summer-of-code",
       "body": "You’ll find this post in your `_posts` directory.",
       "meta": {
         "layout": "post",
@@ -42,7 +40,6 @@
     {
       "id": "2016-01-01-some-post",
       "collection_name": "posts",
-      "document_id": "2016-01-01-some-post",
       "body": "You’ll find this post in your `_posts` directory.",
       "meta": {
         "layout": "post",
@@ -55,7 +52,6 @@
     {
       "id": "the-revenant",
       "collection_name": "movies",
-      "document_id": "the-revenant",
       "body": "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.",
       "meta": {
         "layout": "default",
@@ -67,18 +63,17 @@
   "pages": [
     {
       "id": "gsoc",
-      "page_id": "gsoc",
       "body": "This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)",
       "meta": {
         "layout": "page",
         "title": "GSoC",
         "permalink": "/gsoc/",
-        "path": "gsoc.md"
+        "path": "gsoc.md",
+        "published": false
       }
     },
     {
       "id": "contact",
-      "page_id": "contact",
       "body": "This is the base Jekyll theme.",
       "meta": {
         "layout": "page",

@@ -18,13 +18,13 @@ Action for notifying whether the YAML editor has changed after last update
 ### `fetchPages`
 Async action for fetching an array of page objects.
 
-### `fetchPage(page_id)`
+### `fetchPage(id)`
 Async action for fetching the requested page.
 
-### `putPage(page_id, page)`
+### `putPage(id, page)`
 Async action for creating/updating the requested page.
 
-### `deletePage(page_id)`
+### `deletePage(id)`
 Async action for deleting the requested page.
 
 
@@ -39,13 +39,13 @@ Async action for fetching information about the requested collection
 ### `fetchDocuments(collection_name)`
 Async action for fetching an array of document objects corresponding to the requested collection. The response does not include the document body.
 
-### `fetchDocument(collection_name, document_id)`
+### `fetchDocument(collection_name, id)`
 Async action for fetching the requested document. The response includes the document body.
 
-### `putDocument(document_id, doc)`
+### `putDocument(id, doc)`
 Async action for creating/updating the requested document. The response includes the document body.
 
-### `deleteDocument(document_id)`
+### `deleteDocument(id)`
 Async action for deleting the collection from disk.
 
 
