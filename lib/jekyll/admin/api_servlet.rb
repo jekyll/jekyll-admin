@@ -26,6 +26,7 @@ module Jekyll
       def do_GET(_request, response) # rubocop:disable Style/MethodName
         hash = {
           :status => 200,
+          :site => @site.to_liquid,
           :data => "Welcome to Jekyll::Admin. \
           Head over to http://github.com/jekyll/jekyll-admin for api docs."
         }

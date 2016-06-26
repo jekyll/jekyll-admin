@@ -16,7 +16,8 @@ module Jekyll
             next if page.data["title"].nil?
             extname = File.extname(page.name)
             page_id = File.basename(page.name, extname)
-            meta = parse_frontmatter(page.path)
+            path = File.join(@site.source, page.relative_path)
+            meta = parse_frontmatter(path)
             page_item = {
               "page_id" => page_id,
               "ext" => extname,
@@ -40,7 +41,8 @@ module Jekyll
         # body - contents of the page, except frontmatter (in html)
         def show(file)
           page = Jekyll::Page.new(@site, @site.source, "", file)
-          meta = parse_frontmatter(page.path)
+          path = File.join(@site.source, file)
+          meta = parse_frontmatter(path)
           {
             "page_id" => page.basename,
             "ext" => page.ext,
@@ -60,7 +62,8 @@ module Jekyll
           body = data["body"]
           meta = data["meta"].to_yaml
           content = meta+"---\n"+body
-          write_file(file, content)
+          path = File.join(@site.source, file)
+          write_file(path, content)
         end
 
         # handles DELETE on pages
@@ -70,7 +73,8 @@ module Jekyll
         #
         # Returns nothing.
         def delete(file)
-          delete_file(file)
+          path = File.join(@site.source, file)
+          delete_file(path)
         end
       end
     end
