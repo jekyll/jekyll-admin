@@ -159,4 +159,15 @@
       }
     }
   }
+  .error-messages {
+    color: $dark-red;
+    border-left: 2px solid $dark-red;
+    padding: 5px 10px 5px 20px;
+    margin-bottom: 40px;
+    list-style: none;
+    font-size: 18px;
+    li{
+      padding: 10px 0;
+    }
+  }
 }
