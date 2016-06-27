@@ -2,7 +2,7 @@
 Presentational components.
 
 ## Editor
-Component for simple YAML editor (Ace editor).
+Component for simple YAML editor [React Ace editor](https://github.com/securingsincity/react-ace).
 
 ** PropTypes **
 ``` javascript
@@ -14,7 +14,7 @@ Component for simple YAML editor (Ace editor).
 ```
 
 ## MarkdownEditor
-Component for markdown editor (SimpleMDE).
+Component for markdown editor - [SimpleMDE](https://simplemde.com/).
 
 ** PropTypes **
 Can have [all options of SimpleMDE](https://github.com/NextStepWebs/simplemde-markdown-editor#configuration) as prop types.

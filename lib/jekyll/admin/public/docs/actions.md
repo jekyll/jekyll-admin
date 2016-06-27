@@ -74,8 +74,25 @@ to the target index.
 ### `convertField(nameAttr, convertType)`
 Action that converts the field to the given type.
 
+### `updateTitle(title)`
+Updates the content title when the input changes.
 
-## Search
+### `updateBody(body)`
+Updates the content body when the markdown editor changes.
+
+### `updatePath(path)`
+Updates the content path when the input changes.
+
+### `updateDraft(isDraft)`
+Updates the content visibility when the checkbox changes.
+
+## Utils
 
 ### `searchByTitle(input)`
 Action for storing search input from the user
+
+### `validated()`
+Action for clearing errors if any.
+
+### `validationError(errors)`
+Action for storing form errors.

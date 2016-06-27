@@ -78,11 +78,11 @@ Container for editing pages.
 #### PageNew
 Container for creating pages.
 
-### Collection
-Container for Collection view. Lists all collections documents (including posts).
+### Documents
+Container for Documents view. Lists the documents of a collection (including posts).
 
-#### CollectionEdit
-Container for editing collections' documents.
+#### DocumentEdit
+Container for editing a document.
 
-#### CollectionNew
-Container for creating collections' documents.
+#### DocumentNew
+Container for creating a document.

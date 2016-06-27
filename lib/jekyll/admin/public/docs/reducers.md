@@ -48,11 +48,12 @@ State;
 }
 ```
 
-## Search
+## Utils
 State;
 ``` javascript
 {
-  input: String
+  input: String,
+  errors: Array
 }
 ```
 
