@@ -68,8 +68,7 @@
         "layout": "page",
         "title": "GSoC",
         "permalink": "/gsoc/",
-        "path": "gsoc.md",
-        "published": false
+        "path": "gsoc.md"
       }
     },
     {
