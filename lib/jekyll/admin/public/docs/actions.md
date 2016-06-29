@@ -21,7 +21,7 @@ Async action for fetching an array of page objects.
 ### `fetchPage(id)`
 Async action for fetching the requested page.
 
-### `putPage(id, page)`
+### `postPage(id, page)`
 Async action for creating/updating the requested page.
 
 ### `deletePage(id)`
@@ -42,7 +42,7 @@ Async action for fetching an array of document objects corresponding to the requ
 ### `fetchDocument(collection_name, id)`
 Async action for fetching the requested document. The response includes the document body.
 
-### `putDocument(id, doc)`
+### `postDocument(id, doc)`
 Async action for creating/updating the requested document. The response includes the document body.
 
 ### `deleteDocument(id)`
