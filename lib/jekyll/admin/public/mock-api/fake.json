@@ -1,7 +1,7 @@
 {
   "collections": [
     {
-      "id": "2016-05-20-testing-posts.md",
+      "id": "2016-05-20-testing-posts",
       "collection_name": "posts",
       "body": "You’ll find this post in your `_posts` directory.",
       "meta": {
