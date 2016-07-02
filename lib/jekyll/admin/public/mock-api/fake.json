@@ -1,27 +1,25 @@
 {
   "collections": [
     {
-      "id": "testing-posts",
+      "id": "2016-05-20-testing-posts",
       "collection_name": "posts",
-      "document_id": "testing-posts",
-      "body": "You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.",
+      "body": "You’ll find this post in your `_posts` directory.",
       "meta": {
         "layout": "post",
         "title": "Testing Posts",
         "date": "2016-05-20 01:10:46 +0300",
         "categories": "test",
-        "path": "testing-posts.md"
+        "path": "2016-05-20-testing-posts.md"
       }
     },
     {
       "id": "2016-05-29-google-summer-of-code",
       "collection_name": "posts",
-      "document_id": "2016-05-29-google-summer-of-code",
       "body": "You’ll find this post in your `_posts` directory.",
       "meta": {
         "layout": "post",
         "title": "Google Summer of Code!",
-        "date": "2016-05-20 01:10:46 +0300",
+        "date": "2016-05-29 01:10:46 +0300",
         "categories": "gsoc",
         "students": [
           {
@@ -35,19 +33,22 @@
             "username": "rush-skills"
           }
         ],
-        "mentors": ["Ben Balter", "Jurgen Leschner", "Parker Moore"],
+        "mentors": [
+          "Ben Balter",
+          "Jurgen Leschner",
+          "Parker Moore"
+        ],
         "path": "2016-05-29-google-summer-of-code.md"
       }
     },
     {
       "id": "2016-01-01-some-post",
       "collection_name": "posts",
-      "document_id": "2016-01-01-some-post",
       "body": "You’ll find this post in your `_posts` directory.",
       "meta": {
         "layout": "post",
         "title": "Welcome to Jekyll!",
-        "date": "2016-05-20 01:10:46 +0300",
+        "date": "2016-01-01 01:10:46 +0300",
         "categories": "jekyll update",
         "path": "2016-01-01-some-post.md"
       }
@@ -55,19 +56,18 @@
     {
       "id": "the-revenant",
       "collection_name": "movies",
-      "document_id": "the-revenant",
       "body": "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.",
       "meta": {
-        "layout": "default",
         "title": "The Revenant",
-        "path": "the-revenant.md"
+        "path": "the-revenant.md",
+        "published": false,
+        "layout": "default"
       }
     }
   ],
   "pages": [
     {
       "id": "gsoc",
-      "page_id": "gsoc",
       "body": "This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)",
       "meta": {
         "layout": "page",
@@ -78,7 +78,6 @@
     },
     {
       "id": "contact",
-      "page_id": "contact",
       "body": "This is the base Jekyll theme.",
       "meta": {
         "layout": "page",
