@@ -33,11 +33,7 @@
             "username": "rush-skills"
           }
         ],
-        "mentors": [
-          "Ben Balter",
-          "Jurgen Leschner",
-          "Parker Moore"
-        ],
+        "mentors": ["Ben Balter", "Jurgen Leschner", "Parker Moore"],
         "path": "2016-05-29-google-summer-of-code.md"
       }
     },
@@ -58,14 +54,25 @@
       "collection_name": "movies",
       "body": "A frontiersman on a fur trading expedition in the 1820s fights for survival after being mauled by a bear and left for dead by members of his own hunting team.",
       "meta": {
+        "layout": "default",
         "title": "The Revenant",
         "path": "the-revenant.md",
-        "published": false,
-        "layout": "default"
+        "published": false
       }
     }
   ],
   "pages": [
+    {
+      "id": "about",
+      "body": "This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)",
+      "meta": {
+        "layout": "page",
+        "title": "About",
+        "permalink": "/about/",
+        "path": "about.md",
+        "published": false
+      }
+    },
     {
       "id": "gsoc",
       "body": "This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)",
