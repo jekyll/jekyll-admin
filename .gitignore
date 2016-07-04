@@ -1,3 +1,4 @@
+# Default generated
 _site/
 .sass-cache/
 .jekyll-metadata
@@ -10,4 +11,9 @@ _site/
 /pkg/
 /spec/reports/
 /tmp/
+# Rubymine files
+.idea
+# Mac OS X temp files
+.DS_Store
 npm-debug.log
+test/source
