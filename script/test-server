@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e
+
+script/branding
+script/return-to-pwd
+
+cd ./spec/fixtures/site || exit
+bundle exec jekyll serve

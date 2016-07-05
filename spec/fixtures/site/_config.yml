@@ -1,0 +1,8 @@
+---
+gems:
+- jekyll/admin
+exclude:
+- Gemfile
+- Gemfile.lock
+- README.md
+foo: bar

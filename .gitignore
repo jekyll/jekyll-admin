@@ -10,4 +10,5 @@ _site/
 /pkg/
 /spec/reports/
 /tmp/
+/spec/fixtures/site/_site
 npm-debug.log
