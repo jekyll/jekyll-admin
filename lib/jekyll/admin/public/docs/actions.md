@@ -18,13 +18,13 @@ Action for notifying whether the YAML editor has changed after last update
 ### `fetchPages`
 Async action for fetching an array of page objects.
 
-### `fetchPage(page_id)`
+### `fetchPage(id)`
 Async action for fetching the requested page.
 
-### `putPage(page_id, page)`
+### `postPage(id, page)`
 Async action for creating/updating the requested page.
 
-### `deletePage(page_id)`
+### `deletePage(id)`
 Async action for deleting the requested page.
 
 
@@ -39,19 +39,19 @@ Async action for fetching information about the requested collection
 ### `fetchDocuments(collection_name)`
 Async action for fetching an array of document objects corresponding to the requested collection. The response does not include the document body.
 
-### `fetchDocument(collection_name, document_id)`
+### `fetchDocument(collection_name, id)`
 Async action for fetching the requested document. The response includes the document body.
 
-### `putDocument(document_id, doc)`
+### `postDocument(id, doc)`
 Async action for creating/updating the requested document. The response includes the document body.
 
-### `deleteDocument(document_id)`
+### `deleteDocument(id)`
 Async action for deleting the collection from disk.
 
 
 ## Metadata
 
-### `setupMetadata(meta)`
+### `storeContentFields(meta)`
 Action that adds the current document's meta to redux store.
 
 ### `addField(namePrefix)`
@@ -74,8 +74,25 @@ to the target index.
 ### `convertField(nameAttr, convertType)`
 Action that converts the field to the given type.
 
+### `updateTitle(title)`
+Updates the content title when the input changes.
 
-## Search
+### `updateBody(body)`
+Updates the content body when the markdown editor changes.
+
+### `updatePath(path)`
+Updates the content path when the input changes.
+
+### `updateDraft(isDraft)`
+Updates the content visibility when the checkbox changes.
+
+## Utils
 
 ### `searchByTitle(input)`
 Action for storing search input from the user
+
+### `validated()`
+Action for clearing errors if any.
+
+### `validationError(errors)`
+Action for storing form errors.

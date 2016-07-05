@@ -15,7 +15,7 @@
         @include border-radius(2px);
         padding: 5px 0;
         box-shadow: none;
-        transition: padding 250ms ease;
+        @include transition(padding 250ms ease);
         &:focus {
           padding: 5px;
           border-color: $dark-orange;
@@ -115,7 +115,7 @@
         }
         .object-value {
           position: relative;
-          transition: padding 250ms ease;
+          @include transition(padding 250ms ease);
           .object-item-wrap {
             padding: 0;
             .object-key {

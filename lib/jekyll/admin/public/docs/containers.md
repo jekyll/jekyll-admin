@@ -23,6 +23,27 @@ Container for displaying header which includes title and homepage link.
 }
 ```
 
+## MetaFields
+Main container for metafields.
+
+All of the prop types below passed down to the children;
+
+** PropTypes **
+``` javascript
+{
+  meta: Object, // passed from ContentEdit
+  metadata: Object, // passed from Redux store
+  key_prefix: String,
+  storeContentFields: Function,
+  addField: Function,
+  removeField: Function,
+  updateFieldKey: Function,
+  updateFieldValue: Function,
+  moveArrayItem: Function,
+  convertField: Function
+}
+```
+
 ## Views
 Contains all of the views linked with the routes.
 
@@ -57,11 +78,11 @@ Container for editing pages.
 #### PageNew
 Container for creating pages.
 
-### Collection
-Container for Collection view. Lists all collections documents (including posts).
+### Documents
+Container for Documents view. Lists the documents of a collection (including posts).
 
-#### CollectionEdit
-Container for editing collections' documents.
+#### DocumentEdit
+Container for editing a document.
 
-#### CollectionNew
-Container for creating collections' documents.
+#### DocumentNew
+Container for creating a document.

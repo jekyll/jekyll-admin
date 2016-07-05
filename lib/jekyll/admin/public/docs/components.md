@@ -2,7 +2,7 @@
 Presentational components.
 
 ## Editor
-Component for simple YAML editor (Ace editor).
+Component for simple YAML editor [React Ace editor](https://github.com/securingsincity/react-ace).
 
 ** PropTypes **
 ``` javascript
@@ -14,36 +14,10 @@ Component for simple YAML editor (Ace editor).
 ```
 
 ## MarkdownEditor
-Component for markdown editor (SimpleMDE).
+Component for markdown editor - [SimpleMDE](https://simplemde.com/).
 
 ** PropTypes **
 Can have [all options of SimpleMDE](https://github.com/NextStepWebs/simplemde-markdown-editor#configuration) as prop types.
-
-## ContentTable
-Generic component for listing contents (Collections, Posts, Pages).
-
-** PropTypes **
-``` javascript
-{
-  contentType: String, // (e.g 'posts', 'pages', 'collections')
-  columns: Array,
-  rows: Array,
-  onClickDelete: Function
-}
-```
-
-## ContentEdit
-Generic component for editing contents (Collections, Posts, Pages).
-
-** PropTypes **
-``` javascript
-{
-  contentType: String,
-  content: Object,
-  updateContent: Function,
-  deleteContent: Function
-}
-```
 
 ## Breadcrumbs
 Component for generating breadcrumbs. First breadcrumb indicates the current content
@@ -62,29 +36,58 @@ type and the second one which is editable is the path of current document.
 ## Splitter
 Component for divider.
 
-## Metadata
-Set of components for handling documents' front matter(metafields).
+## Content
 
-### MetaFields
-Main container for metafields.
-
-All of the prop types below passed down to the children;
+### ContentTable
+Generic component for listing contents (Collections, Posts, Pages).
 
 ** PropTypes **
 ``` javascript
 {
-  meta: Object, // passed from ContentEdit
-  metadata: Object, // passed from Redux store
-  key_prefix: String,
-  setupMetadata: Function,
-  addField: Function,
-  removeField: Function,
-  updateFieldKey: Function,
-  updateFieldValue: Function,
-  moveArrayItem: Function,
-  convertField: Function
+  contentType: String, // (e.g 'posts', 'pages', 'collections')
+  columns: Array,
+  rows: Array,
+  onClickDelete: Function
 }
 ```
+
+### ContentEdit
+Generic component for editing contents (Collections, Posts, Pages).
+
+** PropTypes **
+``` javascript
+{
+  contentType: String,
+  content: Object,
+  updateContent: Function,
+  deleteContent: Function
+}
+```
+
+## Form
+
+### Checkbox
+Checkbox wrapper
+
+** PropTypes **
+``` javascript
+{
+  text: String
+}
+```
+
+### InputTitle
+Editable title component
+
+** PropTypes **
+``` javascript
+{
+  title: String
+}
+```
+
+## Metadata
+Set of components for handling documents' front matter(metafields).
 
 ### MetaField
 Contains root attributes of the metadata.

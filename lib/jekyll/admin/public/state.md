@@ -15,10 +15,10 @@ state : {
 
   pages: {
     pages: [ // GET /pages
-      { page_id, body, meta },
-      { page_id2, body2, meta2 }
+      { id, body, meta },
+      { id, body, meta }
     ],
-    currentPage: { page_id, body, meta }, // GET /pages/:page_id
+    currentPage: { id, body, meta }, // GET /pages/:id
     isFetching: false,
     message: null,
   },
@@ -32,11 +32,11 @@ state : {
       }
     },
     currentDocuments: [ //GET /collections/:collection_name/documents
-      {document_id, collection_name, meta},
-      {document_id, collection_name, meta}
+      {id, collection_name, meta},
+      {id, collection_name, meta}
     ],
-    currentDocument: { //GET /collections/:collection_name/documents/:document_id
-      document_id,
+    currentDocument: { //GET /collections/:collection_name/documents/:id
+      id,
       collection_name,
       body,
       meta
