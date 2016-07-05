@@ -3,10 +3,5 @@
 set -e
 
 script/branding
-script/return-to-pwd
-
-bundle exec rspec
-script/fmt
-
-cd ./lib/jekyll/admin/public || exit
-npm test
+script/cibuild-node
+script/cibuild-ruby

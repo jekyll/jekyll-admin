@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -e
+
+if [ ! -d "./lib/jekyll/admin/public/dist" ]; then
+  script/build
+fi
+
+echo "Running Ruby tests..."
+bundle exec rspec
+script/fmt
