@@ -7,7 +7,6 @@ module Jekyll
 
       get "/pages/:page_id" do
         ensure_page
-        render_404 unless page
         json page.to_liquid
       end
 
