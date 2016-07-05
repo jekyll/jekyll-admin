@@ -8,6 +8,7 @@ module Jekyll
         :page => "/page",
         :static_files => "/static_files"
       }.freeze
+
       configure :development do
         register Sinatra::Reloader
       end

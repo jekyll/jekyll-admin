@@ -7,6 +7,7 @@ require 'json'
 require "jekyll"
 require "jekyll/admin/version"
 require "jekyll/admin/server"
+require "jekyll/admin/static_server"
 require "jekyll/admin/server/collection.rb"
 require "jekyll/admin/server/configuration.rb"
 require "jekyll/admin/server/data.rb"
@@ -16,10 +17,6 @@ require_relative "./commands/serve"
 
 module Jekyll
   module Admin
-    def self.public_path
-      File.expand_path "./admin/public/dist", File.dirname(__FILE__)
-    end
-
     def self.site
       @site ||= Jekyll.sites.first
     end
