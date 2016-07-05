@@ -1,21 +1,20 @@
 module Jekyll
   module Admin
     class Server < Sinatra::Base
-
       ROUTES = {
-        collections: "/collections",
-        configuration: "/configuration",
-        data: "/data",
-        page: "/page",
-        static_files: "/static_files"
-      }
+        :collections => "/collections",
+        :configuration => "/configuration",
+        :data => "/data",
+        :page => "/page",
+        :static_files => "/static_files"
+      }.freeze
       configure :development do
         register Sinatra::Reloader
       end
 
       get "/" do
         base = "#{request.scheme}://#{request.host_with_port}"
-        json ROUTES.map { |label, path| ["#{label}_api", URI.join(base,path)] }.to_h
+        json ROUTES.map { |label, path| ["#{label}_api", URI.join(base, path)] }.to_h
       end
 
       private
