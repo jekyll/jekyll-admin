@@ -10,25 +10,21 @@ Refer to [Install Plugins](https://jekyllrb.com/docs/plugins/#installing-a-plugi
 
 ## Usage
 
-Upon successful installation, you should be able to access the admin panel at `/admin` and the api at `/api` respectively.
+Upon successful installation, you should be able to access the admin panel at `/admin` and the api at `/_api` respectively.
 
 ## Development
 
-After checking out the repo, run `bin/setup` to install dependencies. You can also run `bin/console` for an interactive prompt that will allow you to experiment.
+### To install locally
 
-To install this gem onto your local machine, run `bundle exec rake install`. To release a new version, update the version number in `version.rb`, and then run `bundle exec rake release`, which will create a git tag for the version, push git commits and tags, and push the `.gem` file to [rubygems.org](https://rubygems.org).
+`script/bootstrap`
 
-### How to link to a project
+### Running tests
 
-In development, to use the plugin you will first have to setup a test Jekyll project and then in the Gemfile for the project link to this gem using `git` or `path`.
+`script/cibuild`
 
-Example Gemfile:
-```
-gem 'jekyll'
-group :jekyll_plugins do
-   gem "jekyll-admin", path: "../jekyll-admin"
-end
-```
+### Running a test server with a dummy site
+
+`script/test-server`
 
 ## Contributing
 
