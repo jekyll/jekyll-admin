@@ -12,7 +12,7 @@ module Jekyll
 
       put "/data/:data_file_id" do
         File.write data_file_path, data_file_body
-        Jekyll::Admin.load_site
+        site.process
         redirect to("/data/#{params["data_file_id"]}")
       end
 

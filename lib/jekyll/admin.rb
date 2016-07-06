@@ -20,11 +20,5 @@ module Jekyll
     def self.site
       @site ||= Jekyll.sites.first
     end
-
-    def self.load_site
-      site.reset
-      site.read
-      site.generate
-    end
   end
 end

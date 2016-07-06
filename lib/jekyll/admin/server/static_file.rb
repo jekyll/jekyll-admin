@@ -12,7 +12,7 @@ module Jekyll
 
       put "/static_files/:static_file_id" do
         File.write static_file_path, static_file_body
-        Jekyll::Admin.load_site
+        site.process
         redirect to("/static_files/#{params["static_file_id"]}")
       end
 

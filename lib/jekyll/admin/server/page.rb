@@ -12,7 +12,7 @@ module Jekyll
 
       put "/pages/:page_id" do
         File.write page_path, page_body
-        Jekyll::Admin.load_site
+        site.process
         redirect to("/pages/#{params["page_id"]}")
       end
 

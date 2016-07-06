@@ -24,7 +24,7 @@ module Jekyll
       put "/collections/:collection_id/:document_id" do
         ensure_collection
         File.write document_path, document_body
-        Jekyll::Admin.load_site
+        site.process
         redirect to("/collections/#{collection.label}/#{params["document_id"]}")
       end
 

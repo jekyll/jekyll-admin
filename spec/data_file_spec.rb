@@ -50,7 +50,7 @@ describe "data" do
     path = File.expand_path "_data/data_file_delete.yml", fixture_path("site")
     File.delete(path) if File.exist?(path)
     File.write path, "foo: bar"
-    Jekyll::Admin.load_site
+    Jekyll::Admin.site.process
 
     delete '/data/data_file_delete'
     expect(last_response).to be_ok

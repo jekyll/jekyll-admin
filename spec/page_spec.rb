@@ -6,11 +6,11 @@ describe "pages" do
   end
 
   before(:each) do
-    Jekyll::Admin.load_site
+    Jekyll::Admin.site.process
   end
 
   after(:each) do
-    Jekyll::Admin.load_site
+    Jekyll::Admin.site.process
   end
 
   it "lists pages" do
@@ -69,7 +69,7 @@ describe "pages" do
     path = File.expand_path "page-delete.md", fixture_path("site")
     File.delete(path) if File.exist?(path)
     File.write path, "---\n---\n\ntest"
-    Jekyll::Admin.load_site
+    Jekyll::Admin.site.process
 
     delete '/pages/page-delete.md'
     expect(last_response).to be_ok
