@@ -6,7 +6,7 @@ module Jekyll
       end
 
       get "/data/:data_file_id" do
-        ensure_data_files_exists
+        ensure_data_file_exists
         json data_file.to_liquid
       end
 
@@ -17,7 +17,7 @@ module Jekyll
       end
 
       delete "/data/:data_file_id" do
-        ensure_data_files_exists
+        ensure_data_file_exists
         File.delete data_file_path
         content_type :json
         status 200
@@ -34,8 +34,8 @@ module Jekyll
         data_files[params["data_file_id"]]
       end
 
-      def ensure_data_files_exists
-        site.data
+      def ensure_data_file_exists
+        render_404 if data_file.nil?
       end
 
       def data_file_path
