@@ -39,7 +39,7 @@ module Jekyll
       end
 
       def data_file_path
-        File.expand_path "_data/#{params["data_file_id"]}.yml", Jekyll::Admin.site.source
+        sanitized_path "_data/#{params["data_file_id"]}.yml"
       end
 
       def data_file_body

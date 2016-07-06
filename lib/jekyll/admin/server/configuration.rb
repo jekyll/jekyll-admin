@@ -17,7 +17,7 @@ module Jekyll
       end
 
       def configuration_path
-        File.expand_path "_config.yml", Jekyll::Admin.site.source
+        sanitized_path "_config.yml"
       end
     end
   end

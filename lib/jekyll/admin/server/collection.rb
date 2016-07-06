@@ -44,7 +44,7 @@ module Jekyll
       end
 
       def document_path
-        File.expand_path params["document_id"], collection.directory
+        sanitized_path File.join(collection.directory, params["document_id"])
       end
 
       def document_body

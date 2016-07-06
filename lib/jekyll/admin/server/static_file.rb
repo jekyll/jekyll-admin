@@ -27,7 +27,7 @@ module Jekyll
       private
 
       def static_file_path
-        File.expand_path params["static_file_id"], Jekyll::Admin.site.source
+        sanitized_path params["static_file_id"]
       end
 
       def static_file_body

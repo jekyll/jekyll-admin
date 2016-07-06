@@ -27,7 +27,7 @@ module Jekyll
       private
 
       def page_path
-        File.expand_path params["page_id"], Jekyll::Admin.site.source
+        sanitized_path params["page_id"]
       end
 
       def page_body

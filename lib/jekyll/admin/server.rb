@@ -33,6 +33,10 @@ module Jekyll
       def base_url
         "#{request.scheme}://#{request.host_with_port}"
       end
+
+      def sanitized_path(questionable_path)
+        Jekyll.sanitized_path Jekyll::Admin.site.source, questionable_path
+      end
     end
   end
 end
