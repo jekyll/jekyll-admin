@@ -12,3 +12,4 @@ _site/
 /tmp/
 /spec/fixtures/site/_site
 npm-debug.log
+/spec/fixtures/site/Gemfile.lock
