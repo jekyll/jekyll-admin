@@ -10,4 +10,10 @@ describe Jekyll::Admin::StaticServer do
     expect(last_response).to be_ok
     expect(last_response.body).to match(/<body>/)
   end
+
+  it "returns the index for non-existent paths" do
+    get '/collections'
+    expect(last_response).to be_ok
+    expect(last_response.body).to match(/<body>/)
+  end
 end
