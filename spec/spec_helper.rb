@@ -16,6 +16,4 @@ end
 
 config = Jekyll::Configuration.from(:source => fixture_path("site"))
 site = Jekyll::Site.new(config)
-site.reset
-site.read
-site.generate
+site.process
