@@ -3,8 +3,8 @@ module Jekyll
     class StaticServer < Sinatra::Base
       set :public_dir, File.expand_path("./public/dist", File.dirname(__FILE__))
 
-      # Allow `/admin` and `/admin/` to serve `/public/dist/index.html`
-      get "/" do
+      # Allow `/admin` and `/admin/`, and `/admin/*` to serve `/public/dist/index.html`
+      get "/*" do
         send_file index_path
       end
 
