@@ -30,16 +30,6 @@ module Jekyll
         sanitized_path params["page_id"]
       end
 
-      def page_body
-        body = if request_payload["meta"]
-                 YAML.dump(request_payload["meta"]).strip
-               else
-                 "---"
-               end
-        body << "\n---\n\n"
-        body << request_payload["body"].to_s
-      end
-
       def page
         site.pages.find { |p| p.path == params["page_id"] }
       end

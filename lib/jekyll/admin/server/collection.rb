@@ -47,16 +47,6 @@ module Jekyll
         sanitized_path File.join(collection.directory, params["document_id"])
       end
 
-      def document_body
-        body = if request_payload["meta"]
-                 YAML.dump(request_payload["meta"]).strip
-               else
-                 "---"
-               end
-        body << "\n---\n\n"
-        body << request_payload["body"].to_s
-      end
-
       def document
         collection.docs.find { |d| d.path == document_path }
       end
