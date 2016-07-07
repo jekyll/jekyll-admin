@@ -1,9 +1,9 @@
-require 'webrick'
-require 'sinatra'
-require 'sinatra/base'
+require "webrick"
+require "sinatra"
+require "sinatra/base"
 require "sinatra/json"
 require "sinatra/reloader"
-require 'json'
+require "json"
 require "jekyll"
 require "jekyll/admin/version"
 require "jekyll/admin/server"
