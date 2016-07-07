@@ -1,4 +1,0 @@
-source 'https://rubygems.org'
-
-path = File.expand_path "../../../", File.dirname(__FILE__)
-gem 'jekyll-admin', path: path
