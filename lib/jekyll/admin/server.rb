@@ -5,10 +5,25 @@ module Jekyll
 
       configure :development do
         register Sinatra::Reloader
+        enable :logging
+
+        require "sinatra/cross_origin"
+        register Sinatra::CrossOrigin
+        enable  :cross_origin
+        disable :allow_credentials
       end
 
       get "/" do
         json ROUTES.map { |route| ["#{route}_api", URI.join(base_url, "/_api/", route)] }.to_h
+      end
+
+      # CORS preflight. See https://github.com/britg/sinatra-cross_origin#responding-to-options
+      options "*" do
+        render_404 unless settings.development?
+        response.headers["Allow"] = "HEAD,GET,PUT,POST,DELETE,OPTIONS"
+        response.headers["Access-Control-Allow-Headers"] = "X-Requested-With, X-HTTP-Method-Override, Content-Type, Cache-Control, Accept"
+
+        status 200
       end
 
       private

@@ -6,4 +6,4 @@ script/branding
 script/return-to-pwd
 
 cd ./spec/fixtures/site || exit
-bundle exec jekyll serve --verbose
+RACK_ENV=development bundle exec jekyll serve --verbose
