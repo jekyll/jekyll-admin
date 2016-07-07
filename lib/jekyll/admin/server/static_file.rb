@@ -7,12 +7,12 @@ module Jekyll
 
       get "/static_files/:static_file_id" do
         ensure_static_file_exists
-        redirect params["static_file_id"]
+        redirect static_file.url
       end
 
       put "/static_files/:static_file_id" do
         File.write static_file_path, static_file_body
-        Jekyll::Admin.load_site
+        site.process
         redirect to("/static_files/#{params["static_file_id"]}")
       end
 
@@ -27,7 +27,7 @@ module Jekyll
       private
 
       def static_file_path
-        File.expand_path params["static_file_id"], Jekyll::Admin.site.source
+        sanitized_path params["static_file_id"]
       end
 
       def static_file_body
@@ -38,8 +38,12 @@ module Jekyll
         site.static_files
       end
 
+      def static_file
+        static_files.find { |f| f.path == static_file_path }
+      end
+
       def ensure_static_file_exists
-        render_404 unless static_files.any? { |f| f.path == static_file_path }
+        render_404 if static_file.nil?
       end
     end
   end

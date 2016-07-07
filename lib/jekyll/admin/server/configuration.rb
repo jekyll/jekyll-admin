@@ -2,7 +2,9 @@ module Jekyll
   module Admin
     class Server < Sinatra::Base
       get "/configuration" do
-        json site.config.to_liquid
+        config = Jekyll::Configuration.new
+        config_files = config.config_files("source" => sanitized_path("/"))
+        json config.read_config_files(config_files).to_liquid
       end
 
       put "/configuration" do
@@ -17,7 +19,7 @@ module Jekyll
       end
 
       def configuration_path
-        File.expand_path "_config.yml", Jekyll::Admin.site.source
+        sanitized_path "_config.yml"
       end
     end
   end

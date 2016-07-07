@@ -33,6 +33,21 @@ module Jekyll
       def base_url
         "#{request.scheme}://#{request.host_with_port}"
       end
+
+      def sanitized_path(questionable_path)
+        Jekyll.sanitized_path Jekyll::Admin.site.source, questionable_path
+      end
+
+      def document_body
+        body = if request_payload["meta"]
+                 YAML.dump(request_payload["meta"]).strip
+               else
+                 "---"
+               end
+        body << "\n---\n\n"
+        body << request_payload["body"].to_s
+      end
+      alias page_body document_body
     end
   end
 end

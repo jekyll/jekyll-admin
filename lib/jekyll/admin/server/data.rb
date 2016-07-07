@@ -6,18 +6,18 @@ module Jekyll
       end
 
       get "/data/:data_file_id" do
-        ensure_data_files_exists
+        ensure_data_file_exists
         json data_file.to_liquid
       end
 
       put "/data/:data_file_id" do
         File.write data_file_path, data_file_body
-        Jekyll::Admin.load_site
+        site.process
         redirect to("/data/#{params["data_file_id"]}")
       end
 
       delete "/data/:data_file_id" do
-        ensure_data_files_exists
+        ensure_data_file_exists
         File.delete data_file_path
         content_type :json
         status 200
@@ -34,12 +34,12 @@ module Jekyll
         data_files[params["data_file_id"]]
       end
 
-      def ensure_data_files_exists
-        site.data
+      def ensure_data_file_exists
+        render_404 if data_file.nil?
       end
 
       def data_file_path
-        File.expand_path "_data/#{params["data_file_id"]}.yml", Jekyll::Admin.site.source
+        sanitized_path "_data/#{params["data_file_id"]}.yml"
       end
 
       def data_file_body

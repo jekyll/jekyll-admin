@@ -54,7 +54,7 @@ describe "static_files" do
     path = File.expand_path "static-file-delete.txt", fixture_path("site")
     File.delete(path) if File.exist?(path)
     File.write path, "test"
-    Jekyll::Admin.load_site
+    Jekyll::Admin.site.process
 
     delete '/static_files/static-file-delete.txt'
     expect(last_response).to be_ok

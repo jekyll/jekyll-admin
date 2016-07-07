@@ -24,7 +24,7 @@ module Jekyll
       put "/collections/:collection_id/:document_id" do
         ensure_collection
         File.write document_path, document_body
-        Jekyll::Admin.load_site
+        site.process
         redirect to("/collections/#{collection.label}/#{params["document_id"]}")
       end
 
@@ -44,17 +44,7 @@ module Jekyll
       end
 
       def document_path
-        File.expand_path params["document_id"], collection.directory
-      end
-
-      def document_body
-        body = if request_payload["meta"]
-                 YAML.dump(request_payload["meta"]).strip
-               else
-                 "---"
-               end
-        body << "\n---\n\n"
-        body << request_payload["body"].to_s
+        sanitized_path File.join(collection.directory, params["document_id"])
       end
 
       def document
