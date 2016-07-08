@@ -23,7 +23,7 @@ describe Jekyll::Admin::Server do
 
     expected = {
       "Access-Control-Allow-Origin"  => "http://localhost:3000",
-      "Access-Control-Allow-Methods" => "GET, OPTIONS, POST, PUT"
+      "Access-Control-Allow-Methods" => "DELETE, GET, OPTIONS, POST, PUT"
     }
 
     expected.each do |key, value|

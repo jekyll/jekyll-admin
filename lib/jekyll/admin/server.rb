@@ -11,7 +11,7 @@ module Jekyll
         register Sinatra::CrossOrigin
         enable  :cross_origin
         disable :allow_credentials
-        set :allow_methods, %i(get options post put)
+        set :allow_methods, %i(delete get options post put)
       end
 
       get "/" do
