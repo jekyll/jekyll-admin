@@ -14,7 +14,7 @@ module Jekyll
         put "/:page_id" do
           File.write page_path, page_body
           site.process
-          redirect to("/pages/#{params["page_id"]}")
+          json page.to_liquid
         end
 
         delete "/:page_id" do

@@ -8,13 +8,13 @@ module Jekyll
 
         get "/:static_file_id" do
           ensure_static_file_exists
-          redirect static_file.url
+          json static_file.to_liquid
         end
 
         put "/:static_file_id" do
           File.write static_file_path, static_file_body
           site.process
-          redirect to("/static_files/#{params["static_file_id"]}")
+          json static_file.to_liquid
         end
 
         delete "/:static_file_id" do

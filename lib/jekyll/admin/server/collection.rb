@@ -26,7 +26,8 @@ module Jekyll
           ensure_collection
           File.write document_path, document_body
           site.process
-          redirect to("/collections/#{collection.label}/#{params["document_id"]}")
+          content_type :json
+          document.to_liquid.to_json
         end
 
         delete "/:collection_id/:document_id" do
