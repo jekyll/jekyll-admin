@@ -14,7 +14,7 @@ module Jekyll
         put "/:data_file_id" do
           File.write data_file_path, data_file_body
           site.process
-          redirect to("/data/#{params["data_file_id"]}")
+          json data_file.to_liquid
         end
 
         delete "/:data_file_id" do

@@ -54,9 +54,7 @@ describe "collections" do
     }
     put '/collections/posts/2016-01-01-test2.md', request.to_json
 
-    expect(last_response).to be_redirect
-    follow_redirect!
-    expect(last_request.url).to eql('http://example.org/collections/posts/2016-01-01-test2.md')
+    expect(last_response).to be_ok
     expect(last_response_parsed["foo"]).to eq('bar')
     File.delete(path)
   end
@@ -67,15 +65,13 @@ describe "collections" do
     File.write path, "---\n---\n\ntest"
 
     request = {
-      :meta => { :foo => "bar" },
+      :meta => { :foo => "bar2" },
       :body => "test"
     }
     put '/collections/posts/2016-01-01-test2.md', request.to_json
 
-    expect(last_response).to be_redirect
-    follow_redirect!
-    expect(last_request.url).to eql('http://example.org/collections/posts/2016-01-01-test2.md')
-    expect(last_response_parsed["foo"]).to eq('bar')
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq('bar2')
     File.delete(path)
   end
 

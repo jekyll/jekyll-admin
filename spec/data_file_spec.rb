@@ -24,10 +24,8 @@ describe "data" do
     request = { "foo" => "bar" }
     put '/data/data-file-new', request.to_json
 
-    expect(last_response).to be_redirect
-    follow_redirect!
-    expect(last_request.url).to eql('http://example.org/data/data-file-new')
-    expect(last_response_parsed["foo"]).to eq('bar')
+    expect(last_response).to be_ok
+    expect(last_response_parsed).to eql({ "foo" => "bar" })
     File.delete(path)
   end
 
@@ -36,13 +34,11 @@ describe "data" do
     File.delete(path) if File.exist?(path)
     File.write path, "foo2: bar2"
 
-    request = { "foo" => "bar" }
+    request = { "foo" => "bar2" }
     put '/data/data-file-update', request.to_json
 
-    expect(last_response).to be_redirect
-    follow_redirect!
-    expect(last_request.url).to eql('http://example.org/data/data-file-update')
-    expect(last_response_parsed["foo"]).to eq('bar')
+    expect(last_response).to be_ok
+    expect(last_response_parsed).to eql({ "foo" => "bar2" })
     File.delete(path)
   end
 

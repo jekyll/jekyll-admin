@@ -14,7 +14,8 @@ module Jekyll
         put "/:static_file_id" do
           File.write static_file_path, static_file_body
           site.process
-          redirect to("/static_files/#{params["static_file_id"]}")
+          status 200
+          halt
         end
 
         delete "/:static_file_id" do

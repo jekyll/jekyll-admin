@@ -30,9 +30,7 @@ describe "static_files" do
     request = { :body => "test" }
     put '/static_files/static-file-new.txt', request.to_json
 
-    expect(last_response).to be_redirect
-    follow_redirect!
-    expect(last_request.url).to eql('http://example.org/static_files/static-file-new.txt')
+    expect(last_response).to be_ok
     File.delete(path)
   end
 
@@ -44,9 +42,7 @@ describe "static_files" do
     request = { :body => "test" }
     put '/static_files/static-file-update.txt', request.to_json
 
-    expect(last_response).to be_redirect
-    follow_redirect!
-    expect(last_request.url).to eql('http://example.org/static_files/static-file-update.txt')
+    expect(last_response).to be_ok
     File.delete(path)
   end
 
