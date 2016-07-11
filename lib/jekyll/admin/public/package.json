@@ -14,7 +14,7 @@
     "clean-dist": "npm run remove-dist && mkdir dist",
     "remove-dist": "rimraf ./dist",
     "build:html": "babel-node tools/buildHtml.js",
-    "prebuild": "npm run clean-dist && npm run build:html && npm run lint & npm test",
+    "prebuild": "npm run clean-dist && npm run build:html && npm run lint && npm test",
     "build": "babel-node tools/build.js",
     "test": "mocha --timeout 10000 tools/testSetup.js \"src/**/*.spec.js\" --reporter progress",
     "test:cover": "babel-node node_modules/isparta/bin/isparta cover --root src --report html node_modules/mocha/bin/_mocha -- --require ./tools/testSetup.js \"src/**/*.spec.js\" --reporter progress",
