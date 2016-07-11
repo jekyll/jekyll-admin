@@ -3,6 +3,8 @@ module Jekyll
     class Server < Sinatra::Base
       ROUTES = %w(collections configuration data pages static_files).freeze
 
+      register Sinatra::Namespace
+
       configure :development do
         register Sinatra::Reloader
         enable :logging
