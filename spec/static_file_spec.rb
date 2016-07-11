@@ -11,11 +11,11 @@ describe "static_files" do
     expect(last_response_parsed.last["path"]).to eql("/static-file.txt")
   end
 
-  it "redirects to the real file" do
+  it "returns a single static file" do
     get "/static_files/static-file.txt"
-    expect(last_response).to be_redirect
-    follow_redirect!
-    expect(last_request.url).to eql('http://example.org/static-file.txt')
+    expect(last_response).to be_ok
+    expect(last_response_parsed["extname"]).to eql(".txt")
+    expect(last_response_parsed["path"]).to eql("/static-file.txt")
   end
 
   it "404s when a static file doesn't exist" do
@@ -30,9 +30,10 @@ describe "static_files" do
     request = { :body => "test" }
     put '/static_files/static-file-new.txt', request.to_json
 
-    expect(last_response).to be_redirect
-    follow_redirect!
-    expect(last_request.url).to eql('http://example.org/static_files/static-file-new.txt')
+    expect(last_response).to be_ok
+    expect(last_response_parsed["extname"]).to eql(".txt")
+    expect(last_response_parsed["path"]).to eql("/static-file-new.txt")
+
     File.delete(path)
   end
 
@@ -44,9 +45,10 @@ describe "static_files" do
     request = { :body => "test" }
     put '/static_files/static-file-update.txt', request.to_json
 
-    expect(last_response).to be_redirect
-    follow_redirect!
-    expect(last_request.url).to eql('http://example.org/static_files/static-file-update.txt')
+    expect(last_response).to be_ok
+    expect(last_response_parsed["extname"]).to eql(".txt")
+    expect(last_response_parsed["path"]).to eql("/static-file-update.txt")
+
     File.delete(path)
   end
 

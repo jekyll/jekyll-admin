@@ -3,6 +3,8 @@ require "sinatra"
 require "sinatra/base"
 require "sinatra/json"
 require "sinatra/reloader"
+require "sinatra/namespace"
+
 require "json"
 require "jekyll"
 require "jekyll/admin/version"

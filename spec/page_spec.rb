@@ -40,10 +40,9 @@ describe "pages" do
     }
     put '/pages/page-new.md', request.to_json
 
-    expect(last_response).to be_redirect
-    follow_redirect!
-    expect(last_request.url).to eql('http://example.org/pages/page-new.md')
+    expect(last_response).to be_ok
     expect(last_response_parsed["foo"]).to eq('bar')
+
     File.delete(path)
   end
 
@@ -53,15 +52,14 @@ describe "pages" do
     File.write path, "---\n---\n\ntest"
 
     request = {
-      :meta => { :foo => "bar" },
+      :meta => { :foo => "bar2" },
       :body => "test"
     }
     put '/pages/page-update.md', request.to_json
 
-    expect(last_response).to be_redirect
-    follow_redirect!
-    expect(last_request.url).to eql('http://example.org/pages/page-update.md')
-    expect(last_response_parsed["foo"]).to eq('bar')
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq('bar2')
+
     File.delete(path)
   end
 
