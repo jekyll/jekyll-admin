@@ -8,7 +8,6 @@
     "start": "npm-run-all --parallel start-api test:watch open:src lint:watch",
     "start-api": "cd ../../../.. && script/test-server",
     "open:src": "babel-node tools/srcServer.js",
-    "open:dist": "babel-node tools/distServer.js",
     "lint": "esw webpack.config.* src tools",
     "lint:watch": "npm run lint -- --watch",
     "clean-dist": "npm run remove-dist && mkdir dist",
