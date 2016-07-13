@@ -3,18 +3,18 @@ module Jekyll
     class Server < Sinatra::Base
       namespace "/pages" do
         get do
-          json site.pages.map(&:to_liquid)
+          json site.pages.map(&:to_liquid_without_frontmatter_defaults)
         end
 
         get "/:page_id" do
           ensure_page
-          json page.to_liquid
+          json page.to_liquid_without_frontmatter_defaults
         end
 
         put "/:page_id" do
           File.write page_path, page_body
           site.process
-          json page.to_liquid
+          json page.to_liquid_without_frontmatter_defaults
         end
 
         delete "/:page_id" do
