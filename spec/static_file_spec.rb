@@ -93,6 +93,25 @@ describe "static_files" do
     File.delete(path)
   end
 
+  it "deeply updates a static file" do
+    path = File.expand_path(
+      File.join("static-dir", "static-file-update.txt"),
+      fixture_path("site")
+    )
+    File.delete(path) if File.exist?(path)
+    File.write path, "testing testing testing"
+
+    request = { :body => "test" }
+    put '/static_files/static-dir/static-file-update.txt', request.to_json
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed["extname"]).to eql(".txt")
+    (expect(last_response_parsed["path"]).to \
+      eql("/static-dir/static-file-update.txt"))
+
+    File.delete(path)
+  end
+
   it "deletes a static_file" do
     path = File.expand_path "static-file-delete.txt", fixture_path("site")
     File.delete(path) if File.exist?(path)
@@ -100,6 +119,20 @@ describe "static_files" do
     Jekyll::Admin.site.process
 
     delete '/static_files/static-file-delete.txt'
+    expect(last_response).to be_ok
+    expect(File.exist?(path)).to eql(false)
+  end
+
+  it "deeply deletes a static_file" do
+    path = File.expand_path(
+      File.join("static-dir", "static-file-delete.txt"),
+      fixture_path("site")
+    )
+    File.delete(path) if File.exist?(path)
+    File.write path, "test"
+    Jekyll::Admin.site.process
+
+    delete '/static_files/static-dir/static-file-delete.txt'
     expect(last_response).to be_ok
     expect(File.exist?(path)).to eql(false)
   end
