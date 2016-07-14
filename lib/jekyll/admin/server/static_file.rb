@@ -6,18 +6,21 @@ module Jekyll
           json static_files.map(&:to_liquid)
         end
 
-        get "/:static_file_id" do
+        get "/*" do
+          set_file_path
           ensure_static_file_exists
           json static_file.to_liquid
         end
 
-        put "/:static_file_id" do
+        put "/*" do
+          set_file_path
           File.write static_file_path, static_file_body
           site.process
           json static_file.to_liquid
         end
 
-        delete "/:static_file_id" do
+        delete "/*" do
+          set_file_path
           ensure_static_file_exists
           File.delete static_file_path
           content_type :json
@@ -26,6 +29,10 @@ module Jekyll
         end
 
         private
+
+        def set_file_path
+          params["static_file_id"] = params["splat"].first
+        end
 
         def static_file_path
           sanitized_path params["static_file_id"]
@@ -40,7 +47,16 @@ module Jekyll
         end
 
         def static_file
-          static_files.find { |f| f.path == static_file_path }
+          file = static_files.find { |f| f.path == static_file_path }
+          if not file
+            static_files.select do |f|
+              # Files that are in this directory
+              # Joined with / to ensure user can't do partial paths
+              f.path.start_with? File.join(static_file_path, "/")
+            end.map(&:to_liquid)
+          else
+            file
+          end
         end
 
         def ensure_static_file_exists
