@@ -7,20 +7,17 @@ module Jekyll
         end
 
         get "/*" do
-          set_file_path
           ensure_static_file_exists
           json static_file.to_liquid
         end
 
         put "/*" do
-          set_file_path
           File.write static_file_path, static_file_body
           site.process
           json static_file.to_liquid
         end
 
         delete "/*" do
-          set_file_path
           ensure_static_file_exists
           File.delete static_file_path
           content_type :json
@@ -30,11 +27,10 @@ module Jekyll
 
         private
 
-        def set_file_path
-          params["static_file_id"] = params["splat"].first
-        end
-
         def static_file_path
+          if params["splat"]
+            params["static_file_id"] = params["splat"].first
+          end
           sanitized_path params["static_file_id"]
         end
 
@@ -58,6 +54,7 @@ module Jekyll
               nil
             else
               file_list
+            end
           else
             file
           end
