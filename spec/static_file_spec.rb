@@ -23,6 +23,30 @@ describe "static_files" do
     expect(last_response.status).to eql(404)
   end
 
+  it "returns a deep directory listing" do
+    get "/static_files/static-dir"
+    expect(last_response).to be_ok
+    parsed = last_response_parsed
+    expected = [
+      { "extname" => ".txt", "path" => "/static-dir/file.txt" },
+      { "extname" => ".txt", "path" => "/static-dir/b/file2.txt" }
+    ]
+    expected.each do |static_file|
+      expect(parsed.find do |parsed_static_file|
+        static_file_equals(parsed_static_file, static_file)
+      end).not_to eql(nil)
+    end
+  end
+
+  it "returns a directory listing starting only at the root" do
+    get "/static_files/static-dir/b"
+    expect(last_response).to be_ok
+    expected = { "extname" => ".txt", "path" => "/static-dir/b/file2.txt" }
+    expect(last_response_parsed.find do |parsed_static_file|
+      static_file_equals(parsed_static_file, expected)
+    end).not_to eql(nil)
+  end
+
   it "writes a static file" do
     path = File.expand_path "static-file-new.txt", fixture_path("site")
     File.delete(path) if File.exist?(path)
@@ -33,6 +57,23 @@ describe "static_files" do
     expect(last_response).to be_ok
     expect(last_response_parsed["extname"]).to eql(".txt")
     expect(last_response_parsed["path"]).to eql("/static-file-new.txt")
+
+    File.delete(path)
+  end
+
+  it "deeply writes a static file" do
+    path = File.expand_path(
+      File.join("static-dir", "file-new.txt"),
+      fixture_path("site")
+    )
+    File.delete(path) if File.exist?(path)
+
+    request = { :body => "test" }
+    put '/static_files/static-dir/file-new.txt', request.to_json
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed["extname"]).to eql(".txt")
+    expect(last_response_parsed["path"]).to eql("/static-dir/file-new.txt")
 
     File.delete(path)
   end
