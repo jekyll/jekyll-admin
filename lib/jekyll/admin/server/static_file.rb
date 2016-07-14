@@ -44,7 +44,7 @@ module Jekyll
 
         def static_file
           file = static_files.find { |f| f.path == static_file_path }
-          if not file
+          if !file
             file_list = static_files.select do |f|
               # Files that are in this directory
               # Joined with / to ensure user can't do partial paths
