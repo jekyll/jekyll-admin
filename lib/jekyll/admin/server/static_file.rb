@@ -49,11 +49,15 @@ module Jekyll
         def static_file
           file = static_files.find { |f| f.path == static_file_path }
           if not file
-            static_files.select do |f|
+            file_list = static_files.select do |f|
               # Files that are in this directory
               # Joined with / to ensure user can't do partial paths
               f.path.start_with? File.join(static_file_path, "/")
             end.map(&:to_liquid)
+            if file_list == []
+              nil
+            else
+              file_list
           else
             file
           end
