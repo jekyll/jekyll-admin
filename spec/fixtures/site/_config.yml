@@ -1,4 +1,7 @@
----
+title: Your awesome title
+collections:
+  test:
+    output: true
 gems:
 - jekyll/admin
 exclude:
