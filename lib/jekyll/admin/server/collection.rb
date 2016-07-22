@@ -13,13 +13,13 @@ module Jekyll
 
         get "/:collection_id/documents" do
           ensure_collection
-          json collection.docs.map { |doc| document_without_front_matter_defaults(doc).to_liquid }
+          json collection.docs.map { |doc| document_for_api(doc).to_liquid }
         end
 
         get "/:collection_id/*" do
           ensure_document
           content_type :json
-          document_without_front_matter_defaults.to_liquid.to_json
+          document_for_api.to_liquid.to_json
         end
 
         put "/:collection_id/*" do
@@ -27,7 +27,7 @@ module Jekyll
           File.write document_path, document_body
           site.process
           content_type :json
-          document_without_front_matter_defaults.to_liquid.to_json
+          document_for_api.to_liquid.to_json
         end
 
         delete "/:collection_id/*" do
@@ -66,19 +66,24 @@ module Jekyll
           render_404 if document.nil?
         end
 
-        # Returns the document without front matter defaults by
-        # Recalculating @data using a modified version of Document#read,
-        # but without first setting the defaults
-        def document_without_front_matter_defaults(original_doc = document)
+        # Returns a document suitable for to_liquid being called on for the API
+        # The document will be the document as seen by Jekyll, but:
+        #  1. without front matter defaults by
+        #  2. With a `raw_content` field added
+        def document_for_api(original_doc = document)
           doc = original_doc.dup
           doc.instance_variable_set "@data", {}
 
           # If the file has YAML front matter, read it in
           content = File.read(doc.path, Utils.merged_file_read_opts(site, {}))
           if content =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
+            content = $POSTMATCH
             data_file = SafeYAML.load(Regexp.last_match(1))
             doc.merge_data!(data_file, :source => "YAML front matter") if data_file
           end
+
+          # Return the unrendered markdown, see https://git.io/vKDTG
+          doc.merge_data!({ "raw_content" => content }, :source => "Jekyll Admin")
 
           # Set date, title, slug, extension, etc.
           doc.post_read
