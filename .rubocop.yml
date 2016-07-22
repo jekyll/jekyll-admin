@@ -3,4 +3,4 @@ inherit_gem:
 
 AllCops:
   Exclude:
-    - lib/jekyll/admin/public/**/*
+    - lib/jekyll-admin/public/**/*

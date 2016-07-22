@@ -1,5 +1,5 @@
 module Jekyll
-  module Admin
+  module JekyllAdmin
     class Server < Sinatra::Base
       namespace "/configuration" do
         get do

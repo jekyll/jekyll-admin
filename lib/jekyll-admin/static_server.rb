@@ -1,5 +1,5 @@
 module Jekyll
-  module Admin
+  module JekyllAdmin
     class StaticServer < Sinatra::Base
       set :public_dir, File.expand_path("./public/dist", File.dirname(__FILE__))
 

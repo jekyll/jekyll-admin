@@ -1,5 +1,5 @@
 module Jekyll
-  module Admin
+  module JekyllAdmin
     class Server < Sinatra::Base
       ROUTES = %w(collections configuration data pages static_files).freeze
 
@@ -31,7 +31,7 @@ module Jekyll
       private
 
       def site
-        Jekyll::Admin.site
+        Jekyll::JekyllAdmin.site
       end
 
       def render_404
@@ -52,7 +52,7 @@ module Jekyll
       end
 
       def sanitized_path(questionable_path)
-        Jekyll.sanitized_path Jekyll::Admin.site.source, questionable_path
+        Jekyll.sanitized_path Jekyll::JekyllAdmin.site.source, questionable_path
       end
 
       def document_body

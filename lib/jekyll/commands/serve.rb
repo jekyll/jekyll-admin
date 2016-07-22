@@ -22,8 +22,8 @@ module Jekyll
           # otherwise specified by the `RACK_ENV` environmental variable
           ENV["RACK_ENV"] = "production" if ENV["RACK_ENV"].to_s.empty?
 
-          server.mount "/admin", Rack::Handler::WEBrick, Jekyll::Admin::StaticServer
-          server.mount "/_api",  Rack::Handler::WEBrick, Jekyll::Admin::Server
+          server.mount "/admin", Rack::Handler::WEBrick, Jekyll::JekyllAdmin::StaticServer
+          server.mount "/_api",  Rack::Handler::WEBrick, Jekyll::JekyllAdmin::Server
         end
       end
     end

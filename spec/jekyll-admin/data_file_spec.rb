@@ -2,7 +2,7 @@ describe "data" do
   include Rack::Test::Methods
 
   def app
-    Jekyll::Admin::Server
+    Jekyll::JekyllAdmin::Server
   end
 
   it "gets the index" do
@@ -46,7 +46,7 @@ describe "data" do
     path = File.expand_path "_data/data_file_delete.yml", fixture_path("site")
     File.delete(path) if File.exist?(path)
     File.write path, "foo: bar"
-    Jekyll::Admin.site.process
+    Jekyll::JekyllAdmin.site.process
 
     delete '/data/data_file_delete'
     expect(last_response).to be_ok

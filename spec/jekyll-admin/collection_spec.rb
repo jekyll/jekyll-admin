@@ -2,15 +2,15 @@ describe "collections" do
   include Rack::Test::Methods
 
   def app
-    Jekyll::Admin::Server
+    Jekyll::JekyllAdmin::Server
   end
 
   before(:each) do
-    Jekyll::Admin.site.process
+    Jekyll::JekyllAdmin.site.process
   end
 
   after(:each) do
-    Jekyll::Admin.site.process
+    Jekyll::JekyllAdmin.site.process
   end
 
   it "returns the collection index" do
@@ -127,7 +127,7 @@ describe "collections" do
     path = File.expand_path "_posts/2016-01-01-test2.md", fixture_path("site")
     File.delete(path) if File.exist?(path)
     File.write path, "---\n---\n\ntest"
-    Jekyll::Admin.site.process
+    Jekyll::JekyllAdmin.site.process
     delete '/collections/posts/2016-01-01-test2.md'
     expect(last_response).to be_ok
     expect(File.exist?(path)).to eql(false)

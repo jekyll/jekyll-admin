@@ -1,5 +1,5 @@
 require 'rspec'
-require 'jekyll/admin'
+require 'jekyll-admin'
 require 'rack/test'
 
 ENV['RACK_ENV'] = 'test'

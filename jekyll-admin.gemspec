@@ -1,11 +1,11 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'jekyll/admin/version'
+require 'jekyll-admin/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-admin"
-  spec.version       = Jekyll::Admin::VERSION
+  spec.version       = Jekyll::JekyllAdmin::VERSION
   spec.authors       = ["Ankur Singh"]
   spec.email         = ["ankur13019@iiitd.ac.in"]
 
