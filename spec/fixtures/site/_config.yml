@@ -16,4 +16,6 @@ defaults:
       some_front_matter: "default"
 
 collections:
-  - puppies
+  puppies:
+    foo: bar
+    output: true
