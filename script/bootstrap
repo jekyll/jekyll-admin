@@ -5,10 +5,5 @@ set -e
 script/branding
 script/return-to-pwd
 bundle install
-<<<<<<< HEAD
 cd ./lib/jekyll-admin/public || exit
-npm install -g json-server
-=======
-cd ./lib/jekyll/admin/public || exit
->>>>>>> master
 npm install
