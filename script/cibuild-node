@@ -5,5 +5,5 @@ set -e
 script/return-to-pwd
 
 echo "Running Node tests..."
-cd ./lib/jekyll/admin/public || exit
+cd ./lib/jekyll-admin/public || exit
 npm test
