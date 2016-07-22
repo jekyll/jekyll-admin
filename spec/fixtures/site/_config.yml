@@ -6,3 +6,10 @@ exclude:
 - Gemfile.lock
 - README.md
 foo: bar
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      some_front_matter: "default"
