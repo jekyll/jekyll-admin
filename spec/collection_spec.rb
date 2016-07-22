@@ -39,6 +39,11 @@ describe "collections" do
     expect(last_response).to be_ok
     expect(last_response_parsed["title"]).to eq('Test')
   end
+  
+  it "doesn't contain front matter defaults" do
+    get '/collections/posts/2016-01-01-test.md'
+    expect(last_response_parsed.key?("some_front_matter")).to eql(false)
+  end
 
   it "404s for an unknown document" do
     get '/collections/posts/foo'

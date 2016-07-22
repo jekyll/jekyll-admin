@@ -19,7 +19,7 @@ module Jekyll
         get "/:collection_id/*" do
           ensure_document
           content_type :json
-          document.to_liquid.to_json
+          document_without_frontmatter_defaults.to_liquid.to_json
         end
 
         put "/:collection_id/*" do
@@ -27,7 +27,7 @@ module Jekyll
           File.write document_path, document_body
           site.process
           content_type :json
-          document.to_liquid.to_json
+          document_without_frontmatter_defaults.to_liquid.to_json
         end
 
         delete "/:collection_id/*" do
@@ -64,6 +64,19 @@ module Jekyll
         def ensure_document
           ensure_collection
           render_404 if document.nil?
+        end
+
+        def document_without_frontmatter_defaults(opts = {})
+          doc = document.dup
+          contents = File.read(document.path, Utils.merged_file_read_opts(site, opts))
+
+          if contents =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
+            doc.instance_variable_set "@data", SafeYAML.load(Regexp.last_match(1))
+          else
+            doc.data = {}
+          end
+
+          doc
         end
       end
     end
