@@ -16,3 +16,6 @@ defaults:
       path: ""
     values:
       some_front_matter: "default"
+
+collections:
+  - puppies
