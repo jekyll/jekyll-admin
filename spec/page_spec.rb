@@ -25,6 +25,11 @@ describe "pages" do
     expect(last_response_parsed["foo"]).to eq('bar')
   end
 
+  it "doesn't contain front matter defaults" do
+    get "/pages/page.md"
+    expect(last_response_parsed.key?("some_front_matter")).to eql(false)
+  end
+
   it "404s for an unknown page" do
     get "/pages/foo.md"
     expect(last_response.status).to eql(404)
