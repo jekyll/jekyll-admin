@@ -19,7 +19,7 @@ module Jekyll
         get "/:collection_id/*" do
           ensure_document
           content_type :json
-          document_without_frontmatter_defaults.to_liquid.to_json
+          document_without_front_matter_defaults.to_liquid.to_json
         end
 
         put "/:collection_id/*" do
@@ -27,7 +27,7 @@ module Jekyll
           File.write document_path, document_body
           site.process
           content_type :json
-          document_without_frontmatter_defaults.to_liquid.to_json
+          document_without_front_matter_defaults.to_liquid.to_json
         end
 
         delete "/:collection_id/*" do
@@ -66,15 +66,26 @@ module Jekyll
           render_404 if document.nil?
         end
 
-        def document_without_frontmatter_defaults(opts = {})
+        # Returns the document without front matter defaults by
+        # Recalculating @data using a modified version of Document#read,
+        # but without first setting the defaults
+        def document_without_front_matter_defaults(opts = {})
           doc = document.dup
-          contents = File.read(document.path, Utils.merged_file_read_opts(site, opts))
+          doc.instance_variable_set "@data", {}
 
-          if contents =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
-            doc.instance_variable_set "@data", SafeYAML.load(Regexp.last_match(1))
-          else
-            doc.data = {}
+          # If the file has YAML front matter, read it in
+          content = File.read(document.path, Utils.merged_file_read_opts(site, opts))
+          if content =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
+            data_file = SafeYAML.load(Regexp.last_match(1))
+            doc.merge_data!(data_file, :source => "YAML front matter") if data_file
           end
+
+          # Set date, title, slug, extension, etc.
+          doc.post_read
+
+          # Unless we explicitly create the drop, the resulting drop will be based on the
+          # original document, not the duplicated one, due to Ruby strangeness
+          doc.instance_variable_set "@to_liquid", Drops::DocumentDrop.new(doc)
 
           doc
         end
