@@ -1,0 +1,166 @@
+@import 'variables';
+
+.content-table {
+  table {
+    width: 100%;
+    background-color: #f2f2f2;
+    margin: .5em 0;
+    font-size: 18px;
+    @include border-radius(5px);
+    @include box-shadow(0 1px 3px rgba(0,0,0,.3));
+  }
+
+  thead {
+    @include border-top-left-radius(5px);
+    @include border-top-right-radius(5px);
+    color: #fff;
+    background-color: #3a3a3a;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#3a3a3a), to(#1e1e1e));
+    background-image: -webkit-linear-gradient(top, #3a3a3a 0%, #1e1e1e 100%);
+    background-image: -moz-linear-gradient(top, #3a3a3a 0%, #1e1e1e 100%);
+    background-image: -o-linear-gradient(top, #3a3a3a 0%, #1e1e1e 100%);
+    background-image: linear-gradient(to bottom, #3a3a3a 0%,#1e1e1e 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3a3a', endColorstr='#1e1e1e',GradientType=0 );
+
+    th {
+      text-align: left;
+      position: relative;
+      @include box-shadow(inset 0 1px 0 rgba(255,255,255,.1));
+
+      &:first-child {
+        @include border-top-left-radius(5px);
+      }
+
+      &:last-child {
+        @include border-top-right-radius(5px);
+      }
+    }
+  }
+
+  tbody tr:hover {
+    background-color: #f9f9f9;
+  }
+
+  th {
+    text-transform: uppercase;
+    font-size: 16px;
+    padding: .5em .75em;
+    text-shadow: 0 -1px 0 rgba(0,0,0,.9);
+    color: #888;
+  }
+
+  tbody td {
+    padding: 20px 12px;
+    vertical-align: top;
+    border-top: 1px solid rgba(0,0,0,.1);
+    @include box-shadow(inset 0 1px 0 rgba(255,255,255,.1));
+    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.1)), to(rgba(255,255,255,0)));
+    background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    background-image: -moz-linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    background-image: -o-linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.1) 0%,rgba(255,255,255,0) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1affffff', endColorstr='#00ffffff',GradientType=0 );
+  }
+
+  td.row-title {
+    .row-actions {
+      float: right;
+      font-size: 17px;
+      a {
+        padding-right: 8px;
+        &:hover {
+          color: $orange;
+        }
+        &:not(:last-child):after {
+          padding-left: 8px;
+          content: "|";
+        }
+      }
+    }
+    strong a {
+      font-size: 18px;
+      color: #444;
+      &:hover {
+        color: $dark-orange;
+      }
+    }
+  }
+}
+
+.content {
+  padding: 40px;
+
+  .content-header {
+    display: flex;
+    align-items: center;
+    margin: 0 0 35px 0;
+    h1 {
+      margin: 0 40px 0 0;
+      float: left;
+      text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.3);
+    }
+    .page-buttons {
+      display: flex;
+    }
+  }
+
+  .content-wrapper {
+    display: flex;
+    .content-body {
+      width: 100%;
+    }
+    .content-side {
+      width: $content-side-width;
+      margin-left: 40px;
+      font-size: 16px;
+      .side-unit {
+        margin-bottom: 20px;
+      }
+      .delete-link {
+        color: #cf3f3f;
+        font-size: 16px;
+        display: inline-block;
+        float: right;
+        padding: 10px 0;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      .side-link {
+        text-align: center;
+        @include border-radius(4px);
+        margin-bottom: 10px;
+        border: 1px dashed $border-color;
+        width: 100%;
+        @include box-sizing(border-box);
+        display: inline-block;
+        padding: 6px 2px;
+        margin-bottom: 10px;
+        font-weight: 300;
+      }
+      .side-link.options {
+        color: $dark-orange;
+        border: 1px dashed #f3cf9a;
+      }
+      .side-link.delete {
+        color: $dark-red;
+        border: 1px dashed #ffa7a7;
+        @include transition(background 0.3s ease);
+        &:hover {
+          color: white;
+          background-color: $dark-red;
+          border-style: solid;
+        }
+      }
+    }
+  }
+  .error-messages {
+    color: $dark-red;
+    padding: 0 10px 0 20px;
+    margin-bottom: 40px;
+    font-size: 18px;
+    li{
+      padding: 10px 0;
+    }
+  }
+}
