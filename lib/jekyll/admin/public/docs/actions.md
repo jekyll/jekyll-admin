@@ -21,8 +21,9 @@ Async action for fetching an array of page objects.
 ### `fetchPage(id)`
 Async action for fetching the requested page.
 
-### `postPage(id, page)`
-Async action for creating/updating the requested page.
+### `putPage(id)`
+Async action for creating/updating the requested page. The updated content comes
+from `state.metadata`
 
 ### `deletePage(id)`
 Async action for deleting the requested page.
@@ -37,22 +38,22 @@ Async action for fetching an array of the registered collections (including post
 Async action for fetching information about the requested collection
 
 ### `fetchDocuments(collection_name)`
-Async action for fetching an array of document objects corresponding to the requested collection. The response does not include the document body.
+Async action for fetching an array of documents corresponding to the requested collection. The response does not include the document body.
 
 ### `fetchDocument(collection_name, id)`
 Async action for fetching the requested document. The response includes the document body.
 
-### `postDocument(id, doc)`
-Async action for creating/updating the requested document. The response includes the document body.
+### `putDocument(collection_name, id)`
+Async action for creating/updating the requested document. The response includes the document body. The updated content comes from `state.metadata`
 
-### `deleteDocument(id)`
-Async action for deleting the collection from disk.
+### `deleteDocument(collection_name, id)`
+Async action for deleting the document from disk.
 
 
 ## Metadata
 
 ### `storeContentFields(meta)`
-Action that adds the current document's meta to redux store.
+Action that puts the current document's meta in the redux store.
 
 ### `addField(namePrefix)`
 Action that adds empty value to given path in metadata.
@@ -86,13 +87,14 @@ Updates the content path when the input changes.
 ### `updateDraft(isDraft)`
 Updates the content visibility when the checkbox changes.
 
+
 ## Utils
 
 ### `searchByTitle(input)`
 Action for storing search input from the user
 
-### `validated()`
-Action for clearing errors if any.
-
 ### `validationError(errors)`
 Action for storing form errors.
+
+### `clearErrors()`
+Action for clearing form errors if any.

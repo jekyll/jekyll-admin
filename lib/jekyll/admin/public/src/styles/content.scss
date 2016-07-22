@@ -41,10 +41,6 @@
     background-color: #f9f9f9;
   }
 
-  tbody tr:hover .row-actions{
-    position: static;
-  }
-
   th {
     text-transform: uppercase;
     font-size: 16px;
@@ -54,7 +50,7 @@
   }
 
   tbody td {
-    padding: 15px 12px;
+    padding: 20px 12px;
     vertical-align: top;
     border-top: 1px solid rgba(0,0,0,.1);
     @include box-shadow(inset 0 1px 0 rgba(255,255,255,.1));
@@ -68,22 +64,21 @@
 
   td.row-title {
     .row-actions {
-      position: relative;
-      left: -9999em;
-      padding-top: 5px;
-      font-size: 16px;
+      float: right;
+      font-size: 17px;
       a {
-        padding-right: 3px;
+        padding-right: 8px;
         &:hover {
           color: $orange;
         }
         &:not(:last-child):after {
-          padding-left: 3px;
+          padding-left: 8px;
           content: "|";
         }
       }
     }
     strong a {
+      font-size: 18px;
       color: #444;
       &:hover {
         color: $dark-orange;
