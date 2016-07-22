@@ -48,7 +48,6 @@ describe "collections" do
 
   it "doesn't contain front matter defaults" do
     get '/collections/posts/2016-01-01-test.md'
-    pending "Front matter for posts not yet implemented"
     expect(last_response_parsed.key?("some_front_matter")).to eql(false)
   end
 
