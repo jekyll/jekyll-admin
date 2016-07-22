@@ -13,7 +13,7 @@ module Jekyll
 
         get "/:collection_id/documents" do
           ensure_collection
-          json collection.docs.map(&:to_liquid)
+          json collection.docs.map { |doc| document_without_front_matter_defaults(doc).to_liquid }
         end
 
         get "/:collection_id/*" do
@@ -69,12 +69,12 @@ module Jekyll
         # Returns the document without front matter defaults by
         # Recalculating @data using a modified version of Document#read,
         # but without first setting the defaults
-        def document_without_front_matter_defaults(opts = {})
-          doc = document.dup
+        def document_without_front_matter_defaults(original_doc = document)
+          doc = original_doc.dup
           doc.instance_variable_set "@data", {}
 
           # If the file has YAML front matter, read it in
-          content = File.read(document.path, Utils.merged_file_read_opts(site, opts))
+          content = File.read(doc.path, Utils.merged_file_read_opts(site, {}))
           if content =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
             data_file = SafeYAML.load(Regexp.last_match(1))
             doc.merge_data!(data_file, :source => "YAML front matter") if data_file
