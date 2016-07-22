@@ -20,7 +20,9 @@ describe "collections" do
   it "returns collection documents" do
     get '/collections/posts/documents'
     expect(last_response).to be_ok
-    expect(last_response_parsed.first["title"]).to eq('Test')
+    first_document = last_response_parsed.first
+    expect(first_document["title"]).to eq('Test')
+    expect(first_document.key?("some_front_matter")).to eq(false)
   end
 
   it "404s for an unknown collection" do
