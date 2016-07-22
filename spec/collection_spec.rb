@@ -34,8 +34,21 @@ describe "collections" do
     expect(last_response_parsed["title"]).to eq('Test')
   end
 
+  it "returns a collection document using the slashed ID" do
+    get '/collections/posts/2016/01/01/test.md'
+    expect(last_response).to be_ok
+    expect(last_response_parsed["title"]).to eq('Test')
+  end
+
+  it "returns a non-dated document" do
+    get '/collections/puppies/rover.md'
+    expect(last_response).to be_ok
+    expect(last_response_parsed["breed"]).to eq('Golden Retriever')
+  end
+
   it "doesn't contain front matter defaults" do
     get '/collections/posts/2016-01-01-test.md'
+    pending "Front matter for posts not yet implemented"
     expect(last_response_parsed.key?("some_front_matter")).to eql(false)
   end
 

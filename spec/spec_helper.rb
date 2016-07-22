@@ -2,6 +2,8 @@ require 'rspec'
 require 'jekyll/admin'
 require 'rack/test'
 
+ENV['RACK_ENV'] = 'test'
+
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
 end
@@ -14,6 +16,6 @@ def last_response_parsed
   JSON.parse(last_response.body)
 end
 
-config = Jekyll::Configuration.from(:source => fixture_path("site"))
+config = Jekyll.configuration("source" => fixture_path("site"))
 site = Jekyll::Site.new(config)
 site.process
