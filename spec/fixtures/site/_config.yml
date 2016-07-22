@@ -1,10 +1,11 @@
----
 gems:
-- jekyll/admin
+  - jekyll/admin
+
 exclude:
-- Gemfile
-- Gemfile.lock
-- README.md
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+
 foo: bar
 
 defaults:
