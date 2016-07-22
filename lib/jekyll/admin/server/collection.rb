@@ -16,13 +16,13 @@ module Jekyll
           json collection.docs.map(&:to_liquid)
         end
 
-        get "/:collection_id/:document_id" do
+        get "/:collection_id/*" do
           ensure_document
           content_type :json
           document.to_liquid.to_json
         end
 
-        put "/:collection_id/:document_id" do
+        put "/:collection_id/*" do
           ensure_collection
           File.write document_path, document_body
           site.process
@@ -30,7 +30,7 @@ module Jekyll
           document.to_liquid.to_json
         end
 
-        delete "/:collection_id/:document_id" do
+        delete "/:collection_id/*" do
           ensure_document
           File.delete document_path
           content_type :json
@@ -45,8 +45,12 @@ module Jekyll
           collection[1] if collection
         end
 
+        def document_id
+          params["splat"].first.gsub(%r!(\d{4})/(\d{2})/(\d{2})/(.*)!, '\1-\2-\3-\4')
+        end
+
         def document_path
-          sanitized_path File.join(collection.directory, params["document_id"])
+          sanitized_path File.join(collection.directory, document_id)
         end
 
         def document
