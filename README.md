@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/jekyll/jekyll-admin.svg?branch=master)](https://travis-ci.org/jekyll/jekyll-admin)
 
+**NOTE**: jekyll-admin is not ready to be used in Jekyll yet. It will be anounced when this gem can be used with any Jekyll-powered blog properly on Jekyll's official blog.
+
 A Jekyll plugin that provides users with a traditional CMS-style graphical interface to author content and administer Jekyll sites. The project is divided into two parts. A Ruby-based HTTP API that handles Jekyll and filesystem operations, and a Javascript-based front end, built on that API.
 
 ## Installation
