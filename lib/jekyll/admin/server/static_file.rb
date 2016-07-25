@@ -42,14 +42,19 @@ module Jekyll
           site.static_files
         end
 
+        def file_list_dir(path)
+          static_files.select do |f|
+            # Files that are in this directory
+            # Joined with / to ensure user can't do partial paths
+            f.path.start_with? File.join(path, "/")
+          end.map(&:to_liquid)
+        end
+
         def static_file
-          file = static_files.find { |f| f.path == static_file_path }
+          requested_path = static_file_path
+          file = static_files.find { |f| f.path == requested_path }
           if !file
-            file_list = static_files.select do |f|
-              # Files that are in this directory
-              # Joined with / to ensure user can't do partial paths
-              f.path.start_with? File.join(static_file_path, "/")
-            end.map(&:to_liquid)
+            file_list = file_list_dir requested_path
             if file_list == []
               nil
             else
