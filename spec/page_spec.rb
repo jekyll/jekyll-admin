@@ -13,21 +13,49 @@ describe "pages" do
     Jekyll::Admin.site.process
   end
 
-  it "lists pages" do
-    get "/pages"
-    expect(last_response).to be_ok
-    expect(last_response_parsed.last["name"]).to eq('page.md')
+  context "page index" do
+    it "lists pages" do
+      get "/pages"
+      expect(last_response).to be_ok
+      expect(last_response_parsed.last["name"]).to eq('page.md')
+    end
+
+    it "doesn't include front matter defaults" do
+      get "/pages"
+      expect(last_response).to be_ok
+      expect(last_response_parsed.first.key?("some_front_matter")).to eq(false)
+    end
   end
 
-  it "returns a page" do
-    get "/pages/page.md"
-    expect(last_response).to be_ok
-    expect(last_response_parsed["foo"]).to eq('bar')
-  end
+  context "getting a single page" do
+    it "returns a page" do
+      get "/pages/page.md"
+      expect(last_response).to be_ok
+      expect(last_response_parsed["foo"]).to eq('bar')
+    end
 
-  it "404s for an unknown page" do
-    get "/pages/foo.md"
-    expect(last_response.status).to eql(404)
+    it "returns the rendered output" do
+      get "/pages/page.md"
+      expect(last_response).to be_ok
+      expected = "<h1 id=\"test-page\">Test Page</h1>\n"
+      expect(last_response_parsed["content"]).to eq(expected)
+    end
+
+    it "returns the raw content" do
+      get "/pages/page.md"
+      expect(last_response).to be_ok
+      expect(last_response_parsed["raw_content"]).to eq("# Test Page\n")
+    end
+
+    it "doesn't contain front matter defaults" do
+      get "/pages/page.md"
+      expect(last_response_parsed.key?("some_front_matter")).to eql(false)
+    end
+
+    it "404s for an unknown page" do
+      get "/pages/foo.md"
+      expect(last_response.status).to eql(404)
+    end
   end
 
   it "writes a new page" do

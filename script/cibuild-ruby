@@ -7,5 +7,5 @@ if [ ! -d "./lib/jekyll/admin/public/dist" ]; then
 fi
 
 echo "Running Ruby tests..."
-RACK_ENV=development bundle exec rspec
+RACK_ENV=test JEKYLL_LOG_LEVEL=warn bundle exec rspec
 script/fmt

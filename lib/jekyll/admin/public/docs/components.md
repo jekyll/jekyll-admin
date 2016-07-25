@@ -1,6 +1,7 @@
 # Components
 Presentational components.
 
+
 ## Editor
 Component for simple YAML editor [React Ace editor](https://github.com/securingsincity/react-ace).
 
@@ -13,11 +14,13 @@ Component for simple YAML editor [React Ace editor](https://github.com/securings
 }
 ```
 
+
 ## MarkdownEditor
 Component for markdown editor - [SimpleMDE](https://simplemde.com/).
 
 ** PropTypes **
 Can have [all options of SimpleMDE](https://github.com/NextStepWebs/simplemde-markdown-editor#configuration) as prop types.
+
 
 ## Breadcrumbs
 Component for generating breadcrumbs. First breadcrumb indicates the current content
@@ -26,20 +29,22 @@ type and the second one which is editable is the path of current document.
 ** PropTypes **
 ``` javascript
 {
-  breadcrumbs: [{
-    link: String, // optional
-    text: String
-  }]
+  link: String, // Link to the corresponding content type
+  type: String, // Content type (pages, collections)
+  path: String, // File path
+  onChange: Function // triggered when the path changes
 }
 ```
+
 
 ## Splitter
 Component for divider.
 
+
 ## Content
 
 ### ContentTable
-Generic component for listing contents (Collections, Posts, Pages).
+Generic component for listing contents (Collections, Posts, Pages, Static files).
 
 ** PropTypes **
 ``` javascript
@@ -47,32 +52,22 @@ Generic component for listing contents (Collections, Posts, Pages).
   contentType: String, // (e.g 'posts', 'pages', 'collections')
   columns: Array,
   rows: Array,
-  onClickDelete: Function
-}
-```
-
-### ContentEdit
-Generic component for editing contents (Collections, Posts, Pages).
-
-** PropTypes **
-``` javascript
-{
-  contentType: String,
-  content: Object,
-  updateContent: Function,
+  linkPrefix: String, // link prefix of the current page/document
   deleteContent: Function
-}
 ```
+
 
 ## Form
 
 ### Checkbox
-Checkbox wrapper
+Checkbox component
 
 ** PropTypes **
 ``` javascript
 {
-  text: String
+  text: String,
+  checked: Boolean,
+  onChange: Function
 }
 ```
 
@@ -82,9 +77,21 @@ Editable title component
 ** PropTypes **
 ``` javascript
 {
-  title: String
+  title: String,
+  onChange: Function
 }
 ```
+
+### InputSearch
+Listing view search input
+
+** PropTypes **
+``` javascript
+{
+  searchByTitle: Function
+}
+```
+
 
 ## Metadata
 Set of components for handling documents' front matter(metafields).
