@@ -28,7 +28,7 @@ module Jekyll
         output["raw_content"] = content.to_s
         output["front_matter"] = yaml || {}
 
-        output
+        output.to_h
       end
     end
   end

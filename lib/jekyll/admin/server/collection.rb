@@ -18,16 +18,14 @@ module Jekyll
 
         get "/:collection_id/*" do
           ensure_document
-          content_type :json
-          document.to_api.to_json
+          json document.to_api
         end
 
         put "/:collection_id/*" do
           ensure_collection
           File.write document_path, document_body
           site.process
-          content_type :json
-          document.to_api.to_json
+          json document.to_api
         end
 
         delete "/:collection_id/*" do
