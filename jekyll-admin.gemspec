@@ -6,8 +6,8 @@ require 'jekyll-admin/version'
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-admin"
   spec.version       = JekyllAdmin::VERSION
-  spec.authors       = ["Ankur Singh"]
-  spec.email         = ["ankur13019@iiitd.ac.in"]
+  spec.authors       = ["Mert Kahyaoğlu", "GitHub Open Source"]
+  spec.email         = ["mertkahyaoglu93@gmail.com", "opensource@github.com"]
 
   spec.summary       = %q{wp-admin for Jekyll, but better}
   spec.description   = %q{Jekyll::Admin is a drop in administrative framework for Jekyll sites.}
