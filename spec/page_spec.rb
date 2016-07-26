@@ -20,10 +20,17 @@ describe "pages" do
       expect(last_response_parsed.last["name"]).to eq('page.md')
     end
 
-    it "doesn't include front matter defaults" do
+    it "includes front matter defaults" do
       get "/pages"
       expect(last_response).to be_ok
-      expect(last_response_parsed.first.key?("some_front_matter")).to eq(false)
+      expect(last_response_parsed.first.key?("some_front_matter")).to eq(true)
+    end
+
+    it "incldues the raw front matter" do
+      get "/pages"
+      expect(last_response).to be_ok
+      expect(last_response_parsed.first.key?("front_matter")).to eq(true)
+      expect(last_response_parsed.first["front_matter"]["foo"]).to eq("bar")
     end
   end
 
@@ -47,9 +54,22 @@ describe "pages" do
       expect(last_response_parsed["raw_content"]).to eq("# Test Page\n")
     end
 
-    it "doesn't contain front matter defaults" do
-      get "/pages/page.md"
-      expect(last_response_parsed.key?("some_front_matter")).to eql(false)
+    context "front matter" do
+      it "contains front matter defaults" do
+        get "/pages/page.md"
+        expect(last_response_parsed.key?("some_front_matter")).to eql(true)
+      end
+
+      it "contains raw front matter" do
+        get "/pages/page.md"
+        expect(last_response_parsed.key?("front_matter")).to eql(true)
+        expect(last_response_parsed["front_matter"]["foo"]).to eql("bar")
+      end
+
+      it "raw front matter doesn't include defaults" do
+        get "/pages/page.md"
+        expect(last_response_parsed["front_matter"].key?("some_front_matter")).to eql(false)
+      end
     end
 
     it "404s for an unknown page" do

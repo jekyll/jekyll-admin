@@ -32,10 +32,17 @@ describe "collections" do
       expect(last_response_parsed.first["title"]).to eq('Test')
     end
 
-    it "doesn't include front matter defaults" do
+    it "includes front matter defaults" do
       get '/collections/posts/documents'
       expect(last_response).to be_ok
-      expect(last_response_parsed.first.key?("some_front_matter")).to eq(false)
+      expect(last_response_parsed.first.key?("some_front_matter")).to eq(true)
+    end
+
+    it "include the raw front matter" do
+      get '/collections/posts/documents'
+      expect(last_response).to be_ok
+      expect(last_response_parsed.first.key?("front_matter")).to eq(true)
+      expect(last_response_parsed.first["front_matter"]["foo"]).to eql("bar")
     end
   end
 
@@ -76,9 +83,22 @@ describe "collections" do
       expect(last_response_parsed["raw_content"]).to eq("# Test Post\n")
     end
 
-    it "doesn't contain front matter defaults" do
-      get '/collections/posts/2016-01-01-test.md'
-      expect(last_response_parsed.key?("some_front_matter")).to eql(false)
+    context "front matter" do
+      it "contains front matter defaults" do
+        get '/collections/posts/2016-01-01-test.md'
+        expect(last_response_parsed.key?("some_front_matter")).to eql(true)
+      end
+
+      it "contains raw front matter" do
+        get '/collections/posts/2016-01-01-test.md'
+        expect(last_response_parsed.key?("front_matter")).to eql(true)
+        expect(last_response_parsed["front_matter"]["foo"]).to eql("bar")
+      end
+
+      it "raw front matter doesn't contain defaults" do
+        get '/collections/posts/2016-01-01-test.md'
+        expect(last_response_parsed["front_matter"].key?("some_front_matter")).to eql(false)
+      end
     end
 
     it "404s for an unknown document" do

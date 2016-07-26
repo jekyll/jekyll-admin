@@ -15,8 +15,11 @@ require "jekyll/admin/server/configuration.rb"
 require "jekyll/admin/server/data.rb"
 require "jekyll/admin/server/page.rb"
 require "jekyll/admin/server/static_file.rb"
+require "jekyll/admin/apiable.rb"
+
 require_relative "./commands/serve"
 require_relative "./convertible_ext"
+require_relative "./document_ext"
 
 module Jekyll
   module Admin

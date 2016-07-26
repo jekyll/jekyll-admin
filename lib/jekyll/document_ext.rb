@@ -1,5 +1,5 @@
 module Jekyll
-  module Convertible
+  class Document
     include Jekyll::Admin::APIable
   end
 end
