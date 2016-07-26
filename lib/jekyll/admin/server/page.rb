@@ -12,6 +12,12 @@ module Jekyll
         end
 
         put "/:page_id" do
+          # Rename page
+          if request_payload["path"] && request_payload["path"] != params["page_id"]
+            File.delete page_path
+            params["page_id"] = request_payload["path"]
+          end
+
           File.write page_path, page_body
           site.process
           json page.to_liquid_without_frontmatter_defaults

@@ -59,8 +59,7 @@ describe "pages" do
   end
 
   it "writes a new page" do
-    path = File.expand_path "page-new.md", fixture_path("site")
-    File.delete(path) if File.exist?(path)
+    delete_file "page-new.md"
 
     request = {
       :meta => { :foo => "bar" },
@@ -71,13 +70,11 @@ describe "pages" do
     expect(last_response).to be_ok
     expect(last_response_parsed["foo"]).to eq('bar')
 
-    File.delete(path)
+    delete_file "page-new.md"
   end
 
   it "updates a page" do
-    path = File.expand_path "page-update.md", fixture_path("site")
-    File.delete(path) if File.exist?(path)
-    File.write path, "---\n---\n\ntest"
+    write_file "page-update.md"
 
     request = {
       :meta => { :foo => "bar2" },
@@ -88,15 +85,32 @@ describe "pages" do
     expect(last_response).to be_ok
     expect(last_response_parsed["foo"]).to eq('bar2')
 
-    File.delete(path)
+    delete_file "page-update.md"
+  end
+
+  it "renames a page" do
+    write_file  "page-rename.md"
+    delete_file "page-renamed.md"
+
+    request = {
+      :path => "page-renamed.md",
+      :meta => { :foo => "bar" },
+      :body => "test"
+    }
+
+    put '/pages/page-rename.md', request.to_json
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq('bar')
+
+    get '/pages/page-renamed.md'
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq('bar')
+
+    delete_file "page-rename.md", "page-renamed.md"
   end
 
   it "deletes a page" do
-    path = File.expand_path "page-delete.md", fixture_path("site")
-    File.delete(path) if File.exist?(path)
-    File.write path, "---\n---\n\ntest"
-    Jekyll::Admin.site.process
-
+    path = write_file "page-delete.md"
     delete '/pages/page-delete.md'
     expect(last_response).to be_ok
     expect(File.exist?(path)).to eql(false)

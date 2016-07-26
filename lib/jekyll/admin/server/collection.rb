@@ -24,6 +24,13 @@ module Jekyll
 
         put "/:collection_id/*" do
           ensure_collection
+
+          # Rename page
+          if request_payload["path"] && request_payload["path"] != params["splat"].first
+            File.delete document_path
+            params["splat"] = [request_payload["path"]]
+          end
+
           File.write document_path, document_body
           site.process
           content_type :json

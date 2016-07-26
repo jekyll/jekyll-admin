@@ -18,37 +18,32 @@ describe "data" do
   end
 
   it "writes a new data file" do
-    path = File.expand_path "_data/data-file-new.yml", fixture_path("site")
-    File.delete(path) if File.exist?(path)
+    delete_file "_data/data-file-new.yml"
 
     request = { "foo" => "bar" }
     put '/data/data-file-new', request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql({ "foo" => "bar" })
-    File.delete(path)
+
+    delete_file "_data/data-file-new.yml"
   end
 
   it "updates a data file" do
-    path = File.expand_path "_data/data-file-update.yml", fixture_path("site")
-    File.delete(path) if File.exist?(path)
-    File.write path, "foo2: bar2"
+    write_file "_data/data-file-update.yml", "foo2: bar2"
 
     request = { "foo" => "bar2" }
     put '/data/data-file-update', request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql({ "foo" => "bar2" })
-    File.delete(path)
+
+    delete_file "_data/data-file-update.yml"
   end
 
   it "deletes a data file" do
-    path = File.expand_path "_data/data_file_delete.yml", fixture_path("site")
-    File.delete(path) if File.exist?(path)
-    File.write path, "foo: bar"
-    Jekyll::Admin.site.process
-
-    delete '/data/data_file_delete'
+    path = write_file "_data/data-file-delete.yml", "foo2: bar2"
+    delete '/data/data-file-delete'
     expect(last_response).to be_ok
     expect(File.exist?(path)).to eql(false)
   end
