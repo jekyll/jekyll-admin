@@ -10,9 +10,9 @@ describe Jekyll::Admin::APIable do
         end
       end
 
-      let(:liquid) { subject.to_liquid }
-      let(:raw_content)  { subject.to_api["raw_content"] }
-      let(:front_matter) { subject.to_api["front_matter"] }
+      let(:as_api) { subject.to_api }
+      let(:raw_content)  { as_api["raw_content"] }
+      let(:front_matter) { as_api["front_matter"] }
 
       it "is responds to to_api" do
         expect(subject).to respond_to(:to_api)
@@ -33,8 +33,8 @@ describe Jekyll::Admin::APIable do
       end
 
       it "includes front matter defaults" do
-        expect(liquid).to have_key("some_front_matter")
-        expect(liquid["some_front_matter"]).to eql("default")
+        expect(as_api).to have_key("some_front_matter")
+        expect(as_api["some_front_matter"]).to eql("default")
       end
     end
   end
