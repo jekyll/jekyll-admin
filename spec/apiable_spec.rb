@@ -28,11 +28,11 @@ describe Jekyll::Admin::APIable do
         expect(front_matter["foo"]).to eql("bar")
       end
 
-      it "doesn't include front matter defaults" do
+      it "doesn't include front matter defaults in the raw front matter" do
         expect(front_matter).to_not have_key("some_front_matter")
       end
 
-      it "includes front matter defaults" do
+      it "includes front matter defaults as top-level keys" do
         expect(as_api).to have_key("some_front_matter")
         expect(as_api["some_front_matter"]).to eql("default")
       end
