@@ -16,10 +16,12 @@ require "jekyll-admin/server/configuration.rb"
 require "jekyll-admin/server/data.rb"
 require "jekyll-admin/server/page.rb"
 require "jekyll-admin/server/static_file.rb"
+require "jekyll-admin/apiable.rb"
 
-# Monkey Patche
+# Monkey Patches
 require_relative "./jekyll/commands/serve"
 require_relative "./jekyll/convertible_ext"
+require_relative "./jekyll/document_ext"
 
 module Jekyll
   module JekyllAdmin
