@@ -5,7 +5,7 @@ require 'jekyll-admin/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-admin"
-  spec.version       = Jekyll::JekyllAdmin::VERSION
+  spec.version       = JekyllAdmin::VERSION
   spec.authors       = ["Ankur Singh"]
   spec.email         = ["ankur13019@iiitd.ac.in"]
 

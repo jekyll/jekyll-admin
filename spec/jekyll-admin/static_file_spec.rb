@@ -2,7 +2,7 @@ describe "static_files" do
   include Rack::Test::Methods
 
   def app
-    Jekyll::JekyllAdmin::Server
+    JekyllAdmin::Server
   end
 
   it "returns the index" do
@@ -123,7 +123,7 @@ describe "static_files" do
     )
     File.delete(path) if File.exist?(path)
     File.write path, "test"
-    Jekyll::JekyllAdmin.site.process
+    JekyllAdmin.site.process
 
     delete '/static_files/static-dir/static-file-delete.txt'
     expect(last_response).to be_ok

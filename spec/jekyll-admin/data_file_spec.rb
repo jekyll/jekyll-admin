@@ -2,7 +2,7 @@ describe "data" do
   include Rack::Test::Methods
 
   def app
-    Jekyll::JekyllAdmin::Server
+    JekyllAdmin::Server
   end
 
   it "gets the index" do

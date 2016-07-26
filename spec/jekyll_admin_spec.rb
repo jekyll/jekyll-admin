@@ -1,4 +1,4 @@
-describe Jekyll::JekyllAdmin do
+describe JekyllAdmin do
   include Rack::Test::Methods
 
   it "returns the site" do

@@ -1,8 +1,8 @@
-describe Jekyll::JekyllAdmin::StaticServer do
+describe JekyllAdmin::StaticServer do
   include Rack::Test::Methods
 
   def app
-    Jekyll::JekyllAdmin::StaticServer
+    JekyllAdmin::StaticServer
   end
 
   it "returns the index" do

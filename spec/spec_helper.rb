@@ -35,7 +35,7 @@ def delete_file(*paths)
     path = File.expand_path path, fixture_path("site")
     File.delete(path) if File.exist?(path)
   end
-  Jekyll::JekyllAdmin.site.process
+  JekyllAdmin.site.process
 end
 
 # Writes a file to path
@@ -48,7 +48,7 @@ def write_file(path, content = "---\n---\n\n# test")
   delete_file path
   path = File.expand_path path, fixture_path("site")
   File.write path, content
-  Jekyll::JekyllAdmin.site.process
+  JekyllAdmin.site.process
   path
 end
 

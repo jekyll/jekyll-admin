@@ -23,10 +23,8 @@ require_relative "./jekyll/commands/serve"
 require_relative "./jekyll/convertible_ext"
 require_relative "./jekyll/document_ext"
 
-module Jekyll
-  module JekyllAdmin
-    def self.site
-      @site ||= Jekyll.sites.first
-    end
+module JekyllAdmin
+  def self.site
+    @site ||= Jekyll.sites.first
   end
 end

@@ -2,7 +2,7 @@ describe "configuration" do
   include Rack::Test::Methods
 
   def app
-    Jekyll::JekyllAdmin::Server
+    JekyllAdmin::Server
   end
 
   it "returns the configuration" do
