@@ -93,8 +93,7 @@ describe "collections" do
   end
 
   it "writes a new file" do
-    path = File.expand_path "_posts/2016-01-01-test2.md", fixture_path("site")
-    File.delete(path) if File.exist?(path)
+    delete_file "_posts/2016-01-01-test2.md"
 
     request = {
       :meta => { :foo => "bar" },
@@ -104,13 +103,12 @@ describe "collections" do
 
     expect(last_response).to be_ok
     expect(last_response_parsed["foo"]).to eq('bar')
-    File.delete(path)
+
+    delete_file "_posts/2016-01-01-test2.md"
   end
 
   it "updates a file" do
-    path = File.expand_path "_posts/2016-01-01-test2.md", fixture_path("site")
-    File.delete(path) if File.exist?(path)
-    File.write path, "---\n---\n\ntest"
+    write_file "_posts/2016-01-01-test2.md"
 
     request = {
       :meta => { :foo => "bar2" },
@@ -120,14 +118,33 @@ describe "collections" do
 
     expect(last_response).to be_ok
     expect(last_response_parsed["foo"]).to eq('bar2')
-    File.delete(path)
+
+    delete_file "_posts/2016-01-01-test2.md"
+  end
+
+  it "renames a file" do
+    write_file "_posts/2016-01-01-test2.md"
+    delete_file "_posts/2016-01-02-test2.md"
+
+    request = {
+      :path => "2016-01-02-test2.md",
+      :meta => { :foo => "bar2" },
+      :body => "test"
+    }
+
+    put '/collections/posts/2016-01-01-test2.md', request.to_json
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq('bar2')
+
+    get '/collections/posts/2016-01-02-test2.md', request.to_json
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq('bar2')
+
+    delete_file "_posts/2016-01-01-test2.md", "_posts/2016-01-02-test2.md"
   end
 
   it "deletes a file" do
-    path = File.expand_path "_posts/2016-01-01-test2.md", fixture_path("site")
-    File.delete(path) if File.exist?(path)
-    File.write path, "---\n---\n\ntest"
-    Jekyll::Admin.site.process
+    path = write_file "_posts/2016-01-01-test2.md"
     delete '/collections/posts/2016-01-01-test2.md'
     expect(last_response).to be_ok
     expect(File.exist?(path)).to eql(false)
