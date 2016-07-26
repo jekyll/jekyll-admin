@@ -8,7 +8,9 @@ module Jekyll
       configure :development do
         register Sinatra::Reloader
         enable :logging
+      end
 
+      configure :development, :test do
         require "sinatra/cross_origin"
         register Sinatra::CrossOrigin
         enable  :cross_origin
@@ -22,7 +24,7 @@ module Jekyll
 
       # CORS preflight
       options "*" do
-        render_404 unless settings.development?
+        render_404 unless settings.development? || settings.test?
         status 204
       end
 

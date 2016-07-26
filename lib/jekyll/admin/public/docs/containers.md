@@ -1,6 +1,7 @@
 # Containers
 Container components which connect the presentational components to Redux.
 
+
 ## Sidebar
 Container for listing all of the main routes.
 
@@ -11,6 +12,7 @@ Container for listing all of the main routes.
   fetchCollections: Function
 }
 ```
+
 
 ## Header
 Container for displaying header which includes title and homepage link.
@@ -23,16 +25,16 @@ Container for displaying header which includes title and homepage link.
 }
 ```
 
-## MetaFields
-Main container for metafields.
 
-All of the prop types below passed down to the children;
+## MetaFields
+Main container for metafields. Generates list, object or plain inputs
+for front matters other than `title`, `body`, `path` and `draft`.
 
 ** PropTypes **
 ``` javascript
 {
-  meta: Object, // passed from ContentEdit
-  metadata: Object, // passed from Redux store
+  content: Object,
+  metadata: Object,
   key_prefix: String,
   storeContentFields: Function,
   addField: Function,
@@ -43,6 +45,7 @@ All of the prop types below passed down to the children;
   convertField: Function
 }
 ```
+
 
 ## Views
 Contains all of the views linked with the routes.
@@ -63,26 +66,98 @@ The button is activated when the editor changes.
 }
 ```
 
-** Actions **
-``` javascript
-putConfig(config) // Create or update the site's _config.yml file in YAML
-onEditorChange() // dispatched whenever the configuration is changed.
-```
-
 ### Pages
 Container for Pages view. Lists available pages.
 
-#### PageEdit
-Container for editing pages.
+** PropTypes **
+``` javascript
+{
+  pages: Array,
+  fetchPages: Function,
+  deletePage: Function,
+  isFetching: Boolean,
+  message: String,
+  searchByTitle: Function
+}
+```
 
-#### PageNew
-Container for creating pages.
+### PageEdit
+Container for editing a page.
+
+** PropTypes **
+``` javascript
+{
+  page: Object,
+  fetchPage: Function,
+  deletePage: Function,Boolean,
+  putPage: Function,
+  updateTitle: Function,
+  updateBody: Function,
+  updatePath: Function,
+  clearErrors: Function,
+  isFetching: Boolean,
+  errors: Array,
+  fieldChanged: Boolean,
+  updated: Boolean,
+  params: Object
+}
+```
+
+### PageNew
+Container for creating a new page.
+
+** PropTypes **
+``` javascript
+{
+  putPage: Function,
+  updateTitle: Function,
+  updateBody: Function,
+  updatePath: Function,
+  updateDraft: Function,
+  clearErrors: Function,
+  errors: Array,
+  fieldChanged: Boolean
+}
+```
 
 ### Documents
 Container for Documents view. Lists the documents of a collection (including posts).
 
-#### DocumentEdit
+### DocumentEdit
 Container for editing a document.
 
-#### DocumentNew
-Container for creating a document.
+** PropTypes **
+``` javascript
+{
+  currentDocument: Object,
+  fetchDocument: Function,
+  deleteDocument: Function,Boolean,
+  putDocument: Function,
+  updateTitle: Function,
+  updateBody: Function,
+  updatePath: Function,
+  clearErrors: Function,
+  isFetching: Boolean,
+  errors: Array,
+  fieldChanged: Boolean,
+  updated: Boolean,
+  params: Object
+}
+```
+
+### DocumentNew
+Container for creating a new document.
+
+** PropTypes **
+``` javascript
+{
+  putDocument: Function,
+  updateTitle: Function,
+  updateBody: Function,
+  updatePath: Function,
+  updateDraft: Function,
+  clearErrors: Function,
+  errors: Array,
+  fieldChanged: Boolean
+}
+```

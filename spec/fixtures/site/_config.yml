@@ -1,8 +1,21 @@
----
 gems:
-- jekyll/admin
+  - jekyll/admin
+
 exclude:
-- Gemfile
-- Gemfile.lock
-- README.md
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+
 foo: bar
+
+defaults:
+  -
+    scope:
+      path: ""
+    values:
+      some_front_matter: "default"
+
+collections:
+  puppies:
+    foo: bar
+    output: true
