@@ -11,6 +11,7 @@ module JekyllAdmin
       end
 
       put "/*" do
+        FileUtils.mkdir_p File.dirname(static_file_path)
         File.write static_file_path, static_file_body
         site.process
         json static_file.to_liquid
