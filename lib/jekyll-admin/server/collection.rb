@@ -24,9 +24,12 @@ module JekyllAdmin
         ensure_collection
 
         # Rename page
-        if request_payload["path"] && request_payload["path"] != params["splat"].first
-          File.delete document_path
-          params["splat"] = [request_payload["path"]]
+        if request_payload["path"]
+          request_payload["path"].gsub!(%r!\A_#{collection.label}/!, "")
+          if request_payload["path"] != params["splat"].first
+            File.delete document_path
+            params["splat"] = [request_payload["path"]]
+          end
         end
 
         File.write document_path, document_body
