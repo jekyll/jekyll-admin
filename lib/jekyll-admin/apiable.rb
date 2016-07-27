@@ -18,7 +18,7 @@ module JekyllAdmin
                     File.join(@base, @dir, name)
                   end
 
-      if File.exists?(file_path)
+      if File.exist?(file_path)
         content = File.read(file_path, Jekyll::Utils.merged_file_read_opts(site, {}))
         if content =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
           content = $POSTMATCH
