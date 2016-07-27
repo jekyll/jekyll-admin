@@ -13,18 +13,17 @@ module JekyllAdmin
       put "/:page_id" do
         # Rename page
         if request_payload["path"] && request_payload["path"] != params["page_id"]
-          File.delete page_path
+          delete_file page_path
           params["page_id"] = request_payload["path"]
         end
 
-        File.write page_path, page_body
-        site.process
+        write_file(page_path, page_body)
         json page.to_api
       end
 
       delete "/:page_id" do
         ensure_page
-        File.delete page_path
+        delete_file page_path
         content_type :json
         status 200
         halt

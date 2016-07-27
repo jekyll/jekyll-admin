@@ -11,14 +11,13 @@ module JekyllAdmin
       end
 
       put "/:data_file_id" do
-        File.write data_file_path, data_file_body
-        site.process
+        write_file(data_file_path, data_file_body)
         json data_file.to_liquid
       end
 
       delete "/:data_file_id" do
         ensure_data_file_exists
-        File.delete data_file_path
+        delete_file data_file_path
         content_type :json
         status 200
         halt
