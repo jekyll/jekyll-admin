@@ -1,13 +1,13 @@
 # coding: utf-8
 lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
-require 'jekyll/admin/version'
+require 'jekyll-admin/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "jekyll-admin"
-  spec.version       = Jekyll::Admin::VERSION
-  spec.authors       = ["Ankur Singh"]
-  spec.email         = ["ankur13019@iiitd.ac.in"]
+  spec.version       = JekyllAdmin::VERSION
+  spec.authors       = ["Mert Kahyaoğlu", "GitHub Open Source"]
+  spec.email         = ["mertkahyaoglu93@gmail.com", "opensource@github.com"]
 
   spec.summary       = %q{wp-admin for Jekyll, but better}
   spec.description   = %q{Jekyll::Admin is a drop in administrative framework for Jekyll sites.}

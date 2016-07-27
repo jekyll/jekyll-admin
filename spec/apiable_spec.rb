@@ -1,4 +1,4 @@
-describe Jekyll::Admin::APIable do
+describe JekyllAdmin::APIable do
   [:page, :post].each do |type|
     context type do
       subject do

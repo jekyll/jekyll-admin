@@ -5,5 +5,5 @@ set -e
 script/branding
 script/return-to-pwd
 bundle install
-cd ./lib/jekyll/admin/public || exit
+cd ./lib/jekyll-admin/public || exit
 npm install

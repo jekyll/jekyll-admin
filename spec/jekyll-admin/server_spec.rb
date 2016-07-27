@@ -1,8 +1,8 @@
-describe Jekyll::Admin::Server do
+describe JekyllAdmin::Server do
   include Rack::Test::Methods
 
   def app
-    Jekyll::Admin::Server
+    JekyllAdmin::Server
   end
 
   it "returns the page index" do
