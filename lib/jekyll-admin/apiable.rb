@@ -18,14 +18,16 @@ module JekyllAdmin
                     File.join(@base, @dir, name)
                   end
 
-      content = File.read(file_path, Jekyll::Utils.merged_file_read_opts(site, {}))
-      if content =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
-        content = $POSTMATCH
-        yaml = SafeYAML.load(Regexp.last_match(1))
-      end
+      if File.exists?(file_path)
+        content = File.read(file_path, Jekyll::Utils.merged_file_read_opts(site, {}))
+        if content =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
+          content = $POSTMATCH
+          yaml = SafeYAML.load(Regexp.last_match(1))
+        end
 
-      output["raw_content"] = content.to_s
-      output["front_matter"] = yaml || {}
+        output["raw_content"] = content.to_s
+        output["front_matter"] = yaml || {}
+      end
 
       output.to_h
     end

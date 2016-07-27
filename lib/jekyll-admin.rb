@@ -26,7 +26,7 @@ require "jekyll-admin/apiable.rb"
 
 # Monkey Patches
 require_relative "./jekyll/commands/serve"
-[Jekyll::Convertible, Jekyll::Document].each do |klass|
+[Jekyll::Page, Jekyll::Document].each do |klass|
   klass.include JekyllAdmin::APIable
 end
 
