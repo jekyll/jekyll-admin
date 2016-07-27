@@ -2,15 +2,15 @@ describe "collections" do
   include Rack::Test::Methods
 
   def app
-    Jekyll::Admin::Server
+    JekyllAdmin::Server
   end
 
   before(:each) do
-    Jekyll::Admin.site.process
+    JekyllAdmin.site.process
   end
 
   after(:each) do
-    Jekyll::Admin.site.process
+    JekyllAdmin.site.process
   end
 
   it "returns the collection index" do

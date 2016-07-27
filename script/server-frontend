@@ -2,5 +2,5 @@
 
 script/branding
 script/return-to-pwd
-cd ./lib/jekyll/admin/public || exit
+cd ./lib/jekyll-admin/public || exit
 npm start

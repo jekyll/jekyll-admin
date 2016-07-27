@@ -1,5 +1,5 @@
 module Jekyll
   module Convertible
-    include Jekyll::Admin::APIable
+    include JekyllAdmin::APIable
   end
 end
