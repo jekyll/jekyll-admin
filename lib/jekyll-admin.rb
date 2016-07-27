@@ -20,8 +20,13 @@ require "jekyll-admin/apiable.rb"
 
 # Monkey Patches
 require_relative "./jekyll/commands/serve"
-require_relative "./jekyll/convertible_ext"
-require_relative "./jekyll/document_ext"
+[Jekyll::Convertible, Jekyll::Document].each do |klass|
+  klass.include JekyllAdmin::APIable
+end
+
+# Default Sinatra to "production" mode (surpress errors) unless
+# otherwise specified by the `RACK_ENV` environmental variable
+ENV["RACK_ENV"] = "production" if ENV["RACK_ENV"].to_s.empty?
 
 module JekyllAdmin
   def self.site
