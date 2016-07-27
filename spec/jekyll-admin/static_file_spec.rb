@@ -100,7 +100,7 @@ describe "static_files" do
   end
 
   it "deeply updates a static file" do
-    write_file "static-dir/static-file-delete.txt", "test"
+    write_file "static-dir/static-file-update.txt", "test"
 
     request = { :body => "test" }
     put '/static_files/static-dir/static-file-update.txt', request.to_json
@@ -110,7 +110,7 @@ describe "static_files" do
     expect(last_response_parsed["path"]).to eql("/static-dir/static-file-update.txt")
     expect('static-dir/static-file-update.txt').to be_an_existing_file
 
-    delete_file "static-dir/static-file-delete.txt"
+    delete_file "static-dir/static-file-update.txt"
   end
 
   it "deletes a static_file" do
