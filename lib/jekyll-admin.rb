@@ -1,3 +1,9 @@
+# Default Sinatra to "production" mode (surpress errors) unless
+# otherwise specified by the `RACK_ENV` environmental variable.
+# Must be done prior to requiring Sinatra, or we'll get a LoadError
+# as it looks for sinatra/cross-origin, which is development only
+ENV["RACK_ENV"] = "production" if ENV["RACK_ENV"].to_s.empty?
+
 require "json"
 require "jekyll"
 require "webrick"
@@ -23,10 +29,6 @@ require_relative "./jekyll/commands/serve"
 [Jekyll::Convertible, Jekyll::Document].each do |klass|
   klass.include JekyllAdmin::APIable
 end
-
-# Default Sinatra to "production" mode (surpress errors) unless
-# otherwise specified by the `RACK_ENV` environmental variable
-ENV["RACK_ENV"] = "production" if ENV["RACK_ENV"].to_s.empty?
 
 module JekyllAdmin
   def self.site
