@@ -2,7 +2,7 @@
 
 set -e
 
-if [ ! -d "./lib/jekyll/admin/public/dist" ]; then
+if [ ! -d "./lib/jekyll-admin/public/dist" ]; then
   script/build
 fi
 
