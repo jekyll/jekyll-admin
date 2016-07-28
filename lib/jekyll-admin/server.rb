@@ -57,13 +57,13 @@ module JekyllAdmin
     end
 
     def document_body
-      body = if request_payload["meta"]
-               YAML.dump(request_payload["meta"]).strip
+      body = if request_payload["front_matter"]
+               YAML.dump(request_payload["front_matter"]).strip
              else
                "---"
              end
       body << "\n---\n\n"
-      body << request_payload["body"].to_s
+      body << request_payload["raw_content"].to_s
     end
     alias page_body document_body
 

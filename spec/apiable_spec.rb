@@ -11,6 +11,7 @@ describe JekyllAdmin::APIable do
       end
 
       let(:as_api) { subject.to_api }
+      let(:content)  { as_api["content"] }
       let(:raw_content)  { as_api["raw_content"] }
       let(:front_matter) { as_api["front_matter"] }
 
@@ -21,6 +22,12 @@ describe JekyllAdmin::APIable do
       it "includes the raw_content" do
         expected = self.class.description.capitalize
         expect(raw_content).to eql("# Test #{expected}\n")
+      end
+
+      it "includes the rendered content" do
+        type = self.class.description
+        expected = "<h1 id=\"test-#{type}\">Test #{type.capitalize}</h1>\n"
+        expect(content).to eql(expected)
       end
 
       it "includes the raw front matter" do
@@ -35,6 +42,10 @@ describe JekyllAdmin::APIable do
       it "includes front matter defaults as top-level keys" do
         expect(as_api).to have_key("some_front_matter")
         expect(as_api["some_front_matter"]).to eql("default")
+      end
+
+      it "includes front matter as top-level keys" do
+        expect(as_api["foo"]).to eql("bar")
       end
     end
   end

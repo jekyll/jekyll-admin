@@ -4,13 +4,61 @@ The below are the documented endpoints of the shared HTTP API. All requests and 
 
 For simplicity, whenever possible, the API mirrors Jekyll internal data structures, meaning, objects are generally the results of calling `.to_liquid.to_json` on an existing Jekyll model (and the resulting fields).
 
+### API Request and response payloads
+
+#### Pages and Documents
+
+Pages and documents are JSON objects resulting from calling `to_liquid.to_json` on the underlying Jekyll object.
+
+The resulting JSON object has the following structure:
+
+* Top level keys are keys with special meaning. This includes:
+  * Computed, read-only keys like `url`
+  * Computed, read/write keys like `path`
+  * Front matter defaults
+* The top-level namespace will have `content` and `raw_content` keys with the HTML and markdown respectively
+* The top-level namespace will have a `front_matter` key which includes the raw front matter as seen on disk.
+
+A standard page may then look like this:
+
+```json
+{
+   "some_front_matter":"default",
+   "foo":"bar",
+   "content":"<h1 id=\"test-page\">Test Page</h1>\n",
+   "dir":"/",
+   "name":"page.md",
+   "path":"page.md",
+   "url":"/page.html",
+   "raw_content":"# Test Page\n",
+   "front_matter":{
+      "foo":"bar"
+   }
+}
+```
+
+When making a request, clients can set the following top-level fields:
+
+* `raw_content` - the raw, unrendered content to be written to disk (currently `body`)
+* `front_matter` - the entire YAML front matter object to be written to disk (currently `meta`)
+* `path` - the new file path relative to the site source, if the file is to be renamed
+
+#### Data files and the config file
+
+Data files and the config file are direct JSON representations of the underlying YAML File.
+
+#### Static files
+
+Static files are just the raw content and may be binary.
+
 ### Collections
+
 #### Parameters
 
 * `collection_name` - the name of the collection, e.g., posts (`String`)
-* `id` - the filename of a document, relative to the collection root (e.g., `2016-01-01-some-post.md` or `rover.md`) (`String`)
-* `body` - the document body (`String`)
-* `meta` - the document's YAML front matter (`Object`)
+* `path` - the filename of a document, relative to the collection root (e.g., `2016-01-01-some-post.md` or `rover.md`) (`String`)
+* `raw_content` - the document body (`String`)
+* `front_matter` - the document's YAML front matter (`Object`)
 
 #### `GET /collections/`
 
@@ -24,15 +72,15 @@ Returns information about the requested collection
 
 Return an array of document objects corresponding to the requested collection. The response does not include the document body.
 
-#### `GET /collections/:collection_name/:id`
+#### `GET /collections/:collection_name/:path`
 
 Returns the requested document. The response includes the document body.
 
-#### `PUT /collections/:collection_name/:id`
+#### `PUT /collections/:collection_name/:path`
 
 Create or update the requested document, writing its contents to disk.
 
-#### `DELETE /collections/:collection_name/:id`
+#### `DELETE /collections/:collection_name/:path`
 
 Delete the requested document from disk.
 
@@ -40,23 +88,23 @@ Delete the requested document from disk.
 
 #### Parameters
 
-* `id` - The file's path, relative to the site root (e.g., `about.html`) (`String`)
-* `body` - the page's body (`String`)
-* `meta` - the page's YAML front matter (`Object`)
+* `path` - The file's path, relative to the site root (e.g., `about.html`) (`String`)
+* `raw_content` - the page's body (`String`)
+* `front_matter` - the page's YAML front matter (`Object`)
 
 #### `GET /pages`
 
 Return an array of page objects. The response does not include the page body.
 
-#### `GET /pages/:id`
+#### `GET /pages/:path`
 
 Returns the requested page. The response includes the page body.
 
-#### `PUT /pages/:id`
+#### `PUT /pages/:path`
 
 Create or update the requested page, writing its contents to disk.
 
-#### `DELETE /pages/:id`
+#### `DELETE /pages/:path`
 
 Delete the requested page from disk.
 

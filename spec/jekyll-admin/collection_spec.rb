@@ -118,8 +118,8 @@ describe "collections" do
     delete_file "_posts/2016-01-01-test2.md"
 
     request = {
-      :meta => { :foo => "bar" },
-      :body => "test"
+      :front_matter => { :foo => "bar" },
+      :raw_content  => "test"
     }
     put "/collections/posts/2016-01-01-test2.md", request.to_json
 
@@ -134,8 +134,8 @@ describe "collections" do
     write_file "_posts/2016-01-01-test2.md"
 
     request = {
-      :meta => { :foo => "bar2" },
-      :body => "test"
+      :front_matter => { :foo => "bar2" },
+      :raw_content  => "test"
     }
     put "/collections/posts/2016-01-01-test2.md", request.to_json
 
@@ -155,9 +155,9 @@ describe "collections" do
         path = "2016-01-02-test2.md"
         path = path.prepend("_posts/") if type == "with"
         request = {
-          :path => path,
-          :meta => { :foo => "bar2" },
-          :body => "test"
+          :path         => path,
+          :front_matter => { :foo => "bar2" },
+          :raw_content  => "test"
         }
 
         put "/collections/posts/2016-01-01-test2.md", request.to_json
