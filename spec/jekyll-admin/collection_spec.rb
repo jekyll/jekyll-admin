@@ -119,7 +119,7 @@ describe "collections" do
 
     request = {
       :front_matter => { :foo => "bar" },
-      :raw_content => "test"
+      :raw_content  => "test"
     }
     put "/collections/posts/2016-01-01-test2.md", request.to_json
 
@@ -135,7 +135,7 @@ describe "collections" do
 
     request = {
       :front_matter => { :foo => "bar2" },
-      :raw_content => "test"
+      :raw_content  => "test"
     }
     put "/collections/posts/2016-01-01-test2.md", request.to_json
 
@@ -155,9 +155,9 @@ describe "collections" do
         path = "2016-01-02-test2.md"
         path = path.prepend("_posts/") if type == "with"
         request = {
-          :path => path,
+          :path         => path,
           :front_matter => { :foo => "bar2" },
-          :raw_content => "test"
+          :raw_content  => "test"
         }
 
         put "/collections/posts/2016-01-01-test2.md", request.to_json
