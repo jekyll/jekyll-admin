@@ -25,6 +25,7 @@ describe "data" do
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql({ "foo" => "bar" })
+    expect("_data/data-file-new.yml").to be_an_existing_file
 
     delete_file "_data/data-file-new.yml"
   end
@@ -37,14 +38,15 @@ describe "data" do
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql({ "foo" => "bar2" })
+    expect("_data/data-file-update.yml").to be_an_existing_file
 
     delete_file "_data/data-file-update.yml"
   end
 
   it "deletes a data file" do
-    path = write_file "_data/data-file-delete.yml", "foo2: bar2"
+    write_file "_data/data-file-delete.yml", "foo2: bar2"
     delete '/data/data-file-delete'
     expect(last_response).to be_ok
-    expect(File.exist?(path)).to eql(false)
+    expect("_data/data-file-delete.yml").to_not be_an_existing_file
   end
 end

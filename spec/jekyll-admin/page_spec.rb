@@ -89,6 +89,7 @@ describe "pages" do
 
     expect(last_response).to be_ok
     expect(last_response_parsed["foo"]).to eq('bar')
+    expect("page-new.md").to be_an_existing_file
 
     delete_file "page-new.md"
   end
@@ -101,6 +102,7 @@ describe "pages" do
       :body => "test"
     }
     put '/pages/page-update.md', request.to_json
+    expect("page-update.md").to be_an_existing_file
 
     expect(last_response).to be_ok
     expect(last_response_parsed["foo"]).to eq('bar2')
@@ -121,6 +123,8 @@ describe "pages" do
     put '/pages/page-rename.md', request.to_json
     expect(last_response).to be_ok
     expect(last_response_parsed["foo"]).to eq('bar')
+    expect("page-rename.md").to_not be_an_existing_file
+    expect("page-renamed.md").to be_an_existing_file
 
     get '/pages/page-renamed.md'
     expect(last_response).to be_ok
