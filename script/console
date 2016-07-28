@@ -22,4 +22,4 @@ app = Session.new(JekyllAdmin::Server)
 
 puts "You're all set. You can access the server as `app` and the site as `site`..."
 
-binding.pry(false)
+Pry.start binding, :quiet => true
