@@ -21,7 +21,7 @@ describe "data" do
     delete_file "_data/data-file-new.yml"
 
     request = { "foo" => "bar" }
-    put '/data/data-file-new', request.to_json
+    put "/data/data-file-new", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql({ "foo" => "bar" })
@@ -34,7 +34,7 @@ describe "data" do
     write_file "_data/data-file-update.yml", "foo2: bar2"
 
     request = { "foo" => "bar2" }
-    put '/data/data-file-update', request.to_json
+    put "/data/data-file-update", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql({ "foo" => "bar2" })
@@ -45,7 +45,7 @@ describe "data" do
 
   it "deletes a data file" do
     write_file "_data/data-file-delete.yml", "foo2: bar2"
-    delete '/data/data-file-delete'
+    delete "/data/data-file-delete"
     expect(last_response).to be_ok
     expect("_data/data-file-delete.yml").to_not be_an_existing_file
   end
