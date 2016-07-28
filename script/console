@@ -1,0 +1,25 @@
+#!/usr/bin/env ruby
+
+ENV["RACK_ENV"] = "development"
+require 'pry'
+require "jekyll-admin"
+require 'rack/test'
+
+class Session
+  include Rack::Test::Methods
+  attr_reader :app
+
+  def initialize(app)
+    @app = app
+  end
+end
+
+path = File.expand_path "../spec/fixtures/site", File.dirname(__FILE__)
+config = Jekyll.configuration("source" => path)
+site = Jekyll::Site.new(config)
+site.process
+app = Session.new(JekyllAdmin::Server)
+
+puts "You're all set. You can access the server as `app` and the site as `site`..."
+
+binding.pry
