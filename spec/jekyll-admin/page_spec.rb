@@ -84,8 +84,8 @@ describe "pages" do
     delete_file "page-new.md"
 
     request = {
-      :meta => { :foo => "bar" },
-      :body => "test"
+      :front_matter => { :foo => "bar" },
+      :raw_content  => "test"
     }
     put "/pages/page-new.md", request.to_json
 
@@ -100,8 +100,8 @@ describe "pages" do
     write_file "page-update.md"
 
     request = {
-      :meta => { :foo => "bar2" },
-      :body => "test"
+      :front_matter => { :foo => "bar2" },
+      :raw_content  => "test"
     }
     put "/pages/page-update.md", request.to_json
     expect("page-update.md").to be_an_existing_file
@@ -117,9 +117,9 @@ describe "pages" do
     delete_file "page-renamed.md"
 
     request = {
-      :path => "page-renamed.md",
-      :meta => { :foo => "bar" },
-      :body => "test"
+      :path         => "page-renamed.md",
+      :front_matter => { :foo => "bar" },
+      :raw_content  => "test"
     }
 
     put "/pages/page-rename.md", request.to_json
