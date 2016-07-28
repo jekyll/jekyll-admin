@@ -65,4 +65,17 @@ module JekyllAdmin
     end
     alias page_body document_body
   end
+
+  def write_file(path, content)
+    path = sanitized_path(path)
+    FileUtils.mkdir_p File.dirname(path)
+    file = File.write path, content
+    site.process
+    file
+  end
+
+  def delete_file(path)
+    File.delete sanitized_path(path)
+    site.process
+  end
 end
