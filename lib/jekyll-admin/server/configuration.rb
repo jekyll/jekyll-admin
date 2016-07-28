@@ -6,7 +6,7 @@ module JekyllAdmin
       end
 
       put do
-        File.write configuration_path, configuration_body
+        write_file(configuration_path, configuration_body)
         json raw_configuration.to_liquid
       end
 

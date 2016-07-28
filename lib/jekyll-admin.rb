@@ -8,6 +8,7 @@ require "json"
 require "jekyll"
 require "webrick"
 require "sinatra"
+require 'fileutils'
 require "sinatra/base"
 require "sinatra/json"
 require "sinatra/reloader"

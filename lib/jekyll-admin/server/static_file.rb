@@ -11,14 +11,13 @@ module JekyllAdmin
       end
 
       put "/*" do
-        File.write static_file_path, static_file_body
-        site.process
+        write_file(static_file_path, static_file_body)
         json static_file.to_liquid
       end
 
       delete "/*" do
         ensure_static_file_exists
-        File.delete static_file_path
+        delete_file static_file_path
         content_type :json
         status 200
         halt
