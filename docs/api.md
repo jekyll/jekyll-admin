@@ -4,7 +4,10 @@ The below are the documented endpoints of the shared HTTP API. All requests and 
 
 For simplicity, whenever possible, the API mirrors Jekyll internal data structures, meaning, objects are generally the results of calling `.to_liquid.to_json` on an existing Jekyll model (and the resulting fields).
 
+The API is exposed as `http://localhost:4000/_api` (or whatever server/port your Jekyll installation is running on).
+
 ### Collections
+
 #### Parameters
 
 * `collection_name` - the name of the collection, e.g., posts (`String`)
@@ -76,23 +79,23 @@ File will be written to disk in YAML. It will not necessarily to preserve whites
 
 * `path` - the path to the file or directory, relative to the site root (`String`)
 
-### `GET /static_files/:path`
+#### `GET /static_files/:path`
 
 Returns the requested static file. The response does not include the file's content.
 
 If the path maps to a directory, it list all static files in the directory. This does not include documents, pages, etc.
 
-### `PUT /static_files/:path`
+#### `PUT /static_files/:path`
 
 Create or update a static file on disk. This can be arbitrary ASCII or a binary file (e.g., an image).
 
-### `DELETE /static_files/:path`
+#### `DELETE /static_files/:path`
 
 Delete a static file from disk.
 
 ### Data files
 
-### Parameters
+#### Parameters
 
 * `data_file` - File path relative to the `_data` folder without an extension. (`String`)
 
@@ -116,23 +119,23 @@ Remove the requested data file from disk.
 
 ### Git operations
 
-### Parameters
+#### Parameters
 
 * `remote` - the git remote to act against, defaults to `origin` (`String`)
 * `branch` - the branch to act against, defaults to `master` (`String`)
 
-### `GET /git/status`
+#### `GET /git/status`
 
 Returns information about the current working tree.
 
-### `GET /git/pull`
+#### `GET /git/pull`
 
 Pull changes from the remote and branch.
 
-### `PUT /git/commit`
+#### `PUT /git/commit`
 
 Commit the local changes.
 
-### `POST /git/push`
+#### `POST /git/push`
 
 Push changes to the remote and branch.
