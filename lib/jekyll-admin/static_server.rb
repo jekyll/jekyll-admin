@@ -10,7 +10,7 @@ module JekyllAdmin
     private
 
     def index_path
-      @index_path ||= File.join(settings.public_folder, 'index.html')
+      @index_path ||= File.join(settings.public_folder, "index.html")
     end
   end
 end

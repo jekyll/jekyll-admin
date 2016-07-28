@@ -17,7 +17,7 @@ describe "pages" do
     it "lists pages" do
       get "/pages"
       expect(last_response).to be_ok
-      expect(last_response_parsed.last["name"]).to eq('page.md')
+      expect(last_response_parsed.last["name"]).to eq("page.md")
     end
 
     it "includes front matter defaults" do
@@ -38,7 +38,7 @@ describe "pages" do
     it "returns a page" do
       get "/pages/page.md"
       expect(last_response).to be_ok
-      expect(last_response_parsed["foo"]).to eq('bar')
+      expect(last_response_parsed["foo"]).to eq("bar")
     end
 
     it "returns the rendered output" do
@@ -55,6 +55,8 @@ describe "pages" do
     end
 
     context "front matter" do
+      let(:front_matter) { last_response_parsed["front_matter"] }
+
       it "contains front matter defaults" do
         get "/pages/page.md"
         expect(last_response_parsed.key?("some_front_matter")).to eql(true)
@@ -63,12 +65,12 @@ describe "pages" do
       it "contains raw front matter" do
         get "/pages/page.md"
         expect(last_response_parsed.key?("front_matter")).to eql(true)
-        expect(last_response_parsed["front_matter"]["foo"]).to eql("bar")
+        expect(front_matter["foo"]).to eql("bar")
       end
 
       it "raw front matter doesn't include defaults" do
         get "/pages/page.md"
-        expect(last_response_parsed["front_matter"].key?("some_front_matter")).to eql(false)
+        expect(front_matter.key?("some_front_matter")).to eql(false)
       end
     end
 
@@ -85,10 +87,10 @@ describe "pages" do
       :front_matter => { :foo => "bar" },
       :raw_content => "test"
     }
-    put '/pages/page-new.md', request.to_json
+    put "/pages/page-new.md", request.to_json
 
     expect(last_response).to be_ok
-    expect(last_response_parsed["foo"]).to eq('bar')
+    expect(last_response_parsed["foo"]).to eq("bar")
     expect("page-new.md").to be_an_existing_file
 
     delete_file "page-new.md"
@@ -101,11 +103,11 @@ describe "pages" do
       :front_matter => { :foo => "bar2" },
       :raw_content => "test"
     }
-    put '/pages/page-update.md', request.to_json
+    put "/pages/page-update.md", request.to_json
     expect("page-update.md").to be_an_existing_file
 
     expect(last_response).to be_ok
-    expect(last_response_parsed["foo"]).to eq('bar2')
+    expect(last_response_parsed["foo"]).to eq("bar2")
 
     delete_file "page-update.md"
   end
@@ -120,22 +122,22 @@ describe "pages" do
       :raw_content => "test"
     }
 
-    put '/pages/page-rename.md', request.to_json
+    put "/pages/page-rename.md", request.to_json
     expect(last_response).to be_ok
-    expect(last_response_parsed["foo"]).to eq('bar')
+    expect(last_response_parsed["foo"]).to eq("bar")
     expect("page-rename.md").to_not be_an_existing_file
     expect("page-renamed.md").to be_an_existing_file
 
-    get '/pages/page-renamed.md'
+    get "/pages/page-renamed.md"
     expect(last_response).to be_ok
-    expect(last_response_parsed["foo"]).to eq('bar')
+    expect(last_response_parsed["foo"]).to eq("bar")
 
     delete_file "page-rename.md", "page-renamed.md"
   end
 
   it "deletes a page" do
     path = write_file "page-delete.md"
-    delete '/pages/page-delete.md'
+    delete "/pages/page-delete.md"
     expect(last_response).to be_ok
     expect(File.exist?(path)).to eql(false)
   end

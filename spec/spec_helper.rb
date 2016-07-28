@@ -1,8 +1,8 @@
-ENV['RACK_ENV'] = 'test'
+ENV["RACK_ENV"] = "test"
 
-require 'rspec'
-require 'jekyll-admin'
-require 'rack/test'
+require "rspec"
+require "jekyll-admin"
+require "rack/test"
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
