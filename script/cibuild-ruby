@@ -2,13 +2,6 @@
 
 set -e
 
-if [ ! -d "./lib/jekyll-admin/public/dist" ]; then
-  echo "Frontend not build. Stubbing in a front end for testing."
-  echo "Run script/build to compile the front end."
-  mkdir -p "./lib/jekyll-admin/public/dist"
-  echo "Run script/build to build the front end" > "./lib/jekyll-admin/public/dist/index.html"
-fi
-
 echo "Running Ruby tests..."
 RACK_ENV=test JEKYLL_LOG_LEVEL=warn bundle exec rspec
 script/fmt

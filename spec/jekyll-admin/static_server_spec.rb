@@ -6,16 +6,20 @@ describe JekyllAdmin::StaticServer do
   end
 
   it "returns the index" do
-    get "/"
-    expect(last_response).to be_ok
-    expected = "Run script/build to build the front end\n"
-    expect(last_response.body).to eql(expected)
+    with_index_stubbed do
+      get "/"
+      expect(last_response).to be_ok
+      expected = File.read(index_path)
+      expect(last_response.body).to eql(expected)
+    end
   end
 
   it "returns the index for non-existent paths" do
-    get "/collections"
-    expect(last_response).to be_ok
-    expected = "Run script/build to build the front end\n"
-    expect(last_response.body).to eql(expected)
+    with_index_stubbed do
+      get "/collections"
+      expect(last_response).to be_ok
+      expected = File.read(index_path)
+      expect(last_response.body).to eql(expected)
+    end
   end
 end

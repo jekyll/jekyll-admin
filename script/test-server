@@ -5,9 +5,5 @@ set -e
 script/branding
 script/return-to-pwd
 
-if [ ! -d "./lib/jekyll-admin/public/dist" ]; then
-  script/build
-fi
-
 cd ./spec/fixtures/site || exit
 RACK_ENV=development bundle exec jekyll serve --verbose
