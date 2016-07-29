@@ -23,8 +23,9 @@ There is a site in `spec/fixtures/site`, with some dummy content. The below loca
 
 If you just want to click around and see how things work, or if you've making changes to the backend Ruby side of things, this is probably what you want.
 
-1. Run `script/test-server`
-2. Open `http://localhost:4000/admin` in your browser (or `http://localhost:4000/_api`)
+1. Run `script/build` to compile the static frontend
+2. Run `script/test-server` to start the server
+3. Open `http://localhost:4000/admin` in your browser (or `http://localhost:4000/_api`)
 
 #### Running the front end server in development mode
 

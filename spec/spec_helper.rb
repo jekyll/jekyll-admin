@@ -3,6 +3,7 @@ ENV["RACK_ENV"] = "test"
 require "rspec"
 require "jekyll-admin"
 require "rack/test"
+require "fileutils"
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
@@ -10,6 +11,26 @@ end
 
 def fixture_path(fixture)
   File.expand_path "./fixtures/#{fixture}", File.dirname(__FILE__)
+end
+
+def dist_path
+  File.expand_path "../lib/jekyll-admin/public/dist/", File.dirname(__FILE__)
+end
+
+def index_path
+  File.expand_path "index.html", dist_path
+end
+
+def stub_index
+  FileUtils.mkdir_p(dist_path)
+  FileUtils.cp fixture_path("index.html"), index_path
+end
+
+def with_index_stubbed
+  return yield if File.exist?(index_path)
+  stub_index
+  yield
+  FileUtils.rm_f(index_path)
 end
 
 def in_source_dir(questionable_path)
