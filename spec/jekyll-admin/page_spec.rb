@@ -80,7 +80,22 @@ describe "pages" do
     end
   end
 
-  it "writes a new page" do
+  it "writes a new page without front matter" do
+    delete_file "page-new.md"
+
+    request = {
+      :front_matter => {},
+      :raw_content  => "test"
+    }
+    put "/pages/page-new.md", request.to_json
+
+    expect(last_response).to be_ok
+    expect("page-new.md").to be_an_existing_file
+
+    delete_file "page-new.md"
+  end
+
+  it "writes a new page with front matter" do
     delete_file "page-new.md"
 
     request = {

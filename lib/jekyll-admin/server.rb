@@ -56,9 +56,13 @@ module JekyllAdmin
       Jekyll.sanitized_path JekyllAdmin.site.source, questionable_path
     end
 
+    def front_matter
+      request_payload["front_matter"]
+    end
+
     def document_body
-      body = if request_payload["front_matter"]
-               YAML.dump(request_payload["front_matter"]).strip
+      body = if front_matter && !front_matter.empty?
+               YAML.dump(front_matter).strip
              else
                "---"
              end
