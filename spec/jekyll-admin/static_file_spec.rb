@@ -62,7 +62,7 @@ describe "static_files" do
     delete_file "static-file-new.txt", "test"
 
     request = { :body => "test" }
-    put '/static_files/static-file-new.txt', request.to_json
+    put "/static_files/static-file-new.txt", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed["extname"]).to eql(".txt")
@@ -76,12 +76,12 @@ describe "static_files" do
     delete_file "static-dir/file-new.txt"
 
     request = { :body => "test" }
-    put '/static_files/static-dir/file-new.txt', request.to_json
+    put "/static_files/static-dir/file-new.txt", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed["extname"]).to eql(".txt")
     expect(last_response_parsed["path"]).to eql("/static-dir/file-new.txt")
-    expect('static-dir/file-new.txt').to be_an_existing_file
+    expect("static-dir/file-new.txt").to be_an_existing_file
 
     delete_file "static-dir/file-new.txt"
   end
@@ -90,12 +90,12 @@ describe "static_files" do
     write_file "static-file-update.txt", "test2"
 
     request = { :body => "test" }
-    put '/static_files/static-file-update.txt', request.to_json
+    put "/static_files/static-file-update.txt", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed["extname"]).to eql(".txt")
     expect(last_response_parsed["path"]).to eql("/static-file-update.txt")
-    expect('static-file-update.txt').to be_an_existing_file
+    expect("static-file-update.txt").to be_an_existing_file
     delete_file "static-file-update.txt"
   end
 
@@ -103,27 +103,27 @@ describe "static_files" do
     write_file "static-dir/static-file-update.txt", "test"
 
     request = { :body => "test" }
-    put '/static_files/static-dir/static-file-update.txt', request.to_json
+    put "/static_files/static-dir/static-file-update.txt", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed["extname"]).to eql(".txt")
     expect(last_response_parsed["path"]).to eql("/static-dir/static-file-update.txt")
-    expect('static-dir/static-file-update.txt').to be_an_existing_file
+    expect("static-dir/static-file-update.txt").to be_an_existing_file
 
     delete_file "static-dir/static-file-update.txt"
   end
 
   it "deletes a static_file" do
     write_file "static-file-delete.txt", "test"
-    delete '/static_files/static-file-delete.txt'
+    delete "/static_files/static-file-delete.txt"
     expect(last_response).to be_ok
-    expect('static-file-delete.txt').to_not be_an_existing_file
+    expect("static-file-delete.txt").to_not be_an_existing_file
   end
 
   it "deeply deletes a static_file" do
     write_file "static-dir/static-file-delete.txt", "test"
-    delete '/static_files/static-dir/static-file-delete.txt'
+    delete "/static_files/static-dir/static-file-delete.txt"
     expect(last_response).to be_ok
-    expect('static-dir/static-file-delete.txt').to_not be_an_existing_file
+    expect("static-dir/static-file-delete.txt").to_not be_an_existing_file
   end
 end

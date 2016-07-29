@@ -9,3 +9,7 @@ cache:
   directories:
     - node_modules
 sudo: false
+env:
+  matrix:
+    - TEST_SUITE=node
+    - TEST_SUITE=ruby

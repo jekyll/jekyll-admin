@@ -6,19 +6,19 @@ describe JekyllAdmin::Server do
   end
 
   it "returns the page index" do
-    get '/pages'
+    get "/pages"
     expect(last_response).to be_ok
-    expect(last_response_parsed.first["path"]).to eq('page.md')
+    expect(last_response_parsed.first["path"]).to eq("page.md")
   end
 
   it "returns an individual page" do
-    get '/pages/page.md'
+    get "/pages/page.md"
     expect(last_response).to be_ok
-    expect(last_response_parsed["foo"]).to eq('bar')
+    expect(last_response_parsed["foo"]).to eq("bar")
   end
 
   it "responds to CORS preflight checks" do
-    options '/', {}, { "HTTP_ORIGIN" => "http://localhost:3000" }
+    options "/", {}, { "HTTP_ORIGIN" => "http://localhost:3000" }
     expect(last_response.status).to eql(204)
 
     expected = {
