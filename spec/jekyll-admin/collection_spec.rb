@@ -114,7 +114,22 @@ describe "collections" do
     end
   end
 
-  it "writes a new file" do
+  it "writes a new file without front matter" do
+    delete_file "_posts/2016-01-01-test2.md"
+
+    request = {
+      :front_matter => {},
+      :raw_content  => "test"
+    }
+    put "/collections/posts/2016-01-01-test2.md", request.to_json
+
+    expect(last_response).to be_ok
+    expect("_posts/2016-01-01-test2.md").to be_an_existing_file
+
+    delete_file "_posts/2016-01-01-test2.md"
+  end
+
+  it "writes a new file with front matter" do
     delete_file "_posts/2016-01-01-test2.md"
 
     request = {
