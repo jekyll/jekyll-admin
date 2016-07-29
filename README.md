@@ -6,11 +6,12 @@ A Jekyll plugin that provides users with a traditional CMS-style graphical inter
 
 ## Installation
 
-Refer to [Install Plugins](https://jekyllrb.com/docs/plugins/#installing-a-plugin) in Jekyll docs and install the `jekyll-admin` plugin.
+Refer to [Install Plugins](https://jekyllrb.com/docs/plugins/#installing-a-plugin) in Jekyll docs and install the `jekyll-admin` plugin as you would normally by adding `jekyll-admin` to your Gemfile and `_config.yml`'s `gems` list.
 
 ## Usage
 
-Upon successful installation, you should be able to access the admin panel at `/admin` and the api at `/_api` respectively.
+1. Start Jekyll as you would normally `bundle exec jekyll serve`
+2. Navigate to `http://localhost:4000/admin` to access the administrative interface
 
 ## Contributing
 
@@ -18,7 +19,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/jekyll
 
 ## Development
 
-See [the development docs](/docs/development.md)
+See [the development docs](/docs)
 
 ## License
 
