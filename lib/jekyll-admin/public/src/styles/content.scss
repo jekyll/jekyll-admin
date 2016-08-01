@@ -49,6 +49,10 @@
     color: #888;
   }
 
+  th.th-actions {
+    text-align: right;
+  }
+
   tbody td {
     padding: 20px 12px;
     vertical-align: top;
@@ -63,26 +67,33 @@
   }
 
   td.row-title {
-    .row-actions {
-      float: right;
-      font-size: 17px;
-      a {
-        padding-right: 8px;
-        &:hover {
-          color: $orange;
-        }
-        &:not(:last-child):after {
-          padding-left: 8px;
-          content: "|";
-        }
-      }
-    }
     strong a {
       font-size: 18px;
       color: #444;
       &:hover {
         color: $dark-orange;
       }
+    }
+  }
+
+  td .row-actions {
+    float: right;
+    font-size: 18px;
+    a {
+      padding-right: 8px;
+      &:hover {
+        color: $orange;
+      }
+      &:not(:last-child):after {
+        padding-left: 8px;
+        content: "|";
+      }
+    }
+    a:last-child {
+      padding: 0;
+    }
+    i {
+      margin-right: 4px;
     }
   }
 }
