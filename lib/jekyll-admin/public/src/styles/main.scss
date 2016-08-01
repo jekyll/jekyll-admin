@@ -103,6 +103,13 @@ i {
   margin-left: auto;
 }
 
+.notfound {
+  text-align: center;
+  img {
+    margin: 40px 0;
+  }
+}
+
 @font-face {
   font-family: "lato";
   src: url(../assets/fonts/lato-regular.ttf);
