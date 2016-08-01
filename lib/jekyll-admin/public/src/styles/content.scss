@@ -78,7 +78,7 @@
 
   td .row-actions {
     float: right;
-    font-size: 17px;
+    font-size: 18px;
     a {
       padding-right: 8px;
       &:hover {
@@ -91,6 +91,9 @@
     }
     a:last-child {
       padding: 0;
+    }
+    i {
+      margin-right: 4px;
     }
   }
 }
