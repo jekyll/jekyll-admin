@@ -17,6 +17,12 @@ describe "data" do
     expect(last_response_parsed).to eql({ "foo" => "bar" })
   end
 
+  it "gets an individual data file with an extension" do
+    get "/data/data_file.yml"
+    expect(last_response).to be_ok
+    expect(last_response_parsed).to eql({ "foo" => "bar" })
+  end
+
   it "writes a new data file" do
     delete_file "_data/data-file-new.yml"
 
