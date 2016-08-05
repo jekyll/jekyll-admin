@@ -28,17 +28,37 @@ module JekyllAdmin
 
       private
 
+      def data_dir
+        site.config["data_dir"]
+      end
+
       def data_files
         site.data
       end
 
       def data_file
-        data_files[data_file_key]
+        data_files[data_file_name]
       end
 
       # Data file without extension, as used in site.data[keys]
-      def data_file_key
+      def data_file_name
         File.basename params["data_file_id"], ".*"
+      end
+
+      # Returns the data file's extension, without the leading `.`
+      def data_file_extension
+        # Client explicitly passed an extension
+        extension = File.extname(params["data_file_id"]).sub(%r!\A\.!, "")
+        return extension unless extension.empty?
+
+        # No extension passed, try to find a data file on disk
+        base_path = File.join data_dir, data_file_name
+        extension = EXTENSIONS.find do |ext|
+          File.exist?(sanitized_path("#{base_path}.#{ext}"))
+        end
+
+        # Default to .yml if no existing file is found
+        extension || "yml"
       end
 
       def ensure_data_file_exists
@@ -53,20 +73,8 @@ module JekyllAdmin
       # the extension preference in the EXTENSIONS constant, and returns the
       # first match, defaulting to YML if none exists.
       def data_file_path
-        extension = File.extname(params["data_file_id"])
-        base_path = File.join site.config["data_dir"], params["data_file_id"]
-
-        if extension.empty?
-          # default to yml as a fallback if no other is found
-          extension = EXTENSIONS.first
-          EXTENSIONS.each do |ext|
-            path = "#{base_path}.#{ext}"
-            path = sanitized_path("#{path}.#{ext}")
-            return path if File.exist?(path)
-          end
-        end
-
-        sanitized_path "#{base_path}.#{extension}"
+        base_path = File.join data_dir, data_file_name
+        sanitized_path "#{base_path}.#{data_file_extension}"
       end
 
       def data_file_body
