@@ -24,6 +24,7 @@ require "jekyll-admin/server/data.rb"
 require "jekyll-admin/server/page.rb"
 require "jekyll-admin/server/static_file.rb"
 require "jekyll-admin/apiable.rb"
+require "jekyll-admin/data_file.rb"
 
 # Monkey Patches
 require_relative "./jekyll/commands/serve"

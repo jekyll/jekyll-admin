@@ -142,6 +142,24 @@ Delete a static file from disk.
 
 ### Data files
 
+#### Payload
+
+A standard data payload may look like:
+
+```json
+{
+  "path": "_data/data_file.yml",
+  "relative_path": "_data/data_file.yml",
+  "slug": "data_file",
+  "ext": ".yml",
+  "title": "Data File",
+  "raw_content": "foo: bar\n",
+  "content": {
+    "foo": "bar"
+  }
+}
+```
+
 #### Parameters
 
 * `data_file` - File path relative to the `_data` folder without an extension. (`String`)
