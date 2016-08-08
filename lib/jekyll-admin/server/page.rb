@@ -18,6 +18,7 @@ module JekyllAdmin
         end
 
         write_file(page_path, page_body)
+        ensure_page
         json page.to_api
       end
 
