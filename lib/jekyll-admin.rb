@@ -33,6 +33,10 @@ end
 
 module JekyllAdmin
   def self.site
-    @site ||= Jekyll.sites.first
+    @site ||= begin
+      site = Jekyll.sites.first
+      site.future = true
+      site
+    end
   end
 end
