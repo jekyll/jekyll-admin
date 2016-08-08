@@ -12,6 +12,7 @@ module JekyllAdmin
 
       put "/*" do
         write_file(static_file_path, static_file_body)
+        ensure_static_file_exists
         json static_file.to_liquid
       end
 

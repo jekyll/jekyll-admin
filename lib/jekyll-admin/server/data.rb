@@ -15,6 +15,7 @@ module JekyllAdmin
 
       put "/:data_file_id" do
         write_file(data_file_path, data_file_body)
+        ensure_data_file_exists
         json data_file.to_liquid
       end
 
