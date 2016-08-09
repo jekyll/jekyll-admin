@@ -37,7 +37,7 @@ describe "data" do
     expect(last_response_parsed).to eql(expected_response)
   end
 
-  it "writes a new data file" do
+  it "writes a new data file when given content" do
     delete_file "_data/data-file-new.yml"
 
     expected_response = {
@@ -52,7 +52,32 @@ describe "data" do
       }
     }
 
-    request = { "foo" => "bar" }
+    request = { "content" => { "foo" => "bar" } }
+    put "/data/data-file-new", request.to_json
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed).to eql(expected_response)
+    expect("_data/data-file-new.yml").to be_an_existing_file
+
+    delete_file "_data/data-file-new.yml"
+  end
+
+  it "writes a new data file when raw content" do
+    delete_file "_data/data-file-new.yml"
+
+    expected_response = {
+      "path"          => "_data/data-file-new.yml",
+      "relative_path" => "_data/data-file-new.yml",
+      "slug"          => "data-file-new",
+      "ext"           => ".yml",
+      "title"         => "Data File New",
+      "raw_content"   => "foo: bar\n",
+      "content"       => {
+        "foo" => "bar"
+      }
+    }
+
+    request = { "raw_content" => "foo: bar\n" }
     put "/data/data-file-new", request.to_json
 
     expect(last_response).to be_ok
@@ -77,7 +102,7 @@ describe "data" do
       }
     }
 
-    request = { "foo" => "bar2" }
+    request = { "content" => { "foo" => "bar2" } }
     put "/data/data-file-update", request.to_json
 
     expect(last_response).to be_ok

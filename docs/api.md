@@ -162,7 +162,9 @@ A standard data payload may look like:
 
 #### Parameters
 
-* `data_file` - File path relative to the `_data` folder without an extension. (`String`)
+* `data_file` - File path relative to the `_data` folder (`String`). If no extension is given, defaults to `.yml`
+* `content` - The JSON encoded YAML object to write to disk as the file's content
+* `raw_content` - The raw string representing the file's content to write to disk
 
 #### `GET /data`
 

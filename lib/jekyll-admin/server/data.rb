@@ -33,7 +33,11 @@ module JekyllAdmin
       end
 
       def data_file_body
-        YAML.dump(request_payload).sub(%r!\A---\n!, "")
+        if !request_payload["raw_content"].to_s.empty?
+          request_payload["raw_content"]
+        elsif !request_payload["content"].to_s.empty?
+          YAML.dump(request_payload["content"]).sub(%r!\A---\n!, "")
+        end
       end
 
       def ensure_data_file_exists
