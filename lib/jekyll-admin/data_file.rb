@@ -5,7 +5,7 @@ module JekyllAdmin
 
     # Initialize a new DataFile object
     #
-    # relative_path - the path to the data file relative to the `_data` dir
+    # id - the file ID as passed from the API. This may or may not have an extension
     def initialize(id)
       @id ||= id
     end
