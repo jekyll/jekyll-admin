@@ -2,17 +2,22 @@ module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/static_files" do
       get do
-        json static_files.map(&:to_liquid)
+        json static_files.map(&:to_api)
       end
 
       get "/*" do
-        ensure_static_file_exists
-        json static_file.to_liquid
+        if static_file
+          json static_file.to_api
+        elsif !static_files_for_path.empty?
+          json static_files_for_path.map(&:to_api)
+        else
+          render_404
+        end
       end
 
       put "/*" do
         write_file(static_file_path, static_file_body)
-        json static_file.to_liquid
+        json static_file.to_api
       end
 
       delete "/*" do
@@ -33,7 +38,11 @@ module JekyllAdmin
       end
 
       def static_file_body
-        request_payload["body"].to_s
+        if !request_payload["raw_content"].to_s.empty?
+          request_payload["raw_content"].to_s
+        else
+          Base64.decode64 request_payload["encoded_content"].to_s
+        end
       end
 
       def static_files
@@ -41,25 +50,17 @@ module JekyllAdmin
       end
 
       def file_list_dir(path)
-        static_files.select do |f|
-          # Files that are in this directory
-          # Joined with / to ensure user can't do partial paths
-          f.path.start_with? File.join(path, "/")
-        end.map(&:to_liquid)
       end
 
       def static_file
-        requested_path = static_file_path
-        file = static_files.find { |f| f.path == requested_path }
-        if !file
-          file_list = file_list_dir requested_path
-          if file_list == []
-            nil
-          else
-            file_list
-          end
-        else
-          file
+        static_files.find { |f| f.path == static_file_path }
+      end
+
+      def static_files_for_path
+        # Joined with / to ensure user can't do partial paths
+        base_path = File.join(static_file_path, "/")
+        static_files.select do |f|
+          f.path.start_with? base_path
         end
       end
 
