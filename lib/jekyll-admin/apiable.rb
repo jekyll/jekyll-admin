@@ -11,13 +11,6 @@ module JekyllAdmin
     def to_api
       output = to_liquid
 
-      # Pages don't have a hash method, but Documents do
-      file_path = if is_a?(Jekyll::Document)
-                    path
-                  else
-                    File.join(@base, @dir, name)
-                  end
-
       if File.exist?(file_path)
         content = File.read(file_path, Jekyll::Utils.merged_file_read_opts(site, {}))
         if content =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
@@ -25,11 +18,33 @@ module JekyllAdmin
           yaml = SafeYAML.load(Regexp.last_match(1))
         end
 
-        output["raw_content"] = content.to_s
-        output["front_matter"] = yaml || {}
+        if is_a?(Jekyll::StaticFile)
+          output["encoded_content"] = Base64.encode64(content)
+        else
+          output["raw_content"] = content.to_s
+          output["front_matter"] = yaml || {}
+        end
       end
 
       output.to_h
+    end
+
+    private
+
+    # Pages don't have a hash method, but Documents do
+    def file_path
+      if is_a?(Jekyll::Document)
+        path
+      elsif is_a?(Jekyll::StaticFile)
+        File.join(@base, @dir, @name)
+      else
+        File.join(@base, @dir, name)
+      end
+    end
+
+    # StaticFiles don't have `attr_accesor` set for @site
+    def site
+      @site
     end
   end
 end
