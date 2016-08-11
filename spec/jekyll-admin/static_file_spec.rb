@@ -16,6 +16,7 @@ describe "static_files" do
     expect(last_response).to be_ok
     expect(last_response_parsed["extname"]).to eql(".txt")
     expect(last_response_parsed["path"]).to eql("/static-file.txt")
+    expect(last_response_parsed["encoded_content"]).to eql("VEVTVAo=\n")
   end
 
   it "404s when a static file doesn't exist" do
@@ -61,12 +62,28 @@ describe "static_files" do
   it "writes a static file" do
     delete_file "static-file-new.txt", "test"
 
-    request = { :body => "test" }
+    request = { :encoded_content => "dGVzdA==" }
     put "/static_files/static-file-new.txt", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed["extname"]).to eql(".txt")
     expect(last_response_parsed["path"]).to eql("/static-file-new.txt")
+    expect(last_response_parsed["encoded_content"]).to eql("dGVzdA==\n")
+    expect("static-file-new.txt").to be_an_existing_file
+
+    delete_file "static-file-new.txt"
+  end
+
+  it "writes a static file with raw content" do
+    delete_file "static-file-new.txt", "test"
+
+    request = { :raw_content => "test" }
+    put "/static_files/static-file-new.txt", request.to_json
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed["extname"]).to eql(".txt")
+    expect(last_response_parsed["path"]).to eql("/static-file-new.txt")
+    expect(last_response_parsed["encoded_content"]).to eql("dGVzdA==\n")
     expect("static-file-new.txt").to be_an_existing_file
 
     delete_file "static-file-new.txt"
@@ -75,12 +92,13 @@ describe "static_files" do
   it "deeply writes a static file" do
     delete_file "static-dir/file-new.txt"
 
-    request = { :body => "test" }
+    request = { :encoded_content => "dGVzdA==" }
     put "/static_files/static-dir/file-new.txt", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed["extname"]).to eql(".txt")
     expect(last_response_parsed["path"]).to eql("/static-dir/file-new.txt")
+    expect(last_response_parsed["encoded_content"]).to eql("dGVzdA==\n")
     expect("static-dir/file-new.txt").to be_an_existing_file
 
     delete_file "static-dir/file-new.txt"
@@ -89,12 +107,13 @@ describe "static_files" do
   it "updates a static file" do
     write_file "static-file-update.txt", "test2"
 
-    request = { :body => "test" }
+    request = { :encoded_content => "dGVzdDI=" }
     put "/static_files/static-file-update.txt", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed["extname"]).to eql(".txt")
     expect(last_response_parsed["path"]).to eql("/static-file-update.txt")
+    expect(last_response_parsed["encoded_content"]).to eql("dGVzdDI=\n")
     expect("static-file-update.txt").to be_an_existing_file
     delete_file "static-file-update.txt"
   end
