@@ -1,6 +1,6 @@
 ---
 title: Architecture
-permalink: /rchitecture/
+permalink: /architecture/
 ---
 
 Jekyll Admin exists in two parts, a Ruby backend and a Javascript front-end. The two halves communicate via a shared API.
