@@ -13,3 +13,5 @@ defaults:
       path: ""
     values:
       layout: "page"
+
+baseurl: "/jekyll-admin"
