@@ -1,4 +1,7 @@
-## HTTP API
+---
+title: HTTP API
+permalink: /api/
+---
 
 The below are the documented endpoints of the shared HTTP API. All requests and responses are made in JSON, and should follow RESTful standards, including respecting HTTP verbs.
 
