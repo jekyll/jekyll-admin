@@ -23,7 +23,7 @@ Bug reports and pull requests are welcome on GitHub at https://github.com/jekyll
 
 ## Development
 
-See [the development docs](development/)
+See [the development docs](http://jekyll.github.io/jekyll-admin/development/)
 
 ## License
 
