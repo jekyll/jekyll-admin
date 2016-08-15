@@ -1,4 +1,7 @@
-## HTTP API
+---
+title: HTTP API
+permalink: /api/
+---
 
 The below are the documented endpoints of the shared HTTP API. All requests and responses are made in JSON, and should follow RESTful standards, including respecting HTTP verbs.
 
@@ -51,7 +54,7 @@ Data files and the config file are direct JSON representations of the underlying
 
 #### Static files
 
-Static files are just the raw content and may be binary.
+Static files are non-Jekyll files and may be binary or text.
 
 ### Collections
 
@@ -124,11 +127,28 @@ File will be written to disk in YAML. It will not necessarily to preserve whites
 
 ### Static files
 
+#### Parameters
+
 * `path` - the path to the file or directory, relative to the site root (`String`)
+* `raw_content` - The raw, text-based content to be written directly to disk (`String`)
+* `encoded_content` - The Base64 encoded text or binary content (`String`)
+
+### Example response
+
+```json
+{
+  "extname": ".txt",
+  "modified_time": "2016-08-10 18:05:45 -0400",
+  "path": "/test.txt",
+  "encoded_content": "dGVzdA==\n"
+}
+```
+
+**Note**: The `encoded_content` field is the Base64 encoded representation of the file's content.
 
 #### `GET /static_files/:path`
 
-Returns the requested static file. The response does not include the file's content.
+Returns the requested static file.
 
 If the path maps to a directory, it list all static files in the directory. This does not include documents, pages, etc.
 

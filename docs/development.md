@@ -1,4 +1,7 @@
-## Development
+---
+title: Development
+permalink: /development/
+---
 
 ### To install locally
 

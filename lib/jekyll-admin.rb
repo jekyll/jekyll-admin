@@ -6,6 +6,7 @@ ENV["RACK_ENV"] = "production" if ENV["RACK_ENV"].to_s.empty?
 
 require "json"
 require "jekyll"
+require "base64"
 require "webrick"
 require "sinatra"
 require "fileutils"
@@ -28,7 +29,7 @@ require "jekyll-admin/data_file.rb"
 
 # Monkey Patches
 require_relative "./jekyll/commands/serve"
-[Jekyll::Page, Jekyll::Document].each do |klass|
+[Jekyll::Page, Jekyll::Document, Jekyll::StaticFile].each do |klass|
   klass.include JekyllAdmin::APIable
 end
 
