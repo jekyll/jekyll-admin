@@ -2,7 +2,6 @@
 
 set -e
 
-script/return-to-pwd
 echo "Building frontend server..."
 npm run clean-dist
 npm run build

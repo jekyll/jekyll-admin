@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
 
 script/branding
-script/return-to-pwd
 npm start
