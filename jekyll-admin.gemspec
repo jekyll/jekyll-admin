@@ -36,4 +36,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 3.4"
   spec.add_development_dependency "rubocop", "~> 0.35"
   spec.add_development_dependency "sinatra-cross_origin", "~> 0.3"
+  spec.add_development_dependency "gem-release", "~> 0.7"
 end
