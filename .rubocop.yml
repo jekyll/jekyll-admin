@@ -5,3 +5,4 @@ AllCops:
   Exclude:
     - lib/jekyll-admin/public/**/*
     - src/**/*
+    - node_modules/**/*
