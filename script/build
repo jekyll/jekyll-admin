@@ -2,8 +2,6 @@
 
 set -e
 
-script/return-to-pwd
-cd ./lib/jekyll-admin/public || exit
 echo "Building frontend server..."
 npm run clean-dist
 npm run build
