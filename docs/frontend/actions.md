@@ -7,7 +7,7 @@ Actions are payloads of information that send data from the application to the s
 Async action for fetching Jekyll project configuration (`_config.yml`)
 
 ### `putConfig(config)`
-Async action for updating Jekyll project configuration (`_config.yml`)
+Async action for updating Jekyll project configuration
 
 ### `onEditorChange`
 Action for notifying whether the YAML editor has changed after last update
@@ -22,7 +22,7 @@ Async action for fetching an array of page objects.
 Async action for fetching the requested page.
 
 ### `putPage(id)`
-Async action for creating/updating the requested page. The updated content comes
+Async action for creating/updating the requested page. The edited/new content comes
 from `state.metadata`
 
 ### `deletePage(id)`
@@ -43,7 +43,7 @@ Async action for fetching an array of documents corresponding to the requested c
 ### `fetchDocument(collection_name, id)`
 Async action for fetching the requested document. The response includes the document body.
 
-### `putDocument(collection_name, id)`
+### `putDocument(id, collection_name)`
 Async action for creating/updating the requested document. The response includes the document body. The updated content comes from `state.metadata`
 
 ### `deleteDocument(collection_name, id)`
@@ -88,13 +88,44 @@ Updates the content path when the input changes.
 Updates the content visibility when the checkbox changes.
 
 
+## Static Files
+
+### `fetchStaticFiles`
+Async action for fetching static files.
+
+### `uploadStaticFiles(files)`
+Async action for uploading multiple static files at the same time.
+It encodes the uploaded `File` objects to `base64` before sending PUT request.
+
+### `deleteStaticFile(filename)`
+Async action for deleting the requested static file.
+
+
+## Data Files
+
+### `fetchDataFiles`
+Async action for fetching data files.
+
+### `fetchDataFile(filename)`
+Async action for fetching the requested data file.
+
+### `putDataFile(filename, data)`
+Async action for creating/updating the requested data file. It validates the given filename and data before the PUT request.
+
+### `deleteDataFile(filename)`
+Async action for deleting the requested data file.
+
+### `onDataFileChanged`
+Action for keeping track of the updated form fields.
+
+
 ## Utils
 
-### `searchByTitle(input)`
+### `search(input)`
 Action for storing search input from the user
 
 ### `validationError(errors)`
 Action for storing form errors.
 
-### `clearErrors()`
+### `clearErrors`
 Action for clearing form errors if any.
