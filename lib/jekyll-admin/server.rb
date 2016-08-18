@@ -18,9 +18,9 @@ module JekyllAdmin
     end
 
     get "/" do
-      json ROUTES.map do |route|
+      ROUTES.map do |route|
         ["#{route}_api", URI.join(base_url, "/_api/", route)]
-      end.to_h
+      end.to_h.to_json
     end
 
     # CORS preflight
