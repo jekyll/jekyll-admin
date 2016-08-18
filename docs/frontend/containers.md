@@ -161,3 +161,75 @@ Container for creating a new document.
   fieldChanged: Boolean
 }
 ```
+
+### DataFiles
+Container for DataFiles view. Lists the data files.
+
+** PropTypes **
+``` javascript
+{
+  files: Array,
+  fetchDataFiles: Function,
+  deleteDataFile: Function,
+  search: Function,
+  isFetching: Boolean
+  message: String
+}
+```
+
+### DataFileEdit
+Container for editing a data file.
+
+** PropTypes **
+``` javascript
+{
+  datafile: Object,
+  fetchDataFile: Function,
+  putDataFile: Function,
+  deleteDataFile: Function,
+  clearErrors: Function,
+  onDataFileChanged: Function,
+  message: String,
+  isFetching: Boolean,
+  updated: Boolean,
+  datafileChanged: Boolean,
+  errors: Array,
+  params: Object
+}
+```
+
+### DataFileNew
+Container for creating a new data file
+
+** PropTypes **
+``` javascript
+{
+  datafile: Object,
+  putDataFile: Function,
+  onDataFileChanged: Function,
+  clearErrors: Function,
+  errors: Array,
+  updated: Boolean,
+  datafileChanged: Boolean,
+  message: String
+}
+```
+
+### StaticFiles
+Container for StaticFiles view. Lists all of the static files and let users upload/delete static files. It uses `react-dropzone` for drag & drop file uploading.
+Uploaded files are previewed with the help of `FilePreview` component.
+
+** PropTypes **
+``` javascript
+{
+  files: Array,
+  fetchStaticFiles: Function,
+  uploadStaticFiles: Function,
+  deleteStaticFile: Function,
+  search: Function,
+  isFetching: Boolean,
+}
+```
+
+### NotFound
+Component for 404 page. react-router renders this component for all non-existing routes.

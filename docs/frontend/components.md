@@ -24,37 +24,34 @@ Can have [all options of SimpleMDE](https://github.com/NextStepWebs/simplemde-ma
 
 ## Breadcrumbs
 Component for generating breadcrumbs. First breadcrumb indicates the current content
-type and the second one which is editable is the path of current document.
+type and the second one which is editable is the path of current item.
 
 ** PropTypes **
 ``` javascript
 {
   link: String, // Link to the corresponding content type
-  type: String, // Content type (pages, collections)
+  type: String, // Content type (pages, collections..)
   path: String, // File path
   onChange: Function // triggered when the path changes
 }
 ```
 
 
-## Splitter
-Component for divider.
-
-
-## Content
-
-### ContentTable
-Generic component for listing contents (Collections, Posts, Pages, Static files).
+## FilePreview
+Component for previewing the uploaded file. It renders an image or a div according to
+the given file.
 
 ** PropTypes **
 ``` javascript
 {
-  contentType: String, // (e.g 'posts', 'pages', 'collections')
-  columns: Array,
-  rows: Array,
-  linkPrefix: String, // link prefix of the current page/document
-  deleteContent: Function
+  file: File, // https://developer.mozilla.org/en-US/docs/Web/API/File
+  onClickDelete: Function
+}
 ```
+
+
+## Splitter
+Horizontal line for splitting views
 
 
 ## Form
@@ -88,7 +85,8 @@ Listing view search input
 ** PropTypes **
 ``` javascript
 {
-  searchByTitle: Function
+  search: Function, // callback function triggered when enter key is pressed
+  searchBy: String
 }
 ```
 

@@ -8,9 +8,9 @@ State;
 {
   config: Object, // site config object
   updated: Boolean, // set to true when the config is updated
-  message: String,
   editorChanged: Boolean, // set to true when the config editor changes
-  isFetching: Boolean // set to true when the config is being fetched
+  isFetching: Boolean, // set to true when the config is being fetched
+  message: String
 }
 ```
 
@@ -21,9 +21,9 @@ State;
 {
   pages: Array,
   page: Object, // currently visited page
-  message: String,
   isFetching: Boolean, // set to true when the page is being fetched
-  updated: Boolean // set to true when the page is updated
+  updated: Boolean, // set to true when the page is updated
+  message: String
 }
 ```
 
@@ -36,9 +36,9 @@ State;
   currentCollection: Object,
   currentDocuments: Array,
   currentDocument: Object,
-  message: String,
   isFetching: Boolean, // set to true when the document is being fetched
-  updated: Boolean // set to true when the document is updated
+  updated: Boolean, // set to true when the document is updated
+  message: String
 }
 ```
 
@@ -55,6 +55,31 @@ State;
 ```
 
 
+## Data Files
+State;
+``` javascript
+{
+  files: Array, // stores all of the data files
+  currentFile: Object, // stores current datafile
+  updated: Boolean, // stores upload state
+  isFetching: Boolean,
+  message: String
+}
+```
+
+
+## Static Files
+State;
+``` javascript
+{
+  files: Array, // stores all of the static files
+  isFetching: Boolean,
+  uploading: Boolean, // stores upload state
+  message: String
+}
+```
+
+
 ## Utils
 State;
 ``` javascript
@@ -64,8 +89,11 @@ State;
 }
 ```
 
+
 **Selectors**;
+Helper functions for searching contents
 
 ``` javascript
-filterByTitle(list, input) // takes list to be filtered and input to filter by
+filterByTitle(list, input)
+filterByFilename(list, input)
 ```
