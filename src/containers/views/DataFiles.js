@@ -95,7 +95,7 @@ export class DataFiles extends Component {
           files.length > 0 && this.renderTable()
         }
         {
-          !files.length && <h1>{`No matching data files found.`}</h1>
+          !files.length && <h1>{`No data files found.`}</h1>
         }
       </div>
     );

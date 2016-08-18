@@ -113,7 +113,7 @@ export class Documents extends Component {
           currentDocuments.length > 0 && this.renderTable()
         }
         {
-          !currentDocuments.length && <h1>{`No matching documents found.`}</h1>
+          !currentDocuments.length && <h1>{`No documents found.`}</h1>
         }
       </div>
     );

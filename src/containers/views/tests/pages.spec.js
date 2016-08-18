@@ -41,7 +41,7 @@ describe('Containers::Pages', () => {
     const { component, table, h1 } = setup([]);
     const compProps = component.props();
     expect(table.node).toNotExist();
-    expect(h1.text()).toBe(`No matching pages found.`);
+    expect(h1.text()).toBe(`No pages found.`);
   });
 
   it('should call fetchPages action after mounted', () => {
