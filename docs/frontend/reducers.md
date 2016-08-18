@@ -1,10 +1,14 @@
-# Reducers
-Specifies how the application’s state changes in response to action creators.
-
+---
+title: Reducers
+permalink: /frontend/reducers/
+description: Specifies how the application’s state changes in response to action creators.
+---
 
 ## Configuration
+
 State;
-``` javascript
+
+```javascript
 {
   config: Object, // site config object
   updated: Boolean, // set to true when the config is updated
@@ -14,10 +18,11 @@ State;
 }
 ```
 
-
 ## Pages
+
 State;
-``` javascript
+
+```javascript
 {
   pages: Array,
   page: Object, // currently visited page
@@ -27,10 +32,11 @@ State;
 }
 ```
 
-
 ## Collections
+
 State;
-``` javascript
+
+```javascript
 {
   collections: Array,
   currentCollection: Object,
@@ -42,10 +48,11 @@ State;
 }
 ```
 
-
 ## Metadata
+
 State;
-``` javascript
+
+```javascript
 {
   metadata: Object, // stores current document's metadata
   new_field_count: Number, // for naming newly created fields
@@ -54,10 +61,11 @@ State;
 }
 ```
 
-
 ## Data Files
+
 State;
-``` javascript
+
+```javascript
 {
   files: Array, // stores all of the data files
   currentFile: Object, // stores current datafile
@@ -67,10 +75,11 @@ State;
 }
 ```
 
-
 ## Static Files
+
 State;
-``` javascript
+
+```javascript
 {
   files: Array, // stores all of the static files
   isFetching: Boolean,
@@ -79,21 +88,21 @@ State;
 }
 ```
 
-
 ## Utils
+
 State;
-``` javascript
+
+```javascript
 {
   input: String, // search input
   errors: Array // form errors
 }
 ```
 
-
 **Selectors**;
 Helper functions for searching contents
 
-``` javascript
+```javascript
 filterByTitle(list, input)
 filterByFilename(list, input)
 ```
