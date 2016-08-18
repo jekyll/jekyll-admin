@@ -1,37 +1,43 @@
-# Containers
-Container components which connect the presentational components to Redux.
-
+---
+title: Containers
+permalink: /frontend/containers/
+description: Container components which connect the presentational components to Redux.
+---
 
 ## Sidebar
+
 Container for listing all of the main routes.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   collections: Array,
   fetchCollections: Function
 }
 ```
 
-
 ## Header
+
 Container for displaying header which includes title and homepage link.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   config: Object,
   fetchConfig: Function
 }
 ```
 
-
 ## MetaFields
+
 Main container for metafields. Generates list, object or plain inputs
 for front matters other than `title`, `body`, `path` and `draft`.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   content: Object,
   metadata: Object,
@@ -46,16 +52,17 @@ for front matters other than `title`, `body`, `path` and `draft`.
 }
 ```
 
-
-## Views
+\## Views
 Contains all of the views linked with the routes.
 
 ### Configuration
+
 Container for Configuration view. Consists of a YAML editor and a save button.
 The button is activated when the editor changes.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   config: Object,
   onEditorChange: Function,
@@ -67,10 +74,12 @@ The button is activated when the editor changes.
 ```
 
 ### Pages
+
 Container for Pages view. Lists available pages.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   pages: Array,
   fetchPages: Function,
@@ -82,10 +91,12 @@ Container for Pages view. Lists available pages.
 ```
 
 ### PageEdit
+
 Container for editing a page.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   page: Object,
   fetchPage: Function,
@@ -104,10 +115,12 @@ Container for editing a page.
 ```
 
 ### PageNew
+
 Container for creating a new page.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   putPage: Function,
   updateTitle: Function,
@@ -121,13 +134,16 @@ Container for creating a new page.
 ```
 
 ### Documents
+
 Container for Documents view. Lists the documents of a collection (including posts).
 
 ### DocumentEdit
+
 Container for editing a document.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   currentDocument: Object,
   fetchDocument: Function,
@@ -146,10 +162,12 @@ Container for editing a document.
 ```
 
 ### DocumentNew
+
 Container for creating a new document.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   putDocument: Function,
   updateTitle: Function,
@@ -163,10 +181,12 @@ Container for creating a new document.
 ```
 
 ### DataFiles
+
 Container for DataFiles view. Lists the data files.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   files: Array,
   fetchDataFiles: Function,
@@ -178,10 +198,12 @@ Container for DataFiles view. Lists the data files.
 ```
 
 ### DataFileEdit
+
 Container for editing a data file.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   datafile: Object,
   fetchDataFile: Function,
@@ -199,10 +221,12 @@ Container for editing a data file.
 ```
 
 ### DataFileNew
+
 Container for creating a new data file
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   datafile: Object,
   putDataFile: Function,
@@ -216,11 +240,13 @@ Container for creating a new data file
 ```
 
 ### StaticFiles
+
 Container for StaticFiles view. Lists all of the static files and let users upload/delete static files. It uses `react-dropzone` for drag & drop file uploading.
 Uploaded files are previewed with the help of `FilePreview` component.
 
 ** PropTypes **
-``` javascript
+
+```javascript
 {
   files: Array,
   fetchStaticFiles: Function,
@@ -232,4 +258,5 @@ Uploaded files are previewed with the help of `FilePreview` component.
 ```
 
 ### NotFound
+
 Component for 404 page. react-router renders this component for all non-existing routes.

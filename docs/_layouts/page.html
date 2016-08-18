@@ -1,0 +1,25 @@
+---
+layout: default
+---
+
+<article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">{{ page.title | escape }}</h1>
+    {% if page.description %}
+      <h2 class="lede">{{ page.description }}</h2>
+    {% endif %}
+  </header>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+
+</article>
+
+<p>
+  <em>
+    Found a mistake? See something that can be made better? These docs are open source. <br />
+    Please help <a href="https://github.com/{{ site.github.repository_nwo }}/edit/master/{{ page.path }}">improve this page</a>.
+  </em>
+</p>
