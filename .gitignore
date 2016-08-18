@@ -15,3 +15,4 @@ npm-debug.log
 /spec/fixtures/site/Gemfile.lock
 node_modules
 /lib/jekyll-admin/public
+*.gem
