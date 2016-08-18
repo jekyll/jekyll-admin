@@ -48,6 +48,16 @@ describe JekyllAdmin::DataFile do
           "relative_path" => "_data/data_file.yml",
           "slug"          => "data_file",
           "ext"           => ".yml",
+          "title"         => "Data File"
+        })
+      end
+
+      it "returns the hash with content" do
+        expect(subject.to_api(:include_content => true)).to eql({
+          "path"          => "_data/data_file.yml",
+          "relative_path" => "_data/data_file.yml",
+          "slug"          => "data_file",
+          "ext"           => ".yml",
           "title"         => "Data File",
           "raw_content"   => "foo: bar\n",
           "content"       => {

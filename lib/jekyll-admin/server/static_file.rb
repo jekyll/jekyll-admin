@@ -7,7 +7,7 @@ module JekyllAdmin
 
       get "/*" do
         if static_file
-          json static_file.to_api
+          json static_file.to_api(:include_content => true)
         elsif !static_files_for_path.empty?
           json static_files_for_path.map(&:to_api)
         else
@@ -17,7 +17,7 @@ module JekyllAdmin
 
       put "/*" do
         write_file(static_file_path, static_file_body)
-        json static_file.to_api
+        json static_file.to_api(:include_content => true)
       end
 
       delete "/*" do

@@ -1,7 +1,9 @@
 module JekyllAdmin
   class DataFile
-    METHODS_FOR_API = %w(path relative_path slug ext title raw_content content).freeze
+    METHODS_FOR_LIQUID = %w(path relative_path slug ext title).freeze
     EXTENSIONS = %w(yaml yml json csv).freeze
+
+    include APIable
 
     # Initialize a new DataFile object
     #
@@ -17,6 +19,7 @@ module JekyllAdmin
     def absolute_path
       @absolute_path ||= Jekyll.sanitized_path(JekyllAdmin.site.source, relative_path)
     end
+    alias_method :file_path, :absolute_path
 
     # Returns the relative path relative to site source
     def relative_path
@@ -54,11 +57,11 @@ module JekyllAdmin
       @title ||= Jekyll::Utils.titleize_slug(slug.tr("_", "-"))
     end
 
-    # Returns the complete hash suitable for the API response
-    def to_api
-      @to_api ||= METHODS_FOR_API.map { |key| [key, public_send(key)] }.to_h
+    # Mimics Jekyll's native to_liquid functionality by returning a hash
+    # of data file metadata
+    def to_liquid
+      @to_liquid ||= METHODS_FOR_LIQUID.map { |key| [key, public_send(key)] }.to_h
     end
-    alias_method :to_liquid, :to_api
 
     def self.all
       data_dir = Jekyll.sanitized_path(JekyllAdmin.site.source, DataFile.data_dir)

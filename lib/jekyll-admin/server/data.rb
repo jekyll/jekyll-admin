@@ -10,12 +10,12 @@ module JekyllAdmin
 
       get "/:data_file_id" do
         ensure_data_file_exists
-        json data_file.to_api
+        json data_file.to_api(:include_content => true)
       end
 
       put "/:data_file_id" do
         write_file(data_file.relative_path, data_file_body)
-        json data_file.to_api
+        json data_file.to_api(:include_content => true)
       end
 
       delete "/:data_file_id" do

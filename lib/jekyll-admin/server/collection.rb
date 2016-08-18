@@ -2,12 +2,12 @@ module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/collections" do
       get do
-        json site.collections.map { |c| c[1].to_liquid }
+        json site.collections.map { |c| c[1].to_api }
       end
 
       get "/:collection_id" do
         ensure_collection
-        json collection.to_liquid
+        json collection.to_api
       end
 
       get "/:collection_id/documents" do
@@ -17,7 +17,7 @@ module JekyllAdmin
 
       get "/:collection_id/*" do
         ensure_document
-        json document.to_api
+        json document.to_api(:include_content => true)
       end
 
       put "/:collection_id/*" do
@@ -33,7 +33,7 @@ module JekyllAdmin
         end
 
         write_file(document_path, document_body)
-        json document.to_api
+        json document.to_api(:include_content => true)
       end
 
       delete "/:collection_id/*" do
