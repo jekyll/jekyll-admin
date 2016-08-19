@@ -95,7 +95,7 @@ describe('Actions::Collections', () => {
   it('deletes the document successfully', () => {
     nock(API)
       .delete(`/collections/${doc.collection}/${filename}`)
-      .reply(200, { message: 'Deleted' });
+      .reply(200);
 
     const expectedActions = [
       { id: filename, type: types.DELETE_DOCUMENT_SUCCESS }

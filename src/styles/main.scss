@@ -85,10 +85,6 @@ i {
   @include btn($btn-danger, $btn-danger-border);
 }
 
-.message {
-  margin-left: 20px;
-}
-
 .splitter {
   background-color: $orange;
   height: 1px;

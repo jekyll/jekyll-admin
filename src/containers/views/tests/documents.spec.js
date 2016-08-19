@@ -16,7 +16,6 @@ function setup(currentDocuments=[doc]) {
   const component = mount(
     <Documents
       currentDocuments={currentDocuments}
-      message=""
       {...actions}
       params={{collection_name: "movies"}}
       isFetching={false} />
@@ -26,16 +25,14 @@ function setup(currentDocuments=[doc]) {
     component: component,
     actions: actions,
     h1: component.find('h1').last(),
-    message: component.find('.message'),
     table: component.find('.content-table')
   };
 }
 
 describe('Containers::Documents', () => {
   it('should render correctly', () => {
-    const { h1, message } = setup();
+    const { h1 } = setup();
     expect(h1.text()).toBe('Movies');
-    expect(message.text()).toBe('');
   });
 
   it('should render correctly when there are not any documents', () => {

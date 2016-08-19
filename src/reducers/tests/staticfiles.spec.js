@@ -9,7 +9,6 @@ describe('Reducers::StaticFiles', () => {
     expect(reducer(undefined, {})).toEqual({
       files: [],
       isFetching: false,
-      message: "",
       uploading: false
     });
   });
@@ -29,16 +28,13 @@ describe('Reducers::StaticFiles', () => {
       })
     ).toEqual({
       files: [staticfile],
-      isFetching: false,
-      message: ""
+      isFetching: false
     });
     expect(
       reducer({}, {
-        type: types.FETCH_STATICFILES_FAILURE,
-        error: 'Something gone wrong.'
+        type: types.FETCH_STATICFILES_FAILURE
       })
     ).toEqual({
-      message: 'Something gone wrong.',
       isFetching: false
     });
   });
@@ -61,30 +57,10 @@ describe('Reducers::StaticFiles', () => {
     });
     expect(
       reducer({uploading: true}, {
-        type: types.PUT_STATICFILE_FAILURE,
-        error: 'Something gone wrong'
+        type: types.PUT_STATICFILE_FAILURE
       })
     ).toEqual({
-      message: "Something gone wrong.",
       uploading: false
-    });
-  });
-
-  it('should handle deleteStaticFile', () => {
-    expect(
-      reducer({message: ''}, {
-        type: types.DELETE_STATICFILE_SUCCESS
-      })
-    ).toEqual({
-      message: 'The file is deleted.'
-    });
-    expect(
-      reducer({message: ''}, {
-        type: types.DELETE_STATICFILE_FAILURE,
-        error: "Something gone wrong."
-      })
-    ).toEqual({
-      message: "Something gone wrong."
     });
   });
 });
