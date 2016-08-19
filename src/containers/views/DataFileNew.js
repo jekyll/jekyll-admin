@@ -60,7 +60,7 @@ export class DataFileNew extends Component {
             <Editor
               editorChanged={datafileChanged}
               onEditorChange={onDataFileChanged}
-              json={{}}
+              json={''}
               ref="editor" />
           </div>
 
