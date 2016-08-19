@@ -10,6 +10,8 @@ import {
 
 import { get, put, del } from '../utils/fetch';
 
+import { addNotification } from './notifications';
+
 export function fetchStaticFiles() {
   return dispatch => {
     dispatch({ type: ActionTypes.FETCH_STATICFILES_REQUEST});
@@ -44,6 +46,11 @@ export function uploadStaticFiles(files) {
             type: ActionTypes.PUT_STATICFILE_SUCCESS
           });
           dispatch(fetchStaticFiles());
+          dispatch(addNotification(
+            'Success',
+            `${file.name} uploaded successfully`,
+            'success'
+          ));
         })
         .catch(error => dispatch({
           type: ActionTypes.PUT_STATICFILE_FAILURE,
