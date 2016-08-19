@@ -107,3 +107,9 @@ export const staticfile = {
   path: "/index.html",
   encoded_content: "PGh0bWw+CiAgPGJvZHk+CiAgICBZb3UncmUgcHJvYmFibHkgbG9va2luZyBm"
 };
+
+export const notification = {
+  title: 'Test',
+  message: 'Testing notifications',
+  level: 'success'
+};
