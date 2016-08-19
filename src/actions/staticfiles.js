@@ -52,10 +52,17 @@ export function uploadStaticFiles(files) {
             'success'
           ));
         })
-        .catch(error => dispatch({
-          type: ActionTypes.PUT_STATICFILE_FAILURE,
-          error
-        }));
+        .catch(error => {
+          dispatch({
+            type: ActionTypes.PUT_STATICFILE_FAILURE,
+            error
+          });
+          dispatch(addNotification(
+            'Upload Error',
+            `Error occurred uploading the file.`,
+            'error'
+          ));
+        });
       };
     });
   };
