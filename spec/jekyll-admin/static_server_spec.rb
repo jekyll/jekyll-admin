@@ -7,7 +7,7 @@ describe JekyllAdmin::StaticServer do
 
   def expected_index
     expected = File.read(index_path)
-    expected.gsub!("\r\n", "\n") if Gem.win_platform?
+    expected.gsub!("\n", "\r\n") if Gem.win_platform?
     expected
   end
 
