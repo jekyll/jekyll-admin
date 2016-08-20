@@ -36,6 +36,7 @@ module JekyllAdmin
       end
 
       def page
+        puts "PAGE PATH: #{page_path}"
         site.pages.find { |p| p.path == params["page_id"] }
       end
 
