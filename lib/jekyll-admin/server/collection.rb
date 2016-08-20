@@ -60,6 +60,7 @@ module JekyllAdmin
       end
 
       def document
+        puts "DOCUMENT PATH: #{document_path}"
         collection.docs.find { |d| d.path == document_path }
       end
 
