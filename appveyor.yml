@@ -1,11 +1,14 @@
 environment:
   nodejs_version: "0"
+  RACK_ENV: test
+  JEKYLL_LOG_LEVEL: warn
 
 install:
   - set PATH=C:\Ruby22\bin;%PATH%
   - ps: Install-Product node $env:nodejs_version
   - bundle config --local path vendor/bundle
-  - script/bootstrap
+  - bundle install
+  - npm install
 
 build: off
 
@@ -17,7 +20,9 @@ before_test:
   - bundle -v
 
 test_script:
-  - script/cibuild
+  - npm test
+  - bundle exec rspec
+  - bundle exec rubocop -D -S
 
 cache:
   - vendor/bundle
