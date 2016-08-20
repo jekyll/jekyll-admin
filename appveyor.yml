@@ -2,6 +2,9 @@ environment:
   nodejs_version: "6"
   RACK_ENV: test
   JEKYLL_LOG_LEVEL: warn
+  matrix:
+    - TEST_SUITE: node
+    - TEST_SUITE: ruby
 
 install:
   - set PATH=C:\Ruby22\bin;%PATH%
