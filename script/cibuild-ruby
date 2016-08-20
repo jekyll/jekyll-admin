@@ -4,4 +4,8 @@ set -e
 
 echo "Running Ruby tests..."
 RACK_ENV=test JEKYLL_LOG_LEVEL=warn bundle exec rspec
-script/fmt
+
+# Appveyor doesn't seem to like Rubocop for some reason
+if [ -z "$APPVEYOR" ]; then
+  script/fmt
+fi
