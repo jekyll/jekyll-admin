@@ -23,14 +23,20 @@ describe "pages" do
     it "includes front matter defaults" do
       get "/pages"
       expect(last_response).to be_ok
-      expect(last_response_parsed.first.key?("some_front_matter")).to eq(true)
+      expect(last_response_parsed.first).to have_key("some_front_matter")
     end
 
-    it "incldues the raw front matter" do
+    it "doesn't include the raw front matter" do
       get "/pages"
       expect(last_response).to be_ok
-      expect(last_response_parsed.first.key?("front_matter")).to eq(true)
-      expect(last_response_parsed.first["front_matter"]["foo"]).to eq("bar")
+      expect(last_response_parsed.first).to_not have_key("front_matter")
+    end
+
+    it "doesn't include the page content" do
+      get "/pages"
+      expect(last_response).to be_ok
+      expect(last_response_parsed.first).to_not have_key("content")
+      expect(last_response_parsed.first).to_not have_key("raw_content")
     end
   end
 
