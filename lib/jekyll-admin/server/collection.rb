@@ -56,7 +56,7 @@ module JekyllAdmin
       end
 
       def document_path
-        sanitized_path File.join(collection.directory, document_id)
+        sanitized_path File.join(collection.relative_directory, document_id)
       end
 
       def document
