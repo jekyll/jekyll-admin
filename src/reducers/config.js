@@ -10,7 +10,6 @@ import {
 export default function config(state = {
   config: {},
   updated: false,
-  message: '',
   editorChanged: false,
   isFetching: false
 }, action) {
@@ -22,24 +21,20 @@ export default function config(state = {
     case FETCH_CONFIG_SUCCESS:
       return Object.assign({}, state, {
         config: action.config,
-        isFetching: false,
-        message: ''
+        isFetching: false
       });
     case FETCH_CONFIG_FAILURE:
       return Object.assign({}, state, {
-        message: "Something gone wrong.",
         isFetching: false
       });
     case PUT_CONFIG_SUCCESS:
       return Object.assign({}, state, {
         config: action.config,
         editorChanged: false,
-        updated: true,
-        message: ''
+        updated: true
       });
     case PUT_CONFIG_FAILURE:
       return Object.assign({}, state, {
-        message: "Something gone wrong.",
         editorChanged: false
       });
     case CONFIG_EDITOR_CHANGED:

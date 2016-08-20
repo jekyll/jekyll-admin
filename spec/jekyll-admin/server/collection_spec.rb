@@ -17,6 +17,7 @@ describe "collections" do
     get "/collections"
     expect(last_response).to be_ok
     expect(last_response_parsed.first["label"]).to eq("posts")
+    expect(last_response_parsed.first["content"]).to be_nil
   end
 
   it "returns an individual collection" do
@@ -38,11 +39,18 @@ describe "collections" do
       expect(last_response_parsed.first.key?("some_front_matter")).to eq(true)
     end
 
-    it "include the raw front matter" do
+    it "doesn't include the raw front matter" do
       get "/collections/posts/documents"
       expect(last_response).to be_ok
-      expect(last_response_parsed.first.key?("front_matter")).to eq(true)
-      expect(last_response_parsed.first["front_matter"]["foo"]).to eql("bar")
+      expect(last_response_parsed.first).to_not have_key("front_matter")
+    end
+
+    it "deoesn't include content in the index" do
+      get "/collections/posts/documents"
+      expect(last_response).to be_ok
+      expect(last_response_parsed.first).to_not have_key("content")
+      expect(last_response_parsed.first).to_not have_key("raw_content")
+      expect(last_response_parsed.first).to_not have_key("output")
     end
   end
 
@@ -74,7 +82,7 @@ describe "collections" do
       get "/collections/posts/2016-01-01-test.md"
       expect(last_response).to be_ok
       expected = "<h1 id=\"test-post\">Test Post</h1>\n"
-      expect(last_response_parsed["output"]).to eq(expected)
+      expect(last_response_parsed["content"]).to eq(expected)
     end
 
     it "returns the raw content" do

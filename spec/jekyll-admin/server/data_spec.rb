@@ -1,18 +1,23 @@
 describe "data" do
   include Rack::Test::Methods
 
-  let(:expected_response) do
+  let(:base_response) do
     {
       "path"          => "_data/data_file.yml",
       "relative_path" => "_data/data_file.yml",
       "slug"          => "data_file",
       "ext"           => ".yml",
-      "title"         => "Data File",
-      "raw_content"   => "foo: bar\n",
-      "content"       => {
+      "title"         => "Data File"
+    }
+  end
+
+  let(:response_with_content) do
+    base_response.merge({
+      "raw_content" => "foo: bar\n",
+      "content"     => {
         "foo" => "bar"
       }
-    }
+    })
   end
 
   def app
@@ -22,19 +27,19 @@ describe "data" do
   it "gets the index" do
     get "/data"
     expect(last_response).to be_ok
-    expect(last_response_parsed.first).to eql(expected_response)
+    expect(last_response_parsed.first).to eql(base_response)
   end
 
   it "gets an individual data file" do
     get "/data/data_file"
     expect(last_response).to be_ok
-    expect(last_response_parsed).to eql(expected_response)
+    expect(last_response_parsed).to eql(response_with_content)
   end
 
   it "gets an individual data file with an extension" do
     get "/data/data_file.yml"
     expect(last_response).to be_ok
-    expect(last_response_parsed).to eql(expected_response)
+    expect(last_response_parsed).to eql(response_with_content)
   end
 
   it "writes a new data file when given content" do

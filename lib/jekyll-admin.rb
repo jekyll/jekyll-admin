@@ -29,7 +29,7 @@ require "jekyll-admin/data_file.rb"
 
 # Monkey Patches
 require_relative "./jekyll/commands/serve"
-[Jekyll::Page, Jekyll::Document, Jekyll::StaticFile].each do |klass|
+[Jekyll::Page, Jekyll::Document, Jekyll::StaticFile, Jekyll::Collection].each do |klass|
   klass.include JekyllAdmin::APIable
 end
 

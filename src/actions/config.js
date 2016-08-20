@@ -1,7 +1,10 @@
 import * as ActionTypes from '../constants/actionTypes';
 import { getConfigurationUrl, putConfigurationUrl } from '../constants/api';
 
+import { addNotification } from './notifications';
+
 import { get, put } from '../utils/fetch';
+import { toJSON } from '../utils/helpers';
 
 export function fetchConfig() {
   return dispatch => {
@@ -16,13 +19,21 @@ export function fetchConfig() {
 }
 
 export function putConfig(config) {
-  return (dispatch) => put(
-    putConfigurationUrl(),
-    JSON.stringify(config),
-    { type: ActionTypes.PUT_CONFIG_SUCCESS, name: "config"},
-    { type: ActionTypes.PUT_CONFIG_FAILURE, name: "error"},
-    dispatch
-  );
+  return (dispatch) => {
+    let json;
+    try {
+      json = toJSON(config);
+    } catch (e) {
+      return dispatch(addNotification('Parse Error', e.message, 'error'));
+    }
+    return put(
+      putConfigurationUrl(),
+      JSON.stringify(config),
+      { type: ActionTypes.PUT_CONFIG_SUCCESS, name: "config"},
+      { type: ActionTypes.PUT_CONFIG_FAILURE, name: "error"},
+      dispatch
+    );
+  };
 }
 
 export function onEditorChange() {

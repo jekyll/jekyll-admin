@@ -9,7 +9,6 @@ describe('Reducers::Pages', () => {
     expect(reducer(undefined, {})).toEqual({
       pages: [],
       page: {},
-      message: "",
       isFetching: false,
       updated: false
     });
@@ -35,12 +34,10 @@ describe('Reducers::Pages', () => {
     });
     expect(
       reducer({}, {
-        type: types.FETCH_PAGES_FAILURE,
-        error: 'Something gone wrong.'
+        type: types.FETCH_PAGES_FAILURE
       })
     ).toEqual({
       page: {},
-      message: 'Something gone wrong.',
       isFetching: false
     });
   });
@@ -64,33 +61,22 @@ describe('Reducers::Pages', () => {
     });
     expect(
       reducer({}, {
-        type: types.FETCH_PAGE_FAILURE,
-        error: 'Something gone wrong.'
+        type: types.FETCH_PAGE_FAILURE
       })
     ).toEqual({
       page: {},
-      isFetching: false,
-      message: 'Something gone wrong.'
+      isFetching: false
     });
   });
 
   it('should handle deletePages', () => {
     expect(
-      reducer({ message: "", pages: [{name:1},{name:2}] }, {
+      reducer({ pages: [{name:1},{name:2}] }, {
         type: types.DELETE_PAGE_SUCCESS,
         id: 1
       })
     ).toEqual({
-      message: "Page deleted.",
       pages: [{name:2}]
-    });
-    expect(
-      reducer({}, {
-        type: types.DELETE_PAGE_FAILURE,
-        error: 'Something gone wrong.'
-      })
-    ).toEqual({
-      message: 'Something gone wrong.'
     });
   });
 
@@ -108,14 +94,6 @@ describe('Reducers::Pages', () => {
       reducer({updated:true}, {})
     ).toEqual({
       updated: false
-    });
-    expect(
-      reducer({}, {
-        type: types.PUT_PAGE_FAILURE,
-        error: "Something gone wrong."
-      })
-    ).toEqual({
-      message: "Something gone wrong."
     });
   });
 });

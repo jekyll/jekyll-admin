@@ -17,7 +17,6 @@ function setup(files=[staticfile]) {
   const component = mount(
     <StaticFiles
       files={files}
-      message=""
       isFetching={false}
       {...actions} />
   );
@@ -26,7 +25,6 @@ function setup(files=[staticfile]) {
     component: component,
     actions: actions,
     h1: component.find('h1').last(),
-    message: component.find('.message'),
     info: component.find('.preview-info'),
     previewContainer: component.find('.preview-container')
   };
@@ -34,7 +32,7 @@ function setup(files=[staticfile]) {
 
 describe('Containers::StaticFiles', () => {
   it('should render correctly', () => {
-    const { h1, info, previewContainer, message } = setup();
+    const { h1, info, previewContainer } = setup();
     expect(h1.text()).toBe('Static Files');
     expect(info.node).toNotExist();
     expect(previewContainer.node).toExist();

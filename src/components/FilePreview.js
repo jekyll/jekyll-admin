@@ -15,11 +15,15 @@ export default class FilePreview extends Component {
     const { file } = this.props;
     const extension = file.extname.substring(1);
     const image = /png|jpg|gif|jpeg/.test(extension);
+    let prefix = '';
+    if (process.env.NODE_ENV == 'development') {
+      prefix = 'http://localhost:4000';
+    }
     return (
       <div className="file-preview">
-        <a href={file.path} target="_blank">
+        <a href={prefix+file.path} target="_blank">
         {
-          image && <img src={`data:image/${extension};base64,${file.encoded_content}`} />
+          image && <img src={prefix+file.path} />
         }
         {
           !image &&

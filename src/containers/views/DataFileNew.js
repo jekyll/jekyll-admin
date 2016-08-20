@@ -39,7 +39,7 @@ export class DataFileNew extends Component {
   }
 
   render() {
-    const { datafileChanged, onDataFileChanged, datafile, updated, message, errors } = this.props;
+    const { datafileChanged, onDataFileChanged, datafile, updated, errors } = this.props;
     return (
       <div>
         {
@@ -82,7 +82,6 @@ function mapStateToProps(state) {
   const { datafiles, utils } = state;
   return {
     datafile: datafiles.currentFile,
-    message: datafiles.message,
     updated: datafiles.updated,
     datafileChanged: datafiles.datafileChanged,
     errors: utils.errors
@@ -103,7 +102,6 @@ DataFileNew.propTypes = {
   onDataFileChanged: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.array.isRequired,
-  message: PropTypes.string.isRequired,
   updated: PropTypes.bool.isRequired,
   datafileChanged: PropTypes.bool.isRequired
 };

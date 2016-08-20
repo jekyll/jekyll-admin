@@ -73,7 +73,7 @@ export class DataFiles extends Component {
   }
 
   render() {
-    const { isFetching, files, search, message } = this.props;
+    const { isFetching, files, search } = this.props;
 
     if (isFetching) {
       return null;
@@ -86,7 +86,6 @@ export class DataFiles extends Component {
           <div className="page-buttons">
             <Link className="btn btn-active" to={`${ADMIN_PREFIX}/datafile/new`}>New data file</Link>
           </div>
-          <strong className="message">{message}</strong>
           <div className="side-unit pull-right">
             <InputSearch searchBy="filename" search={search} />
           </div>
@@ -107,7 +106,6 @@ DataFiles.propTypes = {
   fetchDataFiles: PropTypes.func.isRequired,
   deleteDataFile: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
   search: PropTypes.func.isRequired
 };
 
@@ -115,8 +113,7 @@ function mapStateToProps(state) {
   const { datafiles, utils } = state;
   return {
     files: filterByFilename(datafiles.files, utils.input),
-    isFetching: datafiles.isFetching,
-    message: datafiles.message
+    isFetching: datafiles.isFetching
   };
 }
 

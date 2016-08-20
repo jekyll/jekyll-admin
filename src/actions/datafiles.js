@@ -8,9 +8,11 @@ import {
   deleteDataFileUrl
 } from '../constants/api';
 
-import { validationError } from '../actions/utils';
+import { validationError } from './utils';
+import { addNotification } from './notifications';
 
 import { get, put, del } from '../utils/fetch';
+import { toJSON } from '../utils/helpers';
 import { validator } from '../utils/validation';
 
 export function fetchDataFiles() {
@@ -54,9 +56,15 @@ export function putDataFile(filename, data) {
       return dispatch(validationError(errors));
     }
     dispatch({type: ActionTypes.CLEAR_ERRORS});
+    let json;
+    try {
+      json = toJSON(data);
+    } catch (e) {
+      return dispatch(addNotification('Parse Error', e.message, 'error'));
+    }
     return put(
       putDataFileUrl(filename),
-      JSON.stringify({ raw_content: data }),
+      JSON.stringify({ content: json }),
       { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.PUT_DATAFILE_FAILURE, name: "error"},
       dispatch

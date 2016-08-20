@@ -9,7 +9,6 @@ describe('Reducers::DataFiles', () => {
     expect(reducer(undefined, {})).toEqual({
       files: [],
       currentFile: {},
-      message: "",
       isFetching: false,
       updated: false,
       datafileChanged: false
@@ -32,18 +31,15 @@ describe('Reducers::DataFiles', () => {
     ).toEqual({
       files: [datafile],
       isFetching: false,
-      message: '',
       currentFile: {}
     });
     expect(
       reducer({ isFetching: true, files: [] }, {
-        type: types.FETCH_DATAFILES_FAILURE,
-        message: 'Something gone wrong.'
+        type: types.FETCH_DATAFILES_FAILURE
       })
     ).toEqual({
       files: [],
       isFetching: false,
-      message: 'Something gone wrong.',
       currentFile: {}
     });
   });
@@ -67,12 +63,10 @@ describe('Reducers::DataFiles', () => {
     });
     expect(
       reducer({ isFetching: true }, {
-        type: types.FETCH_DATAFILE_FAILURE,
-        message: 'Something gone wrong.'
+        type: types.FETCH_DATAFILE_FAILURE
       })
     ).toEqual({
       isFetching: false,
-      message: 'Something gone wrong.',
       currentFile: {}
     });
   });
@@ -86,8 +80,7 @@ describe('Reducers::DataFiles', () => {
     ).toEqual({
       currentFile: datafile,
       datafileChanged: false,
-      updated: true,
-      message: ''
+      updated: true
     });
     expect(
       reducer({updated:true, datafileChanged: true}, {})
@@ -96,12 +89,10 @@ describe('Reducers::DataFiles', () => {
       datafileChanged: false
     });
     expect(
-      reducer({}, {
-        type: types.PUT_DATAFILE_FAILURE,
-        message: 'Something gone wrong.'
+      reducer({datafileChanged: true}, {
+        type: types.PUT_DATAFILE_FAILURE
       })
     ).toEqual({
-      message: 'Something gone wrong.',
       datafileChanged: false
     });
   });
@@ -113,16 +104,7 @@ describe('Reducers::DataFiles', () => {
         id : "data_file.yml"
       })
     ).toEqual({
-      files: [],
-      message: "File deleted."
-    });
-    expect(
-      reducer({}, {
-        type: types.DELETE_DATAFILE_FAILURE,
-        message: 'Something gone wrong.'
-      })
-    ).toEqual({
-      message: 'Something gone wrong.'
+      files: []
     });
   });
 

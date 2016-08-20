@@ -5,10 +5,18 @@ describe "static_files" do
     JekyllAdmin::Server
   end
 
-  it "returns the index" do
-    get "/static_files"
-    expect(last_response).to be_ok
-    expect(last_response_parsed.last["path"]).to eql("/static-file.txt")
+  context "index" do
+    it "returns the index" do
+      get "/static_files"
+      expect(last_response).to be_ok
+      expect(last_response_parsed.last["path"]).to eql("/static-file.txt")
+    end
+
+    it "doesn't include the encoded content" do
+      get "/static_files"
+      expect(last_response).to be_ok
+      expect(last_response_parsed.first).to_not have_key("encoded_content")
+    end
   end
 
   it "returns a single static file" do

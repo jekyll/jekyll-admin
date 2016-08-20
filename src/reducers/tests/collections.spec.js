@@ -10,7 +10,6 @@ describe('Reducers::Collections', () => {
       currentCollection: {},
       currentDocument: {},
       currentDocuments: [],
-      message: "",
       collections: [],
       isFetching: false,
       updated: false
@@ -36,11 +35,9 @@ describe('Reducers::Collections', () => {
     });
     expect(
       reducer({isFetching: true}, {
-        type: types.FETCH_COLLECTIONS_FAILURE,
-        error: "Something gone wrong."
+        type: types.FETCH_COLLECTIONS_FAILURE
       })
     ).toEqual({
-      message: "Something gone wrong.",
       isFetching: false
     });
   });
@@ -63,12 +60,10 @@ describe('Reducers::Collections', () => {
       isFetching: false
     });
     expect(
-      reducer({}, {
-        type: types.FETCH_COLLECTION_FAILURE,
-        error: "Something gone wrong."
+      reducer({isFetching: true}, {
+        type: types.FETCH_COLLECTION_FAILURE
       })
     ).toEqual({
-      message: "Something gone wrong.",
       isFetching: false
     });
   });
@@ -92,32 +87,21 @@ describe('Reducers::Collections', () => {
     });
     expect(
       reducer({}, {
-        type: types.FETCH_DOCUMENTS_FAILURE,
-        error: "Something gone wrong."
+        type: types.FETCH_DOCUMENTS_FAILURE
       })
     ).toEqual({
-      message: "Something gone wrong.",
       isFetching: false
     });
   });
 
   it('should handle deleteDocument', () => {
     expect(
-      reducer({ message: "", currentDocuments: [doc] }, {
+      reducer({ currentDocuments: [doc] }, {
         type: types.DELETE_DOCUMENT_SUCCESS,
         id: doc.path.substring(doc.path.lastIndexOf('/') + 1)
       })
     ).toEqual({
-      message: "Document deleted.",
       currentDocuments: []
-    });
-    expect(
-      reducer({}, {
-        type: types.DELETE_DOCUMENT_FAILURE,
-        error: 'Something gone wrong.'
-      })
-    ).toEqual({
-      message: 'Something gone wrong.'
     });
   });
 
@@ -135,14 +119,6 @@ describe('Reducers::Collections', () => {
       reducer({updated:true}, {})
     ).toEqual({
       updated: false
-    });
-    expect(
-      reducer({}, {
-        type: types.PUT_DOCUMENT_FAILURE,
-        error: "Some error"
-      })
-    ).toEqual({
-      message: "Some error"
     });
   });
 });

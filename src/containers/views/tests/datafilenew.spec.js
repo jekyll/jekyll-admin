@@ -7,7 +7,6 @@ import { DataFileNew } from '../DataFileNew';
 
 const defaultProps = {
   datafile: {},
-  message: "",
   updated: false,
   datafileChanged: false,
   editorChanged: false,

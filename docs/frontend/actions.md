@@ -161,3 +161,9 @@ Action for storing form errors.
 ### `clearErrors`
 
 Action for clearing form errors if any.
+
+## Notifications
+
+### `addNotification(title, message, level)`
+
+Action for adding a notification
