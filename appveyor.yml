@@ -1,5 +1,5 @@
 environment:
-  nodejs_version: "0"
+  nodejs_version: "6"
   RACK_ENV: test
   JEKYLL_LOG_LEVEL: warn
 
@@ -28,6 +28,6 @@ test_script:
 cache:
   - vendor/bundle
   - node_modules
-  
+
 init:
   - git config --global core.autocrlf true
