@@ -16,7 +16,6 @@ function setup(datafiles=[datafile]) {
   const component = mount(
     <DataFiles
       files={datafiles}
-      message=""
       isFetching={false}
       {...actions} />
   );
@@ -25,16 +24,14 @@ function setup(datafiles=[datafile]) {
     component: component,
     actions: actions,
     h1: component.find('h1').last(),
-    message: component.find('.message'),
     table: component.find('.content-table')
   };
 }
 
 describe('Containers::DataFiles', () => {
   it('should render correctly', () => {
-    const { h1, message } = setup();
+    const { h1 } = setup();
     expect(h1.text()).toBe('Data Files');
-    expect(message.text()).toBe('');
   });
 
   it('should render correctly when there are not any data files', () => {

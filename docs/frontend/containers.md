@@ -85,7 +85,6 @@ Container for Pages view. Lists available pages.
   fetchPages: Function,
   deletePage: Function,
   isFetching: Boolean,
-  message: String,
   searchByTitle: Function
 }
 ```
@@ -193,7 +192,6 @@ Container for DataFiles view. Lists the data files.
   deleteDataFile: Function,
   search: Function,
   isFetching: Boolean
-  message: String
 }
 ```
 
@@ -211,7 +209,6 @@ Container for editing a data file.
   deleteDataFile: Function,
   clearErrors: Function,
   onDataFileChanged: Function,
-  message: String,
   isFetching: Boolean,
   updated: Boolean,
   datafileChanged: Boolean,
@@ -234,8 +231,7 @@ Container for creating a new data file
   clearErrors: Function,
   errors: Array,
   updated: Boolean,
-  datafileChanged: Boolean,
-  message: String
+  datafileChanged: Boolean
 }
 ```
 
@@ -260,3 +256,15 @@ Uploaded files are previewed with the help of `FilePreview` component.
 ### NotFound
 
 Component for 404 page. react-router renders this component for all non-existing routes.
+
+### Notifications
+
+Container for showing notifications at the right bottom of the screen
+
+** PropTypes **
+
+```javascript
+{
+  notification: Object
+}
+```

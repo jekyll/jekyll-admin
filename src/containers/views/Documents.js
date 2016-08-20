@@ -90,7 +90,7 @@ export class Documents extends Component {
   }
 
   render() {
-    const { isFetching, currentDocuments, search, message, params } = this.props;
+    const { isFetching, currentDocuments, search, params } = this.props;
     const { collection_name } = params;
 
     if (isFetching) {
@@ -104,7 +104,6 @@ export class Documents extends Component {
           <div className="page-buttons">
             <Link className="btn btn-active" to={`${ADMIN_PREFIX}/collection/${collection_name}/new`}>New document</Link>
           </div>
-          <strong className="message">{message}</strong>
           <div className="side-unit pull-right">
             <InputSearch searchBy="title" search={search} />
           </div>
@@ -125,7 +124,6 @@ Documents.propTypes = {
   currentDocuments: PropTypes.array.isRequired,
   fetchDocuments: PropTypes.func.isRequired,
   deleteDocument: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired,
   search: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired
 };
@@ -134,7 +132,6 @@ function mapStateToProps(state) {
   const { collections, utils } = state;
   return {
     currentDocuments: filterByTitle(collections.currentDocuments, utils.input),
-    message: collections.message,
     isFetching: collections.isFetching
   };
 }

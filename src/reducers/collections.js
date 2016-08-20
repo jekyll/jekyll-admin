@@ -14,7 +14,6 @@ export default function collections(state = {
   currentCollection: {},
   currentDocuments: [],
   currentDocument: {},
-  message: "",
   isFetching: false,
   updated: false
 }, action) {
@@ -51,7 +50,6 @@ export default function collections(state = {
     case FETCH_DOCUMENTS_FAILURE:
     case FETCH_DOCUMENT_FAILURE:
       return Object.assign({}, state, {
-        message: "Something gone wrong.",
         isFetching: false
       });
     case DELETE_DOCUMENT_SUCCESS:
@@ -59,21 +57,12 @@ export default function collections(state = {
         currentDocuments: _.filter(state.currentDocuments, doc => {
           const filename = doc.path.substring(doc.path.lastIndexOf('/') + 1);
           return filename != action.id;
-        }),
-        message: "Document deleted."
-      });
-    case DELETE_DOCUMENT_FAILURE:
-      return Object.assign({}, state, {
-        message: "Something gone wrong."
+        })
       });
     case PUT_DOCUMENT_SUCCESS:
       return Object.assign({}, state, {
         currentDocument: action.doc,
         updated: true
-      });
-    case PUT_DOCUMENT_FAILURE:
-      return Object.assign({}, state, {
-        message: action.error
       });
     default:
       return Object.assign({}, state, {

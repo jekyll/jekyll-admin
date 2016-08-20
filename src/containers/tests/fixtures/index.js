@@ -41,3 +41,9 @@ export const content = {
   ],
   mentors: ["Ben Balter", "Jurgen Leschner", "Parker Moore"]
 };
+
+export const notification = {
+  title: 'Test',
+  message: 'Testing notifications',
+  level: 'success'
+};

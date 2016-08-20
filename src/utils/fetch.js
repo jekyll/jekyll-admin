@@ -1,5 +1,7 @@
 import fetch from 'isomorphic-fetch';
 
+import { addNotification } from '../actions/notifications';
+
 /**
  * Fetch wrapper for GET request that dispatches actions according to the
  * request status
@@ -15,10 +17,17 @@ export const get = (url, action_success, action_failure, dispatch) => {
       type: action_success.type,
       [action_success.name]: data
     }))
-    .catch(error => dispatch({
-      type: action_failure.type,
-      [action_failure.name]: error
-    }));
+    .catch(error => {
+      dispatch({
+        type: action_failure.type,
+        [action_failure.name]: error
+      });
+      dispatch(addNotification(
+        'Fetch Error',
+        `Could not fetch the ${action_success.name}`,
+        'error'
+      ));
+    });
 };
 
 /**
@@ -44,10 +53,17 @@ export const put = (url, body, action_success, action_failure, dispatch) => {
     type: action_success.type,
     [action_success.name]: data
   }))
-  .catch(error => dispatch({
-    type: action_failure.type,
-    [action_failure.name]: error
-  }));
+  .catch(error => {
+    dispatch({
+      type: action_failure.type,
+      [action_failure.name]: error
+    });
+    dispatch(addNotification(
+      'Update Error',
+      `Could not update the ${action_success.name}`,
+      'error'
+    ));
+  });
 };
 
 /**
@@ -66,8 +82,15 @@ export const del = (url, action_success, action_failure, dispatch) => {
     type: action_success.type,
     id: action_success.id
   }))
-  .catch(error => dispatch({
-    type: action_failure.type,
-    [action_failure.name]: error
-  }));
+  .catch(error => {
+    dispatch({
+      type: action_failure.type,
+      [action_failure.name]: error
+    });
+    dispatch(addNotification(
+      'Delete Error',
+      `Could not delete the ${action_success.name}`,
+      'error'
+    ));
+  });
 };

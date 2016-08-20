@@ -55,13 +55,13 @@ describe('Actions::Pages', () => {
   it('deletes the page successfully', () => {
     nock(API)
       .delete(`/pages/${page.name}`)
-      .reply(200, { message: 'Deleted' });
+      .reply(200);
 
     const expectedActions = [
       { id: page.name, type: types.DELETE_PAGE_SUCCESS }
     ];
 
-    const store = mockStore({ message: "" });
+    const store = mockStore({});
 
     return store.dispatch(actions.deletePage(page.name))
       .then(() => {

@@ -8,7 +8,6 @@ import {
 export default function staticfiles(state = {
   files: [],
   isFetching: false,
-  message: "",
   uploading: false // TODO show loading gif
 }, action) {
   switch (action.type) {
@@ -19,12 +18,10 @@ export default function staticfiles(state = {
     case FETCH_STATICFILES_SUCCESS:
       return Object.assign({}, state, {
         files: action.files,
-        isFetching: false,
-        message: ""
+        isFetching: false
       });
     case FETCH_STATICFILES_FAILURE:
       return Object.assign({}, state, {
-        message: "Something gone wrong.",
         isFetching: false
       });
     case PUT_STATICFILE_REQUEST:
@@ -37,17 +34,7 @@ export default function staticfiles(state = {
       });
     case PUT_STATICFILE_FAILURE:
       return Object.assign({}, state, {
-        message: "Something gone wrong.",
         uploading: false
-      });
-    case DELETE_STATICFILE_SUCCESS: {
-      return Object.assign({}, state, {
-        message: "The file is deleted."
-      });
-    }
-    case DELETE_STATICFILE_FAILURE:
-      return Object.assign({}, state, {
-        message: "Something gone wrong."
       });
     default:
       return state;

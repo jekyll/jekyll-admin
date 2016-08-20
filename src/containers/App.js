@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 // Components
 import Sidebar from './Sidebar';
 import Header from './Header';
+import Notifications from './Notifications';
 
 class App extends Component {
 
@@ -16,6 +17,7 @@ class App extends Component {
             {this.props.children}
           </div>
         </div>
+        <Notifications />
       </div>
     );
   }

@@ -90,7 +90,7 @@ describe('Actions::Datafiles', () => {
 
   it('updates a data file successfully', () => {
     nock(API)
-      .put('/data/data_file.yml', { raw_content: 'foo: bar' } )
+      .put('/data/data_file.yml', { content: { foo: "bar" } } )
       .reply(200, datafile);
 
     const expectedAction = [
