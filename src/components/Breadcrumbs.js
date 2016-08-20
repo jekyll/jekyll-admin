@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import _ from 'underscore';
+import moment from 'moment';
 
 import { toTitleCase } from '../utils/helpers';
 
@@ -14,8 +15,12 @@ export default class Breadcrumbs extends Component {
   render() {
     const { link, type, path } = this.props;
     let placeholder = 'example.md';
+    let value = '';
+
     if (type == 'posts') {
-      placeholder = '2016-01-07-your-title.md';
+      const date = moment().format('YYYY-MM-DD');
+      value = date + '-your-title.md';
+      placeholder = date + '-your-title.md';
     }else if (type == 'data files') {
       placeholder = 'your-filename.yml';
     }
@@ -26,7 +31,7 @@ export default class Breadcrumbs extends Component {
           <input onChange={(e) => this.handleChange(e)}
             ref="input"
             placeholder={placeholder}
-            defaultValue={path || ''} />
+            defaultValue={path || value} />
         </li>
       </ul>
     );
