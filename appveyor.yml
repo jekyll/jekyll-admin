@@ -6,8 +6,8 @@ environment:
 install:
   - set PATH=C:\Ruby22\bin;%PATH%
   - ps: Install-Product node $env:nodejs_version
-  - bundle config --local path vendor/bundle
-  - bundle install
+  - gem install bundler --no-ri --no-rdoc
+  - bundle install --jobs=3 --retry=3 --path=vendor/bundle
   - npm install
 
 build: off
@@ -23,7 +23,8 @@ test_script:
   - npm test
   - bundle exec rspec
   - bundle exec rubocop -D -S
-
+  - gem build jekyll-admin.gemspec
+  
 cache:
   - vendor/bundle
 
