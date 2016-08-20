@@ -7,7 +7,6 @@ import { DataFileEdit } from '../DataFileEdit';
 
 const defaultProps = {
   datafile: {},
-  message: "",
   updated: false,
   datafileChanged: false,
   params: { data_file: "data_file" },

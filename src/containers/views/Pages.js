@@ -76,7 +76,7 @@ export class Pages extends Component {
   }
 
   render() {
-    const { isFetching, pages, search, message } = this.props;
+    const { isFetching, pages, search } = this.props;
 
     if (isFetching) {
       return null;
@@ -89,7 +89,6 @@ export class Pages extends Component {
           <div className="page-buttons">
             <Link className="btn btn-active" to={`${ADMIN_PREFIX}/page/new`}>New page</Link>
           </div>
-          <strong className="message">{message}</strong>
           <div className="side-unit pull-right">
             <InputSearch searchBy="filename" search={search} />
           </div>
@@ -110,7 +109,6 @@ Pages.propTypes = {
   fetchPages: PropTypes.func.isRequired,
   deletePage: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  message: PropTypes.string.isRequired,
   search: PropTypes.func.isRequired
 };
 
@@ -118,8 +116,7 @@ function mapStateToProps(state) {
   const { pages, utils } = state;
   return {
     pages: filterByFilename(pages.pages, utils.input),
-    isFetching: pages.isFetching,
-    message: pages.message
+    isFetching: pages.isFetching
   };
 }
 

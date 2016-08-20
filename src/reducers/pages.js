@@ -9,7 +9,6 @@ import {
 export default function pages(state = {
   pages: [],
   page: {},
-  message: "",
   isFetching: false,
   updated: false
 }, action) {
@@ -27,7 +26,6 @@ export default function pages(state = {
       });
     case FETCH_PAGES_FAILURE:
       return Object.assign({}, state, {
-        message: "Something gone wrong.",
         isFetching: false,
         page: {}
       });
@@ -39,26 +37,16 @@ export default function pages(state = {
     case FETCH_PAGE_FAILURE:
       return Object.assign({}, state, {
         page: {},
-        isFetching: false,
-        message: "Something gone wrong."
+        isFetching: false
       });
     case PUT_PAGE_SUCCESS:
       return Object.assign({}, state, {
         page: action.page,
         updated: true
       });
-    case PUT_PAGE_FAILURE:
-      return Object.assign({}, state, {
-        message: "Something gone wrong."
-      });
     case DELETE_PAGE_SUCCESS:
       return Object.assign({}, state, {
-        pages: _.filter(state.pages, page => page.name != action.id),
-        message: "Page deleted."
-      });
-    case DELETE_PAGE_FAILURE:
-      return Object.assign({}, state, {
-        message: "Something gone wrong."
+        pages: _.filter(state.pages, page => page.name != action.id)
       });
     default:
       return Object.assign({}, state, {

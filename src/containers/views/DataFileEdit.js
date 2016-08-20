@@ -46,7 +46,7 @@ export class DataFileEdit extends Component {
   }
 
   render() {
-    const { datafileChanged, onDataFileChanged, datafile, isFetching, updated, message, errors, params } = this.props;
+    const { datafileChanged, onDataFileChanged, datafile, isFetching, updated, errors, params } = this.props;
 
     if (isFetching) {
       return null;
@@ -104,7 +104,6 @@ function mapStateToProps(state) {
   return {
     datafile: datafiles.currentFile,
     isFetching: datafiles.isFetching,
-    message: datafiles.message,
     updated: datafiles.updated,
     datafileChanged: datafiles.datafileChanged,
     errors: utils.errors
@@ -128,7 +127,6 @@ DataFileEdit.propTypes = {
   clearErrors: PropTypes.func.isRequired,
   datafile: PropTypes.object.isRequired,
   onDataFileChanged: PropTypes.func.isRequired,
-  message: PropTypes.string.isRequired,
   isFetching: PropTypes.bool.isRequired,
   updated: PropTypes.bool.isRequired,
   datafileChanged: PropTypes.bool.isRequired,

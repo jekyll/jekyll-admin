@@ -10,7 +10,6 @@ import {
 export default function datafiles(state = {
   files: [],
   currentFile: {},
-  message: "",
   isFetching: false,
   updated: false,
   datafileChanged: false
@@ -25,12 +24,10 @@ export default function datafiles(state = {
       return Object.assign({}, state, {
         files: action.files,
         isFetching: false,
-        currentFile: {},
-        message: ""
+        currentFile: {}
       });
     case FETCH_DATAFILES_FAILURE:
       return Object.assign({}, state, {
-        message: "Something gone wrong.",
         isFetching: false,
         currentFile: {}
       });
@@ -42,31 +39,23 @@ export default function datafiles(state = {
     case FETCH_DATAFILE_FAILURE:
       return Object.assign({}, state, {
         currentFile: {},
-        isFetching: false,
-        message: "Something gone wrong."
+        isFetching: false
       });
     case PUT_DATAFILE_SUCCESS:
       return Object.assign({}, state, {
         currentFile: action.file,
         updated: true,
-        datafileChanged: false,
-        message: ''
+        datafileChanged: false
       });
     case PUT_DATAFILE_FAILURE:
       return Object.assign({}, state, {
-        message: "Something gone wrong.",
         datafileChanged: false
       });
     case DELETE_DATAFILE_SUCCESS:
       return Object.assign({}, state, {
         files: _.filter(state.files, file => {
           return (file.slug+file.ext) != action.id;
-        }),
-        message: "File deleted."
-      });
-    case DELETE_DATAFILE_FAILURE:
-      return Object.assign({}, state, {
-        message: "Something gone wrong."
+        })
       });
     case DATAFILE_CHANGED:
       return Object.assign({}, state, {

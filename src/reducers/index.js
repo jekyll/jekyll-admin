@@ -7,6 +7,7 @@ import metadata from './metadata';
 import datafiles from './datafiles';
 import staticfiles from './staticfiles';
 import utils from './utils';
+import notifications from './notifications';
 
 export default combineReducers({
   routing: routerReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   metadata,
   datafiles,
   staticfiles,
-  utils
+  utils,
+  notifications
 });

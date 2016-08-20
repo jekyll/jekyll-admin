@@ -8,8 +8,7 @@ describe('Reducers::Config', () => {
       config: {},
       updated: false,
       editorChanged: false,
-      isFetching: false,
-      message: ''
+      isFetching: false
     });
   });
 
@@ -22,7 +21,7 @@ describe('Reducers::Config', () => {
       isFetching: true
     });
     expect(
-      reducer({ isFetching: true, message: 'Danger' }, {
+      reducer({ isFetching: true }, {
         type: types.FETCH_CONFIG_SUCCESS,
         config: { title : 'Awesome again' }
       })
@@ -30,23 +29,20 @@ describe('Reducers::Config', () => {
       config: {
         title: 'Awesome again'
       },
-      isFetching: false,
-      message: ''
+      isFetching: false
     });
     expect(
       reducer({ isFetching: true }, {
-        type: types.FETCH_CONFIG_FAILURE,
-        message: 'Something gone wrong.'
+        type: types.FETCH_CONFIG_FAILURE
       })
     ).toEqual({
-      isFetching: false,
-      message: 'Something gone wrong.'
+      isFetching: false
     });
   });
 
   it('should handle putConfig', () => {
     expect(
-      reducer({updated: false, message: 'Danger'}, {
+      reducer({updated: false}, {
         type: types.PUT_CONFIG_SUCCESS,
         config: { title : 'Awesome again' }
       })
@@ -55,29 +51,25 @@ describe('Reducers::Config', () => {
         title: 'Awesome again'
       },
       editorChanged: false,
-      updated: true,
-      message: ''
+      updated: true
     });
 
     expect(
       reducer({}, {
-        type: types.PUT_CONFIG_FAILURE,
-        message: 'Something gone wrong.'
+        type: types.PUT_CONFIG_FAILURE
       })
     ).toEqual({
-      message: 'Something gone wrong.',
       editorChanged: false
     });
   });
 
   it('should handle onEditorChange', () => {
     expect(
-      reducer({message: 'Something gone wrong.'}, {
+      reducer({}, {
         type: types.CONFIG_EDITOR_CHANGED
       })
     ).toEqual({
       editorChanged: true,
-      message: "Something gone wrong.",
       updated: false
     });
     expect(

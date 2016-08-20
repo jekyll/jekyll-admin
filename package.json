@@ -32,6 +32,7 @@
     "react-ace": "^3.4.1",
     "react-dom": "15.0.2",
     "react-dropzone": "^3.5.3",
+    "react-notification-system": "^0.2.7",
     "react-redux": "4.4.5",
     "react-router": "2.4.0",
     "react-router-redux": "^4.0.4",

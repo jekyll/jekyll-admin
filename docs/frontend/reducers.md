@@ -13,8 +13,7 @@ State;
   config: Object, // site config object
   updated: Boolean, // set to true when the config is updated
   editorChanged: Boolean, // set to true when the config editor changes
-  isFetching: Boolean, // set to true when the config is being fetched
-  message: String
+  isFetching: Boolean // set to true when the config is being fetched
 }
 ```
 
@@ -27,8 +26,7 @@ State;
   pages: Array,
   page: Object, // currently visited page
   isFetching: Boolean, // set to true when the page is being fetched
-  updated: Boolean, // set to true when the page is updated
-  message: String
+  updated: Boolean // set to true when the page is updated
 }
 ```
 
@@ -43,8 +41,7 @@ State;
   currentDocuments: Array,
   currentDocument: Object,
   isFetching: Boolean, // set to true when the document is being fetched
-  updated: Boolean, // set to true when the document is updated
-  message: String
+  updated: Boolean // set to true when the document is updated
 }
 ```
 
@@ -70,8 +67,7 @@ State;
   files: Array, // stores all of the data files
   currentFile: Object, // stores current datafile
   updated: Boolean, // stores upload state
-  isFetching: Boolean,
-  message: String
+  isFetching: Boolean
 }
 ```
 
@@ -83,8 +79,7 @@ State;
 {
   files: Array, // stores all of the static files
   isFetching: Boolean,
-  uploading: Boolean, // stores upload state
-  message: String
+  uploading: Boolean // stores upload state
 }
 ```
 
@@ -96,6 +91,16 @@ State;
 {
   input: String, // search input
   errors: Array // form errors
+}
+```
+
+## Notifications
+
+State;
+
+```javascript
+{
+  notification: Object
 }
 ```
 
