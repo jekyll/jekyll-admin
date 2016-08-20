@@ -24,9 +24,10 @@ test_script:
   - bundle exec rspec
   - bundle exec rubocop -D -S
   - gem build jekyll-admin.gemspec
-  
+
 cache:
   - vendor/bundle
-
+  - node_modules
+  
 init:
   - git config --global core.autocrlf true
