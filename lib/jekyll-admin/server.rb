@@ -51,8 +51,6 @@ module JekyllAdmin
     end
 
     def sanitized_path(questionable_path)
-      puts "SITE SOURCE: #{JekyllAdmin.site.source}"
-      puts "QUESTIONABLE PATH: #{questionable_path}"
       Jekyll.sanitized_path JekyllAdmin.site.source, questionable_path
     end
 
