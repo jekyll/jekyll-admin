@@ -2,6 +2,9 @@ module JekyllAdmin
   # Abstract module to be included in Convertible and Document to provide
   # additional, API-specific functionality without duplicating logic
   module APIable
+
+    CONTENT_FIELDS = %w(next previous content excerpt).freeze
+
     # Returns a hash suitable for use as an API response.
     #
     # For Documents and Pages:
@@ -13,26 +16,19 @@ module JekyllAdmin
     #
     # Options:
     #
-    # content - if true, includes the content in the respond, false by default
-    #           to support mapping on indexes where we only want metadata
+    # include_content - if true, includes the content in the respond, false by default
+    #                   to support mapping on indexes where we only want metadata
     #
     # Returns a hash (which can then be to_json'd)
     def to_api(include_content: false)
-      output = to_liquid.to_h
+      output = hash_for_api
 
-      if include_content && File.exist?(file_path)
-        if is_a?(Jekyll::StaticFile)
-          output["encoded_content"] = encoded_content
-        elsif is_a?(JekyllAdmin::DataFile)
-          output["content"] = content
-          output["raw_content"] = raw_content
-        else
-          output["raw_content"] = raw_content
-          output["front_matter"] = front_matter
-        end
+      # Include content, if requested, otherwise remove it
+      if include_content
+        output = output.merge(content_fields)
+      else
+        CONTENT_FIELDS.each { |field| output.delete(field) }
       end
-
-      output.delete("content") unless include_content
 
       # Documents have duplicate output and content fields, Pages do not
       # Since it's an API, use `content` in both for consistency
@@ -66,7 +62,7 @@ module JekyllAdmin
     end
 
     def file_contents
-      @file_contents ||= File.read(file_path, file_read_options)
+      @file_contents ||= File.read(file_path, file_read_options) if file_exists?
     end
 
     def file_read_options
@@ -74,6 +70,7 @@ module JekyllAdmin
     end
 
     def front_matter
+      return unless file_exists?
       @front_matter ||= if file_contents =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
                           SafeYAML.load(Regexp.last_match(1))
                         else
@@ -82,6 +79,7 @@ module JekyllAdmin
     end
 
     def raw_content
+      return unless file_exists?
       @raw_content ||= if file_contents =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
                          $POSTMATCH
                        else
@@ -90,7 +88,49 @@ module JekyllAdmin
     end
 
     def encoded_content
-      @encoded_content ||= Base64.encode64(file_contents)
+      @encoded_content ||= Base64.encode64(file_contents) if file_exists?
+    end
+
+    def file_exists?
+      return @file_exists if defined? @file_exists
+      @file_exists = File.exist?(file_path)
+    end
+
+    # Base hash from which to generate the API output
+    def hash_for_api
+      output = to_liquid
+      if output.respond_to?(:hash_for_json)
+        output.hash_for_json
+      else
+        output.to_h
+      end
+    end
+
+    # Returns a hash of content fields for inclusion in the API output
+    def content_fields
+      output = {}
+
+      # Include file content-related fields
+      if is_a?(Jekyll::StaticFile)
+        output["encoded_content"] = encoded_content
+      elsif is_a?(JekyllAdmin::DataFile)
+        output["content"] = content
+        output["raw_content"] = raw_content
+      else
+        output["raw_content"] = raw_content
+        output["front_matter"] = front_matter
+      end
+
+      # Include next and previous documents non-recursively
+      if is_a?(Jekyll::Document)
+        %w(next previous).each do |direction|
+          method = "#{direction}_doc".to_sym
+          doc = public_send(method)
+          output[direction] = doc.to_api if doc
+        end
+      end
+
+      output
     end
   end
 end
