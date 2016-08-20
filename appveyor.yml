@@ -7,8 +7,8 @@ install:
   - set PATH=C:\Ruby22\bin;%PATH%
   - ps: Install-Product node $env:nodejs_version
   - gem install bundler --no-ri --no-rdoc
-  - bundle install --jobs=3 --retry=3 --path=vendor/bundle
-  - npm install
+  - bundle config --local path vendor/bundle
+  - sh script/bootstrap
 
 build: off
 
