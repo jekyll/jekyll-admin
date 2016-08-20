@@ -20,10 +20,7 @@ before_test:
   - bundle -v
 
 test_script:
-  - npm test
-  - bundle exec rspec
-  - bundle exec rubocop -D -S
-  - gem build jekyll-admin.gemspec
+  - sh script/cibuild
 
 cache:
   - vendor/bundle
