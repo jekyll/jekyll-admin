@@ -19,7 +19,7 @@ export class MetaSimple extends Component {
   handleDatepickerChange(value, dateStr) {
     const { nameAttr, fieldValue, updateFieldValue } = this.props;
     let formatted = dateformat(dateStr, "yyyy-mm-dd HH:MM:ss");
-    updateFieldValue(nameAttr, formatted.toString());
+    updateFieldValue(nameAttr, formatted);
   }
 
   renderEditable() {
@@ -39,8 +39,6 @@ export class MetaSimple extends Component {
       <DateTimePicker
         onChange={(v, d) => this.handleDatepickerChange(null, d)}
         className="date-field"
-        editFormat={"MMM DD, YYYY HH:MM"}
-        format={"MMM DD YYYY HH:MM"}
         defaultValue={dateValue} />
     );
   }
