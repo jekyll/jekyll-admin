@@ -1,0 +1,26 @@
+environment:
+  nodejs_version: "0"
+
+install:
+  - set PATH=C:\Ruby22\bin;%PATH%
+  - ps: Install-Product node $env:nodejs_version
+  - bundle config --local path vendor/bundle
+  - script/bootstrap
+
+build: off
+
+before_test:
+  - node --version
+  - npm --version
+  - ruby -v
+  - gem -v
+  - bundle -v
+
+test_script:
+  - script/cibuild
+
+cache:
+  - vendor/bundle
+
+init:
+  - git config --global core.autocrlf true
