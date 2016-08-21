@@ -39,7 +39,7 @@ describe('Containers::Documents', () => {
     const { component, table, h1 } = setup([]);
     const compProps = component.props();
     expect(table.node).toNotExist();
-    expect(h1.text()).toBe(`You don't have any documents.`);
+    expect(h1.text()).toBe(`No documents found.`);
   });
 
   it('should call fetchDocuments action after mounted', () => {

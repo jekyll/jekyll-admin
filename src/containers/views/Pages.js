@@ -97,7 +97,7 @@ export class Pages extends Component {
           pages.length > 0 && this.renderTable()
         }
         {
-          !pages.length && <h1>{`You don't have any pages.`}</h1>
+          !pages.length && <h1>{`No pages found.`}</h1>
         }
       </div>
     );
