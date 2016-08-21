@@ -112,7 +112,7 @@ export class Documents extends Component {
           currentDocuments.length > 0 && this.renderTable()
         }
         {
-          !currentDocuments.length && <h1>{`You don't have any documents.`}</h1>
+          !currentDocuments.length && <h1>{`No documents found.`}</h1>
         }
       </div>
     );
