@@ -7,7 +7,9 @@ describe "data" do
       "relative_path" => "_data/data_file.yml",
       "slug"          => "data_file",
       "ext"           => ".yml",
-      "title"         => "Data File"
+      "title"         => "Data File",
+      "api_url"       => "http://localhost:4000/_api/data/data_file.yml",
+      "http_url"      => nil
     }
   end
 
@@ -54,7 +56,9 @@ describe "data" do
       "raw_content"   => "foo: bar\n",
       "content"       => {
         "foo" => "bar"
-      }
+      },
+      "api_url"       => "http://localhost:4000/_api/data/data-file-new.yml",
+      "http_url"      => nil
     }
 
     request = { "content" => { "foo" => "bar" } }
@@ -79,7 +83,9 @@ describe "data" do
       "raw_content"   => "foo: bar\n",
       "content"       => {
         "foo" => "bar"
-      }
+      },
+      "api_url"       => "http://localhost:4000/_api/data/data-file-new.yml",
+      "http_url"      => nil
     }
 
     request = { "raw_content" => "foo: bar\n" }
@@ -104,7 +110,9 @@ describe "data" do
       "raw_content"   => "foo: bar2\n",
       "content"       => {
         "foo" => "bar2"
-      }
+      },
+      "api_url"       => "http://localhost:4000/_api/data/data-file-update.yml",
+      "http_url"      => nil
     }
 
     request = { "content" => { "foo" => "bar2" } }

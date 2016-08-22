@@ -22,6 +22,7 @@ module JekyllAdmin
     # Returns a hash (which can then be to_json'd)
     def to_api(include_content: false)
       output = hash_for_api
+      output = output.merge(url_fields)
 
       # Include content, if requested, otherwise remove it
       if include_content
@@ -131,6 +132,14 @@ module JekyllAdmin
       end
 
       output
+    end
+
+    def url_fields
+      return {} unless respond_to?(:http_url) && respond_to?(:api_url)
+      {
+        "http_url" => http_url,
+        "api_url"  => api_url
+      }
     end
   end
 end
