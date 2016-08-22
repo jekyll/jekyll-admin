@@ -3,7 +3,7 @@ module JekyllAdmin
   # additional, URL-specific functionality without duplicating logic
   module URLable
 
-    # Abosolute URL to the HTTP(S) rendered/served representation of this resource
+    # Absolute URL to the HTTP(S) rendered/served representation of this resource
     def http_url
       return if is_a?(Jekyll::Collection) || is_a?(JekyllAdmin::DataFile)
       return if is_a?(Jekyll::Document) && !collection.write?
