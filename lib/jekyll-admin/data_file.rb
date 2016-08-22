@@ -4,6 +4,7 @@ module JekyllAdmin
     EXTENSIONS = %w(yaml yml json csv).freeze
 
     include APIable
+    include URLable
 
     # Initialize a new DataFile object
     #

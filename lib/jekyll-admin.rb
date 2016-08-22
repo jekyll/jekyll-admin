@@ -10,6 +10,7 @@ require "base64"
 require "webrick"
 require "sinatra"
 require "fileutils"
+require "Addressable"
 require "sinatra/base"
 require "sinatra/json"
 require "sinatra/reloader"
@@ -25,12 +26,14 @@ require "jekyll-admin/server/data.rb"
 require "jekyll-admin/server/page.rb"
 require "jekyll-admin/server/static_file.rb"
 require "jekyll-admin/apiable.rb"
+require "jekyll-admin/urlable.rb"
 require "jekyll-admin/data_file.rb"
 
 # Monkey Patches
 require_relative "./jekyll/commands/serve"
 [Jekyll::Page, Jekyll::Document, Jekyll::StaticFile, Jekyll::Collection].each do |klass|
   klass.include JekyllAdmin::APIable
+  klass.include JekyllAdmin::URLable
 end
 
 module JekyllAdmin
