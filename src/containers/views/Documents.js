@@ -63,7 +63,7 @@ export class Documents extends Component {
     return _.chain(currentDocuments)
       .sortBy('date')
       .map(doc => {
-        const { id, title, url, ext, collection, path } = doc;
+        const { id, title, http_url, ext, collection, path } = doc;
         const filename = path.substring(path.lastIndexOf('/') + 1);
         const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
         return (
@@ -77,11 +77,13 @@ export class Documents extends Component {
             <td>
               <div className="row-actions">
                 <a onClick={() => this.handleClickDelete(filename, collection)} title="Delete">
-                  <i className="fa fa-trash-o" aria-hidden="true"></i>
+                  <i className="fa fa-trash-o" aria-hidden="true"></i> Delete
                 </a>
-                <a target="_blank" href={url} title="View">
-                  <i className="fa fa-eye" aria-hidden="true"></i>
-                </a>
+                {
+                  http_url && <a target="_blank" href={http_url} title="View">
+                    <i className="fa fa-eye" aria-hidden="true"></i> View
+                  </a>
+                }
               </div>
             </td>
           </tr>

@@ -60,7 +60,7 @@ export class PageEdit extends Component {
       return <h1>{`Could not find the page.`}</h1>;
     }
 
-    const { name, title, raw_content, url, path, front_matter } = page;
+    const { name, title, raw_content, http_url, path, front_matter } = page;
 
     return (
       <div>
@@ -97,7 +97,7 @@ export class PageEdit extends Component {
               </a>
             </div>
             <div className="side-unit">
-              <Link target="_blank" className="btn btn-fat" to={url}>View</Link>
+              <Link target="_blank" className="btn btn-fat" to={http_url}>View</Link>
             </div>
             <Splitter />
             <a onClick={() => this.handleClickDelete(name)}

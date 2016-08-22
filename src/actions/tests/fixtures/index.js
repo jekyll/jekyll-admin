@@ -90,7 +90,7 @@ export const page = {
   name: "contact.md",
   raw_content: "# This is the base Jekyll theme.",
   dir: "/",
-  url:"/page.html",
+  http_url:"/page.html",
   path: "contact.md",
   front_matter: {
     foo: "bar"
