@@ -13,6 +13,7 @@ export const doc = {
   layout: "default",
   title: "The Revenant",
   path: "_movies/the-revenant.md",
+  http_url: "http://localhost:4000/movies/the-revenant.html",
   front_matter : {
     foo: "bar"
   }
@@ -77,7 +78,7 @@ export const documents = [
 
 export const collections = [
   {
-  path: "/posts",
+    path: "/posts",
     title: "Posts"
   },
   {
@@ -90,7 +91,7 @@ export const page = {
   name: "contact.md",
   raw_content: "# This is the base Jekyll theme.",
   dir: "/",
-  http_url:"/page.html",
+  http_url: "http://localhost:4000/page.html",
   path: "contact.md",
   front_matter: {
     foo: "bar"
