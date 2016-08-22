@@ -12,6 +12,16 @@ module JekyllAdmin
       ).normalize.to_s
     end
 
+    # Absolute URL to the API representation of this resource
+    def api_url
+      @api_url ||= Addressable::URI.new(
+        :scheme => scheme, :host => host, :port => port,
+        :path => path_with_base("/_api", resource_path)
+      ).normalize.to_s
+    end
+
+    private
+
     # URL path relative to `_api/` to retreive the given resource via the API
     # Note: we can't use a case statement here, because === doesn't like includes
     def resource_path
@@ -27,16 +37,6 @@ module JekyllAdmin
         "/pages/#{relative_path}"
       end
     end
-
-    # Absolute URL to the API representation of this resource
-    def api_url
-      Addressable::URI.new(
-        :scheme => scheme, :host => host, :port => port,
-        :path => path_with_base("/_api", resource_path)
-      ).normalize.to_s
-    end
-
-    private
 
     # URI.join doesn't like joining two relative paths, and File.join may join
     # with `\` rather than with `/` on windows
