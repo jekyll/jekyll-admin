@@ -6,6 +6,7 @@ module JekyllAdmin
     # Abosolute URL to the HTTP(S) rendered/served representation of this resource
     def http_url
       return if is_a?(Jekyll::Collection) || is_a?(JekyllAdmin::DataFile)
+      return if is_a?(Jekyll::Document) && !collection.write?
       @http_url ||= Addressable::URI.new(
         :scheme => scheme, :host => host, :port => port,
         :path => path_with_base(JekyllAdmin.site.config["baseurl"], url)
