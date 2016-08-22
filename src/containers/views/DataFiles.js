@@ -63,7 +63,7 @@ export class DataFiles extends Component {
           <td>
             <div className="row-actions">
               <a onClick={() => this.handleClickDelete(filename)} title="Delete">
-                <i className="fa fa-trash-o" aria-hidden="true"></i>
+                <i className="fa fa-trash-o" aria-hidden="true"></i> Delete
               </a>
             </div>
           </td>
