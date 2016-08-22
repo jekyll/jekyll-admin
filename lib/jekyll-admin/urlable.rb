@@ -3,33 +3,36 @@ module JekyllAdmin
   # additional, URL-specific functionality without duplicating logic
   module URLable
 
+    # Abosolute URL to the HTTP(S) rendered/served representation of this resource
     def http_url
       return if is_a?(Jekyll::Collection) || is_a?(JekyllAdmin::DataFile)
       @http_url ||= Addressable::URI.new(
-        :scheme => scheme, :host   => host, :port   => port,
-        :path   => path_with_base(JekyllAdmin.site.config["baseurl"], url)
+        :scheme => scheme, :host => host, :port => port,
+        :path => path_with_base(JekyllAdmin.site.config["baseurl"], url)
       ).normalize.to_s
     end
 
+    # URL path relative to `_api/` to retreive the given resource via the API
     # Note: we can't use a case statement here, because === doesn't like includes
     def resource_path
       if is_a?(Jekyll::Document)
-        "/collections/#{relative_path.sub(/\A_/, "")}"
+        "/collections/#{relative_path.sub(%r!\A_!, "")}"
       elsif is_a?(Jekyll::Collection)
         "/collections/#{label}"
       elsif is_a?(JekyllAdmin::DataFile)
-        relative_path.sub(/\A#{JekyllAdmin.site.config["data_dir"]}/, "/data")
+        relative_path.sub(%r!\A#{JekyllAdmin.site.config["data_dir"]}!, "/data")
       elsif is_a?(Jekyll::StaticFile)
         "/static_files/#{relative_path}"
-      else is_a?(Jekyll::Page)
+      elsif is_a?(Jekyll::Page)
         "/pages/#{relative_path}"
       end
     end
 
+    # Absolute URL to the API representation of this resource
     def api_url
       Addressable::URI.new(
-        :scheme => scheme, :host   => host, :port   => port,
-        :path   => path_with_base("/_api", resource_path)
+        :scheme => scheme, :host => host, :port => port,
+        :path => path_with_base("/_api", resource_path)
       ).normalize.to_s
     end
 
