@@ -33,6 +33,7 @@ module JekyllAdmin
         end
 
         write_file(document_path, document_body)
+        ensure_document
         json document.to_api(:include_content => true)
       end
 
