@@ -8,8 +8,6 @@ A Jekyll plugin that provides users with a traditional CMS-style graphical inter
 
 ## Installation
 
-*Disclaimer : [Initial release](https://github.com/jekyll/jekyll-admin/milestone/1) will not be available before 23th August 2016. Meanwhile you can [install jekyll-admin locally](https://github.com/jekyll/jekyll-admin/blob/master/docs/development.md#to-install-locally).*
-
 Refer to [Install Plugins](https://jekyllrb.com/docs/plugins/#installing-a-plugin) in Jekyll docs and install the `jekyll-admin` plugin as you would normally by adding `jekyll-admin` to your Gemfile and `_config.yml`'s `gems` list.
 
 ## Usage
