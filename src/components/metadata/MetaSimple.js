@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import _ from 'underscore';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
-import dateformat from 'dateformat';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -16,9 +15,9 @@ export class MetaSimple extends Component {
     updateFieldValue(nameAttr, e.target.value);
   }
 
-  handleDatepickerChange(value, dateStr) {
+  handleDatepickerChange(date, dateStr) {
     const { nameAttr, fieldValue, updateFieldValue } = this.props;
-    let formatted = dateformat(dateStr, "yyyy-mm-dd HH:MM:ss");
+    let formatted = moment(date).format("YYYY-MM-DD hh:mm:ss");
     updateFieldValue(nameAttr, formatted);
   }
 
@@ -37,7 +36,7 @@ export class MetaSimple extends Component {
     let dateValue = (new Date(fieldValue) == 'Invalid Date') ? null : new Date(fieldValue);
     return (
       <DateTimePicker
-        onChange={(v, d) => this.handleDatepickerChange(null, d)}
+        onChange={(v, d) => this.handleDatepickerChange(v, d)}
         className="date-field"
         defaultValue={dateValue} />
     );

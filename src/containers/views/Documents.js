@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import { capitalize } from '../../utils/helpers';
-import dateformat from 'dateformat';
+import moment from 'moment';
 
 // Constants
 import { ADMIN_PREFIX } from '../../constants';
@@ -73,7 +73,7 @@ export class Documents extends Component {
                 <Link to={to}>{title}</Link>
               </strong>
             </td>
-            <td>{dateformat(doc.date, "mmm dd, yyyy")}</td>
+            <td>{moment(doc.date).format("LLL").toString()}</td>
             <td>
               <div className="row-actions">
                 <a onClick={() => this.handleClickDelete(filename, collection)} title="Delete">
