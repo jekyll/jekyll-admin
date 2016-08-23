@@ -13,7 +13,7 @@ export const doc = {
   title: "The Revenant",
   path: "the-revenant.md",
   draft: false,
-  url: '/the-revenant.html',
+  http_url: '/the-revenant.html',
   front_matter: {
     foo: "bar"
   }
@@ -24,7 +24,7 @@ export const page = {
   dir: "/",
   name: "page.md",
   path: "page.md",
-  url: "/page.html",
+  http_url: "/page.html",
   front_matter: {
     title: "Test Page"
   }

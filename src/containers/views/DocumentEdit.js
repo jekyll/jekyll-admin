@@ -63,7 +63,7 @@ export class DocumentEdit extends Component {
       return <h1>{`Could not find the document.`}</h1>;
     }
 
-    const { title, raw_content, draft, url, path, collection, front_matter } = currentDocument;
+    const { title, raw_content, draft, http_url, path, collection, front_matter } = currentDocument;
 
     const filename = path.substring(path.lastIndexOf('/') + 1);
 
@@ -101,9 +101,11 @@ export class DocumentEdit extends Component {
                 {updated ? 'Saved' : 'Save'}
               </a>
             </div>
-            <div className="side-unit">
-              <Link target="_blank" className="btn btn-fat" to={url}>View</Link>
-            </div>
+            {
+              http_url && <div className="side-unit">
+                <Link target="_blank" className="btn btn-fat" to={http_url}>View</Link>
+              </div>
+            }
             <Splitter />
             <a onClick={() => this.handleClickDelete(filename, collection)}
               className="side-link delete">

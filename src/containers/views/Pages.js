@@ -51,7 +51,7 @@ export class Pages extends Component {
   renderRows() {
     const { pages } = this.props;
     return _.map(pages, (page) => {
-      const { name, url, title } = page;
+      const { name, http_url, title } = page;
       const to = `${ADMIN_PREFIX}/pages/${name}`;
       return (
         <tr key={name}>
@@ -63,10 +63,10 @@ export class Pages extends Component {
           <td>
             <div className="row-actions">
               <a onClick={() => this.handleClickDelete(name)} title="Delete">
-                <i className="fa fa-trash-o" aria-hidden="true"></i>
+                <i className="fa fa-trash-o" aria-hidden="true"></i> Delete
               </a>
-              <a target="_blank" href={url} title="View">
-                <i className="fa fa-eye" aria-hidden="true"></i>
+              <a target="_blank" href={http_url} title="View">
+                <i className="fa fa-eye" aria-hidden="true"></i> View
               </a>
             </div>
           </td>
