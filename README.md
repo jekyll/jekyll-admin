@@ -8,7 +8,15 @@ A Jekyll plugin that provides users with a traditional CMS-style graphical inter
 
 ## Installation
 
-Refer to [Install Plugins](https://jekyllrb.com/docs/plugins/#installing-a-plugin) in Jekyll docs and install the `jekyll-admin` plugin as you would normally by adding `jekyll-admin` to your Gemfile and `_config.yml`'s `gems` list.
+Refer to the [installing plugins](https://jekyllrb.com/docs/plugins/#installing-a-plugin) section of Jekyll's documentation and install the `jekyll-admin` plugin as you would any other plugin. Here's the short version:
+
+1. Add the following to you site's Gemfile:
+
+    ```ruby
+    gem 'jekyll-admin', group: :jekyll_plugins
+    ```
+
+2. Run `bundle install`
 
 ## Usage
 
