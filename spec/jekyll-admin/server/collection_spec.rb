@@ -195,6 +195,23 @@ describe "collections" do
     delete_file "_posts/2016-01-01-test2.md"
   end
 
+  it "writes a new file with a future date" do
+    future_date = Date.today + 7
+    delete_file "_posts/#{future_date}-test.md"
+
+    request = {
+      :front_matter => { :foo => "bar" },
+      :raw_content  => "test"
+    }
+    put "/collections/posts/#{future_date}-test.md", request.to_json
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq("bar")
+    expect("_posts/#{future_date}-test.md").to be_an_existing_file
+
+    delete_file "_posts/#{future_date}-test.md"
+  end
+
   context "renaming a file" do
     %w(with without).each do |type|
       it "renames a file #{type} the collection prefix" do
