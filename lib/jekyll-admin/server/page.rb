@@ -7,7 +7,7 @@ module JekyllAdmin
 
       get "/:page_id" do
         ensure_page
-        json page.to_api
+        json page.to_api(:include_content => true)
       end
 
       put "/:page_id" do
@@ -19,7 +19,7 @@ module JekyllAdmin
 
         write_file(page_path, page_body)
         ensure_page
-        json page.to_api
+        json page.to_api(:include_content => true)
       end
 
       delete "/:page_id" do

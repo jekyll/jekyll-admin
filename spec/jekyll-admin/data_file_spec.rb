@@ -1,58 +1,74 @@
-describe "data" do
-  include Rack::Test::Methods
+describe JekyllAdmin::DataFile do
+  let(:relative_path) { "_data/data_file.yml" }
+  let(:absolute_path) { in_source_dir(relative_path) }
 
-  def app
-    JekyllAdmin::Server
-  end
+  %w(with without).each do |type|
+    describe "an ID #{type} an extension" do
+      let(:id) do
+        if type == "with"
+          "data_file.yml"
+        else
+          "data_file"
+        end
+      end
 
-  it "gets the index" do
-    get "/data"
-    expect(last_response).to be_ok
-    expect(last_response_parsed.first[0]).to eql("data_file")
-  end
+      subject { described_class.new(id) }
 
-  it "gets an individual data file" do
-    get "/data/data_file"
-    expect(last_response).to be_ok
-    expect(last_response_parsed).to eql({ "foo" => "bar" })
-  end
+      it "stores the id" do
+        expect(subject.instance_variable_get("@id")).to eql(id)
+      end
 
-  it "gets an individual data file with an extension" do
-    get "/data/data_file.yml"
-    expect(last_response).to be_ok
-    expect(last_response_parsed).to eql({ "foo" => "bar" })
-  end
+      it "exposes the relative path" do
+        expect(subject.relative_path).to eql(relative_path)
+      end
 
-  it "writes a new data file" do
-    delete_file "_data/data-file-new.yml"
+      it "exposes the raw content" do
+        expect(subject.raw_content).to eql("foo: bar\n")
+      end
 
-    request = { "foo" => "bar" }
-    put "/data/data-file-new", request.to_json
+      it "exposes the parsed content" do
+        expect(subject.content["foo"]).to eql("bar")
+      end
 
-    expect(last_response).to be_ok
-    expect(last_response_parsed).to eql({ "foo" => "bar" })
-    expect("_data/data-file-new.yml").to be_an_existing_file
+      it "exposes the extension" do
+        expect(subject.extension).to eql(".yml")
+      end
 
-    delete_file "_data/data-file-new.yml"
-  end
+      it "exposes the slug" do
+        expect(subject.slug).to eql("data_file")
+      end
 
-  it "updates a data file" do
-    write_file "_data/data-file-update.yml", "foo2: bar2"
+      it "exposes the title" do
+        expect(subject.title).to eql("Data File")
+      end
 
-    request = { "foo" => "bar2" }
-    put "/data/data-file-update", request.to_json
+      it "returns the hash" do
+        expect(subject.to_api).to eql({
+          "path"          => "_data/data_file.yml",
+          "relative_path" => "_data/data_file.yml",
+          "slug"          => "data_file",
+          "ext"           => ".yml",
+          "title"         => "Data File",
+          "api_url"       => "http://localhost:4000/_api/data/data_file.yml",
+          "http_url"      => nil
+        })
+      end
 
-    expect(last_response).to be_ok
-    expect(last_response_parsed).to eql({ "foo" => "bar2" })
-    expect("_data/data-file-update.yml").to be_an_existing_file
-
-    delete_file "_data/data-file-update.yml"
-  end
-
-  it "deletes a data file" do
-    write_file "_data/data-file-delete.yml", "foo2: bar2"
-    delete "/data/data-file-delete"
-    expect(last_response).to be_ok
-    expect("_data/data-file-delete.yml").to_not be_an_existing_file
+      it "returns the hash with content" do
+        expect(subject.to_api(:include_content => true)).to eql({
+          "path"          => "_data/data_file.yml",
+          "relative_path" => "_data/data_file.yml",
+          "slug"          => "data_file",
+          "ext"           => ".yml",
+          "title"         => "Data File",
+          "raw_content"   => "foo: bar\n",
+          "content"       => {
+            "foo" => "bar"
+          },
+          "api_url"       => "http://localhost:4000/_api/data/data_file.yml",
+          "http_url"      => nil
+        })
+      end
+    end
   end
 end

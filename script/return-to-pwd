@@ -1,6 +1,0 @@
-#!/bin/bash
-# Returns to the present directory when the script exits
-
-pwd=$(pwd)
-cd_pwd () { cd $pwd || exit; }
-trap cd_pwd EXIT

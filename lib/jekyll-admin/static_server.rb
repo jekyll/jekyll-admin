@@ -1,6 +1,6 @@
 module JekyllAdmin
   class StaticServer < Sinatra::Base
-    set :public_dir, File.expand_path("./public/dist", File.dirname(__FILE__))
+    set :public_dir, File.expand_path("./public", File.dirname(__FILE__))
 
     MUST_BUILD_MESSAGE = "Front end not yet built. Run `script/build` to build.".freeze
 

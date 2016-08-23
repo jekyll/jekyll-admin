@@ -13,3 +13,6 @@ _site/
 /spec/fixtures/site/_site
 npm-debug.log
 /spec/fixtures/site/Gemfile.lock
+node_modules
+/lib/jekyll-admin/public
+*.gem

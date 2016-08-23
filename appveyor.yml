@@ -1,0 +1,33 @@
+environment:
+  nodejs_version: "6"
+  RACK_ENV: test
+  JEKYLL_LOG_LEVEL: warn
+  matrix:
+    - TEST_SUITE: node
+    - TEST_SUITE: ruby
+
+install:
+  - set PATH=C:\Ruby22\bin;%PATH%
+  - ps: Install-Product node $env:nodejs_version
+  - gem install bundler --no-ri --no-rdoc
+  - bundle config --local path vendor/bundle
+  - sh script/bootstrap
+
+build: off
+
+before_test:
+  - node --version
+  - npm --version
+  - ruby -v
+  - gem -v
+  - bundle -v
+
+test_script:
+  - sh script/cibuild
+
+cache:
+  - vendor/bundle
+  - node_modules
+
+init:
+  - git config --global core.autocrlf true

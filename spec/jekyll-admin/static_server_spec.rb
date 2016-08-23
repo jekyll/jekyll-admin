@@ -5,12 +5,17 @@ describe JekyllAdmin::StaticServer do
     JekyllAdmin::StaticServer
   end
 
+  def expected_index
+    expected = File.read(index_path)
+    expected.gsub!("\n", "\r\n") if Gem.win_platform?
+    expected
+  end
+
   it "returns the index" do
     with_index_stubbed do
       get "/"
       expect(last_response).to be_ok
-      expected = File.read(index_path)
-      expect(last_response.body).to eql(expected)
+      expect(last_response.body).to eql(expected_index)
     end
   end
 
@@ -18,8 +23,7 @@ describe JekyllAdmin::StaticServer do
     with_index_stubbed do
       get "/collections"
       expect(last_response).to be_ok
-      expected = File.read(index_path)
-      expect(last_response.body).to eql(expected)
+      expect(last_response.body).to eql(expected_index)
     end
   end
 end

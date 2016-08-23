@@ -1,3 +1,5 @@
+title: Your awesome title
+
 gems:
   - jekyll-admin
 
@@ -18,4 +20,4 @@ defaults:
 collections:
   puppies:
     foo: bar
-    output: true
+    output: false

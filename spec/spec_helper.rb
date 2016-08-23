@@ -14,7 +14,7 @@ def fixture_path(fixture)
 end
 
 def dist_path
-  File.expand_path "../lib/jekyll-admin/public/dist/", File.dirname(__FILE__)
+  File.expand_path "../lib/jekyll-admin/public/", File.dirname(__FILE__)
 end
 
 def index_path
