@@ -63,14 +63,14 @@ export class Documents extends Component {
     return _.chain(currentDocuments)
       .sortBy('date')
       .map(doc => {
-        const { id, title, http_url, ext, collection, path } = doc;
+        const { id, slug, title, http_url, ext, collection, path } = doc;
         const filename = path.substring(path.lastIndexOf('/') + 1);
         const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
         return (
           <tr key={id}>
             <td className="row-title">
               <strong>
-                <Link to={to}>{title}</Link>
+                <Link to={to}>{title || slug}</Link>
               </strong>
             </td>
             <td>{moment(doc.date).format("LLL").toString()}</td>
