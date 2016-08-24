@@ -92,7 +92,7 @@ export class PageEdit extends Component {
           <div className="content-side">
             <div className="side-unit">
               <a onClick={() => this.handleClickSave(name)}
-                className={"btn"+(fieldChanged ? " btn-success " : " ")+"btn-fat"}>
+                className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
                 {updated ? 'Saved' : 'Save'}
               </a>
             </div>
