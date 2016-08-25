@@ -10,7 +10,6 @@ const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
 
 import { config, config_yaml } from './fixtures';
-import { toJSON } from '../../utils/helpers';
 
 describe('Actions::Config', () => {
   afterEach(() => {
