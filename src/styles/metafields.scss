@@ -6,19 +6,18 @@
     margin-bottom: 20px;
     .meta-key {
       .key-field {
-        margin: 0 0 5px;
-        max-width: 200px;
+        margin: 15px 0 10px;
+        padding: 11px 13px;
+        max-width: calc(100% - 36px);
+        height: 48px;
         font-size: 16px;
         font-weight: 700;
-        background: 0 0;
-        border: 2px solid transparent;
-        @include border-radius(2px);
-        padding: 5px 0;
+        border: 1px solid $border-color;
+        @include border-radius($border-radius);
         box-shadow: none;
         @include transition(padding 250ms ease);
         &:focus {
-          padding: 5px;
-          border-color: $dark-orange;
+          border-color: $border-color-focus;
           color: #000 !important;
         }
         &:hover {
@@ -28,30 +27,28 @@
     }
     .meta-value {
       .value-field {
-        overflow: hidden;
-        word-wrap: break-word;
-        resize:vertical;
-        height: auto;
-        min-height: 46px;
         margin-bottom: 0;
-        max-height: 500px;
-        vertical-align: bottom;
-        line-height: 1.5;
-        width: 100%;
-
-        @include border-radius(2px);
-        border-color: $border-color;
-        font-size: 16px;
         padding: 11px 13px;
+        max-width: calc(100% - 36px);
+        min-height: 46px;
+        max-height: 500px;
+        font-size: 16px;
+        line-height: 1.5;
+        resize: vertical;
+        vertical-align: bottom;
+        word-wrap: break-word;
+        overflow: hidden;
+        border-color: $border-color;
+        @include border-radius($border-radius);
         &:focus {
-          border: 1px solid $dark-orange;
+          border: 1px solid $border-color-focus;
         }
       }
     }
     .meta-value-array {
       padding: 10px 15px;
       border: 1px solid $border-color;
-      @include border-radius(3px);
+      @include border-radius($border-radius);
       position: relative;
       .array-item-wrap {
         margin-bottom: 20px;
@@ -104,7 +101,7 @@
             box-shadow: none;
             min-height: 46px;
             line-height: 1.5;
-            @include border-radius(2px);
+            @include border-radius($border-radius);
           }
           .meta-buttons {
             transform: translateY(-50%);
@@ -145,6 +142,9 @@
         display: inline-block;
         text-align: center;
         outline: 0;
+        i {
+          margin: 0;
+        }
       }
       .meta-button.move {
         cursor: move;
@@ -156,7 +156,7 @@
         cursor: pointer;
         position: relative;
         button {
-          border: 1px solid #d4d7d9;
+          border: 1px solid $border-color;
           background: none;
           padding: 0;
           @include border-radius(50%);
@@ -175,7 +175,7 @@
             height: 0;
             border-style: solid;
             border-width: 0 10px 10px;
-            border-color: transparent transparent #d4d7d9;
+            border-color: transparent transparent $border-color;
             content: "";
             position: absolute;
             top: -10px;
@@ -190,7 +190,7 @@
           z-index: 30;
           width: 185px;
           border: 1px solid #d4d7d9;
-          border-radius: 2px;
+          border-radius: $border-radius;
           background: #fff;
           span {
             display: block;
@@ -234,7 +234,7 @@
     & div {
       opacity: 0;
     }
-    border: 2px dashed $dark-orange !important;
+    border: 1px dashed $dark-orange !important;
   }
   .showing-dropdown {
     z-index: 30;
@@ -256,6 +256,6 @@
     right: -10px !important;
   }
   .rw-state-focus {
-    border: 1px solid $dark-orange !important;
+    border: 1px solid $orange !important;
   }
 }

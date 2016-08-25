@@ -8,13 +8,13 @@
   width: 100%;
   height: 2.286em;
   padding: .429em .857em;
-  border: #ccc 1px solid;
+  border: 1px solid $border-color;
   font-size: 14px;
   @include box-sizing(border-box);
   @include box-shadow(inset 0 1px 1px rgba(0, 0, 0, 0.075));
-  @include border-radius(4px);
+  @include border-radius($border-radius);
   &:focus {
-    border-color: $dark-orange;
+    border-color: $border-color-focus;
   }
 }
 
@@ -27,23 +27,25 @@
 
 .input-title {
   display:inline-block;
+  margin: 0 0 20px 0;
+  padding: 0 0 12px 0;
+  width: 100%;
+  min-height: 57px;
+  font-size: 45px;
   overflow: hidden;
   resize: vertical;
   word-wrap: break-word;
-  @include border-radius(2px);
+  background: none;
+  line-height: 1.2;
   -webkit-font-smoothing: antialiased;
+  outline: none;
   box-shadow: none;
   border: 0;
-  padding: 0;
-  background: none;
-  margin: 0 0 20px 0;
-  line-height: 1.2;
-  width: 100%;
-  min-height: 57px;
-  font-size: 48px;
-  outline: none;
+  border-bottom: 1px solid #ededed;
+  @include border-radius($border-radius);
   &:focus {
     color: #000 !important;
+    border-bottom: 2px solid $border-color-focus;
   }
   &:hover {
     color: #888;

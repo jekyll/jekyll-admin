@@ -106,11 +106,14 @@ export class PageEdit extends Component {
             <div className="side-unit">
               <a onClick={() => this.handleClickSave(name)}
                 className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
+                  <i className="fa fa-save" aria-hidden="true"></i>
                 {updated ? 'Saved' : 'Save'}
               </a>
             </div>
             <div className="side-unit">
-              <Link target="_blank" className="btn btn-fat" to={http_url}>View</Link>
+              <Link target="_blank" className="btn btn-fat" to={http_url}>
+                <i className="fa fa-eye" aria-hidden="true"></i>View
+              </Link>
             </div>
             <Splitter />
             <a onClick={() => this.handleClickDelete(name)}
