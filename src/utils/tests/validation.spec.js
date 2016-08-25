@@ -56,7 +56,7 @@ describe('Validation functions:', () => {
       ]);
     });
 
-    it("should generate an error message if a non-post documents's filename does not have an extension", () => {
+    it("should generate an error message if a non-post document's filename does not have an extension", () => {
       const metadata = {
         path: 'test'
       };
