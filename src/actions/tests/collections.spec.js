@@ -189,7 +189,8 @@ describe('Actions::Collections', () => {
         type: types.VALIDATION_ERROR,
         errors: [
           'The title is required.',
-          'The filename is required.'
+          'The filename is required.',
+          "The filename is not valid."
         ]
       }
     ];

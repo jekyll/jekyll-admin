@@ -146,12 +146,12 @@ describe('Actions::Pages', () => {
       {
         type: types.VALIDATION_ERROR,
         errors: [
-          "The filename is required."
+          "The filename is not valid."
         ]
       }
     ];
 
-    const store = mockStore({metadata: { metadata: {} }});
+    const store = mockStore({metadata: { metadata: { path: '.invalid.'} }});
 
     store.dispatch(actions.putPage(page.name));
     expect(store.getActions()).toEqual(expectedActions);

@@ -55,5 +55,19 @@ describe('Validation functions:', () => {
         'The filename is not valid.'
       ]);
     });
+
+    it("should generate an error message if a non-post documents's filename does not have an extension", () => {
+      const metadata = {
+        path: 'test'
+      };
+      const errorMessages = validator(
+        metadata,
+        { 'path': 'required|filename' },
+        { 'path.filename': 'The filename is not valid.'}
+      );
+      expect(errorMessages).toEqual([
+        'The filename is not valid.'
+      ]);
+    });
   });
 });
