@@ -73,7 +73,7 @@ Returns an array of the registered collections.
 
 #### `GET /collections/:collection_name`
 
-Returns information about the requested collection
+Returns information about the requested collection.
 
 #### `GET /collections/:collection_name/documents`
 
@@ -125,7 +125,7 @@ Returns the parsed site configuration.
 
 Create or update the site's `_config.yml` file with the requested contents.
 
-File will be written to disk in YAML. It will not necessarily to preserve whitespace or in-line comments.
+File will be written to disk in YAML. It will not necessarily preserve whitespace or inline comments.
 
 ### Static files
 
@@ -156,7 +156,7 @@ If the path maps to a directory, it list all static files in the directory. This
 
 #### `PUT /static_files/:path`
 
-Create or update a static file on disk. This can be arbitrary ASCII or a binary file (e.g., an image).
+Create or update a static file on disk. This can be an arbitrary ASCII or a binary file (e.g., an image).
 
 #### `DELETE /static_files/:path`
 
