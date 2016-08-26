@@ -84,6 +84,9 @@ export function putDocument(id, collection) {
     if (collection == 'posts') {
       validations['path'] = 'required|date';
       messages['path.date'] = 'The filename is not valid.';
+    }else {
+      validations['path'] = 'required|filename';
+      messages['path.filename'] = 'The filename is not valid.';
     }
     const errors = validator(metadata, validations, messages);
     if(errors.length) {

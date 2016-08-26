@@ -55,5 +55,33 @@ describe('Validation functions:', () => {
         'The filename is not valid.'
       ]);
     });
+
+    it("should generate an error message if a post's filename does not have a valid date", () => {
+      const metadata = {
+        path: '2016-33-33-test.md'
+      };
+      const errorMessages = validator(
+        metadata,
+        { 'path': 'required|date' },
+        { 'path.date': 'The filename is not valid.'}
+      );
+      expect(errorMessages).toEqual([
+        'The filename is not valid.'
+      ]);
+    });
+
+    it("should generate an error message if a non-post document's filename does not have an extension", () => {
+      const metadata = {
+        path: 'test'
+      };
+      const errorMessages = validator(
+        metadata,
+        { 'path': 'required|filename' },
+        { 'path.filename': 'The filename is not valid.'}
+      );
+      expect(errorMessages).toEqual([
+        'The filename is not valid.'
+      ]);
+    });
   });
 });

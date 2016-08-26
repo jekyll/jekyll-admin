@@ -60,7 +60,9 @@ export class PageEdit extends Component {
       return <h1>{`Could not find the page.`}</h1>;
     }
 
-    const { name, title, raw_content, http_url, path, front_matter } = page;
+    const { name, raw_content, http_url, path, front_matter } = page;
+
+    const title = front_matter ? front_matter.title : '';
 
     return (
       <div>
@@ -79,14 +81,14 @@ export class PageEdit extends Component {
 
         <div className="content-wrapper">
           <div className="content-body">
-            <InputTitle onChange={updateTitle} title={front_matter.title || ''} ref="title" />
+            <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}
               placeholder="Body"
               initialValue={raw_content}
               ref="editor" />
             <Splitter />
-            <Metadata fields={{title: front_matter.title, raw_content, path, ...front_matter}} />
+            <Metadata fields={{title, raw_content, path, ...front_matter}} />
           </div>
 
           <div className="content-side">
