@@ -1,25 +1,25 @@
-Describe in one or two sentences why you're opening this issue:
+### Description:
+<!-- Describe in one or two sentences why you're opening this issue: -->
+> **REPLACE-ME**
+
+### Tell us a bit about yourself:
+* Version of JekyllAdmin I'm using <HINT: use `bundle show` to check>: ***REPLACE-ME***
+* Version of Jekyll I'm using <HINT: use `bundle show` to check>: ***REPLACE-ME***
+* Operating System <e.g. OS X, Windows>: ***REPLACE-ME***
+* Browser <e.g, Safari, Chrome>: ***REPLACE-ME***
+
+### Steps to reproduce:
+<!-- List the steps someone else can take to reproduce the conditions you're reporting. -->
 
 
-### Tell us a bit about yourself
+### I expected the following:
+<!-- After you take those steps, what do you expect to happen? -->
 
-* Version of JekyllAdmin I'm using <hint: use `bundle show` to check>:
-* Version of Jekyll I'm using <hint: use `bundle show` to check>:
-* Operating System <e.g. OS X, Windows>:
-* Browser <e.g, Safari, Chrome>:
 
-### Steps to reproduce
+### But got the following, instead:
+<!-- After you take those steps, what actually happens, instead? -->
 
-List the steps someone else can take to reproduce the conditions you're reporting:
 
-### Expected
+### Other details:
+<!-- Anything else you think we should know? Do you have a screenshot? An animated GIF? Can you express the problem using emoji? -->
 
-After you take those steps, what are you expecting to happen?
-
-### Actual
-
-After you take those steps, what actually happens?
-
-### Other details
-
-Anything else you think we should know? Do you have a screenshot? An animated GIF? Can you express the problem using emoji?
