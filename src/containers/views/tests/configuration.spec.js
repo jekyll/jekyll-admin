@@ -30,7 +30,7 @@ describe('Containers::Configuration', () => {
   it('should render correctly with initial props', () => {
     const { component, editor, saveButton } = setup();
     expect(saveButton.text()).toBe('Save');
-    expect(saveButton.prop('className').trim()).toBe('btn');
+    expect(saveButton.prop('className').trim()).toBe('btn btn-inactive');
     expect(editor.prop('json')).toEqual(config);
   });
 
