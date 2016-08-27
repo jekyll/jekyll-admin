@@ -78,7 +78,7 @@ i {
 }
 
 .btn-inactive {
-  @include btn($btn-inactive, $btn-inactive-border, default, .4, false); 
+  @include btn($btn-inactive, $btn-inactive-border, default, .5, false); 
 }
 
 .btn-success {
