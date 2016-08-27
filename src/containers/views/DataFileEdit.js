@@ -84,7 +84,7 @@ export class DataFileEdit extends Component {
 
           <div className="content-side">
             <a onClick={() => this.handleClickSave()}
-              className={"btn"+(datafileChanged ? " btn-success " : " ")+"btn-fat"}>
+              className={"btn"+(datafileChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
               {updated ? 'Saved' : 'Save'}
             </a>
             <Splitter />

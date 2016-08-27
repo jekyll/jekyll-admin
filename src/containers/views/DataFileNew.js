@@ -67,7 +67,7 @@ export class DataFileNew extends Component {
           <div className="content-side">
             <div className="side-unit">
               <a onClick={() => this.handleClickSave()}
-                className={"btn"+(datafileChanged ? " btn-success " : " ")+"btn-fat"}>
+                className={"btn"+(datafileChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
                 {updated ? 'Saved' : 'Save'}
               </a>
             </div>
