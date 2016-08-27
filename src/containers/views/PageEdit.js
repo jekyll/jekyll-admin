@@ -32,6 +32,17 @@ export class PageEdit extends Component {
     fetchPage(params.id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.updated !== nextProps.updated) {
+      const new_name = nextProps.page.name;
+      const name = this.props.page.name;
+      // redirect if the name is changed
+      if (new_name != name) {
+        browserHistory.push(`${ADMIN_PREFIX}/pages/${new_name}`);
+      }
+    }
+  }
+
   handleClickSave(name) {
     const { putPage, fieldChanged } = this.props;
     if (fieldChanged) {

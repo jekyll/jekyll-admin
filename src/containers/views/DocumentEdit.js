@@ -35,6 +35,20 @@ export class DocumentEdit extends Component {
     fetchDocument(params.collection_name, params.id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.updated !== nextProps.updated) {
+      const new_path = nextProps.currentDocument.path;
+      const path = this.props.currentDocument.path;
+      // redirect if the path is changed
+      if (new_path != path) {
+        const filename = new_path.substring(new_path.lastIndexOf('/') + 1);
+        browserHistory.push(
+          `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${filename}`
+        );
+      }
+    }
+  }
+
   handleClickSave(id, collection) {
     const { putDocument, fieldChanged } = this.props;
     if (fieldChanged) {
