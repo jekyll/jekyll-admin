@@ -189,7 +189,8 @@ describe('Actions::Collections', () => {
         type: types.VALIDATION_ERROR,
         errors: [
           'The title is required.',
-          'The filename is required.'
+          'The filename is required.',
+          "The filename is not valid."
         ]
       }
     ];
@@ -197,6 +198,24 @@ describe('Actions::Collections', () => {
     const store = mockStore({metadata: { metadata: _.omit(doc, ['title','path']) }});
 
     store.dispatch(actions.putDocument(doc.id, doc.collection));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('creates VALIDATION_ERROR if the date is not valid.', () => {
+    const expectedActions = [
+      {
+        type: types.VALIDATION_ERROR,
+        errors: [
+          "The filename is not valid."
+        ]
+      }
+    ];
+
+    const store = mockStore({
+      metadata: { metadata: { title: 'test', path: '2016-33-33-title.md'} }
+    });
+
+    store.dispatch(actions.putDocument(doc.id, 'posts'));
     expect(store.getActions()).toEqual(expectedActions);
   });
 });

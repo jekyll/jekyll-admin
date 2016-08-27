@@ -1,6 +1,7 @@
 import _ from 'underscore';
 
-const DATE_FILENAME_MATCHER = /^(?:.+\/)*(\d+-\d+-\d+)-(.*)(\.[^.]+)$/;
+const DATE_FILENAME_MATCHER = /^(?:.+\/)*(\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]))-(.*)(\.[^.]+)$/;
+const FILENAME_MATCHER = /^(.*)(\.[^.]+)$/;
 
 /**
  * Returns error messages if the given values does not pass the provided validations.
@@ -28,6 +29,8 @@ const validated = (field, single) => {
       return !!field;
     case 'date':
       return DATE_FILENAME_MATCHER.test(field);
+    case 'filename':
+      return FILENAME_MATCHER.test(field);
     default:
       return false;
   }

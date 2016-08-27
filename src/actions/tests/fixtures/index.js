@@ -3,6 +3,8 @@ export const config = {
   gems: 'jekyll-admin'
 };
 
+export const config_yaml = "title: Awesome Title\ngems: jekyll-admin";
+
 export const doc = {
   id: "/movies/the-revenant",
   ext: ".md",

@@ -43,8 +43,11 @@ export function putPage(name) {
     const { path, raw_content } = metadata;
     const errors = validator(
       metadata,
-      { 'path': 'required' },
-      { 'path.required': 'The filename is required.'}
+      { 'path': 'required|filename' },
+      {
+        'path.required': 'The filename is required.',
+        'path.filename': 'The filename is not valid.'
+      }
     );
     if (errors.length) {
       return dispatch(validationError(errors));

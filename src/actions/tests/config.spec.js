@@ -9,7 +9,7 @@ import expect from 'expect';
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
 
-import { config } from './fixtures';
+import { config, config_yaml } from './fixtures';
 
 describe('Actions::Config', () => {
   afterEach(() => {
@@ -34,6 +34,23 @@ describe('Actions::Config', () => {
       });
   });
 
+  it('updates the configuration', () => {
+    nock(API)
+      .put('/configuration', config)
+      .reply(200, config);
+
+    const expectedAction = [{
+      type: types.PUT_CONFIG_SUCCESS,
+      config
+    }];
+
+    const store = mockStore({ config: {} });
+    return store.dispatch(actions.putConfig(config_yaml))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedAction);
+      });
+  });
+
   it('creates PUT_CONFIG_FAILURE when updating configuration failed', () => {
     nock(API)
       .put('/configuration', config)
@@ -45,7 +62,7 @@ describe('Actions::Config', () => {
 
     const store = mockStore({ config: {} });
 
-    return store.dispatch(actions.putConfig(config))
+    return store.dispatch(actions.putConfig(config_yaml))
       .then(() => {
         expect(store.getActions()[0].type).toEqual(expectedAction.type);
       });
