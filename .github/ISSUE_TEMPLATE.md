@@ -1,12 +1,15 @@
+<!-- JekyllAdmin Issue Ticket -->
+<!-- To tackle bugs better, we recommend that you report one issue per ticket --> 
+
 ### Description:
 <!-- Describe in one or two sentences why you're opening this issue: -->
-> **REPLACE-ME**
+
 
 ### Tell us a bit about yourself:
-* Version of JekyllAdmin I'm using <HINT: use `bundle show` to check>: ***REPLACE-ME***
-* Version of Jekyll I'm using <HINT: use `bundle show` to check>: ***REPLACE-ME***
-* Operating System <e.g. OS X, Windows>: ***REPLACE-ME***
-* Browser <e.g, Safari, Chrome>: ***REPLACE-ME***
+* Version of JekyllAdmin I'm using <HINT: use `bundle show` to check>:
+* Version of Jekyll I'm using <HINT: use `bundle show` to check>:
+* Operating System <e.g. OS X, Windows>:
+* Browser <e.g, Safari, Chrome>:
 
 ### Steps to reproduce:
 <!-- List the steps someone else can take to reproduce the conditions you're reporting. -->
