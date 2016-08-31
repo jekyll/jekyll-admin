@@ -5,20 +5,55 @@ export const config = {
 
 export const config_yaml = "title: Awesome Title\ngems: jekyll-admin";
 
-export const doc = {
-  id: "/movies/the-revenant",
-  ext: ".md",
-  slug: "the-revenant",
-  collection: "movies",
-  raw_content: "# Test Document",
-  content: "Test Document",
-  layout: "default",
-  title: "The Revenant",
-  path: "_movies/the-revenant.md",
-  http_url: "http://localhost:4000/movies/the-revenant.html",
-  front_matter : {
-    foo: "bar"
+export const collections = [
+  {
+    label: "posts",
+    files: [],
+    directory: "/jekyll-admin/spec/fixtures/site/_posts",
+    relative_directory: "_posts",
+    permalink: "/:categories/:year/:month/:day/:title:output_ext",
+    http_url: null,
+    api_url: "http://localhost:4000/_api/collections/posts"
+  },
+  {
+    label: "puppies",
+    files: [],
+    directory: "/jekyll-admin/spec/fixtures/site/_puppies",
+    relative_directory: "_puppies",
+    foo: "bar",
+    http_url: null,
+    api_url: "http://localhost:4000/_api/collections/puppies"
   }
+];
+
+export const doc = {
+  path: "_puppies/rover.md",
+  id: "/puppies/rover",
+  relative_path: "_puppies/rover.md",
+  url: "/puppies/rover.html",
+  collection: "puppies",
+  draft: false,
+  categories: [],
+  some_front_matter: "default",
+  title: "Rover",
+  breed: "Golden Retriever",
+  slug: "rover",
+  ext: ".md",
+  tags: [],
+  date: "2016-08-31 23:02:41 +0300",
+  http_url: null,
+  api_url: "http://localhost:4000/_api/collections/puppies/rover.md"
+};
+
+export const collection = {
+  label: "puppies",
+  files: [],
+  directory: "/jekyll-admin/spec/fixtures/site/_puppies",
+  relative_directory: "_puppies",
+  foo: "bar",
+  http_url: null,
+  api_url: "http://localhost:4000/_api/collections/puppies",
+  documents: [doc]
 };
 
 export const new_doc = {
@@ -28,66 +63,6 @@ export const new_doc = {
   path: "the-revenant.md",
   foo: "bar"
 };
-
-export const documents = [
-  {
-    id: "2016-05-20-testing-posts",
-    ext: ".md",
-    collection: "posts",
-    content: "You’ll find this post in your `_posts` directory.",
-    layout: "post",
-    title: "Testing Posts",
-    date: "2016-05-20 01:10:46 +0300",
-    categories: "test",
-    path: "_posts/2016-05-20-testing-posts.md"
-  },
-  {
-    id: "2016-05-29-google-summer-of-code",
-    ext: ".md",
-    collection: "posts",
-    content: "You’ll find this post in your `_posts` directory.",
-    layout: "post",
-    title: "Google Summer of Code!",
-    date: "2016-05-29 01:10:46 +0300",
-    categories: "gsoc",
-    students: [
-      {
-        name: "Mert Kahyaoğlu",
-        email: "mertkahyaoglu93@gmail.com",
-        username: "mertkahyaoglu"
-      },
-      {
-        name: "Ankur Singh",
-        email: "ankur13019@iiitd.ac.in",
-        username: "rush-skills"
-      }
-    ],
-    mentors: ["Ben Balter", "Jurgen Leschner", "Parker Moore"],
-    path: "_posts/2016-05-29-google-summer-of-code.md"
-  },
-  {
-    id: "2016-01-01-some-post",
-    ext: ".md",
-    collection: "posts",
-    content: "You’ll find this post in your `_posts` directory.",
-    layout: "post",
-    title: "Welcome to Jekyll!",
-    date: "2016-01-01 01:10:46 +0300",
-    categories: "jekyll update",
-    path: "_posts/2016-01-01-some-post.md"
-  }
-];
-
-export const collections = [
-  {
-    path: "/posts",
-    title: "Posts"
-  },
-  {
-    path: "/movies",
-    title: "Movies"
-  }
-];
 
 export const page = {
   name: "contact.md",
