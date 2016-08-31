@@ -2,7 +2,7 @@ module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/pages" do
       get do
-        json site.pages.map(&:to_api)
+        json pages.map(&:to_api)
       end
 
       get "/:page_id" do
@@ -31,6 +31,10 @@ module JekyllAdmin
       end
 
       private
+
+      def pages
+        site.pages.select(&:html?)
+      end
 
       def page_path
         sanitized_path params["page_id"]
