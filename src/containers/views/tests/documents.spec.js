@@ -8,7 +8,7 @@ import { doc } from './fixtures';
 
 function setup(currentDocuments=[doc]) {
   const actions = {
-    fetchDocuments: expect.createSpy(),
+    fetchCollection: expect.createSpy(),
     deleteDocument: expect.createSpy(),
     search: expect.createSpy()
   };
@@ -44,12 +44,12 @@ describe('Containers::Documents', () => {
 
   it('should call fetchDocuments action after mounted', () => {
     const { actions } = setup();
-    expect(actions.fetchDocuments).toHaveBeenCalled();
+    expect(actions.fetchCollection).toHaveBeenCalled();
   });
 
   it('should fetch documents again when params change', () => {
     const { component, actions } = setup();
     component.setProps({params: {collection_name: "puppies"}});
-    expect(actions.fetchDocuments.calls.length).toBe(2);
+    expect(actions.fetchCollection.calls.length).toBe(2);
   });
 });

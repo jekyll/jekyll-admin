@@ -2,7 +2,7 @@ import expect from 'expect';
 import reducer from '../collections';
 import * as types from '../../constants/actionTypes';
 
-import { doc, movies, documents } from './fixtures';
+import { doc, collection, collections } from './fixtures';
 
 describe('Reducers::Collections', () => {
   it('should return the initial state', () => {
@@ -27,10 +27,10 @@ describe('Reducers::Collections', () => {
     expect(
       reducer({isFetching: true}, {
         type: types.FETCH_COLLECTIONS_SUCCESS,
-        collections: ["movies", "posts"]
+        collections
       })
     ).toEqual({
-      collections: ["movies", "posts"],
+      collections,
       isFetching: false
     });
     expect(
@@ -53,41 +53,16 @@ describe('Reducers::Collections', () => {
     expect(
       reducer({}, {
         type: types.FETCH_COLLECTION_SUCCESS,
-        collection: movies
+        collection
       })
     ).toEqual({
-      currentCollection: movies,
+      currentCollection: collection,
+      currentDocuments: collection.documents,
       isFetching: false
     });
     expect(
       reducer({isFetching: true}, {
         type: types.FETCH_COLLECTION_FAILURE
-      })
-    ).toEqual({
-      isFetching: false
-    });
-  });
-
-  it('should handle fetchCollectionDocuments', () => {
-    expect(
-      reducer({}, {
-        type: types.FETCH_DOCUMENTS_REQUEST
-      })
-    ).toEqual({
-      isFetching: true
-    });
-    expect(
-      reducer({}, {
-        type: types.FETCH_DOCUMENTS_SUCCESS,
-        documents
-      })
-    ).toEqual({
-      currentDocuments: documents,
-      isFetching: false
-    });
-    expect(
-      reducer({}, {
-        type: types.FETCH_DOCUMENTS_FAILURE
       })
     ).toEqual({
       isFetching: false

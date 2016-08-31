@@ -45,18 +45,6 @@ export function fetchCollection(collection_name) {
   };
 }
 
-export function fetchDocuments(collection_name) {
-  return dispatch => {
-    dispatch({ type: ActionTypes.FETCH_DOCUMENTS_REQUEST});
-    return get(
-      getCollectionDocumentsUrl(collection_name),
-      { type: ActionTypes.FETCH_DOCUMENTS_SUCCESS, name: "documents"},
-      { type: ActionTypes.FETCH_DOCUMENTS_FAILURE, name: "error"},
-      dispatch
-    );
-  };
-}
-
 export function fetchDocument(collection_name, id) {
   return dispatch => {
     dispatch({ type: ActionTypes.FETCH_DOCUMENT_REQUEST});
