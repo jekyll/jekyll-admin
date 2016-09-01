@@ -3,7 +3,7 @@
 
 .config-editor {
   border: 1px solid $border-color;
-  @include border-radius(4px);
+  @include border-radius($border-radius);
   outline: none;
   font-size: 14px;
 }

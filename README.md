@@ -4,7 +4,7 @@
 
 A Jekyll plugin that provides users with a traditional CMS-style graphical interface to author content and administer Jekyll sites. The project is divided into two parts. A Ruby-based HTTP API that handles Jekyll and filesystem operations, and a Javascript-based front end, built on that API.
 
-![screenshot of Jekyll Admin](https://cloud.githubusercontent.com/assets/282759/17258537/62e23ed6-5595-11e6-89b0-31c787f0492a.png)
+![screenshot of Jekyll Admin](/screenshot.png)
 
 ## Installation
 

@@ -76,11 +76,11 @@ export class Documents extends Component {
             <td>{moment(doc.date).format("LLL").toString()}</td>
             <td>
               <div className="row-actions">
-                <a onClick={() => this.handleClickDelete(filename, collection)} title="Delete">
+                <a onClick={() => this.handleClickDelete(filename, collection)} title="Delete" className="delete">
                   <i className="fa fa-trash-o" aria-hidden="true"></i> Delete
                 </a>
                 {
-                  http_url && <a target="_blank" href={http_url} title="View">
+                  http_url && <a target="_blank" href={http_url} title="View" className="view">
                     <i className="fa fa-eye" aria-hidden="true"></i> View
                   </a>
                 }

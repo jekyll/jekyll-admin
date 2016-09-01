@@ -48,18 +48,18 @@
   transform: translateX($px);
 }
 
-@mixin btn($color, $border-color, $cursor: pointer, $opacity: 1, $hover: true) {
-  cursor: $cursor!important;
+@mixin btn($color, $border-color, $cursor: pointer, $opacity: 1, $hover-fx: true) {
+  cursor: $cursor;
   opacity: $opacity;
   background-color: $color;
   @include box-shadow(0 1px 0 $border-color);
-    &:hover {
-      @if ($hover) {
-        background-color: darken($color, 5%);
-      } @else {
-        background-color: $color;
-      }
+  &:hover {
+    @if ($hover-fx) {
+      background-color: lighten($color, 5%);
+    } @else {
+      background-color: $color;
     }
+  }
 }
 
 @mixin nodrag() {
