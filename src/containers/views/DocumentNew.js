@@ -86,7 +86,7 @@ export class DocumentNew extends Component {
             <div className="side-unit">
               <a onClick={() => this.handleClickSave()}
                 className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
-                  <i className="fa fa-plus-square-o" aria-hidden="true"></i>
+                  <i className="fa fa-plus-square" aria-hidden="true"></i>
                 {updated ? 'Created' : 'Create'}
               </a>
             </div>
