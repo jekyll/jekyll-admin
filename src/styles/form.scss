@@ -42,7 +42,6 @@
   box-shadow: none;
   border: 0;
   border-bottom: 1px solid #ededed;
-  @include border-radius($border-radius);
   &:focus {
     color: #000 !important;
     border-bottom: 2px solid $border-color-focus;
