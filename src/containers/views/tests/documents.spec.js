@@ -1,5 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router';
+import { Link } from 'react-router';
 import { mount } from 'enzyme';
 import expect from 'expect';
 import { Documents } from '../Documents';
@@ -25,6 +26,7 @@ function setup(currentDocuments=[doc]) {
     component: component,
     actions: actions,
     h1: component.find('h1').last(),
+    row_title: component.find('strong a'),
     table: component.find('.content-table')
   };
 }
@@ -40,6 +42,13 @@ describe('Containers::Documents', () => {
     const compProps = component.props();
     expect(table.node).toNotExist();
     expect(h1.text()).toBe(`No documents found.`);
+  });
+
+  it('should show slug if title is empty', () => {
+    const { component, row_title } = setup([Object.assign({}, doc, {
+      title: ''
+    })]);
+    expect(row_title.text()).toBe(doc.slug);
   });
 
   it('should call fetchDocuments action after mounted', () => {
