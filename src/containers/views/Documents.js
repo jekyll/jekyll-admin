@@ -13,7 +13,7 @@ import { ADMIN_PREFIX } from '../../constants';
 import InputSearch from '../../components/form/InputSearch';
 
 // Actions
-import { fetchDocuments, deleteDocument } from '../../actions/collections';
+import { fetchCollection, deleteDocument } from '../../actions/collections';
 import { search } from '../../actions/utils';
 
 // Selectors
@@ -22,14 +22,14 @@ import { filterByTitle } from '../../reducers/collections';
 export class Documents extends Component {
 
   componentDidMount() {
-    const { fetchDocuments, params } = this.props;
-    fetchDocuments(params.collection_name);
+    const { fetchCollection, params } = this.props;
+    fetchCollection(params.collection_name);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchDocuments, params } = nextProps;
+    const { fetchCollection, params } = nextProps;
     if (params.collection_name !== this.props.params.collection_name) {
-      fetchDocuments(params.collection_name);
+      fetchCollection(params.collection_name);
     }
   }
 
@@ -124,7 +124,7 @@ export class Documents extends Component {
 Documents.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   currentDocuments: PropTypes.array.isRequired,
-  fetchDocuments: PropTypes.func.isRequired,
+  fetchCollection: PropTypes.func.isRequired,
   deleteDocument: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired
@@ -140,7 +140,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchDocuments,
+    fetchCollection,
     deleteDocument,
     search
   }, dispatch);

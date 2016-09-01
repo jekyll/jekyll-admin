@@ -77,7 +77,7 @@ export class PageNew extends Component {
           <div className="content-side">
             <div className="side-unit">
               <a onClick={() => this.handleClickSave()}
-                className={"btn"+(fieldChanged ? " btn-success " : " ")+"btn-fat"}>
+                className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
                 {updated ? 'Created' : 'Create'}
               </a>
             </div>

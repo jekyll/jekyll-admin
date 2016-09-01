@@ -6,7 +6,7 @@ description: Container components which connect the presentational components to
 
 ## Sidebar
 
-Container for listing all of the main routes.
+Container for listing all of routes' links.
 
 ** PropTypes **
 
@@ -52,7 +52,7 @@ for front matters other than `title`, `body`, `path` and `draft`.
 }
 ```
 
-\## Views
+## Views
 Contains all of the views linked with the routes.
 
 ### Configuration
@@ -134,7 +134,20 @@ Container for creating a new page.
 
 ### Documents
 
-Container for Documents view. Lists the documents of a collection (including posts).
+Container for Documents view. Lists documents of a collection (including posts).
+
+** PropTypes **
+
+```javascript
+{
+  currentDocuments: Array,
+  fetchCollection: Function,
+  deleteDocument: Function,
+  search: Function,
+  isFetching: Boolean,  
+  params: Object
+}
+```
 
 ### DocumentEdit
 
@@ -181,7 +194,7 @@ Container for creating a new document.
 
 ### DataFiles
 
-Container for DataFiles view. Lists the data files.
+Container for DataFiles view. Lists data files.
 
 ** PropTypes **
 
@@ -237,8 +250,8 @@ Container for creating a new data file
 
 ### StaticFiles
 
-Container for StaticFiles view. Lists all of the static files and let users upload/delete static files. It uses `react-dropzone` for drag & drop file uploading.
-Uploaded files are previewed with the help of `FilePreview` component.
+Container for StaticFiles view. Lists all of static files and let users upload/delete static files. It uses `react-dropzone` for drag & drop file uploading.
+Uploaded files are previewed via `FilePreview` component.
 
 ** PropTypes **
 

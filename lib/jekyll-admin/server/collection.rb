@@ -7,11 +7,13 @@ module JekyllAdmin
 
       get "/:collection_id" do
         ensure_collection
-        json collection.to_api
+        json collection.to_api(:include_documents => true)
       end
 
       get "/:collection_id/documents" do
         ensure_collection
+        msg = "The `documents` endpoint is deprecated and may be removed at any time."
+        Jekyll::Deprecator.deprecation_message msg
         json collection.docs.map(&:to_api)
       end
 

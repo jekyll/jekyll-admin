@@ -28,7 +28,7 @@ export function putConfig(config) {
     }
     return put(
       putConfigurationUrl(),
-      JSON.stringify(config),
+      JSON.stringify(json),
       { type: ActionTypes.PUT_CONFIG_SUCCESS, name: "config"},
       { type: ActionTypes.PUT_CONFIG_FAILURE, name: "error"},
       dispatch

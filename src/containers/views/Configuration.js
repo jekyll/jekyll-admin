@@ -25,7 +25,7 @@ export class Configuration extends Component {
         <div className="content-header">
           <h1>Configuration</h1>
           <div className="page-buttons">
-            <a className={"btn " + (editorChanged ? 'btn-active':'')}
+            <a className={"btn " + (editorChanged ? 'btn-active':'btn-inactive')}
               onClick={() => this.handleSaveClick()}>
                 {updated ? 'Saved' : 'Save'}
             </a>

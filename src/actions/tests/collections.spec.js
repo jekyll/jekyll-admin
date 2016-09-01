@@ -7,7 +7,7 @@ import nock from 'nock';
 import expect from 'expect';
 import _ from 'underscore';
 
-import { doc, new_doc, documents, collections } from './fixtures';
+import { collections, collection, doc, new_doc } from './fixtures';
 
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
@@ -37,38 +37,18 @@ describe('Actions::Collections', () => {
   });
 
   it('fetches the collection successfully', () => {
-    let collection_name = "movies";
     nock(API)
-      .get(`/collections/${collection_name}`)
-      .reply(200, { collection_name, meta: {} });
+      .get(`/collections/${collection.label}`)
+      .reply(200, collection);
 
     const expectedActions = [
       {type: types.FETCH_COLLECTION_REQUEST},
-      {type: types.FETCH_COLLECTION_SUCCESS, collection: { collection_name, meta: {} } }
+      {type: types.FETCH_COLLECTION_SUCCESS, collection }
     ];
 
     const store = mockStore({ movies: {} });
 
-    return store.dispatch(actions.fetchCollection(collection_name))
-      .then(() => { // return of async actions
-        expect(store.getActions()).toEqual(expectedActions);
-      });
-  });
-
-  it('fetches the collection documents successfully', () => {
-    const collection_name = "posts";
-    nock(API)
-      .get(`/collections/${collection_name}/documents`)
-      .reply(200, documents);
-
-    const expectedActions = [
-      {type: types.FETCH_DOCUMENTS_REQUEST},
-      {type: types.FETCH_DOCUMENTS_SUCCESS, documents }
-    ];
-
-    const store = mockStore({ currentDocuments: {} });
-
-    return store.dispatch(actions.fetchDocuments(collection_name))
+    return store.dispatch(actions.fetchCollection(collection.label))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -189,7 +169,8 @@ describe('Actions::Collections', () => {
         type: types.VALIDATION_ERROR,
         errors: [
           'The title is required.',
-          'The filename is required.'
+          'The filename is required.',
+          "The filename is not valid."
         ]
       }
     ];
@@ -197,6 +178,24 @@ describe('Actions::Collections', () => {
     const store = mockStore({metadata: { metadata: _.omit(doc, ['title','path']) }});
 
     store.dispatch(actions.putDocument(doc.id, doc.collection));
+    expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('creates VALIDATION_ERROR if the date is not valid.', () => {
+    const expectedActions = [
+      {
+        type: types.VALIDATION_ERROR,
+        errors: [
+          "The filename is not valid."
+        ]
+      }
+    ];
+
+    const store = mockStore({
+      metadata: { metadata: { title: 'test', path: '2016-33-33-title.md'} }
+    });
+
+    store.dispatch(actions.putDocument(doc.id, 'posts'));
     expect(store.getActions()).toEqual(expectedActions);
   });
 });

@@ -32,6 +32,17 @@ export class PageEdit extends Component {
     fetchPage(params.id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.updated !== nextProps.updated) {
+      const new_name = nextProps.page.name;
+      const name = this.props.page.name;
+      // redirect if the name is changed
+      if (new_name != name) {
+        browserHistory.push(`${ADMIN_PREFIX}/pages/${new_name}`);
+      }
+    }
+  }
+
   handleClickSave(name) {
     const { putPage, fieldChanged } = this.props;
     if (fieldChanged) {
@@ -60,7 +71,9 @@ export class PageEdit extends Component {
       return <h1>{`Could not find the page.`}</h1>;
     }
 
-    const { name, title, raw_content, http_url, path, front_matter } = page;
+    const { name, raw_content, http_url, path, front_matter } = page;
+
+    const title = front_matter ? front_matter.title : '';
 
     return (
       <div>
@@ -79,20 +92,20 @@ export class PageEdit extends Component {
 
         <div className="content-wrapper">
           <div className="content-body">
-            <InputTitle onChange={updateTitle} title={front_matter.title || ''} ref="title" />
+            <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}
               placeholder="Body"
               initialValue={raw_content}
               ref="editor" />
             <Splitter />
-            <Metadata fields={{title: front_matter.title, raw_content, path, ...front_matter}} />
+            <Metadata fields={{title, raw_content, path, ...front_matter}} />
           </div>
 
           <div className="content-side">
             <div className="side-unit">
               <a onClick={() => this.handleClickSave(name)}
-                className={"btn"+(fieldChanged ? " btn-success " : " ")+"btn-fat"}>
+                className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
                 {updated ? 'Saved' : 'Save'}
               </a>
             </div>

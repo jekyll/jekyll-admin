@@ -45,18 +45,6 @@ export function fetchCollection(collection_name) {
   };
 }
 
-export function fetchDocuments(collection_name) {
-  return dispatch => {
-    dispatch({ type: ActionTypes.FETCH_DOCUMENTS_REQUEST});
-    return get(
-      getCollectionDocumentsUrl(collection_name),
-      { type: ActionTypes.FETCH_DOCUMENTS_SUCCESS, name: "documents"},
-      { type: ActionTypes.FETCH_DOCUMENTS_FAILURE, name: "error"},
-      dispatch
-    );
-  };
-}
-
 export function fetchDocument(collection_name, id) {
   return dispatch => {
     dispatch({ type: ActionTypes.FETCH_DOCUMENT_REQUEST});
@@ -84,6 +72,9 @@ export function putDocument(id, collection) {
     if (collection == 'posts') {
       validations['path'] = 'required|date';
       messages['path.date'] = 'The filename is not valid.';
+    }else {
+      validations['path'] = 'required|filename';
+      messages['path.filename'] = 'The filename is not valid.';
     }
     const errors = validator(metadata, validations, messages);
     if(errors.length) {

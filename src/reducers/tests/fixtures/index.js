@@ -1,75 +1,82 @@
-export const doc = {
-  id: "/movies/the-revenant",
-  ext: ".md",
-  slug: "the-revenant",
-  collection: "movies",
-  raw_content: "# Test Document",
-  content: "Test Document",
-  layout: "default",
-  title: "The Revenant",
-  path: "_movies/the-revenant.md"
-};
-
-export const documents = [
+export const collections = [
   {
-    id: "testing-posts",
-    collection: "posts",
-    body: "You’ll find this post in your `_posts` directory.",
-    layout: "post",
-    title: "Testing Posts",
-    date: "2016-05-20 01:10:46 +0300",
-    categories: "test",
-    draft: false
+    label: "posts",
+    files: [],
+    directory: "/jekyll-admin/spec/fixtures/site/_posts",
+    relative_directory: "_posts",
+    permalink: "/:categories/:year/:month/:day/:title:output_ext",
+    http_url: null,
+    api_url: "http://localhost:4000/_api/collections/posts"
   },
   {
-    id: "2016-05-29-google-summer-of-code",
-    collection: "posts",
-    body: "You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.",
-    layout: "post",
-    title: "Google Summer of Code!",
-    date: "2016-05-20 01:10:46 +0300",
-    categories: "gsoc",
-    draft: false
-  },
-  {
-    id: "2016-01-01-some-post",
-    collection: "posts",
-    body: "You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-rgenerates your site when a file is updated.",
-    layout: "post",
-    title: "Welcome to Jekyll!",
-    date: "2016-05-20 01:10:46 +0300",
-    categories: "jekyll update",
-    draft: false
+    label: "puppies",
+    files: [],
+    directory: "/jekyll-admin/spec/fixtures/site/_puppies",
+    relative_directory: "_puppies",
+    foo: "bar",
+    http_url: null,
+    api_url: "http://localhost:4000/_api/collections/puppies"
   }
 ];
 
-export const movies = { collection_name: "movies", meta: {}};
+export const doc = {
+  path: "_puppies/rover.md",
+  id: "/puppies/rover",
+  relative_path: "_puppies/rover.md",
+  url: "/puppies/rover.html",
+  collection: "puppies",
+  draft: false,
+  categories: [],
+  some_front_matter: "default",
+  title: "Rover",
+  breed: "Golden Retriever",
+  slug: "rover",
+  ext: ".md",
+  tags: [],
+  date: "2016-08-31 23:02:41 +0300",
+  http_url: null,
+  api_url: "http://localhost:4000/_api/collections/puppies/rover.md"
+};
+
+export const collection = {
+  label: "puppies",
+  files: [],
+  directory: "/jekyll-admin/spec/fixtures/site/_puppies",
+  relative_directory: "_puppies",
+  foo: "bar",
+  http_url: null,
+  api_url: "http://localhost:4000/_api/collections/puppies",
+  documents: [doc]
+};
 
 export const page = {
   name: "about",
-  content: "This is the base Jekyll theme.",
+  content: "<h1>This is a test content.</h1>",
+  raw_content: "# This is a test content.",
   layout: "page",
   title: "About",
   path: "about.md"
 };
 
-export const pages = [
-  {
-  name: "about.md",
-    raw_content: "# Test",
-    path: "about.md"
-  },
-  {
-    name: "gsoc.md",
-    raw_content: "# Test",
-    path: "gsoc.md"
-  },
-  {
-    name: "contact.md",
-    raw_content: "# Test",
-    path: "contact.md"
-  }
-];
+const page1 = {
+  name: "gsoc",
+  content: "<h1>This is a test content.</h1>",
+  raw_content: "# This is a test content.",
+  layout: "page",
+  title: "GSoC",
+  path: "gsoc.md"
+};
+
+const page2 = {
+  name: "jekyll",
+  content: "<h1>This is a test content.</h1>",
+  raw_content: "# This is a test content.",
+  layout: "page",
+  title: "Jekyll",
+  path: "jekyll.md"
+};
+
+export const pages = [page, page1, page2];
 
 export const meta = {
   layout: "post",

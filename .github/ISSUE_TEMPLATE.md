@@ -3,10 +3,10 @@ Describe in one or two sentences why you're opening this issue:
 
 ### Tell us a bit about yourself
 
-* Version of JekyllAdmin I'm using (hint: use `bundle show` to check):
-* Version of Jekyll I'm using (hint: use `bundle show` to check):
-* Operating System (e.g. OS X, Windows):
-* Browser (e.g, Safari, Chrome):
+* Version of JekyllAdmin I'm using <hint: use `bundle show` to check>:
+* Version of Jekyll I'm using <hint: use `bundle show` to check>:
+* Operating System <e.g. OS X, Windows>:
+* Browser <e.g, Safari, Chrome>:
 
 ### Steps to reproduce
 
