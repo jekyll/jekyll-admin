@@ -47,11 +47,29 @@
       }
     }
   }
+  .about_info {
+    position: fixed;
+    bottom: 15px;
+    width: $sidebar-width;
+    margin: 0 auto;
+    font-weight: 900;
+    color: #1f1f1f;
+    text-align: center;
+    text-shadow: 0 1px #4d4d4d;
+    background: #333;
+    p {
+      margin: 4px 0;
+      font-size: 15px;
+      &.module_name {
+        font-size: 19px;
+      }
+    }
+  }
   .splitter {
-  height: 1px;
-  width: 100%;
-  margin: 5px 0;  
-  border-bottom: 1px solid #424242;
-  border-top: 1px solid #212121;
+    height: 1px;
+    width: 100%;
+    margin: 5px 0;  
+    border-bottom: 1px solid #424242;
+    border-top: 1px solid #212121;
   }
 }
