@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import _ from 'underscore';
+import { VERSION } from '../utils/version';
 
 // Constants
 import { ADMIN_PREFIX } from '../constants';
@@ -68,6 +69,10 @@ export class Sidebar extends Component {
               <Link activeClassName="active" to={`${ADMIN_PREFIX}/configuration`}><i className="fa fa-cog"></i>Configuration</Link>
             </li>
           </ul>
+        </div>
+        <div className="about_info">
+          <p className="module_name">JekyllAdmin</p>
+          <p className="module_version">VERSION: {VERSION}</p>
         </div>
       </div>
     );
