@@ -78,6 +78,7 @@ export const page = {
 export const new_page = {
   raw_content: "# This is the base Jekyll theme.",
   path: "contact.md",
+  title: "Contact",
   foo: "bar"
 };
 

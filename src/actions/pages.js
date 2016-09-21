@@ -12,6 +12,7 @@ import { validationError } from '../actions/utils';
 
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
+import { slugify } from '../utils/helpers';
 
 export function fetchPages() {
   return (dispatch) => {
@@ -40,17 +41,21 @@ export function fetchPage(id) {
 export function putPage(name) {
   return (dispatch, getState) => {
     const metadata = getState().metadata.metadata;
-    const { path, raw_content } = metadata;
-    const errors = validator(
-      metadata,
-      { 'path': 'required|filename' },
-      {
-        'path.required': 'The filename is required.',
-        'path.filename': 'The filename is not valid.'
+    let { path, raw_content, title } = metadata;
+    if (!path && title) {
+      path = `${slugify(title)}.md`;
+    } else {
+      const errors = validator(
+        metadata,
+        { 'path': 'required|filename' },
+        {
+          'path.required': 'The filename is required.',
+          'path.filename': 'The filename is not valid.'
+        }
+      );
+      if (errors.length) {
+        return dispatch(validationError(errors));
       }
-    );
-    if (errors.length) {
-      return dispatch(validationError(errors));
     }
     dispatch({type: ActionTypes.CLEAR_ERRORS});
     const page = JSON.stringify({

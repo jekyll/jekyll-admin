@@ -1,5 +1,6 @@
 import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
+import moment from 'moment';
 
 import {
   getCollectionsUrl,
@@ -20,6 +21,7 @@ import { validationError } from '../actions/utils';
 
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
+import { slugify } from '../utils/helpers';
 
 export function fetchCollections() {
   return dispatch => {
@@ -60,25 +62,35 @@ export function fetchDocument(collection_name, id) {
 export function putDocument(id, collection) {
   return (dispatch, getState) => {
     const metadata = getState().metadata.metadata;
-    const { path, raw_content } = metadata;
-    let validations = {
-      'title': 'required',
-      'path': 'required'
-    };
-    let messages = {
-      'title.required': 'The title is required.',
-      'path.required': 'The filename is required.'
-    };
-    if (collection == 'posts') {
-      validations['path'] = 'required|date';
-      messages['path.date'] = 'The filename is not valid.';
-    }else {
-      validations['path'] = 'required|filename';
-      messages['path.filename'] = 'The filename is not valid.';
-    }
-    const errors = validator(metadata, validations, messages);
-    if(errors.length) {
-      return dispatch(validationError(errors));
+    let { path, raw_content, title } = metadata;
+    let errors;
+    if (!path && title) {
+      if (collection == 'posts') {
+        const date = moment().format('YYYY-MM-DD');
+        path = `${date}-${slugify(title)}.md`;
+      } else {
+        path = `${slugify(title)}.md`;
+      }
+    } else {
+      let validations = {
+        'title': 'required',
+        'path': 'required'
+      };
+      let messages = {
+        'title.required': 'The title is required.',
+        'path.required': 'The filename is required.'
+      };
+      if (collection == 'posts') {
+        validations['path'] = 'required|date';
+        messages['path.date'] = 'The filename is not valid.';
+      }else {
+        validations['path'] = 'required|filename';
+        messages['path.filename'] = 'The filename is not valid.';
+      }
+      errors = validator(metadata, validations, messages);
+      if(errors.length) {
+        return dispatch(validationError(errors));
+      }
     }
     dispatch({type: ActionTypes.CLEAR_ERRORS});
     const doc = JSON.stringify({
