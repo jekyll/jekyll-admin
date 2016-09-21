@@ -63,7 +63,6 @@ export function putDocument(id, collection) {
   return (dispatch, getState) => {
     const metadata = getState().metadata.metadata;
     let { path, raw_content, title } = metadata;
-    let errors;
     if (!path && title) {
       if (collection == 'posts') {
         const date = moment().format('YYYY-MM-DD');
@@ -87,7 +86,7 @@ export function putDocument(id, collection) {
         validations['path'] = 'required|filename';
         messages['path.filename'] = 'The filename is not valid.';
       }
-      errors = validator(metadata, validations, messages);
+      const errors = validator(metadata, validations, messages);
       if(errors.length) {
         return dispatch(validationError(errors));
       }
