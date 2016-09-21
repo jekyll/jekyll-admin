@@ -61,6 +61,10 @@ describe('Helper functions', () => {
     expected = "this-is-a-test-title-1";
     actual = slugify(str);
     expect(actual).toEqual(expected);
+    str = "Démonstration par l'exemple‘";
+    expected = "demonstration-par-lexemple";
+    actual = slugify(str);
+    expect(actual).toEqual(expected);
     str = undefined;
     actual = slugify(str);
     expect(actual).toEqual('');
