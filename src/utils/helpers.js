@@ -42,6 +42,23 @@ export const toTitleCase = (string) => {
 };
 
 /**
+ * Slugify the given string
+ * @param {String} string
+ * @return {String} string
+ */
+export const slugify = (string) => {
+  if (string) {
+    return string.toString().toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-')
+      .replace(/^-+/, '')
+      .replace(/-+$/, '');
+  }
+  return '';
+};
+
+/**
  * returns the uploaded static files that are being overwritten
  * @param {Array} uploadedFiles
  * @param {Array} currentFiles

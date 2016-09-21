@@ -1,7 +1,7 @@
 import expect from 'expect';
 
 import {
-  toYAML, toJSON, capitalize, toTitleCase,
+  toYAML, toJSON, capitalize, toTitleCase, slugify,
   existingUploadedFilenames
 } from '../helpers';
 
@@ -49,6 +49,20 @@ describe('Helper functions', () => {
     expect(actual).toEqual(expected);
     str = undefined;
     actual = toTitleCase(str);
+    expect(actual).toEqual('');
+  });
+
+  it('should slugify the string correctly', () => {
+    let str = "Awesome Jekyll";
+    let expected = "awesome-jekyll";
+    let actual = slugify(str);
+    expect(actual).toEqual(expected);
+    str = "-This is a test title 1!-";
+    expected = "this-is-a-test-title-1";
+    actual = slugify(str);
+    expect(actual).toEqual(expected);
+    str = undefined;
+    actual = slugify(str);
     expect(actual).toEqual('');
   });
 
