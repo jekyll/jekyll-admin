@@ -44,7 +44,6 @@ describe('Components::Breadcrumbs', () => {
   it('should prepend date to input value/placeholder for new post', () => {
     const { input } = setup({ link:'test', collection:'posts', path:'' });
     const expectedValue = moment().format('YYYY-MM-DD') + '-your-title.md';
-    expect(input.prop('defaultValue')).toBe(expectedValue);
     expect(input.prop('placeholder')).toBe(expectedValue);
   });
   it('should call onChange', () => {
