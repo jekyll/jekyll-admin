@@ -41,7 +41,7 @@
     "redux": "3.5.2",
     "redux-logger": "^2.6.1",
     "redux-thunk": "^2.1.0",
-    "simplemde-fork": "0.0.1",
+    "simplemde": "^1.11.2",
     "slug": "^0.9.1",
     "sortablejs": "^1.4.2",
     "underscore": "^1.8.3"

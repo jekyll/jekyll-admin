@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import SimpleMDE from 'simplemde-fork';
+import SimpleMDE from 'simplemde';
 
 const classNames = [
   'editor-toolbar',
