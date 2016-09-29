@@ -27,6 +27,10 @@ Refer to the [installing plugins](https://jekyllrb.com/docs/plugins/#installing-
 
 Interested in contributing to Jekyll Admin? We’d love your help. Jekyll Admin is an open source project, built one contribution at a time by users like you. See [the contributing instructions](.github/CONTRIBUTING.md), and [the development docs](http://jekyll.github.io/jekyll-admin/development/) for more information.
 
+## Looking for a hosted version?
+
+Jekyll Admin is intended to be run on your computer alongside your local Jekyll installation. If you're looking for a hosted version, we'd recommend checking out [Siteleaf](https://www.siteleaf.com/) a hosted Jekyll editor with deep GitHub integration (whom we'd also like to thank for inspiring parts of Jekyll Admin itself!).
+
 ## License
 
 The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
