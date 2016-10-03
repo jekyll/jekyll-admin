@@ -256,12 +256,39 @@
   .rw-datetimepicker {
     box-shadow: none !important;
     font-size: 16px !important;
+    .rw-btn {
+      min-width: 37px;
+      i { margin: 0; }
+    }
+    &.rw-has-both {
+      padding-right: 74px;
+      > .rw-select {
+        width: 75px;
+        &:hover {
+          background: #fff;
+        }
+        .rw-btn:first-child { border-right: 1px solid #ccc; }
+        .rw-btn:hover { background: #fc0; }
+      }
+    }
   }
   .rw-calendar-popup {
     left: auto !important;
     right: -10px !important;
   }
+  .rw-calendar {
+    .rw-header {
+      padding-bottom: 15px;
+      .rw-btn-view { width: 188px; }
+    }
+  }
+  .rw-calendar-grid th {
+    padding-bottom: 8px;
+  }
   .rw-state-focus {
     border: 1px solid $dark-orange !important;
+  }
+  .rw-list-option {
+    padding: 8px 5px;
   }
 }
