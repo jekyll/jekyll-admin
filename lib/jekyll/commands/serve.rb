@@ -12,7 +12,12 @@ module Jekyll
 
           jekyll_admin_monkey_patch(server)
 
-          Jekyll.logger.info "Server address:", server_address(server, opts)
+          Jekyll.logger.info "Server address:", server_address(
+            server.config[:SSLEnable],
+            server.config[:BindAddress],
+            server.config[:Port],
+            opts["baseurl"]
+          )
           launch_browser server, opts if opts["open_url"]
           boot_or_detach server, opts
         end
