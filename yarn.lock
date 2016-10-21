@@ -1410,9 +1410,9 @@ codemirror-spell-checker@*:
   dependencies:
     typo-js "*"
 
-codemirror@*, codemirror@^5.19.0:
-  version "5.19.0"
-  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.19.0.tgz#71fa8523b9425216a2be4734e8aba625ff66e7ec"
+codemirror@*:
+  version "5.20.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.20.0.tgz#ef3822ae6e442dd595d365a86ff424e35c3985b7"
 
 color-convert@^1.3.0:
   version "1.5.0"
@@ -2318,7 +2318,7 @@ fastparse@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/fastparse/-/fastparse-1.1.1.tgz#d1e2643b38a94d7583b479060e6c4affc94071f8"
 
-fbjs@^0.8.0:
+fbjs@^0.8.4:
   version "0.8.5"
   resolved "https://registry.yarnpkg.com/fbjs/-/fbjs-0.8.5.tgz#f69ba8a876096cb1b9bffe4d7c1e71c19d39d008"
   dependencies:
@@ -4582,13 +4582,9 @@ react-deep-force-update@^1.0.0:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/react-deep-force-update/-/react-deep-force-update-1.0.1.tgz#f911b5be1d2a6fe387507dd6e9a767aa2924b4c7"
 
-"react-dom@^0.14.0 || ^15.0.0":
+"react-dom@^0.14.0 || ^15.0.0", react-dom@15.3.2:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.3.2.tgz#c46b0aa5380d7b838e7a59c4a7beff2ed315531f"
-
-react-dom@15.0.2:
-  version "15.0.2"
-  resolved "https://registry.yarnpkg.com/react-dom/-/react-dom-15.0.2.tgz#f8a20ac1bc2da9eb494fce3b44c3ec19d0951e27"
 
 react-dropzone@^3.5.3:
   version "3.6.0"
@@ -4661,13 +4657,13 @@ react-widgets@^3.3.2:
     deconstruct-number-format "0.0.1"
     format-number-with-string "0.0.2"
 
-react@15.0.2:
-  version "15.0.2"
-  resolved "https://registry.yarnpkg.com/react/-/react-15.0.2.tgz#63b95dfda563018a20c182300651ed933e0dd30c"
+react@15.3.2:
+  version "15.3.2"
+  resolved "https://registry.yarnpkg.com/react/-/react-15.3.2.tgz#a7bccd2fee8af126b0317e222c28d1d54528d09e"
   dependencies:
-    fbjs "^0.8.0"
+    fbjs "^0.8.4"
     loose-envify "^1.1.0"
-    object-assign "^4.0.1"
+    object-assign "^4.1.0"
 
 read-pkg-up@^1.0.1:
   version "1.0.1"
@@ -5097,7 +5093,7 @@ signal-exit@^3.0.0:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/signal-exit/-/signal-exit-3.0.1.tgz#5a4c884992b63a7acd9badb7894c3ee9cfccad81"
 
-simplemde@^1.11.2:
+simplemde:
   version "1.11.2"
   resolved "https://registry.yarnpkg.com/simplemde/-/simplemde-1.11.2.tgz#a23a35d978d2c40ef07dec008c92f070d8e080e3"
   dependencies:
