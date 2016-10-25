@@ -27,7 +27,7 @@ Gem::Specification.new do |spec|
   spec.executables   = spec.files.grep(%r{^exe/}) { |f| File.basename(f) }
   spec.require_paths = ["lib"]
 
-  spec.add_dependency "jekyll", "~> 3.1"
+  spec.add_dependency "jekyll", "~> 3.3"
   spec.add_dependency "sinatra", "~> 1.4"
   spec.add_dependency "sinatra-contrib", "~> 1.4"
   spec.add_dependency "addressable", "~> 2.4"
