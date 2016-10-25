@@ -6,3 +6,6 @@ AllCops:
     - lib/jekyll-admin/public/**/*
     - src/**/*
     - node_modules/**/*
+
+Metrics/BlockLength:
+  Enabled: false
