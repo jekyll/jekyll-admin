@@ -95,6 +95,7 @@ export class PageEdit extends Component {
             <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}
+              onSave={() => this.handleClickSave(name)}
               placeholder="Body"
               initialValue={raw_content}
               ref="editor" />

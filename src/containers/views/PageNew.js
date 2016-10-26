@@ -67,6 +67,7 @@ export class PageNew extends Component {
             <InputTitle onChange={updateTitle} title="" ref="title" />
             <MarkdownEditor
               onChange={updateBody}
+              onSave={() => this.handleClickSave()}
               placeholder="Body"
               initialValue=""
               ref="editor" />
