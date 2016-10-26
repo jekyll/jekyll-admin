@@ -2,11 +2,7 @@ module Jekyll
   module Commands
     class Serve < Command
       class << self
-        def process(opts)
-          opts = configuration_from_options(opts)
-          destination = opts["destination"]
-          setup(destination)
-
+        def start_up_webrick(opts, destination)
           server = WEBrick::HTTPServer.new(webrick_opts(opts)).tap { |o| o.unmount("") }
           server.mount(opts["baseurl"], Servlet, destination, file_handler_opts)
 
