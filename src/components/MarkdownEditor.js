@@ -27,12 +27,28 @@ class MarkdownEditor extends Component {
   }
 
   create() {
-    const { onChange } = this.props;
+    const { onChange, onSave } = this.props;
     let opts = Object.create(this.props);
     opts['element'] = this.refs.text;
     opts['hideIcons'] = ["guide"];
     opts['autoDownloadFontAwesome'] = false;
     opts['spellChecker'] = false;
+    let toolbarIcons = [
+      'bold', 'italic', 'heading', '|',
+      'code', 'quote', 'unordered-list', 'ordered-list',
+      '|', 'link', 'image', '|', 'preview', 'side-by-side', 'fullscreen', '|'
+    ];
+    if (onSave) {
+      toolbarIcons.push({
+        name: "save",
+        action: () => {
+          onSave();
+        },
+        className: "fa fa-floppy-o",
+        title: "Save"
+      });
+    }
+    opts['toolbar'] = toolbarIcons;
     this.editor = new SimpleMDE(opts);
     this.editor.codemirror.on("change", () => {
       onChange(this.editor.value());
@@ -55,7 +71,8 @@ class MarkdownEditor extends Component {
 
 MarkdownEditor.propTypes = {
   initialValue: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
+  onSave: PropTypes.func.isRequired
 };
 
 export default MarkdownEditor;
