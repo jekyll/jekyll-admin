@@ -45,11 +45,7 @@ Async action for fetching an array of the registered collections (including post
 
 ### `fetchCollection(collection_name)`
 
-Async action for fetching information about the requested collection
-
-### `fetchDocuments(collection_name)`
-
-Async action for fetching an array of documents corresponding to the requested collection. The response does not include the document body.
+Async action for fetching the requested collection with its documents.
 
 ### `fetchDocument(collection_name, id)`
 

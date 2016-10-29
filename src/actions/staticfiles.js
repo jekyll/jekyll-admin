@@ -27,7 +27,7 @@ export function fetchStaticFiles() {
 export function uploadStaticFiles(files) {
   return (dispatch) => {
     _.each(files, file => {
-      const reader = new window.FileReader();
+      const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
         const payload = {

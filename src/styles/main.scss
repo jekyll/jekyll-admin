@@ -12,6 +12,10 @@
 @import "editor";
 @import "staticfiles";
 
+* {
+  box-sizing: border-box;
+}
+
 body {
   color: #444;
   font-family: lato, Helvetica, Helvetica Neue;
@@ -39,6 +43,7 @@ a:hover {
 i {
   display: inline-block;
   width: 15px;
+  margin-right: 10px;
 }
 
 .wrapper {
@@ -50,27 +55,27 @@ i {
 }
 
 .btn {
-  color: #fff;
+  color: $off-white;
   font-weight: bold;
   text-decoration: none;
   display: inline-block;
   font-size: 14px;
-  line-height: 32px;
-  height: 32px;
   margin: 0;
-  padding: 0 20px 1px;
+  padding: 12px 20px;
   white-space: nowrap;
   text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.2);
-  @include border-radius(4px);
+  @include border-radius($border-radius);
   @include box-sizing(border-box);
   @include btn($btn-initial, $btn-initial-border);
 }
 
 .btn-fat {
+  margin: 10px 0;
   width: 100%;
   text-align: center;
-  height: 40px;
-  line-height: 40px;
+  &:hover {
+    @include btn($btn-fat-hover, $btn-fat-hover-border)
+  }
 }
 
 .btn-active {
@@ -78,11 +83,15 @@ i {
 }
 
 .btn-inactive {
-  @include btn($btn-inactive, $btn-inactive-border, default, .5, false); 
+  @include btn($btn-inactive, $btn-inactive-border, default !important, .5 !important, false); 
 }
 
 .btn-success {
-  @include btn($btn-success, $btn-success-border);
+  @include btn($btn-success, $btn-success-border, pointer);
+  &:hover {
+    background-color: lighten($btn-success, 5%) !important;
+    @include box-shadow(0 1px 0 $btn-success-border);
+  }
 }
 
 .btn-danger {
@@ -90,10 +99,11 @@ i {
 }
 
 .splitter {
-  background-color: $orange;
   height: 1px;
   width: 100%;
-  margin: 15px 0;
+  margin: 5px 0;  
+  border-bottom: 1px solid #424242;
+  border-top: 1px solid #212121;
 }
 
 .hidden {

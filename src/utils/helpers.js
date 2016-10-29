@@ -1,5 +1,6 @@
 import yaml from 'js-yaml';
 import _ from 'underscore';
+import slug from 'slug';
 
 /**
  * Converts the object into YAML string.
@@ -38,6 +39,19 @@ export const toTitleCase = (string) => {
     return string.replace(/\w\S*/g, (txt) => {
       return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
     });
+  return '';
+};
+
+/**
+ * Slugify the given string
+ * @param {String} string
+ * @return {String} string
+ */
+export const slugify = (string) => {
+  if (string) {
+    return slug(string,{lower:true})
+      .replace(/^-+|-+$/g, ''); // remove leading, trailing dashes
+  }
   return '';
 };
 

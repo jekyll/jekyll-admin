@@ -13,7 +13,7 @@ import { ADMIN_PREFIX } from '../../constants';
 import InputSearch from '../../components/form/InputSearch';
 
 // Actions
-import { fetchDocuments, deleteDocument } from '../../actions/collections';
+import { fetchCollection, deleteDocument } from '../../actions/collections';
 import { search } from '../../actions/utils';
 
 // Selectors
@@ -22,14 +22,14 @@ import { filterByTitle } from '../../reducers/collections';
 export class Documents extends Component {
 
   componentDidMount() {
-    const { fetchDocuments, params } = this.props;
-    fetchDocuments(params.collection_name);
+    const { fetchCollection, params } = this.props;
+    fetchCollection(params.collection_name);
   }
 
   componentWillReceiveProps(nextProps) {
-    const { fetchDocuments, params } = nextProps;
+    const { fetchCollection, params } = nextProps;
     if (params.collection_name !== this.props.params.collection_name) {
-      fetchDocuments(params.collection_name);
+      fetchCollection(params.collection_name);
     }
   }
 
@@ -63,24 +63,24 @@ export class Documents extends Component {
     return _.chain(currentDocuments)
       .sortBy('date')
       .map(doc => {
-        const { id, title, http_url, ext, collection, path } = doc;
+        const { id, slug, title, http_url, ext, collection, path } = doc;
         const filename = path.substring(path.lastIndexOf('/') + 1);
         const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
         return (
           <tr key={id}>
             <td className="row-title">
               <strong>
-                <Link to={to}>{title}</Link>
+                <Link to={to}>{title || slug}</Link>
               </strong>
             </td>
             <td>{moment(doc.date).format("LLL").toString()}</td>
             <td>
               <div className="row-actions">
-                <a onClick={() => this.handleClickDelete(filename, collection)} title="Delete">
+                <a onClick={() => this.handleClickDelete(filename, collection)} title="Delete" className="delete">
                   <i className="fa fa-trash-o" aria-hidden="true"></i> Delete
                 </a>
                 {
-                  http_url && <a target="_blank" href={http_url} title="View">
+                  http_url && <a target="_blank" href={http_url} title="View" className="view">
                     <i className="fa fa-eye" aria-hidden="true"></i> View
                   </a>
                 }
@@ -124,7 +124,7 @@ export class Documents extends Component {
 Documents.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   currentDocuments: PropTypes.array.isRequired,
-  fetchDocuments: PropTypes.func.isRequired,
+  fetchCollection: PropTypes.func.isRequired,
   deleteDocument: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
   params: PropTypes.object.isRequired
@@ -140,7 +140,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return bindActionCreators({
-    fetchDocuments,
+    fetchCollection,
     deleteDocument,
     search
   }, dispatch);

@@ -15,12 +15,10 @@ export default class Breadcrumbs extends Component {
   render() {
     const { link, type, path } = this.props;
     let placeholder = 'example.md';
-    let value = '';
 
     if (type == 'posts') {
       const date = moment().format('YYYY-MM-DD');
-      value = date + '-your-title.md';
-      placeholder = date + '-your-title.md';
+      placeholder = `${date}-your-title.md`;
     }else if (type == 'data files') {
       placeholder = 'your-filename.yml';
     }
@@ -31,7 +29,7 @@ export default class Breadcrumbs extends Component {
           <input onChange={(e) => this.handleChange(e)}
             ref="input"
             placeholder={placeholder}
-            defaultValue={path || value} />
+            defaultValue={path} />
         </li>
       </ul>
     );

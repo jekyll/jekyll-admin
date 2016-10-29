@@ -13,51 +13,84 @@ describe "collections" do
     JekyllAdmin.site.process
   end
 
-  it "returns the collection index" do
-    get "/collections"
-    expect(last_response).to be_ok
-    expect(last_response_parsed.first["label"]).to eq("posts")
-    expect(last_response_parsed.first["content"]).to be_nil
+  let(:first_response) { last_response_parsed.first }
+
+  context "collection index" do
+    it "returns the collection index" do
+      get "/collections"
+      expect(last_response).to be_ok
+      expect(first_response["label"]).to eq("posts")
+      expect(first_response["content"]).to be_nil
+    end
+
+    it "doesn't include documents" do
+      get "/collections"
+      expect(last_response).to be_ok
+      expect(first_response).to_not have_key("documents")
+      expect(first_response).to_not have_key("docs")
+    end
   end
 
-  it "returns an individual collection" do
-    get "/collections/posts"
-    expect(last_response).to be_ok
-    expect(last_response_parsed["label"]).to eq("posts")
+  context "an individual collection" do
+    let(:documents) { last_response_parsed["documents"] }
+    let(:first_document) { documents.first }
+
+    it "returns an individual collection" do
+      get "/collections/posts"
+      expect(last_response).to be_ok
+      expect(last_response_parsed["label"]).to eq("posts")
+    end
+
+    it "includes documents" do
+      get "/collections/posts"
+      expect(last_response).to be_ok
+      expect(last_response_parsed).to_not have_key("docs")
+      expect(last_response_parsed).to have_key("documents")
+
+      expect(documents.count).to eql(3)
+      expect(first_document["title"]).to eql("Test")
+    end
+
+    it "doesn't include document content" do
+      get "/collections/posts"
+      expect(last_response).to be_ok
+      expect(first_document).to_not have_key("raw_content")
+      expect(first_document).to_not have_key("content")
+    end
   end
 
   context "document index" do
     it "returns collection documents" do
       get "/collections/posts/documents"
       expect(last_response).to be_ok
-      expect(last_response_parsed.first["title"]).to eq("Test")
+      expect(first_response["title"]).to eq("Test")
     end
 
     it "includes front matter defaults" do
       get "/collections/posts/documents"
       expect(last_response).to be_ok
-      expect(last_response_parsed.first.key?("some_front_matter")).to eq(true)
+      expect(first_response.key?("some_front_matter")).to eq(true)
     end
 
     it "doesn't include the raw front matter" do
       get "/collections/posts/documents"
       expect(last_response).to be_ok
-      expect(last_response_parsed.first).to_not have_key("front_matter")
+      expect(first_response).to_not have_key("front_matter")
     end
 
     it "doesn't include content in the index" do
       get "/collections/posts/documents"
       expect(last_response).to be_ok
-      expect(last_response_parsed.first).to_not have_key("content")
-      expect(last_response_parsed.first).to_not have_key("raw_content")
-      expect(last_response_parsed.first).to_not have_key("output")
+      expect(first_response).to_not have_key("content")
+      expect(first_response).to_not have_key("raw_content")
+      expect(first_response).to_not have_key("output")
     end
 
     it "doesn't include next/previous in the index" do
       get "/collections/posts/documents"
       expect(last_response).to be_ok
-      expect(last_response_parsed.first).to_not have_key("next")
-      expect(last_response_parsed.first).to_not have_key("previous")
+      expect(first_response).to_not have_key("next")
+      expect(first_response).to_not have_key("previous")
     end
   end
 

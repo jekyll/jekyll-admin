@@ -75,6 +75,7 @@ export class DocumentNew extends Component {
             <InputTitle onChange={updateTitle} title="" ref="title" />
             <MarkdownEditor
               onChange={updateBody}
+              onSave={() => this.handleClickSave()}
               placeholder="Body"
               initialValue=""
               ref="editor" />
@@ -86,6 +87,7 @@ export class DocumentNew extends Component {
             <div className="side-unit">
               <a onClick={() => this.handleClickSave()}
                 className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
+                  <i className="fa fa-plus-square" aria-hidden="true"></i>
                 {updated ? 'Created' : 'Create'}
               </a>
             </div>

@@ -62,10 +62,10 @@ export class Pages extends Component {
           </td>
           <td>
             <div className="row-actions">
-              <a onClick={() => this.handleClickDelete(name)} title="Delete">
+              <a onClick={() => this.handleClickDelete(name)} title="Delete" className="delete">
                 <i className="fa fa-trash-o" aria-hidden="true"></i> Delete
               </a>
-              <a target="_blank" href={http_url} title="View">
+              <a target="_blank" href={http_url} title="View" className="view">
                 <i className="fa fa-eye" aria-hidden="true"></i> View
               </a>
             </div>

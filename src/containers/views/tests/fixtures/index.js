@@ -14,6 +14,7 @@ export const doc = {
   path: "the-revenant.md",
   draft: false,
   http_url: '/the-revenant.html',
+  slug: 'the-revenant',
   front_matter: {
     foo: "bar"
   }

@@ -4,6 +4,8 @@ require "rspec"
 require "jekyll-admin"
 require "rack/test"
 require "fileutils"
+require "open3"
+require "net/http"
 
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods

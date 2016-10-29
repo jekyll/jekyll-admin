@@ -38,6 +38,14 @@ describe "pages" do
       expect(last_response_parsed.first).to_not have_key("content")
       expect(last_response_parsed.first).to_not have_key("raw_content")
     end
+
+    it "doesn't include non-html pages" do
+      get "/pages"
+      expect(last_response).to be_ok
+      paths = last_response_parsed.map { |page| page["path"] }
+      expect(paths).to_not include("assets/app.cofee")
+      expect(paths).to_not include("assets/style.scss")
+    end
   end
 
   context "getting a single page" do

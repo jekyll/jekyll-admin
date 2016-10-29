@@ -4,7 +4,7 @@
 
 A Jekyll plugin that provides users with a traditional CMS-style graphical interface to author content and administer Jekyll sites. The project is divided into two parts. A Ruby-based HTTP API that handles Jekyll and filesystem operations, and a Javascript-based front end, built on that API.
 
-![screenshot of Jekyll Admin](https://cloud.githubusercontent.com/assets/282759/17258537/62e23ed6-5595-11e6-89b0-31c787f0492a.png)
+![screenshot of Jekyll Admin](/screenshot.png)
 
 ## Installation
 
@@ -26,6 +26,10 @@ Refer to the [installing plugins](https://jekyllrb.com/docs/plugins/#installing-
 ## Contributing
 
 Interested in contributing to Jekyll Admin? We’d love your help. Jekyll Admin is an open source project, built one contribution at a time by users like you. See [the contributing instructions](.github/CONTRIBUTING.md), and [the development docs](http://jekyll.github.io/jekyll-admin/development/) for more information.
+
+## Looking for a hosted version?
+
+Jekyll Admin is intended to be run on your computer alongside your local Jekyll installation. If you're looking for a hosted version, we'd recommend checking out [Siteleaf](https://www.siteleaf.com/) a hosted Jekyll editor with deep GitHub integration (whom we'd also like to thank for inspiring parts of Jekyll Admin itself!).
 
 ## License
 

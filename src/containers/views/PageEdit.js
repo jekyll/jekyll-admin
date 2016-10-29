@@ -32,6 +32,17 @@ export class PageEdit extends Component {
     fetchPage(params.id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.updated !== nextProps.updated) {
+      const new_name = nextProps.page.name;
+      const name = this.props.page.name;
+      // redirect if the name is changed
+      if (new_name != name) {
+        browserHistory.push(`${ADMIN_PREFIX}/pages/${new_name}`);
+      }
+    }
+  }
+
   handleClickSave(name) {
     const { putPage, fieldChanged } = this.props;
     if (fieldChanged) {
@@ -84,6 +95,7 @@ export class PageEdit extends Component {
             <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}
+              onSave={() => this.handleClickSave(name)}
               placeholder="Body"
               initialValue={raw_content}
               ref="editor" />
@@ -95,11 +107,14 @@ export class PageEdit extends Component {
             <div className="side-unit">
               <a onClick={() => this.handleClickSave(name)}
                 className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
+                  <i className="fa fa-save" aria-hidden="true"></i>
                 {updated ? 'Saved' : 'Save'}
               </a>
             </div>
             <div className="side-unit">
-              <Link target="_blank" className="btn btn-fat" to={http_url}>View</Link>
+              <Link target="_blank" className="btn btn-fat" to={http_url}>
+                <i className="fa fa-eye" aria-hidden="true"></i>View
+              </Link>
             </div>
             <Splitter />
             <a onClick={() => this.handleClickDelete(name)}

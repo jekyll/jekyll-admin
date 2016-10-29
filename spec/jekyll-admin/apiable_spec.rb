@@ -4,7 +4,7 @@ describe JekyllAdmin::APIable do
       subject do
         documents = Jekyll.sites.first.send("#{type}s".to_sym)
         if type == :page
-          documents.first
+          documents.select(&:html?).first
         else
           documents.docs.first
         end

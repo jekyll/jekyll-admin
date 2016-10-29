@@ -35,6 +35,20 @@ export class DocumentEdit extends Component {
     fetchDocument(params.collection_name, params.id);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.updated !== nextProps.updated) {
+      const new_path = nextProps.currentDocument.path;
+      const path = this.props.currentDocument.path;
+      // redirect if the path is changed
+      if (new_path != path) {
+        const filename = new_path.substring(new_path.lastIndexOf('/') + 1);
+        browserHistory.push(
+          `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${filename}`
+        );
+      }
+    }
+  }
+
   handleClickSave(id, collection) {
     const { putDocument, fieldChanged } = this.props;
     if (fieldChanged) {
@@ -87,6 +101,7 @@ export class DocumentEdit extends Component {
             <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}
+              onSave={() => this.handleClickSave(filename, collection)}
               placeholder="Body"
               initialValue={raw_content}
               ref="editor" />
@@ -98,12 +113,15 @@ export class DocumentEdit extends Component {
             <div className="side-unit">
               <a onClick={() => this.handleClickSave(filename, collection)}
                 className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
+                  <i className="fa fa-save" aria-hidden="true"></i>
                 {updated ? 'Saved' : 'Save'}
               </a>
             </div>
             {
               http_url && <div className="side-unit">
-                <Link target="_blank" className="btn btn-fat" to={http_url}>View</Link>
+                <Link target="_blank" className="btn btn-fat" to={http_url}>
+                  <i className="fa fa-eye" aria-hidden="true"></i>View
+                </Link>
               </div>
             }
             <Splitter />
