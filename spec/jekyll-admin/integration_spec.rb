@@ -29,8 +29,10 @@ describe "integration" do
     let(:path) { "/admin" }
 
     it "serves the Jekyll site" do
-      expect(response.code).to eql("200")
-      expect(response.body).to match("Jekyll Admin")
+      with_index_stubbed do
+        expect(response.code).to eql("200")
+        expect(response.body).to match("Jekyll Admin")
+      end
     end
   end
 
