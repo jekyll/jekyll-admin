@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import { Link } from 'react-router';
 import _ from 'underscore';
 
@@ -28,7 +28,8 @@ export class PageEdit extends Component {
   }
 
   componentDidMount() {
-    const { fetchPage, params } = this.props;
+    const { fetchPage, params, router, route } = this.props;
+    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
     fetchPage(params.id);
   }
 
@@ -41,6 +42,12 @@ export class PageEdit extends Component {
         browserHistory.push(`${ADMIN_PREFIX}/pages/${new_name}`);
       }
     }
+  }
+
+  routerWillLeave(nextLocation) {
+    const { fieldChanged } = this.props;
+    if (fieldChanged)
+      return 'Your work is not saved! Are you sure you want to leave?';
   }
 
   handleClickSave(name) {
@@ -143,7 +150,9 @@ PageEdit.propTypes = {
   errors: PropTypes.array.isRequired,
   fieldChanged: PropTypes.bool.isRequired,
   updated: PropTypes.bool.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired
 };
 
 
@@ -170,4 +179,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageEdit);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageEdit));

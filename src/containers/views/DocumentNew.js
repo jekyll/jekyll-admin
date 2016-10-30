@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
 
 // Constants
@@ -29,6 +29,11 @@ export class DocumentNew extends Component {
     clearErrors();
   }
 
+  componentDidMount() {
+    const { router, route } = this.props;
+    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
       const path = nextProps.currentDocument.path;
@@ -37,6 +42,12 @@ export class DocumentNew extends Component {
         `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${filename}`
       );
     }
+  }
+
+  routerWillLeave(nextLocation) {
+    const { fieldChanged } = this.props;
+    if (fieldChanged)
+      return 'Your work is not saved! Are you sure you want to leave?';
   }
 
   handleClickSave() {
@@ -109,7 +120,9 @@ DocumentNew.propTypes = {
   errors: PropTypes.array.isRequired,
   fieldChanged: PropTypes.bool.isRequired,
   updated: PropTypes.bool.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired
 };
 
 
@@ -134,4 +147,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentNew);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentNew));

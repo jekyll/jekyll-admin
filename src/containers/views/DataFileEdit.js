@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import { Link } from 'react-router';
 import _ from 'underscore';
 
@@ -24,8 +24,15 @@ export class DataFileEdit extends Component {
   }
 
   componentDidMount() {
-    const { fetchDataFile, params } = this.props;
+    const { fetchDataFile, params, router, route } = this.props;
+    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
     fetchDataFile(params.data_file);
+  }
+
+  routerWillLeave(nextLocation) {
+    const { datafileChanged } = this.props;
+    if (datafileChanged)
+      return 'Your work is not saved! Are you sure you want to leave?';
   }
 
   handleClickSave() {
@@ -131,7 +138,9 @@ DataFileEdit.propTypes = {
   updated: PropTypes.bool.isRequired,
   datafileChanged: PropTypes.bool.isRequired,
   errors: PropTypes.array.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataFileEdit);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DataFileEdit));

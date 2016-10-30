@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
 
 // Constants
@@ -22,11 +22,22 @@ export class DataFileNew extends Component {
     clearErrors();
   }
 
+  componentDidMount() {
+    const { router, route } = this.props;
+    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
       const filename = this.refs.breadcrumbs.refs.input.value;
       browserHistory.push(`${ADMIN_PREFIX}/datafiles/${filename}`);
     }
+  }
+
+  routerWillLeave(nextLocation) {
+    const { datafileChanged } = this.props;
+    if (datafileChanged)
+      return 'Your work is not saved! Are you sure you want to leave?';
   }
 
   handleClickSave() {
@@ -104,7 +115,9 @@ DataFileNew.propTypes = {
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.array.isRequired,
   updated: PropTypes.bool.isRequired,
-  datafileChanged: PropTypes.bool.isRequired
+  datafileChanged: PropTypes.bool.isRequired,
+  router: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataFileNew);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DataFileNew));
