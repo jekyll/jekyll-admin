@@ -30,7 +30,6 @@ class MarkdownEditor extends Component {
     const { onChange, onSave } = this.props;
     let opts = Object.create(this.props);
     opts['element'] = this.refs.text;
-    opts['hideIcons'] = ["guide"];
     opts['autoDownloadFontAwesome'] = false;
     let toolbarIcons = [
       'bold', 'italic', 'heading', '|',
