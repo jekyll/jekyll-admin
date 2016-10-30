@@ -25,7 +25,7 @@ export class MetaButtons extends Component {
             onBlur={() => onDropdownBlur()}
             className="meta-button"
             tabIndex="-1">
-              <i className="fa fa-ellipsis-h"></i>
+              <i className="fa fa-chevron-down"></i>
           </button>
           <div className="dropdown-wrap">
             {
