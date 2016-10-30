@@ -32,7 +32,6 @@ class MarkdownEditor extends Component {
     opts['element'] = this.refs.text;
     opts['hideIcons'] = ["guide"];
     opts['autoDownloadFontAwesome'] = false;
-    opts['spellChecker'] = false;
     let toolbarIcons = [
       'bold', 'italic', 'heading', '|',
       'code', 'quote', 'unordered-list', 'ordered-list',
