@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import { Link } from 'react-router';
 import _ from 'underscore';
 
@@ -31,7 +31,8 @@ export class DocumentEdit extends Component {
   }
 
   componentDidMount() {
-    const { fetchDocument, params } = this.props;
+    const { fetchDocument, params, router, route } = this.props;
+    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
     fetchDocument(params.collection_name, params.id);
   }
 
@@ -47,6 +48,12 @@ export class DocumentEdit extends Component {
         );
       }
     }
+  }
+
+  routerWillLeave(nextLocation) {
+    const { fieldChanged } = this.props;
+    if (fieldChanged)
+      return 'You have unsaved changes on this page. Are you sure you want to leave?';
   }
 
   handleClickSave(id, collection) {
@@ -151,7 +158,9 @@ DocumentEdit.propTypes = {
   errors: PropTypes.array.isRequired,
   updated: PropTypes.bool.isRequired,
   fieldChanged: PropTypes.bool.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
+  router: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired
 };
 
 function mapStateToProps(state) {
@@ -178,4 +187,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(DocumentEdit);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentEdit));

@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
 
 // Constants
@@ -29,10 +29,21 @@ export class PageNew extends Component {
     clearErrors();
   }
 
+  componentDidMount() {
+    const { router, route } = this.props;
+    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+  }
+
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
       browserHistory.push(`${ADMIN_PREFIX}/pages/${nextProps.page.name}`);
     }
+  }
+
+  routerWillLeave(nextLocation) {
+    const { fieldChanged } = this.props;
+    if (fieldChanged)
+      return 'You have unsaved changes on this page. Are you sure you want to leave?';
   }
 
   handleClickSave() {
@@ -100,7 +111,9 @@ PageNew.propTypes = {
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.array.isRequired,
   fieldChanged: PropTypes.bool.isRequired,
-  updated: PropTypes.bool.isRequired
+  updated: PropTypes.bool.isRequired,
+  router: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired
 };
 
 
@@ -125,4 +138,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(PageNew);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageNew));

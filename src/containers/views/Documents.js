@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { Link, withRouter } from 'react-router';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
@@ -146,4 +146,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Documents));
+export default connect(mapStateToProps, mapDispatchToProps)(Documents);

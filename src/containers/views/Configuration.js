@@ -1,6 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { withRouter } from 'react-router';
 
 // Components
 import Editor from '../../components/Editor';
@@ -9,6 +10,17 @@ import Editor from '../../components/Editor';
 import { putConfig, onEditorChange } from '../../actions/config';
 
 export class Configuration extends Component {
+
+  componentDidMount() {
+    const { router, route } = this.props;
+    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+  }
+
+  routerWillLeave(nextLocation) {
+    const { editorChanged } = this.props;
+    if (editorChanged)
+      return 'You have unsaved changes on this page. Are you sure you want to leave?';
+  }
 
   handleSaveClick() {
     const { editorChanged, putConfig } = this.props;
@@ -62,7 +74,9 @@ Configuration.propTypes = {
   onEditorChange: PropTypes.func.isRequired,
   putConfig: PropTypes.func.isRequired,
   updated: PropTypes.bool.isRequired,
-  editorChanged: PropTypes.bool.isRequired
+  editorChanged: PropTypes.bool.isRequired,
+  router: PropTypes.object.isRequired,
+  route: PropTypes.object.isRequired
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Configuration);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Configuration));

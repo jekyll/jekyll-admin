@@ -43,6 +43,9 @@ export default function config(state = {
         updated: false
       });
     default:
-      return state;
+      return Object.assign({}, state, {
+        updated: false,
+        editorChanged: false
+      });
   }
 }
