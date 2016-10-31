@@ -37,7 +37,7 @@ export class DataFileNew extends Component {
   routerWillLeave(nextLocation) {
     const { datafileChanged } = this.props;
     if (datafileChanged)
-      return 'Your work is not saved! Are you sure you want to leave?';
+      return 'You have unsaved changes on this page. Are you sure you want to leave?';
   }
 
   handleClickSave() {

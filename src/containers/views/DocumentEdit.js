@@ -53,7 +53,7 @@ export class DocumentEdit extends Component {
   routerWillLeave(nextLocation) {
     const { fieldChanged } = this.props;
     if (fieldChanged)
-      return 'Your work is not saved! Are you sure you want to leave?';
+      return 'You have unsaved changes on this page. Are you sure you want to leave?';
   }
 
   handleClickSave(id, collection) {

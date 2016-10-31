@@ -19,7 +19,7 @@ export class Configuration extends Component {
   routerWillLeave(nextLocation) {
     const { editorChanged } = this.props;
     if (editorChanged)
-      return 'Your work is not saved! Are you sure you want to leave?';
+      return 'You have unsaved changes on this page. Are you sure you want to leave?';
   }
 
   handleSaveClick() {
