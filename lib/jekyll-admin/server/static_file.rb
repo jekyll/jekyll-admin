@@ -47,7 +47,7 @@ module JekyllAdmin
       end
 
       def static_files
-        site.static_files
+        JekyllAdmin::StaticDirectory.new(site.source, base_directory: site.source)
       end
 
       def file_list_dir(path)
