@@ -3,25 +3,15 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
-
-// Constants
 import { ADMIN_PREFIX } from '../../constants';
-
-// Components
 import Dropzone from 'react-dropzone';
 import FilePreview from '../../components/FilePreview';
 import InputSearch from '../../components/form/InputSearch';
-
-// Actions
-import {
-  fetchStaticFiles, uploadStaticFiles, deleteStaticFile
-} from '../../actions/staticfiles';
+import { fetchStaticFiles, uploadStaticFiles, deleteStaticFile } from '../../actions/staticfiles';
 import { search } from '../../actions/utils';
-
 import { existingUploadedFilenames } from '../../utils/helpers.js';
-
-// Selectors
 import { filterByFilename } from '../../reducers/staticfiles';
+import { getOverrideMessage } from '../../constants/messages';
 
 export class StaticFiles extends Component {
 
@@ -34,15 +24,12 @@ export class StaticFiles extends Component {
     const { uploadStaticFiles, files } = this.props;
     const existingFiles = existingUploadedFilenames(uploadedFiles, files);
     if (existingFiles.length > 0) {
-      const confirm = window.confirm(
-        `${existingFiles.join(', ')} will be overwritten. Continue anyway?`
-      );
-      if (confirm) {
-        uploadStaticFiles(uploadedFiles);
+      const confirm = window.confirm(getOverrideMessage(existingFiles.join(', ')));
+      if (!confirm) {
+        return false;
       }
-    }else {
-      uploadStaticFiles(uploadedFiles);
     }
+    uploadStaticFiles(uploadedFiles);
   }
 
   openDropzone() {

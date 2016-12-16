@@ -4,17 +4,12 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import { Link } from 'react-router';
 import _ from 'underscore';
-
-// Constants
-import { ADMIN_PREFIX } from '../../constants';
-
-// Components
 import Splitter from '../../components/Splitter';
 import Editor from '../../components/Editor';
-
-// Actions
 import { fetchDataFile, putDataFile, deleteDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
+import { ADMIN_PREFIX } from '../../constants';
+import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
 
 export class DataFileEdit extends Component {
 
@@ -30,9 +25,9 @@ export class DataFileEdit extends Component {
   }
 
   routerWillLeave(nextLocation) {
-    const { datafileChanged } = this.props;
-    if (datafileChanged)
-      return 'You have unsaved changes on this page. Are you sure you want to leave?';
+    if (this.props.datafileChanged) {
+      return getLeaveMessage();
+    }
   }
 
   handleClickSave() {
@@ -45,7 +40,7 @@ export class DataFileEdit extends Component {
 
   handleClickDelete(filename) {
     const { deleteDataFile } = this.props;
-    const confirm = window.confirm(`Are you sure that you want to delete "${filename}" ?`);
+    const confirm = window.confirm(getDeleteMessage(filename));
     if (confirm) {
       deleteDataFile(filename);
       browserHistory.push(`${ADMIN_PREFIX}/datafiles`);
@@ -60,7 +55,7 @@ export class DataFileEdit extends Component {
     }
 
     if (_.isEmpty(datafile)) {
-      return <h1>{`Could not find the data file.`}</h1>;
+      return <h1>{getNotFoundMessage("data file")}</h1>;
     }
 
     const { slug, ext, raw_content, content } = datafile;

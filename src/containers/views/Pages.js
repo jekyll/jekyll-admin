@@ -3,19 +3,12 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
-
-// Constants
 import { ADMIN_PREFIX } from '../../constants';
-
-// Components
 import InputSearch from '../../components/form/InputSearch';
-
-// Actions
 import { fetchPages, deletePage } from '../../actions/pages';
 import { search } from '../../actions/utils';
-
-// Selectors
 import { filterByFilename } from '../../reducers/pages';
+import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
 
 export class Pages extends Component {
 
@@ -26,7 +19,7 @@ export class Pages extends Component {
 
   handleClickDelete(name) {
     const { deletePage } = this.props;
-    const confirm = window.confirm(`Are you sure that you want to delete "${name}"?`);
+    const confirm = window.confirm(getDeleteMessage(name));
     if (confirm) {
       deletePage(name);
     }
@@ -97,7 +90,7 @@ export class Pages extends Component {
           pages.length > 0 && this.renderTable()
         }
         {
-          !pages.length && <h1>{`No pages found.`}</h1>
+          !pages.length && <h1>{getNotFoundMessage("pages")}</h1>
         }
       </div>
     );

@@ -2,12 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
-
-// Components
 import Editor from '../../components/Editor';
-
-// Actions
 import { putConfig, onEditorChange } from '../../actions/config';
+import { getLeaveMessage } from '../../constants/messages';
 
 export class Configuration extends Component {
 
@@ -17,9 +14,9 @@ export class Configuration extends Component {
   }
 
   routerWillLeave(nextLocation) {
-    const { editorChanged } = this.props;
-    if (editorChanged)
-      return 'You have unsaved changes on this page. Are you sure you want to leave?';
+    if (this.props.editorChanged) {
+      return getLeaveMessage();
+    }
   }
 
   handleSaveClick() {

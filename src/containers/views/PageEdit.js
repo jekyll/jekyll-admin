@@ -1,24 +1,18 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, withRouter } from 'react-router';
-import { Link } from 'react-router';
+import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
-
-// Constants
 import { ADMIN_PREFIX } from '../../constants';
-
-// Components
 import Splitter from '../../components/Splitter';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../MetaFields';
-
-// Actions
 import { fetchPage, deletePage, putPage } from '../../actions/pages';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
+import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
 
 export class PageEdit extends Component {
 
@@ -45,9 +39,9 @@ export class PageEdit extends Component {
   }
 
   routerWillLeave(nextLocation) {
-    const { fieldChanged } = this.props;
-    if (fieldChanged)
-      return 'You have unsaved changes on this page. Are you sure you want to leave?';
+    if (this.props.fieldChanged) {
+      return getLeaveMessage();
+    }
   }
 
   handleClickSave(name) {
@@ -59,7 +53,7 @@ export class PageEdit extends Component {
 
   handleClickDelete(name) {
     const { deletePage } = this.props;
-    const confirm = window.confirm(`Are you sure that you want to delete "${name}"?`);
+    const confirm = window.confirm(getDeleteMessage(name));
     if (confirm) {
       deletePage(name);
       browserHistory.push(`${ADMIN_PREFIX}/pages`);
