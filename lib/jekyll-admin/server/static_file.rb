@@ -50,8 +50,7 @@ module JekyllAdmin
         site.static_files
       end
 
-      def file_list_dir(path)
-      end
+      def file_list_dir(path) end
 
       def static_file
         static_files.find { |f| f.path == static_file_path }
