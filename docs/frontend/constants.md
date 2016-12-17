@@ -11,10 +11,12 @@ Stores all of the action creators' names
 
 Stores the following messages;
 
-* delete message
-* leave message
-* override static file message
+* confirm delete message
+* confirm leave message
+* confirm override static file message
 * not found message
+* notification messages
+* validation messages
 
 This allows us to control all of the messages in a single place and also will help us localize the admin panel in the future.
 

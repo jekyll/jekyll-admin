@@ -1,16 +1,19 @@
 import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
-
+import { get, put, del } from '../utils/fetch';
+import { addNotification } from './notifications';
+import {
+  getSuccessMessage,
+  getErrorMessage,
+  getUploadSuccessMessage,
+  getUploadErrorMessage
+} from '../constants/messages';
 import {
   getStaticFilesUrl,
   getStaticFileUrl,
   putStaticFileUrl,
   deleteStaticFileUrl
 } from '../constants/api';
-
-import { get, put, del } from '../utils/fetch';
-
-import { addNotification } from './notifications';
 
 export function fetchStaticFiles() {
   return dispatch => {
@@ -47,8 +50,8 @@ export function uploadStaticFiles(files) {
           });
           dispatch(fetchStaticFiles());
           dispatch(addNotification(
-            'Success',
-            `${file.name} uploaded successfully`,
+            getSuccessMessage(),
+            getUploadSuccessMessage(file.name),
             'success'
           ));
         })
@@ -58,8 +61,8 @@ export function uploadStaticFiles(files) {
             error
           });
           dispatch(addNotification(
-            'Upload Error',
-            `Error occurred uploading the file.`,
+            getErrorMessage(),
+            getUploadErrorMessage(),
             'error'
           ));
         });

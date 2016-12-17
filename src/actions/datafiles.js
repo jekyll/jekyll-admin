@@ -1,19 +1,17 @@
 import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
-
+import { getParserErrorMessage } from '../constants/messages';
+import { validationError } from './utils';
+import { addNotification } from './notifications';
+import { get, put, del } from '../utils/fetch';
+import { toJSON } from '../utils/helpers';
+import { validator } from '../utils/validation';
 import {
   getDataFilesUrl,
   getDataFileUrl,
   putDataFileUrl,
   deleteDataFileUrl
 } from '../constants/api';
-
-import { validationError } from './utils';
-import { addNotification } from './notifications';
-
-import { get, put, del } from '../utils/fetch';
-import { toJSON } from '../utils/helpers';
-import { validator } from '../utils/validation';
 
 export function fetchDataFiles() {
   return (dispatch) => {
@@ -60,7 +58,7 @@ export function putDataFile(filename, data) {
     try {
       json = toJSON(data);
     } catch (e) {
-      return dispatch(addNotification('Parse Error', e.message, 'error'));
+      return dispatch(addNotification(getParserErrorMessage(), e.message, 'error'));
     }
     return put(
       putDataFileUrl(filename),

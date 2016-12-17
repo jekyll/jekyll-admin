@@ -1,18 +1,20 @@
 import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
-
+import { validationError } from '../actions/utils';
+import { get, put, del } from '../utils/fetch';
+import { validator } from '../utils/validation';
+import { slugify } from '../utils/helpers';
 import {
   getPagesUrl,
   getPageUrl,
   putPageUrl,
   deletePageUrl
 } from '../constants/api';
-
-import { validationError } from '../actions/utils';
-
-import { get, put, del } from '../utils/fetch';
-import { validator } from '../utils/validation';
-import { slugify } from '../utils/helpers';
+import {
+  getTitleRequiredMessage,
+  getFilenameRequiredMessage,
+  getFilenameNotValidMessage
+} from '../constants/messages';
 
 export function fetchPages() {
   return (dispatch) => {
@@ -49,8 +51,8 @@ export function putPage(name) {
         metadata,
         { 'path': 'required|filename' },
         {
-          'path.required': 'The filename is required.',
-          'path.filename': 'The filename is not valid.'
+          'path.required': getTitleRequiredMessage(),
+          'path.filename': getFilenameNotValidMessage()
         }
       );
       if (errors.length) {
@@ -67,7 +69,6 @@ export function putPage(name) {
       }),
       raw_content
     });
-    // TODO dispatch({type: ActionTypes.PUT_PAGE_REQUEST, page});
     return put(
       putPageUrl(name || path),
       page,

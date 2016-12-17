@@ -1,8 +1,7 @@
 import * as ActionTypes from '../constants/actionTypes';
 import { getConfigurationUrl, putConfigurationUrl } from '../constants/api';
-
+import { getParserErrorMessage } from '../constants/messages';
 import { addNotification } from './notifications';
-
 import { get, put } from '../utils/fetch';
 import { toJSON } from '../utils/helpers';
 
@@ -24,7 +23,7 @@ export function putConfig(config) {
     try {
       json = toJSON(config);
     } catch (e) {
-      return dispatch(addNotification('Parse Error', e.message, 'error'));
+      return dispatch(addNotification(getParserErrorMessage(), e.message, 'error'));
     }
     return put(
       putConfigurationUrl(),
