@@ -3,17 +3,12 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
-
-// Constants
 import { ADMIN_PREFIX } from '../../constants';
-
-// Components
 import Editor from '../../components/Editor';
 import Breadcrumbs from '../../components/Breadcrumbs';
-
-// Actions
 import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
+import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
 
 export class DataFileNew extends Component {
 
@@ -35,9 +30,9 @@ export class DataFileNew extends Component {
   }
 
   routerWillLeave(nextLocation) {
-    const { datafileChanged } = this.props;
-    if (datafileChanged)
-      return 'You have unsaved changes on this page. Are you sure you want to leave?';
+    if (this.props.datafileChanged) {
+      return getLeaveMessage();
+    }
   }
 
   handleClickSave() {

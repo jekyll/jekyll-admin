@@ -3,18 +3,11 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
-
-// Constants
 import { ADMIN_PREFIX } from '../../constants';
-
-// Components
+import { getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
 import InputSearch from '../../components/form/InputSearch';
-
-// Actions
 import { fetchDataFiles, deleteDataFile } from '../../actions/datafiles';
 import { search } from '../../actions/utils';
-
-// Selectors
 import { filterByFilename } from '../../reducers/datafiles';
 
 export class DataFiles extends Component {
@@ -26,7 +19,7 @@ export class DataFiles extends Component {
 
   handleClickDelete(filename) {
     const { deleteDataFile } = this.props;
-    const confirm = window.confirm(`Are you sure that you want to delete "${filename}" ?`);
+    const confirm = window.confirm(getDeleteMessage(filename));
     if (confirm) {
       deleteDataFile(filename);
     }
@@ -94,7 +87,7 @@ export class DataFiles extends Component {
           files.length > 0 && this.renderTable()
         }
         {
-          !files.length && <h1>{`No data files found.`}</h1>
+          !files.length && <h1>{getNotFoundMessage("data files")}</h1>
         }
       </div>
     );

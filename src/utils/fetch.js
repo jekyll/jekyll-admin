@@ -1,6 +1,11 @@
 import fetch from 'isomorphic-fetch';
-
 import { addNotification } from '../actions/notifications';
+import {
+  getErrorMessage,
+  getFetchErrorMessage,
+  getUpdateErrorMessage,
+  getDeleteMessage
+} from '../constants/messages';
 
 /**
  * Fetch wrapper for GET request that dispatches actions according to the
@@ -23,8 +28,8 @@ export const get = (url, action_success, action_failure, dispatch) => {
         [action_failure.name]: error
       });
       dispatch(addNotification(
-        'Fetch Error',
-        `Could not fetch the ${action_success.name}`,
+        getErrorMessage(),
+        getFetchErrorMessage(action_success.name),
         'error'
       ));
     });
@@ -59,8 +64,8 @@ export const put = (url, body, action_success, action_failure, dispatch) => {
       [action_failure.name]: error
     });
     dispatch(addNotification(
-      'Update Error',
-      `Could not update the ${action_success.name}`,
+      getErrorMessage(),
+      getUpdateErrorMessage(action_success.name),
       'error'
     ));
   });
@@ -88,8 +93,8 @@ export const del = (url, action_success, action_failure, dispatch) => {
       [action_failure.name]: error
     });
     dispatch(addNotification(
-      'Delete Error',
-      `Could not delete the ${action_success.name}`,
+      getErrorMessage(),
+      getDeleteMessage(action_success.name),
       'error'
     ));
   });

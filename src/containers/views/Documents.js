@@ -5,19 +5,12 @@ import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import { capitalize } from '../../utils/helpers';
 import moment from 'moment';
-
-// Constants
 import { ADMIN_PREFIX } from '../../constants';
-
-// Components
 import InputSearch from '../../components/form/InputSearch';
-
-// Actions
 import { fetchCollection, deleteDocument } from '../../actions/collections';
 import { search } from '../../actions/utils';
-
-// Selectors
 import { filterByTitle } from '../../reducers/collections';
+import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
 
 export class Documents extends Component {
 
@@ -35,7 +28,7 @@ export class Documents extends Component {
 
   handleClickDelete(filename, collection) {
     const { deleteDocument } = this.props;
-    const confirm = window.confirm(`Are you sure that you want to delete "${filename}" ?`);
+    const confirm = window.confirm(getDeleteMessage(filename));
     if (confirm) {
       deleteDocument(filename, collection);
     }
@@ -114,7 +107,7 @@ export class Documents extends Component {
           currentDocuments.length > 0 && this.renderTable()
         }
         {
-          !currentDocuments.length && <h1>{`No documents found.`}</h1>
+          !currentDocuments.length && <h1>{getNotFoundMessage("documents")}</h1>
         }
       </div>
     );

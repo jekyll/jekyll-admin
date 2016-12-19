@@ -1,26 +1,18 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, withRouter } from 'react-router';
-import { Link } from 'react-router';
+import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
-
-// Constants
 import { ADMIN_PREFIX } from '../../constants';
-
-// Components
+import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
 import Splitter from '../../components/Splitter';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputTitle from '../../components/form/InputTitle';
 import Checkbox from '../../components/form/Checkbox';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
-
-// Actions
 import { fetchDocument, deleteDocument, putDocument } from '../../actions/collections';
-import {
-  updateTitle, updateBody, updatePath, updateDraft
-} from '../../actions/metadata';
+import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
 
 export class DocumentEdit extends Component {
@@ -51,9 +43,9 @@ export class DocumentEdit extends Component {
   }
 
   routerWillLeave(nextLocation) {
-    const { fieldChanged } = this.props;
-    if (fieldChanged)
-      return 'You have unsaved changes on this page. Are you sure you want to leave?';
+    if (this.props.fieldChanged) {
+      return getLeaveMessage();
+    }
   }
 
   handleClickSave(id, collection) {
@@ -65,7 +57,7 @@ export class DocumentEdit extends Component {
 
   handleClickDelete(filename, collection) {
     const { deleteDocument } = this.props;
-    const confirm = window.confirm(`Are you sure that you want to delete "${filename}" ?`);
+    const confirm = window.confirm(getDeleteMessage(filename));
     if (confirm) {
       deleteDocument(filename, collection);
       browserHistory.push(`${ADMIN_PREFIX}/collections/${collection}`);
@@ -81,7 +73,7 @@ export class DocumentEdit extends Component {
     }
 
     if (_.isEmpty(currentDocument)) {
-      return <h1>{`Could not find the document.`}</h1>;
+      return <h1>{getNotFoundMessage("document")}</h1>;
     }
 
     const { title, raw_content, draft, http_url, path, collection, front_matter } = currentDocument;

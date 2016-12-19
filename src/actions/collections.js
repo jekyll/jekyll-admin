@@ -1,7 +1,10 @@
 import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
 import moment from 'moment';
-
+import { validationError } from '../actions/utils';
+import { get, put, del } from '../utils/fetch';
+import { validator } from '../utils/validation';
+import { slugify } from '../utils/helpers';
 import {
   getCollectionsUrl,
   getCollectionUrl,
@@ -10,18 +13,16 @@ import {
   putCollectionDocumentUrl,
   deleteCollectionDocumentUrl
 } from '../constants/api';
-
 import {
   getCollections,
   getCollection,
   getCollectionDocuments
 } from '../constants/api';
-
-import { validationError } from '../actions/utils';
-
-import { get, put, del } from '../utils/fetch';
-import { validator } from '../utils/validation';
-import { slugify } from '../utils/helpers';
+import {
+  getTitleRequiredMessage,
+  getFilenameRequiredMessage,
+  getFilenameNotValidMessage
+} from '../constants/messages';
 
 export function fetchCollections() {
   return dispatch => {
@@ -76,15 +77,15 @@ export function putDocument(id, collection) {
         'path': 'required'
       };
       let messages = {
-        'title.required': 'The title is required.',
-        'path.required': 'The filename is required.'
+        'title.required': getTitleRequiredMessage(),
+        'path.required': getFilenameRequiredMessage()
       };
       if (collection == 'posts') {
         validations['path'] = 'required|date';
-        messages['path.date'] = 'The filename is not valid.';
+        messages['path.date'] = getFilenameNotValidMessage();
       }else {
         validations['path'] = 'required|filename';
-        messages['path.filename'] = 'The filename is not valid.';
+        messages['path.filename'] = getFilenameNotValidMessage();
       }
       const errors = validator(metadata, validations, messages);
       if(errors.length) {
@@ -101,7 +102,6 @@ export function putDocument(id, collection) {
       }),
       raw_content
     });
-    // TODO dispatch({type: ActionTypes.PUT_DOCUMENT_REQUEST, doc});
     return put(
       putCollectionDocumentUrl(
         collection, id || path.substring(path.lastIndexOf('/') + 1)
