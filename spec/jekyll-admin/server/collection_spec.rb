@@ -57,40 +57,24 @@ describe "collections" do
       expect(first_document).to_not have_key("raw_content")
       expect(first_document).to_not have_key("content")
     end
-  end
-
-  context "document index" do
-    it "returns collection documents" do
-      get "/collections/posts/documents"
-      expect(last_response).to be_ok
-      expect(first_response["title"]).to eq("Test")
-    end
 
     it "includes front matter defaults" do
-      get "/collections/posts/documents"
+      get "/collections/posts"
       expect(last_response).to be_ok
-      expect(first_response.key?("some_front_matter")).to eq(true)
+      expect(first_document.key?("some_front_matter")).to eq(true)
     end
 
     it "doesn't include the raw front matter" do
-      get "/collections/posts/documents"
+      get "/collections/posts"
       expect(last_response).to be_ok
-      expect(first_response).to_not have_key("front_matter")
+      expect(first_document).to_not have_key("front_matter")
     end
 
-    it "doesn't include content in the index" do
-      get "/collections/posts/documents"
+    it "doesn't include next/previous" do
+      get "/collections/posts"
       expect(last_response).to be_ok
-      expect(first_response).to_not have_key("content")
-      expect(first_response).to_not have_key("raw_content")
-      expect(first_response).to_not have_key("output")
-    end
-
-    it "doesn't include next/previous in the index" do
-      get "/collections/posts/documents"
-      expect(last_response).to be_ok
-      expect(first_response).to_not have_key("next")
-      expect(first_response).to_not have_key("previous")
+      expect(first_document).to_not have_key("next")
+      expect(first_document).to_not have_key("previous")
     end
   end
 
