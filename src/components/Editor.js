@@ -44,7 +44,7 @@ class Editor extends Component {
 }
 
 Editor.propTypes = {
-  json: PropTypes.object.isRequired,
+  json: PropTypes.any.isRequired,
   onEditorChange: PropTypes.func.isRequired,
   editorChanged: PropTypes.bool.isRequired
 };

@@ -10,7 +10,9 @@ import { page } from './fixtures';
 const defaultProps = {
   errors: [],
   fieldChanged: false,
-  updated: false
+  updated: false,
+  router: {},
+  route: {}
 };
 
 function setup(props = defaultProps) {

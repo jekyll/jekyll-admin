@@ -11,20 +11,21 @@ const defaultProps = {
   config,
   editorChanged: false,
   updated: false,
+  router: {},
+  route: {},
   onEditorChange: expect.createSpy(),
   putConfig: expect.createSpy()
 };
 
-function setup(props = defaultProps) {
+const setup = (props = defaultProps) => {
   const component = shallow(<Configuration {...props} />);
-
   return {
     component,
     props,
     editor: component.find(Editor),
     saveButton: component.find('a')
   };
-}
+};
 
 describe('Containers::Configuration', () => {
   it('should render correctly with initial props', () => {

@@ -11,10 +11,12 @@ const defaultProps = {
   errors: [],
   fieldChanged: false,
   updated: false,
+  router: {},
+  route: {},
   params: { collection_name: doc.collection }
 };
 
-function setup(props = defaultProps) {
+const setup = (props = defaultProps) => {
   const actions = {
     putDocument: expect.createSpy(),
     updateTitle: expect.createSpy(),
@@ -24,9 +26,7 @@ function setup(props = defaultProps) {
     clearErrors: expect.createSpy()
   };
 
-  const component = shallow(
-    <DocumentNew {...actions} {...props} />
-  );
+  const component = shallow(<DocumentNew {...actions} {...props} />);
 
   return {
     component,
@@ -35,7 +35,7 @@ function setup(props = defaultProps) {
     errors: component.find('.error-messages'),
     props
   };
-}
+};
 
 describe('Containers::DocumentNew', () => {
   it('should call clearErrors before mount', () => {

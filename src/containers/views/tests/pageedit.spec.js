@@ -13,10 +13,12 @@ const defaultProps = {
   fieldChanged: false,
   updated: false,
   isFetching: false,
+  router: {},
+  route: {},
   params: { id: "page.md"}
 };
 
-function setup(props = defaultProps) {
+const setup = (props = defaultProps) => {
   const actions = {
     fetchPage: expect.createSpy(),
     putPage: expect.createSpy(),
@@ -28,9 +30,7 @@ function setup(props = defaultProps) {
     clearErrors: expect.createSpy()
   };
 
-  const component = shallow(
-    <PageEdit {...actions} {...props} />
-  );
+  const component = shallow(<PageEdit {...actions} {...props} />);
 
   return {
     component,
@@ -40,7 +40,7 @@ function setup(props = defaultProps) {
     errors: component.find('.error-messages'),
     props
   };
-}
+};
 
 describe('Containers::PageEdit', () => {
   it('should call clearErrors before mount', () => {
