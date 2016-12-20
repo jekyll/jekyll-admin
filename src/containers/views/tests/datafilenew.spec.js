@@ -10,19 +10,19 @@ const defaultProps = {
   updated: false,
   datafileChanged: false,
   editorChanged: false,
+  router: {},
+  route: {},
   errors: []
 };
 
-function setup(props = defaultProps) {
+const setup = (props = defaultProps) => {
   const actions = {
     putDataFile: expect.createSpy(),
     onDataFileChanged: expect.createSpy(),
     clearErrors: expect.createSpy()
   };
 
-  const component = shallow(
-    <DataFileNew {...actions} {...props} />
-  );
+  const component = shallow(<DataFileNew {...actions} {...props} />);
 
   return {
     component,
@@ -30,7 +30,7 @@ function setup(props = defaultProps) {
     saveButton: component.find('.content-side a').first(),
     props
   };
-}
+};
 
 describe('Containers::DataFileNew', () => {
   it('should not call putDataFile if a field is not changed.', () => {

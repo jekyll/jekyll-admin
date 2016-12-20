@@ -9,12 +9,14 @@ const defaultProps = {
   datafile: {},
   updated: false,
   datafileChanged: false,
+  router: {},
+  route: {},
   params: { data_file: "data_file" },
   errors: [],
   isFetching: false
 };
 
-function setup(props = defaultProps) {
+const setup = (props = defaultProps) => {
   const actions = {
     fetchDataFile: expect.createSpy(),
     putDataFile: expect.createSpy(),
@@ -23,9 +25,7 @@ function setup(props = defaultProps) {
     clearErrors: expect.createSpy()
   };
 
-  const component = shallow(
-    <DataFileEdit {...actions} {...props} />
-  );
+  const component = shallow(<DataFileEdit {...actions} {...props} />);
 
   return {
     component,
@@ -34,7 +34,7 @@ function setup(props = defaultProps) {
     deleteButton: component.find('.content-side').last(),
     props
   };
-}
+};
 
 describe('Containers::DataFileEdit', () => {
   it('should render correctly', () => {
