@@ -73,11 +73,7 @@ Returns an array of the registered collections.
 
 #### `GET /collections/:collection_name`
 
-Returns information about the requested collection.
-
-#### `GET /collections/:collection_name/documents`
-
-Return an array of document objects corresponding to the requested collection. The response does not include the document body.
+Returns information about the requested collection along with an array of corresponding document objects. Documents are sorted by date reverse chronologically and the response does not include the document body.
 
 #### `GET /collections/:collection_name/:path`
 
