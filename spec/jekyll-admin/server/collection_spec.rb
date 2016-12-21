@@ -54,8 +54,8 @@ describe "collections" do
     it "sorts documents by date reverse chronologically" do
       get "/collections/posts"
       expect(last_response).to be_ok
-      expected = "2016-03-01 00:00:00 +0200"
-      expect(first_document["date"]).to eq(expected)
+      expected = "2016-03-01"
+      expect(first_document["date"].split(" ").first).to eq(expected)
     end
 
     it "doesn't include document content" do
