@@ -51,6 +51,13 @@ describe "collections" do
       expect(first_document["title"]).to eql("Test")
     end
 
+    it "sorts documents by date reverse chronologically" do
+      get "/collections/posts"
+      expect(last_response).to be_ok
+      expected = "2016-03-01 00:00:00 +0200"
+      expect(first_document["date"]).to eq(expected)
+    end
+
     it "doesn't include document content" do
       get "/collections/posts"
       expect(last_response).to be_ok
