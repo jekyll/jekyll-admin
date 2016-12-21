@@ -53,35 +53,33 @@ export class Documents extends Component {
 
   renderRows() {
     const { currentDocuments } = this.props;
-    return _.chain(currentDocuments)
-      .sortBy('date')
-      .map(doc => {
-        const { id, slug, title, http_url, ext, collection, path } = doc;
-        const filename = path.substring(path.lastIndexOf('/') + 1);
-        const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
-        return (
-          <tr key={id}>
-            <td className="row-title">
-              <strong>
-                <Link to={to}>{title || slug}</Link>
-              </strong>
-            </td>
-            <td>{moment(doc.date).format("LLL").toString()}</td>
-            <td>
-              <div className="row-actions">
-                <a onClick={() => this.handleClickDelete(filename, collection)} title="Delete" className="delete">
-                  <i className="fa fa-trash-o" aria-hidden="true"></i> Delete
+    return _.map(currentDocuments, doc => {
+      const { id, slug, title, http_url, ext, collection, path } = doc;
+      const filename = path.substring(path.lastIndexOf('/') + 1);
+      const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
+      return (
+        <tr key={id}>
+          <td className="row-title">
+            <strong>
+              <Link to={to}>{title || slug}</Link>
+            </strong>
+          </td>
+          <td>{moment(doc.date).format("LLL").toString()}</td>
+          <td>
+            <div className="row-actions">
+              <a onClick={() => this.handleClickDelete(filename, collection)} title="Delete" className="delete">
+                <i className="fa fa-trash-o" aria-hidden="true"></i> Delete
+              </a>
+              {
+                http_url && <a target="_blank" href={http_url} title="View" className="view">
+                  <i className="fa fa-eye" aria-hidden="true"></i> View
                 </a>
-                {
-                  http_url && <a target="_blank" href={http_url} title="View" className="view">
-                    <i className="fa fa-eye" aria-hidden="true"></i> View
-                  </a>
-                }
-              </div>
-            </td>
-          </tr>
-        );
-      }).value().reverse();
+              }
+            </div>
+          </td>
+        </tr>
+      );
+    });
   }
 
   render() {
