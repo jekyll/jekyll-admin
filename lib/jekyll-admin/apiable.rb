@@ -42,7 +42,9 @@ module JekyllAdmin
       # include our own documents array, without the content
       if is_a?(Jekyll::Collection)
         output.delete("docs")
-        output["documents"] = docs.map(&:to_api) if include_documents
+        if include_documents
+          output["documents"] = docs.sort_by(&:date).reverse.map(&:to_api)
+        end
       end
 
       output
