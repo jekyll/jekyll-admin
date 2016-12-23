@@ -2,9 +2,8 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
 import Editor from '../../../components/Editor';
-
 import { Configuration } from '../Configuration';
-
+import { toYAML } from '../../../utils/helpers';
 import { config } from './fixtures';
 
 const defaultProps = {
@@ -32,7 +31,7 @@ describe('Containers::Configuration', () => {
     const { component, editor, saveButton } = setup();
     expect(saveButton.text()).toBe('Save');
     expect(saveButton.prop('className').trim()).toBe('btn btn-inactive');
-    expect(editor.prop('json')).toEqual(config);
+    expect(editor.prop('content')).toEqual(toYAML(config));
   });
 
   it('should render correctly with updated props', () => {
