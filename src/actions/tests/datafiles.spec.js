@@ -90,7 +90,7 @@ describe('Actions::Datafiles', () => {
 
   it('updates a data file successfully', () => {
     nock(API)
-      .put('/data/data_file.yml', { content: { foo: "bar" } } )
+      .put('/data/data_file.json', { raw_content: { foo: "bar" } } )
       .reply(200, datafile);
 
     const expectedAction = [
@@ -100,7 +100,7 @@ describe('Actions::Datafiles', () => {
 
     const store = mockStore({ currentFile: {} });
 
-    return store.dispatch(actions.putDataFile('data_file.yml', 'foo: bar'))
+    return store.dispatch(actions.putDataFile('data_file.json', { foo: "bar" }))
       .then(() => { // return of async actions
         expect(store.getActions()).toEqual(expectedAction);
       });

@@ -4,11 +4,9 @@ import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/github';
 
-import { toYAML } from '../utils/helpers';
-
 class Editor extends Component {
   shouldComponentUpdate(nextProps, nextState) {
-    return nextProps.json !== this.props.json;
+    return nextProps.content !== this.props.content;
   }
 
   handleChange(value) {
@@ -24,10 +22,10 @@ class Editor extends Component {
   }
 
   render() {
-    const { json } = this.props;
+    const { content } = this.props;
     return (
       <AceEditor
-        value={toYAML(json)}
+        value={content}
         mode="yaml"
         theme="github"
         width="100%"
@@ -44,7 +42,7 @@ class Editor extends Component {
 }
 
 Editor.propTypes = {
-  json: PropTypes.any.isRequired,
+  content: PropTypes.any.isRequired,
   onEditorChange: PropTypes.func.isRequired,
   editorChanged: PropTypes.bool.isRequired
 };

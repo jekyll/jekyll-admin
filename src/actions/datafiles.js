@@ -54,15 +54,9 @@ export function putDataFile(filename, data) {
       return dispatch(validationError(errors));
     }
     dispatch({type: ActionTypes.CLEAR_ERRORS});
-    let json;
-    try {
-      json = toJSON(data);
-    } catch (e) {
-      return dispatch(addNotification(getParserErrorMessage(), e.message, 'error'));
-    }
     return put(
       putDataFileUrl(filename),
-      JSON.stringify({ content: json }),
+      JSON.stringify({ raw_content: data }),
       { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.PUT_DATAFILE_FAILURE, name: "error"},
       dispatch
