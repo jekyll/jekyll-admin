@@ -1,13 +1,10 @@
 import React from 'react';
 import expect from 'expect';
 import { shallow } from 'enzyme';
-
 import Editor from '../Editor';
-import { toYAML } from '../../utils/helpers';
-
 import { json } from './fixtures';
 
-function setup(props = {json, editorChanged: false}) {
+function setup(props = {content: json, editorChanged: false}) {
   const actions = {
     onEditorChange: expect.createSpy()
   };
@@ -26,7 +23,7 @@ function setup(props = {json, editorChanged: false}) {
 describe('Components::Editor', () => {
   it('should render correctly', () => {
     const { component, editor } = setup();
-    expect(editor.prop('value')).toEqual(toYAML(json));
+    expect(editor.prop('value')).toEqual(json);
   });
   it('should call onEditorChange if editor is not changed', () => {
     const { actions, editor, component } = setup();
@@ -34,7 +31,7 @@ describe('Components::Editor', () => {
     expect(actions.onEditorChange).toHaveBeenCalled();
   });
   it('should not call onEditorChange again if editor is already changed', () => {
-    const { actions, editor } = setup({ json, editorChanged: true });
+    const { actions, editor } = setup({ content: json, editorChanged: true });
     editor.simulate('change');
     expect(actions.onEditorChange).toNotHaveBeenCalled();
   });
