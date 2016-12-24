@@ -88,8 +88,4 @@ function mapDispatchToProps(dispatch) {
   }, dispatch);
 }
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  null,
-  {pure:false})(Sidebar); // fix this when react-router 3.0.0
+export default connect(mapStateToProps,mapDispatchToProps)(Sidebar);
