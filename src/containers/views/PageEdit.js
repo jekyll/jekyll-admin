@@ -77,7 +77,7 @@ export class PageEdit extends Component {
     }
 
     const { name, raw_content, http_url, path, front_matter } = page;
-    const title = front_matter ? front_matter.title : '';
+    const title = front_matter.title ? front_matter.title : '';
 
     return (
       <div>
