@@ -16,7 +16,6 @@ export default class FilePreview extends Component {
     const { file } = this.props;
     const extension = file.extname.substring(1);
     const image = /png|jpg|gif|jpeg/.test(extension);
-    let prefix = '';
     return (
       <div className="file-preview">
         <a href={file.http_url} target="_blank">
