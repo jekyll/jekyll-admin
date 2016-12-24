@@ -8,7 +8,11 @@ import Editor from '../../components/Editor';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
-import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
+import {
+  getLeaveMessage,
+  getDeleteMessage,
+  getNotFoundMessage
+} from '../../constants/messages';
 
 export class DataFileNew extends Component {
 
@@ -85,24 +89,6 @@ export class DataFileNew extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  const { datafiles, utils } = state;
-  return {
-    datafile: datafiles.currentFile,
-    updated: datafiles.updated,
-    datafileChanged: datafiles.datafileChanged,
-    errors: utils.errors
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    putDataFile,
-    onDataFileChanged,
-    clearErrors
-  }, dispatch);
-}
-
 DataFileNew.propTypes = {
   putDataFile: PropTypes.func.isRequired,
   datafile: PropTypes.object.isRequired,
@@ -114,5 +100,18 @@ DataFileNew.propTypes = {
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired
 };
+
+const mapStateToProps = (state) => ({
+  datafile: state.datafiles.currentFile,
+  updated: state.datafiles.updated,
+  datafileChanged: state.datafiles.datafileChanged,
+  errors: state.utils.errors
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  putDataFile,
+  onDataFileChanged,
+  clearErrors
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DataFileNew));

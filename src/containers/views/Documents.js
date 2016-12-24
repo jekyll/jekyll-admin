@@ -123,20 +123,15 @@ Documents.propTypes = {
   params: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  const { collections, utils } = state;
-  return {
-    currentDocuments: filterByTitle(collections.currentDocuments, utils.input),
-    isFetching: collections.isFetching
-  };
-}
+const mapStateToProps = (state) => ({
+  currentDocuments: filterByTitle(state.collections.currentDocuments, state.utils.input),
+  isFetching: state.collections.isFetching
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchCollection,
-    deleteDocument,
-    search
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchCollection,
+  deleteDocument,
+  search
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Documents);

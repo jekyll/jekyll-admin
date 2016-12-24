@@ -30,18 +30,13 @@ Header.propTypes = {
   config: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  const { config } = state;
-  return {
-    config: config.config,
-    isFetching: config.isFetching
-  };
-}
+const mapStateToProps = (state) => ({
+  config: state.config.config,
+  isFetching: state.config.isFetching
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchConfig
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchConfig
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

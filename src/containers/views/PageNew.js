@@ -109,26 +109,20 @@ PageNew.propTypes = {
   route: PropTypes.object.isRequired
 };
 
+const mapStateToProps = (state) => ({
+  page: state.pages.page,
+  fieldChanged: state.metadata.fieldChanged,
+  errors: state.utils.errors,
+  updated: state.pages.updated
+});
 
-function mapStateToProps(state) {
-  const { pages, utils, metadata } = state;
-  return {
-    page: pages.page,
-    fieldChanged: metadata.fieldChanged,
-    errors: utils.errors,
-    updated: pages.updated
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    updateTitle,
-    updateBody,
-    updatePath,
-    updateDraft,
-    putPage,
-    clearErrors
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateTitle,
+  updateBody,
+  updatePath,
+  updateDraft,
+  putPage,
+  clearErrors
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageNew));

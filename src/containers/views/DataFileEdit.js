@@ -1,15 +1,23 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, withRouter } from 'react-router';
-import { Link } from 'react-router';
+import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
 import Splitter from '../../components/Splitter';
 import Editor from '../../components/Editor';
-import { fetchDataFile, putDataFile, deleteDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
 import { ADMIN_PREFIX } from '../../constants';
-import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
+import {
+  fetchDataFile,
+  putDataFile,
+  deleteDataFile,
+  onDataFileChanged
+} from '../../actions/datafiles';
+import {
+  getLeaveMessage,
+  getDeleteMessage,
+  getNotFoundMessage
+} from '../../constants/messages';
 
 export class DataFileEdit extends Component {
 
@@ -101,27 +109,6 @@ export class DataFileEdit extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  const { datafiles, utils } = state;
-  return {
-    datafile: datafiles.currentFile,
-    isFetching: datafiles.isFetching,
-    updated: datafiles.updated,
-    datafileChanged: datafiles.datafileChanged,
-    errors: utils.errors
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchDataFile,
-    putDataFile,
-    deleteDataFile,
-    onDataFileChanged,
-    clearErrors
-  }, dispatch);
-}
-
 DataFileEdit.propTypes = {
   fetchDataFile: PropTypes.func.isRequired,
   putDataFile: PropTypes.func.isRequired,
@@ -137,5 +124,21 @@ DataFileEdit.propTypes = {
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired
 };
+
+const mapStateToProps = (state) => ({
+  datafile: state.datafiles.currentFile,
+  isFetching: state.datafiles.isFetching,
+  updated: state.datafiles.updated,
+  datafileChanged: state.datafiles.datafileChanged,
+  errors: state.utils.errors
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchDataFile,
+  putDataFile,
+  deleteDataFile,
+  onDataFileChanged,
+  clearErrors
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DataFileEdit));

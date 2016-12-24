@@ -3,16 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import _ from 'underscore';
-
-// Constants
 import { ADMIN_PREFIX } from '../constants';
-
-// Components
 import Splitter from '../components/Splitter';
-
-// Actions
 import { fetchCollections } from '../actions/collections';
-
 import { capitalize } from '../utils/helpers';
 
 export class Sidebar extends Component {
@@ -75,17 +68,12 @@ Sidebar.propTypes = {
   fetchCollections: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  const { collections } = state;
-  return {
-    collections: collections.collections
-  };
-}
+const mapStateToProps = (state) => ({
+  collections: state.collections.collections
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchCollections
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchCollections
+}, dispatch);
 
 export default connect(mapStateToProps,mapDispatchToProps)(Sidebar);

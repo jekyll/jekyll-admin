@@ -7,11 +7,14 @@ import { ADMIN_PREFIX } from '../../constants';
 import Dropzone from 'react-dropzone';
 import FilePreview from '../../components/FilePreview';
 import InputSearch from '../../components/form/InputSearch';
-import { fetchStaticFiles, uploadStaticFiles, deleteStaticFile } from '../../actions/staticfiles';
 import { search } from '../../actions/utils';
 import { existingUploadedFilenames } from '../../utils/helpers.js';
 import { filterByFilename } from '../../reducers/staticfiles';
 import { getOverrideMessage } from '../../constants/messages';
+import {
+  fetchStaticFiles,
+  uploadStaticFiles,
+  deleteStaticFile } from '../../actions/staticfiles';
 
 export class StaticFiles extends Component {
 
@@ -100,21 +103,16 @@ StaticFiles.propTypes = {
   search: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  const { staticfiles, utils } = state;
-  return {
-    files: filterByFilename(staticfiles.files, utils.input),
-    isFetching: staticfiles.isFetching
-  };
-}
+const mapStateToProps = (state) => ({
+  files: filterByFilename(state.staticfiles.files, state.utils.input),
+  isFetching: state.staticfiles.isFetching
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchStaticFiles,
-    uploadStaticFiles,
-    deleteStaticFile,
-    search
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchStaticFiles,
+  uploadStaticFiles,
+  deleteStaticFile,
+  search
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaticFiles);
