@@ -5,6 +5,7 @@ import { withRouter } from 'react-router';
 import Editor from '../../components/Editor';
 import { putConfig, onEditorChange } from '../../actions/config';
 import { getLeaveMessage } from '../../constants/messages';
+import { toYAML } from '../../utils/helpers';
 
 export class Configuration extends Component {
 
@@ -43,7 +44,7 @@ export class Configuration extends Component {
         <Editor
           editorChanged={editorChanged}
           onEditorChange={onEditorChange}
-          json={config}
+          content={toYAML(config)}
           ref="editor" />
       </div>
     );

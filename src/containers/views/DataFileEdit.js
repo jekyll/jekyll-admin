@@ -58,7 +58,7 @@ export class DataFileEdit extends Component {
       return <h1>{getNotFoundMessage("data file")}</h1>;
     }
 
-    const { slug, ext, raw_content, content } = datafile;
+    const { slug, ext, raw_content } = datafile;
     const filename = slug+ext;
 
     return (
@@ -80,7 +80,7 @@ export class DataFileEdit extends Component {
             <Editor
               editorChanged={datafileChanged}
               onEditorChange={onDataFileChanged}
-              json={content}
+              content={raw_content}
               ref="editor" />
           </div>
 
