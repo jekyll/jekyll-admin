@@ -15,7 +15,7 @@ const history = syncHistoryWithStore(browserHistory, store);
 render(
   <Provider store={store}>
     <Router history={history} routes={routes}>
-      <Redirect from={`${ADMIN_PREFIX}/`} to={`${ADMIN_PREFIX}/pages/`} />
+      <Redirect from={`${ADMIN_PREFIX}/`} to={`${ADMIN_PREFIX}/collections/posts`} />
     </Router>
   </Provider>, document.getElementById('root')
 );

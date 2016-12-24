@@ -44,14 +44,14 @@ export class Sidebar extends Component {
   render() {
     return (
       <div className="sidebar">
-        <Link className="logo" to={`${ADMIN_PREFIX}/pages`} />
+        <Link className="logo" to={`${ADMIN_PREFIX}/collections/posts`} />
         <div className="routes">
           <ul>
             <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/pages`}><i className="fa fa-file-text"></i>Pages</Link>
+              <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/posts`}><i className="fa fa-thumb-tack"></i>Posts</Link>
             </li>
             <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/posts`}><i className="fa fa-thumb-tack"></i>Posts</Link>
+              <Link activeClassName="active" to={`${ADMIN_PREFIX}/pages`}><i className="fa fa-file-text"></i>Pages</Link>
             </li>
 
             {this.renderCollections()}
