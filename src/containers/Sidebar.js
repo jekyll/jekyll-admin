@@ -45,30 +45,26 @@ export class Sidebar extends Component {
     return (
       <div className="sidebar">
         <Link className="logo" to={`${ADMIN_PREFIX}/pages`} />
-        <div className="routes">
-          <ul>
-            <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/pages`}><i className="fa fa-file-text"></i>Pages</Link>
-            </li>
-            <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/posts`}><i className="fa fa-thumb-tack"></i>Posts</Link>
-            </li>
-
-            {this.renderCollections()}
-
-            <Splitter />
-            <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/datafiles`}><i className="fa fa-database"></i>Data Files</Link>
-            </li>
-            <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/staticfiles`}><i className="fa fa-file"></i>Static Files</Link>
-            </li>
-            <Splitter />
-            <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/configuration`}><i className="fa fa-cog"></i>Configuration</Link>
-            </li>
-          </ul>
-        </div>
+        <ul className="routes">
+          <li>
+            <Link activeClassName="active" to={`${ADMIN_PREFIX}/pages`}><i className="fa fa-file-text"></i>Pages</Link>
+          </li>
+          <li>
+            <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/posts`}><i className="fa fa-thumb-tack"></i>Posts</Link>
+          </li>
+          {this.renderCollections()}
+          <Splitter />
+          <li>
+            <Link activeClassName="active" to={`${ADMIN_PREFIX}/datafiles`}><i className="fa fa-database"></i>Data Files</Link>
+          </li>
+          <li>
+            <Link activeClassName="active" to={`${ADMIN_PREFIX}/staticfiles`}><i className="fa fa-file"></i>Static Files</Link>
+          </li>
+          <Splitter />
+          <li>
+            <Link activeClassName="active" to={`${ADMIN_PREFIX}/configuration`}><i className="fa fa-cog"></i>Configuration</Link>
+          </li>
+        </ul>
       </div>
     );
   }

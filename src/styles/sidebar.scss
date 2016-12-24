@@ -21,28 +21,23 @@
     }
   }
   .routes {
-    padding: 5px 0;
-    background-color: #333;
-    ul {
-      padding: 0;
-      margin: 10px 0;
-      list-style: none;
-      li {
-        a {
-          display: block;
-          padding: 15px 20px;
-          font-size: 17px;
-          color: #ebdac1;
-          &.active {
-            color: $dark-orange;
-          }
+    padding: 10px 0;
+    list-style: none;
+    li {
+      a {
+        display: block;
+        padding: 15px 20px;
+        font-size: 17px;
+        color: #ebdac1;
+        &.active {
+          color: $dark-orange;
         }
-        &:hover {
-          background-color: #3d3d3d;
+      }
+      &:hover {
+        background-color: #3d3d3d;
 
-          a {
-            color: #ffa114;
-          }
+        a {
+          color: #ffa114;
         }
       }
     }
