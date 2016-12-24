@@ -82,7 +82,3 @@ export function onDataFileChanged() {
     type: ActionTypes.DATAFILE_CHANGED
   };
 }
-
-function validate() {
-
-}
