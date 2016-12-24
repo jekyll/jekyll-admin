@@ -4,7 +4,9 @@ import { shallow } from 'enzyme';
 import Editor from '../Editor';
 import { json } from './fixtures';
 
-function setup(props = {content: json, editorChanged: false}) {
+const content = JSON.stringify(json);
+
+function setup(props = {content, editorChanged: false}) {
   const actions = {
     onEditorChange: expect.createSpy()
   };
@@ -23,7 +25,7 @@ function setup(props = {content: json, editorChanged: false}) {
 describe('Components::Editor', () => {
   it('should render correctly', () => {
     const { component, editor } = setup();
-    expect(editor.prop('value')).toEqual(json);
+    expect(editor.prop('value')).toEqual(content);
   });
   it('should call onEditorChange if editor is not changed', () => {
     const { actions, editor, component } = setup();
@@ -31,7 +33,7 @@ describe('Components::Editor', () => {
     expect(actions.onEditorChange).toHaveBeenCalled();
   });
   it('should not call onEditorChange again if editor is already changed', () => {
-    const { actions, editor } = setup({ content: json, editorChanged: true });
+    const { actions, editor } = setup({ content, editorChanged: true });
     editor.simulate('change');
     expect(actions.onEditorChange).toNotHaveBeenCalled();
   });
