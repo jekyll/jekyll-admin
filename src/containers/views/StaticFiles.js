@@ -12,9 +12,8 @@ import { existingUploadedFilenames } from '../../utils/helpers.js';
 import { filterByFilename } from '../../reducers/staticfiles';
 import { getOverrideMessage } from '../../constants/messages';
 import {
-  fetchStaticFiles,
-  uploadStaticFiles,
-  deleteStaticFile } from '../../actions/staticfiles';
+  fetchStaticFiles, uploadStaticFiles, deleteStaticFile
+} from '../../actions/staticfiles';
 
 export class StaticFiles extends Component {
 

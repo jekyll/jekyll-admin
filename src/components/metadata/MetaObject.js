@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import _ from 'underscore';
-
 import MetaObjectItem from './MetaObjectItem';
 
 export class MetaObject extends Component {

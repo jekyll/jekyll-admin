@@ -9,9 +9,7 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
 import {
-  getLeaveMessage,
-  getDeleteMessage,
-  getNotFoundMessage
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/messages';
 
 export class DataFileNew extends Component {

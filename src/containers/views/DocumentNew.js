@@ -13,7 +13,9 @@ import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
 import { putDocument } from '../../actions/collections';
 import { clearErrors } from '../../actions/utils';
-import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
+import {
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
+} from '../../constants/messages';
 
 export class DocumentNew extends Component {
 

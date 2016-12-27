@@ -3,18 +3,12 @@ import _ from 'underscore';
 import { validationError } from './utils';
 import { addNotification } from './notifications';
 import { get, put, del } from '../utils/fetch';
-import { toJSON } from '../utils/helpers';
 import { validator } from '../utils/validation';
 import {
-  getDataFilesUrl,
-  getDataFileUrl,
-  putDataFileUrl,
-  deleteDataFileUrl
+  getDataFilesUrl, getDataFileUrl, putDataFileUrl, deleteDataFileUrl
 } from '../constants/api';
 import {
-  getParserErrorMessage,
-  getContentRequiredMessage,
-  getFilenameRequiredMessage
+  getParserErrorMessage, getContentRequiredMessage, getFilenameRequiredMessage
 } from '../constants/messages';
 
 export function fetchDataFiles() {

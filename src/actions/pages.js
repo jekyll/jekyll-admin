@@ -5,15 +5,10 @@ import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify } from '../utils/helpers';
 import {
-  getPagesUrl,
-  getPageUrl,
-  putPageUrl,
-  deletePageUrl
+  getPagesUrl, getPageUrl, putPageUrl, deletePageUrl
 } from '../constants/api';
 import {
-  getTitleRequiredMessage,
-  getFilenameRequiredMessage,
-  getFilenameNotValidMessage
+  getTitleRequiredMessage, getFilenameRequiredMessage, getFilenameNotValidMessage
 } from '../constants/messages';
 
 export function fetchPages() {

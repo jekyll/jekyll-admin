@@ -13,7 +13,9 @@ import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
 import { putPage } from '../../actions/pages';
 import { clearErrors } from '../../actions/utils';
-import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
+import {
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
+} from '../../constants/messages';
 
 export class PageNew extends Component {
 

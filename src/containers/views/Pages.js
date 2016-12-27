@@ -9,9 +9,7 @@ import { fetchPages, deletePage } from '../../actions/pages';
 import { search } from '../../actions/utils';
 import { filterByFilename } from '../../reducers/pages';
 import {
-  getLeaveMessage,
-  getDeleteMessage,
-  getNotFoundMessage
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/messages';
 
 export class Pages extends Component {

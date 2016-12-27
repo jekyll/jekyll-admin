@@ -14,9 +14,7 @@ import { fetchDocument, deleteDocument, putDocument } from '../../actions/collec
 import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
 import {
-  getLeaveMessage,
-  getDeleteMessage,
-  getNotFoundMessage
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/messages';
 
 export class DocumentEdit extends Component {

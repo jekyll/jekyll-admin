@@ -8,15 +8,10 @@ import Editor from '../../components/Editor';
 import { clearErrors } from '../../actions/utils';
 import { ADMIN_PREFIX } from '../../constants';
 import {
-  fetchDataFile,
-  putDataFile,
-  deleteDataFile,
-  onDataFileChanged
+  fetchDataFile, putDataFile, deleteDataFile, onDataFileChanged
 } from '../../actions/datafiles';
 import {
-  getLeaveMessage,
-  getDeleteMessage,
-  getNotFoundMessage
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/messages';
 
 export class DataFileEdit extends Component {

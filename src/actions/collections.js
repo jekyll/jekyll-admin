@@ -6,22 +6,14 @@ import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify } from '../utils/helpers';
 import {
-  getCollectionsUrl,
-  getCollectionUrl,
-  getCollectionDocumentsUrl,
-  getCollectionDocumentUrl,
-  putCollectionDocumentUrl,
-  deleteCollectionDocumentUrl
+  getCollectionsUrl, getCollectionUrl, getCollectionDocumentsUrl,
+  getCollectionDocumentUrl, putCollectionDocumentUrl, deleteCollectionDocumentUrl
 } from '../constants/api';
 import {
-  getCollections,
-  getCollection,
-  getCollectionDocuments
+  getCollections, getCollection, getCollectionDocuments
 } from '../constants/api';
 import {
-  getTitleRequiredMessage,
-  getFilenameRequiredMessage,
-  getFilenameNotValidMessage
+  getTitleRequiredMessage, getFilenameRequiredMessage, getFilenameNotValidMessage
 } from '../constants/messages';
 
 export function fetchCollections() {

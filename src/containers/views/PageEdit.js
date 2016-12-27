@@ -13,9 +13,7 @@ import { fetchPage, deletePage, putPage } from '../../actions/pages';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
 import {
-  getLeaveMessage,
-  getDeleteMessage,
-  getNotFoundMessage
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/messages';
 
 export class PageEdit extends Component {
