@@ -40,5 +40,8 @@ export const getTitleRequiredMessage = () =>
 export const getFilenameRequiredMessage = () =>
   "The filename is required.";
 
+export const getContentRequiredMessage = () =>
+  "The content is required.";
+
 export const getFilenameNotValidMessage = () =>
   "The filename is not valid.";

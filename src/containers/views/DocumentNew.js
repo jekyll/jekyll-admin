@@ -13,7 +13,9 @@ import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
 import { putDocument } from '../../actions/collections';
 import { clearErrors } from '../../actions/utils';
-import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
+import {
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
+} from '../../constants/messages';
 
 export class DocumentNew extends Component {
 
@@ -118,26 +120,20 @@ DocumentNew.propTypes = {
   route: PropTypes.object.isRequired
 };
 
+const mapStateToProps = (state) => ({
+  currentDocument: state.collections.currentDocument,
+  fieldChanged: state.metadata.fieldChanged,
+  errors: state.utils.errors,
+  updated: state.collections.updated
+});
 
-function mapStateToProps(state) {
-  const { collections, utils, metadata } = state;
-  return {
-    currentDocument: collections.currentDocument,
-    fieldChanged: metadata.fieldChanged,
-    errors: utils.errors,
-    updated: collections.updated
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    updateTitle,
-    updateBody,
-    updatePath,
-    updateDraft,
-    putDocument,
-    clearErrors
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  updateTitle,
+  updateBody,
+  updatePath,
+  updateDraft,
+  putDocument,
+  clearErrors
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentNew));

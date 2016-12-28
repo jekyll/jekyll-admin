@@ -4,7 +4,6 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
 import { ADMIN_PREFIX } from '../../constants';
-import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
 import Splitter from '../../components/Splitter';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputTitle from '../../components/form/InputTitle';
@@ -14,6 +13,9 @@ import Metadata from '../../containers/MetaFields';
 import { fetchDocument, deleteDocument, putDocument } from '../../actions/collections';
 import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
+import {
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
+} from '../../constants/messages';
 
 export class DocumentEdit extends Component {
 
@@ -155,28 +157,23 @@ DocumentEdit.propTypes = {
   route: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  const { collections, utils, metadata } = state;
-  return {
-    currentDocument: collections.currentDocument,
-    isFetching: collections.isFetching,
-    fieldChanged: metadata.fieldChanged,
-    updated: collections.updated,
-    errors: utils.errors
-  };
-}
+const mapStateToProps = (state) => ({
+  currentDocument: state.collections.currentDocument,
+  isFetching: state.collections.isFetching,
+  fieldChanged: state.metadata.fieldChanged,
+  updated: state.collections.updated,
+  errors: state.utils.errors
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchDocument,
-    deleteDocument,
-    putDocument,
-    updateTitle,
-    updateBody,
-    updatePath,
-    updateDraft,
-    clearErrors
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchDocument,
+  deleteDocument,
+  putDocument,
+  updateTitle,
+  updateBody,
+  updatePath,
+  updateDraft,
+  clearErrors
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentEdit));

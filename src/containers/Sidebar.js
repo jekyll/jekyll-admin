@@ -3,16 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import _ from 'underscore';
-
-// Constants
 import { ADMIN_PREFIX } from '../constants';
-
-// Components
 import Splitter from '../components/Splitter';
-
-// Actions
 import { fetchCollections } from '../actions/collections';
-
 import { capitalize } from '../utils/helpers';
 
 export class Sidebar extends Component {
@@ -45,30 +38,26 @@ export class Sidebar extends Component {
     return (
       <div className="sidebar">
         <Link className="logo" to={`${ADMIN_PREFIX}/pages`} />
-        <div className="routes">
-          <ul>
-            <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/pages`}><i className="fa fa-file-text"></i>Pages</Link>
-            </li>
-            <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/posts`}><i className="fa fa-thumb-tack"></i>Posts</Link>
-            </li>
-
-            {this.renderCollections()}
-
-            <Splitter />
-            <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/datafiles`}><i className="fa fa-database"></i>Data Files</Link>
-            </li>
-            <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/staticfiles`}><i className="fa fa-file"></i>Static Files</Link>
-            </li>
-            <Splitter />
-            <li>
-              <Link activeClassName="active" to={`${ADMIN_PREFIX}/configuration`}><i className="fa fa-cog"></i>Configuration</Link>
-            </li>
-          </ul>
-        </div>
+        <ul className="routes">
+          <li>
+            <Link activeClassName="active" to={`${ADMIN_PREFIX}/pages`}><i className="fa fa-file-text"></i>Pages</Link>
+          </li>
+          <li>
+            <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/posts`}><i className="fa fa-thumb-tack"></i>Posts</Link>
+          </li>
+          {this.renderCollections()}
+          <Splitter />
+          <li>
+            <Link activeClassName="active" to={`${ADMIN_PREFIX}/datafiles`}><i className="fa fa-database"></i>Data Files</Link>
+          </li>
+          <li>
+            <Link activeClassName="active" to={`${ADMIN_PREFIX}/staticfiles`}><i className="fa fa-file"></i>Static Files</Link>
+          </li>
+          <Splitter />
+          <li>
+            <Link activeClassName="active" to={`${ADMIN_PREFIX}/configuration`}><i className="fa fa-cog"></i>Configuration</Link>
+          </li>
+        </ul>
       </div>
     );
   }
@@ -79,21 +68,12 @@ Sidebar.propTypes = {
   fetchCollections: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  const { collections } = state;
-  return {
-    collections: collections.collections
-  };
-}
+const mapStateToProps = (state) => ({
+  collections: state.collections.collections
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchCollections
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchCollections
+}, dispatch);
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-  null,
-  {pure:false})(Sidebar); // fix this when react-router 3.0.0
+export default connect(mapStateToProps,mapDispatchToProps)(Sidebar);

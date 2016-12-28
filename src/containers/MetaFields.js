@@ -2,11 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
-
-// Components
 import MetaField from '../components/metadata/MetaField';
-
-// Actions
 import {
   storeContentFields, addField, removeField, updateFieldKey, updateFieldValue,
   moveArrayItem, convertField
@@ -76,24 +72,19 @@ MetaFields.propTypes = {
   convertField: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  const { metadata } = state;
-  return {
-    metadata: metadata.metadata,
-    key_prefix: metadata.key_prefix
-  };
-}
+const mapStateToProps = (state) => ({
+  metadata: state.metadata.metadata,
+  key_prefix: state.metadata.key_prefix
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    storeContentFields,
-    addField,
-    removeField,
-    updateFieldKey,
-    updateFieldValue,
-    moveArrayItem,
-    convertField
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  storeContentFields,
+  addField,
+  removeField,
+  updateFieldKey,
+  updateFieldValue,
+  moveArrayItem,
+  convertField
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(MetaFields);

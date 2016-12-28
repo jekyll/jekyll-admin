@@ -102,20 +102,15 @@ DataFiles.propTypes = {
   search: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  const { datafiles, utils } = state;
-  return {
-    files: filterByFilename(datafiles.files, utils.input),
-    isFetching: datafiles.isFetching
-  };
-}
+const mapStateToProps = (state) => ({
+  files: filterByFilename(state.datafiles.files, state.utils.input),
+  isFetching: state.datafiles.isFetching
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchDataFiles,
-    deleteDataFile,
-    search
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchDataFiles,
+  deleteDataFile,
+  search
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(DataFiles);
