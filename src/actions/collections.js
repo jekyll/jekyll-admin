@@ -56,6 +56,7 @@ export function putDocument(id, collection) {
   return (dispatch, getState) => {
     const metadata = getState().metadata.metadata;
     let { path, raw_content, title } = metadata;
+    // if no path given, generate title from the title
     if (!path && title) {
       if (collection == 'posts') {
         const date = moment().format('YYYY-MM-DD');
