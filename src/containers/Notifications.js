@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-
 import NotificationSystem from 'react-notification-system';
 
 export class Notifications extends Component {
@@ -21,9 +20,7 @@ export class Notifications extends Component {
   }
 
   render() {
-    return (
-      <NotificationSystem ref="notificationSystem" />
-    );
+    return <NotificationSystem ref="notificationSystem" />;
   }
 }
 
@@ -31,11 +28,8 @@ Notifications.propTypes = {
   notification: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  const { notifications } = state;
-  return {
-    notification: notifications.notification
-  };
-}
+const mapStateToProps = (state) => ({
+  notification: state.notifications.notification
+});
 
 export default connect(mapStateToProps)(Notifications);

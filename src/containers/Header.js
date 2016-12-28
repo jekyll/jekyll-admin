@@ -2,9 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
-import _ from 'underscore';
-
-// Actions
 import { fetchConfig } from '../actions/config';
 
 export class Header extends Component {
@@ -33,18 +30,13 @@ Header.propTypes = {
   config: PropTypes.object.isRequired
 };
 
-function mapStateToProps(state) {
-  const { config } = state;
-  return {
-    config: config.config,
-    isFetching: config.isFetching
-  };
-}
+const mapStateToProps = (state) => ({
+  config: state.config.config,
+  isFetching: state.config.isFetching
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchConfig
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchConfig
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Header);

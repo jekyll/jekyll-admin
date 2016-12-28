@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import _ from 'underscore';
 import moment from 'moment';
-
 import { toTitleCase } from '../utils/helpers';
 
 export default class Breadcrumbs extends Component {

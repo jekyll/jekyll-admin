@@ -12,7 +12,9 @@ import Metadata from '../MetaFields';
 import { fetchPage, deletePage, putPage } from '../../actions/pages';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
-import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
+import {
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
+} from '../../constants/messages';
 
 export class PageEdit extends Component {
 
@@ -73,8 +75,7 @@ export class PageEdit extends Component {
     }
 
     const { name, raw_content, http_url, path, front_matter } = page;
-
-    const title = front_matter ? front_matter.title : '';
+    const title = front_matter.title ? front_matter.title : '';
 
     return (
       <div>
@@ -149,28 +150,22 @@ PageEdit.propTypes = {
   route: PropTypes.object.isRequired
 };
 
+const mapStateToProps = (state) => ({
+  page: state.pages.page,
+  isFetching: state.pages.isFetching,
+  fieldChanged: state.metadata.fieldChanged,
+  updated: state.pages.updated,
+  errors: state.utils.errors
+});
 
-function mapStateToProps(state) {
-  const { pages, utils, metadata } = state;
-  return {
-    page: pages.page,
-    isFetching: pages.isFetching,
-    fieldChanged: metadata.fieldChanged,
-    updated: pages.updated,
-    errors: utils.errors
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchPage,
-    deletePage,
-    putPage,
-    updateTitle,
-    updateBody,
-    updatePath,
-    clearErrors
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchPage,
+  deletePage,
+  putPage,
+  updateTitle,
+  updateBody,
+  updatePath,
+  clearErrors
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageEdit));

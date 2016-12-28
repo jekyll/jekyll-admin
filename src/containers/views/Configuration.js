@@ -51,22 +51,6 @@ export class Configuration extends Component {
   }
 }
 
-function mapStateToProps(state) {
-  const { config } = state;
-  return {
-    config: config.config,
-    updated: config.updated,
-    editorChanged: config.editorChanged
-  };
-}
-
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    putConfig,
-    onEditorChange
-  }, dispatch);
-}
-
 Configuration.propTypes = {
   config: PropTypes.object.isRequired,
   onEditorChange: PropTypes.func.isRequired,
@@ -76,5 +60,16 @@ Configuration.propTypes = {
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired
 };
+
+const mapStateToProps = (state) => ({
+  config: state.config.config,
+  updated: state.config.updated,
+  editorChanged: state.config.editorChanged
+});
+
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  putConfig,
+  onEditorChange
+}, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Configuration));

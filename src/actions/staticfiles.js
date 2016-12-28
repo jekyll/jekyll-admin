@@ -3,16 +3,10 @@ import _ from 'underscore';
 import { get, put, del } from '../utils/fetch';
 import { addNotification } from './notifications';
 import {
-  getSuccessMessage,
-  getErrorMessage,
-  getUploadSuccessMessage,
-  getUploadErrorMessage
+  getSuccessMessage, getErrorMessage, getUploadSuccessMessage, getUploadErrorMessage
 } from '../constants/messages';
 import {
-  getStaticFilesUrl,
-  getStaticFileUrl,
-  putStaticFileUrl,
-  deleteStaticFileUrl
+  getStaticFilesUrl, getStaticFileUrl, putStaticFileUrl, deleteStaticFileUrl
 } from '../constants/api';
 
 export function fetchStaticFiles() {

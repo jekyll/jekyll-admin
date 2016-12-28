@@ -8,7 +8,9 @@ import InputSearch from '../../components/form/InputSearch';
 import { fetchPages, deletePage } from '../../actions/pages';
 import { search } from '../../actions/utils';
 import { filterByFilename } from '../../reducers/pages';
-import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
+import {
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
+} from '../../constants/messages';
 
 export class Pages extends Component {
 
@@ -105,20 +107,15 @@ Pages.propTypes = {
   search: PropTypes.func.isRequired
 };
 
-function mapStateToProps(state) {
-  const { pages, utils } = state;
-  return {
-    pages: filterByFilename(pages.pages, utils.input),
-    isFetching: pages.isFetching
-  };
-}
+const mapStateToProps = (state) => ({
+  pages: filterByFilename(state.pages.pages, state.utils.input),
+  isFetching: state.pages.isFetching
+});
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators({
-    fetchPages,
-    deletePage,
-    search
-  }, dispatch);
-}
+const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchPages,
+  deletePage,
+  search
+}, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pages);

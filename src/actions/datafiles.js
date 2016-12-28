@@ -1,17 +1,15 @@
 import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
-import { getParserErrorMessage } from '../constants/messages';
 import { validationError } from './utils';
 import { addNotification } from './notifications';
 import { get, put, del } from '../utils/fetch';
-import { toJSON } from '../utils/helpers';
 import { validator } from '../utils/validation';
 import {
-  getDataFilesUrl,
-  getDataFileUrl,
-  putDataFileUrl,
-  deleteDataFileUrl
+  getDataFilesUrl, getDataFileUrl, putDataFileUrl, deleteDataFileUrl
 } from '../constants/api';
+import {
+  getParserErrorMessage, getContentRequiredMessage, getFilenameRequiredMessage
+} from '../constants/messages';
 
 export function fetchDataFiles() {
   return (dispatch) => {
@@ -46,8 +44,8 @@ export function putDataFile(filename, data) {
         'data': 'required'
       },
       {
-        'filename.required': 'The filename is required.',
-        'data.required': 'The content is required.'
+        'filename.required': getFilenameRequiredMessage(),
+        'data.required': getContentRequiredMessage()
       }
     );
     if (errors.length) {
