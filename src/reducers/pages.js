@@ -44,10 +44,6 @@ export default function pages(state = {
         page: action.page,
         updated: true
       });
-    case DELETE_PAGE_SUCCESS:
-      return Object.assign({}, state, {
-        pages: _.filter(state.pages, page => page.name != action.id)
-      });
     default:
       return Object.assign({}, state, {
         updated: false

@@ -69,17 +69,6 @@ describe('Reducers::Pages', () => {
     });
   });
 
-  it('should handle deletePages', () => {
-    expect(
-      reducer({ pages: [{name:1},{name:2}] }, {
-        type: types.DELETE_PAGE_SUCCESS,
-        id: 1
-      })
-    ).toEqual({
-      pages: [{name:2}]
-    });
-  });
-
   it('should handle putPage', () => {
     expect(
       reducer({}, {

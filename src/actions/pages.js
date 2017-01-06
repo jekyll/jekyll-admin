@@ -75,10 +75,23 @@ export function putPage(name) {
 }
 
 export function deletePage(id) {
-  return (dispatch) => del(
-    deletePageUrl(id),
-    { type: ActionTypes.DELETE_PAGE_SUCCESS, id},
-    { type: ActionTypes.DELETE_PAGE_FAILURE, name: "error"},
-    dispatch
-  );
+  return (dispatch) => {
+    return fetch(deletePageUrl(id), {
+      method: 'DELETE',
+      headers: {
+        'Origin': 'http://localhost:3000',
+        'Access-Control-Request-Method': 'DELETE'
+      }
+    })
+    .then(data => {
+      dispatch({
+        type: ActionTypes.DELETE_PAGE_SUCCESS
+      });
+      dispatch(fetchPages());
+    })
+    .catch(error => dispatch({
+      type: ActionTypes.DELETE_PAGE_FAILURE,
+      error
+    }));
+  };
 }

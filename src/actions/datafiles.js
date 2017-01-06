@@ -63,12 +63,25 @@ export function putDataFile(filename, data) {
 }
 
 export function deleteDataFile(filename) {
-  return (dispatch) => del(
-    deleteDataFileUrl(filename),
-    { type: ActionTypes.DELETE_DATAFILE_SUCCESS, id: filename},
-    { type: ActionTypes.DELETE_DATAFILE_FAILURE, name: "error"},
-    dispatch
-  );
+  return (dispatch) => {
+    return fetch(deleteDataFileUrl(filename), {
+      method: 'DELETE',
+      headers: {
+        'Origin': 'http://localhost:3000',
+        'Access-Control-Request-Method': 'DELETE'
+      }
+    })
+    .then(data => {
+      dispatch({
+        type: ActionTypes.DELETE_DATAFILE_SUCCESS
+      });
+      dispatch(fetchDataFiles());
+    })
+    .catch(error => dispatch({
+      type: ActionTypes.DELETE_DATAFILE_FAILURE,
+      error
+    }));
+  };
 }
 
 export function onDataFileChanged() {

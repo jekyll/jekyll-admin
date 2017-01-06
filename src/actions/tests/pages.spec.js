@@ -58,7 +58,8 @@ describe('Actions::Pages', () => {
       .reply(200);
 
     const expectedActions = [
-      { id: page.name, type: types.DELETE_PAGE_SUCCESS }
+      { type: types.DELETE_PAGE_SUCCESS },
+      { type: types.FETCH_PAGES_REQUEST }
     ];
 
     const store = mockStore({});

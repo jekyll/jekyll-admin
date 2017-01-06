@@ -108,10 +108,23 @@ export function putDocument(id, collection) {
 }
 
 export function deleteDocument(id, collection) {
-  return (dispatch) => del(
-    deleteCollectionDocumentUrl(collection, id),
-    { type: ActionTypes.DELETE_DOCUMENT_SUCCESS, id },
-    { type: ActionTypes.DELETE_DOCUMENT_FAILURE, name: "error"},
-    dispatch
-  );
+  return (dispatch) => {
+    return fetch(deleteCollectionDocumentUrl(collection, id), {
+      method: 'DELETE',
+      headers: {
+        'Origin': 'http://localhost:3000',
+        'Access-Control-Request-Method': 'DELETE'
+      }
+    })
+    .then(data => {
+      dispatch({
+        type: ActionTypes.DELETE_DOCUMENT_SUCCESS
+      });
+      dispatch(fetchCollection(collection));
+    })
+    .catch(error => dispatch({
+      type: ActionTypes.DELETE_DOCUMENT_FAILURE,
+      error
+    }));
+  };
 }

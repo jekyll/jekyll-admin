@@ -130,7 +130,8 @@ describe('Actions::Datafiles', () => {
       .reply(200);
 
     const expectedAction = [
-      { type: types.DELETE_DATAFILE_SUCCESS, id: 'data_file.yml' }
+      { type: types.DELETE_DATAFILE_SUCCESS },
+      { type: types.FETCH_DATAFILES_REQUEST }
     ];
 
     const store = mockStore({ files: [] });
