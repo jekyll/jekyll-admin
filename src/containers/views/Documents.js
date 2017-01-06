@@ -57,6 +57,10 @@ export class Documents extends Component {
       const { id, slug, title, http_url, ext, collection, path } = doc;
       const filename = path.substring(path.lastIndexOf('/') + 1);
       const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
+      const date = moment(doc.date).format("hh:mm:ss") == '12:00:00' ?
+        moment(doc.date).format("LL").toString() :
+        moment(doc.date).format("LLL").toString();
+
       return (
         <tr key={id}>
           <td className="row-title">
@@ -64,7 +68,7 @@ export class Documents extends Component {
               <Link to={to}>{title || slug}</Link>
             </strong>
           </td>
-          <td>{moment(doc.date).format("LLL").toString()}</td>
+          <td>{date}</td>
           <td>
             <div className="row-actions">
               <a onClick={() => this.handleClickDelete(filename, collection)} title="Delete" className="delete">
