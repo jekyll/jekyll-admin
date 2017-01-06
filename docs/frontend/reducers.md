@@ -38,7 +38,6 @@ State;
 {
   collections: Array,
   currentCollection: Object,
-  currentDocuments: Array,
   currentDocument: Object,
   isFetching: Boolean, // set to true when the document is being fetched
   updated: Boolean // set to true when the document is updated
