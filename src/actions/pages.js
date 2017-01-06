@@ -77,11 +77,7 @@ export function putPage(name) {
 export function deletePage(id) {
   return (dispatch) => {
     return fetch(deletePageUrl(id), {
-      method: 'DELETE',
-      headers: {
-        'Origin': 'http://localhost:3000',
-        'Access-Control-Request-Method': 'DELETE'
-      }
+      method: 'DELETE'
     })
     .then(data => {
       dispatch({

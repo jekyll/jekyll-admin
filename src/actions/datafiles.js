@@ -65,11 +65,7 @@ export function putDataFile(filename, data) {
 export function deleteDataFile(filename) {
   return (dispatch) => {
     return fetch(deleteDataFileUrl(filename), {
-      method: 'DELETE',
-      headers: {
-        'Origin': 'http://localhost:3000',
-        'Access-Control-Request-Method': 'DELETE'
-      }
+      method: 'DELETE'
     })
     .then(data => {
       dispatch({

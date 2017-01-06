@@ -110,11 +110,7 @@ export function putDocument(id, collection) {
 export function deleteDocument(id, collection) {
   return (dispatch) => {
     return fetch(deleteCollectionDocumentUrl(collection, id), {
-      method: 'DELETE',
-      headers: {
-        'Origin': 'http://localhost:3000',
-        'Access-Control-Request-Method': 'DELETE'
-      }
+      method: 'DELETE'
     })
     .then(data => {
       dispatch({
