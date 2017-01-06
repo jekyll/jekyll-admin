@@ -52,8 +52,8 @@ export class Documents extends Component {
   }
 
   renderRows() {
-    const { currentDocuments } = this.props;
-    return _.map(currentDocuments, doc => {
+    const { documents } = this.props;
+    return _.map(documents, doc => {
       const { id, slug, title, http_url, ext, collection, path } = doc;
       const filename = path.substring(path.lastIndexOf('/') + 1);
       const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
@@ -83,7 +83,7 @@ export class Documents extends Component {
   }
 
   render() {
-    const { isFetching, currentDocuments, search, params } = this.props;
+    const { isFetching, documents, search, params } = this.props;
     const { collection_name } = params;
 
     if (isFetching) {
@@ -102,10 +102,10 @@ export class Documents extends Component {
           </div>
         </div>
         {
-          currentDocuments.length > 0 && this.renderTable()
+          documents.length > 0 && this.renderTable()
         }
         {
-          !currentDocuments.length && <h1>{getNotFoundMessage("documents")}</h1>
+          !documents.length && <h1>{getNotFoundMessage("documents")}</h1>
         }
       </div>
     );
@@ -114,7 +114,7 @@ export class Documents extends Component {
 
 Documents.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  currentDocuments: PropTypes.array.isRequired,
+  documents: PropTypes.array.isRequired,
   fetchCollection: PropTypes.func.isRequired,
   deleteDocument: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
@@ -122,7 +122,10 @@ Documents.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  currentDocuments: filterByTitle(state.collections.currentDocuments, state.utils.input),
+  documents: filterByTitle(
+    state.collections.currentCollection.documents,
+    state.utils.input
+  ),
   isFetching: state.collections.isFetching
 });
 
