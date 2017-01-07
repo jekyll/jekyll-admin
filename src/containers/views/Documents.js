@@ -3,14 +3,18 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
-import { capitalize } from '../../utils/helpers';
 import moment from 'moment';
-import { ADMIN_PREFIX } from '../../constants';
 import InputSearch from '../../components/form/InputSearch';
 import { fetchCollection, deleteDocument } from '../../actions/collections';
-import { search } from '../../actions/utils';
 import { filterByTitle } from '../../reducers/collections';
-import { getLeaveMessage, getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
+import { capitalize } from '../../utils/helpers';
+import { search } from '../../actions/utils';
+import { ADMIN_PREFIX } from '../../constants';
+import {
+  getLeaveMessage,
+  getDeleteMessage,
+  getNotFoundMessage
+} from '../../constants/messages';
 
 export class Documents extends Component {
 
@@ -58,8 +62,8 @@ export class Documents extends Component {
       const filename = path.substring(path.lastIndexOf('/') + 1);
       const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
       const date = moment(doc.date).format("hh:mm:ss") == '12:00:00' ?
-        moment(doc.date).format("LL").toString() :
-        moment(doc.date).format("LLL").toString();
+        moment(doc.date).format("LL") :
+        moment(doc.date).format("LLL");
 
       return (
         <tr key={id}>
