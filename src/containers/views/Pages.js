@@ -82,7 +82,7 @@ export class Pages extends Component {
         <div className="content-header">
           <h1>Pages</h1>
           <div className="page-buttons">
-            <Link className="btn btn-active" to={`${ADMIN_PREFIX}/page/new`}>New page</Link>
+            <Link className="btn btn-active" to={`${ADMIN_PREFIX}/pages/new`}>New page</Link>
           </div>
           <div className="side-unit pull-right">
             <InputSearch searchBy="filename" search={search} />

@@ -20,15 +20,23 @@ export default (
   <Route path={`${ADMIN_PREFIX}`} component={App}>
     <IndexRoute component={Pages}/>
     <Route path="configuration" component={Configuration} />
-    <Route path="pages" component={Pages} />
-    <Route path="pages/:id" component={PageEdit} />
-    <Route path="page/new" component={PageNew} />
-    <Route path="collections/:collection_name" component={Documents} />
-    <Route path="collections/:collection_name/:id" component={DocumentEdit} />
-    <Route path="collection/:collection_name/new" component={DocumentNew} />
-    <Route path="datafiles" component={DataFiles} />
-    <Route path="datafiles/:data_file" component={DataFileEdit} />
-    <Route path="datafile/new" component={DataFileNew} />
+    <Route path="pages">
+      <IndexRoute component={Pages} />
+      <Route path="new" component={PageNew} />
+      <Route path=":id" component={PageEdit} />
+    </Route>
+    <Route path="collections">
+      <Route path=":collection_name">
+        <IndexRoute component={Documents} />
+        <Route path="new" component={DocumentNew} />
+        <Route path=":id" component={DocumentEdit} />
+      </Route>
+    </Route>
+    <Route path="datafiles">
+      <IndexRoute component={DataFiles} />
+      <Route path="new" component={DataFileNew} />
+      <Route path=":data_file" component={DataFileEdit} />
+    </Route>
     <Route path="staticfiles" component={StaticFiles} />
     <Route path={`${ADMIN_PREFIX}/*`} component={NotFound} />
   </Route>
