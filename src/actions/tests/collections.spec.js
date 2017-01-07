@@ -78,7 +78,8 @@ describe('Actions::Collections', () => {
       .reply(200);
 
     const expectedActions = [
-      { id: filename, type: types.DELETE_DOCUMENT_SUCCESS }
+      { type: types.DELETE_DOCUMENT_SUCCESS },
+      { type: types.FETCH_COLLECTION_REQUEST }
     ];
 
     const store = mockStore({});

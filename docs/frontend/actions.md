@@ -35,7 +35,7 @@ from `state.metadata`
 
 ### `deletePage(id)`
 
-Async action for deleting the requested page.
+Async action for deleting the requested page. After deletion, page list is requested.
 
 ## Collections
 
@@ -57,7 +57,7 @@ Async action for creating/updating the requested document. The response includes
 
 ### `deleteDocument(collection_name, id)`
 
-Async action for deleting the document from disk.
+Async action for deleting the document from disk. After deletion, collection is requested.
 
 ## Metadata
 
@@ -120,7 +120,7 @@ It encodes the uploaded `File` objects to `base64` before sending PUT request.
 
 ### `deleteStaticFile(filename)`
 
-Async action for deleting the requested static file.
+Async action for deleting the requested static file. After deletion, static file list is requested.
 
 ## Data Files
 
@@ -138,7 +138,7 @@ Async action for creating/updating the requested data file. It validates the giv
 
 ### `deleteDataFile(filename)`
 
-Async action for deleting the requested data file.
+Async action for deleting the requested data file. After deletion, data file list is requested.
 
 ### `onDataFileChanged`
 

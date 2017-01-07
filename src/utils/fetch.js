@@ -47,10 +47,6 @@ export const get = (url, action_success, action_failure, dispatch) => {
 export const put = (url, body, action_success, action_failure, dispatch) => {
   return fetch(url, {
     method: 'PUT',
-    headers: {
-      'Origin': 'http://localhost:3000',
-      'Access-Control-Request-Method': 'PUT'
-    },
     body
   })
   .then(res => res.json())

@@ -9,7 +9,6 @@ describe('Reducers::Collections', () => {
     expect(reducer(undefined, {})).toEqual({
       currentCollection: {},
       currentDocument: {},
-      currentDocuments: [],
       collections: [],
       isFetching: false,
       updated: false
@@ -57,7 +56,6 @@ describe('Reducers::Collections', () => {
       })
     ).toEqual({
       currentCollection: collection,
-      currentDocuments: collection.documents,
       isFetching: false
     });
     expect(
@@ -66,17 +64,6 @@ describe('Reducers::Collections', () => {
       })
     ).toEqual({
       isFetching: false
-    });
-  });
-
-  it('should handle deleteDocument', () => {
-    expect(
-      reducer({ currentDocuments: [doc] }, {
-        type: types.DELETE_DOCUMENT_SUCCESS,
-        id: doc.path.substring(doc.path.lastIndexOf('/') + 1)
-      })
-    ).toEqual({
-      currentDocuments: []
     });
   });
 

@@ -7,7 +7,7 @@ import { Documents } from '../Documents';
 
 import { doc } from './fixtures';
 
-function setup(currentDocuments=[doc]) {
+function setup(documents=[doc]) {
   const actions = {
     fetchCollection: expect.createSpy(),
     deleteDocument: expect.createSpy(),
@@ -16,7 +16,7 @@ function setup(currentDocuments=[doc]) {
 
   const component = mount(
     <Documents
-      currentDocuments={currentDocuments}
+      documents={documents}
       {...actions}
       params={{collection_name: "movies"}}
       isFetching={false} />

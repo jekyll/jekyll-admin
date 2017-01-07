@@ -68,11 +68,7 @@ export function uploadStaticFiles(files) {
 export function deleteStaticFile(filename) {
   return (dispatch) => {
     return fetch(deleteStaticFileUrl(filename), {
-      method: 'DELETE',
-      headers: {
-        'Origin': 'http://localhost:3000',
-        'Access-Control-Request-Method': 'DELETE'
-      }
+      method: 'DELETE'
     })
     .then(data => {
       dispatch({

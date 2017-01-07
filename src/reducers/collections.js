@@ -11,7 +11,6 @@ import _ from 'underscore';
 export default function collections(state = {
   collections: [],
   currentCollection: {},
-  currentDocuments: [],
   currentDocument: {},
   isFetching: false,
   updated: false
@@ -31,7 +30,6 @@ export default function collections(state = {
     case FETCH_COLLECTION_SUCCESS:
       return Object.assign({}, state, {
         currentCollection: action.collection,
-        currentDocuments: action.collection.documents,
         isFetching: false
       });
     case FETCH_DOCUMENT_SUCCESS:
@@ -44,13 +42,6 @@ export default function collections(state = {
     case FETCH_DOCUMENT_FAILURE:
       return Object.assign({}, state, {
         isFetching: false
-      });
-    case DELETE_DOCUMENT_SUCCESS:
-      return Object.assign({}, state, {
-        currentDocuments: _.filter(state.currentDocuments, doc => {
-          const filename = doc.path.substring(doc.path.lastIndexOf('/') + 1);
-          return filename != action.id;
-        })
       });
     case PUT_DOCUMENT_SUCCESS:
       return Object.assign({}, state, {
@@ -66,6 +57,9 @@ export default function collections(state = {
 
 // Selectors
 export const filterByTitle = (list, input) => {
+  if (!list) {
+    return [];
+  }
   if (input) {
     return list.filter(
       p => p.title.toLowerCase().indexOf(input.toLowerCase()) > -1

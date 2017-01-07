@@ -97,17 +97,6 @@ describe('Reducers::DataFiles', () => {
     });
   });
 
-  it('should handle deleteDataFile', () => {
-    expect(
-      reducer({ files: [datafile] }, {
-        type: types.DELETE_DATAFILE_SUCCESS,
-        id : "data_file.yml"
-      })
-    ).toEqual({
-      files: []
-    });
-  });
-
   it('should handle datafileChanged', () => {
     expect(
       reducer({ updated: true }, {

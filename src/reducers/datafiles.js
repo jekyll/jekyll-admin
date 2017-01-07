@@ -51,12 +51,6 @@ export default function datafiles(state = {
       return Object.assign({}, state, {
         datafileChanged: false
       });
-    case DELETE_DATAFILE_SUCCESS:
-      return Object.assign({}, state, {
-        files: _.filter(state.files, file => {
-          return (file.slug+file.ext) != action.id;
-        })
-      });
     case DATAFILE_CHANGED:
       return Object.assign({}, state, {
         datafileChanged: true,
