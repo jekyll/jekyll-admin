@@ -1,11 +1,6 @@
-let prefix;
-if (process.env.NODE_ENV === 'production') {
-  prefix = '/_api';
-} else {
-  prefix = 'http://localhost:4000/_api';
-}
-
-export const API = prefix;
+export const API = process.env.NODE_ENV === 'production' ?
+  '/_api' :
+  'http://localhost:4000/_api';
 
 export const getConfigurationUrl = () => `${API}/configuration`;
 export const putConfigurationUrl = () => `${API}/configuration`;
