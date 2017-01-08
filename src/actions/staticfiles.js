@@ -3,10 +3,16 @@ import _ from 'underscore';
 import { get, put, del } from '../utils/fetch';
 import { addNotification } from './notifications';
 import {
-  getSuccessMessage, getErrorMessage, getUploadSuccessMessage, getUploadErrorMessage
+  getSuccessMessage,
+  getErrorMessage,
+  getUploadSuccessMessage,
+  getUploadErrorMessage
 } from '../constants/messages';
 import {
-  getStaticFilesUrl, getStaticFileUrl, putStaticFileUrl, deleteStaticFileUrl
+  getStaticFilesUrl,
+  getStaticFileUrl,
+  putStaticFileUrl,
+  deleteStaticFileUrl
 } from '../constants/api';
 
 export function fetchStaticFiles() {
@@ -27,21 +33,16 @@ export function uploadStaticFiles(files) {
       const reader = new FileReader();
       reader.readAsDataURL(file);
       reader.onloadend = () => {
-        const payload = {
+        const payload = JSON.stringify({
           encoded_content: reader.result.split('base64,')[1]
-        };
+        });
+        // send the put request
         return fetch(putStaticFileUrl(file.name), {
           method: 'PUT',
-          headers: {
-            'Origin': 'http://localhost:3000',
-            'Access-Control-Request-Method': 'PUT'
-          },
-          body: JSON.stringify(payload)
+          body: payload
         })
         .then(data => {
-          dispatch({
-            type: ActionTypes.PUT_STATICFILE_SUCCESS
-          });
+          dispatch({ type: ActionTypes.PUT_STATICFILE_SUCCESS });
           dispatch(fetchStaticFiles());
           dispatch(addNotification(
             getSuccessMessage(),
@@ -71,9 +72,7 @@ export function deleteStaticFile(filename) {
       method: 'DELETE'
     })
     .then(data => {
-      dispatch({
-        type: ActionTypes.DELETE_STATICFILE_SUCCESS
-      });
+      dispatch({ type: ActionTypes.DELETE_STATICFILE_SUCCESS });
       dispatch(fetchStaticFiles());
     })
     .catch(error => dispatch({

@@ -7,16 +7,14 @@ import slug from 'slug';
  * @param {Object} object
  * @return {String} yaml
  */
-export const toYAML = (obj) =>
-  (!_.isEmpty(obj)) ? yaml.safeDump(obj, {indent:2}) : '';
+export const toYAML = (obj) => (!_.isEmpty(obj)) ? yaml.safeDump(obj, {indent:2}) : '';
 
 /**
  * Converts the YAML string into JS object.
  * @param {String} string
  * @return {Object} obj
  */
-export const toJSON = (yamlString) =>
-  (yamlString ? yaml.load(yamlString) : {});
+export const toJSON = (yamlString) => (yamlString ? yaml.load(yamlString) : {});
 
 /**
  * Capitalize the given string.
@@ -24,9 +22,8 @@ export const toJSON = (yamlString) =>
  * @return {String} string
  */
 export const capitalize = (string) => {
-  if(string)
-    return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
-  return '';
+  if(!string) return '';
+  return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
 };
 
 /**
@@ -35,11 +32,10 @@ export const capitalize = (string) => {
  * @return {String} string
  */
 export const toTitleCase = (string) => {
-  if(string)
-    return string.replace(/\w\S*/g, (txt) => {
-      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
-    });
-  return '';
+  if(!string) return '';
+  return string.replace(/\w\S*/g, (txt) => {
+    return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+  });
 };
 
 /**
@@ -48,11 +44,18 @@ export const toTitleCase = (string) => {
  * @return {String} string
  */
 export const slugify = (string) => {
-  if (string) {
-    return slug(string,{lower:true})
-      .replace(/^-+|-+$/g, ''); // remove leading, trailing dashes
-  }
-  return '';
+  if (!string) return '';
+  return slug(string,{lower:true}).replace(/^-+|-+$/g, '');
+};
+
+/**
+ * Returns filename from the given path
+ * @param {String} path
+ * @return {String} filename
+ */
+export const getFilenameFromPath = (path) => {
+  if (!path) return '';
+  return path.substring(path.lastIndexOf('/') + 1);
 };
 
 /**
@@ -62,13 +65,12 @@ export const slugify = (string) => {
  * @return {Array} filenames
  */
 export const existingUploadedFilenames = (uploadedFiles, currentFiles) => {
-  if ((uploadedFiles && !uploadedFiles.length) || (currentFiles && !currentFiles.length)) return [];
-  const currentFilenames = _.map(currentFiles, cf => {
-    return cf.path.substring(cf.path.lastIndexOf('/') + 1);
-  });
+  if ((uploadedFiles && !uploadedFiles.length) || (currentFiles && !currentFiles.length)){
+    return [];
+  }
+  const currentFilenames = _.map(currentFiles, cf => getFilenameFromPath(cf.path));
   return _.chain(uploadedFiles)
-    .filter(file => {
-      return currentFilenames.indexOf(file.name) > -1;
-    })
-    .map(file => file.name).value();
+    .filter(file => currentFilenames.indexOf(file.name) > -1)
+    .map(file => file.name)
+    .value();
 };

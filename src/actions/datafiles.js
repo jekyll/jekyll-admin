@@ -1,15 +1,19 @@
 import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
 import { validationError } from './utils';
-import { addNotification } from './notifications';
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import {
-  getDataFilesUrl, getDataFileUrl, putDataFileUrl, deleteDataFileUrl
-} from '../constants/api';
-import {
-  getParserErrorMessage, getContentRequiredMessage, getFilenameRequiredMessage
+  getParserErrorMessage,
+  getContentRequiredMessage,
+  getFilenameRequiredMessage
 } from '../constants/messages';
+import {
+  getDataFilesUrl,
+  getDataFileUrl,
+  putDataFileUrl,
+  deleteDataFileUrl
+} from '../constants/api';
 
 export function fetchDataFiles() {
   return (dispatch) => {
@@ -37,20 +41,11 @@ export function fetchDataFile(filename) {
 
 export function putDataFile(filename, data) {
   return (dispatch, getState) => {
-    const errors = validator(
-      { filename, data },
-      {
-        'filename': 'required',
-        'data': 'required'
-      },
-      {
-        'filename.required': getFilenameRequiredMessage(),
-        'data.required': getContentRequiredMessage()
-      }
-    );
+    const errors = validateDatafile(filename, data);
     if (errors.length) {
       return dispatch(validationError(errors));
     }
+    // clear errors
     dispatch({type: ActionTypes.CLEAR_ERRORS});
     return put(
       putDataFileUrl(filename),
@@ -62,15 +57,24 @@ export function putDataFile(filename, data) {
   };
 }
 
+function validateDatafile(filename, data) {
+  return validator(
+    { filename, data },
+    { 'filename': 'required', 'data': 'required' },
+    {
+      'filename.required': getFilenameRequiredMessage(),
+      'data.required': getContentRequiredMessage()
+    }
+  );
+}
+
 export function deleteDataFile(filename) {
   return (dispatch) => {
     return fetch(deleteDataFileUrl(filename), {
       method: 'DELETE'
     })
     .then(data => {
-      dispatch({
-        type: ActionTypes.DELETE_DATAFILE_SUCCESS
-      });
+      dispatch({ type: ActionTypes.DELETE_DATAFILE_SUCCESS });
       dispatch(fetchDataFiles());
     })
     .catch(error => dispatch({

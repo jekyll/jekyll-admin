@@ -3,6 +3,7 @@ import thunk from 'redux-thunk';
 import * as actions from '../collections';
 import * as types from '../../constants/actionTypes';
 import { API } from '../../constants/api';
+import { getFilenameFromPath } from '../../utils/helpers';
 import nock from 'nock';
 import expect from 'expect';
 import _ from 'underscore';
@@ -11,7 +12,7 @@ import { collections, collection, doc, new_doc } from './fixtures';
 
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);
-const filename = doc.path.substring(doc.path.lastIndexOf('/') + 1);
+const filename = getFilenameFromPath(doc.path);
 
 describe('Actions::Collections', () => {
   afterEach(() => {
@@ -119,7 +120,6 @@ describe('Actions::Collections', () => {
     ];
 
     const store = mockStore({metadata: { metadata: doc}});
-    const filename = doc.path.substring(doc.path.lastIndexOf('/') + 1);
 
     return store.dispatch(actions.putDocument(filename, doc.collection))
       .then(() => {
@@ -138,7 +138,6 @@ describe('Actions::Collections', () => {
     ];
 
     const store = mockStore({metadata: { metadata: doc}});
-    const filename = doc.path.substring(doc.path.lastIndexOf('/') + 1);
 
     return store.dispatch(actions.putDocument(filename, doc.collection))
       .then(() => {
