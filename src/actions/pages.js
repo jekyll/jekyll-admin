@@ -5,11 +5,16 @@ import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify } from '../utils/helpers';
 import {
-  getPagesUrl, getPageUrl, putPageUrl, deletePageUrl
-} from '../constants/api';
-import {
-  getTitleRequiredMessage, getFilenameRequiredMessage, getFilenameNotValidMessage
+  getTitleRequiredMessage,
+  getFilenameRequiredMessage,
+  getFilenameNotValidMessage
 } from '../constants/messages';
+import {
+  getPagesUrl,
+  getPageUrl,
+  putPageUrl,
+  deletePageUrl
+} from '../constants/api';
 
 export function fetchPages() {
   return (dispatch) => {
@@ -37,41 +42,48 @@ export function fetchPage(id) {
 
 export function putPage(name) {
   return (dispatch, getState) => {
+    // get edited fields from metadata state
     const metadata = getState().metadata.metadata;
     let { path, raw_content, title } = metadata;
+
+    // if no path given, generate filename from the title
     if (!path && title) {
       path = `${slugify(title)}.md`;
     } else {
-      const errors = validator(
-        metadata,
-        { 'path': 'required|filename' },
-        {
-          'path.required': getTitleRequiredMessage(),
-          'path.filename': getFilenameNotValidMessage()
-        }
-      );
+      const errors = validatePage(metadata);
       if (errors.length) {
         return dispatch(validationError(errors));
       }
     }
+    // clear errors
     dispatch({type: ActionTypes.CLEAR_ERRORS});
-    const page = JSON.stringify({
-      path,
-      front_matter: _.omit(metadata, (value, key, object) => {
-        if (key == 'raw_content' || key == 'path' || value == '') {
-          return true;
-        }
-      }),
-      raw_content
+
+    // omit raw_content, path and empty-value keys in metadata state from front_matter
+    const front_matter = _.omit(metadata, (value, key, object) => {
+      if (key == 'raw_content' || key == 'path' || value == '') return true;
     });
+    const payload = JSON.stringify({ path, front_matter, raw_content });
+
+    //send the put request
     return put(
-      putPageUrl(name || path),
-      page,
+      putPageUrl(name || path), // create or update page
+      payload,
       { type: ActionTypes.PUT_PAGE_SUCCESS, name: "page"},
       { type: ActionTypes.PUT_PAGE_FAILURE, name: "error"},
       dispatch
     );
   };
+}
+
+function validatePage(metadata) {
+  return validator(
+    metadata,
+    { 'path': 'required|filename' },
+    {
+      'path.required': getTitleRequiredMessage(),
+      'path.filename': getFilenameNotValidMessage()
+    }
+  );
 }
 
 export function deletePage(id) {
@@ -80,9 +92,7 @@ export function deletePage(id) {
       method: 'DELETE'
     })
     .then(data => {
-      dispatch({
-        type: ActionTypes.DELETE_PAGE_SUCCESS
-      });
+      dispatch({ type: ActionTypes.DELETE_PAGE_SUCCESS });
       dispatch(fetchPages());
     })
     .catch(error => dispatch({
