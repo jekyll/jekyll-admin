@@ -4,7 +4,7 @@ import moment from 'moment';
 import { validationError } from '../actions/utils';
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify } from '../utils/helpers';
+import { slugify, getFilenameFromPath } from '../utils/helpers';
 import {
   getCollectionsUrl, getCollectionUrl, getCollectionDocumentsUrl,
   getCollectionDocumentUrl, putCollectionDocumentUrl, deleteCollectionDocumentUrl
@@ -96,9 +96,7 @@ export function putDocument(id, collection) {
       raw_content
     });
     return put(
-      putCollectionDocumentUrl(
-        collection, id || path.substring(path.lastIndexOf('/') + 1)
-      ),
+      putCollectionDocumentUrl(collection, id || getFilenameFromPath(path)),
       doc,
       { type: ActionTypes.PUT_DOCUMENT_SUCCESS, name: "doc"},
       { type: ActionTypes.PUT_DOCUMENT_FAILURE, name: "error"},

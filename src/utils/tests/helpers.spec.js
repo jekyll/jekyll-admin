@@ -2,7 +2,7 @@ import expect from 'expect';
 
 import {
   toYAML, toJSON, capitalize, toTitleCase, slugify,
-  existingUploadedFilenames
+  existingUploadedFilenames, getFilenameFromPath
 } from '../helpers';
 
 describe('Helper functions', () => {
@@ -31,9 +31,11 @@ describe('Helper functions', () => {
     let expected = "Awesome";
     let actual = capitalize(str);
     expect(actual).toEqual(expected);
+
     str = "Awesome";
     actual = capitalize(str);
     expect(actual).toEqual(expected);
+
     str = undefined;
     actual = capitalize(str);
     expect(actual).toEqual('');
@@ -44,9 +46,11 @@ describe('Helper functions', () => {
     let expected = "Awesome Jekyll";
     let actual = toTitleCase(str);
     expect(actual).toEqual(expected);
+
     str = "awesome Jekyll";
     actual = toTitleCase(str);
     expect(actual).toEqual(expected);
+
     str = undefined;
     actual = toTitleCase(str);
     expect(actual).toEqual('');
@@ -57,14 +61,17 @@ describe('Helper functions', () => {
     let expected = "awesome-jekyll";
     let actual = slugify(str);
     expect(actual).toEqual(expected);
+
     str = "-This is a test title 1!-";
     expected = "this-is-a-test-title-1";
     actual = slugify(str);
     expect(actual).toEqual(expected);
+
     str = "Démonstration par l'exemple‘";
     expected = "demonstration-par-lexemple";
     actual = slugify(str);
     expect(actual).toEqual(expected);
+
     str = undefined;
     actual = slugify(str);
     expect(actual).toEqual('');
@@ -74,12 +81,15 @@ describe('Helper functions', () => {
     let currentFiles = [];
     let uploadedFiles = [];
     expect(existingUploadedFilenames(uploadedFiles, currentFiles)).toEqual([]);
+
     currentFiles = undefined;
     uploadedFiles = undefined;
     expect(existingUploadedFilenames(uploadedFiles, currentFiles)).toEqual([]);
+
     currentFiles = { foo: 'test' };
     uploadedFiles = [{ name: 'test2.html' }];
     expect(existingUploadedFilenames(uploadedFiles, currentFiles)).toEqual([]);
+
     currentFiles = [
       { path: 'test.html' },
       { path: 'logo.png' }
@@ -88,6 +98,7 @@ describe('Helper functions', () => {
       { name: 'test2.html' }
     ];
     expect(existingUploadedFilenames(uploadedFiles, currentFiles)).toEqual([]);
+
     currentFiles = [
       { path: 'test.html' },
       { path: 'logo.png' }
@@ -96,6 +107,7 @@ describe('Helper functions', () => {
       { name: 'test.html' }
     ];
     expect(existingUploadedFilenames(uploadedFiles, currentFiles)).toEqual(['test.html']);
+
     currentFiles = [
       { path: 'test.html' },
       { path: 'logo.png' }
@@ -108,5 +120,19 @@ describe('Helper functions', () => {
     expect(
       existingUploadedFilenames(uploadedFiles, currentFiles)
     ).toEqual(['test.html','logo.png']);
+  });
+
+  it('should return the filename from the given path', () => {
+    let path = "";
+    let expected = "";
+    expect(getFilenameFromPath(path)).toEqual(expected);
+
+    path = "collections/posts/test.md";
+    expected = "test.md";
+    expect(getFilenameFromPath(path)).toEqual(expected);
+
+    path = "test.md";
+    expected = "test.md";
+    expect(getFilenameFromPath(path)).toEqual(expected);
   });
 });

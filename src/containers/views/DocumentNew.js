@@ -7,12 +7,12 @@ import { ADMIN_PREFIX } from '../../constants';
 import Splitter from '../../components/Splitter';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputTitle from '../../components/form/InputTitle';
-import Checkbox from '../../components/form/Checkbox';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
 import { putDocument } from '../../actions/collections';
 import { clearErrors } from '../../actions/utils';
+import { getFilenameFromPath } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/messages';
@@ -32,7 +32,7 @@ export class DocumentNew extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
       const path = nextProps.currentDocument.path;
-      const filename = path.substring(path.lastIndexOf('/') + 1);
+      const filename = getFilenameFromPath(path);
       browserHistory.push(
         `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${filename}`
       );

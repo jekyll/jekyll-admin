@@ -7,7 +7,7 @@ import moment from 'moment';
 import InputSearch from '../../components/form/InputSearch';
 import { fetchCollection, deleteDocument } from '../../actions/collections';
 import { filterByTitle } from '../../reducers/collections';
-import { capitalize } from '../../utils/helpers';
+import { capitalize, getFilenameFromPath } from '../../utils/helpers';
 import { search } from '../../actions/utils';
 import { ADMIN_PREFIX } from '../../constants';
 import {
@@ -59,7 +59,7 @@ export class Documents extends Component {
     const { documents } = this.props;
     return _.map(documents, doc => {
       const { id, slug, title, http_url, ext, collection, path } = doc;
-      const filename = path.substring(path.lastIndexOf('/') + 1);
+      const filename = getFilenameFromPath(path);
       const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
       const date = moment(doc.date).format("hh:mm:ss") == '12:00:00' ?
         moment(doc.date).format("LL") :

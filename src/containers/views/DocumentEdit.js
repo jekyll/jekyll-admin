@@ -7,12 +7,12 @@ import { ADMIN_PREFIX } from '../../constants';
 import Splitter from '../../components/Splitter';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputTitle from '../../components/form/InputTitle';
-import Checkbox from '../../components/form/Checkbox';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
 import { fetchDocument, deleteDocument, putDocument } from '../../actions/collections';
 import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
+import { getFilenameFromPath } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/messages';
@@ -36,7 +36,7 @@ export class DocumentEdit extends Component {
       const path = this.props.currentDocument.path;
       // redirect if the path is changed
       if (new_path != path) {
-        const filename = new_path.substring(new_path.lastIndexOf('/') + 1);
+        const filename = getFilenameFromPath(new_path);
         browserHistory.push(
           `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${filename}`
         );
@@ -80,7 +80,7 @@ export class DocumentEdit extends Component {
 
     const { title, raw_content, draft, http_url, path, collection, front_matter } = currentDocument;
 
-    const filename = path.substring(path.lastIndexOf('/') + 1);
+    const filename = getFilenameFromPath(path);
 
     return (
       <div>
