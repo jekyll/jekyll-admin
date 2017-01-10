@@ -109,36 +109,10 @@ describe "collections" do
       expect(last_response_parsed["breed"]).to eq("Golden Retriever")
     end
 
-    it "returns the rendered output" do
-      get "/collections/posts/2016-01-01-test.md"
-      expect(last_response).to be_ok
-      expected = "<h1 id=\"test-post\">Test Post</h1>\n"
-      expect(last_response_parsed["content"]).to eq(expected)
-    end
-
     it "returns the raw content" do
       get "/collections/posts/2016-01-01-test.md"
       expect(last_response).to be_ok
       expect(last_response_parsed["raw_content"]).to eq("# Test Post\n")
-    end
-
-    %w(next previous).each do |direction|
-      it "includes the #{direction} document non-recursively" do
-        get "/collections/posts/2016-02-01-test.md"
-        expect(last_response).to be_ok
-        expect(last_response_parsed).to have_key(direction)
-        expect(last_response_parsed[direction]).to_not have_key("next")
-        expect(last_response_parsed[direction]).to_not have_key("previous")
-      end
-
-      it "doesn't include the #{direction} document's content" do
-        get "/collections/posts/2016-02-01-test.md"
-        expect(last_response).to be_ok
-        expect(last_response_parsed).to have_key(direction)
-        expect(last_response_parsed[direction]).to_not have_key("content")
-        expect(last_response_parsed[direction]).to_not have_key("raw_content")
-        expect(last_response_parsed[direction]).to_not have_key("output")
-      end
     end
 
     context "front matter" do

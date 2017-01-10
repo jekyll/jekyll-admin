@@ -55,13 +55,6 @@ describe "pages" do
       expect(last_response_parsed["foo"]).to eq("bar")
     end
 
-    it "returns the rendered output" do
-      get "/pages/page.md"
-      expect(last_response).to be_ok
-      expected = "<h1 id=\"test-page\">Test Page</h1>\n"
-      expect(last_response_parsed["content"]).to eq(expected)
-    end
-
     it "returns the raw content" do
       get "/pages/page.md"
       expect(last_response).to be_ok

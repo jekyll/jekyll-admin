@@ -15,10 +15,7 @@ describe "data" do
 
   let(:response_with_content) do
     base_response.merge({
-      "raw_content" => "foo: bar\n",
-      "content"     => {
-        "foo" => "bar"
-      }
+      "raw_content" => "foo: bar\n"
     })
   end
 
@@ -54,9 +51,6 @@ describe "data" do
       "ext"           => ".yml",
       "title"         => "Data File New",
       "raw_content"   => "foo: bar\n",
-      "content"       => {
-        "foo" => "bar"
-      },
       "api_url"       => "http://localhost:4000/_api/data/data-file-new.yml",
       "http_url"      => nil
     }
@@ -81,9 +75,6 @@ describe "data" do
       "ext"           => ".yml",
       "title"         => "Data File New",
       "raw_content"   => "foo: bar\n",
-      "content"       => {
-        "foo" => "bar"
-      },
       "api_url"       => "http://localhost:4000/_api/data/data-file-new.yml",
       "http_url"      => nil
     }
@@ -108,9 +99,6 @@ describe "data" do
       "ext"           => ".yml",
       "title"         => "Data File Update",
       "raw_content"   => "foo: bar2\n",
-      "content"       => {
-        "foo" => "bar2"
-      },
       "api_url"       => "http://localhost:4000/_api/data/data-file-update.yml",
       "http_url"      => nil
     }
