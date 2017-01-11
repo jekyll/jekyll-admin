@@ -22,20 +22,20 @@ browserSync({
     baseDir: 'src',
     middleware: [
       webpackDevMiddleware(bundler, {
-        // Dev middleware can't access config, so we provide publicPath
         publicPath: config.output.publicPath,
-
-        // pretty colored output
-        stats: { colors: true },
-
-        // Set to false to display a list of each file that is being bundled.
-        noInfo: true
-
-        // for other settings see
-        // http://webpack.github.io/docs/webpack-dev-middleware.html
+        noInfo: false,
+        quiet: false,
+        stats: {
+          assets: false,
+          colors: true,
+          version: false,
+          hash: false,
+          timings: false,
+          chunks: false,
+          chunkModules: false
+        }
       }),
 
-      // bundler should be the same as above
       webpackHotMiddleware(bundler),
 
       // history fallback

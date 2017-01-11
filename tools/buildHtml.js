@@ -19,7 +19,7 @@ fs.readFile('src/index.html', 'utf8', (readError, markup) => {
     if (writeError) {
       return console.log(chalkError(writeError));
     }
-    console.log(chalkSuccess('index.html written to /dist'));
+    console.log(chalkSuccess('index.html written to /lib/jekyll-admin/public/'));
 
     return writeError;
   });
