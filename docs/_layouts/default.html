@@ -20,5 +20,13 @@
         </div>
       </div>
     </div>
+    <script type="text/javascript">
+      var routes = document.querySelector('.routes')
+      var logo = document.querySelector('.logo')
+      logo.addEventListener("click", function(e) {
+        e.preventDefault()
+        routes.classList.toggle('open')
+      });
+    </script>
   </body>
 </html>

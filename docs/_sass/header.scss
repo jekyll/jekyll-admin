@@ -5,12 +5,19 @@
   align-items: center;
   height: 75px;
   background-color: white;
-  font-weight: normal;
   padding: 0 0 0 40px;
   color: #444444;
   font-size: 24px;
   &:hover {
     color: black;
+  }
+  @media(max-width: 768px) {
+    margin: auto;
+    display: block;
+    text-align: center;
+    padding: 15px;
+    font-size: 20px;
+    height: auto;
   }
   @include box-shadow(0 2px 4px 0 rgba(204, 204, 204, 0.4));
 }

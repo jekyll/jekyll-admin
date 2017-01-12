@@ -3,6 +3,9 @@
 .content {
   padding: 40px;
   line-height: 1.8;
+  @media(max-width: 768px) {
+    padding: 15px;
+  }
   .description {
     background-color: #fefefe;
     padding: 15px;

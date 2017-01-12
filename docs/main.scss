@@ -44,6 +44,9 @@ a:hover {
 
 .container {
   margin-left: $sidebar-width;
+  @media(max-width: 768px) {
+    margin: auto;
+  }
 }
 
 .splitter {
@@ -66,4 +69,5 @@ code {
   border-radius: 2px;
   color: #444;
   font-weight: bold;
+  word-wrap: break-word;
 }
