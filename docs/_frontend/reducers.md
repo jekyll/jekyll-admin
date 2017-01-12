@@ -5,7 +5,7 @@ description: Specifies how the application’s state changes in response to acti
 
 ## Configuration
 
-State;
+### State
 
 ```javascript
 {
@@ -18,7 +18,7 @@ State;
 
 ## Pages
 
-State;
+### State
 
 ```javascript
 {
@@ -31,7 +31,7 @@ State;
 
 ## Collections
 
-State;
+### State
 
 ```javascript
 {
@@ -45,7 +45,7 @@ State;
 
 ## Metadata
 
-State;
+### State
 
 ```javascript
 {
@@ -58,7 +58,7 @@ State;
 
 ## Data Files
 
-State;
+### State
 
 ```javascript
 {
@@ -71,7 +71,7 @@ State;
 
 ## Static Files
 
-State;
+### State
 
 ```javascript
 {
@@ -83,7 +83,7 @@ State;
 
 ## Utils
 
-State;
+### State
 
 ```javascript
 {
@@ -94,7 +94,7 @@ State;
 
 ## Notifications
 
-State;
+### State
 
 ```javascript
 {

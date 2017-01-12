@@ -21,7 +21,6 @@ body {
 }
 
 h1,h2,h3,h4,h5 {
-  font-weight: normal;
   color: #292929;
 }
 
@@ -37,12 +36,6 @@ a {
 a:hover {
   text-decoration: none;
   cursor: pointer;
-}
-
-i {
-  display: inline-block;
-  width: 15px;
-  margin-right: 10px;
 }
 
 .wrapper {
@@ -67,4 +60,10 @@ i {
 
 .pull-right {
   margin-left: auto;
+}
+
+code {
+  border-radius: 2px;
+  color: #444;
+  font-weight: bold;
 }
