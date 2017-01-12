@@ -18,12 +18,13 @@
   }
   .menu-icon {
     position: absolute;
-    right: 24px;
-    top: 28px;
+    right: 15px;
+    top: 15px;
+    padding: 15px;
     display: none;
+    z-index: 100;
   }
   .logo {
-    position: relative;
     display: block;
     height: 75px;
     background: #222222 url(./assets/images/logo.png) no-repeat center;
