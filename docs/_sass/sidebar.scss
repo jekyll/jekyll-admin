@@ -38,6 +38,7 @@
     padding: 10px 0;
     list-style: none;
     @media(max-width: 768px) {
+      width: 100%;
       display: none;
     }
     &.open {
