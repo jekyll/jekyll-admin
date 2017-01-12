@@ -1,0 +1,16 @@
+@import 'mixins';
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 75px;
+  background-color: white;
+  font-weight: normal;
+  padding: 0 0 0 40px;
+  color: #444444;
+  font-size: 24px;
+  &:hover {
+    color: black;
+  }
+  @include box-shadow(0 2px 4px 0 rgba(204, 204, 204, 0.4));
+}

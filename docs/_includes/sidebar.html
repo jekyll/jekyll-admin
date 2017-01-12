@@ -1,0 +1,19 @@
+<div class="sidebar">
+
+  <a class="logo" href="{{ site.baseurl }}/"></a>
+  <ul class="routes">
+    <li><a href="{{ site.baseurl }}/">Index</a></li>
+    <li><a href="{{ site.baseurl }}/api/">API</a></li>
+    <li><a href="{{ site.baseurl }}/frontend/">Front End</a>
+      <ul>
+        {% for doc in site.frontend %}
+          <li><a href="{{ site.baseurl }}{{ doc.url }}">{{ doc.title }}</a></li>
+        {% endfor %}
+      </ul>
+    </li>
+    <div class="splitter"></div>
+    <li><a href="{{ site.baseurl }}/architecture/">Architecture</a></li>
+    <li><a href="{{ site.baseurl }}/development/">Development</a></li>
+  </ul>
+
+</div>
