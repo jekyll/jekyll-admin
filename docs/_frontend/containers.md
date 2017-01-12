@@ -1,6 +1,5 @@
 ---
 title: Containers
-permalink: /frontend/containers/
 description: Container components which connect the presentational components to Redux.
 ---
 

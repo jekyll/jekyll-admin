@@ -1,6 +1,5 @@
 ---
 title: Reducers
-permalink: /frontend/reducers/
 description: Specifies how the application’s state changes in response to action creators.
 ---
 

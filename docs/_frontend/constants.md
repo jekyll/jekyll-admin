@@ -1,6 +1,5 @@
 ---
 title: Constants
-permalink: /frontend/constants/
 ---
 
 ## Action Types

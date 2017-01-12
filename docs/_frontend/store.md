@@ -1,7 +1,6 @@
 ---
 title: Store
 description: Store is the object that brings actions and reducers together.
-permalink: /frontend/store/
 ---
 
 ## Middlewares
