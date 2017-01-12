@@ -20,13 +20,17 @@
         </div>
       </div>
     </div>
+    <script src="{{ "/assets/highlight.min.js" | prepend: site.baseurl }}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
     <script type="text/javascript">
-      var routes = document.querySelector('.routes')
-      var logo = document.querySelector('.logo')
-      logo.addEventListener("click", function(e) {
-        e.preventDefault()
-        routes.classList.toggle('open')
-      });
+      window.onload = function () {
+        var routes = document.querySelector('.routes')
+        var logo = document.querySelector('.logo')
+        logo.addEventListener("click", function(e) {
+          e.preventDefault()
+          routes.classList.toggle('open')
+        });
+      };
     </script>
   </body>
 </html>
