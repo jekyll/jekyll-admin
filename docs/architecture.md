@@ -1,9 +1,8 @@
 ---
 title: Architecture
 permalink: /architecture/
+description: Jekyll Admin exists in two parts, a Ruby back end and a Javascript front end. The two halves communicate via a shared API.
 ---
-
-Jekyll Admin exists in two parts, a Ruby back end and a Javascript front end. The two halves communicate via a shared API.
 
 ## How Jekyll Admin hooks into Jekyll
 

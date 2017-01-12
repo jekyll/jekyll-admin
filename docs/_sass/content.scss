@@ -1,0 +1,35 @@
+@import 'variables';
+
+.content {
+  padding: 40px;
+  line-height: 1.8;
+  @media(max-width: 768px) {
+    padding: 15px;
+  }
+  .description {
+    background-color: #fefefe;
+    padding: 15px;
+    margin: 0;
+    border-left: 2px solid #444;
+  }
+
+  .content-header {
+    display: flex;
+    align-items: center;
+    margin: 0 0 35px 0;
+    h1 {
+      margin: 0 40px 0 0;
+      float: left;
+      text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.3);
+    }
+    .page-buttons {
+      display: flex;
+    }
+  }
+
+  .splitter {
+    margin: 15px 0;
+    background: #cfcfcf;
+    border: 0;
+  }
+}

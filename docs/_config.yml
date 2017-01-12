@@ -1,11 +1,20 @@
 title: Jekyll Admin
 description: A Jekyll plugin that provides users with a traditional CMS-style graphical interface to author content and administer Jekyll sites.
 
+collections:
+  frontend:
+    permalink: /frontend/:path/
+    output: true
+
 gems:
   - jekyll-seo-tag
   - jekyll-sitemap
 
-theme: minima
+sass:
+  sass_dir: _sass
+  style: compressed
+
+markdown: kramdown
 
 defaults:
   -

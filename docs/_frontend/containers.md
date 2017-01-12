@@ -1,6 +1,5 @@
 ---
 title: Containers
-permalink: /frontend/containers/
 description: Container components which connect the presentational components to Redux.
 ---
 
@@ -8,7 +7,7 @@ description: Container components which connect the presentational components to
 
 Container for listing all of routes' links.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -21,7 +20,7 @@ Container for listing all of routes' links.
 
 Container for displaying header which includes title and homepage link.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -35,7 +34,7 @@ Container for displaying header which includes title and homepage link.
 Main container for metafields. Generates list, object or plain inputs
 for front matters other than `title`, `body`, `path` and `draft`.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -60,7 +59,7 @@ Contains all of the views linked with the routes.
 Container for Configuration view. Consists of a YAML editor and a save button.
 The button is activated when the editor changes.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -77,7 +76,7 @@ The button is activated when the editor changes.
 
 Container for Pages view. Lists available pages.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -93,7 +92,7 @@ Container for Pages view. Lists available pages.
 
 Container for editing a page.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -117,7 +116,7 @@ Container for editing a page.
 
 Container for creating a new page.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -136,7 +135,7 @@ Container for creating a new page.
 
 Container for Documents view. Lists documents of a collection (including posts).
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -153,7 +152,7 @@ Container for Documents view. Lists documents of a collection (including posts).
 
 Container for editing a document.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -177,7 +176,7 @@ Container for editing a document.
 
 Container for creating a new document.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -196,7 +195,7 @@ Container for creating a new document.
 
 Container for DataFiles view. Lists data files.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -212,7 +211,7 @@ Container for DataFiles view. Lists data files.
 
 Container for editing a data file.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -234,7 +233,7 @@ Container for editing a data file.
 
 Container for creating a new data file
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -253,7 +252,7 @@ Container for creating a new data file
 Container for StaticFiles view. Lists all of static files and let users upload/delete static files. It uses `react-dropzone` for drag & drop file uploading.
 Uploaded files are previewed via `FilePreview` component.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -274,7 +273,7 @@ Component for 404 page. react-router renders this component for all non-existing
 
 Container for showing notifications at the right bottom of the screen
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {

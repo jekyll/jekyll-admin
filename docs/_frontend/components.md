@@ -1,6 +1,5 @@
 ---
 title: Components
-permalink: /frontend/components/
 description: Presentational components.
 ---
 
@@ -8,7 +7,7 @@ description: Presentational components.
 
 Component for simple YAML editor [React Ace editor](https://github.com/securingsincity/react-ace).
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -22,7 +21,7 @@ Component for simple YAML editor [React Ace editor](https://github.com/securings
 
 Component for markdown editor - [SimpleMDE](https://simplemde.com/).
 
-** PropTypes **
+### PropTypes
 Can have [all options of SimpleMDE](https://github.com/NextStepWebs/simplemde-markdown-editor#configuration) as prop types.
 
 ## Breadcrumbs
@@ -30,7 +29,7 @@ Can have [all options of SimpleMDE](https://github.com/NextStepWebs/simplemde-ma
 Component for generating breadcrumbs. First breadcrumb indicates the current content
 type and the second one which is editable is the path of current item.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -46,7 +45,7 @@ type and the second one which is editable is the path of current item.
 Component for previewing the uploaded file. It renders an image or a div according to
 the given file.
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -65,7 +64,7 @@ Horizontal line for splitting views
 
 Checkbox component
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -79,7 +78,7 @@ Checkbox component
 
 Editable title component
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
@@ -92,7 +91,7 @@ Editable title component
 
 Listing view search input
 
-** PropTypes **
+### PropTypes
 
 ```javascript
 {
