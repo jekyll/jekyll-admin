@@ -64,6 +64,33 @@ export const new_doc = {
   foo: "bar"
 };
 
+export const post = {
+  path: "2016-04-01-awesome-post.md",
+  id: "/2016/04/01/awesome-post",
+  relative_path: "_post/awesome-post.md",
+  url: "/posts/awesome-post.html",
+  collection: "posts",
+  draft: false,
+  categories: [],
+  some_front_matter: "default",
+  title: "Awesome Post",
+  slug: "awesome-post",
+  ext: ".md",
+  tags: [],
+  date: "2016-04-01 00:00:00 +0200",
+  http_url: null,
+  api_url: "http://localhost:4000/_api/collections/posts/awesome-post.md"
+};
+
+export const new_post_with_date = {
+  collection: "posts",
+  raw_content: "# Test Post",
+  title: "Awesome Post",
+  date: "2016-04-01 00:00:00 +0200",
+  path: "2016-04-01-awesome-post.md",
+  foo: "bar"
+};
+
 export const page = {
   name: "contact.md",
   raw_content: "# This is the base Jekyll theme.",

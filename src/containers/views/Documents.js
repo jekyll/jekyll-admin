@@ -58,12 +58,13 @@ export class Documents extends Component {
   renderRows() {
     const { documents } = this.props;
     return _.map(documents, doc => {
-      const { id, slug, title, http_url, ext, collection, path } = doc;
+      const { id, slug, title, http_url, collection, path } = doc;
       const filename = getFilenameFromPath(path);
       const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
-      const date = moment(doc.date).format("hh:mm:ss") == '12:00:00' ?
-        moment(doc.date).format("LL") :
-        moment(doc.date).format("LLL");
+      let date = doc.date.substring(0, doc.date.lastIndexOf(" ")); // w/o timezone
+      date = moment(date).format("hh:mm:ss") == '12:00:00' ?
+        moment(date).format("ll") :
+        moment(date).format("lll");
 
       return (
         <tr key={id}>

@@ -15,6 +15,7 @@ export const doc = {
   draft: false,
   http_url: '/the-revenant.html',
   slug: 'the-revenant',
+  date: '2016-03-01 00:00:00 +0200',
   front_matter: {
     foo: "bar"
   }
