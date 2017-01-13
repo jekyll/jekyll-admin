@@ -35,7 +35,7 @@ function setup(documents=[doc]) {
 
 describe('Containers::Documents', () => {
   it('should render correctly', () => {
-    let { component, h1, new_button, props } = setup();
+    const { component, h1, new_button, props } = setup();
     expect(h1.text()).toBe('Movies');
     expect(new_button.text()).toBe('New document');
     component.setProps({params: {collection_name: "posts"}});
