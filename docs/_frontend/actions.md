@@ -29,8 +29,8 @@ Async action for fetching the requested page.
 
 ### > `putPage(id)`
 
-Async action for creating/updating the requested page. The edited/new content comes
-from `state.metadata`
+Async action for creating/updating the requested page. The updated content comes
+from `state.metadata`. If the filename is not provided, it is auto-generated from the title.
 
 ### > `deletePage(id)`
 
@@ -52,7 +52,7 @@ Async action for fetching the requested document. The response includes the docu
 
 ### > `putDocument(id, collection_name)`
 
-Async action for creating/updating the requested document. The response includes the document body. The updated content comes from `state.metadata`
+Async action for creating/updating the requested document. The response includes the document body. The updated content comes from `state.metadata`. If the filename is not provided, it is auto-generated from the title.
 
 ### > `deleteDocument(collection_name, id)`
 
