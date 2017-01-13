@@ -104,7 +104,7 @@ export class Documents extends Component {
           <h1>{capitalize(collection_name)}</h1>
           <div className="page-buttons">
             <Link className="btn btn-active" to={`${ADMIN_PREFIX}/collections/${collection_name}/new`}>
-              {(collection_name == "posts") ? "New Post" : "New Document"}
+              {collection_name == "posts" ? "New post" : "New document"}
             </Link>
           </div>
           <div className="side-unit pull-right">
