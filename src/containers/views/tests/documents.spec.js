@@ -28,14 +28,13 @@ function setup(documents=[doc]) {
     h1: component.find('h1').last(),
     new_button: component.find('.page-buttons a').first(),
     row_title: component.find('strong a'),
-    table: component.find('.content-table'),
-    props
+    table: component.find('.content-table')
   };
 }
 
 describe('Containers::Documents', () => {
   it('should render correctly', () => {
-    const { component, h1, new_button, props } = setup();
+    const { component, h1, new_button } = setup();
     expect(h1.text()).toBe('Movies');
     expect(new_button.text()).toBe('New document');
     component.setProps({params: {collection_name: "posts"}});
