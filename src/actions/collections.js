@@ -62,7 +62,7 @@ export function putDocument(id, collection) {
 
     // if no path given, generate filename from the title
     if (!path && title) {
-      path = generateFilenameFromTitle(title, collection); // override empty path
+      path = generateFilenameFromTitle(metadata, collection); // override empty path
     } else { // validate otherwise
       const errors = validateDocument(metadata, collection);
       if (errors.length) {
@@ -91,12 +91,18 @@ export function putDocument(id, collection) {
   };
 }
 
-const generateFilenameFromTitle = (title, collection) => {
+const generateFilenameFromTitle = (metadata, collection) => {
   if (collection == 'posts') {
-    const date = moment().format('YYYY-MM-DD');
-    return `${date}-${slugify(title)}.md`;
+    // if date is provided, use it, otherwise generate it with today's date
+    let date;
+    if (metadata.date) {
+      date = metadata.date.split(' ')[0];
+    } else {
+      date = moment().format('YYYY-MM-DD');
+    }
+    return `${date}-${slugify(metadata.title)}.md`;
   }
-  return `${slugify(title)}.md`;
+  return `${slugify(metadata.title)}.md`;
 };
 
 const validateDocument = (metadata, collection) => {

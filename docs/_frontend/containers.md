@@ -51,10 +51,24 @@ for front matters other than `title`, `body`, `path` and `draft`.
 }
 ```
 
-## Views
+## Notifications
+
+Container for showing notifications at the right bottom of the screen
+
+### PropTypes
+
+```javascript
+{
+  notification: Object
+}
+```
+
+
+# Views
+
 Contains all of the views linked with the routes.
 
-### Configuration
+## Configuration
 
 Container for Configuration view. Consists of a YAML editor and a save button.
 The button is activated when the editor changes.
@@ -72,7 +86,7 @@ The button is activated when the editor changes.
 }
 ```
 
-### Pages
+## Pages
 
 Container for Pages view. Lists available pages.
 
@@ -88,7 +102,7 @@ Container for Pages view. Lists available pages.
 }
 ```
 
-### PageEdit
+## PageEdit
 
 Container for editing a page.
 
@@ -112,7 +126,7 @@ Container for editing a page.
 }
 ```
 
-### PageNew
+## PageNew
 
 Container for creating a new page.
 
@@ -131,7 +145,7 @@ Container for creating a new page.
 }
 ```
 
-### Documents
+## Documents
 
 Container for Documents view. Lists documents of a collection (including posts).
 
@@ -148,7 +162,7 @@ Container for Documents view. Lists documents of a collection (including posts).
 }
 ```
 
-### DocumentEdit
+## DocumentEdit
 
 Container for editing a document.
 
@@ -172,7 +186,7 @@ Container for editing a document.
 }
 ```
 
-### DocumentNew
+## DocumentNew
 
 Container for creating a new document.
 
@@ -191,7 +205,7 @@ Container for creating a new document.
 }
 ```
 
-### DataFiles
+## DataFiles
 
 Container for DataFiles view. Lists data files.
 
@@ -207,7 +221,7 @@ Container for DataFiles view. Lists data files.
 }
 ```
 
-### DataFileEdit
+## DataFileEdit
 
 Container for editing a data file.
 
@@ -229,7 +243,7 @@ Container for editing a data file.
 }
 ```
 
-### DataFileNew
+## DataFileNew
 
 Container for creating a new data file
 
@@ -247,7 +261,7 @@ Container for creating a new data file
 }
 ```
 
-### StaticFiles
+## StaticFiles
 
 Container for StaticFiles view. Lists all of static files and let users upload/delete static files. It uses `react-dropzone` for drag & drop file uploading.
 Uploaded files are previewed via `FilePreview` component.
@@ -265,18 +279,6 @@ Uploaded files are previewed via `FilePreview` component.
 }
 ```
 
-### NotFound
+## NotFound
 
 Component for 404 page. react-router renders this component for all non-existing routes.
-
-### Notifications
-
-Container for showing notifications at the right bottom of the screen
-
-### PropTypes
-
-```javascript
-{
-  notification: Object
-}
-```
