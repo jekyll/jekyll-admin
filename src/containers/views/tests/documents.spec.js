@@ -14,27 +14,32 @@ function setup(documents=[doc]) {
     search: expect.createSpy()
   };
 
-  const component = mount(
-    <Documents
-      documents={documents}
-      {...actions}
-      params={{collection_name: "movies"}}
-      isFetching={false} />
-  );
+  const props = {
+    documents,
+    params: { collection_name: 'movies' },
+    isFetching: false
+  };
+
+  const component = mount(<Documents {...actions} {...props} />);
 
   return {
     component: component,
     actions: actions,
     h1: component.find('h1').last(),
+    new_button: component.find('.page-buttons a').first(),
     row_title: component.find('strong a'),
-    table: component.find('.content-table')
+    table: component.find('.content-table'),
+    props
   };
 }
 
 describe('Containers::Documents', () => {
   it('should render correctly', () => {
-    const { h1 } = setup();
+    let { component, h1, new_button, props } = setup();
     expect(h1.text()).toBe('Movies');
+    expect(new_button.text()).toBe('New document');
+    component.setProps({params: {collection_name: "posts"}});
+    expect(new_button.text()).toBe('New post');
   });
 
   it('should render correctly when there are not any documents', () => {
