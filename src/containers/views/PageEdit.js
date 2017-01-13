@@ -95,6 +95,7 @@ export class PageEdit extends Component {
         <div className="content-wrapper">
           <div className="content-body">
             <InputTitle onChange={updateTitle} title={title} ref="title" />
+            <Metadata fields={{title, raw_content, path, ...front_matter}} />
             <MarkdownEditor
               onChange={updateBody}
               onSave={() => this.handleClickSave(name)}
@@ -102,7 +103,6 @@ export class PageEdit extends Component {
               initialValue={raw_content}
               ref="editor" />
             <Splitter />
-            <Metadata fields={{title, raw_content, path, ...front_matter}} />
           </div>
 
           <div className="content-side">
