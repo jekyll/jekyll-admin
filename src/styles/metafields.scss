@@ -62,14 +62,19 @@
 
     .meta-value-array {
       margin-bottom: 20px;
-      padding: 10px 15px;
+      padding: 15px 15px 10px;
       border: 1px solid $border-color;
       @include border-radius(3px);
       position: relative;
-      .meta-value { width: 90%; }
+      .meta-value {
+        margin-left: 0;
+        width: calc(100% - 50px)
+      }
       .array-item-wrap {
         margin-bottom: 0;
+        .array-item-wrap:first-child { margin-top: 25px; }
         .array-header {
+          float: right;
           margin-bottom: 5px;
           .array-field-num{
             color: $orange;
@@ -80,6 +85,10 @@
           .meta-buttons {
             position: static;
             display: inline-block;
+          }
+          .meta-button.move,
+          .dropdown {
+            vertical-align: sub;
           }
         }
       }
