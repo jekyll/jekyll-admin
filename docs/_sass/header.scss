@@ -5,19 +5,32 @@
   align-items: center;
   height: 75px;
   background-color: white;
-  padding: 0 0 0 40px;
-  color: #444444;
-  font-size: 24px;
-  &:hover {
-    color: black;
+  padding: 0 40px;
+  h1 {
+    color: #444444;
+    font-size: 24px;
+    font-weight: normal;
+  }
+  ul {
+    display: inline-block;
+    padding: 0;
+    list-style: none;
+    li {
+      float: left;
+      &:not(:last-child) {
+        margin-right: 15px;
+      }
+    }
   }
   @media(max-width: 768px) {
     margin: auto;
     display: block;
     text-align: center;
     padding: 15px;
-    font-size: 20px;
     height: auto;
+    h1 {
+      font-size: 20px;
+    }
   }
   @include box-shadow(0 2px 4px 0 rgba(204, 204, 204, 0.4));
 }
