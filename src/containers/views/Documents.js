@@ -58,12 +58,13 @@ export class Documents extends Component {
   renderRows() {
     const { documents } = this.props;
     return _.map(documents, doc => {
-      const { id, slug, title, http_url, ext, collection, path } = doc;
+      const { id, slug, title, http_url, collection, path } = doc;
       const filename = getFilenameFromPath(path);
       const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
-      const date = moment(doc.date).format("hh:mm:ss") == '12:00:00' ?
-        moment(doc.date).format("LL") :
-        moment(doc.date).format("LLL");
+      let date = doc.date.substring(0, doc.date.lastIndexOf(" ")); // w/o timezone
+      date = moment(date).format("hh:mm:ss") == '12:00:00' ?
+        moment(date).format("ll") :
+        moment(date).format("lll");
 
       return (
         <tr key={id}>
@@ -103,7 +104,9 @@ export class Documents extends Component {
         <div className="content-header">
           <h1>{capitalize(collection_name)}</h1>
           <div className="page-buttons">
-            <Link className="btn btn-active" to={`${ADMIN_PREFIX}/collections/${collection_name}/new`}>New document</Link>
+            <Link className="btn btn-active" to={`${ADMIN_PREFIX}/collections/${collection_name}/new`}>
+              {collection_name == "posts" ? "New post" : "New document"}
+            </Link>
           </div>
           <div className="side-unit pull-right">
             <InputSearch searchBy="title" search={search} />
