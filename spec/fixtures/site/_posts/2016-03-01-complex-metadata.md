@@ -12,4 +12,4 @@ overseers:
   - Podolsky
 ---
 
-# A post with complex metadata
+# A post with complex meta data
