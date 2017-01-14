@@ -9,17 +9,19 @@
     position: relative;
     zoom: 1;
     margin-bottom: 20px;
+
     .meta-key {
-      float: left;
+      display: inline-block;
 
       .key-field {
-        margin: 0 0 10px;
+        margin-bottom: 10px;
+        padding: 11px 10px;
         max-width: 190px;
+        min-height: 36px;
         font-size: 16px;
         font-weight: 700;
-        padding: 11px 10px;
-        min-height: 36px;
         line-height: 1.5;
+        vertical-align: middle;
         border: 1px solid $border-color;
         @include border-radius(2px);
         @include transition(color 250ms ease);
@@ -32,22 +34,24 @@
         }
       }
     }
+
     .meta-value {
-      float: left;
+      display: inline-block;
       width: 70%;
       margin-left: 15px;
 
       .value-field {
-        overflow: hidden;
-        word-wrap: break-word;
-        resize: vertical;
-        height: auto;
+        margin-bottom: 10px;
         width: 100%;
+        height: auto;
         min-height: 36px;
         max-height: 500px;
-        margin-bottom: 0;
-        border: 1px solid $border-color;
         font-size: 16px;
+        word-wrap: break-word;
+        vertical-align: middle;
+        resize: vertical;
+        border: 1px solid $border-color;
+        overflow: hidden;
         @include border-radius(2px);
         @include transition(color 250ms ease);
         &:focus {
@@ -55,13 +59,16 @@
         }
       }
     }
+
     .meta-value-array {
+      margin-bottom: 20px;
       padding: 10px 15px;
       border: 1px solid $border-color;
       @include border-radius(3px);
       position: relative;
+      .meta-value { width: 90%; }
       .array-item-wrap {
-        margin-bottom: 20px;
+        margin-bottom: 0;
         .array-header {
           margin-bottom: 5px;
           .array-field-num{
@@ -111,7 +118,7 @@
             width: 100%;
             padding: 11px 55px 10px 11px;
             font-size: 16px;
-            min-height: 48px;
+            min-height: 36px;
             line-height: 1.5;
             @include border-radius(2px);
           }
