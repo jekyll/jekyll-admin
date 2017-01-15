@@ -186,4 +186,36 @@
     background: #cfcfcf;
     border: 0;
   }
+
+  .tooltip {
+    position: relative; 
+    
+    .tooltip-text {
+      display: none;
+      position: absolute;
+      top: 36px;
+      right: -250px;
+      width: 300px;
+      padding: 10px;
+      font-size: 1rem;
+      color: $white;
+      text-align: center;
+      background: $dark-gray;
+      @include border-radius($border-radius);
+
+      &:after {
+        content: "";
+        position: absolute;
+        bottom: 100%;
+        left: 5%;
+        border: 9px solid;
+        border-color: transparent transparent $dark-gray transparent;
+      }
+    }
+
+    &:hover .tooltip-text {
+      display: block;
+    }
+  }
 }
+
