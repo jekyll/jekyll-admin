@@ -15,7 +15,7 @@ describe "configuration" do
   it "updates the configuration" do
     config_path   = File.expand_path "_config.yml", fixture_path("site")
     config_body   = File.read(config_path)
-    config_before = YAML.load(config_body)
+    config_before = SafeYAML.load(config_body)
     config = config_before.dup
 
     config["foo"] = "bar2"
@@ -33,7 +33,7 @@ describe "configuration" do
   it "doesn't inject the default collections" do
     config_path   = File.expand_path "_config.yml", fixture_path("site")
     config_body   = File.read(config_path)
-    config_before = YAML.load(config_body)
+    config_before = SafeYAML.load(config_body)
 
     config = config_before.dup
     config["collections"]["test"] = { "foo" => "bar" }
