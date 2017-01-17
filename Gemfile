@@ -4,6 +4,5 @@ source 'https://rubygems.org'
 gemspec
 
 # Site dependencies
-gem 'minima'
 gem 'jekyll-seo-tag'
 gem 'jekyll-sitemap'
