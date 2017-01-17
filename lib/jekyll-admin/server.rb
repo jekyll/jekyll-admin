@@ -72,9 +72,10 @@ module JekyllAdmin
     def write_file(path, content)
       path = sanitized_path(path)
       FileUtils.mkdir_p File.dirname(path)
-      file = File.write path, content
+      File.open(path, "wb") do |file|
+        file.write(content)
+      end
       site.process
-      file
     end
 
     def delete_file(path)
