@@ -7,10 +7,15 @@ module JekyllAdmin
 
       get "/:collection_id" do
         ensure_collection
-        json collection.to_api(:include_documents => true)
+        json collection.to_api
       end
 
-      get "/:collection_id/*" do
+      get "/:collection_id/entries/?*" do
+        ensure_directory
+        json entries.map(&:to_api)
+      end
+
+      get "/:collection_id/*/:filename" do
         ensure_document
         json document.to_api(:include_content => true)
       end
@@ -48,7 +53,8 @@ module JekyllAdmin
       end
 
       def document_id
-        params["splat"].first.gsub(%r!(\d{4})/(\d{2})/(\d{2})/(.*)!, '\1-\2-\3-\4')
+        path = "#{params["splat"].first}/#{params["filename"]}"
+        path.gsub(%r!(\d{4})/(\d{2})/(\d{2})/(.*)!, '\1-\2-\3-\4')
       end
 
       def document_path
@@ -59,13 +65,43 @@ module JekyllAdmin
         collection.docs.find { |d| d.path == document_path }
       end
 
+      def directory_docs
+        collection.docs.find_all { |d| File.dirname(d.path) == directory_path }
+      end
+
+      def directory_path
+        sanitized_path File.join(collection.relative_directory, params["splat"].first)
+      end
+
+      def draft_path
+        sanitized_path File.join(site.source, '_drafts')
+      end
+
       def ensure_collection
         render_404 if collection.nil?
+      end
+
+      def ensure_directory
+        ensure_collection
+        render_404 unless Dir.exists?(directory_path)
       end
 
       def ensure_document
         ensure_collection
         render_404 if document.nil?
+      end
+
+      def entries
+        args = {
+          base: site.source,
+          content_type: params['collection_id'],
+          splat: params["splat"].first
+        }
+        # get the directories inside the requested directory
+        directory = JekyllAdmin::Directory.new(directory_path, args)
+        directories = directory.directories
+        # merge directories with the documents at the same level
+        directories.concat(directory_docs)
       end
     end
   end
