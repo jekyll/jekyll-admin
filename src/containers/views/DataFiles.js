@@ -83,7 +83,7 @@ export class DataFiles extends Component {
           <div className="page-buttons">
             <Link className="btn btn-active" to={`${ADMIN_PREFIX}/datafiles/new`}>New data file</Link>
           </div>
-          <div className="side-unit pull-right">
+          <div className="pull-right">
             <InputSearch searchBy="filename" search={search} />
           </div>
         </div>

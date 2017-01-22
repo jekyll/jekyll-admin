@@ -86,7 +86,7 @@ export class StaticFiles extends Component {
             type="upload"
             icon="upload"
             active={true} />
-          <div className="side-unit pull-right">
+          <div className="pull-right">
             <InputSearch searchBy="filename" search={search} />
           </div>
         </div>

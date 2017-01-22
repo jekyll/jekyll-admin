@@ -116,7 +116,7 @@ export class Documents extends Component {
               {collection_name == "posts" ? "New post" : "New document"}
             </Link>
           </div>
-          <div className="side-unit pull-right">
+          <div className="pull-right">
             <InputSearch searchBy="title" search={search} />
           </div>
         </div>
