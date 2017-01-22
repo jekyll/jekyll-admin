@@ -10,7 +10,7 @@ module JekyllAdmin
         json entries.map(&:to_api)
       end
 
-      get "/:page_id" do
+      get "/*?/?:page_id" do
         ensure_page
         json page.to_api(:include_content => true)
       end
@@ -51,7 +51,7 @@ module JekyllAdmin
       end
 
       def page
-        site.pages.find { |p| p.path == params["page_id"] }
+        site.pages.find { |p| p.name == "#{params["page_id"]}" }
       end
 
       def directory_pages

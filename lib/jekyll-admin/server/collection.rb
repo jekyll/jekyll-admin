@@ -15,7 +15,7 @@ module JekyllAdmin
         json entries.map(&:to_api)
       end
 
-      get "/:collection_id/*/:filename" do
+      get "/:collection_id/*?/?:filename" do
         ensure_document
         json document.to_api(:include_content => true)
       end
