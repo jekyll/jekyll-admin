@@ -12,23 +12,30 @@ export default class Breadcrumbs extends Component {
   }
 
   render() {
-    const { link, type, path } = this.props;
-    let placeholder = 'example.md';
+    const { link, type, content, editable } = this.props;
 
-    if (type == 'posts') {
-      const date = moment().format('YYYY-MM-DD');
-      placeholder = `${date}-your-title.md`;
-    }else if (type == 'data files') {
-      placeholder = 'your-filename.yml';
+    let node = null;
+    if (editable) {
+      let placeholder = 'example.md';
+      if (type == 'posts') {
+        const date = moment().format('YYYY-MM-DD');
+        placeholder = `${date}-your-title.md`;
+      }else if (type == 'datafiles') {
+        placeholder = 'your-filename.yml';
+      }
+      node = (<input onChange={(e) => this.handleChange(e)}
+        placeholder={placeholder}
+        defaultValue={content}
+        ref="input" />);
+    } else {
+      node = content;
     }
+
     return (
       <ul className="breadcrumbs">
         <li><Link to={link}>{toTitleCase(type)}</Link></li>
         <li className="filename">
-          <input onChange={(e) => this.handleChange(e)}
-            ref="input"
-            placeholder={placeholder}
-            defaultValue={path} />
+          {node}
         </li>
       </ul>
     );
@@ -38,6 +45,7 @@ export default class Breadcrumbs extends Component {
 Breadcrumbs.propTypes = {
   link: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  path: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  content: PropTypes.string.isRequired,
+  editable: PropTypes.bool,
+  onChange: PropTypes.func
 };
