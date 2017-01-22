@@ -15,7 +15,7 @@ import { clearErrors } from '../../actions/utils';
 import { getFilenameFromPath } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/messages';
+} from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {

@@ -15,7 +15,7 @@ import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/messages';
+} from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class PageEdit extends Component {

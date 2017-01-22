@@ -10,7 +10,7 @@ import { search } from '../../actions/utils';
 import { filterByFilename } from '../../reducers/pages';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/messages';
+} from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class Pages extends Component {

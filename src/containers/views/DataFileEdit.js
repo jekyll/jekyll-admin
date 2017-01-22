@@ -15,7 +15,7 @@ import {
 } from '../../actions/datafiles';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/messages';
+} from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileEdit extends Component {

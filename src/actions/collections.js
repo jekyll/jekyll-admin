@@ -9,7 +9,7 @@ import {
   getTitleRequiredMessage,
   getFilenameRequiredMessage,
   getFilenameNotValidMessage
-} from '../constants/messages';
+} from '../constants/lang';
 import {
   getCollectionsUrl,
   getCollectionUrl,

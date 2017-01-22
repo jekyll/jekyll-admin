@@ -3,7 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
-import { getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
+import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
 import InputSearch from '../../components/form/InputSearch';
 import Button from '../../components/Button';
 import { fetchDataFiles, deleteDataFile } from '../../actions/datafiles';

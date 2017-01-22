@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
 import { putConfig, onEditorChange } from '../../actions/config';
-import { getLeaveMessage } from '../../constants/messages';
+import { getLeaveMessage } from '../../constants/lang';
 import { toYAML } from '../../utils/helpers';
 
 export class Configuration extends Component {

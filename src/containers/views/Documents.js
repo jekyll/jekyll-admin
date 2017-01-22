@@ -14,7 +14,7 @@ import {
   getLeaveMessage,
   getDeleteMessage,
   getNotFoundMessage
-} from '../../constants/messages';
+} from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class Documents extends Component {

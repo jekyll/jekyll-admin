@@ -7,7 +7,7 @@ import {
   getErrorMessage,
   getUploadSuccessMessage,
   getUploadErrorMessage
-} from '../constants/messages';
+} from '../constants/lang';
 import {
   getStaticFilesUrl,
   getStaticFileUrl,

@@ -11,7 +11,7 @@ import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../actions/utils';
 import { existingUploadedFilenames } from '../../utils/helpers.js';
 import { filterByFilename } from '../../reducers/staticfiles';
-import { getOverrideMessage } from '../../constants/messages';
+import { getOverrideMessage } from '../../constants/lang';
 import {
   fetchStaticFiles, uploadStaticFiles, deleteStaticFile
 } from '../../actions/staticfiles';

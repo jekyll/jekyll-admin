@@ -10,7 +10,7 @@ import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/messages';
+} from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileNew extends Component {

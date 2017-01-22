@@ -16,7 +16,7 @@ import { putPage } from '../../actions/pages';
 import { clearErrors } from '../../actions/utils';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/messages';
+} from '../../constants/lang';
 
 export class PageNew extends Component {
 

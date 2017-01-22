@@ -7,7 +7,7 @@ import {
   getParserErrorMessage,
   getContentRequiredMessage,
   getFilenameRequiredMessage
-} from '../constants/messages';
+} from '../constants/lang';
 import {
   getDataFilesUrl,
   getDataFileUrl,

@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
+import { labels } from '../constants/lang';
 
 export default class Button extends Component {
 
@@ -21,21 +22,21 @@ export default class Button extends Component {
     let triggeredLabel = '';
     switch (type) {
       case 'save':
-        label = 'Save';
-        triggeredLabel = 'Saved';
+        label = labels.save.label;
+        triggeredLabel = labels.save.triggeredLabel;
         break;
       case 'create':
-        label = 'Create';
-        triggeredLabel = 'Created';
+        label = labels.create.label;
+        triggeredLabel = labels.create.triggeredLabel;
         break;
       case 'delete':
-        label = 'Delete';
+        label = labels.delete.label;
         break;
       case 'view':
-        label = 'View';
+        label = labels.view.label;
         break;
       case 'upload':
-        label = 'Upload files';
+        label = labels.upload.label;
         break;
       default:
     }
