@@ -3,11 +3,13 @@ environment:
   RACK_ENV: test
   JEKYLL_LOG_LEVEL: warn
   matrix:
+    - RUBY_FOLDER_VER: "22"
+      GEMS_FOLDER_VER: "2.2.0"
     - TEST_SUITE: node
     - TEST_SUITE: ruby
 
 install:
-  - set PATH=C:\Ruby22\bin;%PATH%
+  - set PATH=C:\Ruby%RUBY_FOLDER_VER%\bin;%PATH%
   - ps: Install-Product node $env:nodejs_version
   - gem install bundler --no-ri --no-rdoc
   - bundle config --local path vendor/bundle
@@ -28,6 +30,9 @@ test_script:
 cache:
   - vendor/bundle
   - node_modules
+  # If one of the files after the right arrow changes, cache will be skipped
+  - C:\Ruby%RUBY_FOLDER_VER%\bin -> Gemfile,jekyll-admin.gemspec,appveyor.yml
+  - C:\Ruby%RUBY_FOLDER_VER%\lib\ruby\gems\%GEMS_FOLDER_VER% -> Gemfile,jekyll-admin.gemspec,appveyor.yml
 
 init:
   - git config --global core.autocrlf true
