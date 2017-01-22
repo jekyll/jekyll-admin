@@ -10,6 +10,7 @@
 @import 'metafields';
 @import 'breadcrumbs';
 @import "editor";
+@import "button";
 @import "staticfiles";
 
 * {
@@ -54,54 +55,10 @@ i {
   margin-left: $sidebar-width;
 }
 
-.btn {
-  color: $off-white;
-  font-weight: bold;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 14px;
-  margin: 0;
-  padding: 12px 20px;
-  white-space: nowrap;
-  text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.2);
-  @include border-radius($border-radius);
-  @include box-sizing(border-box);
-  @include btn($btn-initial, $btn-initial-border);
-}
-
-.btn-fat {
-  margin: 10px 0;
-  width: 100%;
-  text-align: center;
-  &:hover {
-    @include btn($btn-fat-hover, $btn-fat-hover-border)
-  }
-}
-
-.btn-active {
-  @include btn($btn-active, $btn-active-border);
-}
-
-.btn-inactive {
-  @include btn($btn-inactive, $btn-inactive-border, default !important, .5 !important, false); 
-}
-
-.btn-success {
-  @include btn($btn-success, $btn-success-border, pointer);
-  &:hover {
-    background-color: lighten($btn-success, 5%) !important;
-    @include box-shadow(0 1px 0 $btn-success-border);
-  }
-}
-
-.btn-danger {
-  @include btn($btn-danger, $btn-danger-border);
-}
-
 .splitter {
   height: 1px;
   width: 100%;
-  margin: 5px 0;  
+  margin: 5px 0;
   border-bottom: 1px solid #424242;
   border-top: 1px solid #212121;
 }

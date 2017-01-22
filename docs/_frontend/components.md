@@ -27,7 +27,7 @@ Can have [all options of SimpleMDE](https://github.com/NextStepWebs/simplemde-ma
 ## Breadcrumbs
 
 Component for generating breadcrumbs. First breadcrumb indicates the current content
-type and the second one which is editable is the path of current item.
+type and the second one which can be either an input or a label is the path of the current item.
 
 ### PropTypes
 
@@ -35,8 +35,40 @@ type and the second one which is editable is the path of current item.
 {
   link: String, // Link to the corresponding content type
   type: String, // Content type (pages, collections..)
-  path: String, // File path
+  content: String, // File path
+  editable: Boolean, // can be editable or not
   onChange: Function // triggered when the path changes
+}
+```
+
+## Errors
+
+Component for listing the validation errors
+
+### PropTypes
+
+```javascript
+{
+  errors: Array // Array of error messages
+}
+```
+
+## Button
+
+Generic component for button element.
+
+### PropTypes
+
+```javascript
+{
+  type: String, // type of the button ('save', 'create', 'view', 'upload' etc.)
+  active: Boolean, // state of the button
+  onClick: Function, // callback function triggered when the button is clicked
+  triggered: PropTypes.bool, // click state
+  block: PropTypes.bool, // should the button fill the parent width
+  thin: PropTypes.bool, // should the button be small
+  icon: PropTypes.string, // displays icon if icon name is given
+  to: PropTypes.string // links to the given URL. If set, onClick is disabled
 }
 ```
 

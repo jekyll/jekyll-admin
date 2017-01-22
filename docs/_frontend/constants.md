@@ -6,18 +6,11 @@ title: Constants
 
 Stores all of the action creators' names
 
-## Messages
+## Lang
 
-Stores the following messages;
+Stores the language specific files. Selected language strings are exported from `index.js`.
 
-* `confirm delete message`
-* `confirm leave message`
-* `confirm override static file message`
-* `not found message`
-* `notification messages`
-* `validation messages`
-
-This allows us to control all of the messages in a single place and also will help us localize the admin panel in the future.
+This allows us to control all of the language specific strings in a single place and also will help us localize the admin panel in the future.
 
 ## API
 

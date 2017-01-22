@@ -18,15 +18,15 @@ export class MetaButtons extends Component {
       <div className="meta-buttons">
         {
           parentType == 'array' &&
-          <span className="meta-button move"><i className="fa fa-arrows"></i></span>
+          <span className="move"><i className="fa fa-arrows"></i></span>
         }
         <span className="dropdown">
-          <button onFocus={() => onDropdownFocus()}
+          <a onFocus={() => onDropdownFocus()}
             onBlur={() => onDropdownBlur()}
             className="meta-button"
-            tabIndex="-1">
+            tabIndex="1">
               <i className="fa fa-chevron-down"></i>
-          </button>
+          </a>
           <div className="dropdown-wrap">
             {
               currentType != 'simple' &&

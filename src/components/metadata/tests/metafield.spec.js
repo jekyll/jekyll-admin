@@ -80,7 +80,7 @@ describe('Components::MetaField', () => {
   });
   it('should add `showing-dropdown` class when dropdown button is focused', () => {
     const { component, metabuttons } = setup();
-    let dropdownButton = metabuttons.find('button');
+    let dropdownButton = metabuttons.find('.meta-button');
     dropdownButton.simulate('focus');
     expect(
       component.find('.metafield').node.classList
