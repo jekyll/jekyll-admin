@@ -12,6 +12,7 @@ install:
   - ps: Install-Product node $env:nodejs_version
   - gem install bundler --no-ri --no-rdoc
   - bundle config --local path vendor/bundle
+  - bundle update
   - bundle package
   - sh script/bootstrap
 
