@@ -3,5 +3,5 @@
 set -e
 
 script/branding
-bundle install
+bundle install --verbose
 npm install
