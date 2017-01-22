@@ -10,7 +10,7 @@ environment:
 install:
   - set PATH=C:\Ruby%RUBY_VERSION%\bin;%PATH%
   - ps: Install-Product node $env:nodejs_version
-  - gem install bundler --no-ri --no-rdoc
+  - gem install bundler --no-ri --no-rdoc --version '1.13.7'
   - sh script/bootstrap
 
 build: off
