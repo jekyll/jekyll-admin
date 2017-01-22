@@ -18,7 +18,7 @@ export class MetaButtons extends Component {
       <div className="meta-buttons">
         {
           parentType == 'array' &&
-          <span className="meta-button move"><i className="fa fa-arrows"></i></span>
+          <span className="move"><i className="fa fa-arrows"></i></span>
         }
         <span className="dropdown">
           <a onFocus={() => onDropdownFocus()}
