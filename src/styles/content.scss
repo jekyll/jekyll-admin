@@ -81,28 +81,6 @@
     float: right;
     min-width: 96px;
     font-size: 16px;
-    a {
-      display: inline-block;
-      margin: 5px;
-      padding: 8px;
-      color: $off-white;
-      background: $inactive-gray;
-      @include border-radius($border-radius);
-      &:hover {
-        color: $orange;
-      }
-      &.delete:hover {
-        color: $white !important;
-        background: $dark-red;
-      }
-      &.view:hover {
-        color: $white !important;
-        background: $green;
-      }
-    }
-    i {
-      margin-right: 4px;
-    }
   }
 }
 
@@ -160,16 +138,6 @@
       .side-link.options {
         color: $dark-orange;
       }
-      .side-link.delete {
-        color: $off-white;
-        background: $inactive-gray;
-        border: 0;
-        @include transition(background 0.3s ease);
-        &:hover {
-          color: $white;
-          background-color: $dark-red;
-        }
-      }
     }
   }
   .error-messages {
@@ -188,8 +156,8 @@
   }
 
   .tooltip {
-    position: relative; 
-    
+    position: relative;
+
     .tooltip-text {
       display: none;
       position: absolute;
@@ -218,4 +186,3 @@
     }
   }
 }
-
