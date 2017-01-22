@@ -3,19 +3,21 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
-import { ADMIN_PREFIX } from '../../constants';
 import Splitter from '../../components/Splitter';
+import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import Button from '../../components/Button';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
 import { fetchDocument, deleteDocument, putDocument } from '../../actions/collections';
-import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
+import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
 import { getFilenameFromPath } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/messages';
+import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentEdit extends Component {
 
@@ -67,8 +69,10 @@ export class DocumentEdit extends Component {
   }
 
   render() {
-    const { isFetching, currentDocument, errors, updateTitle, updateBody, updatePath,
-      updateDraft, updated, fieldChanged } = this.props;
+    const {
+      isFetching, currentDocument, errors, updateTitle, updateBody, updatePath, updated,
+      fieldChanged
+    } = this.props;
 
     if (isFetching) {
       return null;
@@ -84,18 +88,14 @@ export class DocumentEdit extends Component {
 
     return (
       <div>
-        {
-          errors.length > 0 &&
-          <ul className="error-messages">
-            {_.map(errors, (error,i) => <li key={i}>{error}</li>)}
-          </ul>
-        }
+        {errors.length > 0 && <Errors errors={errors} />}
 
-        <Breadcrumbs onChange={updatePath}
-          ref="breadcrumbs"
+        <Breadcrumbs
+          onChange={updatePath}
           link={`${ADMIN_PREFIX}/collections/${collection}`}
-          path={path}
-          type={collection} />
+          content={path}
+          type={collection}
+          editable />
 
         <div className="content-wrapper">
           <div className="content-body">
@@ -111,27 +111,30 @@ export class DocumentEdit extends Component {
           </div>
 
           <div className="content-side">
-            <div className="side-unit">
-              <a onClick={() => this.handleClickSave(filename, collection)}
-                className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
-                  <i className="fa fa-save" aria-hidden="true"></i>
-                {updated ? 'Saved' : 'Save'}
-              </a>
-            </div>
+            <Button
+              onClick={() => this.handleClickSave(filename, collection)}
+              type="save"
+              active={fieldChanged}
+              triggered={updated}
+              icon="save"
+              block />
             {
-              http_url && <div className="side-unit">
-                <Link target="_blank" className="btn btn-fat" to={http_url}>
-                  <i className="fa fa-eye" aria-hidden="true"></i>View
-                </Link>
-              </div>
+              http_url &&
+                <Button
+                  to={http_url}
+                  type="view"
+                  icon="eye"
+                  active={true}
+                  block />
             }
             <Splitter />
-            <a onClick={() => this.handleClickDelete(filename, collection)}
-              className="side-link delete">
-                <i className="fa fa-trash-o"></i>Delete document
-            </a>
+            <Button
+              onClick={() => this.handleClickDelete(filename, collection)}
+              type="delete"
+              active={true}
+              icon="trash"
+              block />
           </div>
-
         </div>
       </div>
     );
@@ -146,7 +149,6 @@ DocumentEdit.propTypes = {
   updateTitle: PropTypes.func.isRequired,
   updateBody: PropTypes.func.isRequired,
   updatePath: PropTypes.func.isRequired,
-  updateDraft: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   errors: PropTypes.array.isRequired,
@@ -172,7 +174,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateTitle,
   updateBody,
   updatePath,
-  updateDraft,
   clearErrors
 }, dispatch);
 

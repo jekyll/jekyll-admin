@@ -3,12 +3,13 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
-import { ADMIN_PREFIX } from '../../constants';
 import { getDeleteMessage, getNotFoundMessage } from '../../constants/messages';
 import InputSearch from '../../components/form/InputSearch';
+import Button from '../../components/Button';
 import { fetchDataFiles, deleteDataFile } from '../../actions/datafiles';
 import { search } from '../../actions/utils';
 import { filterByFilename } from '../../reducers/datafiles';
+import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFiles extends Component {
 
@@ -55,9 +56,12 @@ export class DataFiles extends Component {
           </td>
           <td>
             <div className="row-actions">
-              <a onClick={() => this.handleClickDelete(filename)} title="Delete" className="delete">
-                <i className="fa fa-trash-o" aria-hidden="true"></i> Delete
-              </a>
+              <Button
+                onClick={() => this.handleClickDelete(filename)}
+                type="delete"
+                icon="trash"
+                active={true}
+                thin />
             </div>
           </td>
         </tr>

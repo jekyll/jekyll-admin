@@ -2,15 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
-import _ from 'underscore';
-import { ADMIN_PREFIX } from '../../constants';
+import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
+import Button from '../../components/Button';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/messages';
+import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileNew extends Component {
 
@@ -50,18 +51,14 @@ export class DataFileNew extends Component {
     const { datafileChanged, onDataFileChanged, datafile, updated, errors } = this.props;
     return (
       <div>
-        {
-          errors.length > 0 &&
-          <ul className="error-messages">
-            {_.map(errors, (error,i) => <li key={i}>{error}</li>)}
-          </ul>
-        }
+        {errors.length > 0 && <Errors errors={errors} />}
 
         <Breadcrumbs onChange={onDataFileChanged}
           ref="breadcrumbs"
           link={`${ADMIN_PREFIX}/datafiles`}
-          path=""
-          type="data files" />
+          type="datafiles"
+          content=""
+          editable />
 
         <div className="content-wrapper">
           <div className="content-body">
@@ -73,13 +70,13 @@ export class DataFileNew extends Component {
           </div>
 
           <div className="content-side">
-            <div className="side-unit">
-              <a onClick={() => this.handleClickSave()}
-                className={"btn"+(datafileChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
-                  <i className="fa fa-plus-square" aria-hidden="true"></i>
-                {updated ? 'Created' : 'Create'}
-              </a>
-            </div>
+            <Button
+              onClick={() => this.handleClickSave()}
+              type="create"
+              active={datafileChanged}
+              triggered={updated}
+              icon="plus-square"
+              block />
           </div>
         </div>
       </div>

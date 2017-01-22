@@ -3,16 +3,20 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
+import Breadcrumbs from '../../components/Breadcrumbs';
 import Splitter from '../../components/Splitter';
+import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
+import Button from '../../components/Button';
 import { clearErrors } from '../../actions/utils';
-import { ADMIN_PREFIX } from '../../constants';
+import { getFilenameFromPath } from '../../utils/helpers';
 import {
   fetchDataFile, putDataFile, deleteDataFile, onDataFileChanged
 } from '../../actions/datafiles';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/messages';
+import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileEdit extends Component {
 
@@ -61,22 +65,18 @@ export class DataFileEdit extends Component {
       return <h1>{getNotFoundMessage("data file")}</h1>;
     }
 
-    const { slug, ext, raw_content } = datafile;
-    const filename = slug+ext;
+    const { path, raw_content } = datafile;
+    const filename = getFilenameFromPath(path);
 
     return (
       <div>
-        {
-          errors.length > 0 &&
-          <ul className="error-messages">
-            {_.map(errors, (error,i) => <li key={i}>{error}</li>)}
-          </ul>
-        }
+        {errors.length > 0 && <Errors errors={errors} />}
 
-        <ul className="breadcrumbs">
-          <li><Link to={`${ADMIN_PREFIX}/datafiles`}>Data Files</Link></li>
-          <li>{filename}</li>
-        </ul>
+        <Breadcrumbs
+          link={`${ADMIN_PREFIX}/datafiles`}
+          content={filename}
+          type="datafiles"
+          />
 
         <div className="content-wrapper">
           <div className="content-body">
@@ -88,15 +88,20 @@ export class DataFileEdit extends Component {
           </div>
 
           <div className="content-side">
-            <a onClick={() => this.handleClickSave()}
-              className={"btn"+(datafileChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
-              {updated ? 'Saved' : 'Save'}
-            </a>
+            <Button
+              onClick={() => this.handleClickSave()}
+              type="save"
+              active={datafileChanged}
+              triggered={updated}
+              icon="save"
+              block />
             <Splitter />
-            <a onClick={() => this.handleClickDelete(filename)}
-              className="side-link delete">
-                <i className="fa fa-trash-o"></i>Delete file
-            </a>
+            <Button
+              onClick={() => this.handleClickDelete(filename)}
+              type="delete"
+              active={true}
+              icon="trash"
+              block />
           </div>
         </div>
       </div>

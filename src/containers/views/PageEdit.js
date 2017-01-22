@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
-import { ADMIN_PREFIX } from '../../constants';
+import Button from '../../components/Button';
 import Splitter from '../../components/Splitter';
+import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
@@ -15,6 +16,7 @@ import { clearErrors } from '../../actions/utils';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/messages';
+import { ADMIN_PREFIX } from '../../constants';
 
 export class PageEdit extends Component {
 
@@ -79,18 +81,14 @@ export class PageEdit extends Component {
 
     return (
       <div>
-        {
-          errors.length > 0 &&
-          <ul className="error-messages">
-            {_.map(errors, (error,i) => <li key={i}>{error}</li>)}
-          </ul>
-        }
+        {errors.length > 0 && <Errors errors={errors} />}
 
-        <Breadcrumbs onChange={updatePath}
-          path={path}
-          ref="breadcrumbs"
+        <Breadcrumbs
+          onChange={updatePath}
+          content={path}
           link={`${ADMIN_PREFIX}/pages`}
-          type="pages" />
+          type="pages"
+          editable />
 
         <div className="content-wrapper">
           <div className="content-body">
@@ -106,23 +104,26 @@ export class PageEdit extends Component {
           </div>
 
           <div className="content-side">
-            <div className="side-unit">
-              <a onClick={() => this.handleClickSave(name)}
-                className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
-                  <i className="fa fa-save" aria-hidden="true"></i>
-                {updated ? 'Saved' : 'Save'}
-              </a>
-            </div>
-            <div className="side-unit">
-              <Link target="_blank" className="btn btn-fat" to={http_url}>
-                <i className="fa fa-eye" aria-hidden="true"></i>View
-              </Link>
-            </div>
+            <Button
+              onClick={() => this.handleClickSave(name)}
+              type="save"
+              active={fieldChanged}
+              triggered={updated}
+              icon="save"
+              block />
+            <Button
+              to={http_url}
+              type="view"
+              icon="eye"
+              active={true}
+              block />
             <Splitter />
-            <a onClick={() => this.handleClickDelete(name)}
-              className="side-link delete">
-                <i className="fa fa-trash-o"></i>Delete page
-            </a>
+            <Button
+              onClick={() => this.handleClickDelete(name)}
+              type="delete"
+              active={true}
+              icon="trash"
+              block />
           </div>
 
         </div>

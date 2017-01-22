@@ -5,6 +5,8 @@ import expect from 'expect';
 
 import { DataFileNew } from '../DataFileNew';
 
+import Button from '../../../components/Button';
+
 const defaultProps = {
   datafile: {},
   updated: false,
@@ -27,7 +29,7 @@ const setup = (props = defaultProps) => {
   return {
     component,
     actions,
-    saveButton: component.find('.content-side a').first(),
+    saveButton: component.find(Button),
     props
   };
 };
@@ -43,6 +45,6 @@ describe('Containers::DataFileNew', () => {
     const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
       datafileChanged: true
     }));
-    expect(saveButton.prop('className')).toMatch('btn-success');
+    expect(saveButton.prop('active')).toBe(true);
   });
 });

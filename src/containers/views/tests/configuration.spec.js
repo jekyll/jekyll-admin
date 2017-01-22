@@ -2,6 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import expect from 'expect';
 import Editor from '../../../components/Editor';
+import Button from '../../../components/Button';
 import { Configuration } from '../Configuration';
 import { toYAML } from '../../../utils/helpers';
 import { config } from './fixtures';
@@ -20,18 +21,17 @@ const setup = (props = defaultProps) => {
   const component = shallow(<Configuration {...props} />);
   return {
     component,
-    props,
     editor: component.find(Editor),
-    saveButton: component.find('a')
+    saveButton: component.find(Button)
   };
 };
 
 describe('Containers::Configuration', () => {
   it('should render correctly with initial props', () => {
     const { component, editor, saveButton } = setup();
-    expect(saveButton.text()).toBe('Save');
-    expect(saveButton.prop('className').trim()).toBe('btn btn-inactive');
     expect(editor.prop('content')).toEqual(toYAML(config));
+    expect(saveButton.prop('active')).toBe(false);
+    expect(saveButton.prop('triggered')).toBe(false);
   });
 
   it('should render correctly with updated props', () => {
@@ -41,7 +41,7 @@ describe('Containers::Configuration', () => {
         updated: true
       })
     );
-    expect(saveButton.text()).toBe('Saved');
-    expect(saveButton.prop('className').trim()).toBe('btn btn-active');
+    expect(saveButton.prop('triggered')).toBe(true);
+    expect(saveButton.prop('active')).toBe(true);
   });
 });
