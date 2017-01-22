@@ -10,6 +10,7 @@ environment:
 install:
   - set PATH=C:\Ruby%RUBY_VERSION%\bin;%PATH%
   - ps: Install-Product node $env:nodejs_version
+  - bundle config --local path vendor/bundle
   - gem install bundler --no-ri --no-rdoc --version '1.13.7'
   - sh script/bootstrap
 
@@ -22,14 +23,11 @@ before_test:
   - gem -v
   - bundle -v
 
-after_test:
-  - bundle package
-
 test_script:
   - sh script/cibuild
 
 cache:
-  - vendor/cache
+  - vendor/bundle
   - node_modules
 
 init:
