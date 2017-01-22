@@ -159,19 +159,18 @@
       .dropdown {
         cursor: pointer;
         position: relative;
-        button {
+        .meta-button {
           border: 2px solid #d4d7d9;
-          background: none;
-          padding: 0;
+          padding: 3px 0;
           @include border-radius(50%);
           &:hover, &:focus {
             border-color: $dark-orange;
             background: $dark-orange;
             color: #fff;
           }
-        }
-        button:focus + .dropdown-wrap {
-          display: block;
+          &:focus + .dropdown-wrap {
+            display: block;
+          }
         }
         .dropdown-wrap {
           &:before {
