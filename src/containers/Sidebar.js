@@ -2,11 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
-import _ from 'underscore';
 import { ADMIN_PREFIX } from '../constants';
 import Splitter from '../components/Splitter';
 import { fetchCollections } from '../actions/collections';
 import { capitalize } from '../utils/helpers';
+import _ from 'underscore';
 
 export class Sidebar extends Component {
 
@@ -17,21 +17,18 @@ export class Sidebar extends Component {
 
   renderCollections() {
     const { collections } = this.props;
+
     if (!collections.length) {
       return null;
     }
 
-    return _.chain(collections)
-      .filter(col => col.label != 'posts') // TODO
-      .map((col, i) => {
-        return (
-          <li key={i}>
-            <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/${col.label}`}>
-              <i className="fa fa-book"></i>{capitalize(col.label)}
-            </Link>
-          </li>
-        );
-      }).value();
+    return _.map(collections, (col, i) =>
+      <li key={i}>
+        <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/${col.label}`}>
+          <i className="fa fa-book"></i>{capitalize(col.label)}
+        </Link>
+      </li>
+    );
   }
 
   render() {
@@ -42,10 +39,9 @@ export class Sidebar extends Component {
           <li>
             <Link activeClassName="active" to={`${ADMIN_PREFIX}/pages`}><i className="fa fa-file-text"></i>Pages</Link>
           </li>
-          <li>
-            <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/posts`}><i className="fa fa-thumb-tack"></i>Posts</Link>
-          </li>
+
           {this.renderCollections()}
+
           <Splitter />
           <li>
             <Link activeClassName="active" to={`${ADMIN_PREFIX}/datafiles`}><i className="fa fa-database"></i>Data Files</Link>
