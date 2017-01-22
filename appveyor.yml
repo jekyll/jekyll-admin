@@ -11,7 +11,8 @@ install:
   - set PATH=C:\Ruby%RUBY_VERSION%\bin;%PATH%
   - ps: Install-Product node $env:nodejs_version
   - gem install bundler --no-ri --no-rdoc
-  - bundle config --global path vendor/bundle
+  - bundle config --local path vendor/bundle
+  - bundle package
   - sh script/bootstrap
 
 build: off
@@ -27,7 +28,7 @@ test_script:
   - sh script/cibuild
 
 cache:
-  - vendor/bundle
+  - vendor/cache
   - node_modules
 
 init:
