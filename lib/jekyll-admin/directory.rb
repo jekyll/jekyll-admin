@@ -1,5 +1,8 @@
 module JekyllAdmin
   class Directory
+    extend Forwardable
+    def_delegator :@path, :basename, :name
+    def_delegator :@path, :mtime, :modified_time
     attr_reader :path
 
     include Enumerable
@@ -25,14 +28,6 @@ module JekyllAdmin
       }
     end
 
-    def name
-      @path.basename
-    end
-
-    def modified_time
-      @path.mtime
-    end
-
     def relative_path
       @path.relative_path_from(@base).to_s
     end
@@ -44,10 +39,7 @@ module JekyllAdmin
         "/collections/#{@content_type}/entries/#{@splat}/#{name}"
       end
     end
-
-    def url
-      resource_path
-    end
+    alias_method :url, :resource_path
 
     def http_url
     end
