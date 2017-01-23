@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import { fetchConfig } from '../actions/config';
+import { VERSION } from '../constants';
 
 export class Header extends Component {
 
@@ -17,9 +18,11 @@ export class Header extends Component {
       <div className="header">
         <h3 className="title">
           <Link target="_blank" to={`/`}>
-            <i className="fa fa-home"></i> <span>{config.title || 'You have no title!'}</span>
+            <i className="fa fa-home"></i>
+            <span>{config.title || 'You have no title!'}</span>
           </Link>
         </h3>
+        <span className="version">{VERSION}</span>
       </div>
     );
   }
