@@ -1,11 +1,7 @@
 module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/pages" do
-      get do
-        json pages.map(&:to_api)
-      end
-
-      get "/entries/?*" do
+      get "/?*/" do
         ensure_directory
         json entries.map(&:to_api)
       end
