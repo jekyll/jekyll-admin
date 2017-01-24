@@ -10,21 +10,21 @@
     </svg>
   </span>
 
-  <a class="logo" href="{{ "/" | prepend: site.baseurl }}"></a>
+  <a class="logo" href="{{ "/" | relative_url }}"></a>
 
   <ul class="routes">
-    <li><a href="{{ "/" | prepend: site.baseurl }}" {% if page.url == '/' %}class="active"{% endif %}>Index</a></li>
-    <li><a href="{{ "/api" | prepend: site.baseurl }}" {% if active[1] == 'api' %}class="active"{% endif %}>API</a></li>
-    <li><a href="{{ "/frontend" | prepend: site.baseurl }}" {% if active[1] == 'frontend' %}class="active"{% endif %}>Front End</a>
+    <li><a href="{{ "/" | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Index</a></li>
+    <li><a href="{{ "/api" | relative_url }}" {% if active[1] == 'api' %}class="active"{% endif %}>API</a></li>
+    <li><a href="{{ "/frontend" | relative_url }}" {% if active[1] == 'frontend' %}class="active"{% endif %}>Front End</a>
       <ul>
         {% for doc in site.frontend %}
-          <li><a href="{{ doc.url | prepend: site.baseurl }}" {% if active[2] == doc.slug %}class="active"{% endif %}>{{ doc.title }}</a></li>
+          <li><a href="{{ doc.url | relative_url }}" {% if active[2] == doc.slug %}class="active"{% endif %}>{{ doc.title }}</a></li>
         {% endfor %}
       </ul>
     </li>
     <div class="splitter"></div>
-    <li><a href="{{ "/architecture" | prepend: site.baseurl }}" {% if active[1] == 'architecture' %}class="active"{% endif %}>Architecture</a></li>
-    <li><a href="{{ "/development" | prepend: site.baseurl }}" {% if active[1] == 'development' %}class="active"{% endif %}>Development</a></li>
+    <li><a href="{{ "/architecture" | relative_url }}" {% if active[1] == 'architecture' %}class="active"{% endif %}>Architecture</a></li>
+    <li><a href="{{ "/development" | relative_url }}" {% if active[1] == 'development' %}class="active"{% endif %}>Development</a></li>
   </ul>
 
 </div>
