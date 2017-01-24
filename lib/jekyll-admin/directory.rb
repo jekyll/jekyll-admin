@@ -3,7 +3,7 @@ module JekyllAdmin
     extend Forwardable
     def_delegator :@path, :basename, :name
     def_delegator :@path, :mtime, :modified_time
-    attr_reader :path
+    attr_reader :path, :splat, :content_type, :base
 
     include Enumerable
     include JekyllAdmin::URLable
@@ -11,11 +11,10 @@ module JekyllAdmin
 
     TYPE = 'directory'
 
-    def initialize(path, args={})
-      @args = args
-      @base = Pathname.new args[:base]
-      @content_type = args[:content_type]
-      @splat = Pathname.new args[:splat]
+    def initialize(path, base: nil, content_type: nil, splat: nil)
+      @base = Pathname.new base
+      @content_type = content_type
+      @splat = Pathname.new splat
       @path = Pathname.new path
     end
 
@@ -29,14 +28,14 @@ module JekyllAdmin
     end
 
     def relative_path
-      @path.relative_path_from(@base).to_s
+      path.relative_path_from(base).to_s
     end
 
     def resource_path
-      if @content_type == 'pages'
-        "/pages/entries/#{@splat}/#{name}"
+      if content_type == 'pages'
+        "/pages/#{splat}/#{name}/"
       else
-        "/collections/#{@content_type}/entries/#{@splat}/#{name}"
+        "/collections/#{content_type}/entries/#{splat}/#{name}/"
       end
     end
     alias_method :url, :resource_path
@@ -45,9 +44,12 @@ module JekyllAdmin
     end
 
     def directories
-      @path.entries.map do |entry|
+      path.entries.map do |entry|
         next if ['.', '..'].include? entry.to_s
-        self.class.new(@path.join(entry), @args) if @path.join(entry).directory?
+        self.class.new(
+          path.join(entry),
+          base: base, content_type: content_type, splat: splat
+        ) if path.join(entry).directory?
       end.compact!
     end
   end
