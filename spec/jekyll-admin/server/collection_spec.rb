@@ -32,8 +32,6 @@ describe "collections" do
   end
 
   context "an individual collection" do
-    let(:documents) { last_response_parsed["documents"] }
-    let(:first_document) { documents.first }
 
     it "returns an individual collection" do
       get "/collections/posts"
@@ -41,48 +39,56 @@ describe "collections" do
       expect(last_response_parsed["label"]).to eq("posts")
     end
 
-    it "includes documents" do
+    it "doesn't includes documents" do
       get "/collections/posts"
       expect(last_response).to be_ok
       expect(last_response_parsed).to_not have_key("docs")
-      expect(last_response_parsed).to have_key("documents")
-
-      expect(documents.count).to eql(3)
-      expect(first_document["title"]).to eql("Test")
+      expect(last_response_parsed).to_not have_key("documents")
     end
 
-    it "sorts documents by date reverse chronologically" do
-      get "/collections/posts"
-      expect(last_response).to be_ok
-      expected = "2016-03-01"
-      expect(first_document["date"].split(" ").first).to eq(expected)
+    context "entries" do
+      let(:entries) { last_response_parsed }
+      let(:documents) {
+        entries.select do |entry|
+          !entry.has_key? 'type'
+        end
+      }
+      let(:first_document) { documents.first }
+
+      it "sorts documents by date reverse chronologically" do
+        get "/collections/posts/entries/"
+        expect(last_response).to be_ok
+        expected = "2016-03-01"
+        expect(first_document["date"].split(" ").first).to eq(expected)
+      end
+
+      it "doesn't include document content" do
+        get "/collections/posts/entries/"
+        expect(last_response).to be_ok
+        expect(first_document).to_not have_key("raw_content")
+        expect(first_document).to_not have_key("content")
+      end
+
+      it "includes front matter defaults" do
+        get "/collections/posts/entries/"
+        expect(last_response).to be_ok
+        expect(first_document.key?("some_front_matter")).to eq(true)
+      end
+
+      it "doesn't include the raw front matter" do
+        get "/collections/posts/entries/"
+        expect(last_response).to be_ok
+        expect(first_document).to_not have_key("front_matter")
+      end
+
+      it "doesn't include next/previous" do
+        get "/collections/posts/entries/"
+        expect(last_response).to be_ok
+        expect(first_document).to_not have_key("next")
+        expect(first_document).to_not have_key("previous")
+      end
     end
 
-    it "doesn't include document content" do
-      get "/collections/posts"
-      expect(last_response).to be_ok
-      expect(first_document).to_not have_key("raw_content")
-      expect(first_document).to_not have_key("content")
-    end
-
-    it "includes front matter defaults" do
-      get "/collections/posts"
-      expect(last_response).to be_ok
-      expect(first_document.key?("some_front_matter")).to eq(true)
-    end
-
-    it "doesn't include the raw front matter" do
-      get "/collections/posts"
-      expect(last_response).to be_ok
-      expect(first_document).to_not have_key("front_matter")
-    end
-
-    it "doesn't include next/previous" do
-      get "/collections/posts"
-      expect(last_response).to be_ok
-      expect(first_document).to_not have_key("next")
-      expect(first_document).to_not have_key("previous")
-    end
   end
 
   it "404s for an unknown collection" do
@@ -90,7 +96,7 @@ describe "collections" do
     expect(last_response.status).to eql(404)
   end
 
-  context "gettting a single document" do
+  context "getting a single document" do
     it "returns a collection document" do
       get "/collections/posts/2016-01-01-test.md"
       expect(last_response).to be_ok

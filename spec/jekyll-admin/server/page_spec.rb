@@ -14,33 +14,40 @@ describe "pages" do
   end
 
   context "page index" do
+    let(:entries) { last_response_parsed }
+    let(:pages) {
+      entries.select do |entry|
+        !entry.has_key? 'type'
+      end
+    }
+    let(:first_page) { pages.first }
     it "lists pages" do
-      get "/pages"
+      get "/pages/"
       expect(last_response).to be_ok
-      expect(last_response_parsed.last["name"]).to eq("page.md")
+      expect(first_page["name"]).to eq("page.md")
     end
 
     it "includes front matter defaults" do
-      get "/pages"
+      get "/pages/"
       expect(last_response).to be_ok
-      expect(last_response_parsed.first).to have_key("some_front_matter")
+      expect(first_page).to have_key("some_front_matter")
     end
 
     it "doesn't include the raw front matter" do
-      get "/pages"
+      get "/pages/"
       expect(last_response).to be_ok
       expect(last_response_parsed.first).to_not have_key("front_matter")
     end
 
     it "doesn't include the page content" do
-      get "/pages"
+      get "/pages/"
       expect(last_response).to be_ok
       expect(last_response_parsed.first).to_not have_key("content")
       expect(last_response_parsed.first).to_not have_key("raw_content")
     end
 
     it "doesn't include non-html pages" do
-      get "/pages"
+      get "/pages/"
       expect(last_response).to be_ok
       paths = last_response_parsed.map { |page| page["path"] }
       expect(paths).to_not include("assets/app.cofee")
