@@ -9,7 +9,7 @@ module JekyllAdmin
     include JekyllAdmin::URLable
     include JekyllAdmin::APIable
 
-    TYPE = 'directory'
+    TYPE = "directory".freeze
 
     def initialize(path, base: nil, content_type: nil, splat: nil)
       @base = Pathname.new base
@@ -20,10 +20,10 @@ module JekyllAdmin
 
     def to_liquid
       {
-        name: name,
-        modified_time: modified_time,
-        path: relative_path,
-        type: TYPE
+        :name          => name,
+        :modified_time => modified_time,
+        :path          => relative_path,
+        :type          => TYPE
       }
     end
 
@@ -32,7 +32,7 @@ module JekyllAdmin
     end
 
     def resource_path
-      if content_type == 'pages'
+      if content_type == "pages"
         "/pages/#{splat}/#{name}/"
       else
         "/collections/#{content_type}/entries/#{splat}/#{name}/"
@@ -41,15 +41,17 @@ module JekyllAdmin
     alias_method :url, :resource_path
 
     def http_url
+      nil
     end
 
     def directories
       path.entries.map do |entry|
-        next if ['.', '..'].include? entry.to_s
+        next if [".", ".."].include? entry.to_s
+        next unless path.join(entry).directory?
         self.class.new(
           path.join(entry),
-          base: base, content_type: content_type, splat: splat
-        ) if path.join(entry).directory?
+          :base => base, :content_type => content_type, :splat => splat
+        )
       end.compact!
     end
   end

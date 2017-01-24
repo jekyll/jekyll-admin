@@ -73,17 +73,13 @@ module JekyllAdmin
         sanitized_path File.join(collection.relative_directory, params["splat"].first)
       end
 
-      def draft_path
-        sanitized_path File.join(site.source, '_drafts')
-      end
-
       def ensure_collection
         render_404 if collection.nil?
       end
 
       def ensure_directory
         ensure_collection
-        render_404 unless Dir.exists?(directory_path)
+        render_404 unless Dir.exist?(directory_path)
       end
 
       def ensure_document
@@ -93,9 +89,9 @@ module JekyllAdmin
 
       def entries
         args = {
-          base: site.source,
-          content_type: params['collection_id'],
-          splat: params["splat"].first
+          :base         => site.source,
+          :content_type => params["collection_id"],
+          :splat        => params["splat"].first
         }
         # get the directories inside the requested directory
         directory = JekyllAdmin::Directory.new(directory_path, args)

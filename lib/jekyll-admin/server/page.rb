@@ -47,7 +47,7 @@ module JekyllAdmin
       end
 
       def page
-        site.pages.find { |p| p.name == "#{params["page_id"]}" }
+        site.pages.find { |p| p.name == params["page_id"].to_s }
       end
 
       def directory_pages
@@ -61,7 +61,7 @@ module JekyllAdmin
       end
 
       def ensure_directory
-        render_404 unless Dir.exists?(directory_path)
+        render_404 unless Dir.exist?(directory_path)
       end
 
       def ensure_page
@@ -70,9 +70,9 @@ module JekyllAdmin
 
       def entries
         args = {
-          base: site.source,
-          content_type: 'pages',
-          splat: params["splat"].first
+          :base         => site.source,
+          :content_type => "pages",
+          :splat        => params["splat"].first
         }
         # get all directories inside the requested directory
         directory = JekyllAdmin::Directory.new(directory_path, args)

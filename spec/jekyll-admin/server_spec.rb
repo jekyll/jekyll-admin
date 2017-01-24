@@ -10,7 +10,7 @@ describe JekyllAdmin::Server do
     expect(last_response).to be_ok
     entries = last_response_parsed
     first_page = entries.select do |entry|
-      !entry.has_key? 'type'
+      !entry.key? "type"
     end.first
     expect(first_page["path"]).to eq("page.md")
   end

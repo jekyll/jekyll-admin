@@ -15,11 +15,11 @@ describe "pages" do
 
   context "page index" do
     let(:entries) { last_response_parsed }
-    let(:pages) {
+    let(:pages) do
       entries.select do |entry|
-        !entry.has_key? 'type'
+        !entry.key? "type"
       end
-    }
+    end
     let(:first_page) { pages.first }
     it "lists pages" do
       get "/pages/"

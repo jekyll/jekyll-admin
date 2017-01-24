@@ -32,7 +32,6 @@ describe "collections" do
   end
 
   context "an individual collection" do
-
     it "returns an individual collection" do
       get "/collections/posts"
       expect(last_response).to be_ok
@@ -48,11 +47,11 @@ describe "collections" do
 
     context "entries" do
       let(:entries) { last_response_parsed }
-      let(:documents) {
+      let(:documents) do
         entries.select do |entry|
-          !entry.has_key? 'type'
+          !entry.key? "type"
         end
-      }
+      end
       let(:first_document) { documents.first }
 
       it "sorts documents by date reverse chronologically" do
@@ -88,7 +87,6 @@ describe "collections" do
         expect(first_document).to_not have_key("previous")
       end
     end
-
   end
 
   it "404s for an unknown collection" do
