@@ -5,7 +5,7 @@ import {
   getFetchErrorMessage,
   getUpdateErrorMessage,
   getDeleteMessage
-} from '../constants/messages';
+} from '../constants/lang';
 
 /**
  * Fetch wrapper for GET request that dispatches actions according to the

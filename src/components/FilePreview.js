@@ -1,5 +1,5 @@
 import React, { Component, PropTypes } from 'react';
-import { getDeleteMessage } from '../constants/messages';
+import { getDeleteMessage } from '../constants/lang';
 import { getFilenameFromPath } from '../utils/helpers';
 
 export default class FilePreview extends Component {

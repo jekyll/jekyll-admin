@@ -30,7 +30,7 @@ module JekyllAdmin
 
     # Returns unparsed content as it exists on disk
     def raw_content
-      @raw_content ||= File.read(absolute_path)
+      @raw_content ||= File.open(absolute_path, "r:UTF-8", &:read)
     end
 
     # Returnes (re)parsed content using Jekyll's native parsing mechanism

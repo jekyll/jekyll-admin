@@ -1,5 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import brace from 'brace';
 import AceEditor from 'react-ace';
 import 'brace/mode/yaml';
 import 'brace/theme/monokai';
@@ -34,6 +33,7 @@ class Editor extends Component {
         showPrintMargin={false}
         highlightActiveLine={false}
         className="config-editor"
+        fontSize={14}
         ref="ace"
         onChange={() => this.handleChange()}
       />

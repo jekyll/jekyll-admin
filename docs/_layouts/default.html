@@ -12,8 +12,8 @@
           <div class="header">
             <h1>Jekyll Admin - {{ page.title | escape }}</h1>
             <ul class="pull-right">
-              <li><a href="https://github.com/jekyll/jekyll-admin" target="_blank">Github</a></li>
-              <li><a href="https://github.com/jekyll/jekyll-admin/releases" target="_blank">v0.2.0</a></li>
+              <li><a href="https://github.com/{{ site.github.repository_nwo }}/" target="_blank"><img src="https://img.shields.io/github/stars/jekyll/jekyll-admin.svg?style=social&label=Star" alt="GitHub"></a></li>
+              <li><a href="https://rubygems.org/gems/jekyll-admin" target="_blank"><img src="https://img.shields.io/gem/v/jekyll-admin.svg" alt="Gem"></a></li>
             </ul>
           </div>
 
@@ -24,7 +24,7 @@
         </div>
       </div>
     </div>
-    <script src="{{ "/assets/highlight.min.js" | prepend: site.baseurl }}"></script>
+    <script src="{{ "/assets/highlight.min.js" | relative_url }}"></script>
     <script>hljs.initHighlightingOnLoad();</script>
     <script type="text/javascript">
       window.onload = function () {

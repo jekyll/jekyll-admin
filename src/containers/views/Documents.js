@@ -5,16 +5,17 @@ import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import moment from 'moment';
 import InputSearch from '../../components/form/InputSearch';
+import Button from '../../components/Button';
 import { fetchCollection, deleteDocument } from '../../actions/collections';
 import { filterByTitle } from '../../reducers/collections';
 import { capitalize, getFilenameFromPath } from '../../utils/helpers';
 import { search } from '../../actions/utils';
-import { ADMIN_PREFIX } from '../../constants';
 import {
   getLeaveMessage,
   getDeleteMessage,
   getNotFoundMessage
-} from '../../constants/messages';
+} from '../../constants/lang';
+import { ADMIN_PREFIX } from '../../constants';
 
 export class Documents extends Component {
 
@@ -76,13 +77,20 @@ export class Documents extends Component {
           <td>{date}</td>
           <td>
             <div className="row-actions">
-              <a onClick={() => this.handleClickDelete(filename, collection)} title="Delete" className="delete">
-                <i className="fa fa-trash-o" aria-hidden="true"></i> Delete
-              </a>
+              <Button
+                onClick={() => this.handleClickDelete(filename, collection)}
+                type="delete"
+                icon="trash"
+                active={true}
+                thin />
               {
-                http_url && <a target="_blank" href={http_url} title="View" className="view">
-                  <i className="fa fa-eye" aria-hidden="true"></i> View
-                </a>
+                http_url &&
+                <Button
+                  to={http_url}
+                  type="view"
+                  icon="eye"
+                  active={true}
+                  thin />
               }
             </div>
           </td>
@@ -108,7 +116,7 @@ export class Documents extends Component {
               {collection_name == "posts" ? "New post" : "New document"}
             </Link>
           </div>
-          <div className="side-unit pull-right">
+          <div className="pull-right">
             <InputSearch searchBy="title" search={search} />
           </div>
         </div>

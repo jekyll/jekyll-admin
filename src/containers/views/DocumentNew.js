@@ -2,20 +2,21 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
-import _ from 'underscore';
-import { ADMIN_PREFIX } from '../../constants';
 import Splitter from '../../components/Splitter';
+import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import Button from '../../components/Button';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
-import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
+import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { putDocument } from '../../actions/collections';
 import { clearErrors } from '../../actions/utils';
 import { getFilenameFromPath } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/messages';
+} from '../../constants/lang';
+import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {
 
@@ -53,28 +54,21 @@ export class DocumentNew extends Component {
   }
 
   render() {
-    const { errors, updated, updateTitle, updateBody, updatePath,
-      updateDraft, fieldChanged, params } = this.props;
+    const { errors, updated, updateTitle, updateBody, updatePath, fieldChanged, params } = this.props;
 
-    const link = `${ADMIN_PREFIX}/collections/${params.collection_name}`;
-    const linkText = params.collection_name;
-    const type = params.collection_name;
+    const collection = params.collection_name;
+    const link = `${ADMIN_PREFIX}/collections/${collection}`;
 
     return (
       <div>
-        {
-          errors.length > 0 &&
-          <ul className="error-messages">
-            {_.map(errors, (error,i) => <li key={i}>{error}</li>)}
-          </ul>
-        }
+        {errors.length > 0 && <Errors errors={errors} />}
 
-        <Breadcrumbs onChange={updatePath}
-          ref="breadcrumbs"
+        <Breadcrumbs
+          onChange={updatePath}
           link={link}
-          linkText={linkText}
-          type={type}
-          path="" />
+          type={collection}
+          content=""
+          editable />
 
         <div className="content-wrapper">
           <div className="content-body">
@@ -90,13 +84,13 @@ export class DocumentNew extends Component {
           </div>
 
           <div className="content-side">
-            <div className="side-unit">
-              <a onClick={() => this.handleClickSave()}
-                className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
-                  <i className="fa fa-plus-square" aria-hidden="true"></i>
-                {updated ? 'Created' : 'Create'}
-              </a>
-            </div>
+            <Button
+              onClick={() => this.handleClickSave()}
+              type="create"
+              active={fieldChanged}
+              triggered={updated}
+              icon="plus-square"
+              block />
           </div>
 
         </div>
@@ -110,7 +104,6 @@ DocumentNew.propTypes = {
   updateTitle: PropTypes.func.isRequired,
   updateBody: PropTypes.func.isRequired,
   updatePath: PropTypes.func.isRequired,
-  updateDraft: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.array.isRequired,
   fieldChanged: PropTypes.bool.isRequired,
@@ -131,7 +124,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateTitle,
   updateBody,
   updatePath,
-  updateDraft,
   putDocument,
   clearErrors
 }, dispatch);

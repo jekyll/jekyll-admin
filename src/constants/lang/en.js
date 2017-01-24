@@ -45,3 +45,33 @@ export const getContentRequiredMessage = () =>
 
 export const getFilenameNotValidMessage = () =>
   "The filename is not valid.";
+
+// sidebar titles
+export const sidebar = {
+  pages: 'Pages',
+  posts: 'Posts',
+  datafiles: 'Data Files',
+  staticfiles: 'Static Files',
+  configuration: 'Configuration'
+};
+
+// button labels
+export const labels = {
+  save: {
+    label: 'Save',
+    triggeredLabel: 'Saved'
+  },
+  create: {
+    label: 'Create',
+    triggeredLabel: 'Created'
+  },
+  delete: {
+    label: 'Delete'
+  },
+  view: {
+    label: 'View'
+  },
+  upload: {
+    label: 'Upload files'
+  }
+};

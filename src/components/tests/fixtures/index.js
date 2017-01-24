@@ -5,7 +5,8 @@ export const content = {
   layout: "default",
   title: "The Revenant",
   path: 'the-revenant.md',
-  draft: false
+  draft: false,
+  editable: true
 };
 
 export const json = {
@@ -24,3 +25,8 @@ export const staticfile = {
   path: "/logo.png",
   encoded_content: "PGh0bWw+CiAgPGJvZHk+CiAgICBZb3UncmUgcHJvYmFibHkgbG9va2luZyBm"
 };
+
+export const errors = [
+  'The filename is invalid',
+  'The title is required'
+];

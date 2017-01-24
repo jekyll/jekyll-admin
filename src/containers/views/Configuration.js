@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import Editor from '../../components/Editor';
+import Button from '../../components/Button';
 import { putConfig, onEditorChange } from '../../actions/config';
-import { getLeaveMessage } from '../../constants/messages';
+import { getLeaveMessage } from '../../constants/lang';
 import { toYAML } from '../../utils/helpers';
 
 export class Configuration extends Component {
@@ -20,7 +21,7 @@ export class Configuration extends Component {
     }
   }
 
-  handleSaveClick() {
+  handleClickSave() {
     const { editorChanged, putConfig } = this.props;
     if (editorChanged) {
       const value = this.refs.editor.getValue();
@@ -35,10 +36,11 @@ export class Configuration extends Component {
         <div className="content-header">
           <h1>Configuration</h1>
           <div className="page-buttons">
-            <a className={"btn " + (editorChanged ? 'btn-active':'btn-inactive')}
-              onClick={() => this.handleSaveClick()}>
-                {updated ? 'Saved' : 'Save'}
-            </a>
+            <Button
+              onClick={() => this.handleClickSave()}
+              type="save"
+              active={editorChanged}
+              triggered={updated} />
           </div>
         </div>
         <Editor

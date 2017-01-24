@@ -1,6 +1,3 @@
-@import 'mixins';
-@import 'variables';
-
 .config-editor {
   border: 1px solid $border-color;
   @include border-radius($border-radius);

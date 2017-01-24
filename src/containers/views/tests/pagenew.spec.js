@@ -4,6 +4,8 @@ import { shallow } from 'enzyme';
 import expect from 'expect';
 
 import { PageNew } from '../PageNew';
+import Errors from '../../../components/Errors';
+import Button from '../../../components/Button';
 
 import { page } from './fixtures';
 
@@ -32,8 +34,8 @@ function setup(props = defaultProps) {
   return {
     component,
     actions,
-    saveButton: component.find('.content-side a'),
-    errors: component.find('.error-messages'),
+    saveButton: component.find(Button),
+    errors: component.find(Errors),
     props
   };
 }

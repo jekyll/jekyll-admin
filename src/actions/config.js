@@ -1,6 +1,6 @@
 import * as ActionTypes from '../constants/actionTypes';
 import { getConfigurationUrl, putConfigurationUrl } from '../constants/api';
-import { getParserErrorMessage } from '../constants/messages';
+import { getParserErrorMessage } from '../constants/lang';
 import { addNotification } from './notifications';
 import { get, put } from '../utils/fetch';
 import { toJSON } from '../utils/helpers';

@@ -2,10 +2,11 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
-import _ from 'underscore';
 import { ADMIN_PREFIX } from '../../constants';
 import Splitter from '../../components/Splitter';
+import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import Button from '../../components/Button';
 import InputTitle from '../../components/form/InputTitle';
 import Checkbox from '../../components/form/Checkbox';
 import MarkdownEditor from '../../components/MarkdownEditor';
@@ -15,7 +16,7 @@ import { putPage } from '../../actions/pages';
 import { clearErrors } from '../../actions/utils';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/messages';
+} from '../../constants/lang';
 
 export class PageNew extends Component {
 
@@ -54,19 +55,14 @@ export class PageNew extends Component {
 
     return (
       <div>
-        {
-          errors.length > 0 &&
-          <ul className="error-messages">
-            {_.map(errors, (error,i) => <li key={i}>{error}</li>)}
-          </ul>
-        }
+        {errors.length > 0 && <Errors errors={errors} />}
 
-        <Breadcrumbs onChange={updatePath}
-          ref="breadcrumbs"
+        <Breadcrumbs
+          onChange={updatePath}
           link={`${ADMIN_PREFIX}/pages`}
-          linkText={"Pages"}
           type={"pages"}
-          path="" />
+          content=""
+          editable />
 
         <div className="content-wrapper">
           <div className="content-body">
@@ -82,13 +78,13 @@ export class PageNew extends Component {
           </div>
 
           <div className="content-side">
-            <div className="side-unit">
-              <a onClick={() => this.handleClickSave()}
-                className={"btn"+(fieldChanged ? " btn-success " : " btn-inactive ")+"btn-fat"}>
-                  <i className="fa fa-plus-square" aria-hidden="true"></i>
-                {updated ? 'Created' : 'Create'}
-              </a>
-            </div>
+            <Button
+              onClick={() => this.handleClickSave()}
+              type="create"
+              active={fieldChanged}
+              triggered={updated}
+              icon="plus-square"
+              block />
           </div>
 
         </div>

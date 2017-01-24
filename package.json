@@ -1,6 +1,6 @@
 {
   "name": "jekyll-admin",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Admin Panel for Jekyll",
   "private": true,
   "scripts": {
@@ -25,6 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "brace": "0.9.1",
+    "classnames": "^2.2.5",
     "isomorphic-fetch": "^2.2.1",
     "js-yaml": "^3.6.1",
     "lodash": "^4.13.1",

@@ -3,14 +3,15 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
-import { ADMIN_PREFIX } from '../../constants';
+import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
 import { fetchPages, deletePage } from '../../actions/pages';
 import { search } from '../../actions/utils';
 import { filterByFilename } from '../../reducers/pages';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/messages';
+} from '../../constants/lang';
+import { ADMIN_PREFIX } from '../../constants';
 
 export class Pages extends Component {
 
@@ -57,12 +58,18 @@ export class Pages extends Component {
           </td>
           <td>
             <div className="row-actions">
-              <a onClick={() => this.handleClickDelete(name)} title="Delete" className="delete">
-                <i className="fa fa-trash-o" aria-hidden="true"></i> Delete
-              </a>
-              <a target="_blank" href={http_url} title="View" className="view">
-                <i className="fa fa-eye" aria-hidden="true"></i> View
-              </a>
+              <Button
+                onClick={() => this.handleClickDelete(name)}
+                type="delete"
+                icon="trash"
+                active={true}
+                thin />
+              <Button
+                to={http_url}
+                type="view"
+                icon="eye"
+                active={true}
+                thin />
             </div>
           </td>
         </tr>
@@ -84,7 +91,7 @@ export class Pages extends Component {
           <div className="page-buttons">
             <Link className="btn btn-active" to={`${ADMIN_PREFIX}/pages/new`}>New page</Link>
           </div>
-          <div className="side-unit pull-right">
+          <div className="pull-right">
             <InputSearch searchBy="filename" search={search} />
           </div>
         </div>

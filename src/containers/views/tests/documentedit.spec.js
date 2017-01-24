@@ -4,6 +4,8 @@ import { shallow } from 'enzyme';
 import expect from 'expect';
 
 import { DocumentEdit } from '../DocumentEdit';
+import Errors from '../../../components/Errors';
+import Button from '../../../components/Button';
 
 import { doc } from './fixtures';
 
@@ -26,7 +28,6 @@ const setup = (props = defaultProps) => {
     updateTitle: expect.createSpy(),
     updateBody: expect.createSpy(),
     updatePath: expect.createSpy(),
-    updateDraft: expect.createSpy(),
     clearErrors: expect.createSpy()
   };
 
@@ -35,9 +36,9 @@ const setup = (props = defaultProps) => {
   return {
     component,
     actions,
-    saveButton: component.find('.content-side a').first(),
-    deleteButton: component.find('.content-side .delete'),
-    errors: component.find('.error-messages'),
+    saveButton: component.find(Button).first(),
+    deleteButton: component.find(Button).last(),
+    errors: component.find(Errors),
     props
   };
 };
