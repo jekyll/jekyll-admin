@@ -39,7 +39,6 @@ export class MetaArrayItem extends Component {
       <div ref="wrap" data-id={index} className="array-item-wrap">
         <div className="array">
           <div className="array-header">
-            <span className="array-field-num">{index+1}.</span>
             <MetaButtons
               currentType={type}
               parentType="array"

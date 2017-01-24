@@ -67,6 +67,7 @@ export class PageNew extends Component {
         <div className="content-wrapper">
           <div className="content-body">
             <InputTitle onChange={updateTitle} title="" ref="title" />
+            <Metadata fields={{"layout":""}} />
             <MarkdownEditor
               onChange={updateBody}
               onSave={() => this.handleClickSave()}
@@ -74,7 +75,6 @@ export class PageNew extends Component {
               initialValue=""
               ref="editor" />
             <Splitter />
-            <Metadata fields={{}} />
           </div>
 
           <div className="content-side">

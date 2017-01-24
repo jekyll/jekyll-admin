@@ -100,6 +100,7 @@ export class DocumentEdit extends Component {
         <div className="content-wrapper">
           <div className="content-body">
             <InputTitle onChange={updateTitle} title={title} ref="title" />
+            <Metadata fields={{title, path, raw_content, ...front_matter}} />
             <MarkdownEditor
               onChange={updateBody}
               onSave={() => this.handleClickSave(filename, collection)}
@@ -107,7 +108,6 @@ export class DocumentEdit extends Component {
               initialValue={raw_content}
               ref="editor" />
             <Splitter />
-            <Metadata fields={{title, path, raw_content, ...front_matter}} />
           </div>
 
           <div className="content-side">
