@@ -6,7 +6,7 @@ description: A Jekyll plugin that provides users with a traditional CMS-style gr
 
 ## Installation
 
-Refer to [Install Plugins](https://jekyllrb.com/docs/plugins/#installing-a-plugin) in Jekyll docs and install the `jekyll-admin` plugin as you would normally by adding `jekyll-admin` to your Gemfile and `_config.yml`'s `gems` list.
+Refer to [Install Plugins](https://jekyllrb.com/docs/plugins/#installing-a-plugin) in Jekyll docs and install the `jekyll-admin` plugin as you would normally by adding `jekyll-admin` to the `:jekyll_plugins` group in your `Gemfile` (or) to the `gems` list in your `config.yml`.
 
 ## Usage
 
@@ -15,7 +15,7 @@ Refer to [Install Plugins](https://jekyllrb.com/docs/plugins/#installing-a-plugi
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at <https://github.com/jekyll/jekyll-admin>.
+Bug reports and pull requests are welcome on GitHub at <https://github.com/{{ site.github.repository_nwo }}/>.
 
 ## Improve this page
 
