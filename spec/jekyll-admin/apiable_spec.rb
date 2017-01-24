@@ -13,7 +13,6 @@ describe JekyllAdmin::APIable do
       [false, true].each do |with_content|
         context "#{with_content ? "with" : "without"} content" do
           let(:as_api) { subject.to_api(:include_content => with_content) }
-          let(:content)  { as_api["content"] }
           let(:raw_content)  { as_api["raw_content"] }
           let(:front_matter) { as_api["front_matter"] }
 
@@ -21,14 +20,18 @@ describe JekyllAdmin::APIable do
             expect(subject).to respond_to(:to_api)
           end
 
+          it "does not include the omitted fields" do
+            expect(as_api).to_not have_key("content")
+            expect(as_api).to_not have_key("output")
+            expect(as_api).to_not have_key("excerpt")
+            expect(as_api).to_not have_key("next")
+            expect(as_api).to_not have_key("previous")
+            expect(as_api).to_not have_key("url")
+          end
+
           if with_content
             it "includes the raw_content" do
               expect(raw_content).to eql("# Test #{type.to_s.capitalize}\n")
-            end
-
-            it "includes the rendered content" do
-              expected = "<h1 id=\"test-#{type}\">Test #{type.capitalize}</h1>\n"
-              expect(content).to eql(expected)
             end
 
             it "includes the raw front matter" do
@@ -45,10 +48,6 @@ describe JekyllAdmin::APIable do
               expect(as_api).to_not have_key("raw_content")
             end
 
-            it "doesn't include the rendered content" do
-              expect(as_api).to_not have_key("content")
-              expect(as_api).to_not have_key("output")
-            end
           end
 
           it "includes front matter defaults as top-level keys" do

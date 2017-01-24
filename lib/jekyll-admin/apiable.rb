@@ -3,8 +3,13 @@ module JekyllAdmin
   # additional, API-specific functionality without duplicating logic
   module APIable
 
-    CONTENT_FIELDS = %w(next previous content excerpt).freeze
-
+    # - Documents have duplicate output and content fields, Pages do not
+    # Since it's an API, use `raw_content` in both for consistency
+    # - API doesn't need `content` & `excerpt` since we have `raw_content`
+    # which is the only field that the front end deals with
+    # - `url` is duplicate since we have `http_url`
+    # - `next` and `previous` documents are not needed as well
+    OMITTED_FIELDS = %w(output content excerpt url next previous).freeze
     # Returns a hash suitable for use as an API response.
     #
     # For Documents and Pages:
@@ -29,13 +34,7 @@ module JekyllAdmin
       # Include content, if requested, otherwise remove it
       if include_content
         output = output.merge(content_fields)
-      else
-        CONTENT_FIELDS.each { |field| output.delete(field) }
       end
-
-      # Documents have duplicate output and content fields, Pages do not
-      # Since it's an API, use `content` in both for consistency
-      output.delete("output")
 
       # By default, calling to_liquid on a collection will return a docs
       # array with each rendered document, which we don't want. Instead
@@ -46,6 +45,8 @@ module JekyllAdmin
           output["documents"] = docs.sort_by(&:date).reverse.map(&:to_api)
         end
       end
+
+      OMITTED_FIELDS.each { |field| output.delete(field) }
 
       output
     end
@@ -128,15 +129,6 @@ module JekyllAdmin
       else
         output["raw_content"] = raw_content
         output["front_matter"] = front_matter
-      end
-
-      # Include next and previous documents non-recursively
-      if is_a?(Jekyll::Document)
-        %w(next previous).each do |direction|
-          method = "#{direction}_doc".to_sym
-          doc = public_send(method)
-          output[direction] = doc.to_api if doc
-        end
       end
 
       output

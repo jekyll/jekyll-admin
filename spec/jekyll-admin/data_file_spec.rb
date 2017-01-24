@@ -54,7 +54,7 @@ describe JekyllAdmin::DataFile do
         })
       end
 
-      it "returns the hash with content" do
+      it "returns the hash with raw content" do
         expect(subject.to_api(:include_content => true)).to eql({
           "path"          => "_data/data_file.yml",
           "relative_path" => "_data/data_file.yml",
@@ -62,9 +62,6 @@ describe JekyllAdmin::DataFile do
           "ext"           => ".yml",
           "title"         => "Data File",
           "raw_content"   => "foo: bar\n",
-          "content"       => {
-            "foo" => "bar"
-          },
           "api_url"       => "http://localhost:4000/_api/data/data_file.yml",
           "http_url"      => nil
         })
