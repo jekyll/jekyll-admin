@@ -10,7 +10,7 @@ module JekyllAdmin
         json collection.to_api
       end
 
-      get "/:collection_id/entries/?*" do
+      get "/:collection_id/entries/?*/" do
         ensure_directory
         json entries.map(&:to_api)
       end
@@ -101,7 +101,7 @@ module JekyllAdmin
         directory = JekyllAdmin::Directory.new(directory_path, args)
         directories = directory.directories
         # merge directories with the documents at the same level
-        directories.concat(directory_docs)
+        directories.concat(directory_docs.sort_by(&:date).reverse)
       end
     end
   end
