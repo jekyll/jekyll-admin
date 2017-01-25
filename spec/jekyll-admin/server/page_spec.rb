@@ -21,10 +21,25 @@ describe "pages" do
       end
     end
     let(:first_page) { pages.first }
+
     it "lists pages" do
       get "/pages/"
       expect(last_response).to be_ok
       expect(first_page["name"]).to eq("page.md")
+    end
+
+    it "lists directories" do
+      get "/pages/"
+      expect(last_response).to be_ok
+      expect(entries.first["type"]).to eq("directory")
+      expect(entries.first["name"]).to eq("page-dir")
+    end
+
+    it "lists pages in subdirectories" do
+      get "/pages/page-dir/"
+      expect(last_response).to be_ok
+      expect(first_page["name"]).to eq("page2.md")
+      expect(first_page["path"]).to eq("page-dir/page2.md")
     end
 
     it "includes front matter defaults" do

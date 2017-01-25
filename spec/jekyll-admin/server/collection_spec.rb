@@ -86,6 +86,20 @@ describe "collections" do
         expect(first_document).to_not have_key("next")
         expect(first_document).to_not have_key("previous")
       end
+
+      it "lists directories" do
+        get "/collections/posts/entries/"
+        expect(last_response).to be_ok
+        expect(entries.first["type"]).to eq("directory")
+        expect(entries.first["name"]).to eq("test")
+      end
+
+      it "lists documents in subdirectories" do
+        get "/collections/posts/entries/test/other/"
+        expect(last_response).to be_ok
+        expect(first_document["id"]).to eq("/2016/05/02/test")
+        expect(first_document["path"]).to eq("_posts/test/other/2016-05-02-test.md")
+      end
     end
   end
 
