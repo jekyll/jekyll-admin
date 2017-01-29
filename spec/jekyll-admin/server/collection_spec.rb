@@ -115,6 +115,12 @@ describe "collections" do
       expect(last_response_parsed["title"]).to eq("Test")
     end
 
+    it "returns a collection document in subdirectories" do
+      get "/collections/posts/test/2016-04-01-test.md"
+      expect(last_response).to be_ok
+      expect(last_response_parsed["title"]).to eq("Test")
+    end
+
     it "returns a collection document using the slashed ID" do
       get "/collections/posts/2016/01/01/test.md"
       expect(last_response).to be_ok
@@ -125,6 +131,13 @@ describe "collections" do
       get "/collections/puppies/rover.md"
       expect(last_response).to be_ok
       expect(last_response_parsed["breed"]).to eq("Golden Retriever")
+    end
+
+    it "returns `directory` and `filename` fields" do
+      get "/collections/puppies/rover.md"
+      expect(last_response).to be_ok
+      expect(last_response_parsed["dir"]).to eq("/_puppies")
+      expect(last_response_parsed["name"]).to eq("rover.md")
     end
 
     it "returns the rendered output" do
@@ -221,6 +234,22 @@ describe "collections" do
     delete_file "_posts/2016-01-01-test2.md"
   end
 
+  it "writes a new file in subdirectories" do
+    delete_file "_posts/test/2016-01-01-test2.md"
+
+    request = {
+      :front_matter => { :foo => "bar" },
+      :raw_content  => "test",
+    }
+    put "/collections/posts/test/2016-01-01-test2.md", request.to_json
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq("bar")
+    expect("_posts/test/2016-01-01-test2.md").to be_an_existing_file
+
+    delete_file "_posts/test/2016-01-01-test2.md"
+  end
+
   it "updates a file" do
     write_file "_posts/2016-01-01-test2.md"
 
@@ -235,6 +264,22 @@ describe "collections" do
     expect("_posts/2016-01-01-test2.md").to be_an_existing_file
 
     delete_file "_posts/2016-01-01-test2.md"
+  end
+
+  it "updates a file" do
+    write_file "_posts/test/2016-01-01-test2.md"
+
+    request = {
+      :front_matter => { :foo => "bar2" },
+      :raw_content  => "test",
+    }
+    put "/collections/posts/test/2016-01-01-test2.md", request.to_json
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq("bar2")
+    expect("_posts/test/2016-01-01-test2.md").to be_an_existing_file
+
+    delete_file "_posts/test/2016-01-01-test2.md"
   end
 
   it "writes a new file with a future date" do
@@ -280,6 +325,31 @@ describe "collections" do
       delete_file "_posts/2016-01-01-test2.md"
       delete_file "_posts/2016-01-02-test2.md"
     end
+
+    it "renames a file in subdirectories" do
+      write_file "_posts/test/2016-01-01-test2.md"
+      delete_file "_posts/test/2016-01-02-test2.md"
+
+      path = "_posts/test/2016-01-02-test2.md"
+      request = {
+        :path         => path,
+        :front_matter => { :foo => "bar2" },
+        :raw_content  => "test",
+      }
+
+      put "/collections/posts/test/2016-01-01-test2.md", request.to_json
+      expect(last_response).to be_ok
+      expect(last_response_parsed["foo"]).to eq("bar2")
+
+      get "/collections/posts/test/2016-01-02-test2.md", request.to_json
+      expect(last_response).to be_ok
+      expect(last_response_parsed["foo"]).to eq("bar2")
+
+      expect("_posts/test/2016-01-01-test2.md").to_not be_an_existing_file
+      expect("_posts/test/2016-01-02-test2.md").to be_an_existing_file
+
+      delete_file "_posts/test/2016-01-01-test2.md", "_posts/test/2016-01-02-test2.md"
+    end
   end
 
   it "deletes a file" do
@@ -287,5 +357,13 @@ describe "collections" do
     delete "/collections/posts/2016-01-01-test2.md"
     expect(last_response).to be_ok
     expect("_posts/2016-01-01-test2.md").to_not be_an_existing_file
+  end
+
+  it "deletes a file in subdirectories" do
+    write_file "_posts/test/other/2017-01-01-test.md"
+    delete "/collections/posts/test/other/2017-01-01-test.md"
+    expect(last_response).to be_ok
+    expect("_posts/test/other/2017-01-01-test.md").to_not be_an_existing_file
+    delete_file "_posts/test/other/2017-01-01-test.md"
   end
 end

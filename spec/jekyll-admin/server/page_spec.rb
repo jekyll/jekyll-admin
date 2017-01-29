@@ -77,6 +77,12 @@ describe "pages" do
       expect(last_response_parsed["foo"]).to eq("bar")
     end
 
+    it "returns a page in subdirectories" do
+      get "/pages/page-dir/page1.md"
+      expect(last_response).to be_ok
+      expect(last_response_parsed["foo"]).to eq("bar")
+    end
+
     it "returns the rendered output" do
       get "/pages/page.md"
       expect(last_response).to be_ok
@@ -147,6 +153,20 @@ describe "pages" do
     delete_file "page-new.md"
   end
 
+  it "writes a new page in subdirectories" do
+    request = {
+      :front_matter => { :foo => "bar" },
+      :raw_content  => "test",
+    }
+    put "/pages/page-dir/page-new.md", request.to_json
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq("bar")
+    expect("page-dir/page-new.md").to be_an_existing_file
+
+    delete_file "page-dir/page-new.md"
+  end
+
   it "updates a page" do
     write_file "page-update.md"
 
@@ -161,6 +181,22 @@ describe "pages" do
     expect(last_response_parsed["foo"]).to eq("bar2")
 
     delete_file "page-update.md"
+  end
+
+  it "updates a page in subdirectories" do
+    write_file "page-dir/page-update.md"
+
+    request = {
+      :front_matter => { :foo => "bar2" },
+      :raw_content  => "test",
+    }
+    put "/pages/page-dir/page-update.md", request.to_json
+    expect("page-dir/page-update.md").to be_an_existing_file
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq("bar2")
+
+    delete_file "page-dir/page-update.md"
   end
 
   it "renames a page" do
@@ -186,9 +222,39 @@ describe "pages" do
     delete_file "page-rename.md", "page-renamed.md"
   end
 
+  it "renames a page in subdirectories" do
+    write_file  "page-dir/page-rename.md"
+    delete_file "page-dir/page-renamed.md"
+
+    request = {
+      :path         => "page-dir/page-renamed.md",
+      :front_matter => { :foo => "bar" },
+      :raw_content  => "test",
+    }
+
+    put "/pages/page-dir/page-rename.md", request.to_json
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq("bar")
+    expect("page-dir/page-rename.md").to_not be_an_existing_file
+    expect("page-dir/page-renamed.md").to be_an_existing_file
+
+    get "/pages/page-dir/page-renamed.md"
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq("bar")
+
+    delete_file "page-dir/page-rename.md", "page-dir/page-renamed.md"
+  end
+
   it "deletes a page" do
     path = write_file "page-delete.md"
     delete "/pages/page-delete.md"
+    expect(last_response).to be_ok
+    expect(File.exist?(path)).to eql(false)
+  end
+
+  it "deletes a page in subdirectories" do
+    path = write_file "page-dir/page-delete.md"
+    delete "/pages/page-dir/page-delete.md"
     expect(last_response).to be_ok
     expect(File.exist?(path)).to eql(false)
   end
