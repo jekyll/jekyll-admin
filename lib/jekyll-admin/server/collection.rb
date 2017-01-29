@@ -10,14 +10,14 @@ module JekyllAdmin
         json collection.to_api
       end
 
-      get "/:collection_id/entries/?*" do
-        ensure_directory
-        json entries.map(&:to_api)
-      end
-
       get "/:collection_id/*?/?:path.:ext" do
         ensure_document
         json document.to_api(:include_content => true)
+      end
+
+      get "/:collection_id/entries/?*" do
+        ensure_directory
+        json entries.map(&:to_api)
       end
 
       put "/:collection_id/*?/?:path.:ext" do
