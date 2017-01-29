@@ -6,7 +6,7 @@ describe JekyllAdmin::Server do
   end
 
   it "returns the page index" do
-    get "/pages/"
+    get "/pages"
     expect(last_response).to be_ok
     entries = last_response_parsed
     first_page = entries.select do |entry|

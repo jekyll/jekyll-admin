@@ -23,46 +23,46 @@ describe "pages" do
     let(:first_page) { pages.first }
 
     it "lists pages" do
-      get "/pages/"
+      get "/pages"
       expect(last_response).to be_ok
       expect(first_page["name"]).to eq("page.md")
     end
 
     it "lists directories" do
-      get "/pages/"
+      get "/pages"
       expect(last_response).to be_ok
       expect(entries.first["type"]).to eq("directory")
       expect(entries.first["name"]).to eq("page-dir")
     end
 
     it "lists pages in subdirectories" do
-      get "/pages/page-dir/"
+      get "/pages/page-dir"
       expect(last_response).to be_ok
-      expect(first_page["name"]).to eq("page2.md")
-      expect(first_page["path"]).to eq("page-dir/page2.md")
+      expect(first_page["name"]).to eq("page1.md")
+      expect(first_page["path"]).to eq("page-dir/page1.md")
     end
 
     it "includes front matter defaults" do
-      get "/pages/"
+      get "/pages"
       expect(last_response).to be_ok
       expect(first_page).to have_key("some_front_matter")
     end
 
     it "doesn't include the raw front matter" do
-      get "/pages/"
+      get "/pages"
       expect(last_response).to be_ok
       expect(last_response_parsed.first).to_not have_key("front_matter")
     end
 
     it "doesn't include the page content" do
-      get "/pages/"
+      get "/pages"
       expect(last_response).to be_ok
       expect(last_response_parsed.first).to_not have_key("content")
       expect(last_response_parsed.first).to_not have_key("raw_content")
     end
 
     it "doesn't include non-html pages" do
-      get "/pages/"
+      get "/pages"
       expect(last_response).to be_ok
       paths = last_response_parsed.map { |page| page["path"] }
       expect(paths).to_not include("assets/app.cofee")

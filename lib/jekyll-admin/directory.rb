@@ -33,7 +33,7 @@ module JekyllAdmin
 
     def resource_path
       if content_type == "pages"
-        "/pages/entries/#{splat}/#{name}"
+        "/pages/#{splat}/#{name}"
       else
         "/collections/#{content_type}/entries/#{splat}/#{name}"
       end
