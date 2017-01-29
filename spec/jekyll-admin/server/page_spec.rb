@@ -36,10 +36,10 @@ describe "pages" do
     end
 
     it "lists pages in subdirectories" do
-      get "/pages/page-dir"
+      get "/pages/page-dir/test"
       expect(last_response).to be_ok
-      expect(first_page["name"]).to eq("page1.md")
-      expect(first_page["path"]).to eq("page-dir/page1.md")
+      expect(first_page["name"]).to eq("page2.md")
+      expect(first_page["path"]).to eq("page-dir/test/page2.md")
     end
 
     it "includes front matter defaults" do
@@ -121,7 +121,7 @@ describe "pages" do
 
     request = {
       :front_matter => {},
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
     put "/pages/page-new.md", request.to_json
 
@@ -136,7 +136,7 @@ describe "pages" do
 
     request = {
       :front_matter => { :foo => "bar" },
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
     put "/pages/page-new.md", request.to_json
 
@@ -152,7 +152,7 @@ describe "pages" do
 
     request = {
       :front_matter => { :foo => "bar2" },
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
     put "/pages/page-update.md", request.to_json
     expect("page-update.md").to be_an_existing_file
@@ -170,7 +170,7 @@ describe "pages" do
     request = {
       :path         => "page-renamed.md",
       :front_matter => { :foo => "bar" },
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
 
     put "/pages/page-rename.md", request.to_json

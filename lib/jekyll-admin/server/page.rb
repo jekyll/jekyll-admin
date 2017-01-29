@@ -92,7 +92,7 @@ module JekyllAdmin
         args = {
           :base         => site.source,
           :content_type => "pages",
-          :splat        => params["splat"].first
+          :splat        => params["splat"].first,
         }
         # get all directories inside the requested directory
         directory = JekyllAdmin::Directory.new(directory_path, args)

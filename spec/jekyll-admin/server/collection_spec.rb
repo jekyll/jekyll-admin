@@ -195,7 +195,7 @@ describe "collections" do
 
     request = {
       :front_matter => {},
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
     put "/collections/posts/2016-01-01-test2.md", request.to_json
 
@@ -210,7 +210,7 @@ describe "collections" do
 
     request = {
       :front_matter => { :foo => "bar" },
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
     put "/collections/posts/2016-01-01-test2.md", request.to_json
 
@@ -226,7 +226,7 @@ describe "collections" do
 
     request = {
       :front_matter => { :foo => "bar2" },
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
     put "/collections/posts/2016-01-01-test2.md", request.to_json
 
@@ -243,7 +243,7 @@ describe "collections" do
 
     request = {
       :front_matter => { :foo => "bar" },
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
     put "/collections/posts/#{future_date}-test.md", request.to_json
 
@@ -263,7 +263,7 @@ describe "collections" do
       request = {
         :path         => path,
         :front_matter => { :foo => "bar2" },
-        :raw_content  => "test"
+        :raw_content  => "test",
       }
 
       put "/collections/posts/2016-01-01-test2.md", request.to_json

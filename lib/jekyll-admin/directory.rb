@@ -23,7 +23,7 @@ module JekyllAdmin
         :name          => name,
         :modified_time => modified_time,
         :path          => relative_path,
-        :type          => TYPE
+        :type          => TYPE,
       }
     end
 

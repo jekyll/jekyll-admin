@@ -151,7 +151,7 @@ module JekyllAdmin
       return {} unless respond_to?(:http_url) && respond_to?(:api_url)
       {
         "http_url" => http_url,
-        "api_url"  => api_url
+        "api_url"  => api_url,
       }
     end
   end
