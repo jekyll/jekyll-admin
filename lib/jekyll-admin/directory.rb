@@ -33,9 +33,9 @@ module JekyllAdmin
 
     def resource_path
       if content_type == "pages"
-        "/pages/#{splat}/#{name}/"
+        "/pages/entries/#{splat}/#{name}"
       else
-        "/collections/#{content_type}/entries/#{splat}/#{name}/"
+        "/collections/#{content_type}/entries/#{splat}/#{name}"
       end
     end
     alias_method :url, :resource_path

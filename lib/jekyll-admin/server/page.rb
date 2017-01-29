@@ -1,29 +1,30 @@
 module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/pages" do
-      get "/?*/" do
+      get "/entries/?*" do
         ensure_directory
         json entries.map(&:to_api)
       end
 
-      get "/*?/?:page_id" do
+      get "/*?/?:path.:ext" do
         ensure_page
         json page.to_api(:include_content => true)
       end
 
-      put "/:page_id" do
-        # Rename page
-        if request_payload["path"] && request_payload["path"] != params["page_id"]
+      put "/*?/?:path.:ext" do
+        write_path = page_path
+        if request_payload["path"] && request_payload["path"] != relative_page_path
           delete_file page_path
-          params["page_id"] = request_payload["path"]
+          write_path = request_path
         end
 
-        write_file(page_path, page_body)
-        ensure_page
-        json page.to_api(:include_content => true)
+        write_file(write_path, page_body)
+        updated_page = site.pages.find { |p| sanitized_path(p.path) == write_path }
+        render_404 if updated_page.nil?
+        json updated_page.to_api(:include_content => true)
       end
 
-      delete "/:page_id" do
+      delete "/*?/?:path.:ext" do
         ensure_page
         delete_file page_path
         content_type :json
@@ -33,27 +34,46 @@ module JekyllAdmin
 
       private
 
+      def request_path
+        sanitized_path File.join(site.source, request_payload["path"])
+      end
+
+      def filename
+        "#{params["path"]}.#{params["ext"]}"
+      end
+
       def pages
         site.pages.select(&:html?)
-      end
-
-      # returns paths of directories that contains pages
-      def directory_paths
-        pages.map { |p| sanitized_path p.dir }.uniq
-      end
-
-      def page_path
-        sanitized_path params["page_id"]
-      end
-
-      def page
-        site.pages.find { |p| p.name == params["page_id"].to_s }
       end
 
       def directory_pages
         pages.find_all do |p|
           File.dirname(File.join(site.source, p.path)) == directory_path
         end
+      end
+
+      # returns relative path of root level directories that contain pages
+      def directory_paths
+        paths = pages.map { |p| sanitized_path p.dir }.uniq
+        source = Pathname.new site.source
+        paths.map do |p|
+          p = Pathname.new p
+          p = p.relative_path_from source
+          p.to_s.split("/")[0]
+        end
+      end
+
+      def page_path
+        File.join(directory_path, filename)
+      end
+
+      def relative_page_path
+        return filename if params["splat"].first.empty?
+        File.join(params["splat"].first, filename)
+      end
+
+      def page
+        site.pages.find { |p| sanitized_path(p.path) == page_path }
       end
 
       def directory_path
@@ -77,9 +97,12 @@ module JekyllAdmin
         # get all directories inside the requested directory
         directory = JekyllAdmin::Directory.new(directory_path, args)
         directories = directory.directories
-        # filter directories that have pages
-        directories = directories.select do |d|
-          directory_paths.include? sanitized_path(d.name.to_s)
+
+        # exclude root level directories which do not have pages
+        if params["splat"].first.empty?
+          directories = directories.select do |d|
+            directory_paths.include? d.name.to_s
+          end
         end
         # merge directories with the pages at the same level
         directories.concat(directory_pages)
