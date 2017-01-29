@@ -255,32 +255,30 @@ describe "collections" do
   end
 
   context "renaming a file" do
-    %w(with without).each do |type|
-      it "renames a file #{type} the collection prefix" do
-        write_file "_posts/2016-01-01-test2.md"
-        delete_file "_posts/2016-01-02-test2.md"
+    it "renames a file" do
+      write_file "_posts/2016-01-01-test2.md"
+      delete_file "_posts/2016-01-02-test2.md"
 
-        path = "2016-01-02-test2.md"
-        path = path.prepend("_posts/") if type == "with"
-        request = {
-          :path         => path,
-          :front_matter => { :foo => "bar2" },
-          :raw_content  => "test"
-        }
+      path = "_posts/2016-01-02-test2.md"
+      request = {
+        :path         => path,
+        :front_matter => { :foo => "bar2" },
+        :raw_content  => "test"
+      }
 
-        put "/collections/posts/2016-01-01-test2.md", request.to_json
-        expect(last_response).to be_ok
-        expect(last_response_parsed["foo"]).to eq("bar2")
+      put "/collections/posts/2016-01-01-test2.md", request.to_json
+      expect(last_response).to be_ok
+      expect(last_response_parsed["foo"]).to eq("bar2")
 
-        get "/collections/posts/2016-01-02-test2.md", request.to_json
-        expect(last_response).to be_ok
-        expect(last_response_parsed["foo"]).to eq("bar2")
+      get "/collections/posts/2016-01-02-test2.md", request.to_json
+      expect(last_response).to be_ok
+      expect(last_response_parsed["foo"]).to eq("bar2")
 
-        expect("_posts/2016-01-01-test2.md").to_not be_an_existing_file
-        expect("_posts/2016-01-02-test2.md").to be_an_existing_file
+      expect("_posts/2016-01-01-test2.md").to_not be_an_existing_file
+      expect("_posts/2016-01-02-test2.md").to be_an_existing_file
 
-        delete_file "_posts/2016-01-01-test2.md", "_posts/2016-01-02-test2.md"
-      end
+      delete_file "_posts/2016-01-01-test2.md"
+      delete_file "_posts/2016-01-02-test2.md"
     end
   end
 
