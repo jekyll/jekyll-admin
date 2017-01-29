@@ -266,7 +266,7 @@ describe "collections" do
     delete_file "_posts/2016-01-01-test2.md"
   end
 
-  it "updates a file" do
+  it "updates a file in subdirectories" do
     write_file "_posts/test/2016-01-01-test2.md"
 
     request = {
