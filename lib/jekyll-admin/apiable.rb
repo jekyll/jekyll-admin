@@ -43,7 +43,7 @@ module JekyllAdmin
       end
 
       if is_a?(Jekyll::Document)
-        output["dir"] = File.join("/", relative_path_from_source.to_s)
+        output["dir"] = File.join("/", relative_path_from_source.dirname.to_s)
         output["name"] = relative_path_from_source.basename
       end
 
