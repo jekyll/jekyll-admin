@@ -22,14 +22,16 @@ export default (
     <Route path="configuration" component={Configuration} />
     <Route path="pages">
       <IndexRoute component={Pages} />
-      <Route path="new" component={PageNew} />
-      <Route path=":id" component={PageEdit} />
+      <Route path="(**/)new" component={PageNew} />
+      <Route path="(**/)*.*" component={PageEdit} />
+      <Route path="**" component={Pages} />
     </Route>
     <Route path="collections">
       <Route path=":collection_name">
         <IndexRoute component={Documents} />
-        <Route path="new" component={DocumentNew} />
-        <Route path=":id" component={DocumentEdit} />
+        <Route path="(**/)new" component={DocumentNew} />
+        <Route path="(**/)*.*" component={DocumentEdit} />
+        <Route path="**" component={Documents} />
       </Route>
     </Route>
     <Route path="datafiles">
