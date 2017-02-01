@@ -12,14 +12,14 @@ module JekyllAdmin
       end
 
       put "/*?/?:path.:ext" do
-        write_path = page_path
+        write_path = relative_page_path
         if request_payload["path"] && request_payload["path"] != relative_page_path
           delete_file page_path
-          write_path = request_path
+          write_path = request_payload["path"]
         end
 
         write_file(write_path, page_body)
-        updated_page = site.pages.find { |p| sanitized_path(p.path) == write_path }
+        updated_page = pages.find { |p| p.path == write_path }
         render_404 if updated_page.nil?
         json updated_page.to_api(:include_content => true)
       end
