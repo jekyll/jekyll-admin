@@ -9,17 +9,15 @@ import {
   getFilenameRequiredMessage
 } from '../constants/lang';
 import {
-  getDataFilesUrl,
-  getDataFileUrl,
-  putDataFileUrl,
-  deleteDataFileUrl
+  datafilesAPIUrl,
+  datafileAPIUrl
 } from '../constants/api';
 
 export function fetchDataFiles() {
   return (dispatch) => {
     dispatch({ type: ActionTypes.FETCH_DATAFILES_REQUEST});
     return get(
-      getDataFilesUrl(),
+      datafilesAPIUrl(),
       { type: ActionTypes.FETCH_DATAFILES_SUCCESS, name: "files"},
       { type: ActionTypes.FETCH_DATAFILES_FAILURE, name: "error"},
       dispatch
@@ -31,7 +29,7 @@ export function fetchDataFile(filename) {
   return (dispatch) => {
     dispatch({ type: ActionTypes.FETCH_DATAFILE_REQUEST});
     return get(
-      getDataFileUrl(filename),
+      datafileAPIUrl(filename),
       { type: ActionTypes.FETCH_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.FETCH_DATAFILE_FAILURE, name: "error"},
       dispatch
@@ -48,7 +46,7 @@ export function putDataFile(filename, data) {
     // clear errors
     dispatch({type: ActionTypes.CLEAR_ERRORS});
     return put(
-      putDataFileUrl(filename),
+      datafileAPIUrl(filename),
       JSON.stringify({ raw_content: data }),
       { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.PUT_DATAFILE_FAILURE, name: "error"},
@@ -70,7 +68,7 @@ function validateDatafile(filename, data) {
 
 export function deleteDataFile(filename) {
   return (dispatch) => {
-    return fetch(deleteDataFileUrl(filename), {
+    return fetch(datafileAPIUrl(filename), {
       method: 'DELETE'
     })
     .then(data => {

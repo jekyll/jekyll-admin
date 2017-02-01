@@ -9,17 +9,15 @@ import {
   getUploadErrorMessage
 } from '../constants/lang';
 import {
-  getStaticFilesUrl,
-  getStaticFileUrl,
-  putStaticFileUrl,
-  deleteStaticFileUrl
+  staticfilesAPIUrl,
+  staticfileAPIUrl
 } from '../constants/api';
 
 export function fetchStaticFiles() {
   return dispatch => {
     dispatch({ type: ActionTypes.FETCH_STATICFILES_REQUEST});
     return get(
-      getStaticFilesUrl(),
+      staticfilesAPIUrl(),
       { type: ActionTypes.FETCH_STATICFILES_SUCCESS, name: "files"},
       { type: ActionTypes.FETCH_STATICFILES_FAILURE, name: "error"},
       dispatch
@@ -37,7 +35,7 @@ export function uploadStaticFiles(files) {
           encoded_content: reader.result.split('base64,')[1]
         });
         // send the put request
-        return fetch(putStaticFileUrl(file.name), {
+        return fetch(staticfileAPIUrl(file.name), {
           method: 'PUT',
           body: payload
         })
@@ -68,7 +66,7 @@ export function uploadStaticFiles(files) {
 
 export function deleteStaticFile(filename) {
   return (dispatch) => {
-    return fetch(deleteStaticFileUrl(filename), {
+    return fetch(staticfileAPIUrl(filename), {
       method: 'DELETE'
     })
     .then(data => {
