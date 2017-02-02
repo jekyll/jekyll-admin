@@ -43,7 +43,7 @@ module JekyllAdmin
       end
 
       if is_a?(Jekyll::Document)
-        output["name"] = basename_without_ext
+        output["name"] = basename
       end
 
       output
