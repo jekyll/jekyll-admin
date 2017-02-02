@@ -7,12 +7,13 @@ import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
+import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import Checkbox from '../../components/form/Checkbox';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
-import { putPage } from '../../actions/pages';
+import { createPage } from '../../actions/pages';
 import { clearErrors } from '../../actions/utils';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
@@ -32,7 +33,7 @@ export class PageNew extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
-      browserHistory.push(`${ADMIN_PREFIX}/pages/${nextProps.page.name}`);
+      browserHistory.push(`${ADMIN_PREFIX}/pages/${nextProps.page.path}`);
     }
   }
 
@@ -43,29 +44,28 @@ export class PageNew extends Component {
   }
 
   handleClickSave() {
-    const { fieldChanged, putPage } = this.props;
+    const { fieldChanged, createPage, params } = this.props;
     if (fieldChanged) {
-      putPage();
+      createPage(params.splat);
     }
   }
 
   render() {
     const { errors, updated, updateTitle, updateBody, updatePath,
-      updateDraft, fieldChanged } = this.props;
+      updateDraft, fieldChanged, params } = this.props;
 
     return (
-      <div>
+      <div className="single">
         {errors.length > 0 && <Errors errors={errors} />}
-
-        <Breadcrumbs
-          onChange={updatePath}
-          link={`${ADMIN_PREFIX}/pages`}
-          type={"pages"}
-          content=""
-          editable />
+        <div className="content-header">
+          <Breadcrumbs
+            type="pages"
+            splat={params.splat || ''} />
+        </div>
 
         <div className="content-wrapper">
           <div className="content-body">
+            <InputPath onChange={updatePath} type="pages" path="" ref="input" />
             <InputTitle onChange={updateTitle} title="" ref="title" />
             <MarkdownEditor
               onChange={updateBody}
@@ -86,7 +86,6 @@ export class PageNew extends Component {
               icon="plus-square"
               block />
           </div>
-
         </div>
       </div>
     );
@@ -94,7 +93,7 @@ export class PageNew extends Component {
 }
 
 PageNew.propTypes = {
-  putPage: PropTypes.func.isRequired,
+  createPage: PropTypes.func.isRequired,
   updateTitle: PropTypes.func.isRequired,
   updateBody: PropTypes.func.isRequired,
   updatePath: PropTypes.func.isRequired,
@@ -104,7 +103,8 @@ PageNew.propTypes = {
   fieldChanged: PropTypes.bool.isRequired,
   updated: PropTypes.bool.isRequired,
   router: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired
+  route: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -119,7 +119,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateBody,
   updatePath,
   updateDraft,
-  putPage,
+  createPage,
   clearErrors
 }, dispatch);
 

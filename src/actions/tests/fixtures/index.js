@@ -92,11 +92,11 @@ export const new_post_with_date = {
 };
 
 export const page = {
-  name: "contact.md",
+  name: "page.md",
   raw_content: "# This is the base Jekyll theme.",
   dir: "/",
   http_url: "http://localhost:4000/page.html",
-  path: "contact.md",
+  path: "page.md",
   front_matter: {
     foo: "bar"
   }
@@ -104,8 +104,8 @@ export const page = {
 
 export const new_page = {
   raw_content: "# This is the base Jekyll theme.",
-  path: "contact.md",
-  title: "Contact",
+  path: "page.md",
+  title: "Page",
   foo: "bar"
 };
 

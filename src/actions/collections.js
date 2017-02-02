@@ -11,18 +11,16 @@ import {
   getFilenameNotValidMessage
 } from '../constants/lang';
 import {
-  getCollectionsUrl,
-  getCollectionUrl,
-  getCollectionDocumentUrl,
-  putCollectionDocumentUrl,
-  deleteCollectionDocumentUrl
+  collectionsAPIUrl,
+  collectionAPIUrl,
+  documentAPIUrl
 } from '../constants/api';
 
 export function fetchCollections() {
   return dispatch => {
     dispatch({ type: ActionTypes.FETCH_COLLECTIONS_REQUEST});
     return get(
-      getCollectionsUrl(),
+      collectionsAPIUrl(),
       { type: ActionTypes.FETCH_COLLECTIONS_SUCCESS, name: "collections"},
       { type: ActionTypes.FETCH_COLLECTIONS_FAILURE, name: "error"},
       dispatch
@@ -30,23 +28,23 @@ export function fetchCollections() {
   };
 }
 
-export function fetchCollection(collection_name) {
+export function fetchCollection(collection_name, directory = '') {
   return dispatch => {
     dispatch({ type: ActionTypes.FETCH_COLLECTION_REQUEST});
     return get(
-      getCollectionUrl(collection_name),
-      { type: ActionTypes.FETCH_COLLECTION_SUCCESS, name: "collection"},
+      collectionAPIUrl(collection_name, directory),
+      { type: ActionTypes.FETCH_COLLECTION_SUCCESS, name: "entries"},
       { type: ActionTypes.FETCH_COLLECTION_FAILURE, name: "error"},
       dispatch
     );
   };
 }
 
-export function fetchDocument(collection_name, id) {
+export function fetchDocument(collection_name, directory, filename) {
   return dispatch => {
     dispatch({ type: ActionTypes.FETCH_DOCUMENT_REQUEST});
     return get(
-      getCollectionDocumentUrl(collection_name, id),
+      documentAPIUrl(collection_name, directory, filename),
       { type: ActionTypes.FETCH_DOCUMENT_SUCCESS, name: "doc"},
       { type: ActionTypes.FETCH_DOCUMENT_FAILURE, name: "error"},
       dispatch
@@ -54,14 +52,13 @@ export function fetchDocument(collection_name, id) {
   };
 }
 
-export function putDocument(id, collection) {
+export function createDocument(collection, directory) {
   return (dispatch, getState) => {
     // get edited fields from metadata state
     const metadata = getState().metadata.metadata;
     let { path, raw_content, title } = metadata;
-
-    // if no path given, generate filename from the title
-    if (!path && title) {
+    // if path is not given or equals to directory, generate filename from the title
+    if ((!path || (`${path}/` == directory)) && title) {
       path = generateFilenameFromTitle(metadata, collection); // override empty path
     } else { // validate otherwise
       const errors = validateDocument(metadata, collection);
@@ -71,19 +68,50 @@ export function putDocument(id, collection) {
     }
     // clear errors
     dispatch({type: ActionTypes.CLEAR_ERRORS});
-
     // omit raw_content, path and empty-value keys in metadata state from front_matter
     const front_matter = _.omit(metadata, (value, key, object) => {
-      if (key == 'raw_content' || key == 'path' || value == '') return true;
+      return key == 'raw_content' || key == 'path' || value == '';
     });
-    const payload = JSON.stringify({ raw_content, path, front_matter });
-
     // send the put request
     return put(
-      putCollectionDocumentUrl(
-        collection, id || getFilenameFromPath(path) // create or update document
-      ),
-      payload,
+      // create or update document according to filename existence
+      documentAPIUrl(collection, directory, path),
+      JSON.stringify({ raw_content, front_matter }),
+      { type: ActionTypes.PUT_DOCUMENT_SUCCESS, name: "doc"},
+      { type: ActionTypes.PUT_DOCUMENT_FAILURE, name: "error"},
+      dispatch
+    );
+  };
+}
+
+export function putDocument(collection, directory, filename) {
+  return (dispatch, getState) => {
+    // get edited fields from metadata state
+    const metadata = getState().metadata.metadata;
+    let { path, raw_content, title } = metadata;
+    // if path is not given or equals to directory, generate filename from the title
+    if ((!path || (`${path}/` == directory)) && title) {
+      path = generateFilenameFromTitle(metadata, collection); // override empty path
+    } else { // validate otherwise
+      const errors = validateDocument(metadata, collection);
+      if (errors.length) {
+        return dispatch(validationError(errors));
+      }
+    }
+    // clear errors
+    dispatch({type: ActionTypes.CLEAR_ERRORS});
+    // omit raw_content, path and empty-value keys in metadata state from front_matter
+    const front_matter = _.omit(metadata, (value, key, object) => {
+      return key == 'raw_content' || key == 'path' || value == '';
+    });
+    // add collection type prefix to relative path
+    const relative_path = directory ?
+      `_${collection}/${directory}/${path}` : `_${collection}/${path}`;
+    // send the put request
+    return put(
+      // create or update document according to filename existence
+      documentAPIUrl(collection, directory, filename),
+      JSON.stringify({ path: relative_path, raw_content, front_matter }),
       { type: ActionTypes.PUT_DOCUMENT_SUCCESS, name: "doc"},
       { type: ActionTypes.PUT_DOCUMENT_FAILURE, name: "error"},
       dispatch
@@ -123,14 +151,14 @@ const validateDocument = (metadata, collection) => {
   return validator(metadata, validations, messages);
 };
 
-export function deleteDocument(id, collection) {
+export function deleteDocument(collection, directory, filename) {
   return (dispatch) => {
-    return fetch(deleteCollectionDocumentUrl(collection, id), {
+    return fetch(documentAPIUrl(collection, directory, filename), {
       method: 'DELETE'
     })
     .then(data => {
       dispatch({ type: ActionTypes.DELETE_DOCUMENT_SUCCESS });
-      dispatch(fetchCollection(collection));
+      dispatch(fetchCollection(collection, directory));
     })
     .catch(error => dispatch({
       type: ActionTypes.DELETE_DOCUMENT_FAILURE,

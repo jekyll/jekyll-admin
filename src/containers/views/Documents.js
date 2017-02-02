@@ -5,10 +5,10 @@ import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import moment from 'moment';
 import InputSearch from '../../components/form/InputSearch';
+import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import { fetchCollection, deleteDocument } from '../../actions/collections';
-import { filterByTitle } from '../../reducers/collections';
-import { capitalize, getFilenameFromPath } from '../../utils/helpers';
+import { filterBySearchInput } from '../../reducers/collections';
 import { search } from '../../actions/utils';
 import {
   getLeaveMessage,
@@ -21,21 +21,23 @@ export class Documents extends Component {
 
   componentDidMount() {
     const { fetchCollection, params } = this.props;
-    fetchCollection(params.collection_name);
+    fetchCollection(params.collection_name, params.splat);
   }
 
   componentWillReceiveProps(nextProps) {
     const { fetchCollection, params } = nextProps;
-    if (params.collection_name !== this.props.params.collection_name) {
-      fetchCollection(params.collection_name);
+    // refetch the collection when navigating between collections or when splat is changed
+    if (params.splat !== this.props.params.splat ||
+        params.collection_name !== this.props.params.collection_name) {
+      fetchCollection(params.collection_name, params.splat);
     }
   }
 
-  handleClickDelete(filename, collection) {
-    const { deleteDocument } = this.props;
+  handleClickDelete(filename) {
+    const { deleteDocument, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(filename));
     if (confirm) {
-      deleteDocument(filename, collection);
+      deleteDocument(params.collection_name, params.splat, filename);
     }
   }
 
@@ -56,46 +58,74 @@ export class Documents extends Component {
     );
   }
 
-  renderRows() {
-    const { documents } = this.props;
-    return _.map(documents, doc => {
-      const { id, slug, title, http_url, collection, path } = doc;
-      const filename = getFilenameFromPath(path);
-      const to = `${ADMIN_PREFIX}/collections/${collection}/${filename}`;
-      let date = doc.date.substring(0, doc.date.lastIndexOf(" ")); // w/o timezone
-      date = moment(date).format("hh:mm:ss") == '12:00:00' ?
-        moment(date).format("ll") :
-        moment(date).format("lll");
+  renderFileRow(doc) {
+    const { id, name, title, http_url, collection, path } = doc;
+    const splat = path.substr(path.indexOf('/')+1, path.length);
+    const to = `${ADMIN_PREFIX}/collections/${collection}/${splat}`;
+    let date = doc.date.substring(0, doc.date.lastIndexOf(" ")); // w/o timezone
+    date = moment(date).format("hh:mm:ss") == '12:00:00' ?
+      moment(date).format("ll") :
+      moment(date).format("lll");
 
-      return (
-        <tr key={id}>
-          <td className="row-title">
-            <strong>
-              <Link to={to}>{title || slug}</Link>
-            </strong>
-          </td>
-          <td>{date}</td>
-          <td>
-            <div className="row-actions">
+    return (
+      <tr key={id}>
+        <td className="row-title">
+          <strong>
+            <Link to={to}>{title || name}</Link>
+          </strong>
+        </td>
+        <td>{date}</td>
+        <td>
+          <div className="row-actions">
+            <Button
+              onClick={() => this.handleClickDelete(name)}
+              type="delete"
+              icon="trash"
+              active={true}
+              thin />
+            {
+              http_url &&
               <Button
-                onClick={() => this.handleClickDelete(filename, collection)}
-                type="delete"
-                icon="trash"
+                to={http_url}
+                type="view"
+                icon="eye"
                 active={true}
                 thin />
-              {
-                http_url &&
-                <Button
-                  to={http_url}
-                  type="view"
-                  icon="eye"
-                  active={true}
-                  thin />
-              }
-            </div>
-          </td>
-        </tr>
-      );
+            }
+          </div>
+        </td>
+      </tr>
+    );
+  }
+
+  renderDirectoryRow(directory) {
+    const { params: { collection_name } } = this.props;
+    const { name, path, modified_time, api_url } = directory;
+    const splat = path.substr(path.indexOf('/')+1, path.length);
+    const to = `${ADMIN_PREFIX}/collections/${collection_name}/${splat}`;
+    const date = moment(modified_time).format("ll");
+    return (
+      <tr key={name}>
+        <td className="row-title">
+          <strong>
+            <Link to={to}><i className="fa fa-folder" aria-hidden="true"></i>
+            {name}</Link>
+          </strong>
+        </td>
+        <td>{date}</td>
+        <td></td>
+      </tr>
+    );
+  }
+
+  renderRows() {
+    const { documents } = this.props;
+    return _.map(documents, entry => {
+      if (entry.type && entry.type == 'directory') {
+        return this.renderDirectoryRow(entry);
+      } else {
+        return this.renderFileRow(entry);
+      }
     });
   }
 
@@ -107,12 +137,17 @@ export class Documents extends Component {
       return null;
     }
 
+    const splat = params.splat || '';
+    const to = params.splat ?
+      `${ADMIN_PREFIX}/collections/${collection_name}/${splat}/new` :
+      `${ADMIN_PREFIX}/collections/${collection_name}/new`;
+
     return (
       <div>
         <div className="content-header">
-          <h1>{capitalize(collection_name)}</h1>
+          <Breadcrumbs type={collection_name} splat={splat} />
           <div className="page-buttons">
-            <Link className="btn btn-active" to={`${ADMIN_PREFIX}/collections/${collection_name}/new`}>
+            <Link className="btn btn-active" to={to}>
               {collection_name == "posts" ? "New post" : "New document"}
             </Link>
           </div>
@@ -141,8 +176,8 @@ Documents.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-  documents: filterByTitle(
-    state.collections.currentCollection.documents,
+  documents: filterBySearchInput(
+    state.collections.entries,
     state.utils.input
   ),
   isFetching: state.collections.isFetching

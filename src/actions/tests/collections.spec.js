@@ -44,19 +44,19 @@ describe('Actions::Collections', () => {
       });
   });
 
-  it('fetches the collection successfully', () => {
+  it("fetches the collection's entries successfully", () => {
     nock(API)
-      .get(`/collections/${collection.label}`)
-      .reply(200, collection);
+      .get(`/collections/posts/entries`)
+      .reply(200, [collection]);
 
     const expectedActions = [
       {type: types.FETCH_COLLECTION_REQUEST},
-      {type: types.FETCH_COLLECTION_SUCCESS, collection }
+      {type: types.FETCH_COLLECTION_SUCCESS, entries: [collection] }
     ];
 
     const store = mockStore({ movies: {} });
 
-    return store.dispatch(actions.fetchCollection(collection.label))
+    return store.dispatch(actions.fetchCollection('posts', ''))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -74,7 +74,7 @@ describe('Actions::Collections', () => {
 
     const store = mockStore({ currentDocument: {} });
 
-    return store.dispatch(actions.fetchDocument(doc.collection, filename))
+    return store.dispatch(actions.fetchDocument(doc.collection, '', filename))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -92,7 +92,7 @@ describe('Actions::Collections', () => {
 
     const store = mockStore({});
 
-    return store.dispatch(actions.deleteDocument(filename, doc.collection))
+    return store.dispatch(actions.deleteDocument(doc.collection, '', filename))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -110,7 +110,7 @@ describe('Actions::Collections', () => {
 
     const store = mockStore({});
 
-    return store.dispatch(actions.deleteDocument(filename, doc.collection))
+    return store.dispatch(actions.deleteDocument(doc.collection, filename, ''))
       .then(() => {
         expect(store.getActions()[0].type).toEqual(expectedAction.type);
       });
@@ -128,7 +128,7 @@ describe('Actions::Collections', () => {
 
     const store = mockStore({metadata: { metadata: doc}});
 
-    return store.dispatch(actions.putDocument(filename, doc.collection))
+    return store.dispatch(actions.putDocument(doc.collection, '', filename))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -146,7 +146,7 @@ describe('Actions::Collections', () => {
 
     const store = mockStore({metadata: { metadata: doc}});
 
-    return store.dispatch(actions.putDocument(filename, doc.collection))
+    return store.dispatch(actions.putDocument(doc.collection, filename))
       .then(() => {
         expect(store.getActions()[1].type).toEqual(expectedActions[1].type);
       });
@@ -164,7 +164,7 @@ describe('Actions::Collections', () => {
 
     const store = mockStore({metadata: { metadata: new_doc}});
 
-    return store.dispatch(actions.putDocument(null, new_doc.collection))
+    return store.dispatch(actions.createDocument(new_doc.collection, ''))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -182,7 +182,7 @@ describe('Actions::Collections', () => {
 
     const store = mockStore({metadata: { metadata: {...new_doc, path: ''}}});
 
-    return store.dispatch(actions.putDocument(null, new_doc.collection))
+    return store.dispatch(actions.createDocument(new_doc.collection, ''))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -208,7 +208,7 @@ describe('Actions::Collections', () => {
       }
     });
 
-    return store.dispatch(actions.putDocument(null, new_post_with_date.collection))
+    return store.dispatch(actions.createDocument(new_post_with_date.collection, ''))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -228,7 +228,7 @@ describe('Actions::Collections', () => {
 
     const store = mockStore({metadata: { metadata: _.omit(doc, ['title','path']) }});
 
-    store.dispatch(actions.putDocument(doc.id, doc.collection));
+    store.dispatch(actions.putDocument(doc.collection, doc.id));
     expect(store.getActions()).toEqual(expectedActions);
   });
 
@@ -246,7 +246,7 @@ describe('Actions::Collections', () => {
       metadata: { metadata: { title: 'test', path: '2016-33-33-title.md'} }
     });
 
-    store.dispatch(actions.putDocument(doc.id, 'posts'));
+    store.dispatch(actions.putDocument('posts', doc.id));
     expect(store.getActions()).toEqual(expectedActions);
   });
 });

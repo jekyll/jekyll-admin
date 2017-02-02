@@ -7,6 +7,7 @@ import Button from '../../components/Button';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../MetaFields';
@@ -27,17 +28,20 @@ export class PageEdit extends Component {
 
   componentDidMount() {
     const { fetchPage, params, router, route } = this.props;
+    const [directory, ...rest] = params.splat;
+    const filename = rest.join('.');
+    fetchPage(directory, filename);
+
     router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
-    fetchPage(params.id);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
-      const new_name = nextProps.page.name;
-      const name = this.props.page.name;
-      // redirect if the name is changed
-      if (new_name != name) {
-        browserHistory.push(`${ADMIN_PREFIX}/pages/${new_name}`);
+      const new_path = nextProps.page.path;
+      const path = this.props.page.path;
+      // redirect if the path is changed
+      if (new_path != path) {
+        browserHistory.push(`${ADMIN_PREFIX}/pages/${new_path}`);
       }
     }
   }
@@ -48,25 +52,29 @@ export class PageEdit extends Component {
     }
   }
 
-  handleClickSave(name) {
-    const { putPage, fieldChanged } = this.props;
+  handleClickSave() {
+    const { putPage, fieldChanged, params } = this.props;
     if (fieldChanged) {
-      putPage(name);
+      const [directory, ...rest] = params.splat;
+      const filename = rest.join('.');
+      putPage(directory, filename);
     }
   }
 
   handleClickDelete(name) {
-    const { deletePage } = this.props;
+    const { deletePage, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(name));
     if (confirm) {
-      deletePage(name);
-      browserHistory.push(`${ADMIN_PREFIX}/pages`);
+      const [directory, ...rest] = params.splat;
+      const filename = rest.join('.');
+      deletePage(directory, filename);
+      browserHistory.push(`${ADMIN_PREFIX}/pages/${directory || ''}`);
     }
   }
 
   render() {
     const { isFetching, page, errors, updateTitle, updateBody, updatePath,
-      updated, fieldChanged } = this.props;
+      updated, fieldChanged, params } = this.props;
 
     if (isFetching) {
       return null;
@@ -77,25 +85,22 @@ export class PageEdit extends Component {
     }
 
     const { name, raw_content, http_url, path, front_matter } = page;
-    const title = front_matter.title ? front_matter.title : '';
-
+    const [directory, ...rest] = params.splat;
+    const title = front_matter && front_matter.title ? front_matter.title : '';
     return (
-      <div>
+      <div className="single">
         {errors.length > 0 && <Errors errors={errors} />}
-
-        <Breadcrumbs
-          onChange={updatePath}
-          content={path}
-          link={`${ADMIN_PREFIX}/pages`}
-          type="pages"
-          editable />
+        <div className="content-header">
+          <Breadcrumbs splat={directory || ''} type="pages" />
+        </div>
 
         <div className="content-wrapper">
           <div className="content-body">
+            <InputPath onChange={updatePath} type="pages" path={name} ref="input" />
             <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}
-              onSave={() => this.handleClickSave(name)}
+              onSave={() => this.handleClickSave()}
               placeholder="Body"
               initialValue={raw_content}
               ref="editor" />
@@ -105,7 +110,7 @@ export class PageEdit extends Component {
 
           <div className="content-side">
             <Button
-              onClick={() => this.handleClickSave(name)}
+              onClick={() => this.handleClickSave()}
               type="save"
               active={fieldChanged}
               triggered={updated}
@@ -125,7 +130,6 @@ export class PageEdit extends Component {
               icon="trash"
               block />
           </div>
-
         </div>
       </div>
     );

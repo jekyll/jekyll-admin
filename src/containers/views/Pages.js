@@ -3,11 +3,12 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
+import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
 import { fetchPages, deletePage } from '../../actions/pages';
 import { search } from '../../actions/utils';
-import { filterByFilename } from '../../reducers/pages';
+import { filterBySearchInput } from '../../reducers/pages';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/lang';
@@ -16,15 +17,22 @@ import { ADMIN_PREFIX } from '../../constants';
 export class Pages extends Component {
 
   componentDidMount() {
-    const { fetchPages } = this.props;
-    fetchPages();
+    const { fetchPages, params } = this.props;
+    fetchPages(params.splat);
   }
 
-  handleClickDelete(name) {
-    const { deletePage } = this.props;
-    const confirm = window.confirm(getDeleteMessage(name));
+  componentWillReceiveProps(nextProps) {
+    const { fetchPages } = nextProps;
+    if (this.props.params.splat !== nextProps.params.splat) {
+      fetchPages(nextProps.params.splat);
+    }
+  }
+
+  handleClickDelete(filename) {
+    const { deletePage, params } = this.props;
+    const confirm = window.confirm(getDeleteMessage(filename));
     if (confirm) {
-      deletePage(name);
+      deletePage(params.splat, filename);
     }
   }
 
@@ -44,52 +52,81 @@ export class Pages extends Component {
     );
   }
 
+  renderFileRow(file) {
+    const { name, path, api_url, http_url, title } = file;
+    const to = `${ADMIN_PREFIX}/pages/${path}`;
+    return (
+      <tr key={name}>
+        <td className="row-title">
+          <strong>
+            <Link to={to}>{name}</Link>
+          </strong>
+        </td>
+        <td>
+          <div className="row-actions">
+            <Button
+              onClick={() => this.handleClickDelete(name)}
+              type="delete"
+              icon="trash"
+              active={true}
+              thin />
+            <Button
+              to={http_url}
+              type="view"
+              icon="eye"
+              active={true}
+              thin />
+          </div>
+        </td>
+      </tr>
+    );
+  }
+
+  renderDirectoryRow(directory) {
+    const { name, path, api_url } = directory;
+    const to = `${ADMIN_PREFIX}/pages/${path}`;
+    return (
+      <tr key={name}>
+        <td className="row-title">
+          <strong>
+            <Link to={to}>
+              <i className="fa fa-folder" aria-hidden="true"></i>
+              {name}
+            </Link>
+          </strong>
+        </td>
+        <td></td>
+      </tr>
+    );
+  }
+
   renderRows() {
     const { pages } = this.props;
-    return _.map(pages, (page) => {
-      const { name, http_url, title } = page;
-      const to = `${ADMIN_PREFIX}/pages/${name}`;
-      return (
-        <tr key={name}>
-          <td className="row-title">
-            <strong>
-              <Link to={to}>{name}</Link>
-            </strong>
-          </td>
-          <td>
-            <div className="row-actions">
-              <Button
-                onClick={() => this.handleClickDelete(name)}
-                type="delete"
-                icon="trash"
-                active={true}
-                thin />
-              <Button
-                to={http_url}
-                type="view"
-                icon="eye"
-                active={true}
-                thin />
-            </div>
-          </td>
-        </tr>
-      );
+    return _.map(pages, entry => {
+      if (entry.type && entry.type == 'directory') {
+        return this.renderDirectoryRow(entry);
+      } else {
+        return this.renderFileRow(entry);
+      }
     });
   }
 
   render() {
-    const { isFetching, pages, search } = this.props;
+    const { isFetching, pages, search, params } = this.props;
 
     if (isFetching) {
       return null;
     }
 
+    const to = params.splat ? `${ADMIN_PREFIX}/pages/${params.splat}/new` :
+      `${ADMIN_PREFIX}/pages/new`;
+
     return (
       <div>
         <div className="content-header">
-          <h1>Pages</h1>
+          <Breadcrumbs type="pages" splat={params.splat || ''} />
           <div className="page-buttons">
-            <Link className="btn btn-active" to={`${ADMIN_PREFIX}/pages/new`}>New page</Link>
+            <Link className="btn btn-active" to={to}>New page</Link>
           </div>
           <div className="pull-right">
             <InputSearch searchBy="filename" search={search} />
@@ -111,11 +148,12 @@ Pages.propTypes = {
   fetchPages: PropTypes.func.isRequired,
   deletePage: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  search: PropTypes.func.isRequired
+  search: PropTypes.func.isRequired,
+  params: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-  pages: filterByFilename(state.pages.pages, state.utils.input),
+  pages: filterBySearchInput(state.pages.pages, state.utils.input),
   isFetching: state.pages.isFetching
 });
 

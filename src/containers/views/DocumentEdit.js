@@ -7,13 +7,13 @@ import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
+import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
 import { fetchDocument, deleteDocument, putDocument } from '../../actions/collections';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
-import { getFilenameFromPath } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/lang';
@@ -28,19 +28,22 @@ export class DocumentEdit extends Component {
 
   componentDidMount() {
     const { fetchDocument, params, router, route } = this.props;
+    const [directory, ...rest] = params.splat;
+    const filename = rest.join('.');
+    fetchDocument(params.collection_name, directory, filename);
+
     router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
-    fetchDocument(params.collection_name, params.id);
   }
 
   componentWillReceiveProps(nextProps) {
+    const { currentDocument, params } = this.props;
     if (this.props.updated !== nextProps.updated) {
       const new_path = nextProps.currentDocument.path;
-      const path = this.props.currentDocument.path;
+      const path = currentDocument.path;
       // redirect if the path is changed
       if (new_path != path) {
-        const filename = getFilenameFromPath(new_path);
         browserHistory.push(
-          `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${filename}`
+          `${ADMIN_PREFIX}/collections/${new_path.substring(1)}` // remove `_`
         );
       }
     }
@@ -52,26 +55,34 @@ export class DocumentEdit extends Component {
     }
   }
 
-  handleClickSave(id, collection) {
-    const { putDocument, fieldChanged } = this.props;
+  handleClickSave() {
+    const { putDocument, fieldChanged, params } = this.props;
     if (fieldChanged) {
-      putDocument(id, collection);
+      const collection = params.collection_name;
+      const [directory, ...rest] = params.splat;
+      const filename = rest.join('.');
+      putDocument(collection, directory, filename);
     }
   }
 
-  handleClickDelete(filename, collection) {
-    const { deleteDocument } = this.props;
+  handleClickDelete() {
+    const { deleteDocument, params } = this.props;
+    const [directory, ...rest] = params.splat;
+    const filename = rest.join('.');
     const confirm = window.confirm(getDeleteMessage(filename));
     if (confirm) {
-      deleteDocument(filename, collection);
-      browserHistory.push(`${ADMIN_PREFIX}/collections/${collection}`);
+      const collection = params.collection_name;
+      deleteDocument(collection, directory, filename);
+      browserHistory.push(
+        `${ADMIN_PREFIX}/collections/${collection}/${directory || ''}`
+      );
     }
   }
 
   render() {
     const {
       isFetching, currentDocument, errors, updateTitle, updateBody, updatePath, updated,
-      fieldChanged
+      fieldChanged, params
     } = this.props;
 
     if (isFetching) {
@@ -82,27 +93,27 @@ export class DocumentEdit extends Component {
       return <h1>{getNotFoundMessage("document")}</h1>;
     }
 
-    const { title, raw_content, draft, http_url, path, collection, front_matter } = currentDocument;
-
-    const filename = getFilenameFromPath(path);
+    const {
+      title, raw_content, draft, http_url, path, collection, front_matter, name
+    } = currentDocument;
+    const [directory, ...rest] = params.splat;
 
     return (
-      <div>
+      <div className="single">
         {errors.length > 0 && <Errors errors={errors} />}
-
-        <Breadcrumbs
-          onChange={updatePath}
-          link={`${ADMIN_PREFIX}/collections/${collection}`}
-          content={path}
-          type={collection}
-          editable />
+        <div className="content-header">
+          <Breadcrumbs
+            splat={directory || ''}
+            type={collection} />
+        </div>
 
         <div className="content-wrapper">
           <div className="content-body">
+            <InputPath onChange={updatePath} type={collection} path={name} ref="input" />
             <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}
-              onSave={() => this.handleClickSave(filename, collection)}
+              onSave={() => this.handleClickSave()}
               placeholder="Body"
               initialValue={raw_content}
               ref="editor" />
@@ -112,7 +123,7 @@ export class DocumentEdit extends Component {
 
           <div className="content-side">
             <Button
-              onClick={() => this.handleClickSave(filename, collection)}
+              onClick={() => this.handleClickSave()}
               type="save"
               active={fieldChanged}
               triggered={updated}
@@ -129,7 +140,7 @@ export class DocumentEdit extends Component {
             }
             <Splitter />
             <Button
-              onClick={() => this.handleClickDelete(filename, collection)}
+              onClick={() => this.handleClickDelete()}
               type="delete"
               active={true}
               icon="trash"
