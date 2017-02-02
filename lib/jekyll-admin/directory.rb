@@ -11,6 +11,16 @@ module JekyllAdmin
 
     TYPE = "directory".freeze
 
+    # Arguments:
+    #
+    # path - full path of the directory which its entries will be listed
+    #
+    # base - passes site.source to generate `relative_path` needed for `to_api`
+    #
+    # content_type - type of the requested directory entries, this is used to generate
+    # API endpoint of the directory along with `splat`
+    #
+    # splat - the requested directory path relative to content namespace
     def initialize(path, base: nil, content_type: nil, splat: nil)
       @base = Pathname.new base
       @content_type = content_type
