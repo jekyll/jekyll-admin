@@ -69,14 +69,11 @@ export class DataFileEdit extends Component {
     const filename = getFilenameFromPath(path);
 
     return (
-      <div>
+      <div className="single">
         {errors.length > 0 && <Errors errors={errors} />}
-
-        <Breadcrumbs
-          link={`${ADMIN_PREFIX}/datafiles`}
-          content={filename}
-          type="datafiles"
-          />
+        <div className="content-header">
+          <Breadcrumbs splat={filename} type="datafiles" />
+        </div>
 
         <div className="content-wrapper">
           <div className="content-body">
