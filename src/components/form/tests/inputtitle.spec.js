@@ -13,16 +13,22 @@ function setup(props = {title: 'GSoC'}) {
     <InputTitle {...props} {...actions} />
   );
 
-  return {component, props, actions};
+  return {
+    component,
+    textarea: component.find('textarea'),
+    props,
+    actions
+  };
 }
 
 describe('Components::InputTitle', () => {
   it('should return the current input value', () => {
     const { component, props} = setup();
   });
+
   it('should call onChange', () => {
-    const { component, actions } = setup();
-    component.simulate('change');
+    const { textarea, actions } = setup();
+    textarea.simulate('change');
     expect(actions.onChange).toHaveBeenCalled();
   });
 });
