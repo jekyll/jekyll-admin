@@ -90,7 +90,7 @@
   .content-header {
     display: flex;
     align-items: center;
-    margin: 0 0 35px 0;
+    margin: 0 0 40px 0;
     h1 {
       margin: 0 40px 0 0;
       float: left;
@@ -98,6 +98,15 @@
     }
     .page-buttons {
       display: flex;
+    }
+  }
+
+  .single {
+    .breadcrumbs {
+      width: 100%;
+      input {
+        width: 100%;
+      }
     }
   }
 

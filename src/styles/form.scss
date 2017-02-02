@@ -24,8 +24,8 @@
 
 .input-title {
   display:inline-block;
-  margin: 0 0 20px 0;
-  padding: 0 0 12px 0;
+  padding: 0;
+  margin: 5px 0 30px 0;
   width: 100%;
   min-height: 57px;
   font-size: 45px;
@@ -33,12 +33,36 @@
   resize: vertical;
   word-wrap: break-word;
   background: none;
-  line-height: 1.2;
   -webkit-font-smoothing: antialiased;
   outline: none;
   box-shadow: none;
   border: 0;
-  border-bottom: 1px solid #ededed;
+  border-bottom: 1px solid #ccc;
+  &:focus {
+    color: #000 !important;
+    border-bottom: 2px solid $border-color-focus;
+  }
+  &:hover {
+    color: #888;
+  }
+}
+
+.input-path {
+  display:inline-block;
+  padding: 0;
+  margin: 5px 0 30px 0;
+  width: 100%;
+  min-height: 30px;
+  font-size: 20px;
+  overflow: hidden;
+  resize: vertical;
+  word-wrap: break-word;
+  background: none;
+  -webkit-font-smoothing: antialiased;
+  outline: none;
+  box-shadow: none;
+  border: 0;
+  border-bottom: 1px solid #ccc;
   &:focus {
     color: #000 !important;
     border-bottom: 2px solid $border-color-focus;

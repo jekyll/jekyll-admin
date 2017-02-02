@@ -1,51 +1,52 @@
 import React, { Component, PropTypes } from 'react';
 import { Link } from 'react-router';
 import _ from 'underscore';
-import moment from 'moment';
 import { toTitleCase } from '../utils/helpers';
+import { ADMIN_PREFIX } from '../constants';
 
 export default class Breadcrumbs extends Component {
 
-  handleChange(e) {
-    const { onChange } = this.props;
-    onChange(e.target.value);
-  }
-
   render() {
-    const { link, type, content, editable } = this.props;
-
-    let node = null;
-    if (editable) {
-      let placeholder = 'example.md';
-      if (type == 'posts') {
-        const date = moment().format('YYYY-MM-DD');
-        placeholder = `${date}-your-title.md`;
-      }else if (type == 'datafiles') {
-        placeholder = 'your-filename.yml';
-      }
-      node = (<input onChange={(e) => this.handleChange(e)}
-        placeholder={placeholder}
-        defaultValue={content}
-        ref="input" />);
+    const { splat, type } = this.props;
+    // generate links from `splat`
+    let base;
+    if (type == 'pages') {
+      base = `${ADMIN_PREFIX}/pages`;
+    } else if (type == 'datafiles') {
+      base = `${ADMIN_PREFIX}/datafiles`;
     } else {
-      node = content;
+      base = `${ADMIN_PREFIX}/collections/${type}`;
     }
+    let links;
+    if (splat) {
+      const paths = splat.split('/');
+      links = _.map(paths, (path, i) => {
+        const before = (i == 0) ? '' : paths.slice(0, i).join('/') + '/';
+        return {
+          href: `${base}/${before}${path}`,
+          label: path
+        };
+      });
+    }
+
+    let nodes = _.map(links, (link, i) => {
+      if (link.href) {
+        return <li key={i}><Link to={link.href}>{link.label}</Link></li>;
+      } else {
+        return <li key={i}>{toTitleCase(link.label)}</li>;
+      }
+    });
 
     return (
       <ul className="breadcrumbs">
-        <li><Link to={link}>{toTitleCase(type)}</Link></li>
-        <li className="filename">
-          {node}
-        </li>
+        <li><Link to={base}>{toTitleCase(type)}</Link></li>
+        {nodes}
       </ul>
     );
   }
 }
 
 Breadcrumbs.propTypes = {
-  link: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  content: PropTypes.string.isRequired,
-  editable: PropTypes.bool,
-  onChange: PropTypes.func
+  splat: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
 };

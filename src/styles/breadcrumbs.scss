@@ -1,41 +1,19 @@
 .breadcrumbs {
-  display: flex;
-  align-items: center;
-  margin-bottom: 40px;
+  margin: 0 30px 10px 0;
   list-style: none;
   padding: 0;
   li {
-    font-size: 20px;
     float: left;
     position: relative;
     &:not(:last-child):after {
-      content: " / ";
-      padding: 0 10px;
+      content: "/";
+      padding: 0 8px;
     }
     a {
       color: #444;
+      font-size: 30px;
       &:hover {
         color: $dark-orange;
-      }
-    }
-  }
-  li.filename {
-    display: flex;
-    align-items: center;
-    flex: 1;
-    input {
-      color: $dark-orange;
-      height: 30px;
-      width: 100%;
-      padding: 0 .4em;
-      border: none;
-      background: transparent;
-      outline: none;
-      &:focus {
-        color: #000 !important;
-      }
-      &:hover {
-        color: $orange;
       }
     }
   }
