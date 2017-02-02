@@ -1,8 +1,8 @@
 import expect from 'expect';
-import reducer from '../pages';
+import reducer, { filterBySearchInput } from '../pages';
 import * as types from '../../constants/actionTypes';
 
-import { page } from './fixtures';
+import { page, page_entries } from './fixtures';
 
 describe('Reducers::Pages', () => {
   it('should return the initial state', () => {
@@ -84,5 +84,9 @@ describe('Reducers::Pages', () => {
     ).toEqual({
       updated: false
     });
+  });
+
+  it('should filter pages and directories', () => {
+    expect(filterBySearchInput(page_entries, 'gsoc').length).toBe(1);
   });
 });

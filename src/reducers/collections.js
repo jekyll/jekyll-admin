@@ -10,7 +10,7 @@ import _ from 'underscore';
 
 export default function collections(state = {
   collections: [],
-  currentCollection: {},
+  entries: [],
   currentDocument: {},
   isFetching: false,
   updated: false
@@ -29,7 +29,7 @@ export default function collections(state = {
       });
     case FETCH_COLLECTION_SUCCESS:
       return Object.assign({}, state, {
-        currentCollection: action.collection,
+        entries: action.entries,
         isFetching: false
       });
     case FETCH_DOCUMENT_SUCCESS:
@@ -56,14 +56,18 @@ export default function collections(state = {
 }
 
 // Selectors
-export const filterByTitle = (list, input) => {
+export const filterBySearchInput = (list, input) => {
   if (!list) {
     return [];
   }
   if (input) {
-    return list.filter(
-      p => p.title.toLowerCase().indexOf(input.toLowerCase()) > -1
-    );
+    return _.filter(list, item => {
+      if (item.type) {
+         return item.name.toLowerCase().indexOf(input.toLowerCase()) > -1;
+      } else {
+        return item.title.toLowerCase().indexOf(input.toLowerCase()) > -1;
+      }
+    });
   }
   return list;
 };

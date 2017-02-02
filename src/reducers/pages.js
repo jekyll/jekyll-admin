@@ -52,7 +52,7 @@ export default function pages(state = {
 }
 
 // Selectors
-export const filterByFilename = (list, input) => {
+export const filterBySearchInput = (list, input) => {
   if (input) {
     return list.filter(
       p => p.name.toLowerCase().indexOf(input.toLowerCase()) > -1
