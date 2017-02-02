@@ -9,7 +9,7 @@ module JekyllAdmin
     include JekyllAdmin::URLable
     include JekyllAdmin::APIable
 
-    TYPE = "directory".freeze
+    TYPE = :directory
 
     # Arguments:
     #
