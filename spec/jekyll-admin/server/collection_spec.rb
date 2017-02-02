@@ -133,10 +133,9 @@ describe "collections" do
       expect(last_response_parsed["breed"]).to eq("Golden Retriever")
     end
 
-    it "returns `directory` and `filename` fields" do
+    it "returns `name` field" do
       get "/collections/puppies/rover.md"
       expect(last_response).to be_ok
-      expect(last_response_parsed["dir"]).to eq("/_puppies")
       expect(last_response_parsed["name"]).to eq("rover.md")
     end
 

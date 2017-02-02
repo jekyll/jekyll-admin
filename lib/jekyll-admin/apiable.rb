@@ -43,19 +43,13 @@ module JekyllAdmin
       end
 
       if is_a?(Jekyll::Document)
-        output["dir"] = File.join("/", relative_path_from_source.dirname.to_s)
-        output["name"] = relative_path_from_source.basename
+        output["name"] = basename_without_ext
       end
 
       output
     end
 
     private
-
-    # returns the relative path from site's source
-    def relative_path_from_source
-      Pathname.new(file_path).relative_path_from(Pathname.new(site.source))
-    end
 
     # Pages don't have a hash method, but Documents do
     def file_path
