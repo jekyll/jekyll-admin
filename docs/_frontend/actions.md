@@ -19,22 +19,28 @@ Action for notifying whether the YAML editor has changed after last update
 
 ## Pages
 
-### > `fetchPages`
+### > `fetchPages(directory)`
 
-Async action for fetching an array of page objects.
+Async action for fetching an array of page objects in a directory.
 
-### > `fetchPage(id)`
+### > `fetchPage(directory, filename)`
 
-Async action for fetching the requested page.
+Async action for fetching the requested page in a directory.
 
-### > `putPage(id)`
+### > `createPage(directory)`
 
-Async action for creating/updating the requested page. The updated content comes
-from `state.metadata`. If the filename is not provided, it is auto-generated from the title.
+Async action for creating a page in the requested directory. The content comes
+from `state.metadata`. If the path is not provided, it is auto-generated from the title.
 
-### > `deletePage(id)`
+### > `putPage(directory, filename)`
 
-Async action for deleting the requested page. After deletion, page list is requested.
+Async action for updating the requested page. The updated content comes
+from `state.metadata`.
+
+### > `deletePage(directory, filename)`
+
+Async action for deleting the requested page in a directory.
+After deletion, page list is requested.
 
 ## Collections
 
@@ -42,21 +48,30 @@ Async action for deleting the requested page. After deletion, page list is reque
 
 Async action for fetching an array of the registered collections (including posts).
 
-### > `fetchCollection(collection_name)`
+### > `fetchCollection(collection_name, directory)`
 
-Async action for fetching the requested collection with its documents.
+Async action for fetching documents and directories of the requested collection
+inside the requested directory.
 
-### > `fetchDocument(collection_name, id)`
+### > `fetchDocument(collection_name, directory, filename)`
 
-Async action for fetching the requested document. The response includes the document body.
+Async action for fetching the requested document in a directory.
+The response includes the document body.
 
-### > `putDocument(id, collection_name)`
+### > `createDocument(collection_name, directory)`
 
-Async action for creating/updating the requested document. The response includes the document body. The updated content comes from `state.metadata`. If the filename is not provided, it is auto-generated from the title.
+Async action for creating a document in the requested directory.
+The content comes from `state.metadata`. If the path is not provided,
+it is auto-generated from the title.
 
-### > `deleteDocument(collection_name, id)`
+### > `putDocument(collection_name, directory, filename)`
 
-Async action for deleting the document from disk. After deletion, collection is requested.
+Async action for updating the requested document. The updated content comes from `state.metadata`. If the filename is not provided, it is auto-generated from the title.
+The response includes the document body. 
+
+### > `deleteDocument(collection_name, directory, filename)`
+
+Async action for deleting the document in a directory from disk. After deletion, collection documents are requested.
 
 ## Metadata
 

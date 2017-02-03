@@ -50,6 +50,27 @@ When making a request, clients can set the following top-level fields:
 * `front_matter` - the entire YAML front matter object to be written to disk (currently `meta`)
 * `path` - the new file path relative to the site source, if the file is to be renamed
 
+##### Pages & Documents in subdirectories
+
+In order to determine which pages and documents are in which subdirectories, API looks for
+the project's file structure and lists all files and directories at a given path together.
+Directories are represented as JSON objects resulting from calling
+`JekyllAdmin::Directory.new`. The resulting JSON objects then merged with
+pages/documents at the same level to be served in index endpoints.
+
+A standard JSON object of a directory looks like this:
+
+```json
+{
+  "name": "test",
+  "modified_time": "2017-02-02 23:48:11 +0200",
+  "path": "_posts/test",
+  "type": "directory",
+  "http_url": null,
+  "api_url": "http://localhost:4000/_api/collections/posts/entries/test"
+},
+```
+
 #### Data files and the config file
 
 Data files and the config file are direct JSON representations of the underlying YAML File.
@@ -73,7 +94,12 @@ Returns an array of the registered collections.
 
 #### `GET /collections/:collection_name`
 
-Returns information about the requested collection along with an array of corresponding document objects. Documents are sorted by date reverse chronologically and the response does not include the document body.
+Returns information about the requested collection.
+
+#### `GET /collections/:collection_name/entries/:path`
+
+Returns an array of documents and directories for the requested path.
+The response does not include documents' body.
 
 #### `GET /collections/:collection_name/:path`
 
@@ -95,13 +121,15 @@ Delete the requested document from disk.
 * `raw_content` - the page's body (`String`)
 * `front_matter` - the page's YAML front matter (`Object`)
 
-#### `GET /pages`
-
-Return an array of page objects. The response does not include the page body.
-
 #### `GET /pages/:path`
 
-Returns the requested page. The response includes the page body.
+Returns an array of pages and directories for the requested path. If `path`
+is not provided, entries at the root level are returned. The response does not include
+pages' body.
+
+#### `GET /pages/:path/:filename`
+
+Returns the requested page. The response includes the page body. `path` is optional.
 
 #### `PUT /pages/:path`
 
@@ -203,6 +231,8 @@ File will be written to disk in YAML. It will necessarily preserve whitespace or
 Remove the requested data file from disk.
 
 ### Git operations
+
+**NOTE: Git API will be available in the future releases**
 
 #### Parameters
 

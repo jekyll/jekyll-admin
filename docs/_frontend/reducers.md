@@ -36,7 +36,7 @@ description: Specifies how the application’s state changes in response to acti
 ```javascript
 {
   collections: Array,
-  currentCollection: Object,
+  entries: Array,
   currentDocument: Object,
   isFetching: Boolean, // set to true when the document is being fetched
   updated: Boolean // set to true when the document is updated

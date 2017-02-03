@@ -88,7 +88,7 @@ The button is activated when the editor changes.
 
 ## Pages
 
-Container for Pages view. Lists available pages.
+Container for Pages view. Lists available pages and directories.
 
 ### PropTypes
 
@@ -147,7 +147,7 @@ Container for creating a new page.
 
 ## Documents
 
-Container for Documents view. Lists documents of a collection (including posts).
+Container for Documents view. Lists documents and directories of a collection.
 
 ### PropTypes
 
