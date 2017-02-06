@@ -50,7 +50,7 @@ module JekyllAdmin
       end
 
       def request_path
-        sanitized_path File.join(site.source, request_payload["path"])
+        sanitized_path request_payload["path"]
       end
 
       def filename

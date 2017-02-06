@@ -35,7 +35,7 @@ module JekyllAdmin
       private
 
       def request_path
-        sanitized_path File.join(site.source, request_payload["path"])
+        sanitized_path request_payload["path"]
       end
 
       def filename
@@ -48,7 +48,7 @@ module JekyllAdmin
 
       def directory_pages
         pages.find_all do |p|
-          File.dirname(File.join(site.source, p.path)) == directory_path
+          sanitized_path(File.dirname(p.path)) == directory_path
         end
       end
 
@@ -71,7 +71,7 @@ module JekyllAdmin
       end
 
       def directory_path
-        sanitized_path File.join(site.source, params["splat"].first)
+        sanitized_path params["splat"].first
       end
 
       def ensure_directory
