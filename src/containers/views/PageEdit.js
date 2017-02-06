@@ -105,7 +105,7 @@ export class PageEdit extends Component {
               initialValue={raw_content}
               ref="editor" />
             <Splitter />
-            <Metadata fields={{title, raw_content, path, ...front_matter}} />
+            <Metadata fields={{title, raw_content, path: name, ...front_matter}} />
           </div>
 
           <div className="content-side">
