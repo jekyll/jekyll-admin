@@ -54,13 +54,7 @@ module JekyllAdmin
 
       # returns relative path of root level directories that contain pages
       def directory_paths
-        paths = pages.map { |p| sanitized_path p.dir }.uniq
-        source = Pathname.new site.source
-        paths.map do |p|
-          p = Pathname.new p
-          p = p.relative_path_from source
-          p.to_s.split("/")[0]
-        end
+        pages.map { |p| File.dirname(p.path).split("/")[0] }.uniq
       end
 
       def page_path
