@@ -65,7 +65,7 @@ export class PageNew extends Component {
 
         <div className="content-wrapper">
           <div className="content-body">
-            <InputPath onChange={updatePath} type="pages" path="" ref="input" />
+            <InputPath onChange={updatePath} type="pages" path="" />
             <InputTitle onChange={updateTitle} title="" ref="title" />
             <MarkdownEditor
               onChange={updateBody}

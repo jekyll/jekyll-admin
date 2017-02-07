@@ -96,7 +96,7 @@ export class PageEdit extends Component {
 
         <div className="content-wrapper">
           <div className="content-body">
-            <InputPath onChange={updatePath} type="pages" path={name} ref="input" />
+            <InputPath onChange={updatePath} type="pages" path={name} />
             <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}

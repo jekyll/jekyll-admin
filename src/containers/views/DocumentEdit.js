@@ -109,7 +109,7 @@ export class DocumentEdit extends Component {
 
         <div className="content-wrapper">
           <div className="content-body">
-            <InputPath onChange={updatePath} type={collection} path={name} ref="input" />
+            <InputPath onChange={updatePath} type={collection} path={name} />
             <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}
