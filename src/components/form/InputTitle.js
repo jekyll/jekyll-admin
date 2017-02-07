@@ -15,11 +15,10 @@ export default class InputTitle extends Component {
   render() {
     const { title } = this.props;
     return (
-      <div>
+      <div className="input-title">
         <label>Title</label>
         <TextareaAutosize
           onChange={(e) => this.handleChange(e)}
-          className="input-title"
           placeholder="Title"
           defaultValue={title}
           ref="input"
