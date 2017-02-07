@@ -1,9 +1,6 @@
 import expect from 'expect';
 import reducer from '../utils';
-import { filterByFilename } from '../pages';
 import * as types from '../../constants/actionTypes';
-
-import { pages } from './fixtures';
 
 describe('Reducers::Utils', () => {
   it('should return the initial state', () => {
@@ -22,10 +19,6 @@ describe('Reducers::Utils', () => {
     ).toEqual({
       input: "Some post"
     });
-  });
-
-  it('should filter pages', () => {
-    expect(filterByFilename(pages, 'gsoc').length).toBe(1);
   });
 
   it('should validate form', () => {

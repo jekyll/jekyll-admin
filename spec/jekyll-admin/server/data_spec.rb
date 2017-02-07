@@ -9,7 +9,7 @@ describe "data" do
       "ext"           => ".yml",
       "title"         => "Data File",
       "api_url"       => "http://localhost:4000/_api/data/data_file.yml",
-      "http_url"      => nil
+      "http_url"      => nil,
     }
   end
 
@@ -17,8 +17,8 @@ describe "data" do
     base_response.merge({
       "raw_content" => "foo: bar\n",
       "content"     => {
-        "foo" => "bar"
-      }
+        "foo" => "bar",
+      },
     })
   end
 
@@ -55,10 +55,10 @@ describe "data" do
       "title"         => "Data File New",
       "raw_content"   => "foo: bar\n",
       "content"       => {
-        "foo" => "bar"
+        "foo" => "bar",
       },
       "api_url"       => "http://localhost:4000/_api/data/data-file-new.yml",
-      "http_url"      => nil
+      "http_url"      => nil,
     }
 
     request = { "content" => { "foo" => "bar" } }
@@ -82,10 +82,10 @@ describe "data" do
       "title"         => "Data File New",
       "raw_content"   => "foo: bar\n",
       "content"       => {
-        "foo" => "bar"
+        "foo" => "bar",
       },
       "api_url"       => "http://localhost:4000/_api/data/data-file-new.yml",
-      "http_url"      => nil
+      "http_url"      => nil,
     }
 
     request = { "raw_content" => "foo: bar\n" }
@@ -109,10 +109,10 @@ describe "data" do
       "title"         => "Data File Update",
       "raw_content"   => "foo: bar2\n",
       "content"       => {
-        "foo" => "bar2"
+        "foo" => "bar2",
       },
       "api_url"       => "http://localhost:4000/_api/data/data-file-update.yml",
-      "http_url"      => nil
+      "http_url"      => nil,
     }
 
     request = { "content" => { "foo" => "bar2" } }

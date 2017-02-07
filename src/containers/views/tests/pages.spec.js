@@ -17,6 +17,7 @@ function setup(pages=[page]) {
     <Pages
       pages={pages}
       isFetching={false}
+      params={{ splat: 'page-dir' }}
       {...actions} />
   );
 
@@ -30,8 +31,8 @@ function setup(pages=[page]) {
 
 describe('Containers::Pages', () => {
   it('should render correctly', () => {
-    const { h1 } = setup();
-    expect(h1.text()).toBe('Pages');
+    const { component, table, h1 } = setup();
+    expect(h1.node).toNotExist();
   });
 
   it('should render correctly when there are not any pages', () => {

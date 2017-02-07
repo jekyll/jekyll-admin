@@ -5,27 +5,20 @@ export const API = process.env.NODE_ENV === 'production' ?
 export const getConfigurationUrl = () => `${API}/configuration`;
 export const putConfigurationUrl = () => `${API}/configuration`;
 
-export const getPagesUrl = () => `${API}/pages`;
-export const getPageUrl = (id) => `${API}/pages/${id}`;
-export const putPageUrl = (id) => `${API}/pages/${id}`;
-export const deletePageUrl = (id) => `${API}/pages/${id}`;
+export const pagesAPIUrl = (directory = '') => `${API}/pages/${directory}`;
+export const pageAPIUrl = (directory, filename) =>
+  directory ? `${API}/pages/${directory}/${filename}` : `${API}/pages/${filename}`;
 
-export const getCollectionsUrl = () => `${API}/collections`;
-export const getCollectionUrl = (collection_name) =>
-  `${API}/collections/${collection_name}`;
-export const getCollectionDocumentUrl = (collection_name, id) =>
-  `${API}/collections/${collection_name}/${id}`;
-export const putCollectionDocumentUrl = (collection_name, id) =>
-  `${API}/collections/${collection_name}/${id}`;
-export const deleteCollectionDocumentUrl = (collection_name, id) =>
-  `${API}/collections/${collection_name}/${id}`;
+export const collectionsAPIUrl = () => `${API}/collections`;
+export const collectionAPIUrl = (collection_name, directory) =>
+  directory ? `${API}/collections/${collection_name}/entries/${directory}` :
+  `${API}/collections/${collection_name}/entries`;
+export const documentAPIUrl = (collection_name, directory, filename) =>
+  directory ? `${API}/collections/${collection_name}/${directory}/${filename}` :
+  `${API}/collections/${collection_name}/${filename}`;
 
-export const getDataFilesUrl = () => `${API}/data`;
-export const getDataFileUrl = (filename) => `${API}/data/${filename}`;
-export const putDataFileUrl = (filename) => `${API}/data/${filename}`;
-export const deleteDataFileUrl = (filename) => `${API}/data/${filename}`;
+export const datafilesAPIUrl = () => `${API}/data`;
+export const datafileAPIUrl = (filename) => `${API}/data/${filename}`;
 
-export const getStaticFilesUrl = () => `${API}/static_files`;
-export const getStaticFileUrl = (filename) => `${API}/static_files/${filename}`;
-export const putStaticFileUrl = (filename) => `${API}/static_files/${filename}`;
-export const deleteStaticFileUrl = (filename) => `${API}/static_files/${filename}`;
+export const staticfilesAPIUrl = () => `${API}/static_files`;
+export const staticfileAPIUrl = (filename) => `${API}/static_files/${filename}`;

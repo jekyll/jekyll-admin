@@ -6,11 +6,12 @@ import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
+import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
-import { putDocument } from '../../actions/collections';
+import { createDocument } from '../../actions/collections';
 import { clearErrors } from '../../actions/utils';
 import { getFilenameFromPath } from '../../utils/helpers';
 import {
@@ -33,9 +34,9 @@ export class DocumentNew extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
       const path = nextProps.currentDocument.path;
-      const filename = getFilenameFromPath(path);
+      const splat = path.substr(path.indexOf('/')+1, path.length);
       browserHistory.push(
-        `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${filename}`
+        `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${splat}`
       );
     }
   }
@@ -47,9 +48,10 @@ export class DocumentNew extends Component {
   }
 
   handleClickSave() {
-    const { fieldChanged, putDocument, params } = this.props;
+    const { fieldChanged, createDocument, params } = this.props;
     if (fieldChanged) {
-      putDocument(null,params.collection_name);
+      const { collection_name, splat } = params;
+      createDocument(collection_name, splat);
     }
   }
 
@@ -60,18 +62,17 @@ export class DocumentNew extends Component {
     const link = `${ADMIN_PREFIX}/collections/${collection}`;
 
     return (
-      <div>
+      <div className="single">
         {errors.length > 0 && <Errors errors={errors} />}
-
-        <Breadcrumbs
-          onChange={updatePath}
-          link={link}
-          type={collection}
-          content=""
-          editable />
+        <div className="content-header">
+          <Breadcrumbs
+            type={collection}
+            splat={params.splat || ''} />
+        </div>
 
         <div className="content-wrapper">
           <div className="content-body">
+            <InputPath onChange={updatePath} type={collection} path="" ref="input" />
             <InputTitle onChange={updateTitle} title="" ref="title" />
             <MarkdownEditor
               onChange={updateBody}
@@ -92,7 +93,6 @@ export class DocumentNew extends Component {
               icon="plus-square"
               block />
           </div>
-
         </div>
       </div>
     );
@@ -100,7 +100,7 @@ export class DocumentNew extends Component {
 }
 
 DocumentNew.propTypes = {
-  putDocument: PropTypes.func.isRequired,
+  createDocument: PropTypes.func.isRequired,
   updateTitle: PropTypes.func.isRequired,
   updateBody: PropTypes.func.isRequired,
   updatePath: PropTypes.func.isRequired,
@@ -124,7 +124,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   updateTitle,
   updateBody,
   updatePath,
-  putDocument,
+  createDocument,
   clearErrors
 }, dispatch);
 

@@ -20,7 +20,7 @@ const defaultProps = {
 
 const setup = (props = defaultProps) => {
   const actions = {
-    putDocument: expect.createSpy(),
+    createDocument: expect.createSpy(),
     updateTitle: expect.createSpy(),
     updateBody: expect.createSpy(),
     updatePath: expect.createSpy(),
@@ -56,17 +56,17 @@ describe('Containers::DocumentNew', () => {
     expect(errors.node).toExist();
   });
 
-  it('should not call putDocument if a field is not changed.', () => {
+  it('should not call createDocument if a field is not changed.', () => {
     const { saveButton, actions } = setup();
     saveButton.simulate('click');
-    expect(actions.putDocument).toNotHaveBeenCalled();
+    expect(actions.createDocument).toNotHaveBeenCalled();
   });
 
-  it('should call putDocument if a field is changed.', () => {
+  it('should call createDocument if a field is changed.', () => {
     const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
       fieldChanged: true
     }));
     saveButton.simulate('click');
-    expect(actions.putDocument).toHaveBeenCalled();
+    expect(actions.createDocument).toHaveBeenCalled();
   });
 });

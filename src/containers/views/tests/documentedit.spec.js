@@ -17,7 +17,7 @@ const defaultProps = {
   isFetching: false,
   router: {},
   route: {},
-  params: { id: "the-revenant", collection_name: "movies"}
+  params: { collection_name: "movies", splat: [null, "inception", "md"] }
 };
 
 const setup = (props = defaultProps) => {

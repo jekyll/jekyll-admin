@@ -8,7 +8,11 @@ describe JekyllAdmin::Server do
   it "returns the page index" do
     get "/pages"
     expect(last_response).to be_ok
-    expect(last_response_parsed.first["path"]).to eq("page.md")
+    entries = last_response_parsed
+    first_page = entries.select do |entry|
+      !entry.key? "type"
+    end.first
+    expect(first_page["path"]).to eq("page.md")
   end
 
   it "returns an individual page" do
@@ -23,7 +27,7 @@ describe JekyllAdmin::Server do
 
     expected = {
       "Access-Control-Allow-Origin"  => "http://localhost:3000",
-      "Access-Control-Allow-Methods" => "DELETE, GET, OPTIONS, POST, PUT"
+      "Access-Control-Allow-Methods" => "DELETE, GET, OPTIONS, POST, PUT",
     }
 
     expected.each do |key, value|

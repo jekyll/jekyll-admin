@@ -67,16 +67,17 @@ const page1 = {
   path: "gsoc.md"
 };
 
-const page2 = {
-  name: "jekyll",
-  content: "<h1>This is a test content.</h1>",
-  raw_content: "# This is a test content.",
-  layout: "page",
-  title: "Jekyll",
-  path: "jekyll.md"
+const directory = {
+  name: "page-dir",
+  modified_time: "2017-01-28 19:23:16 +0200",
+  path: "page-dir",
+  type: "directory",
+  http_url: null,
+  api_url: "http://localhost:4000/_api/pages/entries/page-dir"
 };
 
-export const pages = [page, page1, page2];
+export const page_entries = [page, page1, directory];
+export const collection_entries = [doc, directory];
 
 export const meta = {
   layout: "post",

@@ -16,7 +16,7 @@ function setup(documents=[doc]) {
 
   const props = {
     documents,
-    params: { collection_name: 'movies' },
+    params: { collection_name: 'movies', splat: 'test' },
     isFetching: false
   };
 
@@ -34,8 +34,7 @@ function setup(documents=[doc]) {
 
 describe('Containers::Documents', () => {
   it('should render correctly', () => {
-    const { component, h1, new_button } = setup();
-    expect(h1.text()).toBe('Movies');
+    const { component, new_button } = setup();
     expect(new_button.text()).toBe('New document');
     component.setProps({params: {collection_name: "posts"}});
     expect(new_button.text()).toBe('New post');
@@ -48,11 +47,11 @@ describe('Containers::Documents', () => {
     expect(h1.text()).toBe(`No documents found.`);
   });
 
-  it('should show slug if title is empty', () => {
+  it('should show filename if title is empty', () => {
     const { component, row_title } = setup([Object.assign({}, doc, {
       title: ''
     })]);
-    expect(row_title.text()).toBe(doc.slug);
+    expect(row_title.text()).toBe(doc.name);
   });
 
   it('should call fetchDocuments action after mounted', () => {

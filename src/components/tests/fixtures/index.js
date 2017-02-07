@@ -5,8 +5,7 @@ export const content = {
   layout: "default",
   title: "The Revenant",
   path: 'the-revenant.md',
-  draft: false,
-  editable: true
+  draft: false
 };
 
 export const json = {

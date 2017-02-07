@@ -14,12 +14,13 @@ const defaultProps = {
   fieldChanged: false,
   updated: false,
   router: {},
-  route: {}
+  route: {},
+  params: { splat: 'page-dir' }
 };
 
 function setup(props = defaultProps) {
   const actions = {
-    putPage: expect.createSpy(),
+    createPage: expect.createSpy(),
     updateTitle: expect.createSpy(),
     updateBody: expect.createSpy(),
     updatePath: expect.createSpy(),
@@ -58,17 +59,17 @@ describe('Containers::PageNew', () => {
     expect(errors.node).toExist();
   });
 
-  it('should not call putPage if a field is not changed.', () => {
+  it('should not call createPage if a field is not changed.', () => {
     const { saveButton, actions } = setup();
     saveButton.simulate('click');
-    expect(actions.putPage).toNotHaveBeenCalled();
+    expect(actions.createPage).toNotHaveBeenCalled();
   });
 
-  it('should call putPage if a field is changed.', () => {
+  it('should call createPage if a field is changed.', () => {
     const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
       fieldChanged: true
     }));
     saveButton.simulate('click');
-    expect(actions.putPage).toHaveBeenCalled();
+    expect(actions.createPage).toHaveBeenCalled();
   });
 });

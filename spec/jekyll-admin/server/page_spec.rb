@@ -14,16 +14,38 @@ describe "pages" do
   end
 
   context "page index" do
+    let(:entries) { last_response_parsed }
+    let(:pages) do
+      entries.select do |entry|
+        !entry.key? "type"
+      end
+    end
+    let(:first_page) { pages.first }
+
     it "lists pages" do
       get "/pages"
       expect(last_response).to be_ok
-      expect(last_response_parsed.last["name"]).to eq("page.md")
+      expect(first_page["name"]).to eq("page.md")
+    end
+
+    it "lists directories" do
+      get "/pages"
+      expect(last_response).to be_ok
+      expect(entries.first["type"]).to eq("directory")
+      expect(entries.first["name"]).to eq("page-dir")
+    end
+
+    it "lists pages in subdirectories" do
+      get "/pages/page-dir/test"
+      expect(last_response).to be_ok
+      expect(first_page["name"]).to eq("page2.md")
+      expect(first_page["path"]).to eq("page-dir/test/page2.md")
     end
 
     it "includes front matter defaults" do
       get "/pages"
       expect(last_response).to be_ok
-      expect(last_response_parsed.first).to have_key("some_front_matter")
+      expect(first_page).to have_key("some_front_matter")
     end
 
     it "doesn't include the raw front matter" do
@@ -51,6 +73,12 @@ describe "pages" do
   context "getting a single page" do
     it "returns a page" do
       get "/pages/page.md"
+      expect(last_response).to be_ok
+      expect(last_response_parsed["foo"]).to eq("bar")
+    end
+
+    it "returns a page in subdirectories" do
+      get "/pages/page-dir/page1.md"
       expect(last_response).to be_ok
       expect(last_response_parsed["foo"]).to eq("bar")
     end
@@ -99,7 +127,7 @@ describe "pages" do
 
     request = {
       :front_matter => {},
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
     put "/pages/page-new.md", request.to_json
 
@@ -114,7 +142,7 @@ describe "pages" do
 
     request = {
       :front_matter => { :foo => "bar" },
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
     put "/pages/page-new.md", request.to_json
 
@@ -125,12 +153,26 @@ describe "pages" do
     delete_file "page-new.md"
   end
 
+  it "writes a new page in subdirectories" do
+    request = {
+      :front_matter => { :foo => "bar" },
+      :raw_content  => "test",
+    }
+    put "/pages/page-dir/page-new.md", request.to_json
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq("bar")
+    expect("page-dir/page-new.md").to be_an_existing_file
+
+    delete_file "page-dir/page-new.md"
+  end
+
   it "updates a page" do
     write_file "page-update.md"
 
     request = {
       :front_matter => { :foo => "bar2" },
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
     put "/pages/page-update.md", request.to_json
     expect("page-update.md").to be_an_existing_file
@@ -141,6 +183,22 @@ describe "pages" do
     delete_file "page-update.md"
   end
 
+  it "updates a page in subdirectories" do
+    write_file "page-dir/page-update.md"
+
+    request = {
+      :front_matter => { :foo => "bar2" },
+      :raw_content  => "test",
+    }
+    put "/pages/page-dir/page-update.md", request.to_json
+    expect("page-dir/page-update.md").to be_an_existing_file
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq("bar2")
+
+    delete_file "page-dir/page-update.md"
+  end
+
   it "renames a page" do
     write_file  "page-rename.md"
     delete_file "page-renamed.md"
@@ -148,7 +206,7 @@ describe "pages" do
     request = {
       :path         => "page-renamed.md",
       :front_matter => { :foo => "bar" },
-      :raw_content  => "test"
+      :raw_content  => "test",
     }
 
     put "/pages/page-rename.md", request.to_json
@@ -164,9 +222,39 @@ describe "pages" do
     delete_file "page-rename.md", "page-renamed.md"
   end
 
+  it "renames a page in subdirectories" do
+    write_file  "page-dir/page-rename.md"
+    delete_file "page-dir/page-renamed.md"
+
+    request = {
+      :path         => "page-dir/page-renamed.md",
+      :front_matter => { :foo => "bar" },
+      :raw_content  => "test",
+    }
+
+    put "/pages/page-dir/page-rename.md", request.to_json
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq("bar")
+    expect("page-dir/page-rename.md").to_not be_an_existing_file
+    expect("page-dir/page-renamed.md").to be_an_existing_file
+
+    get "/pages/page-dir/page-renamed.md"
+    expect(last_response).to be_ok
+    expect(last_response_parsed["foo"]).to eq("bar")
+
+    delete_file "page-dir/page-rename.md", "page-dir/page-renamed.md"
+  end
+
   it "deletes a page" do
     path = write_file "page-delete.md"
     delete "/pages/page-delete.md"
+    expect(last_response).to be_ok
+    expect(File.exist?(path)).to eql(false)
+  end
+
+  it "deletes a page in subdirectories" do
+    path = write_file "page-dir/page-delete.md"
+    delete "/pages/page-dir/page-delete.md"
     expect(last_response).to be_ok
     expect(File.exist?(path)).to eql(false)
   end

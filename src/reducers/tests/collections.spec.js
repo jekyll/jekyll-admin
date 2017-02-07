@@ -1,13 +1,13 @@
 import expect from 'expect';
-import reducer from '../collections';
+import reducer, { filterBySearchInput } from '../collections';
 import * as types from '../../constants/actionTypes';
 
-import { doc, collection, collections } from './fixtures';
+import { doc, collection, collections, collection_entries } from './fixtures';
 
 describe('Reducers::Collections', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
-      currentCollection: {},
+      entries: [],
       currentDocument: {},
       collections: [],
       isFetching: false,
@@ -52,10 +52,10 @@ describe('Reducers::Collections', () => {
     expect(
       reducer({}, {
         type: types.FETCH_COLLECTION_SUCCESS,
-        collection
+        entries: [collection]
       })
     ).toEqual({
-      currentCollection: collection,
+      entries: [collection],
       isFetching: false
     });
     expect(
@@ -82,5 +82,9 @@ describe('Reducers::Collections', () => {
     ).toEqual({
       updated: false
     });
+  });
+
+  it('should filter documents and directories', () => {
+    expect(filterBySearchInput(collection_entries, 'dir').length).toBe(1);
   });
 });

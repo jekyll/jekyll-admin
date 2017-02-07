@@ -26,18 +26,14 @@ Can have [all options of SimpleMDE](https://github.com/NextStepWebs/simplemde-ma
 
 ## Breadcrumbs
 
-Component for generating breadcrumbs. First breadcrumb indicates the current content
-type and the second one which can be either an input or a label is the path of the current item.
+Component for generating breadcrumbs.
 
 ### PropTypes
 
 ```javascript
 {
-  link: String, // Link to the corresponding content type
-  type: String, // Content type (pages, collections..)
-  content: String, // File path
-  editable: Boolean, // can be editable or not
-  onChange: Function // triggered when the path changes
+  splat: String, // breadcrumbs links are generated from splat splitting by `/`
+  type: String, // Content type prefix for links (pages, collections..)
 }
 ```
 
@@ -64,11 +60,11 @@ Generic component for button element.
   type: String, // type of the button ('save', 'create', 'view', 'upload' etc.)
   active: Boolean, // state of the button
   onClick: Function, // callback function triggered when the button is clicked
-  triggered: PropTypes.bool, // click state
-  block: PropTypes.bool, // should the button fill the parent width
-  thin: PropTypes.bool, // should the button be small
-  icon: PropTypes.string, // displays icon if icon name is given
-  to: PropTypes.string // links to the given URL. If set, onClick is disabled
+  triggered: Boolean, // click state
+  block: Boolean, // should the button fill the parent width
+  thin: Boolean, // should the button be small
+  icon: String, // displays icon if icon name is given
+  to: String // links to the given URL. If set, onClick is disabled
 }
 ```
 
@@ -106,9 +102,36 @@ Checkbox component
 }
 ```
 
+## InputPath
+
+Editable path component for edit views
+
+### PropTypes
+
+```javascript
+{
+  path: String, // File path
+  type: String, // Content type for input placeholders
+  onChange: Function // triggered when the path changes
+}
+```
+
+### InputSearch
+
+Component for searching in list views
+
+### PropTypes
+
+```javascript
+{
+  search: Function, // callback function triggered when enter key is pressed
+  searchBy: String // search term
+}
+```
+
 ### InputTitle
 
-Editable title component
+Editable title component for edit views
 
 ### PropTypes
 
@@ -116,19 +139,6 @@ Editable title component
 {
   title: String,
   onChange: Function
-}
-```
-
-### InputSearch
-
-Listing view search input
-
-### PropTypes
-
-```javascript
-{
-  search: Function, // callback function triggered when enter key is pressed
-  searchBy: String
 }
 ```
 

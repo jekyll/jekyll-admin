@@ -14,7 +14,7 @@ module JekyllAdmin
 
       def overrides
         {
-          "source" => sanitized_path("/")
+          "source" => sanitized_path("/"),
         }
       end
 

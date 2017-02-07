@@ -6,6 +6,7 @@ import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import InputPath from '../../components/form/InputPath';
 import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
 import {
@@ -52,16 +53,17 @@ export class DataFileNew extends Component {
     return (
       <div>
         {errors.length > 0 && <Errors errors={errors} />}
-
-        <Breadcrumbs onChange={onDataFileChanged}
-          ref="breadcrumbs"
-          link={`${ADMIN_PREFIX}/datafiles`}
-          type="datafiles"
-          content=""
-          editable />
+        <div className="content-header">
+          <Breadcrumbs splat="" type="datafiles" />
+        </div>
 
         <div className="content-wrapper">
           <div className="content-body">
+            <InputPath
+              onChange={onDataFileChanged}
+              type="datafiles"
+              path=""
+              ref="input" />
             <Editor
               editorChanged={datafileChanged}
               onEditorChange={onDataFileChanged}

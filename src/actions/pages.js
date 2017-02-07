@@ -10,17 +10,15 @@ import {
   getFilenameNotValidMessage
 } from '../constants/lang';
 import {
-  getPagesUrl,
-  getPageUrl,
-  putPageUrl,
-  deletePageUrl
+  pagesAPIUrl,
+  pageAPIUrl
 } from '../constants/api';
 
-export function fetchPages() {
+export function fetchPages(directory = '') {
   return (dispatch) => {
     dispatch({ type: ActionTypes.FETCH_PAGES_REQUEST});
     return get(
-      getPagesUrl(),
+      pagesAPIUrl(directory),
       { type: ActionTypes.FETCH_PAGES_SUCCESS, name: "pages"},
       { type: ActionTypes.FETCH_PAGES_FAILURE, name: "error"},
       dispatch
@@ -28,11 +26,11 @@ export function fetchPages() {
   };
 }
 
-export function fetchPage(id) {
+export function fetchPage(directory, filename) {
   return (dispatch) => {
     dispatch({ type: ActionTypes.FETCH_PAGE_REQUEST});
     return get(
-      getPageUrl(id),
+      pageAPIUrl(directory, filename),
       { type: ActionTypes.FETCH_PAGE_SUCCESS, name: "page"},
       { type: ActionTypes.FETCH_PAGE_FAILURE, name: "error"},
       dispatch
@@ -40,13 +38,12 @@ export function fetchPage(id) {
   };
 }
 
-export function putPage(name) {
+export function createPage(directory) {
   return (dispatch, getState) => {
     // get edited fields from metadata state
     const metadata = getState().metadata.metadata;
     let { path, raw_content, title } = metadata;
-
-    // if no path given, generate filename from the title
+    // if path is not given or equals to directory, generate filename from the title
     if (!path && title) {
       path = `${slugify(title)}.md`;
     } else {
@@ -57,17 +54,48 @@ export function putPage(name) {
     }
     // clear errors
     dispatch({type: ActionTypes.CLEAR_ERRORS});
-
     // omit raw_content, path and empty-value keys in metadata state from front_matter
     const front_matter = _.omit(metadata, (value, key, object) => {
-      if (key == 'raw_content' || key == 'path' || value == '') return true;
+      return key == 'raw_content' || key == 'path' || value == '';
     });
-    const payload = JSON.stringify({ path, front_matter, raw_content });
-
     //send the put request
     return put(
-      putPageUrl(name || path), // create or update page
-      payload,
+      pageAPIUrl(directory, path),
+      JSON.stringify({ front_matter, raw_content }),
+      { type: ActionTypes.PUT_PAGE_SUCCESS, name: "page"},
+      { type: ActionTypes.PUT_PAGE_FAILURE, name: "error"},
+      dispatch
+    );
+  };
+}
+
+export function putPage(directory, filename) {
+  return (dispatch, getState) => {
+    // get edited fields from metadata state
+    const metadata = getState().metadata.metadata;
+    let { path, raw_content, title } = metadata;
+    // if path is not given or equals to directory, generate filename from the title
+    if (!path && title) {
+      path = `${slugify(title)}.md`;
+    } else {
+      const errors = validatePage(metadata);
+      if (errors.length) {
+        return dispatch(validationError(errors));
+      }
+    }
+    // clear errors
+    dispatch({type: ActionTypes.CLEAR_ERRORS});
+    // omit raw_content, path and empty-value keys in metadata state from front_matter
+    const front_matter = _.omit(metadata, (value, key, object) => {
+      return key == 'raw_content' || key == 'path' || value == '';
+    });
+    const relative_path = directory ?
+      `${directory}/${path}` : `${path}`;
+    //send the put request
+    return put(
+      // create or update page according to filename existence
+      pageAPIUrl(directory, filename),
+      JSON.stringify({ path: relative_path, front_matter, raw_content }),
       { type: ActionTypes.PUT_PAGE_SUCCESS, name: "page"},
       { type: ActionTypes.PUT_PAGE_FAILURE, name: "error"},
       dispatch
@@ -86,14 +114,14 @@ function validatePage(metadata) {
   );
 }
 
-export function deletePage(id) {
+export function deletePage(directory, filename) {
   return (dispatch) => {
-    return fetch(deletePageUrl(id), {
+    return fetch(pageAPIUrl(directory, filename), {
       method: 'DELETE'
     })
     .then(data => {
       dispatch({ type: ActionTypes.DELETE_PAGE_SUCCESS });
-      dispatch(fetchPages());
+      dispatch(fetchPages(directory));
     })
     .catch(error => dispatch({
       type: ActionTypes.DELETE_PAGE_FAILURE,

@@ -18,7 +18,7 @@ describe('Actions::Pages', () => {
 
   it('fetches pages successfully', () => {
     nock(API)
-      .get('/pages')
+      .get('/pages/page-dir')
       .reply(200, [page]);
 
     const expectedActions = [
@@ -28,7 +28,7 @@ describe('Actions::Pages', () => {
 
     const store = mockStore({ pages: [], isFetching: false });
 
-    return store.dispatch(actions.fetchPages())
+    return store.dispatch(actions.fetchPages('page-dir'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -36,7 +36,7 @@ describe('Actions::Pages', () => {
 
   it('fetches the page successfully', () => {
     nock(API)
-      .get(`/pages/${page.name}`)
+      .get(`/pages/page.md`)
       .reply(200, page);
 
     const expectedActions = [
@@ -46,7 +46,7 @@ describe('Actions::Pages', () => {
 
     const store = mockStore({ page: {}, isFetching: true });
 
-    return store.dispatch(actions.fetchPage(page.name))
+    return store.dispatch(actions.fetchPage(null, 'page.md'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -54,7 +54,7 @@ describe('Actions::Pages', () => {
 
   it('deletes the page successfully', () => {
     nock(API)
-      .delete(`/pages/${page.name}`)
+      .delete(`/pages/page-dir/test/test.md`)
       .reply(200);
 
     const expectedActions = [
@@ -64,7 +64,7 @@ describe('Actions::Pages', () => {
 
     const store = mockStore({});
 
-    return store.dispatch(actions.deletePage(page.name))
+    return store.dispatch(actions.deletePage('page-dir/test', 'test.md'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -72,7 +72,7 @@ describe('Actions::Pages', () => {
 
   it('creates DELETE_PAGE_FAILURE when deleting a page failed', () => {
     nock(API)
-      .delete(`/pages/${page.name}`)
+      .delete(`/pages/page.md`)
       .replyWithError('something awful happened');
 
     const expectedAction = {
@@ -82,7 +82,7 @@ describe('Actions::Pages', () => {
 
     const store = mockStore({ pages: [page] });
 
-    return store.dispatch(actions.deletePage(page.name))
+    return store.dispatch(actions.deletePage('page.md'))
       .then(() => {
         expect(store.getActions()[0].type).toEqual(expectedAction.type);
       });
@@ -90,7 +90,7 @@ describe('Actions::Pages', () => {
 
   it('updates the page successfully', () => {
     nock(API)
-      .put(`/pages/${page.name}`)
+      .put(`/pages/page.md`)
       .reply(200, page);
 
     const expectedActions = [
@@ -100,7 +100,7 @@ describe('Actions::Pages', () => {
 
     const store = mockStore({metadata: { metadata: page}});
 
-    return store.dispatch(actions.putPage(page.name))
+    return store.dispatch(actions.putPage('', 'page.md'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -118,7 +118,7 @@ describe('Actions::Pages', () => {
 
     const store = mockStore({metadata: { metadata: page}});
 
-    return store.dispatch(actions.putPage())
+    return store.dispatch(actions.createPage(''))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -136,7 +136,7 @@ describe('Actions::Pages', () => {
 
     const store = mockStore({metadata: { metadata: {...new_page, path: ''}}});
 
-    return store.dispatch(actions.putPage())
+    return store.dispatch(actions.createPage(''))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });

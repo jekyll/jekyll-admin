@@ -19,10 +19,9 @@ module JekyllAdmin
     # include_content - if true, includes the content in the respond, false by default
     #                   to support mapping on indexes where we only want metadata
     #
-    # include_documents - for collections, whether to output the collection's documents
     #
     # Returns a hash (which can then be to_json'd)
-    def to_api(include_content: false, include_documents: false)
+    def to_api(include_content: false)
       output = hash_for_api
       output = output.merge(url_fields)
 
@@ -38,13 +37,13 @@ module JekyllAdmin
       output.delete("output")
 
       # By default, calling to_liquid on a collection will return a docs
-      # array with each rendered document, which we don't want. Instead
-      # include our own documents array, without the content
+      # array with each rendered document, which we don't want.
       if is_a?(Jekyll::Collection)
         output.delete("docs")
-        if include_documents
-          output["documents"] = docs.sort_by(&:date).reverse.map(&:to_api)
-        end
+      end
+
+      if is_a?(Jekyll::Document)
+        output["name"] = basename
       end
 
       output
@@ -146,7 +145,7 @@ module JekyllAdmin
       return {} unless respond_to?(:http_url) && respond_to?(:api_url)
       {
         "http_url" => http_url,
-        "api_url"  => api_url
+        "api_url"  => api_url,
       }
     end
   end
