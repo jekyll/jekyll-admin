@@ -28,7 +28,7 @@ export class DataFileNew extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
-      const filename = this.refs.breadcrumbs.refs.input.value;
+      const filename = this.refs.inputpath.refs.input.value;
       browserHistory.push(`${ADMIN_PREFIX}/datafiles/${filename}`);
     }
   }
@@ -42,7 +42,7 @@ export class DataFileNew extends Component {
   handleClickSave() {
     const { datafileChanged, putDataFile } = this.props;
     if (datafileChanged) {
-      const filename = this.refs.breadcrumbs.refs.input.value;
+      const filename = this.refs.inputpath.refs.input.value;
       const value = this.refs.editor.getValue();
       putDataFile(filename, value);
     }
@@ -63,7 +63,7 @@ export class DataFileNew extends Component {
               onChange={onDataFileChanged}
               type="datafiles"
               path=""
-              ref="input" />
+              ref="inputpath" />
             <Editor
               editorChanged={datafileChanged}
               onEditorChange={onDataFileChanged}
