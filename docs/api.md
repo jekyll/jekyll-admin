@@ -50,7 +50,7 @@ When making a request, clients can set the following top-level fields:
 * `front_matter` - the entire YAML front matter object to be written to disk (currently `meta`)
 * `path` - the new file path relative to the site source, if the file is to be renamed
 
-##### Pages & Documents in subdirectories
+#### Pages & Documents in subdirectories
 
 In order to determine which pages and documents are in which subdirectories, API looks for
 the project's file structure and lists all files and directories at a given path together.
