@@ -15,6 +15,7 @@ const defaultProps = {
   updated: false,
   router: {},
   route: {},
+  config: {},
   params: { collection_name: doc.collection }
 };
 

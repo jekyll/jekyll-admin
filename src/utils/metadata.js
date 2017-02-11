@@ -123,3 +123,27 @@ export const moveArrayItem = (state, namePrefix, srcInd, targetInd) => {
   arr.splice(targetInd, 0, arr.splice(srcInd, 1)[0]);
   return tmpState.metadata;
 };
+
+/**
+ * Injects the relevant default front matter fields read from the config file into
+ * the provided front matter object
+ * @param {Object} config
+ * @param {String} path
+ * @param {String} type
+ * @param {Object} front_matter
+ * @return {Object} metadata
+ */
+export const injectDefaultFields = (config, path, type, front_matter={}) => {
+  if (!config.defaults) {
+    return {};
+  }
+  const defaults = config.defaults;
+  let metafields = {};
+  _.each(defaults, field => {
+    const scope = field.scope;
+    if ((!scope.type || scope.type == type) && (!scope.path || scope.path == path)) {
+      _.extend(metafields, field.values);
+    }
+  });
+  return _.extend(metafields, front_matter);
+};

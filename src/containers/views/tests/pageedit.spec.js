@@ -17,6 +17,7 @@ const defaultProps = {
   isFetching: false,
   router: {},
   route: {},
+  config: {},
   params: { splat: [null, "page", "md"] }
 };
 
