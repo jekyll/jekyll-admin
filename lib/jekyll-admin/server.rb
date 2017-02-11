@@ -75,7 +75,11 @@ module JekyllAdmin
       File.open(path, "wb") do |file|
         file.write(content)
       end
-      site.process
+      if ENV["RACK_ENV"]
+        site.process
+      else
+        site.read
+      end
     end
 
     def delete_file(path)
