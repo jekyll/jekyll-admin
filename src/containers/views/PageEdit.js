@@ -21,11 +21,6 @@ import { ADMIN_PREFIX } from '../../constants';
 
 export class PageEdit extends Component {
 
-  componentWillMount() {
-    const { clearErrors } = this.props;
-    clearErrors();
-  }
-
   componentDidMount() {
     const { fetchPage, params, router, route } = this.props;
     const [directory, ...rest] = params.splat;
@@ -43,6 +38,14 @@ export class PageEdit extends Component {
       if (new_path != path) {
         browserHistory.push(`${ADMIN_PREFIX}/pages/${new_path}`);
       }
+    }
+  }
+
+  componentWillUnmount() {
+    const { clearErrors, errors} = this.props;
+    // clear errors if any
+    if (errors.length) {
+      clearErrors();
     }
   }
 

@@ -16,11 +16,6 @@ import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileNew extends Component {
 
-  componentWillMount() {
-    const { clearErrors } = this.props;
-    clearErrors();
-  }
-
   componentDidMount() {
     const { router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
@@ -30,6 +25,14 @@ export class DataFileNew extends Component {
     if (this.props.updated !== nextProps.updated) {
       const filename = this.refs.inputpath.refs.input.value;
       browserHistory.push(`${ADMIN_PREFIX}/datafiles/${filename}`);
+    }
+  }
+
+  componentWillUnmount() {
+    const { clearErrors, errors} = this.props;
+    // clear errors if any
+    if (errors.length) {
+      clearErrors();
     }
   }
 
@@ -49,7 +52,10 @@ export class DataFileNew extends Component {
   }
 
   render() {
-    const { datafileChanged, onDataFileChanged, datafile, updated, errors } = this.props;
+    const {
+      datafileChanged, onDataFileChanged, datafile, updated, errors
+    } = this.props;
+
     return (
       <div>
         {errors.length > 0 && <Errors errors={errors} />}
@@ -111,4 +117,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   clearErrors
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DataFileNew));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DataFileNew)
+);
