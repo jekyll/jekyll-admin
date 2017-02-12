@@ -20,15 +20,18 @@ import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileEdit extends Component {
 
-  componentWillMount() {
-    const { clearErrors } = this.props;
-    clearErrors();
-  }
-
   componentDidMount() {
     const { fetchDataFile, params, router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
     fetchDataFile(params.data_file);
+  }
+
+  componentWillUnmount() {
+    const { clearErrors, errors} = this.props;
+    // clear errors if any
+    if (errors.length) {
+      clearErrors();
+    }
   }
 
   routerWillLeave(nextLocation) {

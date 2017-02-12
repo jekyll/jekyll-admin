@@ -21,11 +21,6 @@ import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentEdit extends Component {
 
-  componentWillMount() {
-    const { clearErrors } = this.props;
-    clearErrors();
-  }
-
   componentDidMount() {
     const { fetchDocument, params, router, route } = this.props;
     const [directory, ...rest] = params.splat;
@@ -46,6 +41,14 @@ export class DocumentEdit extends Component {
           `${ADMIN_PREFIX}/collections/${new_path.substring(1)}` // remove `_`
         );
       }
+    }
+  }
+
+  componentWillUnmount() {
+    const { clearErrors, errors} = this.props;
+    // clear errors if any
+    if (errors.length) {
+      clearErrors();
     }
   }
 

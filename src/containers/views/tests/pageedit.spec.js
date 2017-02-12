@@ -45,11 +45,6 @@ const setup = (props = defaultProps) => {
 };
 
 describe('Containers::PageEdit', () => {
-  it('should call clearErrors before mount', () => {
-    const { actions } = setup();
-    expect(actions.clearErrors).toHaveBeenCalled();
-  });
-
   it('should render correctly', () => {
     let { component } = setup(Object.assign(
       {}, defaultProps, { isFetching: true }
