@@ -191,4 +191,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   clearErrors
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentEdit));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DocumentEdit)
+);

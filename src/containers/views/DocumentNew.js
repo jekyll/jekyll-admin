@@ -59,7 +59,9 @@ export class DocumentNew extends Component {
   }
 
   render() {
-    const { errors, updated, updateTitle, updateBody, updatePath, fieldChanged, params } = this.props;
+    const {
+      errors, updated, updateTitle, updateBody, updatePath, fieldChanged, params
+    } = this.props;
 
     const collection = params.collection_name;
     const link = `${ADMIN_PREFIX}/collections/${collection}`;
@@ -131,4 +133,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   clearErrors
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentNew));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DocumentNew)
+);

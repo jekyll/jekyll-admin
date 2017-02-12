@@ -58,7 +58,10 @@ export class DataFileEdit extends Component {
   }
 
   render() {
-    const { datafileChanged, onDataFileChanged, datafile, isFetching, updated, errors, params } = this.props;
+    const {
+      datafileChanged, onDataFileChanged, datafile, isFetching,
+      updated, errors, params
+    } = this.props;
 
     if (isFetching) {
       return null;
@@ -141,4 +144,6 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   clearErrors
 }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DataFileEdit));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DataFileEdit)
+);
