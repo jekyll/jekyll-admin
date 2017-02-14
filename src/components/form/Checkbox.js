@@ -17,7 +17,7 @@ export default class Checkbox extends Component {
             type="checkbox"
             defaultChecked={checked}
             ref="checkbox" />
-          <div className="slider round"></div>
+          <div className="slider round" />
         </label>
       </div>
     );

@@ -90,12 +90,12 @@ export class Pages extends Component {
         <td className="row-title">
           <strong>
             <Link to={to}>
-              <i className="fa fa-folder" aria-hidden="true"></i>
+              <i className="fa fa-folder" aria-hidden="true" />
               {name}
             </Link>
           </strong>
         </td>
-        <td></td>
+        <td />
       </tr>
     );
   }

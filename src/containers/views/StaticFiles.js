@@ -62,7 +62,7 @@ export class StaticFiles extends Component {
           {
             !files.length &&
             <div className="preview-info">
-              <i className="fa fa-upload" aria-hidden="true"></i>
+              <i className="fa fa-upload" aria-hidden="true" />
               <p>Drag and drop file(s) here to upload</p>
             </div>
           }

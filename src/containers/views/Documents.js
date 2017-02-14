@@ -108,12 +108,12 @@ export class Documents extends Component {
       <tr key={name}>
         <td className="row-title">
           <strong>
-            <Link to={to}><i className="fa fa-folder" aria-hidden="true"></i>
+            <Link to={to}><i className="fa fa-folder" aria-hidden="true" />
             {name}</Link>
           </strong>
         </td>
         <td>{date}</td>
-        <td></td>
+        <td/>
       </tr>
     );
   }
