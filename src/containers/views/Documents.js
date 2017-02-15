@@ -62,7 +62,8 @@ export class Documents extends Component {
     const { id, name, title, http_url, collection, path } = doc;
     const splat = path.substr(path.indexOf('/')+1, path.length);
     const to = `${ADMIN_PREFIX}/collections/${collection}/${splat}`;
-    let date = doc.date.substring(0, doc.date.lastIndexOf(" ")); // w/o timezone
+    // date w/o timezone
+    let date = doc.date.substring(0, doc.date.lastIndexOf(" "));
     date = moment(date).format("hh:mm:ss") == '12:00:00' ?
       moment(date).format("ll") :
       moment(date).format("lll");
@@ -103,7 +104,9 @@ export class Documents extends Component {
     const { name, path, modified_time, api_url } = directory;
     const splat = path.substr(path.indexOf('/')+1, path.length);
     const to = `${ADMIN_PREFIX}/collections/${collection_name}/${splat}`;
-    const date = moment(modified_time).format("ll");
+    // date w/o timezone
+    let date = modified_time.substring(0, modified_time.lastIndexOf(" "));
+    date = moment(date).format("ll");
     return (
       <tr key={name}>
         <td className="row-title">
