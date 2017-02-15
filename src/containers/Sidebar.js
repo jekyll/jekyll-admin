@@ -26,7 +26,7 @@ export class Sidebar extends Component {
     return _.map(collections, (col, i) =>
       <li key={i}>
         <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/${col.label}`}>
-          <i className="fa fa-book"></i>{capitalize(col.label)}
+          <i className="fa fa-book" />{capitalize(col.label)}
         </Link>
       </li>
     );
@@ -39,7 +39,7 @@ export class Sidebar extends Component {
         <ul className="routes">
           <li>
             <Link activeClassName="active" to={`${ADMIN_PREFIX}/pages`}>
-              <i className="fa fa-file-text"></i>
+              <i className="fa fa-file-text" />
               {sidebar.pages}
             </Link>
           </li>
@@ -49,20 +49,20 @@ export class Sidebar extends Component {
           <Splitter />
           <li>
             <Link activeClassName="active" to={`${ADMIN_PREFIX}/datafiles`}>
-              <i className="fa fa-database"></i>
+              <i className="fa fa-database" />
               {sidebar.datafiles}
             </Link>
           </li>
           <li>
             <Link activeClassName="active" to={`${ADMIN_PREFIX}/staticfiles`}>
-              <i className="fa fa-file"></i>
+              <i className="fa fa-file" />
               {sidebar.staticfiles}
             </Link>
           </li>
           <Splitter />
           <li>
             <Link activeClassName="active" to={`${ADMIN_PREFIX}/configuration`}>
-              <i className="fa fa-cog"></i>
+              <i className="fa fa-cog" />
               {sidebar.configuration}
             </Link>
           </li>

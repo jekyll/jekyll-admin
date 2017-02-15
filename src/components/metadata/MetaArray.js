@@ -54,7 +54,7 @@ export class MetaArray extends Component {
         {items}
         <a onClick={() => addField(namePrefix)}
           className="add-field-array" title="Add new list item">
-            <i className="fa fa-plus"></i>
+            <i className="fa fa-plus" />
         </a>
       </div>
     );

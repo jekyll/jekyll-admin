@@ -25,7 +25,7 @@ export default class FilePreview extends Component {
         }
         {
           !image &&
-          <div><i className="fa fa-file-text-o" aria-hidden="true"></i></div>
+          <div><i className="fa fa-file-text-o" aria-hidden="true"/></div>
         }
         </a>
         <span className="filename">{file.path}</span>
