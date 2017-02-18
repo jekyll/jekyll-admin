@@ -1,7 +1,10 @@
 import {createStore, compose, applyMiddleware} from 'redux';
 import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
 import thunk from 'redux-thunk';
+import createLogger from 'redux-logger';
 import rootReducer from '../reducers';
+
+const logger = createLogger();
 
 const configureStoreProd = (initialState) => {
   const middlewares = [thunk];
@@ -12,7 +15,7 @@ const configureStoreProd = (initialState) => {
 };
 
 const configureStoreDev = (initialState) => {
-  const middlewares = [reduxImmutableStateInvariant(), thunk];
+  const middlewares = [reduxImmutableStateInvariant(), thunk, logger];
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
   const store = createStore(
