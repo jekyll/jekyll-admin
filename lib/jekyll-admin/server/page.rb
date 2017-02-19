@@ -12,6 +12,7 @@ module JekyllAdmin
       end
 
       put "/*?/?:path.:ext" do
+        ensure_html_content
         write_path = relative_page_path
         if request_payload["path"] && request_payload["path"] != relative_page_path
           delete_file page_path
@@ -33,6 +34,23 @@ module JekyllAdmin
       end
 
       private
+
+      def ensure_html_content
+        return if html_content?
+        content_type :json
+        halt 422, json("error_message" => "Invalid file extension for pages")
+      end
+
+      def html_content?
+        page = JekyllAdmin::PageWithoutAFile.new(
+          site,
+          site.source,
+          "",
+          request_payload["path"] || filename
+        )
+        page.data = request_payload["front_matter"]
+        page.html?
+      end
 
       def request_path
         sanitized_path request_payload["path"]
