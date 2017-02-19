@@ -6,6 +6,7 @@ import {
   getUpdateErrorMessage,
   getDeleteMessage
 } from '../constants/lang';
+import { BadInputError } from './api_errors';
 
 /**
  * Fetch wrapper for GET request that dispatches actions according to the
@@ -50,18 +51,24 @@ export const put = (url, body, action_success, action_failure, dispatch) => {
     body
   })
   .then(res => res.json())
-  .then(data => dispatch({
-    type: action_success.type,
-    [action_success.name]: data
-  }))
+  .then(data => {
+    if (data.error_message){
+      throw new BadInputError(data.error_message);
+    }
+    dispatch({
+      type: action_success.type,
+      [action_success.name]: data
+    });
+  })
   .catch(error => {
     dispatch({
       type: action_failure.type,
       [action_failure.name]: error
     });
+    let error_message = error.name ==='BadInputError' ? error.message : getUpdateErrorMessage(action_success.name);
     dispatch(addNotification(
       getErrorMessage(),
-      getUpdateErrorMessage(action_success.name),
+      error_message,
       'error'
     ));
   });
