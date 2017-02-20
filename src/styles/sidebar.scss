@@ -6,37 +6,28 @@
   width: $sidebar-width;
   overflow-y: auto;
   min-height: 100%;
-  background-color: #333;
+  background-color: $sidebar-color;
   .logo {
     display: block;
-    height: 75px;
-    background: #222222 url(../assets/images/logo.png) no-repeat center;
+    height: $header-height;
+    background: $sidebar-color url(../assets/images/logo.png) no-repeat center;
     background-size: 110px 46px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
     &:hover {
       -webkit-filter: brightness(1.2);
       filter: brightness(1.2);
     }
   }
   .routes {
-    padding: 10px 0;
+    padding: 0;
     list-style: none;
     li {
       a {
         display: block;
-        padding: 15px 20px;
-        font-size: 17px;
-        color: #ebdac1;
-        &.active {
-          color: $dark-orange;
-        }
-      }
-      &:hover {
-        background-color: #3d3d3d;
-
-        a {
-          color: #ffa114;
-        }
+        padding: 12px 20px;
+        color: #ababab;
+        &:hover { color: #ffcc80; }
+        &.active { color: $dark-orange; }
+        &:hover, &.active { background-color: #212121; }
       }
     }
   }
