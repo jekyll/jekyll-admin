@@ -4,18 +4,18 @@
   justify-content: space-between;
   height: $header-height;
   background-color: $header-color;
+  border-bottom: 1px solid #dedede;
   padding: 0 40px;
   .title {
     font-weight: normal;
     a {
-      color: $inactive-gray;
+      color: $dark-gray;
       &:hover {
-        color: $off-white;
+        color: black;
       }
     }
   }
   .version {
-    font-weight: 900;
-    color: #727272;
+    color: $inactive-gray;
   }
 }
