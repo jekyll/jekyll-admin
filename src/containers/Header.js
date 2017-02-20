@@ -22,7 +22,7 @@ export class Header extends Component {
             <span>{config.title || 'You have no title!'}</span>
           </Link>
         </h3>
-        <span className="version">{VERSION}</span>
+        <span className="version">JekyllAdmin {VERSION}</span>
       </div>
     );
   }
