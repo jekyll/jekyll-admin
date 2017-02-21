@@ -12,6 +12,11 @@ module JekyllAdmin
       end
 
       put "/*?/?:path.:ext" do
+        unless html_content?
+          status 422
+          content_type :json
+          return json "error_message" => "Invalid file extension for pages"
+        end
         write_path = relative_page_path
         if request_payload["path"] && request_payload["path"] != relative_page_path
           delete_file page_path
@@ -33,6 +38,18 @@ module JekyllAdmin
       end
 
       private
+
+      def html_content?
+        permalink_ext = File.extname(request_payload["front_matter"]["permalink"].to_s)
+        ext = if permalink_ext.empty?
+                File.extname(request_payload["path"] || filename)
+              else
+                permalink_ext
+              end
+        matched_converters = site.converters.select { |c| c.matches(ext) }.sort
+        output_ext = (matched_converters[-2] || matched_converters.last).output_ext(ext)
+        Jekyll::Page::HTML_EXTENSIONS.include?(output_ext)
+      end
 
       def request_path
         sanitized_path request_payload["path"]

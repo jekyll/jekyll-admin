@@ -128,6 +128,7 @@ describe "pages" do
     request = {
       :front_matter => {},
       :raw_content  => "test",
+      :path         => "page-new.md",
     }
     put "/pages/page-new.md", request.to_json
 
@@ -143,6 +144,7 @@ describe "pages" do
     request = {
       :front_matter => { :foo => "bar" },
       :raw_content  => "test",
+      :path         => "page-new.md",
     }
     put "/pages/page-new.md", request.to_json
 
@@ -157,6 +159,7 @@ describe "pages" do
     request = {
       :front_matter => { :foo => "bar" },
       :raw_content  => "test",
+      :path         => "page-dir/page-new.md",
     }
     put "/pages/page-dir/page-new.md", request.to_json
 
@@ -167,12 +170,27 @@ describe "pages" do
     delete_file "page-dir/page-new.md"
   end
 
+  it "does not writes a non html page" do
+    expected_error = "Invalid file extension for pages"
+    request = {
+      :front_matter => { :foo => "bar" },
+      :raw_content  => "test",
+      :path         => "page-new.txt",
+    }
+    put "/pages/page-new.txt", request.to_json
+
+    expect(last_response).to be_unprocessable
+    expect(last_response_parsed["error_message"]).to eq(expected_error)
+    expect("page-new.md").to_not be_an_existing_file
+  end
+
   it "updates a page" do
     write_file "page-update.md"
 
     request = {
       :front_matter => { :foo => "bar2" },
       :raw_content  => "test",
+      :path         => "page-update.md",
     }
     put "/pages/page-update.md", request.to_json
     expect("page-update.md").to be_an_existing_file
@@ -189,6 +207,7 @@ describe "pages" do
     request = {
       :front_matter => { :foo => "bar2" },
       :raw_content  => "test",
+      :path         => "page-dir/page-update.md",
     }
     put "/pages/page-dir/page-update.md", request.to_json
     expect("page-dir/page-update.md").to be_an_existing_file
