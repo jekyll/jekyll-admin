@@ -51,7 +51,10 @@ export class DataFiles extends Component {
         <tr key={file.slug}>
           <td className="row-title">
             <strong>
-              <Link to={to}>{filename}</Link>
+              <Link to={to}>
+                <i className="fa fa-file-code-o" aria-hidden="true" />
+                {filename}
+              </Link>
             </strong>
           </td>
           <td>

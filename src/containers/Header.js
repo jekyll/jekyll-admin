@@ -18,7 +18,7 @@ export class Header extends Component {
       <div className="header">
         <h3 className="title">
           <Link target="_blank" to={`/`}>
-            <i className="fa fa-home"></i>
+            <i className="fa fa-home" />
             <span>{config.title || 'You have no title!'}</span>
           </Link>
         </h3>
