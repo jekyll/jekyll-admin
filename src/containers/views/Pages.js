@@ -59,7 +59,10 @@ export class Pages extends Component {
       <tr key={name}>
         <td className="row-title">
           <strong>
-            <Link to={to}>{name}</Link>
+            <Link to={to}>
+              <i className="fa fa-file-text-o" aria-hidden="true" />
+              {name}
+            </Link>
           </strong>
         </td>
         <td>

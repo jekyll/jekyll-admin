@@ -34,6 +34,7 @@ class Editor extends Component {
         highlightActiveLine={false}
         className="config-editor"
         fontSize={14}
+        scrollMargin={[15, 15, 15, 15]}
         ref="ace"
         onChange={() => this.handleChange()}
       />

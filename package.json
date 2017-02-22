@@ -31,7 +31,7 @@
     "lodash": "4.13.1",
     "moment": "2.17.1",
     "react": "15.4.1",
-    "react-ace": "4.1.0",
+    "react-ace": "4.1.5",
     "react-dom": "15.4.1",
     "react-dropzone": "3.10.0",
     "react-notification-system": "0.2.7",
