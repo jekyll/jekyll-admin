@@ -72,7 +72,10 @@ export class Documents extends Component {
       <tr key={id}>
         <td className="row-title">
           <strong>
-            <Link to={to}>{title || name}</Link>
+            <Link to={to}>
+              <i className="fa fa-file-text-o" aria-hidden="true" />
+              {title || name}
+            </Link>
           </strong>
         </td>
         <td>{date}</td>
@@ -112,7 +115,8 @@ export class Documents extends Component {
         <td className="row-title">
           <strong>
             <Link to={to}><i className="fa fa-folder" aria-hidden="true" />
-            {name}</Link>
+              {name}
+            </Link>
           </strong>
         </td>
         <td>{date}</td>
