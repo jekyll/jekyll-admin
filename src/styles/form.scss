@@ -22,57 +22,45 @@
   display: block;
 }
 
-.input-title {
+.input-title,
+.input-path {
   textarea {
     display:inline-block;
-    padding: 0;
     margin: 5px 0 30px 0;
+    padding: 0;
     width: 100%;
-    min-height: 57px;
-    font-size: 45px;
+    color: #757575;
+    word-wrap: break-word;
+    -webkit-font-smoothing: antialiased;
     overflow: hidden;
     resize: vertical;
-    word-wrap: break-word;
     background: none;
-    -webkit-font-smoothing: antialiased;
     outline: none;
-    box-shadow: none;
     border: 0;
     border-bottom: 1px solid #ccc;
+    box-shadow: none;
     &:focus {
       color: #000 !important;
       border-bottom: 2px solid $border-color-focus;
     }
     &:hover {
-      color: #888;
+      color: #444;
     }
+  }
+}
+
+.input-title {
+  textarea {
+    min-height: 57px;
+    font-size: 45px;
   }
 }
 
 .input-path {
   textarea {
-    display:inline-block;
-    padding: 0;
-    margin: 5px 0 30px 0;
-    width: 100%;
+    margin-top: 10px;
     min-height: 30px;
     font-size: 20px;
-    overflow: hidden;
-    resize: vertical;
-    word-wrap: break-word;
-    background: none;
-    -webkit-font-smoothing: antialiased;
-    outline: none;
-    box-shadow: none;
-    border: 0;
-    border-bottom: 1px solid #ccc;
-    &:focus {
-      color: #000 !important;
-      border-bottom: 2px solid $border-color-focus;
-    }
-    &:hover {
-      color: #888;
-    }
   }
   .tooltip {
     i {
