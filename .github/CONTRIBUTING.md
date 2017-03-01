@@ -50,7 +50,7 @@ That's it! You'll be automatically subscribed to receive updates as others revie
 4. Hack away, add tests. Not necessarily in that order.
 5. Make sure everything still passes by running `script/cibuild` (see [the tests section](#running-tests-locally) below)
 6. Push the branch up ( `git push origin my-awesome-feature` ).
-7. Create a pull request by visiting `https://github.com/<your-username>/jekyll-admin` and following the instructions at the top of the scree
+7. Create a pull request by visiting `https://github.com/<your-username>/jekyll-admin` and following the instructions at the top of the screen.
 
 ## Proposing updates to the documentation
 
