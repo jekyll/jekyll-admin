@@ -31,6 +31,7 @@ class MarkdownEditor extends Component {
     let opts = Object.create(this.props);
     opts['element'] = this.refs.text;
     opts['autoDownloadFontAwesome'] = false;
+    opts['spellChecker'] = false;
     let toolbarIcons = [
       'bold', 'italic', 'heading', '|',
       'code', 'quote', 'unordered-list', 'ordered-list',
