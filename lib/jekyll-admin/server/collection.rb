@@ -29,10 +29,7 @@ module JekyllAdmin
         end
 
         write_file(write_path, document_body)
-        updated_document = Jekyll::Document.new(write_path, {
-          :collection => collection, :site => site,
-        }).tap(&:read)
-        render_404 if updated_document.nil?
+        ensure_document
         json updated_document.to_api(:include_content => true)
       end
 
@@ -78,7 +75,10 @@ module JekyllAdmin
       end
 
       def document
-        collection.docs.find { |d| d.path == document_path }
+        collection.docs.find { |d| d.path == document_path } ||
+          Jekyll::Document.new(write_path, {
+            :collection => collection, :site => site,
+          }).tap(&:read)
       end
 
       def directory_docs
