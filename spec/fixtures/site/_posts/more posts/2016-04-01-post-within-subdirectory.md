@@ -1,5 +1,6 @@
 ---
+title: Post Within Subdirectory
 foo: bar
 ---
 
-# Test Post in test
+# Test Post within `_posts/more posts`
