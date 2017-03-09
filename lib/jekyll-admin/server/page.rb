@@ -20,7 +20,9 @@ module JekyllAdmin
         end
 
         write_file(write_path, page_body)
-        updated_page = pages.find { |p| p.path == write_path }
+        updated_page = Jekyll::Page.new(
+          site, site.source, File.dirname(write_path), File.basename(write_path)
+        )
         render_404 if updated_page.nil?
         json updated_page.to_api(:include_content => true)
       end
