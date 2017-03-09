@@ -52,8 +52,13 @@ module JekyllAdmin
 
       def file_list_dir(path) end
 
+      # TODO: StaticFile.new needs to be taught about the collection the
+      # file belongs to, if it belongs to a collection.
       def static_file
-        static_files.find { |f| f.path == static_file_path }
+        static_files.find { |f| f.path == static_file_path } ||
+          Jekyll::StaticFile.new(
+            site, site.source, File.dirname(static_file_path), File.basename(static_file_path)
+          )
       end
 
       def static_files_for_path
