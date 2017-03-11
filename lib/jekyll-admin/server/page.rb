@@ -21,7 +21,7 @@ module JekyllAdmin
 
         write_file(write_path, page_body)
         ensure_page
-        json updated_page.to_api(:include_content => true)
+        json page.to_api(:include_content => true)
       end
 
       delete "/*?/?:path.:ext" do
@@ -84,9 +84,10 @@ module JekyllAdmin
       end
 
       def page
-        Jekyll::Page.new(
-          site, site.source, File.dirname(page_path), File.basename(page_path)
-        )
+        site.pages.find { |p| sanitized_path(p.path) == page_path } ||
+          Jekyll::Page.new(
+            site, site.source, File.dirname(page_path), File.basename(page_path)
+          )
       end
 
       def directory_path

@@ -30,7 +30,7 @@ module JekyllAdmin
 
         write_file(write_path, document_body)
         ensure_document
-        json updated_document.to_api(:include_content => true)
+        json document.to_api(:include_content => true)
       end
 
       delete "/:collection_id/*?/?:path.:ext" do
