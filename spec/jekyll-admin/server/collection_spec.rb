@@ -91,14 +91,19 @@ describe "collections" do
         get "/collections/posts/entries/"
         expect(last_response).to be_ok
         expect(entries.first["type"]).to eq("directory")
-        expect(entries.first["name"]).to eq("test")
+        expect(entries.first["name"]).to eq("more posts")
       end
 
       it "lists documents in subdirectories" do
-        get "/collections/posts/entries/test/other/"
+        get "/collections/posts/entries/more%20posts/some%20more%20posts/"
         expect(last_response).to be_ok
-        expect(first_document["id"]).to eq("/2016/05/02/test")
-        expect(first_document["path"]).to eq("_posts/test/other/2016-05-02-test.md")
+        expect(first_document["id"])
+          .to eq("/2016/05/02/another-test-post-within-subdirectory")
+        expect(first_document["path"])
+          .to eq(
+            "_posts/more posts/some more " \
+            "posts/2016-05-02-another-test-post-within-subdirectory.md"
+          )
       end
     end
   end
@@ -110,21 +115,21 @@ describe "collections" do
 
   context "getting a single document" do
     it "returns a collection document" do
-      get "/collections/posts/2016-01-01-test.md"
+      get "/collections/posts/2016-01-01-test-post.md"
       expect(last_response).to be_ok
-      expect(last_response_parsed["title"]).to eq("Test")
+      expect(last_response_parsed["title"]).to eq("Test Post")
     end
 
     it "returns a collection document in subdirectories" do
-      get "/collections/posts/test/2016-04-01-test.md"
+      get "/collections/posts/more%20posts/2016-04-01-post-within-subdirectory.md"
       expect(last_response).to be_ok
-      expect(last_response_parsed["title"]).to eq("Test")
+      expect(last_response_parsed["title"]).to eq("Post Within Subdirectory")
     end
 
     it "returns a collection document using the slashed ID" do
-      get "/collections/posts/2016/01/01/test.md"
+      get "/collections/posts/2016-01-01-test-post.md"
       expect(last_response).to be_ok
-      expect(last_response_parsed["title"]).to eq("Test")
+      expect(last_response_parsed["title"]).to eq("Test Post")
     end
 
     it "returns a non-dated document" do
@@ -140,21 +145,21 @@ describe "collections" do
     end
 
     it "returns the rendered output" do
-      get "/collections/posts/2016-01-01-test.md"
+      get "/collections/posts/2016-01-01-test-post.md"
       expect(last_response).to be_ok
       expected = "<h1 id=\"test-post\">Test Post</h1>\n"
       expect(last_response_parsed["content"]).to eq(expected)
     end
 
     it "returns the raw content" do
-      get "/collections/posts/2016-01-01-test.md"
+      get "/collections/posts/2016-01-01-test-post.md"
       expect(last_response).to be_ok
       expect(last_response_parsed["raw_content"]).to eq("# Test Post\n")
     end
 
     %w(next previous).each do |direction|
       it "includes the #{direction} document non-recursively" do
-        get "/collections/posts/2016-02-01-test.md"
+        get "/collections/posts/2016-02-01-test-post-2.md"
         expect(last_response).to be_ok
         expect(last_response_parsed).to have_key(direction)
         expect(last_response_parsed[direction]).to_not have_key("next")
@@ -162,7 +167,7 @@ describe "collections" do
       end
 
       it "doesn't include the #{direction} document's content" do
-        get "/collections/posts/2016-02-01-test.md"
+        get "/collections/posts/2016-02-01-test-post-2.md"
         expect(last_response).to be_ok
         expect(last_response_parsed).to have_key(direction)
         expect(last_response_parsed[direction]).to_not have_key("content")
@@ -175,18 +180,18 @@ describe "collections" do
       let(:front_matter) { last_response_parsed["front_matter"] }
 
       it "contains front matter defaults" do
-        get "/collections/posts/2016-01-01-test.md"
+        get "/collections/posts/2016-01-01-test-post.md"
         expect(last_response_parsed.key?("some_front_matter")).to eql(true)
       end
 
       it "contains raw front matter" do
-        get "/collections/posts/2016-01-01-test.md"
+        get "/collections/posts/2016-01-01-test-post.md"
         expect(last_response_parsed.key?("front_matter")).to eql(true)
         expect(front_matter["foo"]).to eql("bar")
       end
 
       it "raw front matter doesn't contain defaults" do
-        get "/collections/posts/2016-01-01-test.md"
+        get "/collections/posts/2016-01-01-test-post.md"
         expect(front_matter.key?("some_front_matter")).to eql(false)
       end
     end
@@ -234,19 +239,19 @@ describe "collections" do
   end
 
   it "writes a new file in subdirectories" do
-    delete_file "_posts/test/2016-01-01-test2.md"
+    delete_file "_posts/more posts/2016-01-01-test2.md"
 
     request = {
       :front_matter => { :foo => "bar" },
       :raw_content  => "test",
     }
-    put "/collections/posts/test/2016-01-01-test2.md", request.to_json
+    put "/collections/posts/more%20posts/2016-01-01-test2.md", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed["foo"]).to eq("bar")
-    expect("_posts/test/2016-01-01-test2.md").to be_an_existing_file
+    expect("_posts/more posts/2016-01-01-test2.md").to be_an_existing_file
 
-    delete_file "_posts/test/2016-01-01-test2.md"
+    delete_file "_posts/more posts/2016-01-01-test2.md"
   end
 
   it "updates a file" do
@@ -266,19 +271,19 @@ describe "collections" do
   end
 
   it "updates a file in subdirectories" do
-    write_file "_posts/test/2016-01-01-test2.md"
+    write_file "_posts/more posts/2016-01-01-test2.md"
 
     request = {
       :front_matter => { :foo => "bar2" },
       :raw_content  => "test",
     }
-    put "/collections/posts/test/2016-01-01-test2.md", request.to_json
+    put "/collections/posts/more%20posts/2016-01-01-test2.md", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed["foo"]).to eq("bar2")
-    expect("_posts/test/2016-01-01-test2.md").to be_an_existing_file
+    expect("_posts/more posts/2016-01-01-test2.md").to be_an_existing_file
 
-    delete_file "_posts/test/2016-01-01-test2.md"
+    delete_file "_posts/more posts/2016-01-01-test2.md"
   end
 
   it "writes a new file with a future date" do
@@ -326,28 +331,31 @@ describe "collections" do
     end
 
     it "renames a file in subdirectories" do
-      write_file "_posts/test/2016-01-01-test2.md"
-      delete_file "_posts/test/2016-01-02-test2.md"
+      write_file "_posts/more posts/2016-01-01-test2.md"
+      delete_file "_posts/more posts/2016-01-02-test2.md"
 
-      path = "_posts/test/2016-01-02-test2.md"
+      path = "_posts/more posts/2016-01-02-test2.md"
       request = {
         :path         => path,
         :front_matter => { :foo => "bar2" },
         :raw_content  => "test",
       }
 
-      put "/collections/posts/test/2016-01-01-test2.md", request.to_json
+      put "/collections/posts/more%20posts/2016-01-01-test2.md", request.to_json
       expect(last_response).to be_ok
       expect(last_response_parsed["foo"]).to eq("bar2")
 
-      get "/collections/posts/test/2016-01-02-test2.md", request.to_json
+      get "/collections/posts/more%20posts/2016-01-02-test2.md", request.to_json
       expect(last_response).to be_ok
       expect(last_response_parsed["foo"]).to eq("bar2")
 
-      expect("_posts/test/2016-01-01-test2.md").to_not be_an_existing_file
-      expect("_posts/test/2016-01-02-test2.md").to be_an_existing_file
+      expect("_posts/more posts/2016-01-01-test2.md").to_not be_an_existing_file
+      expect("_posts/more posts/2016-01-02-test2.md").to be_an_existing_file
 
-      delete_file "_posts/test/2016-01-01-test2.md", "_posts/test/2016-01-02-test2.md"
+      delete_file(
+        "_posts/more posts/2016-01-01-test2.md",
+        "_posts/more posts/2016-01-02-test2.md"
+      )
     end
   end
 
@@ -359,10 +367,11 @@ describe "collections" do
   end
 
   it "deletes a file in subdirectories" do
-    write_file "_posts/test/other/2017-01-01-test.md"
-    delete "/collections/posts/test/other/2017-01-01-test.md"
+    write_file "_posts/more posts/some more posts/2017-01-01-test.md"
+    delete "/collections/posts/more%20posts/some%20more%20posts/2017-01-01-test.md"
     expect(last_response).to be_ok
-    expect("_posts/test/other/2017-01-01-test.md").to_not be_an_existing_file
-    delete_file "_posts/test/other/2017-01-01-test.md"
+    expect("_posts/more posts/some more posts/2017-01-01-test.md")
+      .to_not be_an_existing_file
+    delete_file "_posts/more posts/some more posts/2017-01-01-test.md"
   end
 end
