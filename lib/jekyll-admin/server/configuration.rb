@@ -28,9 +28,17 @@ module JekyllAdmin
         configuration.read_config_file(configuration_path)
       end
 
+      def custom_configs
+        Jekyll::Commands::Serve.custom_configs
+      end
+
       # Returns the path to the *first* config file discovered
       def configuration_path
-        sanitized_path configuration.config_files(overrides).first
+        if custom_configs
+          sanitized_path custom_configs.first
+        else
+          sanitized_path configuration.config_files(overrides).first
+        end
       end
 
       # The user's uploaded configuration for updates
