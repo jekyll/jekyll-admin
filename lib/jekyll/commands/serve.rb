@@ -2,6 +2,21 @@ module Jekyll
   module Commands
     class Serve < Command
       class << self
+        def process(opts)
+          @overrides = opts["config"] if opts["config"]
+
+          opts = configuration_from_options(opts)
+          destination = opts["destination"]
+          setup(destination)
+
+          start_up_webrick(opts, destination)
+        end
+
+        def custom_configs
+          return nil unless @overrides
+          @overrides
+        end
+
         def start_up_webrick(opts, destination)
           server = WEBrick::HTTPServer.new(webrick_opts(opts)).tap { |o| o.unmount("") }
           server.mount(opts["baseurl"], Servlet, destination, file_handler_opts)
