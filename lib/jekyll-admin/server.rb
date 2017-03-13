@@ -68,12 +68,7 @@ module JekyllAdmin
 
     # Returns the sanitized absolute path to the requested object
     def path
-      case namespace
-      when "collections"
-        sanitized_path File.join(collection.relative_directory, document_id)
-      when "pages", "static_files"
-        sanitized_path File.join(directory_path, filename)
-      end
+      sanitized_path File.join(directory_path, filename)
     end
 
     # Returns the sanitized relative path to the requested object
