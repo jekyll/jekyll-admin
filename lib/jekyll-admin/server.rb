@@ -52,14 +52,13 @@ module JekyllAdmin
     end
 
     def sanitized_path(path)
-      path = path.to_s.gsub(%r!\A#{Regexp.escape(JekyllAdmin.site.source)}!, "")
+      path = path_without_site_source(path)
       Jekyll.sanitized_path JekyllAdmin.site.source, path
     end
 
     # Returns the sanitized path relative to the site source
     def sanitized_relative_path(path)
-      path = sanitized_path(path)
-      path.sub(%r!\A#{Regexp.escape(JekyllAdmin.site.source)}!, "")
+      path_without_site_source sanitized_path(path)
     end
 
     def filename
@@ -154,6 +153,10 @@ module JekyllAdmin
     def ensure_leading_slash(input)
       return input if input.nil? || input.empty? || input.start_with?("/")
       "/#{input}"
+    end
+
+    def path_without_site_source(path)
+      path.to_s.gsub(%r!\A#{Regexp.escape(JekyllAdmin.site.source)}!, "")
     end
   end
 end
