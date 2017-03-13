@@ -22,20 +22,15 @@ module JekyllAdmin
 
       put "/:collection_id/*?/?:path.:ext" do
         ensure_collection
-        write_path = document_path
-        if request_payload["path"] && request_payload["path"] != relative_document_path
-          delete_file document_path
-          write_path = request_path
-        end
-
-        write_file(write_path, document_body)
+        delete_file path if renamed?
+        write_file write_path, document_body
         ensure_document
         json document.to_api(:include_content => true)
       end
 
       delete "/:collection_id/*?/?:path.:ext" do
         ensure_document
-        delete_file document_path
+        delete_file path
         content_type :json
         status 200
         halt
@@ -48,34 +43,13 @@ module JekyllAdmin
         collection[1] if collection
       end
 
-      def request_path
-        sanitized_path request_payload["path"]
-      end
-
-      def filename
-        "#{params["path"]}.#{params["ext"]}"
-      end
-
       def document_id
         path = "#{params["splat"].first}/#{filename}"
         path.gsub(%r!(\d{4})/(\d{2})/(\d{2})/(.*)!, '\1-\2-\3-\4')
       end
 
-      def document_path
-        sanitized_path File.join(collection.relative_directory, document_id)
-      end
-
-      def relative_document_path
-        if params["splat"].first.empty?
-          File.join(collection.relative_directory, filename)
-        else
-          relative_to_collection = File.join(params["splat"].first, filename)
-          File.join(collection.relative_directory, relative_to_collection)
-        end
-      end
-
       def document
-        collection.docs.find { |d| d.path == document_path } ||
+        collection.docs.find { |d| d.path == path } ||
           Jekyll::Document.new(write_path, {
             :collection => collection, :site => site,
           }).tap(&:read)
@@ -83,10 +57,6 @@ module JekyllAdmin
 
       def directory_docs
         collection.docs.find_all { |d| File.dirname(d.path) == directory_path }
-      end
-
-      def directory_path
-        sanitized_path File.join(collection.relative_directory, params["splat"].first)
       end
 
       def ensure_collection

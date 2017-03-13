@@ -13,20 +13,15 @@ module JekyllAdmin
 
       put "/*?/?:path.:ext" do
         ensure_html_content
-        write_path = relative_page_path
-        if request_payload["path"] && request_payload["path"] != relative_page_path
-          delete_file page_path
-          write_path = request_payload["path"]
-        end
-
-        write_file(write_path, page_body)
+        delete_file path if renamed?
+        write_file write_path, page_body
         ensure_page
         json page.to_api(:include_content => true)
       end
 
       delete "/*?/?:path.:ext" do
         ensure_page
-        delete_file page_path
+        delete_file path
         content_type :json
         status 200
         halt
@@ -51,14 +46,6 @@ module JekyllAdmin
         page.html?
       end
 
-      def request_path
-        sanitized_path request_payload["path"]
-      end
-
-      def filename
-        "#{params["path"]}.#{params["ext"]}"
-      end
-
       def pages
         site.pages.select(&:html?)
       end
@@ -74,28 +61,13 @@ module JekyllAdmin
         pages.map { |p| File.dirname(p.path).split("/")[0] }.uniq
       end
 
-      def page_path
-        File.join(directory_path, filename)
-      end
-
-      def relative_page_path
-        return filename if params["splat"].first.empty?
-        File.join(params["splat"].first, filename)
-      end
-
       def page
-        site.pages.find { |p| sanitized_path(p.path) == page_path } ||
-          Jekyll::Page.new(
-            site, site.source, File.dirname(page_path), File.basename(page_path)
-          )
-      end
-
-      def directory_path
-        sanitized_path params["splat"].first
-      end
-
-      def ensure_directory
-        render_404 unless Dir.exist?(directory_path)
+        found = site.pages.find { |p| sanitized_path(p.path) == path }
+        return found if found
+        return unless File.file?(write_path)
+        Jekyll::Page.new(
+          site, site.source, File.dirname(write_path), File.basename(write_path)
+        )
       end
 
       def ensure_page
