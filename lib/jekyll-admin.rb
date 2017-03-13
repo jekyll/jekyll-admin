@@ -18,6 +18,7 @@ require "sinatra/namespace"
 
 # Jekyll-Admin stuffs
 require "jekyll-admin/version"
+require "jekyll-admin/server/path_helper.rb"
 require "jekyll-admin/server"
 require "jekyll-admin/static_server"
 require "jekyll-admin/server/collection.rb"
