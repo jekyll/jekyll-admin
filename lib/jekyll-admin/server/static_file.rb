@@ -16,27 +16,20 @@ module JekyllAdmin
       end
 
       put "/*" do
-        write_file(static_file_path, static_file_body)
+        write_file(write_path, static_file_body)
         ensure_static_file_exists
         json static_file.to_api(:include_content => true)
       end
 
       delete "/*" do
         ensure_static_file_exists
-        delete_file static_file_path
+        delete_file path
         content_type :json
         status 200
         halt
       end
 
       private
-
-      def static_file_path
-        if params["splat"]
-          params["static_file_id"] = params["splat"].first
-        end
-        sanitized_path params["static_file_id"]
-      end
 
       def static_file_body
         if !request_payload["raw_content"].to_s.empty?
@@ -55,15 +48,20 @@ module JekyllAdmin
       # TODO: StaticFile.new needs to be taught about the collection the
       # file belongs to, if it belongs to a collection.
       def static_file
-        static_files.find { |f| f.path == static_file_path } ||
-          Jekyll::StaticFile.new(
-            site, site.source, File.dirname(static_file_path), File.basename(static_file_path)
-          )
+        found = static_files.find { |f| f.path == relative_path }
+        return found if found
+        return unless File.file?(write_path)
+        Jekyll::StaticFile.new(
+          site,
+          site.source,
+          File.dirname(relative_write_path),
+          File.basename(relative_write_path)
+        )
       end
 
       def static_files_for_path
         # Joined with / to ensure user can't do partial paths
-        base_path = File.join(static_file_path, "/")
+        base_path = File.join(path, "/")
         static_files.select do |f|
           f.path.start_with? base_path
         end

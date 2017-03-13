@@ -40,18 +40,77 @@ module JekyllAdmin
     end
 
     def request_payload
-      @request_payload ||= begin
-        request.body.rewind
-        JSON.parse request.body.read
-      end
+      @request_payload ||= if request_body.to_s.empty?
+                             {}
+                           else
+                             JSON.parse(request_body)
+                           end
     end
 
     def base_url
       "#{request.scheme}://#{request.host_with_port}"
     end
 
-    def sanitized_path(questionable_path)
-      Jekyll.sanitized_path JekyllAdmin.site.source, questionable_path
+    def sanitized_path(path)
+      path = path.to_s.gsub(%r!\A#{Regexp.escape(JekyllAdmin.site.source)}!, "")
+      Jekyll.sanitized_path JekyllAdmin.site.source, path
+    end
+
+    # Returns the sanitized path relative to the site source
+    def sanitized_relative_path(path)
+      path = sanitized_path(path)
+      path.sub(%r!\A#{Regexp.escape(JekyllAdmin.site.source)}!, "")
+    end
+
+    def filename
+      "#{params["path"]}.#{params["ext"]}"
+    end
+
+    # Returns the sanitized absolute path to the requested object
+    def path
+      case namespace
+      when "collections"
+        sanitized_path File.join(collection.relative_directory, document_id)
+      when "pages", "static_files"
+        sanitized_path File.join(directory_path, filename)
+      end
+    end
+
+    # Returns the sanitized relative path to the requested object
+    def relative_path
+      sanitized_relative_path path
+    end
+
+    # Returns the sanitized absolute path to write the requested object
+    def write_path
+      if renamed?
+        sanitized_path request_payload["path"]
+      else
+        path
+      end
+    end
+    alias_method :request_path, :write_path
+
+    # Returns the sanitized relative path to write the requested object
+    def relative_write_path
+      sanitized_relative_path write_path
+    end
+
+    def renamed?
+      return false unless request_payload["path"]
+      ensure_leading_slash(request_payload["path"]) != relative_path
+    end
+
+    def directory_path
+      if namespace == "collections"
+        sanitized_path File.join(collection.relative_directory, params["splat"].first)
+      else
+        sanitized_path params["splat"].first
+      end
+    end
+
+    def ensure_directory
+      render_404 unless Dir.exist?(directory_path)
     end
 
     def front_matter
@@ -81,6 +140,25 @@ module JekyllAdmin
     def delete_file(path)
       File.delete sanitized_path(path)
       site.process
+    end
+
+    private
+
+    def request_body
+      @request_body ||= begin
+        request.body.rewind
+        request.body.read
+      end
+    end
+
+    def namespace
+      namespace = request.fullpath.split("/")[1].downcase
+      namespace if ROUTES.include?(namespace)
+    end
+
+    def ensure_leading_slash(input)
+      return input if input.nil? || input.empty? || input.start_with?("/")
+      "/#{input}"
     end
   end
 end
