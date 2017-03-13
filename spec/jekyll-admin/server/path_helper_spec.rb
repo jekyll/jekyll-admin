@@ -35,7 +35,6 @@ RSpec.describe JekyllAdmin::PathHelper do
     it "sanitizes a relative path" do
       expect(subject.sanitized_path("../foo/bar")).to eql("#{site_source}/foo/bar")
       expect(subject.sanitized_relative_path("../foo/bar")).to eql("/foo/bar")
-
     end
 
     it "sanitizes an absolute path" do
@@ -91,7 +90,6 @@ RSpec.describe JekyllAdmin::PathHelper do
 
     it "returns the path" do
       expect(subject.path).to eql("#{site_source}/foo/page.md")
-
     end
 
     it "returns the relative path" do
@@ -112,7 +110,6 @@ RSpec.describe JekyllAdmin::PathHelper do
 
     it "returns the path" do
       expect(subject.path).to eql("#{site_source}/_puppies/page.md")
-
     end
 
     it "returns the relative path" do
