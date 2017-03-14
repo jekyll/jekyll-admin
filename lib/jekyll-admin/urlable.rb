@@ -21,6 +21,11 @@ module JekyllAdmin
       ).normalize.to_s
     end
 
+    def entries_url
+      return unless is_a?(Jekyll::Collection)
+      "#{api_url}/entries"
+    end
+
     private
 
     # URL path relative to `_api/` to retreive the given resource via the API
