@@ -48,6 +48,8 @@ module JekyllAdmin
       ensure_leading_slash(request_payload["path"]) != relative_path
     end
 
+    private
+
     # Returns the path to the requested file's containing directory
     def directory_path
       case namespace
@@ -59,8 +61,6 @@ module JekyllAdmin
         sanitized_path params["splat"].first
       end
     end
-
-    private
 
     def ensure_leading_slash(input)
       return input if input.nil? || input.empty? || input.start_with?("/")
