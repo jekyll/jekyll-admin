@@ -83,3 +83,9 @@ module JekyllAdmin
     end
   end
 end
+
+require "jekyll-admin/server/collection"
+require "jekyll-admin/server/configuration"
+require "jekyll-admin/server/data"
+require "jekyll-admin/server/page"
+require "jekyll-admin/server/static_file"
