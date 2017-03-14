@@ -11,8 +11,8 @@ module JekyllAdmin
       end
 
       get "/:collection_id/*?/?:path.:ext" do
-        ensure_document
-        json document.to_api(:include_content => true)
+        ensure_requested_file
+        json requested_file.to_api(:include_content => true)
       end
 
       get "/:collection_id/entries/?*" do
@@ -22,14 +22,18 @@ module JekyllAdmin
 
       put "/:collection_id/*?/?:path.:ext" do
         ensure_collection
-        delete_file path if renamed?
+
+        if renamed?
+          ensure_requested_file
+          delete_file path
+        end
+
         write_file write_path, document_body
-        ensure_document
-        json document.to_api(:include_content => true)
+        json written_file.to_api(:include_content => true)
       end
 
       delete "/:collection_id/*?/?:path.:ext" do
-        ensure_document
+        ensure_requested_file
         delete_file path
         content_type :json
         status 200
@@ -48,13 +52,6 @@ module JekyllAdmin
         path.gsub(%r!(\d{4})/(\d{2})/(\d{2})/(.*)!, '\1-\2-\3-\4')
       end
 
-      def document
-        collection.docs.find { |d| d.path == path } ||
-          Jekyll::Document.new(write_path, {
-            :collection => collection, :site => site,
-          }).tap(&:read)
-      end
-
       def directory_docs
         collection.docs.find_all { |d| File.dirname(d.path) == directory_path }
       end
@@ -66,11 +63,6 @@ module JekyllAdmin
       def ensure_directory
         ensure_collection
         render_404 unless Dir.exist?(directory_path)
-      end
-
-      def ensure_document
-        ensure_collection
-        render_404 if document.nil?
       end
 
       def entries
