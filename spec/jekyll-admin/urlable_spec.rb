@@ -64,6 +64,7 @@ describe JekyllAdmin::URLable do
     subject { JekyllAdmin.site.collections["posts"] }
     let(:http_url) { nil }
     let(:api_url) { "#{url_base}/#{prefix}/collections/posts" }
+    let(:entries_url) { "#{api_url}/entries" }
 
     it "knows the HTTP URL" do
       expect(subject.http_url).to eql(http_url)
@@ -71,6 +72,10 @@ describe JekyllAdmin::URLable do
 
     it "knows the API URL" do
       expect(subject.api_url).to eql(api_url)
+    end
+
+    it "knows the entries url" do
+      expect(subject.entries_url).to eql(entries_url)
     end
   end
 
