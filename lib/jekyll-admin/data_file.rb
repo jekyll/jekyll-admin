@@ -5,6 +5,10 @@ module JekyllAdmin
 
     include APIable
     include URLable
+    include PathHelper
+    extend PathHelper
+
+    alias_method :path, :relative_path
 
     # Initialize a new DataFile object
     #
@@ -16,17 +20,6 @@ module JekyllAdmin
     def exists?
       @exists ||= File.exist?(absolute_path)
     end
-
-    def absolute_path
-      @absolute_path ||= Jekyll.sanitized_path(JekyllAdmin.site.source, relative_path)
-    end
-    alias_method :file_path, :absolute_path
-
-    # Returns the relative path relative to site source
-    def relative_path
-      @relative_path = File.join(DataFile.data_dir, basename_with_extension)
-    end
-    alias_method :path, :relative_path
 
     # Returns unparsed content as it exists on disk
     def raw_content
@@ -65,10 +58,9 @@ module JekyllAdmin
     end
 
     def self.all
-      data_dir = Jekyll.sanitized_path(JekyllAdmin.site.source, DataFile.data_dir)
-      data_dir = Pathname.new(data_dir)
+      data_dir = sanitized_path DataFile.data_dir
       Dir["#{data_dir}/*.{#{EXTENSIONS.join(",")}}"].map do |path|
-        new(Pathname.new(path).relative_path_from(data_dir).to_s)
+        new path_without_site_source(path)
       end
     end
 
@@ -89,6 +81,11 @@ module JekyllAdmin
 
     def basename_with_extension
       [basename, extension].join
+    end
+    alias_method :filename, :basename_with_extension
+
+    def namespace
+      "data"
     end
   end
 end

@@ -145,8 +145,8 @@ describe "static_files" do
 
     request = {
       :encoded_content => "dGVzdDI=",
-      :path => "static-file-rename2.txt"
-     }
+      :path            => "static-file-rename2.txt",
+    }
     put "/static_files/static-file-rename.txt", request.to_json
 
     expect(last_response).to be_ok
