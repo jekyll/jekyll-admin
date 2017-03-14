@@ -80,14 +80,14 @@ RSpec.describe JekyllAdmin::PathHelper do
   end
 
   it "knows the directory path" do
-    expect(subject.directory_path).to eql("#{site_source}/")
+    expect(subject.send(:directory_path)).to eql("#{site_source}/")
   end
 
   context "subdir" do
     let(:splat) { ["foo"] }
 
     it "knows the directory path" do
-      expect(subject.directory_path).to eql("#{site_source}/foo")
+      expect(subject.send(:directory_path)).to eql("#{site_source}/foo")
     end
 
     it "returns the path" do
@@ -107,7 +107,7 @@ RSpec.describe JekyllAdmin::PathHelper do
     let(:namespace) { "collections" }
 
     it "knows the directory path" do
-      expect(subject.directory_path).to eql("#{site_source}/_puppies")
+      expect(subject.send(:directory_path)).to eql("#{site_source}/_puppies")
     end
 
     it "returns the path" do
