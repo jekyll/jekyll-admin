@@ -2,8 +2,8 @@ module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/pages" do
       get "/*?/?:path.:ext" do
-        ensure_page
-        json page.to_api(:include_content => true)
+        ensure_requested_file
+        json requested_file.to_api(:include_content => true)
       end
 
       get "/?*" do
@@ -13,14 +13,19 @@ module JekyllAdmin
 
       put "/*?/?:path.:ext" do
         ensure_html_content
-        delete_file path if renamed?
+
+        if renamed?
+          ensure_requested_file
+          delete_file path
+        end
+
         write_file write_path, page_body
-        ensure_page
-        json page.to_api(:include_content => true)
+
+        json written_file.to_api(:include_content => true)
       end
 
       delete "/*?/?:path.:ext" do
-        ensure_page
+        ensure_requested_file
         delete_file path
         content_type :json
         status 200
@@ -59,19 +64,6 @@ module JekyllAdmin
       # returns relative path of root level directories that contain pages
       def directory_paths
         pages.map { |p| File.dirname(p.path).split("/")[0] }.uniq
-      end
-
-      def page
-        found = site.pages.find { |p| sanitized_path(p.path) == path }
-        return found if found
-        return unless File.file?(write_path)
-        Jekyll::Page.new(
-          site, site.source, File.dirname(write_path), File.basename(write_path)
-        )
-      end
-
-      def ensure_page
-        render_404 if page.nil?
       end
 
       def entries

@@ -2,6 +2,7 @@ module JekyllAdmin
   class Server < Sinatra::Base
     ROUTES = %w(collections configuration data pages static_files).freeze
     include JekyllAdmin::PathHelper
+    include JekyllAdmin::FileHelper
 
     register Sinatra::Namespace
 
@@ -52,10 +53,6 @@ module JekyllAdmin
       "#{request.scheme}://#{request.host_with_port}"
     end
 
-    def ensure_directory
-      render_404 unless Dir.exist?(directory_path)
-    end
-
     def front_matter
       request_payload["front_matter"]
     end
@@ -81,7 +78,7 @@ module JekyllAdmin
     end
 
     def namespace
-      namespace = request.fullpath.split("/")[1].downcase
+      namespace = request.fullpath.split("/")[1].to_s.downcase
       namespace if ROUTES.include?(namespace)
     end
   end

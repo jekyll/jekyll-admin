@@ -5,13 +5,14 @@ module JekyllAdmin
       Jekyll.sanitized_path JekyllAdmin.site.source, path
     end
 
+    # Returns the basename + extension for the requested file
+    def filename
+      "#{params["path"]}.#{params["ext"]}"
+    end
+
     # Returns the sanitized path relative to the site source
     def sanitized_relative_path(path)
       path_without_site_source sanitized_path(path)
-    end
-
-    def filename
-      "#{params["path"]}.#{params["ext"]}"
     end
 
     # Returns the sanitized absolute path to the requested object
@@ -39,29 +40,19 @@ module JekyllAdmin
       sanitized_relative_path write_path
     end
 
+    # Is this request renaming a file?
     def renamed?
       return false unless request_payload["path"]
       ensure_leading_slash(request_payload["path"]) != relative_path
     end
 
+    # Returns the path to the requested file's containing directory
     def directory_path
       if namespace == "collections"
         sanitized_path File.join(collection.relative_directory, params["splat"].first)
       else
         sanitized_path params["splat"].first
       end
-    end
-
-    def write_file(path, content)
-      path = sanitized_path(path)
-      FileUtils.mkdir_p File.dirname(path)
-      File.open(path, "wb") do |file|
-        file.write(content)
-      end
-    end
-
-    def delete_file(path)
-      File.delete sanitized_path(path)
     end
 
     private

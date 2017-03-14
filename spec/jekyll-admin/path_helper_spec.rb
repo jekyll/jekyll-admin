@@ -27,19 +27,21 @@ RSpec.describe JekyllAdmin::PathHelper do
   end
 
   context "sanitization" do
+    let(:relative_path) { "/foo/bar" }
+    let(:path) { "#{site_source}/foo/bar" }
     it "sanitizes a normal path" do
-      expect(subject.sanitized_path("foo/bar")).to eql("#{site_source}/foo/bar")
-      expect(subject.sanitized_relative_path("foo/bar")).to eql("/foo/bar")
+      expect(subject.sanitized_path("foo/bar")).to eql(path)
+      expect(subject.sanitized_relative_path("foo/bar")).to eql(relative_path)
     end
 
     it "sanitizes a relative path" do
-      expect(subject.sanitized_path("../foo/bar")).to eql("#{site_source}/foo/bar")
-      expect(subject.sanitized_relative_path("../foo/bar")).to eql("/foo/bar")
+      expect(subject.sanitized_path("../foo/bar")).to eql(path)
+      expect(subject.sanitized_relative_path("../foo/bar")).to eql(relative_path)
     end
 
     it "sanitizes an absolute path" do
-      expect(subject.sanitized_path("#{site_source}/foo/bar")).to eql("#{site_source}/foo/bar")
-      expect(subject.sanitized_relative_path("#{site_source}/foo/bar")).to eql("/foo/bar")
+      expect(subject.sanitized_path(path)).to eql(path)
+      expect(subject.sanitized_relative_path(path)).to eql(relative_path)
     end
   end
 
@@ -118,33 +120,6 @@ RSpec.describe JekyllAdmin::PathHelper do
 
     it "returns the write path" do
       expect(subject.write_path).to eql("#{site_source}/_puppies/page.md")
-    end
-  end
-
-  context "writing and deleting" do
-    let(:path) { "#{site_source}/write-and-delete.md" }
-    let(:content) { "TEST TEST TEST" }
-    before { FileUtils.rm_rf(path) }
-    after { FileUtils.rm_rf(path) }
-
-    context "writing" do
-      before { FileUtils.rm_rf(path) }
-
-      it "writes the file" do
-        subject.write_file(path, content)
-        expect(path).to be_an_existing_file
-        actual_content = File.read(path)
-        expect(actual_content).to eql(content)
-      end
-    end
-
-    context "deleting" do
-      before { FileUtils.touch(path) }
-
-      it "deletes the file" do
-        subject.delete_file(path)
-        expect(path).to_not be_an_existing_file
-      end
     end
   end
 end
