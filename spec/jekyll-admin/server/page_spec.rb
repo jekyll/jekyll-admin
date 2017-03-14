@@ -264,6 +264,18 @@ describe "pages" do
     delete_file "page-dir/page-rename.md", "page-dir/page-renamed.md"
   end
 
+  it "404s when trying to rename a non-existent page" do
+    request = {
+      :path         => "page-dir/page-renamed.md",
+      :front_matter => { :foo => "bar" },
+      :raw_content  => "test",
+    }
+
+    put "/pages/page-dir/invalid-page.md", request.to_json
+    expect(last_response.status).to eql(404)
+    expect("page-dir/page-renamed.md").to_not be_an_existing_file
+  end
+
   it "deletes a page" do
     path = write_file "page-delete.md"
     delete "/pages/page-delete.md"

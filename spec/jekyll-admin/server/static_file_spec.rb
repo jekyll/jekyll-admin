@@ -140,6 +140,22 @@ describe "static_files" do
     delete_file "static-dir/static-file-update.txt"
   end
 
+  it "renames a static file" do
+    write_file "static-file-rename.txt", "test2"
+
+    request = {
+      :encoded_content => "dGVzdDI=",
+      :path => "static-file-rename2.txt"
+     }
+    put "/static_files/static-file-rename.txt", request.to_json
+
+    expect(last_response).to be_ok
+    expect("static-file-rename.txt").to_not be_an_existing_file
+    expect("static-file-rename2.txt").to be_an_existing_file
+
+    delete_file "static-file-rename2.txt"
+  end
+
   it "deletes a static_file" do
     write_file "static-file-delete.txt", "test"
     delete "/static_files/static-file-delete.txt"
