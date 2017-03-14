@@ -3,8 +3,8 @@ describe "data" do
 
   let(:base_response) do
     {
-      "path"          => "_data/data_file.yml",
-      "relative_path" => "_data/data_file.yml",
+      "path"          => "/_data/data_file.yml",
+      "relative_path" => "/_data/data_file.yml",
       "slug"          => "data_file",
       "ext"           => ".yml",
       "title"         => "Data File",
@@ -48,8 +48,8 @@ describe "data" do
     delete_file "_data/data-file-new.yml"
 
     expected_response = {
-      "path"          => "_data/data-file-new.yml",
-      "relative_path" => "_data/data-file-new.yml",
+      "path"          => "/_data/data-file-new.yml",
+      "relative_path" => "/_data/data-file-new.yml",
       "slug"          => "data-file-new",
       "ext"           => ".yml",
       "title"         => "Data File New",
@@ -75,8 +75,8 @@ describe "data" do
     delete_file "_data/data-file-new.yml"
 
     expected_response = {
-      "path"          => "_data/data-file-new.yml",
-      "relative_path" => "_data/data-file-new.yml",
+      "path"          => "/_data/data-file-new.yml",
+      "relative_path" => "/_data/data-file-new.yml",
       "slug"          => "data-file-new",
       "ext"           => ".yml",
       "title"         => "Data File New",
@@ -102,8 +102,8 @@ describe "data" do
     write_file "_data/data-file-update.yml", "foo2: bar2"
 
     expected_response = {
-      "path"          => "_data/data-file-update.yml",
-      "relative_path" => "_data/data-file-update.yml",
+      "path"          => "/_data/data-file-update.yml",
+      "relative_path" => "/_data/data-file-update.yml",
       "slug"          => "data-file-update",
       "ext"           => ".yml",
       "title"         => "Data File Update",

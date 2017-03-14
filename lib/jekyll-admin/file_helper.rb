@@ -43,6 +43,8 @@ module JekyllAdmin
       files = case namespace
               when "collections"
                 collection.docs
+              when "data"
+                DataFile.all
               when "pages", "static_files"
                 site.public_send(namespace.to_sym)
               else

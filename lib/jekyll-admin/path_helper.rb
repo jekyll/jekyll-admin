@@ -7,6 +7,7 @@ module JekyllAdmin
 
     # Returns the basename + extension for the requested file
     def filename
+      params["ext"] ||= "yml" if namespace == "data"
       "#{params["path"]}.#{params["ext"]}"
     end
 
@@ -16,13 +17,14 @@ module JekyllAdmin
     end
 
     # Returns the sanitized absolute path to the requested object
-    def path
+    def absolute_path
       sanitized_path File.join(directory_path, filename)
     end
+    alias_method :path, :absolute_path
 
     # Returns the sanitized relative path to the requested object
     def relative_path
-      sanitized_relative_path path
+      sanitized_relative_path absolute_path
     end
 
     # Returns the sanitized absolute path to write the requested object
@@ -48,8 +50,11 @@ module JekyllAdmin
 
     # Returns the path to the requested file's containing directory
     def directory_path
-      if namespace == "collections"
+      case namespace
+      when "collections"
         sanitized_path File.join(collection.relative_directory, params["splat"].first)
+      when "data"
+        sanitized_path File.join(DataFile.data_dir)
       else
         sanitized_path params["splat"].first
       end

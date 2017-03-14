@@ -78,7 +78,7 @@ module JekyllAdmin
     end
 
     def namespace
-      namespace = request.fullpath.split("/")[1].to_s.downcase
+      namespace = request.path_info.split("/")[1].to_s.downcase
       namespace if ROUTES.include?(namespace)
     end
   end
