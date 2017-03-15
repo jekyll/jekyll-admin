@@ -10,6 +10,7 @@ describe "integration" do
   let(:response) { Net::HTTP.get_response(uri) }
 
   before do
+    Open3.capture2e(*stop_command)
     @stdin, @stdout, @stderr, @wait_thr = Open3.popen3(*start_command)
     sleep 3
   end
