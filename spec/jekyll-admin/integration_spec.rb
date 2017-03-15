@@ -3,7 +3,7 @@ describe "integration" do
   let(:dest) { File.join(source, "_site") }
   let(:args) { ["--detach", "--watch", "--source", source, "--destination", dest] }
   let(:start_command) { %w(bundle exec jekyll serve).concat(args) }
-  let(:stop_command) { ["pkill", "-9", "jekyll"] }
+  let(:stop_command) { ["pkill", "-f", "jekyll"] }
   let(:server) { "http://localhost:4000" }
   let(:path) { "/" }
   let(:uri) { URI.join(server, path) }
