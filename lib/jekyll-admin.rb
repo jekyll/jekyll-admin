@@ -16,29 +16,18 @@ require "addressable/uri"
 require "sinatra/reloader"
 require "sinatra/namespace"
 
-# Jekyll-Admin stuffs
-require "jekyll-admin/version"
-require "jekyll-admin/server"
-require "jekyll-admin/static_server"
-require "jekyll-admin/server/collection.rb"
-require "jekyll-admin/server/configuration.rb"
-require "jekyll-admin/server/data.rb"
-require "jekyll-admin/server/page.rb"
-require "jekyll-admin/server/static_file.rb"
-require "jekyll-admin/apiable.rb"
-require "jekyll-admin/urlable.rb"
-require "jekyll-admin/data_file.rb"
-require "jekyll-admin/directory.rb"
-require "jekyll-admin/page_without_a_file.rb"
-
-# Monkey Patches
-require_relative "./jekyll/commands/serve"
-[Jekyll::Page, Jekyll::Document, Jekyll::StaticFile, Jekyll::Collection].each do |klass|
-  klass.include JekyllAdmin::APIable
-  klass.include JekyllAdmin::URLable
-end
-
 module JekyllAdmin
+  autoload :APIable,          "jekyll-admin/apiable"
+  autoload :DataFile,         "jekyll-admin/data_file"
+  autoload :Directory,        "jekyll-admin/directory"
+  autoload :FileHelper,       "jekyll-admin/file_helper"
+  autoload :PageWithoutAFile, "jekyll-admin/page_without_a_file"
+  autoload :PathHelper,       "jekyll-admin/path_helper"
+  autoload :Server,           "jekyll-admin/server"
+  autoload :StaticServer,     "jekyll-admin/static_server"
+  autoload :URLable,          "jekyll-admin/urlable"
+  autoload :Version,          "jekyll-admin/version"
+
   def self.site
     @site ||= begin
       site = Jekyll.sites.first
@@ -46,4 +35,11 @@ module JekyllAdmin
       site
     end
   end
+end
+
+# Monkey Patches
+require_relative "./jekyll/commands/serve"
+[Jekyll::Page, Jekyll::Document, Jekyll::StaticFile, Jekyll::Collection].each do |klass|
+  klass.include JekyllAdmin::APIable
+  klass.include JekyllAdmin::URLable
 end

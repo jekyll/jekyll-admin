@@ -11,8 +11,8 @@ module JekyllAdmin
       end
 
       get "/:collection_id/*?/?:path.:ext" do
-        ensure_document
-        json document.to_api(:include_content => true)
+        ensure_requested_file
+        json requested_file.to_api(:include_content => true)
       end
 
       get "/:collection_id/entries/?*" do
@@ -22,21 +22,19 @@ module JekyllAdmin
 
       put "/:collection_id/*?/?:path.:ext" do
         ensure_collection
-        write_path = document_path
-        if request_payload["path"] && request_payload["path"] != relative_document_path
-          delete_file document_path
-          write_path = request_path
+
+        if renamed?
+          ensure_requested_file
+          delete_file path
         end
 
-        write_file(write_path, document_body)
-        updated_document = collection.docs.find { |d| d.path == write_path }
-        render_404 if updated_document.nil?
-        json updated_document.to_api(:include_content => true)
+        write_file write_path, document_body
+        json written_file.to_api(:include_content => true)
       end
 
       delete "/:collection_id/*?/?:path.:ext" do
-        ensure_document
-        delete_file document_path
+        ensure_requested_file
+        delete_file path
         content_type :json
         status 200
         halt
@@ -49,42 +47,13 @@ module JekyllAdmin
         collection[1] if collection
       end
 
-      def request_path
-        sanitized_path request_payload["path"]
-      end
-
-      def filename
-        "#{params["path"]}.#{params["ext"]}"
-      end
-
       def document_id
         path = "#{params["splat"].first}/#{filename}"
         path.gsub(%r!(\d{4})/(\d{2})/(\d{2})/(.*)!, '\1-\2-\3-\4')
       end
 
-      def document_path
-        sanitized_path File.join(collection.relative_directory, document_id)
-      end
-
-      def relative_document_path
-        if params["splat"].first.empty?
-          File.join(collection.relative_directory, filename)
-        else
-          relative_to_collection = File.join(params["splat"].first, filename)
-          File.join(collection.relative_directory, relative_to_collection)
-        end
-      end
-
-      def document
-        collection.docs.find { |d| d.path == document_path }
-      end
-
       def directory_docs
         collection.docs.find_all { |d| File.dirname(d.path) == directory_path }
-      end
-
-      def directory_path
-        sanitized_path File.join(collection.relative_directory, params["splat"].first)
       end
 
       def ensure_collection
@@ -94,11 +63,6 @@ module JekyllAdmin
       def ensure_directory
         ensure_collection
         render_404 unless Dir.exist?(directory_path)
-      end
-
-      def ensure_document
-        ensure_collection
-        render_404 if document.nil?
       end
 
       def entries
