@@ -1,6 +1,7 @@
 module JekyllAdmin
   class Server < Sinatra::Base
     ROUTES = %w(collections configuration data pages static_files).freeze
+    include JekyllAdmin::PrettyJSON if ENV["RACK_ENV"] == "development"
     include JekyllAdmin::PathHelper
     include JekyllAdmin::FileHelper
 

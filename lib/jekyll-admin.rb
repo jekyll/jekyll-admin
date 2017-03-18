@@ -23,6 +23,7 @@ module JekyllAdmin
   autoload :FileHelper,       "jekyll-admin/file_helper"
   autoload :PageWithoutAFile, "jekyll-admin/page_without_a_file"
   autoload :PathHelper,       "jekyll-admin/path_helper"
+  autoload :PrettyJSON,       "jekyll-admin/pretty_json"
   autoload :Server,           "jekyll-admin/server"
   autoload :StaticServer,     "jekyll-admin/static_server"
   autoload :URLable,          "jekyll-admin/urlable"
