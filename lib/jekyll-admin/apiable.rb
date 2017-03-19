@@ -47,6 +47,10 @@ module JekyllAdmin
         output["name"] = basename
       end
 
+      if is_a?(Jekyll::Page) || is_a?(Jekyll::Document)
+        output["modified_at"] = mtime
+      end
+
       output
     end
 
@@ -68,6 +72,10 @@ module JekyllAdmin
 
     def name
       @name
+    end
+
+    def mtime
+      @mtime ||= File.stat(file_path).mtime
     end
 
     def file_contents
