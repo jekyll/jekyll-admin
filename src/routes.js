@@ -3,6 +3,7 @@ import { Route, IndexRoute } from 'react-router';
 import { ADMIN_PREFIX } from './constants';
 
 import App from './containers/App';
+import Dashboard from './containers/views/Dashboard';
 import Configuration from './containers/views/Configuration';
 import Pages from './containers/views/Pages';
 import PageEdit from './containers/views/PageEdit';
@@ -18,7 +19,7 @@ import NotFound from './containers/views/NotFound';
 
 export default (
   <Route path={`${ADMIN_PREFIX}`} component={App}>
-    <IndexRoute component={Pages}/>
+    <IndexRoute component={Dashboard}/>
     <Route path="configuration" component={Configuration} />
     <Route path="pages">
       <IndexRoute component={Pages} />
