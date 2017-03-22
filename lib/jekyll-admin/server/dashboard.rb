@@ -16,6 +16,7 @@ module JekyllAdmin
           "pages"       => recent_pages.map { |page| page.to_api["path"] },
           "posts"       => paths_to_posts,
           "collections" => site.collections.map { |c| c[0] },
+          "watch"       => false, # manually override value set by --watch
         })
 
         output.delete("documents")
