@@ -25,6 +25,7 @@
   "license": "MIT",
   "dependencies": {
     "brace": "^0.10.0",
+    "buffertools": "^2.1.4",
     "classnames": "2.2.5",
     "highlight.js": "^9.10.0",
     "isomorphic-fetch": "2.2.1",
