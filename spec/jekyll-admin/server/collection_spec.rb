@@ -48,8 +48,8 @@ describe "collections" do
     context "entries" do
       let(:entries) { last_response_parsed }
       let(:documents) do
-        entries.select do |entry|
-          !entry.key? "type"
+        entries.reject do |entry|
+          entry.key? "type"
         end
       end
       let(:first_document) { documents.first }
