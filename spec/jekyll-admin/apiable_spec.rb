@@ -1,5 +1,5 @@
 describe JekyllAdmin::APIable do
-  [:page, :post].each do |type|
+  %i(page post).each do |type|
     context type do
       subject do
         documents = Jekyll.sites.first.send("#{type}s".to_sym)
