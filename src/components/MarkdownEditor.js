@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import SimpleMDE from 'simplemde';
-import hljs from 'highlight.js';
 
 const classNames = [
   'editor-toolbar',
@@ -13,7 +12,6 @@ class MarkdownEditor extends Component {
 
   componentDidMount() {
     this.create();
-    window.hljs = hljs; // TODO: fix this after the next release of SimpleMDE
   }
 
   shouldComponentUpdate(nextProps) {
