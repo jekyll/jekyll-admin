@@ -1,7 +1,7 @@
 language: ruby
 rvm: 2.2
 before_install:
-  - apt-get install build-essential
+  - sudo apt-get install build-essential
   - nvm install 7
   - npm install -g node-gyp
 install: script/bootstrap
@@ -9,7 +9,6 @@ script: script/cibuild
 cache:
   bundler: true
   yarn: true
-sudo: false
 env:
   matrix:
     - TEST_SUITE=node
