@@ -2,7 +2,7 @@ module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/collections" do
       get do
-        json site.collections.map { |c| c[1].to_api }
+        json(site.collections.map { |c| c[1].to_api })
       end
 
       get "/:collection_id" do

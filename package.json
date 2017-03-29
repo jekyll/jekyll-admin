@@ -45,7 +45,7 @@
     "redux-logger": "2.6.1",
     "redux-thunk": "2.1.0",
     "simplemde": "1.11.2",
-    "slug": "0.9.1",
+    "slug": "git+https://git@github.com/180-g/node-slug",
     "sortablejs": "1.4.2",
     "underscore": "1.8.3"
   },
