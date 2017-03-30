@@ -1,3 +1,5 @@
+@import url('../../node_modules/highlight.js/styles/atom-one-light.css');
+
 .config-editor {
   border: 1px solid $border-color;
   @include border-radius($border-radius);

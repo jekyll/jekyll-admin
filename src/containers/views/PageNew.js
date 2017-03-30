@@ -22,11 +22,6 @@ import {
 
 export class PageNew extends Component {
 
-  componentWillMount() {
-    const { clearErrors } = this.props;
-    clearErrors();
-  }
-
   componentDidMount() {
     const { router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
@@ -35,6 +30,14 @@ export class PageNew extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
       browserHistory.push(`${ADMIN_PREFIX}/pages/${nextProps.page.path}`);
+    }
+  }
+
+  componentWillUnmount() {
+    const { clearErrors, errors} = this.props;
+    // clear errors if any
+    if (errors.length) {
+      clearErrors();
     }
   }
 

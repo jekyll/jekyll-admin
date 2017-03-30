@@ -22,11 +22,6 @@ import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {
 
-  componentWillMount() {
-    const { clearErrors } = this.props;
-    clearErrors();
-  }
-
   componentDidMount() {
     const { router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
@@ -39,6 +34,14 @@ export class DocumentNew extends Component {
       browserHistory.push(
         `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${splat}`
       );
+    }
+  }
+
+  componentWillUnmount() {
+    const { clearErrors, errors} = this.props;
+    // clear errors if any
+    if (errors.length) {
+      clearErrors();
     }
   }
 

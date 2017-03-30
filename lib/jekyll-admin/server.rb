@@ -1,6 +1,8 @@
 module JekyllAdmin
   class Server < Sinatra::Base
     ROUTES = %w(collections configuration data pages static_files).freeze
+    include JekyllAdmin::PathHelper
+    include JekyllAdmin::FileHelper
 
     register Sinatra::Namespace
 
@@ -40,18 +42,15 @@ module JekyllAdmin
     end
 
     def request_payload
-      @request_payload ||= begin
-        request.body.rewind
-        JSON.parse request.body.read
-      end
+      @request_payload ||= if request_body.to_s.empty?
+                             {}
+                           else
+                             JSON.parse(request_body)
+                           end
     end
 
     def base_url
       "#{request.scheme}://#{request.host_with_port}"
-    end
-
-    def sanitized_path(questionable_path)
-      Jekyll.sanitized_path JekyllAdmin.site.source, questionable_path
     end
 
     def front_matter
@@ -69,18 +68,24 @@ module JekyllAdmin
     end
     alias page_body document_body
 
-    def write_file(path, content)
-      path = sanitized_path(path)
-      FileUtils.mkdir_p File.dirname(path)
-      File.open(path, "wb") do |file|
-        file.write(content)
+    private
+
+    def request_body
+      @request_body ||= begin
+        request.body.rewind
+        request.body.read
       end
-      site.process
     end
 
-    def delete_file(path)
-      File.delete sanitized_path(path)
-      site.process
+    def namespace
+      namespace = request.path_info.split("/")[1].to_s.downcase
+      namespace if ROUTES.include?(namespace)
     end
   end
 end
+
+require "jekyll-admin/server/collection"
+require "jekyll-admin/server/configuration"
+require "jekyll-admin/server/data"
+require "jekyll-admin/server/page"
+require "jekyll-admin/server/static_file"

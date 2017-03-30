@@ -21,6 +21,11 @@ module JekyllAdmin
       ).normalize.to_s
     end
 
+    def entries_url
+      return unless is_a?(Jekyll::Collection)
+      "#{api_url}/entries"
+    end
+
     private
 
     # URL path relative to `_api/` to retreive the given resource via the API
@@ -31,7 +36,7 @@ module JekyllAdmin
       elsif is_a?(Jekyll::Collection)
         "/collections/#{label}"
       elsif is_a?(JekyllAdmin::DataFile)
-        relative_path.sub(%r!\A#{JekyllAdmin.site.config["data_dir"]}!, "/data")
+        relative_path.sub(%r!\A/#{DataFile.data_dir}!, "/data")
       elsif is_a?(Jekyll::StaticFile)
         "/static_files/#{relative_path}"
       elsif is_a?(Jekyll::Page)

@@ -6,6 +6,8 @@ AllCops:
     - lib/jekyll-admin/public/**/*
     - src/**/*
     - node_modules/**/*
+    - Gemfile
+    - jekyll-admin.gemspec
 
 Metrics/BlockLength:
   Enabled: false

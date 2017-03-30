@@ -40,11 +40,6 @@ const setup = (props = defaultProps) => {
 };
 
 describe('Containers::DocumentNew', () => {
-  it('should call clearErrors before mount', () => {
-    const { actions } = setup();
-    expect(actions.clearErrors).toHaveBeenCalled();
-  });
-
   it('should not render error messages initially', () => {
     const { errors } = setup();
     expect(errors.node).toNotExist();

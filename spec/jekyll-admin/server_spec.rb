@@ -9,8 +9,8 @@ describe JekyllAdmin::Server do
     get "/pages"
     expect(last_response).to be_ok
     entries = last_response_parsed
-    first_page = entries.select do |entry|
-      !entry.key? "type"
+    first_page = entries.reject do |entry|
+      entry.key? "type"
     end.first
     expect(first_page["path"]).to eq("page.md")
   end

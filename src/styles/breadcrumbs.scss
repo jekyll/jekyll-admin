@@ -8,6 +8,7 @@
     &:not(:last-child):after {
       content: "/";
       padding: 0 8px;
+      font-size: 30px;
     }
     a {
       color: #444;

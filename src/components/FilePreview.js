@@ -16,7 +16,7 @@ export default class FilePreview extends Component {
   render() {
     const { file } = this.props;
     const extension = file.extname.substring(1);
-    const image = /png|jpg|gif|jpeg/.test(extension);
+    const image = /png|jpg|gif|jpeg|svg/.test(extension);
     return (
       <div className="file-preview">
         <a href={file.http_url} target="_blank">
@@ -25,7 +25,7 @@ export default class FilePreview extends Component {
         }
         {
           !image &&
-          <div><i className="fa fa-file-text-o" aria-hidden="true"></i></div>
+          <div><i className="fa fa-file-text-o" aria-hidden="true"/></div>
         }
         </a>
         <span className="filename">{file.path}</span>

@@ -1,8 +1,10 @@
 title: Your awesome title
 
+# Load the admin interface.
 gems:
   - jekyll-admin
 
+# Exclude these files from being processed.
 exclude:
   - Gemfile
   - Gemfile.lock
@@ -32,6 +34,7 @@ defaults:
     values:
       post_test_only: true
 
+# Dummy Collection.
 collections:
   puppies:
     foo: bar
