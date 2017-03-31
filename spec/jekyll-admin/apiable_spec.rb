@@ -52,8 +52,8 @@ describe JekyllAdmin::APIable do
           end
 
           it "includes front matter defaults as top-level keys" do
-            expect(as_api).to have_key("some_front_matter")
-            expect(as_api["some_front_matter"]).to eql("default")
+            expect(as_api).to have_key("all")
+            expect(as_api["all"]).to eql(true)
           end
 
           it "includes front matter as top-level keys" do
