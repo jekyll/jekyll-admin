@@ -23,6 +23,7 @@ export function removeField(namePrefix, key) {
 }
 
 export function updateFieldKey(namePrefix, fieldKey, newKey) {
+  newKey = newKey.trim();
   return {
     type: ActionTypes.UPDATE_FIELD_KEY,
     namePrefix,
