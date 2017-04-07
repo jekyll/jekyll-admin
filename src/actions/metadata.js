@@ -33,6 +33,7 @@ export function updateFieldKey(namePrefix, fieldKey, newKey) {
 }
 
 export function updateFieldValue(nameAttr, value) {
+  value = value.trim();
   return {
     type: ActionTypes.UPDATE_FIELD_VALUE,
     nameAttr,

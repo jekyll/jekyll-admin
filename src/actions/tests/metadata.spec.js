@@ -50,7 +50,7 @@ describe('Actions::Metadata', () => {
       value: 'post1'
     };
     expect(
-      actions.updateFieldValue('metadata["layout"]', 'post1')
+      actions.updateFieldValue('metadata["layout"]', '  post1   ')
     ).toEqual(expectedAction);
   });
 
