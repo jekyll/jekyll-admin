@@ -71,7 +71,7 @@ export default function metadata(state = {
           state,
           action.namePrefix,
           action.fieldKey,
-          action.newKey
+          action.newKey.trim()
         ),
         fieldChanged: true
       });
@@ -80,7 +80,7 @@ export default function metadata(state = {
         metadata: updateFieldValue(
           state,
           action.nameAttr,
-          action.value
+          action.value.trim()
         ),
         fieldChanged: true
       });

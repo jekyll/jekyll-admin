@@ -39,7 +39,7 @@ describe('Actions::Metadata', () => {
       newKey: 'layout1'
     };
     expect(
-      actions.updateFieldKey('metadata', 'layout', ' layout1  ')
+      actions.updateFieldKey('metadata', 'layout', 'layout1')
     ).toEqual(expectedAction);
   });
 
@@ -50,7 +50,7 @@ describe('Actions::Metadata', () => {
       value: 'post1'
     };
     expect(
-      actions.updateFieldValue('metadata["layout"]', '  post1   ')
+      actions.updateFieldValue('metadata["layout"]', 'post1')
     ).toEqual(expectedAction);
   });
 
