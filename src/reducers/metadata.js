@@ -63,7 +63,7 @@ export default function metadata(state = {
       return Object.assign({}, state, {
         metadata: removeField(state, action.namePrefix, action.key),
         fieldChanged: true,
-        key_prefix: Math.random() * 100 + ''
+        key_prefix: `${Math.random() * 100}`
       });
     case UPDATE_FIELD_KEY:
       return Object.assign({}, state, {
@@ -92,7 +92,7 @@ export default function metadata(state = {
           action.srcInd,
           action.targetInd
         ),
-        key_prefix: Math.random() * 100 + '',
+        key_prefix: `${Math.random() * 100}`,
         fieldChanged: true
       });
     case CONVERT_FIELD:

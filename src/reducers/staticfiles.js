@@ -45,7 +45,7 @@ export default function staticfiles(state = {
 export const filterByFilename = (staticfiles, input) => {
   if (input) {
     return staticfiles.filter(
-      sf => sf.path.toLowerCase().indexOf(input.toLowerCase()) > -1
+      sf => sf.path.toLowerCase().includes(input.toLowerCase())
     );
   }
   return staticfiles;
