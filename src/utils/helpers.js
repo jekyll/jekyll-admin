@@ -70,7 +70,7 @@ export const existingUploadedFilenames = (uploadedFiles, currentFiles) => {
   }
   const currentFilenames = _.map(currentFiles, cf => getFilenameFromPath(cf.path));
   return _.chain(uploadedFiles)
-    .filter(file => currentFilenames.indexOf(file.name) > -1)
+    .filter(file => currentFilenames.includes(file.name))
     .map(file => file.name)
     .value();
 };
