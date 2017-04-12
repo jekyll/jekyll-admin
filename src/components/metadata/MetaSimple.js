@@ -3,15 +3,10 @@ import TextareaAutosize from 'react-textarea-autosize';
 import _ from 'underscore';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Modal from 'react-modal';
+import StaticFiles from '../../containers/views/StaticFiles';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 import 'react-widgets/dist/css/react-widgets.css';
-import Dropzone from '../Dropzone';
-import StaticFiles from '../../containers/views/StaticFiles';
-import { deleteStaticFile } from '../../actions/staticfiles';
-import {
-  staticfilesAPIUrl,
-} from '../../constants/api';
 
 momentLocalizer(moment);
 
@@ -25,7 +20,6 @@ export class MetaSimple extends Component {
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
-    this.fetchStaticFiles = this.fetchStaticFiles.bind(this);
   }
 
   handleOpenModal () {
@@ -45,14 +39,6 @@ export class MetaSimple extends Component {
     const { nameAttr, fieldValue, updateFieldValue } = this.props;
     let formatted = moment(date).format("YYYY-MM-DD hh:mm:ss");
     updateFieldValue(nameAttr, formatted);
-  }
-
-  fetchStaticFiles() {
-    fetch(staticfilesAPIUrl())
-      .then(res => res.json())
-      .then(staticfiles => {
-        this.setState({staticfiles: staticfiles});
-      });
   }
 
   renderEditable() {
@@ -105,13 +91,11 @@ export class MetaSimple extends Component {
               overlay: {
                 backgroundColor: 'rgba(0,0,0,0.6)',
                 zIndex: 10,
-
               },
               content: {
                 margin: 50,
               }
-            }}
-           >
+            }} >
              <StaticFiles onClickStaticFile={(url) => this.onClickPickerItem(url)} />
           </Modal>
         </span>
@@ -139,7 +123,6 @@ export class MetaSimple extends Component {
       </div>
     );
   }
-
 }
 
 MetaSimple.propTypes = {
