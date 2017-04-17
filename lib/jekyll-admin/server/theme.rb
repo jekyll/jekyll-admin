@@ -17,10 +17,13 @@ module JekyllAdmin
 
       get "/*?/?:path.:ext" do
         ensure_theme
-        json(
-          { :name => filename,
-            :path => file_path, }.merge!(contents).merge!(url_fields)
-        )
+        json({
+          :name     => filename,
+          :path     => file_path,
+          :content  => File.open(file_path).read,
+          :http_url => http_url(file_path),
+          :api_url  => url,
+        })
       end
 
       get "/?*" do
@@ -50,24 +53,6 @@ module JekyllAdmin
         site.in_theme_dir(splats.first)
       end
 
-      def contents
-        if splats.first == "_layouts"
-          {
-            :data    => layouts(file_path).data,
-            :content => layouts(file_path),
-          }
-        else
-          { :content => File.open(file_path).read }
-        end
-      end
-
-      def url_fields
-        {
-          :http_url => http_url(file_path),
-          :api_url  => url,
-        }
-      end
-
       def entries
         args = {
           :base         => site.theme.root,
@@ -80,7 +65,7 @@ module JekyllAdmin
       def subdir_entries
         Dir["#{directory_path}/*"].reject { |e| File.directory?(e) }.map! do |e|
           {
-            :path     => relative_path_of(e).sub(splats.first, ""),
+            :path     => relative_path_of(e).sub("#{splats.first}/", ""),
             :http_url => http_url(e),
             :api_url  => api_url(e),
           }
@@ -89,10 +74,6 @@ module JekyllAdmin
 
       def splats
         params["splat"] || ["/"]
-      end
-
-      def layouts(file)
-        Jekyll::Layout.new(site, directory_path, file)
       end
 
       def file_path
