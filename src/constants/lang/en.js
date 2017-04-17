@@ -52,7 +52,8 @@ export const sidebar = {
   posts: 'Posts',
   datafiles: 'Data Files',
   staticfiles: 'Static Files',
-  configuration: 'Configuration'
+  configuration: 'Configuration',
+  theme: 'Theme'
 };
 
 // button labels
