@@ -1,0 +1,18 @@
+.theme-info,
+.theme-dirs {
+  float: left;
+  margin: 0 15px;
+  width: 47%;
+}
+
+.theme-info td:first-of-type {
+  min-width: 150px;
+}
+
+.theme-content {
+  padding: 45px 30px;
+  min-height: 350px;
+  color: #81dfab;
+  background: #2d2f27;
+  box-shadow: 0 1px 2px #d9d9d9;
+}
