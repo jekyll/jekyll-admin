@@ -17,9 +17,15 @@ export class TemplateDetail extends Component {
     fetchThemeItem(directory, filename);
   }
 
-  render() {
+  contentMarkup() {
     const { template, params } = this.props;
     const { name, path, data, content, http_url } = template;
+    return {__html: `${content}`};
+  }
+
+  render() {
+    const { params } = this.props;
+    const classes = "content-body theme-content";
     const [directory, ...rest] = params.splat;
     const filename = rest.join('.');
     return (
@@ -28,11 +34,7 @@ export class TemplateDetail extends Component {
           <Breadcrumbs splat={`${directory || ''}/${filename}`} type="theme" />
         </div>
         <div className="content-wrapper">
-          <div className="content-body">
-            <pre className="theme-content">
-              {content}
-            </pre>
-          </div>
+          <div className={classes} dangerouslySetInnerHTML={this.contentMarkup()} />
         </div>
       </div>
     );

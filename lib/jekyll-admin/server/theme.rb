@@ -1,3 +1,5 @@
+require "rouge"
+
 module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/theme" do
@@ -20,7 +22,7 @@ module JekyllAdmin
         json({
           :name     => filename,
           :path     => file_path,
-          :content  => File.open(file_path).read,
+          :content  => content(file_path),
           :http_url => http_url(file_path),
           :api_url  => url,
         })
@@ -91,6 +93,27 @@ module JekyllAdmin
       def http_url(entry)
         if splats.first.include?("assets") && !Jekyll::Utils.has_yaml_header?(entry)
           "#{base_url}/#{relative_path_of(entry)}"
+        end
+      end
+
+      def content(file_path)
+        code = File.open(file_path).read.encode("UTF-8")
+        formatter = Rouge::Formatters::HTML.new
+        lexer = Rouge::Lexer.find_fancy(lexer_lang, code)
+
+        formatter.format(lexer.lex(code))
+      end
+
+      def lexer_lang
+        case File.extname(file_path)
+        when ".scss", ".sass"
+          "sass"
+        when ".html", ".xhtml", ".htm"
+          "html"
+        when ".coffee"
+          "javascript"
+        else
+          "text"
         end
       end
     end
