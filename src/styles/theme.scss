@@ -1,13 +1,16 @@
 .theme-info,
 .theme-dirs {
   float: left;
-  margin: 0 15px;
-  width: 47%;
+  margin: 0 10px;
 }
 
-.theme-info td:first-of-type {
-  min-width: 150px;
+.theme-info {
+  width: 78%;
+
+  td:first-of-type { min-width: 150px; }
 }
+
+.theme-dirs { width: 18%; }
 
 .theme-content {
   padding: 45px 30px;

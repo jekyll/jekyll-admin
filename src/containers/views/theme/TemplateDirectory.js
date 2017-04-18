@@ -26,7 +26,7 @@ export class TemplateDirectory extends Component {
     const { path, api_url, http_url } = file;
     const to = `${ADMIN_PREFIX}/theme/${splat}/${path}`;
     return (
-      <tr>
+      <tr key={path}>
         <td className="row-title">
           <strong>
             <Link to={http_url ? null : to}>
@@ -55,7 +55,7 @@ export class TemplateDirectory extends Component {
     const { name, path, entries, api_url } = directory;
     const to = `${ADMIN_PREFIX}/theme/${path}`;
     return (
-      <tr>
+      <tr key={name}>
         <td className="row-title">
           <strong>
             <Link to={to}>

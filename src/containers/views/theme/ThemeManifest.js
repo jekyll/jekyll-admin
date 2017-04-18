@@ -25,7 +25,7 @@ export class ThemeManifest extends Component {
     const { name, path, api_url } = directory;
     const to = `${ADMIN_PREFIX}/theme/${path}`;
     return (
-      <tr>
+      <tr key={name}>
         <td className="row-title">
           <strong>
             <Link to={to}>

@@ -35,7 +35,6 @@ export class TemplateDetail extends Component {
           </div>
         </div>
       </div>
-
     );
   }
 }

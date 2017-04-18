@@ -5,6 +5,7 @@ import {
 
 export default function theme(state = {
   theme: {},
+  template: {},
   updated: false
 }, action) {
   switch (action.type) {
