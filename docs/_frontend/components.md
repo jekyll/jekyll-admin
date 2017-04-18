@@ -144,7 +144,7 @@ Editable title component for edit views
 
 ## Metadata
 
-Set of components for handling documents' front matter(metafields).
+Set of components for handling documents' front matters (metafields).
 
 ### MetaField
 
@@ -152,8 +152,9 @@ Contains root attributes of the metadata.
 
 ### MetaSimple
 
-Leaf component that contains an simple input or date picker depending on the field's
-key. If the key is called `date`, it shows date picker for the value.
+Leaf component for metadata that contains a simple input, date picker or staticfile
+picker depending on the field's key.
+Special keys for additional functionalities are `date`, `file` and `image`.
 
 ### MetaArray
 
@@ -165,7 +166,7 @@ Convertible array item. Can be MetaArray, MetaObject or MetaSimple.
 
 ### MetaObject
 
-Contains sortable object items. Items are sorted visually, not stored in the state.
+Contains object items which allows entering key-value fields.
 
 ### MetaObjectItem
 
@@ -173,5 +174,5 @@ Convertible object item. Can be MetaArray, MetaObject or MetaSimple.
 
 ### MetaButtons
 
-Contains convert and delete buttons and sort handle. Dynamically shows the possible
+Contains `convert` and `delete` buttons and sort handle. Dynamically shows the possible
 conversion types.
