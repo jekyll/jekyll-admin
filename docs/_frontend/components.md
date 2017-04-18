@@ -68,6 +68,21 @@ Generic component for button element.
 }
 ```
 
+## Dropzone
+
+Component for uploading staticfiles.
+
+### PropTypes
+
+```javascript
+{
+  files: Array,
+  onDrop: Function,
+  onClickDelete: Function,
+  onClickItem: Function,
+}
+```
+
 ## FilePreview
 
 Component for previewing the uploaded file. It renders an image or a div according to
