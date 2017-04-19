@@ -55,9 +55,15 @@ export class MetaFields extends Component {
           <a onClick={() => addField('metadata')} className="tooltip">
             <i className="fa fa-plus-circle" /> New metadata field
             <span className="tooltip-text">
-              Metadata will be stored as the <b>YAML front matter</b> within the document.
+              Metadata will be stored as the <b>YAML front matter</b> within the document.ity.
             </span>
           </a>
+          <small className="tooltip pull-right">
+            <i className="fa fa-info-circle" />Special Keys
+            <span className="tooltip-text">
+              You can use special keys like <b>date</b>, <b>file</b>, <b>image</b> for user-friendly functionalities.
+            </span>
+          </small>
         </div>
       </div>
     );
