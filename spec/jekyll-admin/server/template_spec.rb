@@ -71,20 +71,20 @@ describe "templates" do
     end
   end
 
-  it "writes a new template without front matter" do
+  it "writes a new template without front matter in subdirectories" do
     delete_file "_layouts/test.html"
 
     request = {
       :front_matter => {},
       :raw_content  => "test",
-      :path         => "test.html",
+      :path         => "_layouts/test.html",
     }
-    put "/templates/test.html", request.to_json
+    put "/templates/_layouts/test.html", request.to_json
 
     expect(last_response).to be_ok
-    expect("test.html").to be_an_existing_file
+    expect("_layouts/test.html").to be_an_existing_file
 
-    delete_file "test.html"
+    delete_file "_layouts/test.html"
   end
 
   it "writes a new template in subdirectories" do
@@ -116,23 +116,6 @@ describe "templates" do
     delete_file "_sass/test.scss"
   end
 
-  it "updates a template" do
-    write_file "template-update.html"
-
-    request = {
-      :front_matter => { :foo => "bar2" },
-      :raw_content  => "test",
-      :path         => "template-update.html",
-    }
-    put "/templates/template-update.html", request.to_json
-    expect("template-update.html").to be_an_existing_file
-
-    expect(last_response).to be_ok
-    expect(last_response_parsed["foo"]).to eq("bar2")
-
-    delete_file "template-update.html"
-  end
-
   it "updates a template in subdirectories" do
     write_file "_layouts/test.html"
 
@@ -148,29 +131,6 @@ describe "templates" do
     expect(last_response_parsed["foo"]).to eq("bar2")
 
     delete_file "_layouts/test.html"
-  end
-
-  it "renames a template" do
-    write_file  "template-rename.html"
-    delete_file "template-renamed.html"
-
-    request = {
-      :path         => "template-renamed.html",
-      :front_matter => { :foo => "bar" },
-      :raw_content  => "test",
-    }
-
-    put "/templates/template-rename.html", request.to_json
-    expect(last_response).to be_ok
-    expect(last_response_parsed["foo"]).to eq("bar")
-    expect("template-rename.html").to_not be_an_existing_file
-    expect("template-renamed.html").to be_an_existing_file
-
-    get "/templates/template-renamed.html"
-    expect(last_response).to be_ok
-    expect(last_response_parsed["foo"]).to eq("bar")
-
-    delete_file "template-rename.html", "template-renamed.html"
   end
 
   it "renames a template in subdirectories" do
@@ -206,13 +166,6 @@ describe "templates" do
     put "/templates/_layouts/invalid-template.html", request.to_json
     expect(last_response.status).to eql(404)
     expect("_layouts/template-renamed.html").to_not be_an_existing_file
-  end
-
-  it "deletes a template" do
-    path = write_file "template-delete.html"
-    delete "/templates/template-delete.html"
-    expect(last_response).to be_ok
-    expect(File.exist?(path)).to eql(false)
   end
 
   it "deletes a template in subdirectories" do
