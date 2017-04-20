@@ -52,7 +52,8 @@ export class MetaField extends Component {
             defaultValue={fieldKey}
             className="field key-field"
             type="text"
-            placeholder="Key" />
+            placeholder="Key"
+            maxLength="21" />
           <MetaButtons
             currentType={type}
             parentType="top"
