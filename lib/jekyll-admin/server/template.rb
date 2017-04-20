@@ -1,19 +1,22 @@
 module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/templates" do
-      get do
+      get "/?" do
         json template_directories.map(&:to_api)
       end
 
       get "/*?/?:path.:ext" do
         ensure_requested_file
-        json({
-          :name        => filename,
-          :path        => requested_file,
-          :http_url    => http_url,
-          :api_url     => url,
-          :raw_content => raw_content,
-        }.merge!(front_matter))
+        api_hash = {
+          :name         => filename,
+          :path         => written_path,
+          :http_url     => http_url,
+          :api_url      => url,
+          :raw_content  => raw_content,
+          :front_matter => front_matter,
+        }
+        api_hash.merge!(front_matter) if front_matter
+        json api_hash
       end
 
       get "/?*" do
@@ -29,10 +32,11 @@ module JekyllAdmin
 
         write_file write_path, template_body
         json({
-          :name     => filename,
-          :path     => requested_file,
-          :http_url => http_url,
-          :api_url  => url,
+          :name        => filename,
+          :path        => written_path,
+          :raw_content => request_payload["raw_content"],
+          :http_url    => http_url,
+          :api_url     => url,
         }.merge!(payload_front_matter))
       end
 
@@ -73,6 +77,7 @@ module JekyllAdmin
       def subdir_entries
         Dir["#{directory_path}/*"].reject { |e| File.directory?(e) }.map! do |e|
           {
+            :name     => File.basename(e),
             :path     => sanitized_relative_path(e).sub("/#{splats.first}/", ""),
             :http_url => http_url(e),
             :api_url  => api_url(e),
@@ -98,6 +103,10 @@ module JekyllAdmin
 
       def payload_front_matter
         request_payload["front_matter"]
+      end
+
+      def written_path
+        renamed? ? request_payload["path"] : relative_write_path.sub("/", "")
       end
 
       def template_body
