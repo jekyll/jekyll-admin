@@ -22,3 +22,7 @@ export const datafileAPIUrl = (filename) => `${API}/data/${filename}`;
 
 export const staticfilesAPIUrl = () => `${API}/static_files`;
 export const staticfileAPIUrl = (filename) => `${API}/static_files/${filename}`;
+
+export const templatesAPIUrl = (directory = '') => `${API}/templates/${directory}`;
+export const templateAPIUrl = (directory, filename) =>
+  directory ? `${API}/templates/${directory}/${filename}` : `${API}/templates/${filename}`;

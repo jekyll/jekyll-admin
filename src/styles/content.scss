@@ -180,6 +180,7 @@
       background: $dark-gray;
       @include border-radius($border-radius);
       @include box-shadow(0px 2px 8px 2px rgba(0, 0, 0, 0.08));
+      z-index: 99;
       &:after {
         content: "";
         position: absolute;

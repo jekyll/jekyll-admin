@@ -66,6 +66,12 @@ export class Sidebar extends Component {
               {sidebar.configuration}
             </Link>
           </li>
+          <li>
+            <Link activeClassName="active" to={`${ADMIN_PREFIX}/templates`}>
+              <i className="fa fa-edit" />
+              Templates
+            </Link>
+          </li>
         </ul>
       </div>
     );
