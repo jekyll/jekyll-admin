@@ -4,16 +4,17 @@ module JekyllAdmin
     EXTENSIONS = %w(yml json).freeze
 
     namespace "/data" do
-      get do
-        json DataFile.all.map(&:to_api)
-      end
-
-      get "/:path.?:ext?" do
+      get "/*?/?:path.?:ext?" do
         ensure_requested_file
         json requested_file.to_api(:include_content => true)
       end
 
-      put "/:path.?:ext?" do
+      get "/?*" do
+        ensure_directory
+        json entries.map(&:to_api)
+      end
+
+      put "/*?/?:path.?:ext?" do
         if renamed?
           ensure_requested_file
           delete_file path
@@ -23,7 +24,7 @@ module JekyllAdmin
         json written_file.to_api(:include_content => true)
       end
 
-      delete "/:path.?:ext?" do
+      delete "/*?/?:path.?:ext?" do
         ensure_requested_file
         delete_file path
         content_type :json
@@ -33,12 +34,36 @@ module JekyllAdmin
 
       private
 
+      def directory_pages
+        DataFile.all.find_all do |p|
+          sanitized_path(File.dirname(p.path)) == directory_path
+        end
+      end
+
+      def entries
+        args = {
+          :base         => sanitized_path(DataFile.data_dir),
+          :content_type => "data",
+          :splat        => splats.first,
+        }
+        # get all directories inside the requested directory
+        directory = JekyllAdmin::Directory.new(directory_path, args)
+        directories = directory.directories
+
+        # merge directories with the pages at the same level
+        directories.concat(directory_pages)
+      end
+
       def data_file_body
         if !request_payload["raw_content"].to_s.empty?
           request_payload["raw_content"]
         elsif !request_payload["content"].to_s.empty?
           YAML.dump(request_payload["content"]).sub(%r!\A---\n!, "")
         end
+      end
+
+      def splats
+        params["splat"] || ["/"]
       end
     end
   end
