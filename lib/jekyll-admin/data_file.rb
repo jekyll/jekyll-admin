@@ -59,7 +59,11 @@ module JekyllAdmin
 
     def self.all
       data_dir = sanitized_path DataFile.data_dir
-      Dir["#{data_dir}/*.{#{EXTENSIONS.join(",")}}"].map do |path|
+      files = Dir["#{data_dir}/**/*.{#{EXTENSIONS.join(",")}}"].reject do |d|
+        File.directory?(d)
+      end
+
+      files.map do |path|
         new path_without_site_source(path)
       end
     end
