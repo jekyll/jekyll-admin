@@ -14,10 +14,6 @@ describe JekyllAdmin::DataFile do
 
       subject { described_class.new(id) }
 
-      it "stores the id" do
-        expect(subject.instance_variable_get("@id")).to eql(id)
-      end
-
       it "exposes the relative path" do
         expect(subject.relative_path).to eql(relative_path)
       end
