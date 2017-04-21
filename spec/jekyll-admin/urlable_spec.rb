@@ -82,7 +82,7 @@ describe JekyllAdmin::URLable do
   context "data files" do
     subject { JekyllAdmin::DataFile.all.first }
     let(:http_url) { nil }
-    let(:api_url) { "#{url_base}/#{prefix}/data/data_file.yml" }
+    let(:api_url) { "#{url_base}/#{prefix}/data/books/authors.yml" }
 
     it "knows the HTTP URL" do
       expect(subject.http_url).to eql(http_url)

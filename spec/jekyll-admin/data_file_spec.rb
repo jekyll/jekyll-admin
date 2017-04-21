@@ -1,14 +1,15 @@
 describe JekyllAdmin::DataFile do
-  let(:relative_path) { "/_data/data_file.yml" }
+  let(:data_dir) { "_data" }
+  let(:relative_path) { "data_file.yml" }
   let(:absolute_path) { in_source_dir(relative_path) }
 
   %w(with without).each do |type|
     describe "an ID #{type} an extension" do
       let(:id) do
         if type == "with"
-          "data_file.yml"
+          "/#{data_dir}/data_file.yml"
         else
-          "data_file"
+          "/#{data_dir}/data_file"
         end
       end
 
@@ -41,7 +42,7 @@ describe JekyllAdmin::DataFile do
       it "returns the hash" do
         expect(subject.to_api).to eql({
           "path"          => "/_data/data_file.yml",
-          "relative_path" => "/_data/data_file.yml",
+          "relative_path" => "data_file.yml",
           "slug"          => "data_file",
           "ext"           => ".yml",
           "title"         => "Data File",
@@ -53,7 +54,7 @@ describe JekyllAdmin::DataFile do
       it "returns the hash with content" do
         expect(subject.to_api(:include_content => true)).to eql({
           "path"          => "/_data/data_file.yml",
-          "relative_path" => "/_data/data_file.yml",
+          "relative_path" => "data_file.yml",
           "slug"          => "data_file",
           "ext"           => ".yml",
           "title"         => "Data File",
