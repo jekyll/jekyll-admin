@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
+import { HotKeys } from 'react-hotkeys';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -14,12 +15,19 @@ import Metadata from '../../containers/MetaFields';
 import { fetchDocument, deleteDocument, putDocument } from '../../actions/collections';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
+import { preventDefault } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentEdit extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.handleClickSave = this.handleClickSave.bind(this);
+  }
 
   componentDidMount() {
     const { fetchDocument, params, router, route } = this.props;
@@ -58,8 +66,12 @@ export class DocumentEdit extends Component {
     }
   }
 
-  handleClickSave() {
+  handleClickSave(e) {
     const { putDocument, fieldChanged, params } = this.props;
+
+    // Prevent the default event from bubbling
+    preventDefault(e);
+
     if (fieldChanged) {
       const collection = params.collection_name;
       const [directory, ...rest] = params.splat;
@@ -101,8 +113,14 @@ export class DocumentEdit extends Component {
     } = currentDocument;
     const [directory, ...rest] = params.splat;
 
+    const keyboardHandlers = {
+      'save': this.handleClickSave,
+    };
+
     return (
-      <div className="single">
+      <HotKeys
+        handlers={keyboardHandlers}
+        className="single">
         {errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
           <Breadcrumbs
@@ -116,7 +134,7 @@ export class DocumentEdit extends Component {
             <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}
-              onSave={() => this.handleClickSave()}
+              onSave={this.handleClickSave}
               placeholder="Body"
               initialValue={raw_content}
               ref="editor" />
@@ -126,7 +144,7 @@ export class DocumentEdit extends Component {
 
           <div className="content-side">
             <Button
-              onClick={() => this.handleClickSave()}
+              onClick={this.handleClickSave}
               type="save"
               active={fieldChanged}
               triggered={updated}
@@ -150,7 +168,7 @@ export class DocumentEdit extends Component {
               block />
           </div>
         </div>
-      </div>
+      </HotKeys>
     );
   }
 }
