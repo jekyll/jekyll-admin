@@ -265,6 +265,42 @@ describe "data" do
     delete_file "_data/test-dir/data-file-update.yml"
   end
 
+  it "renames a data file" do
+    write_file "_data/data-file-rename.yml"
+    delete_file "_data/data-file-renamed.yml"
+
+    expected_response = {
+      "path"          => "/_data/data-file-renamed.yml",
+      "relative_path" => "data-file-renamed.yml",
+      "slug"          => "data-file-renamed",
+      "ext"           => ".yml",
+      "title"         => "Data File Renamed",
+      "raw_content"   => "foo: bar2\n",
+      "content"       => {
+        "foo" => "bar2",
+      },
+      "api_url"       => "http://localhost:4000/_api/data/data-file-renamed.yml",
+      "http_url"      => nil,
+    }
+
+    request = {
+      "path"    => "/_data/data-file-renamed.yml",
+      "content" => { "foo" => "bar2" },
+    }
+    put "/data/data-file-rename", request.to_json
+
+    expect(last_response).to be_ok
+    expect(last_response_parsed).to eql(expected_response)
+    expect("_data/data-file-rename.yml").to_not be_an_existing_file
+    expect("_data/data-file-renamed.yml").to be_an_existing_file
+
+    get "/data/data-file-renamed"
+    expect(last_response).to be_ok
+    expect(last_response_parsed).to eql(expected_response)
+
+    delete_file "_data/data-file-rename.yml", "_data/data-file-renamed.yml"
+  end
+
   it "deletes a data file" do
     write_file "_data/data-file-delete.yml", "foo2: bar2"
     delete "/data/data-file-delete"
