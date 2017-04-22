@@ -217,7 +217,9 @@ Container for DataFiles view. Lists data files.
   fetchDataFiles: Function,
   deleteDataFile: Function,
   search: Function,
-  isFetching: Boolean
+  isFetching: Boolean,
+  search: Function,
+  params: Object
 }
 ```
 
@@ -239,7 +241,9 @@ Container for editing a data file.
   updated: Boolean,
   datafileChanged: Boolean,
   errors: Array,
-  params: Object
+  params: Object,
+  router: Object,
+  route: Object
 }
 ```
 
@@ -257,7 +261,10 @@ Container for creating a new data file
   clearErrors: Function,
   errors: Array,
   updated: Boolean,
-  datafileChanged: Boolean
+  datafileChanged: Boolean,
+  params: Object,
+  router: Object,
+  route: Object
 }
 ```
 

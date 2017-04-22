@@ -138,21 +138,23 @@ Async action for deleting the requested static file. After deletion, static file
 
 ## Data Files
 
-### > `fetchDataFiles`
+### > `fetchDataFiles(directory)`
 
-Async action for fetching data files.
+Async action for fetching data files in a directory.
+`null` value for `directory` returns files in the configured data directory (`_data/` by default).
 
-### > `fetchDataFile(filename)`
+### > `fetchDataFile(directory, filename)`
 
-Async action for fetching the requested data file.
+Async action for fetching the requested data file in a directory.
 
-### > `putDataFile(filename, data)`
+### > `putDataFile(directory, filename, data, new_path)`
 
-Async action for creating/updating the requested data file. It validates the given filename and data before the PUT request.
+Async action for creating/updating the requested data file in a directory. It validates the given filename and data before the PUT request.
+Optional parameter `new_path` will update the data file's `path` metadata.
 
-### > `deleteDataFile(filename)`
+### > `deleteDataFile(directory, filename)`
 
-Async action for deleting the requested data file. After deletion, data file list is requested.
+Async action for deleting the requested data file in a directory. After deletion, the root data file list is requested.
 
 ### > `onDataFileChanged`
 

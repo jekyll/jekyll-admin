@@ -75,6 +75,47 @@ A standard JSON object of a directory looks like this:
 
 Data files and the config file are direct JSON representations of the underlying YAML File.
 
+#### Data files in subdirectories
+
+Like Pages and Documents, Data files in subdirectories too can be requested for. The resulting JSON object is very similar to the that derived from Pages and Documents.
+
+A JSON object from a Data file subdirectory looks like this:
+
+```json
+{
+  "name": "books",
+  "modified_time": "2017-04-22 10:16:40 +0200",
+  "path": "books",
+  "type": "directory",
+  "http_url": null,
+  "api_url": "http://localhost:4000/_api/data/books/"
+}
+```
+
+A `GET` call to the `api_url` will return another JSON object for the constituents of the directory:
+
+```json
+[
+  {
+    "name": "genres",
+    "modified_time": "2017-04-22 10:07:10 +0200",
+    "path": "books/genres",
+    "type": "directory",
+    "http_url": null,
+    "api_url": "http://localhost:4000/_api/data/books/genres/"
+  },
+  {
+    "path": "/_data/books/authors.yml",
+    "relative_path": "books/authors.yml",
+    "slug": "authors",
+    "ext": ".yml",
+    "title": "Authors",
+    "http_url": null,
+    "api_url": "http://localhost:4000/_api/data/books/authors.yml"
+  }
+]
+```
+
 #### Static files
 
 Static files are non-Jekyll files and may be binary or text.
