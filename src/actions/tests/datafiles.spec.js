@@ -18,7 +18,7 @@ describe('Actions::Datafiles', () => {
 
   it('fetches data files successfully', () => {
     nock(API)
-      .get('/data')
+      .get('/data/')
       .reply(200, [datafile]);
 
     const expectedActions = [
@@ -29,6 +29,24 @@ describe('Actions::Datafiles', () => {
     const store = mockStore({ files: [] });
 
     return store.dispatch(actions.fetchDataFiles())
+      .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('fetches data files from directories successfully', () => {
+    nock(API)
+      .get('/data/books/')
+      .reply(200, [datafile]);
+
+    const expectedActions = [
+      { type: types.FETCH_DATAFILES_REQUEST },
+      { type: types.FETCH_DATAFILES_SUCCESS, files: [datafile] }
+    ];
+
+    const store = mockStore({ files: [] });
+
+    return store.dispatch(actions.fetchDataFiles('books/'))
       .then(() => { // return of async actions
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -64,7 +82,25 @@ describe('Actions::Datafiles', () => {
 
     const store = mockStore({ currentFile: {} });
 
-    return store.dispatch(actions.fetchDataFile('data_file.yml'))
+    return store.dispatch(actions.fetchDataFile(null, 'data_file.yml'))
+      .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
+  it('fetches a data file from a subdirectory successfully', () => {
+    nock(API)
+      .get('/data/books/authors.yml')
+      .reply(200, datafile);
+
+    const expectedActions = [
+      { type: types.FETCH_DATAFILE_REQUEST },
+      { type: types.FETCH_DATAFILE_SUCCESS, file: datafile }
+    ];
+
+    const store = mockStore({ currentFile: {} });
+
+    return store.dispatch(actions.fetchDataFile('books', 'authors.yml'))
       .then(() => { // return of async actions
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -100,7 +136,7 @@ describe('Actions::Datafiles', () => {
 
     const store = mockStore({ currentFile: {} });
 
-    return store.dispatch(actions.putDataFile('data_file.json', { foo: "bar" }))
+    return store.dispatch(actions.putDataFile(null, 'data_file.json', { foo: "bar" }))
       .then(() => { // return of async actions
         expect(store.getActions()).toEqual(expectedAction);
       });
@@ -108,7 +144,7 @@ describe('Actions::Datafiles', () => {
 
   it('creates PUT_DATAFILE_FAILURE when updating a datafile failed', () => {
     nock(API)
-      .put('/data/data_file.yml', datafile)
+      .put('/data/books/authors.yml', datafile)
       .replyWithError('something awful happened');
 
     const expectedActions = [
@@ -118,7 +154,7 @@ describe('Actions::Datafiles', () => {
 
     const store = mockStore({ currentFile: {} });
 
-    return store.dispatch(actions.putDataFile('data_file.yml', datafile))
+    return store.dispatch(actions.putDataFile('books', 'authors.yml', datafile))
       .then(() => { // return of async actions
         expect(store.getActions()[1].type).toEqual(expectedActions[1].type);
       });
@@ -136,7 +172,7 @@ describe('Actions::Datafiles', () => {
 
     const store = mockStore({ files: [] });
 
-    return store.dispatch(actions.deleteDataFile('data_file.yml'))
+    return store.dispatch(actions.deleteDataFile(null, 'data_file.yml'))
       .then(() => { // return of async actions
         expect(store.getActions()).toEqual(expectedAction);
       });

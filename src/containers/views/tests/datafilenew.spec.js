@@ -14,6 +14,7 @@ const defaultProps = {
   editorChanged: false,
   router: {},
   route: {},
+  params: { splat: 'books' },
   errors: []
 };
 

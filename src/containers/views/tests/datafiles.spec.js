@@ -17,6 +17,7 @@ function setup(datafiles=[datafile]) {
     <DataFiles
       files={datafiles}
       isFetching={false}
+      params={{ splat: 'books' }}
       {...actions} />
   );
 
@@ -31,7 +32,7 @@ function setup(datafiles=[datafile]) {
 describe('Containers::DataFiles', () => {
   it('should render correctly', () => {
     const { h1 } = setup();
-    expect(h1.text()).toBe('Data Files');
+    expect(h1.node).toNotExist();
   });
 
   it('should render correctly when there are not any data files', () => {
