@@ -11,7 +11,7 @@ const defaultProps = {
   datafileChanged: false,
   router: {},
   route: {},
-  params: { splat: ["books", "authors", "yml"]},
+  params: { splat: ["movies", "actors", "yml"]},
   errors: [],
   isFetching: false
 };

@@ -45,15 +45,15 @@ describe "data" do
   end
 
   it "gets data files in a subdirectory" do
-    get "/data/books/"
+    get "/data/movies/"
 
     expected_response = {
-      "path"          => "/_data/books/authors.yml",
-      "relative_path" => "books/authors.yml",
-      "slug"          => "authors",
+      "path"          => "/_data/movies/actors.yml",
+      "relative_path" => "movies/actors.yml",
+      "slug"          => "actors",
       "ext"           => ".yml",
-      "title"         => "Authors",
-      "api_url"       => "http://localhost:4000/_api/data/books/authors.yml",
+      "title"         => "Actors",
+      "api_url"       => "http://localhost:4000/_api/data/movies/actors.yml",
       "http_url"      => nil,
     }
 
@@ -62,19 +62,19 @@ describe "data" do
   end
 
   it "gets an individual data file in a subdirectory" do
-    get "/data/books/authors.yml"
+    get "/data/movies/actors.yml"
 
     expected_response = {
-      "path"          => "/_data/books/authors.yml",
-      "relative_path" => "books/authors.yml",
-      "slug"          => "authors",
+      "path"          => "/_data/movies/actors.yml",
+      "relative_path" => "movies/actors.yml",
+      "slug"          => "actors",
       "ext"           => ".yml",
-      "title"         => "Authors",
+      "title"         => "Actors",
       "raw_content"   => "foo: bar\n",
       "content"       => {
         "foo" => "bar",
       },
-      "api_url"       => "http://localhost:4000/_api/data/books/authors.yml",
+      "api_url"       => "http://localhost:4000/_api/data/movies/actors.yml",
       "http_url"      => nil,
     }
 
@@ -83,19 +83,19 @@ describe "data" do
   end
 
   it "gets an individual data file without an extension in a subdirectory" do
-    get "/data/books/authors"
+    get "/data/movies/actors"
 
     expected_response = {
-      "path"          => "/_data/books/authors.yml",
-      "relative_path" => "books/authors.yml",
-      "slug"          => "authors",
+      "path"          => "/_data/movies/actors.yml",
+      "relative_path" => "movies/actors.yml",
+      "slug"          => "actors",
       "ext"           => ".yml",
-      "title"         => "Authors",
+      "title"         => "Actors",
       "raw_content"   => "foo: bar\n",
       "content"       => {
         "foo" => "bar",
       },
-      "api_url"       => "http://localhost:4000/_api/data/books/authors.yml",
+      "api_url"       => "http://localhost:4000/_api/data/movies/actors.yml",
       "http_url"      => nil,
     }
 

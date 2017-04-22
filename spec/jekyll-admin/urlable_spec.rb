@@ -80,7 +80,7 @@ describe JekyllAdmin::URLable do
   end
 
   context "data files" do
-    subject { JekyllAdmin::DataFile.all[-2] }
+    subject { JekyllAdmin::DataFile.all.first }
     let(:http_url) { nil }
     let(:api_url) { "#{url_base}/#{prefix}/data/data_file.yml" }
 

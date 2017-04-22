@@ -17,7 +17,7 @@ function setup(datafiles=[datafile]) {
     <DataFiles
       files={datafiles}
       isFetching={false}
-      params={{ splat: 'books' }}
+      params={{ splat: 'movies' }}
       {...actions} />
   );
 
