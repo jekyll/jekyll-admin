@@ -13,8 +13,7 @@ module Jekyll
         end
 
         def custom_configs
-          return nil unless @overrides
-          @overrides
+          @custom_configs ||= @overrides
         end
 
         def start_up_webrick(opts, destination)
