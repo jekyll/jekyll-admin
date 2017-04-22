@@ -16,12 +16,12 @@ export default class InputFilename extends Component {
     if (type == 'posts') {
       const date = moment().format('YYYY-MM-DD');
       placeholder = `${date}-your-title.md`;
-    }else if (type == 'datafiles') {
-      placeholder = 'your-filename.yml';
+    }else if (type == 'data files') {
+      placeholder = '<directory/>your-filename.yml';
     }
 
     let tooltip = null;
-    if (type != 'datafiles') {
+    if (type != 'data files') {
       tooltip = (
         <span className="tooltip">
           <i className="fa fa-info-circle" aria-hidden="true" />
