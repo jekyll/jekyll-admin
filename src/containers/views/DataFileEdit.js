@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import InputPath from '../../components/form/InputPath';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
@@ -22,8 +23,24 @@ export class DataFileEdit extends Component {
 
   componentDidMount() {
     const { fetchDataFile, params, router, route } = this.props;
+    const [directory, ...rest] = params.splat;
+    const filename = rest.join('.');
+
     router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
-    fetchDataFile(params.data_file);
+    fetchDataFile(directory, filename);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.updated !== nextProps.updated) {
+      const new_path = nextProps.datafile.path;
+      const new_relative_path = nextProps.datafile.relative_path;
+      const path = this.props.datafile.path;
+
+      // redirect if the path is changed
+      if (new_path != path) {
+        browserHistory.push(`${ADMIN_PREFIX}/datafiles/${new_relative_path}`);
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -40,19 +57,33 @@ export class DataFileEdit extends Component {
     }
   }
 
+  getDirectoryfromPath(path) {
+    let directory = path.split("/");
+    directory.pop();
+
+    return directory.join("/");
+  }
+
   handleClickSave() {
     const { datafileChanged, putDataFile, params } = this.props;
+    const [directory, ...rest] = params.splat;
+    const filename = rest.join('.');
+
     if (datafileChanged) {
       const value = this.refs.editor.getValue();
-      putDataFile(params.data_file, value);
+      const new_path = this.refs.inputpath.refs.input.value;
+      putDataFile(directory, filename, value, new_path);
     }
   }
 
-  handleClickDelete(filename) {
-    const { deleteDataFile } = this.props;
-    const confirm = window.confirm(getDeleteMessage(filename));
+  handleClickDelete(path) {
+    const { deleteDataFile, params } = this.props;
+    const confirm = window.confirm(getDeleteMessage(path));
+
     if (confirm) {
-      deleteDataFile(filename);
+      const directory = this.getDirectoryfromPath(path);
+      const filename = getFilenameFromPath(path);
+      deleteDataFile(directory, filename);
       browserHistory.push(`${ADMIN_PREFIX}/datafiles`);
     }
   }
@@ -71,18 +102,24 @@ export class DataFileEdit extends Component {
       return <h1>{getNotFoundMessage("data file")}</h1>;
     }
 
-    const { path, raw_content } = datafile;
+    const { path, relative_path, raw_content } = datafile;
+    const [directory, ...rest] = params.splat;
     const filename = getFilenameFromPath(path);
 
     return (
       <div className="single">
         {errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
-          <Breadcrumbs splat={filename} type="datafiles" />
+          <Breadcrumbs splat={directory || ""} type="data files" />
         </div>
 
         <div className="content-wrapper">
           <div className="content-body">
+            <InputPath
+              onChange={onDataFileChanged}
+              type="data files"
+              path={path} // TODO: Support using `relative_path` from API instead
+              ref="inputpath" />
             <Editor
               editorChanged={datafileChanged}
               onEditorChange={onDataFileChanged}
@@ -100,7 +137,7 @@ export class DataFileEdit extends Component {
               block />
             <Splitter />
             <Button
-              onClick={() => this.handleClickDelete(filename)}
+              onClick={() => this.handleClickDelete(relative_path)}
               type="delete"
               active={true}
               icon="trash"

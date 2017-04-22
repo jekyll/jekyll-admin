@@ -9,6 +9,7 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
+import { getFilenameFromPath } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/lang';
@@ -42,38 +43,51 @@ export class DataFileNew extends Component {
     }
   }
 
+  getDirectoryfromPath(path) {
+    let directory = path.split("/");
+    directory.pop();
+
+    return directory.join("/");
+  }
+
   handleClickSave() {
-    const { datafileChanged, putDataFile } = this.props;
+    const { datafileChanged, putDataFile, params } = this.props;
+
     if (datafileChanged) {
-      const filename = this.refs.inputpath.refs.input.value;
+      const path = this.refs.inputpath.refs.input.value;
+      const directory = this.getDirectoryfromPath(path);
+      const filename = getFilenameFromPath(path);
       const value = this.refs.editor.getValue();
-      putDataFile(filename, value);
+
+      putDataFile(directory, filename, value);
     }
   }
 
   render() {
     const {
-      datafileChanged, onDataFileChanged, datafile, updated, errors
+      datafileChanged, onDataFileChanged, datafile, updated, errors, params
     } = this.props;
+    const { path, raw_content } = datafile;
+    const initialPath = params.splat ? (params.splat + "/") : "";
 
     return (
       <div>
         {errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
-          <Breadcrumbs splat="" type="datafiles" />
+          <Breadcrumbs splat={params.splat || ""} type="data files" />
         </div>
 
         <div className="content-wrapper">
           <div className="content-body">
             <InputPath
               onChange={onDataFileChanged}
-              type="datafiles"
-              path=""
+              type="data files"
+              path={initialPath}
               ref="inputpath" />
             <Editor
               editorChanged={datafileChanged}
               onEditorChange={onDataFileChanged}
-              content={''}
+              content={""}
               ref="editor" />
           </div>
 
@@ -101,7 +115,8 @@ DataFileNew.propTypes = {
   updated: PropTypes.bool.isRequired,
   datafileChanged: PropTypes.bool.isRequired,
   router: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired
+  route: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
