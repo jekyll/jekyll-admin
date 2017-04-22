@@ -36,8 +36,9 @@ export default (
     </Route>
     <Route path="datafiles">
       <IndexRoute component={DataFiles} />
-      <Route path="new" component={DataFileNew} />
-      <Route path=":data_file" component={DataFileEdit} />
+      <Route path="(**/)new" component={DataFileNew} />
+      <Route path="(**/)*.*" component={DataFileEdit} />
+      <Route path="**" component={DataFiles} />
     </Route>
     <Route path="staticfiles" component={StaticFiles} />
     <Route path={`${ADMIN_PREFIX}/*`} component={NotFound} />
