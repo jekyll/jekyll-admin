@@ -34,6 +34,11 @@ module JekyllAdmin
 
       private
 
+      # returns relative path of root level directories that contain data files
+      def directory_paths
+        DataFile.all.map { |p| File.dirname(p.relative_path).split("/")[0] }.uniq
+      end
+
       def directory_pages
         DataFile.all.find_all do |p|
           sanitized_path(File.dirname(p.path)) == directory_path
@@ -49,6 +54,13 @@ module JekyllAdmin
         # get all directories inside the requested directory
         directory = JekyllAdmin::Directory.new(directory_path, args)
         directories = directory.directories
+
+        # exclude root level directories which do not have data files
+        if splats.first.empty?
+          directories = directories.select do |d|
+            directory_paths.include? d.name.to_s
+          end
+        end
 
         # merge directories with the pages at the same level
         directories.concat(directory_pages)
