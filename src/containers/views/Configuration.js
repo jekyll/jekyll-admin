@@ -31,6 +31,7 @@ export class Configuration extends Component {
 
   render() {
     const { editorChanged, onEditorChange, config, updated } = this.props;
+    const { raw_content } = config;
     return (
       <div>
         <div className="content-header">
@@ -43,11 +44,14 @@ export class Configuration extends Component {
               triggered={updated} />
           </div>
         </div>
-        <Editor
-          editorChanged={editorChanged}
-          onEditorChange={onEditorChange}
-          content={toYAML(config)}
-          ref="editor" />
+        {
+          raw_content &&
+            <Editor
+              editorChanged={editorChanged}
+              onEditorChange={onEditorChange}
+              content={raw_content}
+              ref="editor" />
+        }
       </div>
     );
   }
