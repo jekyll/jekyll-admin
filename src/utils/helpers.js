@@ -74,3 +74,14 @@ export const existingUploadedFilenames = (uploadedFiles, currentFiles) => {
     .map(file => file.name)
     .value();
 };
+
+/**
+ * Given an Event object, prevents the default event
+ * from bubbling, if possible.
+ * @param {Event} event
+ */
+export const preventDefault = (event) => {
+  if (event && event.preventDefault) {
+    event.preventDefault();
+  }
+};
