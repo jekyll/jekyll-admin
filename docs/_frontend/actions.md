@@ -7,11 +7,15 @@ description: Actions are payloads of information that send data from the applica
 
 ### > `fetchConfig`
 
-Async action for fetching Jekyll project configuration (`_config.yml`)
+Async action for fetching an object comprised of Jekyll project configuration (from `_config.yml` by default)
 
 ### > `putConfig(config)`
 
-Async action for updating Jekyll project configuration
+Async action for updating Jekyll project configuration, after ensuring the content is not empty.
+
+### > `validateConfig(config)`
+
+Action for checking whether the YAML editor has content.
 
 ### > `onEditorChange`
 

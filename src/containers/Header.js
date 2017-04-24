@@ -12,14 +12,25 @@ export class Header extends Component {
     fetchConfig();
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (this.props.updated !== nextProps.updated) {
+      const { fetchConfig } = this.props;
+      fetchConfig();
+    }
+  }
+
   render() {
     const { config } = this.props;
+    const configuration = config.content;
     return (
       <div className="header">
         <h3 className="title">
           <Link target="_blank" to={`/`}>
             <i className="fa fa-home" />
-            <span>{config.title || 'You have no title!'}</span>
+            {
+              configuration &&
+                <span>{configuration.title || 'You have no title!'}</span>
+            }
           </Link>
         </h3>
         <span className="version">{VERSION}</span>
@@ -30,11 +41,13 @@ export class Header extends Component {
 
 Header.propTypes = {
   fetchConfig: PropTypes.func.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
+  updated: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   config: state.config.config,
+  updated: state.config.updated,
   isFetching: state.config.isFetching
 });
 

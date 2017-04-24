@@ -73,7 +73,11 @@ A standard JSON object of a directory looks like this:
 
 #### Data files and the config file
 
-Data files and the config file are direct JSON representations of the underlying YAML File.
+Data files are a direct JSON representations of the underlying YAML File.
+A JSON object from the config file has the data segregated into two representations:
+
+* `content` - the parsed configuration data as read by Jekyll.
+* `raw_content` - the raw data as it sits on the disk.
 
 #### Data files in subdirectories
 
@@ -119,6 +123,8 @@ A `GET` call to the `api_url` will return another JSON object for the constituen
 #### Static files
 
 Static files are non-Jekyll files and may be binary or text.
+
+---
 
 ### Collections
 
@@ -184,13 +190,13 @@ Delete the requested page from disk.
 
 #### `GET /configuration`
 
-Returns the parsed site configuration.
+Returns a hash object comprised of the parsed configuration from the file and the raw unparsed content of the file.
 
 #### `PUT /configuration`
 
-Create or update the site's `_config.yml` file with the requested contents.
+Create or update the site's `_config.yml` file with the requested raw file content string.
 
-File will be written to disk in YAML. It will not necessarily preserve whitespace or inline comments.
+File will be written to disk verbatim, preserving whitespace and inline comments.
 
 ### Static files
 
