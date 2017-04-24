@@ -49,4 +49,16 @@ describe('Containers::Configuration', () => {
     expect(saveButton.prop('triggered')).toBe(true);
     expect(saveButton.prop('active')).toBe(true);
   });
+
+  it('should not render error messages with initial props', () => {
+    const { errors } = setup();
+    expect(errors.node).toNotExist();
+  });
+
+  it('should render error messages when necessary', () => {
+    const { errors } = setup(Object.assign({}, defaultProps, {
+      errors: ['The content is required.']
+    }));
+    expect(errors.node).toExist();
+  });
 });
