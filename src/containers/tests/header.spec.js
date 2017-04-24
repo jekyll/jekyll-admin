@@ -24,8 +24,9 @@ function setup() {
 describe('Containers::Header', () => {
   it('should render correctly', () => {
     const { title, component } = setup();
+    const { content } = config;
     const actual = title.text();
-    const expected = config.title;
+    const expected = content.title;
     expect(actual).toEqual(expected);
   });
 
