@@ -55,7 +55,7 @@ export default function pages(state = {
 export const filterBySearchInput = (list, input) => {
   if (input) {
     return list.filter(
-      p => p.name.toLowerCase().indexOf(input.toLowerCase()) > -1
+      p => p.name.toLowerCase().includes(input.toLowerCase())
     );
   }
   return list;

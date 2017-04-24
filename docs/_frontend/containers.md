@@ -25,7 +25,8 @@ Container for displaying header which includes title and homepage link.
 ```javascript
 {
   config: Object,
-  fetchConfig: Function
+  fetchConfig: Function,
+  updated: Boolean \\ optional
 }
 ```
 
@@ -82,7 +83,11 @@ The button is activated when the editor changes.
   putConfig: Function,
   error: String,
   updated: Boolean,
-  editorChanged: Boolean
+  editorChanged: Boolean,
+  errors: Array,
+  clearErrors: Function,
+  router: Object,
+  route: Object
 }
 ```
 

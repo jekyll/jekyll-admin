@@ -16,12 +16,12 @@ describe('Metadata functions:', () => {
     });
     it('should add a field to empty metadata', () => {
       let actual = addField(emptyState, 'metadata');
-      let expected = { ['New field ' + emptyState.new_field_count]: '' };
+      let expected = { [`New field ${emptyState.new_field_count}`]: '' };
       expect(actual).toEqual(expected);
     });
     it('should add a field to object', () => {
       let metadata = addField(state, 'metadata["students"][1]');
-      let actual = metadata.students[1]['New field ' + state.new_field_count];
+      let actual = metadata.students[1][`New field ${state.new_field_count}`];
       expect(actual).toBe('');
     });
     it('should add a field to array', () => {
@@ -114,7 +114,7 @@ describe('Metadata functions:', () => {
     it('should convert simple type to object', () => {
       let metadata = convertField(state, 'metadata["layout"]', 'object');
       let actual = metadata.layout;
-      let expected = { ['New field ' + emptyState.new_field_count]: '' };
+      let expected = { [`New field ${emptyState.new_field_count}`]: '' };
       expect(actual).toEqual(expected);
     });
     it('should convert simple type to array', () => {
@@ -126,7 +126,7 @@ describe('Metadata functions:', () => {
     it('should convert array type to object', () => {
       let metadata = convertField(state, 'metadata["students"]', 'object');
       let actual = metadata.students;
-      let expected = { ['New field ' + emptyState.new_field_count]: '' };
+      let expected = { [`New field ${emptyState.new_field_count}`]: '' };
       expect(actual).toEqual(expected);
     });
     it('should convert object type to array', () => {

@@ -70,7 +70,18 @@ export const existingUploadedFilenames = (uploadedFiles, currentFiles) => {
   }
   const currentFilenames = _.map(currentFiles, cf => getFilenameFromPath(cf.path));
   return _.chain(uploadedFiles)
-    .filter(file => currentFilenames.indexOf(file.name) > -1)
+    .filter(file => currentFilenames.includes(file.name))
     .map(file => file.name)
     .value();
+};
+
+/**
+ * Given an Event object, prevents the default event
+ * from bubbling, if possible.
+ * @param {Event} event
+ */
+export const preventDefault = (event) => {
+  if (event && event.preventDefault) {
+    event.preventDefault();
+  }
 };

@@ -40,6 +40,7 @@ module JekyllAdmin
       # array with each rendered document, which we don't want.
       if is_a?(Jekyll::Collection)
         output.delete("docs")
+        output["entries_url"] = entries_url
       end
 
       if is_a?(Jekyll::Document)

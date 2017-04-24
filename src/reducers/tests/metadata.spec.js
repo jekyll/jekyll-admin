@@ -127,7 +127,7 @@ describe('Reducers::Metadata', () => {
         type: types.UPDATE_FIELD_KEY,
         namePrefix: 'metadata',
         fieldKey: 'layout',
-        newKey: 'new_layout'
+        newKey: '  new_layout  '
       })
     ).toEqual({
       metadata: {
@@ -144,7 +144,7 @@ describe('Reducers::Metadata', () => {
       reducer({ metadata : meta, new_field_count: 0 }, {
         type: types.UPDATE_FIELD_VALUE,
         nameAttr: 'metadata["notexists"]',
-        value: 'willExist'
+        value: '  willExist  '
       })
     ).toEqual({
       metadata: {

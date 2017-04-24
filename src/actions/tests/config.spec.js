@@ -36,13 +36,13 @@ describe('Actions::Config', () => {
 
   it('updates the configuration', () => {
     nock(API)
-      .put('/configuration', config)
+      .put('/configuration')
       .reply(200, config);
 
-    const expectedAction = [{
-      type: types.PUT_CONFIG_SUCCESS,
-      config
-    }];
+    const expectedAction = [
+      { type: types.CLEAR_ERRORS },
+      { type: types.PUT_CONFIG_SUCCESS, config }
+    ];
 
     const store = mockStore({ config: {} });
     return store.dispatch(actions.putConfig(config_yaml))
@@ -56,15 +56,16 @@ describe('Actions::Config', () => {
       .put('/configuration', config)
       .replyWithError('something awful happened');
 
-    const expectedAction = {
-      type: types.PUT_CONFIG_FAILURE
-    };
+    const expectedAction = [
+      { type: types.CLEAR_ERRORS },
+      { type: types.PUT_CONFIG_FAILURE }
+    ];
 
     const store = mockStore({ config: {} });
 
     return store.dispatch(actions.putConfig(config_yaml))
       .then(() => {
-        expect(store.getActions()[0].type).toEqual(expectedAction.type);
+        expect(store.getActions()[1].type).toEqual(expectedAction[1].type);
       });
   });
 });
