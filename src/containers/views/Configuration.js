@@ -2,15 +2,22 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
-import Errors from '../../components/Errors';
+import { HotKeys } from 'react-hotkeys';
 import Editor from '../../components/Editor';
+import Errors from '../../components/Errors';
 import Button from '../../components/Button';
 import { putConfig, onEditorChange } from '../../actions/config';
 import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
-import { toYAML } from '../../utils/helpers';
+import { toYAML, preventDefault } from '../../utils/helpers';
 
 export class Configuration extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.handleClickSave = this.handleClickSave.bind(this);
+  }
 
   componentDidMount() {
     const { router, route } = this.props;
@@ -31,7 +38,10 @@ export class Configuration extends Component {
     }
   }
 
-  handleClickSave() {
+  handleClickSave(e) {
+    // Prevent the default event from bubbling
+    preventDefault(e);
+
     const { editorChanged, putConfig } = this.props;
     if (editorChanged) {
       const value = this.refs.editor.getValue();
@@ -42,14 +52,18 @@ export class Configuration extends Component {
   render() {
     const { editorChanged, onEditorChange, config, updated, errors } = this.props;
     const { raw_content } = config;
+    const keyboardHandlers = {
+      'save': this.handleClickSave,
+    };
+
     return (
-      <div className="single">
+      <HotKeys handlers={keyboardHandlers} className="single">
         {errors && errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
           <h1>Configuration</h1>
           <div className="page-buttons">
             <Button
-              onClick={() => this.handleClickSave()}
+              onClick={this.handleClickSave}
               type="save"
               active={editorChanged}
               triggered={updated} />
@@ -63,7 +77,7 @@ export class Configuration extends Component {
               content={raw_content}
               ref="editor" />
         }
-      </div>
+      </HotKeys>
     );
   }
 }
