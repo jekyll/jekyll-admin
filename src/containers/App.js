@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+import { HotKeys } from 'react-hotkeys';
+
+import keyboardShortcuts from '../constants/keyboardShortcuts';
 
 // Components
 import Sidebar from './Sidebar';
@@ -9,7 +12,9 @@ class App extends Component {
 
   render() {
     return (
-      <div className="wrapper">
+      <HotKeys
+        keyMap={keyboardShortcuts}
+        className="wrapper">
         <Sidebar />
         <div className="container">
           <Header />
@@ -18,7 +23,7 @@ class App extends Component {
           </div>
         </div>
         <Notifications />
-      </div>
+      </HotKeys>
     );
   }
 }
