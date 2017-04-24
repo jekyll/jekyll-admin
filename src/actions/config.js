@@ -4,6 +4,7 @@ import { getContentRequiredMessage } from '../constants/lang';
 import { addNotification } from './notifications';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
+import { validationError } from './utils';
 
 export function fetchConfig() {
   return dispatch => {

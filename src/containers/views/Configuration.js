@@ -2,9 +2,11 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
+import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
 import { putConfig, onEditorChange } from '../../actions/config';
+import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
 import { toYAML } from '../../utils/helpers';
 
@@ -13,6 +15,14 @@ export class Configuration extends Component {
   componentDidMount() {
     const { router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+  }
+
+  componentWillUnmount() {
+    const { clearErrors, errors } = this.props;
+    // clear errors if any
+    if (errors.length) {
+      clearErrors();
+    }
   }
 
   routerWillLeave(nextLocation) {
@@ -30,10 +40,11 @@ export class Configuration extends Component {
   }
 
   render() {
-    const { editorChanged, onEditorChange, config, updated } = this.props;
+    const { editorChanged, onEditorChange, config, updated, errors } = this.props;
     const { raw_content } = config;
     return (
-      <div>
+      <div className="single">
+        {errors && errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
           <h1>Configuration</h1>
           <div className="page-buttons">
@@ -63,6 +74,8 @@ Configuration.propTypes = {
   putConfig: PropTypes.func.isRequired,
   updated: PropTypes.bool.isRequired,
   editorChanged: PropTypes.bool.isRequired,
+  errors: PropTypes.array.isRequired,
+  clearErrors: PropTypes.func.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired
 };
@@ -70,12 +83,14 @@ Configuration.propTypes = {
 const mapStateToProps = (state) => ({
   config: state.config.config,
   updated: state.config.updated,
-  editorChanged: state.config.editorChanged
+  editorChanged: state.config.editorChanged,
+  errors: state.utils.errors
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   putConfig,
-  onEditorChange
+  onEditorChange,
+  clearErrors
 }, dispatch);
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Configuration));
