@@ -43,19 +43,12 @@ export class DataFileNew extends Component {
     }
   }
 
-  getDirectoryfromPath(path) {
-    let directory = path.split("/");
-    directory.pop();
-
-    return directory.join("/");
-  }
-
   handleClickSave() {
     const { datafileChanged, putDataFile, params } = this.props;
 
     if (datafileChanged) {
       const path = this.refs.inputpath.refs.input.value;
-      const directory = this.getDirectoryfromPath(path);
+      const [directory, ...rest] = params.splat || [""];
       const filename = getFilenameFromPath(path);
       const value = this.refs.editor.getValue();
 

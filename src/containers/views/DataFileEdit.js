@@ -29,7 +29,7 @@ export class DataFileEdit extends Component {
 
   componentDidMount() {
     const { fetchDataFile, params, router, route } = this.props;
-    const [directory, ...rest] = params.splat;
+    const [directory, ...rest] = params.splat || [""];
     const filename = rest.join('.');
 
     router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
@@ -63,16 +63,9 @@ export class DataFileEdit extends Component {
     }
   }
 
-  getDirectoryfromPath(path) {
-    let directory = path.split("/");
-    directory.pop();
-
-    return directory.join("/");
-  }
-
   handleClickSave(e) {
     const { datafileChanged, putDataFile, params } = this.props;
-    const [directory, ...rest] = params.splat;
+    const [directory, ...rest] = params.splat || [""];
     const filename = rest.join('.');
 
     // Prevent the default event from bubbling
@@ -90,7 +83,7 @@ export class DataFileEdit extends Component {
     const confirm = window.confirm(getDeleteMessage(path));
 
     if (confirm) {
-      const directory = this.getDirectoryfromPath(path);
+      const [directory, ...rest] = params.splat || [""];
       const filename = getFilenameFromPath(path);
       deleteDataFile(directory, filename);
       browserHistory.push(`${ADMIN_PREFIX}/datafiles`);
@@ -112,7 +105,7 @@ export class DataFileEdit extends Component {
     }
 
     const { path, relative_path, raw_content } = datafile;
-    const [directory, ...rest] = params.splat;
+    const [directory, ...rest] = params.splat || [""];
     const filename = getFilenameFromPath(path);
 
     const keyboardHandlers = {

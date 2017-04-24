@@ -27,19 +27,12 @@ export class DataFiles extends Component {
     }
   }
 
-  getDirectoryfromPath(path) {
-    let directory = path.split("/");
-    directory.pop();
-
-    return directory.join("/");
-  }
-
   handleClickDelete(path) {
     const { deleteDataFile, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(path));
 
     if (confirm) {
-      const directory = this.getDirectoryfromPath(path);
+      const [directory, ...rest] = params.splat || [""];
       const filename = getFilenameFromPath(path);
 
       deleteDataFile(directory, filename);
