@@ -64,7 +64,9 @@ export class DataFileEdit extends Component {
   }
 
   handleClickSave(e) {
-    const { datafileChanged, putDataFile, params } = this.props;
+    const { datafile, datafileChanged, putDataFile, params } = this.props;
+    const { path, relative_path } = datafile;
+    const data_dir = path.replace(relative_path, "");
     const [directory, ...rest] = params.splat || [""];
     const filename = rest.join('.');
 
@@ -73,7 +75,7 @@ export class DataFileEdit extends Component {
 
     if (datafileChanged) {
       const value = this.refs.editor.getValue();
-      const new_path = this.refs.inputpath.refs.input.value;
+      const new_path = data_dir + this.refs.inputpath.refs.input.value;
       putDataFile(directory, filename, value, new_path);
     }
   }
@@ -126,7 +128,7 @@ export class DataFileEdit extends Component {
             <InputPath
               onChange={onDataFileChanged}
               type="data files"
-              path={path} // TODO: Support using `relative_path` from API instead
+              path={relative_path}
               ref="inputpath" />
             <Editor
               editorChanged={datafileChanged}
