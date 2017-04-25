@@ -17,7 +17,7 @@ export default class InputFilename extends Component {
       const date = moment().format('YYYY-MM-DD');
       placeholder = `${date}-your-title.md`;
     }else if (type == 'data files') {
-      placeholder = '<directory/>your-filename.yml';
+      placeholder = 'directory/your-filename.yml';
     }
 
     let tooltip = null;
