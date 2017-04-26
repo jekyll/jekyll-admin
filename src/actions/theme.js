@@ -1,12 +1,12 @@
 import * as ActionTypes from '../constants/actionTypes';
-import { getThemeUrl, getThemeItemUrl } from '../constants/api';
-import { get } from '../utils/fetch';
+import { themeAPIUrl, themeItemAPIUrl } from '../constants/api';
+import { get, put } from '../utils/fetch';
 
 export function fetchTheme(directory = '') {
   return (dispatch) => {
     dispatch({ type: ActionTypes.FETCH_THEME_REQUEST});
     return get(
-      getThemeUrl(directory),
+      themeAPIUrl(directory),
       { type: ActionTypes.FETCH_THEME_SUCCESS, name: "theme"},
       { type: ActionTypes.FETCH_THEME_FAILURE, name: "error"},
       dispatch
@@ -18,10 +18,23 @@ export function fetchThemeItem(directory, filename) {
   return (dispatch) => {
     dispatch({ type: ActionTypes.FETCH_THEME_ITEM_REQUEST});
     return get(
-      getThemeItemUrl(directory, filename),
+      themeItemAPIUrl(directory, filename),
       { type: ActionTypes.FETCH_THEME_ITEM_SUCCESS, name: "template"},
       { type: ActionTypes.FETCH_THEME_ITEM_FAILURE, name: "error"},
       dispatch
     );
   };
 }
+
+export function putThemeItem(directory, filename, data) {
+  return (dispatch, getState) => {
+    return put(
+      themeItemAPIUrl(directory, filename),
+      JSON.stringify({ raw_content: data }),
+      { type: ActionTypes.PUT_THEME_ITEM_SUCCESS, name: "template"},
+      { type: ActionTypes.PUT_THEME_ITEM_FAILURE, name: "error"},
+      dispatch
+    );
+  };
+}
+

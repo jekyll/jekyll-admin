@@ -38,6 +38,10 @@ export default class Button extends Component {
       case 'upload':
         label = labels.upload.label;
         break;
+      case 'themefile':
+        label = labels.themefile.label;
+        triggeredLabel = labels.themefile.triggeredLabel;
+        break;
       default:
     }
 

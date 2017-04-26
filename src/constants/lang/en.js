@@ -74,5 +74,9 @@ export const labels = {
   },
   upload: {
     label: 'Upload files'
+  },
+  themefile: {
+    label: 'Copy to Source',
+    triggeredLabel: 'Copied'
   }
 };

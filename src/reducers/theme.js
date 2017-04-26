@@ -1,6 +1,7 @@
 import {
   FETCH_THEME_REQUEST, FETCH_THEME_SUCCESS, FETCH_THEME_FAILURE,
-  FETCH_THEME_ITEM_REQUEST, FETCH_THEME_ITEM_SUCCESS, FETCH_THEME_ITEM_FAILURE
+  FETCH_THEME_ITEM_REQUEST, FETCH_THEME_ITEM_SUCCESS, FETCH_THEME_ITEM_FAILURE,
+  PUT_THEME_ITEM_REQUEST, PUT_THEME_ITEM_SUCCESS, PUT_THEME_ITEM_FAILURE
 } from '../constants/actionTypes';
 
 export default function theme(state = {
@@ -31,6 +32,11 @@ export default function theme(state = {
       return Object.assign({}, state, {
         template: {},
         isFetching: false
+      });
+    case PUT_THEME_ITEM_SUCCESS:
+      return Object.assign({}, state, {
+        template: action.template,
+        updated: true
       });
     default:
       return Object.assign({}, state, {
