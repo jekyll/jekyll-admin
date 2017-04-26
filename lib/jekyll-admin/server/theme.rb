@@ -20,11 +20,13 @@ module JekyllAdmin
       get "/*?/?:path.:ext" do
         ensure_theme
         json({
-          :name     => filename,
-          :path     => file_path,
-          :content  => content(file_path),
-          :http_url => http_url(file_path),
-          :api_url  => url,
+          :name            => filename,
+          :path            => file_path,
+          :content         => lexed_content,
+          :raw_content     => raw_content,
+          :exist_at_source => exist_at_source?,
+          :http_url        => http_url(file_path),
+          :api_url         => url,
         })
       end
 
@@ -34,6 +36,16 @@ module JekyllAdmin
           :name    => splats.first.split("/").last,
           :path    => at_root(splats.first),
           :entries => entries.map(&:to_api).concat(subdir_entries),
+        })
+      end
+
+      put "/*?/?:path.:ext" do
+        write_file write_path, raw_content
+        json({
+          :name            => filename,
+          :path            => write_path,
+          :content         => lexed_content,
+          :exist_at_source => true,
         })
       end
 
@@ -96,7 +108,19 @@ module JekyllAdmin
         end
       end
 
-      def content(file_path)
+      def write_path
+        File.join(site.source, relative_path_of(file_path))
+      end
+
+      def exist_at_source?
+        File.exist? write_path
+      end
+
+      def raw_content
+        File.open(file_path).read.encode("UTF-8")
+      end
+
+      def lexed_content
         code = File.open(file_path).read.encode("UTF-8")
         formatter = Rouge::Formatters::HTML.new
         lexer = Rouge::Lexer.find_fancy(lexer_lang, code)
