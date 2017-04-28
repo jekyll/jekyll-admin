@@ -37,7 +37,8 @@ describe('Reducers::Collections', () => {
         type: types.FETCH_COLLECTIONS_FAILURE
       })
     ).toEqual({
-      isFetching: false
+      isFetching: false,
+      collections: []
     });
   });
 
@@ -63,6 +64,7 @@ describe('Reducers::Collections', () => {
         type: types.FETCH_COLLECTION_FAILURE
       })
     ).toEqual({
+      entries: [],
       isFetching: false
     });
   });
