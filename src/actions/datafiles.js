@@ -38,7 +38,7 @@ export function fetchDataFile(filename) {
   };
 }
 
-export function putDataFile(filename, data, source) {
+export function putDataFile(filename, data, source = "editor") {
   return (dispatch, getState) => {
     let payload = {};
     if (source == "editor") {
