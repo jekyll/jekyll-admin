@@ -45,7 +45,7 @@ export class MetaObjectItem extends Component {
     const CurrentComponent = FieldTypes[type];
     return (
       <div ref="wrap" className="object-item-wrap">
-        <div className="object-key">
+        <div className={`object-key ${type}`}>
           <input ref="field_key"
             onBlur={(e) => this.handleKeyBlur(e)}
             defaultValue={fieldKey}
