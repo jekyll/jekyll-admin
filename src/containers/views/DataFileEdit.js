@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
+import Metadata from '../DataGUI';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
@@ -23,8 +24,10 @@ export class DataFileEdit extends Component {
 
   constructor(props) {
     super(props);
-
     this.handleClickSave = this.handleClickSave.bind(this);
+    this.state = {
+      guiView: false
+    };
   }
 
   componentDidMount() {
@@ -47,16 +50,24 @@ export class DataFileEdit extends Component {
     }
   }
 
+  toggleView() {
+    this.setState({ guiView: !this.state.guiView });
+  }
+
   handleClickSave(e) {
-    const { datafileChanged, putDataFile, params } = this.props;
+    const { datafileChanged, fieldChanged, putDataFile, params } = this.props;
+    let data, source = null;
 
     // Prevent the default event from bubbling
     preventDefault(e);
 
-    if (datafileChanged) {
-      const value = this.refs.editor.getValue();
-      putDataFile(params.data_file, value);
+    if (fieldChanged) {
+      source = "gui";
+    } else if (datafileChanged) {
+      data = this.refs.editor.getValue();
+      source = "editor";
     }
+    putDataFile(params.data_file, data, source);
   }
 
   handleClickDelete(filename) {
@@ -71,7 +82,7 @@ export class DataFileEdit extends Component {
   render() {
     const {
       datafileChanged, onDataFileChanged, datafile, isFetching,
-      updated, errors, params
+      updated, fieldChanged, errors, params
     } = this.props;
 
     if (isFetching) {
@@ -82,12 +93,15 @@ export class DataFileEdit extends Component {
       return <h1>{getNotFoundMessage("data file")}</h1>;
     }
 
-    const { path, raw_content } = datafile;
+    const { path, raw_content, content } = datafile;
     const filename = getFilenameFromPath(path);
 
     const keyboardHandlers = {
       'save': this.handleClickSave,
     };
+
+    const editorView = this.state.guiView ? "hidden" : "";
+    const uiView = this.state.guiView ? "" : "hidden";
 
     return (
       <HotKeys
@@ -98,7 +112,16 @@ export class DataFileEdit extends Component {
           <Breadcrumbs splat={filename} type="datafiles" />
         </div>
 
-        <div className="content-wrapper">
+        <div className="toggle-button">
+          <Button
+            onClick={this.toggleView.bind(this)}
+            type="view-toggle"
+            active={true}
+            triggered={this.state.guiView}
+            toggle />
+        </div>
+
+        <div className={`content-wrapper ${editorView}`}>
           <div className="content-body">
             <Editor
               editorChanged={datafileChanged}
@@ -124,6 +147,28 @@ export class DataFileEdit extends Component {
               block />
           </div>
         </div>
+        <div className={`gui ${uiView}`}>
+          <div className="warning">
+            CAUTION! Any existing comments will be lost when editing via this view.
+            Switch to the <strong>Raw Editor</strong> to preserve comments.
+          </div>
+          <Metadata fields={content} />
+          <div className="gui-buttons">
+            <Button
+              onClick={this.handleClickSave}
+              type="save"
+              active={fieldChanged}
+              triggered={updated}
+              icon="save"
+              block />
+            <Button
+              onClick={() => this.handleClickDelete(filename)}
+              type="delete"
+              active={true}
+              icon="trash"
+              block />
+          </div>
+        </div>
       </HotKeys>
     );
   }
@@ -139,6 +184,7 @@ DataFileEdit.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   updated: PropTypes.bool.isRequired,
   datafileChanged: PropTypes.bool.isRequired,
+  fieldChanged: PropTypes.bool.isRequired,
   errors: PropTypes.array.isRequired,
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
@@ -150,6 +196,7 @@ const mapStateToProps = (state) => ({
   isFetching: state.datafiles.isFetching,
   updated: state.datafiles.updated,
   datafileChanged: state.datafiles.datafileChanged,
+  fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors
 });
 
