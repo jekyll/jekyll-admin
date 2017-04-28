@@ -1,0 +1,352 @@
+.toggle-button {
+  margin-top: -20px;
+  margin-bottom: 5px;
+}
+.gui-buttons {
+  margin: -40px auto 10px;
+  padding: 15px 0;
+  width: 250px;
+  border-top: 1px solid #ccc;
+  .btn {
+    margin: 0 15px;
+    display: inline;
+  }
+}
+.datafields {
+  margin-bottom: 40px;
+  .metafield {
+    position: relative;
+    zoom: 1;
+    margin-bottom: 20px;
+    .meta-key {
+      &.simple {
+        float: left;
+
+        + .meta-value .value-field {
+          margin-left: 15px;
+          width: calc(100% - 240px);
+        }
+      }
+      .key-field {
+        margin: 0 0 10px;
+        max-width: 190px;
+        font-size: 16px;
+        font-weight: 700;
+        padding: 11px 10px;
+        min-height: 46px;
+        line-height: 1.5;
+        border: 1px solid $border-color;
+        @include border-radius(2px);
+        @include transition(color 250ms ease);
+        &:focus {
+          border-color: $dark-orange;
+          color: #000 !important;
+        }
+        &:hover {
+          color: #000 !important;
+        }
+      }
+    }
+    .meta-value {
+      .value-field {
+        overflow: hidden;
+        word-wrap: break-word;
+        resize: vertical;
+        height: auto;
+        width: 100%;
+        min-height: 46px;
+        max-height: 500px;
+        line-height: 1.5;
+        margin-bottom: 0;
+        vertical-align: bottom;
+        border: 1px solid $border-color;
+        font-size: 16px;
+        padding: 11px 13px;
+        @include border-radius(2px);
+        @include transition(color 250ms ease);
+        &:focus {
+          border-color: $dark-orange;
+        }
+      }
+    }
+    .meta-value-array {
+      margin-right: auto;
+      margin-left: 200px;
+      padding: 10px 15px;
+      border: 1px solid $border-color;
+      @include border-radius(3px);
+      position: relative;
+      .array-item-wrap {
+        margin-bottom: 20px;
+        .array-header {
+          margin-bottom: 5px;
+          .array-field-num{
+            color: $orange;
+            line-height: 27px;
+            display: inline-block;
+            margin-right: 5px;
+          }
+          .meta-buttons {
+            position: static;
+            display: inline-block;
+          }
+        }
+      }
+      .add-field-array {
+        background: $dark-orange;
+        text-align: center;
+        color: #fff;
+        border-radius: 50%;
+        width: 26px;
+        height: 26px;
+        line-height: 26px;
+        font-size: 16px;
+        position: absolute;
+        bottom: -13px;
+        margin-left: -13px;
+        left: 50%;
+        i {
+          margin: 0;
+        }
+      }
+    }
+    .meta-value-object {
+      .object-item-wrap {
+        padding-left: 200px;
+        min-height: 50px;
+        position: relative;
+        margin-bottom: 10px;
+        .object-key {
+          width: 190px;
+          position: relative;
+          max-width: 200px;
+          margin-bottom: 5px;
+          &.simple {
+            float: left;
+            + .object-value .meta-value .value-field {
+              margin-left: 15px;
+              width: calc(100% - 240px);
+            }
+          }
+          input {
+            width: 100%;
+            padding: 11px 55px 10px 11px;
+            font-size: 16px;
+            min-height: 48px;
+            line-height: 1.5;
+            @include border-radius(2px);
+          }
+          .meta-buttons {
+            transform: translateY(-50%);
+            position: absolute;
+            top: 50%;
+            right: 5px;
+          }
+        }
+        .object-value {
+          position: relative;
+          @include transition(padding 250ms ease);
+          .object-item-wrap {
+            margin-left: 200px;
+            padding: 0;
+            .object-key {
+              position: relative;
+            }
+            .object-value .object-item-wrap {
+              margin-left: 200px;
+            }
+          }
+        }
+      }
+      .add-field-object {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+    .meta-buttons {
+      position: absolute;
+      top: 4px;
+      right: 0;
+      z-index: 8;
+      span.move {
+        color: $inactive-gray;
+        cursor: move;
+        &:hover, &:focus {
+          color: $dark-orange;
+        }
+      }
+      .dropdown {
+        cursor: pointer;
+        position: relative;
+        .meta-button {
+          border: 2px solid #d4d7d9;
+          padding: 2px 0;
+          color: $inactive-gray;
+          font-size: 13px;
+          width: 23px;
+          height: 23px;
+          display: inline-block;
+          text-align: center;
+          outline: none;
+          @include border-radius(50%);
+          &:hover, &:focus {
+            border-color: $dark-orange;
+            background: $dark-orange;
+            color: #fff;
+          }
+          &:focus + .dropdown-wrap {
+            display: block;
+          }
+          i {
+            margin: 0;
+          }
+        }
+        .dropdown-wrap {
+          &:before {
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 10px 10px;
+            border-color: transparent transparent #d4d7d9;
+            content: "";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            margin-left: -10px;
+          }
+          transform: translateX(-50%);
+          top: 35px;
+          left: 50%;
+          display: none;
+          position: absolute;
+          z-index: 30;
+          width: 185px;
+          border: 1px solid #d4d7d9;
+          border-radius: 2px;
+          background: #fff;
+          span {
+            display: block;
+            padding: 15px 0 15px 15px;
+            border-bottom: 1px solid #d4d7d9;
+            outline: 0;
+            i {
+              padding-right: 8px;
+            }
+            &:hover {
+              border-color: $dark-orange;
+              background: $dark-orange;
+              color: #fff;
+            }
+          }
+          .remove-field {
+            &:hover {
+              background: $dark-red;
+              i {
+                color: white;
+              }
+            }
+            i {
+              color: $dark-red;
+            }
+          }
+        }
+      }
+    }
+  }
+  .meta-new {
+    font-size: 20px;
+    i {
+      padding-right: 8px;
+    }
+  }
+  .sortable-chosen, .sortable-chosen.sortable-ghost {
+    & div {
+      opacity: 0;
+    }
+    border: 2px dashed $dark-orange !important;
+  }
+  .showing-dropdown {
+    z-index: 30;
+  }
+  .date-field {
+    @include border-radius(2px);
+    border-color: $border-color;
+    input {
+      padding: 11px 13px;
+      min-height: 46px;
+    }
+  }
+  .rw-datetimepicker {
+    box-shadow: none !important;
+    font-size: 16px !important;
+    .rw-btn {
+      min-width: 37px;
+      i { margin: 0; }
+    }
+    &.rw-has-both {
+      padding-right: 74px;
+      > .rw-select {
+        width: 75px;
+        &:hover {
+          background: #fff;
+        }
+        .rw-btn:first-child { border-right: 1px solid #ccc; }
+        .rw-btn:hover { background: $orange; }
+      }
+    }
+  }
+  .rw-calendar-popup {
+    left: auto !important;
+    right: -10px !important;
+  }
+  .rw-calendar {
+    .rw-header {
+      padding-bottom: 15px;
+      .rw-btn-view { width: 188px; }
+    }
+  }
+  .rw-calendar-grid th {
+    padding-bottom: 8px;
+  }
+  .rw-state-focus {
+    border: 1px solid $dark-orange !important;
+  }
+  .rw-list-option {
+    padding: 8px 5px;
+  }
+
+  .imagepicker {
+    position: relative;
+    .images-wrapper {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      padding: 2px;
+      button {
+        color: #333;
+        line-height: 2.286em;
+        height: 100%;
+        min-width: 37px;
+        display: inline-block;
+        margin: 0;
+        text-align: center;
+        vertical-align: middle;
+        background: white;
+        background-image: none;
+        border: none;
+        border-left: 1px solid #ccc;
+        padding: 0;
+        white-space: nowrap;
+        outline: none;
+        &:hover {
+          background: $orange;
+        }
+        i {
+          margin: 0;
+        }
+      }
+    }
+  }
+}
