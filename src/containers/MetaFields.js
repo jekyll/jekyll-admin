@@ -21,7 +21,7 @@ export class MetaFields extends Component {
 
   render() {
     const { metadata, addField, removeField, updateFieldKey,
-      updateFieldValue, moveArrayItem, convertField, key_prefix } = this.props;
+      updateFieldValue, moveArrayItem, convertField, key_prefix, type } = this.props;
 
     const { path, title, raw_content, ...rest } = metadata;
 
@@ -58,12 +58,15 @@ export class MetaFields extends Component {
               Metadata will be stored as the <b>YAML front matter</b> within the document.
             </span>
           </a>
-          <small className="tooltip pull-right">
-            <i className="fa fa-info-circle" />Special Keys
-            <span className="tooltip-text">
-              You can use special keys like <b>date</b>, <b>file</b>, <b>image</b> for user-friendly functionalities.
-            </span>
-          </small>
+          {
+            type != "templates" &&
+              <small className="tooltip pull-right">
+                <i className="fa fa-info-circle" />Special {type} Keys
+                <span className="tooltip-text">
+                  You can use special keys like <b>date</b>, <b>file</b>, <b>image</b> for user-friendly functionalities.
+                </span>
+              </small>
+          }
         </div>
       </div>
     );
@@ -80,7 +83,8 @@ MetaFields.propTypes = {
   updateFieldKey: PropTypes.func.isRequired,
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
-  convertField: PropTypes.func.isRequired
+  convertField: PropTypes.func.isRequired,
+  type: PropTypes.string
 };
 
 const mapStateToProps = (state) => ({

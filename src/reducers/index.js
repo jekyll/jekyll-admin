@@ -6,6 +6,7 @@ import collections from './collections';
 import metadata from './metadata';
 import datafiles from './datafiles';
 import staticfiles from './staticfiles';
+import templates from './templates';
 import utils from './utils';
 import notifications from './notifications';
 
@@ -17,6 +18,7 @@ export default combineReducers({
   metadata,
   datafiles,
   staticfiles,
+  templates,
   utils,
   notifications
 });

@@ -14,6 +14,10 @@ import DataFiles from './containers/views/DataFiles';
 import DataFileEdit from './containers/views/DataFileEdit';
 import DataFileNew from './containers/views/DataFileNew';
 import StaticFiles from './containers/views/StaticFiles';
+import Templates from './containers/views/Templates';
+import TemplateDirectory from './containers/views/TemplateDirectory';
+import TemplateEdit from './containers/views/TemplateEdit';
+import TemplateNew from './containers/views/TemplateNew';
 import NotFound from './containers/views/NotFound';
 
 export default (
@@ -40,6 +44,12 @@ export default (
       <Route path=":data_file" component={DataFileEdit} />
     </Route>
     <Route path="staticfiles" component={StaticFiles} />
+    <Route path="templates">
+      <IndexRoute component={Templates} />
+      <Route path="(**/)new" component={TemplateNew} />
+      <Route path="(**/)*.*" component={TemplateEdit} />
+      <Route path="**" component={TemplateDirectory} />
+    </Route>
     <Route path={`${ADMIN_PREFIX}/*`} component={NotFound} />
   </Route>
 );
