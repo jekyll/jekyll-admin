@@ -14,11 +14,13 @@
 }
 .datafields {
   margin-bottom: 40px;
+
   .metafield {
     position: relative;
     zoom: 1;
     margin-bottom: 20px;
     .meta-key {
+      color: #eb2659;
       &.simple {
         float: left;
 
@@ -38,13 +40,6 @@
         border: 1px solid $border-color;
         @include border-radius(2px);
         @include transition(color 250ms ease);
-        &:focus {
-          border-color: $dark-orange;
-          color: #000 !important;
-        }
-        &:hover {
-          color: #000 !important;
-        }
       }
     }
     .meta-value {
@@ -59,7 +54,7 @@
         line-height: 1.5;
         margin-bottom: 0;
         vertical-align: bottom;
-        border: 1px solid $border-color;
+        border: 1px solid #2b2b2b;
         font-size: 16px;
         padding: 11px 13px;
         @include border-radius(2px);
@@ -70,12 +65,13 @@
       }
     }
     .meta-value-array {
+      position: relative;
       margin-right: auto;
       margin-left: 50px;
       padding: 10px 15px;
-      border: 1px solid $border-color;
+      pointer-events: auto;
+      border: 1px solid #383838;
       @include border-radius(3px);
-      position: relative;
       .array-item-wrap {
         margin-bottom: 20px;
         .array-header {
@@ -120,20 +116,24 @@
           width: 190px;
           position: relative;
           max-width: 200px;
-          margin-bottom: 5px;
+          margin-bottom: 10px;
           &.simple {
             float: left;
+            pointer-events: auto;
             + .object-value .meta-value .value-field {
               margin-left: 15px;
               width: calc(100% - 240px);
+              pointer-events: auto;
             }
           }
+
           input {
             width: 100%;
             padding: 11px 55px 10px 11px;
             font-size: 16px;
             min-height: 48px;
             line-height: 1.5;
+            pointer-events: auto;
             @include border-radius(2px);
           }
           .meta-buttons {
@@ -145,6 +145,7 @@
         }
         .object-value {
           position: relative;
+          pointer-events: none;
           @include transition(padding 250ms ease);
           .object-item-wrap {
             margin-left: 50px;
@@ -216,19 +217,20 @@
             margin-left: -10px;
           }
           transform: translateX(-50%);
+          position: absolute;
           top: 35px;
           left: 50%;
           display: none;
-          position: absolute;
-          z-index: 30;
           width: 185px;
-          border: 1px solid #d4d7d9;
+          color: #ddd;
+          background: #353535;
+          border: 1px solid #323232;
           border-radius: 2px;
-          background: #fff;
+          z-index: 30;
           span {
             display: block;
             padding: 15px 0 15px 15px;
-            border-bottom: 1px solid #d4d7d9;
+            border-bottom: 1px solid #272727;
             outline: 0;
             i {
               padding-right: 8px;
@@ -240,14 +242,13 @@
             }
           }
           .remove-field {
+            color: $dark-red;
+
             &:hover {
               background: $dark-red;
               i {
                 color: white;
               }
-            }
-            i {
-              color: $dark-red;
             }
           }
         }
@@ -347,6 +348,30 @@
           margin: 0;
         }
       }
+    }
+  }
+
+  padding: 30px;
+  background: #222222;
+
+  .metafield {
+    .meta-key, .object-key {
+      .key-field {
+        color: #eb2659;
+        background: #2b2b2b;
+        border-color: transparent;
+
+        &:focus {
+          color: #eaeaea !important;
+          border-color: $dark-orange;
+        }
+      }
+    }
+
+    .meta-value .value-field {
+      color: #eaeaea;
+      background: #2b2b2b;
+      border-color: transparent;
     }
   }
 }
