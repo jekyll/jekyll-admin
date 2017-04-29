@@ -71,7 +71,7 @@
     }
     .meta-value-array {
       margin-right: auto;
-      margin-left: 200px;
+      margin-left: 50px;
       padding: 10px 15px;
       border: 1px solid $border-color;
       @include border-radius(3px);
@@ -112,7 +112,7 @@
     }
     .meta-value-object {
       .object-item-wrap {
-        padding-left: 200px;
+        padding-left: 50px;
         min-height: 50px;
         position: relative;
         margin-bottom: 10px;
@@ -147,13 +147,13 @@
           position: relative;
           @include transition(padding 250ms ease);
           .object-item-wrap {
-            margin-left: 200px;
+            margin-left: 50px;
             padding: 0;
             .object-key {
               position: relative;
             }
             .object-value .object-item-wrap {
-              margin-left: 200px;
+              margin-left: 50px;
             }
           }
         }

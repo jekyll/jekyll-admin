@@ -100,8 +100,8 @@ export class DataFileEdit extends Component {
       'save': this.handleClickSave,
     };
 
-    const editorView = this.state.guiView ? "hidden" : "";
-    const uiView = this.state.guiView ? "" : "hidden";
+    const editorView = this.state.guiView ? " hidden" : "";
+    const uiView = this.state.guiView ? "" : " hidden";
 
     return (
       <HotKeys
@@ -121,7 +121,7 @@ export class DataFileEdit extends Component {
             toggle />
         </div>
 
-        <div className={`content-wrapper ${editorView}`}>
+        <div id="raw-editor" className={`content-wrapper${editorView}`}>
           <div className="content-body">
             <Editor
               editorChanged={datafileChanged}
@@ -147,13 +147,16 @@ export class DataFileEdit extends Component {
               block />
           </div>
         </div>
-        <div className={`gui ${uiView}`}>
-          <div className="warning">
-            CAUTION! Any existing comments will be lost when editing via this view.
-            Switch to the <strong>Raw Editor</strong> to preserve comments.
+
+        <div id="gui" className={`content-wrapper${uiView}`}>
+          <div className="content-body">
+            <div className="warning">
+              CAUTION! Any existing comments will be lost when editing via this view.
+              Switch to the <strong>Raw Editor</strong> to preserve comments.
+            </div>
+            <Metadata fields={content} />
           </div>
-          <Metadata fields={content} />
-          <div className="gui-buttons">
+          <div className="content-side">
             <Button
               onClick={this.handleClickSave}
               type="save"
@@ -161,6 +164,7 @@ export class DataFileEdit extends Component {
               triggered={updated}
               icon="save"
               block />
+            <Splitter />
             <Button
               onClick={() => this.handleClickDelete(filename)}
               type="delete"
