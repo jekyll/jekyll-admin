@@ -1,6 +1,5 @@
 import yaml from 'js-yaml';
 import _ from 'underscore';
-import slug from 'slug';
 
 /**
  * Converts the object into YAML string.
@@ -43,10 +42,22 @@ export const toTitleCase = (string) => {
  * @param {String} string
  * @return {String} string
  */
-export const slugify = (string) => {
-  if (!string) return '';
-  return slug(string,{lower:true}).replace(/^-+|-+$/g, '');
-};
+ export const slugify = (string) => {
+   if (!string) return '';
+   const a = 'àáäâèéëêìíïîòóöôùúüûñçßÿœæŕśńṕẃǵǹḿǘẍźḧ·/_,:;';
+   const b = 'aaaaeeeeiiiioooouuuuncsyoarsnpwgnmuxzh------';
+   const p = new RegExp(a.split('').join('|'), 'g');
+
+   return string.toString().toLowerCase()
+     .replace(/\s+/g, '-')           // Replace spaces with -
+     .replace(p, c =>
+         b.charAt(a.indexOf(c)))     // Replace special chars
+     .replace(/&/g, '-')             // Replace & with 'and'
+     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+     .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+     .replace(/^-+/, '')             // Trim - from start of text
+     .replace(/-+$/, '');             // Trim - from end of text
+ };
 
 /**
  * Returns filename from the given path
