@@ -44,8 +44,8 @@ export const toTitleCase = (string) => {
  */
  export const slugify = (string) => {
    if (!string) return '';
-   const a = 'àáäâèéëêìíïîòóöôùúüûñçßÿœæŕśńṕẃǵǹḿǘẍźḧ·/_,:;';
-   const b = 'aaaaeeeeiiiioooouuuuncsyoarsnpwgnmuxzh------';
+   const a = 'àáäâèéëêìíïîıòóöôùúüûñçşßÿœæŕśńṕẃǵğǹḿǘẍźḧ·/_,:;';
+   const b = 'aaaaeeeeiiiiioooouuuuncssyoarsnpwggnmuxzh------';
    const p = new RegExp(a.split('').join('|'), 'g');
 
    return string.toString().toLowerCase()
