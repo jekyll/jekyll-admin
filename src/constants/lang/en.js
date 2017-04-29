@@ -52,7 +52,8 @@ export const sidebar = {
   posts: 'Posts',
   datafiles: 'Data Files',
   staticfiles: 'Static Files',
-  configuration: 'Configuration'
+  configuration: 'Configuration',
+  theme: 'Theme'
 };
 
 // button labels
@@ -73,5 +74,9 @@ export const labels = {
   },
   upload: {
     label: 'Upload files'
+  },
+  themefile: {
+    label: 'Copy to Source',
+    triggeredLabel: 'Copied'
   }
 };

@@ -52,7 +52,8 @@ export const sidebar = {
   posts: 'Inlägg',
   datafiles: 'Data filer',
   staticfiles: 'Statiska filer',
-  configuration: 'Konfiguration'
+  configuration: 'Konfiguration',
+  theme: 'Tema'
 };
 
 // button labels

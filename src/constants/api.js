@@ -22,3 +22,7 @@ export const datafileAPIUrl = (filename) => `${API}/data/${filename}`;
 
 export const staticfilesAPIUrl = () => `${API}/static_files`;
 export const staticfileAPIUrl = (filename) => `${API}/static_files/${filename}`;
+
+export const themeAPIUrl = (directory = '') =>
+  directory ? `${API}/theme/${directory}` : `${API}/theme`;
+export const themeItemAPIUrl = (directory, filename) => `${API}/theme/${directory}/${filename}`;

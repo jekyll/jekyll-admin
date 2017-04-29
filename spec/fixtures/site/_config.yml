@@ -4,6 +4,9 @@ title: Your awesome title
 gems:
   - jekyll-admin
 
+# Gem-based theme for this site.
+theme: test-theme
+
 # Exclude these files from being processed.
 exclude:
   - Gemfile

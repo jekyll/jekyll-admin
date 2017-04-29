@@ -1,0 +1,4 @@
+---
+---
+
+@import "test-theme-{{ site.theme-color | default: "red" }}";
