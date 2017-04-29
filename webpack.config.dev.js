@@ -37,7 +37,9 @@ export default {
       }
     }),
     new BundleAnalyzerPlugin({
-      openAnalyzer: false,
+      analyzerMode: 'static',
+      logLevel: 'silent',
+      openAnalyzer: false
     })
   ],
   module: {
