@@ -37,7 +37,7 @@ describe('Reducers::Pages', () => {
         type: types.FETCH_PAGES_FAILURE
       })
     ).toEqual({
-      page: {},
+      pages: [],
       isFetching: false
     });
   });

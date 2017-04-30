@@ -38,9 +38,18 @@ export default function collections(state = {
         isFetching: false
       });
     case FETCH_COLLECTIONS_FAILURE:
+      return Object.assign({}, state, {
+        collections: [],
+        isFetching: false
+      });
     case FETCH_COLLECTION_FAILURE:
+      return Object.assign({}, state, {
+        entries: [],
+        isFetching: false
+      });
     case FETCH_DOCUMENT_FAILURE:
       return Object.assign({}, state, {
+        currentDocument: {},
         isFetching: false
       });
     case PUT_DOCUMENT_SUCCESS:
