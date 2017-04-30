@@ -1,5 +1,3 @@
-/* eslint no-unused-vars: 0 */
-
 import * as ActionTypes from '../constants/actionTypes';
 import { validationError } from './utils';
 import { get, put } from '../utils/fetch';

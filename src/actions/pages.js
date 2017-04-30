@@ -1,4 +1,3 @@
-/* eslint no-unused-vars: 0 */
 import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
 import { validationError } from '../actions/utils';
