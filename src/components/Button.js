@@ -5,7 +5,7 @@ import { labels } from '../constants/lang';
 export default class Button extends Component {
 
   render() {
-    const { type, active, triggered, onClick, toggle, block, thin, icon, to } = this.props;
+    const { type, active, triggered, onClick, block, thin, icon, to } = this.props;
 
     const btnClass = classnames({
       'btn': true,
@@ -15,8 +15,7 @@ export default class Button extends Component {
       'btn-view': type == 'view',
       'btn-inactive': !active,
       'btn-fat': block,
-      'btn-thin': thin,
-      'btn-toggle': toggle,
+      'btn-thin': thin
     });
 
     let label = '';
@@ -69,7 +68,6 @@ Button.propTypes = {
   onClick: PropTypes.func,
   triggered: PropTypes.bool,
   block: PropTypes.bool,
-  toggle: PropTypes.bool,
   thin: PropTypes.bool,
   icon: PropTypes.string,
   to: PropTypes.string

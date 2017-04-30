@@ -35,11 +35,6 @@
   @include btn($btn-inactive, $btn-inactive-border, default !important, .5 !important, false);
 }
 
-.btn-toggle {
-  @extend .btn-fat;
-  @include btn(#a25433, #a25433);
-}
-
 .btn-success {
   @include btn($btn-success, $btn-success-border, pointer);
   &:hover {

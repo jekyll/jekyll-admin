@@ -23,7 +23,7 @@ export class DataGUI extends Component {
     const { metadata, addField, removeField, updateFieldKey,
       updateFieldValue, moveArrayItem, convertField, key_prefix } = this.props;
 
-    const { path, title, raw_content, ...rest } = metadata;
+    const { path, raw_content, ...rest } = metadata;
 
     const metafields = _.map(rest, (field, key) => {
       let type = "simple";
@@ -52,11 +52,8 @@ export class DataGUI extends Component {
       <div className="datafields">
         {metafields}
         <div className="data-new">
-          <a onClick={() => addField('metadata')} className="tooltip">
+          <a onClick={() => addField('metadata')}>
             <i className="fa fa-plus-circle" /> New data field
-            <span className="tooltip-text">
-              Metadata will be stored as the <b>YAML front matter</b> within the document.
-            </span>
           </a>
         </div>
       </div>

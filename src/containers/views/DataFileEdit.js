@@ -79,11 +79,42 @@ export class DataFileEdit extends Component {
     }
   }
 
+  renderAside() {
+    const { datafile, datafileChanged, onDataFileChanged, fieldChanged, updated } = this.props;
+    const { path } = datafile;
+    const filename = getFilenameFromPath(path);
+
+    const activator = (datafileChanged || fieldChanged) ? true : false;
+
+    return (
+      <div className="content-side">
+        <Button
+          onClick={this.toggleView.bind(this)}
+          type="view-toggle"
+          active={true}
+          triggered={this.state.guiView}
+          block />
+        <Splitter />
+        <Button
+          onClick={this.handleClickSave}
+          type="save"
+          active={activator}
+          triggered={updated}
+          icon="save"
+          block />
+        <Splitter />
+        <Button
+          onClick={() => this.handleClickDelete(filename)}
+          type="delete"
+          active={true}
+          icon="trash"
+          block />
+      </div>
+    );
+  }
+
   render() {
-    const {
-      datafileChanged, onDataFileChanged, datafile, isFetching,
-      updated, fieldChanged, errors, params
-    } = this.props;
+    const { datafileChanged, onDataFileChanged, datafile, isFetching, errors, params } = this.props;
 
     if (isFetching) {
       return null;
@@ -108,17 +139,9 @@ export class DataFileEdit extends Component {
         handlers={keyboardHandlers}
         className="single">
         {errors.length > 0 && <Errors errors={errors} />}
+
         <div className="content-header">
           <Breadcrumbs splat={filename} type="datafiles" />
-        </div>
-
-        <div className="toggle-button">
-          <Button
-            onClick={this.toggleView.bind(this)}
-            type="view-toggle"
-            active={true}
-            triggered={this.state.guiView}
-            toggle />
         </div>
 
         <div id="raw-editor" className={`content-wrapper${editorView}`}>
@@ -129,23 +152,7 @@ export class DataFileEdit extends Component {
               content={raw_content}
               ref="editor" />
           </div>
-
-          <div className="content-side">
-            <Button
-              onClick={this.handleClickSave}
-              type="save"
-              active={datafileChanged}
-              triggered={updated}
-              icon="save"
-              block />
-            <Splitter />
-            <Button
-              onClick={() => this.handleClickDelete(filename)}
-              type="delete"
-              active={true}
-              icon="trash"
-              block />
-          </div>
+          {this.renderAside()}
         </div>
 
         <div id="gui" className={`content-wrapper${uiView}`}>
@@ -156,22 +163,7 @@ export class DataFileEdit extends Component {
             </div>
             <Metadata fields={content} />
           </div>
-          <div className="content-side">
-            <Button
-              onClick={this.handleClickSave}
-              type="save"
-              active={fieldChanged}
-              triggered={updated}
-              icon="save"
-              block />
-            <Splitter />
-            <Button
-              onClick={() => this.handleClickDelete(filename)}
-              type="delete"
-              active={true}
-              icon="trash"
-              block />
-          </div>
+          {this.renderAside()}
         </div>
       </HotKeys>
     );
