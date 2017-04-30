@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import expect from 'expect';
 import { Link } from 'react-router';
 import { Sidebar } from '../Sidebar';
 
@@ -8,7 +7,7 @@ import { collections } from './fixtures';
 
 function setup() {
   const actions = {
-    fetchCollections: expect.createSpy()
+    fetchCollections: jest.fn()
   };
 
   const component = mount(

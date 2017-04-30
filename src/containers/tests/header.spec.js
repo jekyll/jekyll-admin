@@ -1,13 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import expect from 'expect';
 import { Header } from '../Header';
 
 import { config } from './fixtures';
 
 function setup() {
   const actions = {
-    fetchConfig: expect.createSpy()
+    fetchConfig: jest.fn()
   };
 
   const component = mount(

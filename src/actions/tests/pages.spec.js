@@ -4,7 +4,6 @@ import * as actions from '../pages';
 import * as types from '../../constants/actionTypes';
 import { API } from '../../constants/api';
 import nock from 'nock';
-import expect from 'expect';
 
 import { page, new_page } from './fixtures';
 

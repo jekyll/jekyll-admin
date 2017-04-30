@@ -1,6 +1,5 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import expect from 'expect';
 import Errors from '../../../components/Errors';
 import Editor from '../../../components/Editor';
 import Button from '../../../components/Button';
@@ -15,9 +14,9 @@ const defaultProps = {
   router: {},
   route: {},
   updated: false,
-  clearErrors: expect.createSpy(),
-  onEditorChange: expect.createSpy(),
-  putConfig: expect.createSpy()
+  clearErrors: jest.fn(),
+  onEditorChange: jest.fn(),
+  putConfig: jest.fn()
 };
 
 const setup = (props = defaultProps) => {
@@ -52,13 +51,13 @@ describe('Containers::Configuration', () => {
 
   it('should not render error messages with initial props', () => {
     const { errors } = setup();
-    expect(errors.node).toNotExist();
+    expect(errors.node).toBeFalsy();
   });
 
   it('should render error messages when necessary', () => {
     const { errors } = setup(Object.assign({}, defaultProps, {
       errors: ['The content is required.']
     }));
-    expect(errors.node).toExist();
+    expect(errors.node).toBeTruthy();
   });
 });

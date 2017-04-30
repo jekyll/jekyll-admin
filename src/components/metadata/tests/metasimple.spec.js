@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import expect from 'expect';
 import { mount } from 'enzyme';
 
 import MetaSimple from '../MetaSimple';
@@ -14,7 +13,7 @@ const defaultProps = {
 
 function setup(props = defaultProps) {
   const actions = {
-    updateFieldValue: expect.createSpy()
+    updateFieldValue: jest.fn()
   };
 
   let component = mount(
@@ -33,16 +32,16 @@ function setup(props = defaultProps) {
 describe('Components::MetaSimple', () => {
   it('should render editable if field key is not called date', () => {
     const { editable, datepicker } = setup();
-    expect(editable.node).toExist();
-    expect(datepicker.node).toNotExist();
+    expect(editable.node).toBeTruthy();
+    expect(datepicker.node).toBeFalsy();
   });
 
   it('should render datepicker if field key is called date', () => {
     const { editable, datepicker } = setup(Object.assign({}, defaultProps, {
       fieldKey: 'date'
     }));
-    expect(datepicker.node).toExist();
-    expect(editable.node).toNotExist();
+    expect(datepicker.node).toBeTruthy();
+    expect(editable.node).toBeFalsy();
   });
 
   it('should call updateFieldValue when the input is changed', () => {

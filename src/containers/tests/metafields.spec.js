@@ -1,5 +1,4 @@
 import React from 'react';
-import expect from 'expect';
 import { mount } from 'enzyme';
 import _ from 'underscore';
 
@@ -10,13 +9,13 @@ import { content } from './fixtures';
 
 function setup() {
   const actions = {
-    storeContentFields: expect.createSpy(),
-    addField: expect.createSpy(),
-    removeField: expect.createSpy(),
-    updateFieldKey: expect.createSpy(),
-    updateFieldValue: expect.createSpy(),
-    moveArrayItem: expect.createSpy(),
-    convertField: expect.createSpy()
+    storeContentFields: jest.fn(),
+    addField: jest.fn(),
+    removeField: jest.fn(),
+    updateFieldKey: jest.fn(),
+    updateFieldValue: jest.fn(),
+    moveArrayItem: jest.fn(),
+    convertField: jest.fn()
   };
 
   const component = mount(

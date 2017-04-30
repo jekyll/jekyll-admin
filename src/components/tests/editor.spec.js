@@ -1,5 +1,4 @@
 import React from 'react';
-import expect from 'expect';
 import { shallow } from 'enzyme';
 import Editor from '../Editor';
 import { json } from './fixtures';
@@ -8,7 +7,7 @@ const content = JSON.stringify(json);
 
 function setup(props = {content, editorChanged: false}) {
   const actions = {
-    onEditorChange: expect.createSpy()
+    onEditorChange: jest.fn()
   };
 
   let component = shallow(
@@ -35,6 +34,6 @@ describe('Components::Editor', () => {
   it('should not call onEditorChange again if editor is already changed', () => {
     const { actions, editor } = setup({ content, editorChanged: true });
     editor.simulate('change');
-    expect(actions.onEditorChange).toNotHaveBeenCalled();
+    expect(actions.onEditorChange).not.toHaveBeenCalled();
   });
 });

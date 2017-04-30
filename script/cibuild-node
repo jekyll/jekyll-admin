@@ -11,5 +11,5 @@ echo "Running Node tests..."
 if [ -n "$CI" ]; then
   script/build
 else
-  npm test
+  npm run test:CI
 fi

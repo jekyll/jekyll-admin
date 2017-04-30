@@ -1,13 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import expect from 'expect';
 import { Notifications } from '../Notifications';
 
 import { notification } from './fixtures';
 
 function setup() {
   const actions = {
-    fetchCollections: expect.createSpy()
+    fetchCollections: jest.fn()
   };
 
   const component = mount(

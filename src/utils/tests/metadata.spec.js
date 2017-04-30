@@ -1,5 +1,3 @@
-import expect from 'expect';
-
 import {
   addField, removeField, updateFieldKey,
   updateFieldValue, convertField, moveArrayItem
@@ -47,7 +45,7 @@ describe('Metadata functions:', () => {
     it('should remove field', () => {
       let metadata = removeField(state, 'metadata["students"][1]', 'name');
       let actual = metadata.students[1]['name'];
-      expect(actual).toNotExist();
+      expect(actual).toBeFalsy();
       metadata = removeField(state, 'metadata["students"]', 0);
       actual = metadata.students;
       let expected = state.metadata.students.slice(1);
@@ -81,7 +79,7 @@ describe('Metadata functions:', () => {
       let actual = metadata.layout1;
       let expected = state.metadata.layout;
       expect(actual).toEqual(expected);
-      expect(metadata.layout).toNotExist();
+      expect(metadata.layout).toBeFalsy();
     });
   });
 
@@ -89,7 +87,7 @@ describe('Metadata functions:', () => {
     it('should empty state', () => {
       let actual = updateFieldValue(state, 'metadata', {});
       expect(actual).toEqual({});
-      expect(actual).toBeA('object');
+      expect(typeof actual).toBe('object');
     });
     it('should create the key if nameAttr does not exists', () => {
       let actual = updateFieldValue(emptyState, 'metadata["layout"]', 'post');
@@ -102,7 +100,7 @@ describe('Metadata functions:', () => {
       expect(actual).toBe('post1');
       metadata = updateFieldValue(state, 'metadata["mentors"]', 'text');
       actual = metadata.student;
-      expect(actual).toNotBeA('array');
+      expect(typeof actual).not.toBe('array');
     });
   });
 

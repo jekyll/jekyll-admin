@@ -1,12 +1,11 @@
 import React from 'react';
-import expect from 'expect';
 import { mount } from 'enzyme';
 
 import InputTitle from '../InputTitle';
 
 function setup(props = {title: 'GSoC'}) {
   let actions = {
-    onChange: expect.createSpy()
+    onChange: jest.fn()
   };
 
   let component = mount(

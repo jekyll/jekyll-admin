@@ -1,12 +1,11 @@
 import React from 'react';
-import expect from 'expect';
 import { mount } from 'enzyme';
 
 import Checkbox from '../Checkbox';
 
 function setup(props = {text: 'GSoC', checked: false}) {
   let actions = {
-    onChange: expect.createSpy()
+    onChange: jest.fn()
   };
 
   let component = mount(

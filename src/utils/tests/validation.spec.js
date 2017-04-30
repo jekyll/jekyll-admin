@@ -1,5 +1,3 @@
-import expect from 'expect';
-
 import { validator } from '../validation';
 
 describe('Validation functions:', () => {

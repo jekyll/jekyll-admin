@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import expect from 'expect';
 import { mount } from 'enzyme';
 import { capitalize } from '../../../utils/helpers';
 import moment from 'moment';
@@ -14,7 +13,7 @@ const props = {
 
 function setup(defaultProps = props) {
   const actions = {
-    onChange: expect.createSpy()
+    onChange: jest.fn()
   };
 
   let component = mount(
@@ -31,7 +30,7 @@ function setup(defaultProps = props) {
 describe('Components::InputPath', () => {
   it('should render correctly', () => {
     const { component, links, input } = setup();
-    expect(input.node).toExist();
+    expect(input.node).toBeTruthy();
   });
 
   it('should prepend date to input value/placeholder for new post', () => {

@@ -1,5 +1,3 @@
-import expect from 'expect';
-
 import {
   toYAML, toJSON, capitalize, toTitleCase, slugify,
   existingUploadedFilenames, getFilenameFromPath

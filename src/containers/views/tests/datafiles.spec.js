@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import expect from 'expect';
 
 import { DataFiles } from '../DataFiles';
 
@@ -8,9 +7,9 @@ import { datafile } from './fixtures';
 
 function setup(datafiles=[datafile]) {
   const actions = {
-    fetchDataFiles: expect.createSpy(),
-    deleteDataFile: expect.createSpy(),
-    search: expect.createSpy()
+    fetchDataFiles: jest.fn(),
+    deleteDataFile: jest.fn(),
+    search: jest.fn()
   };
 
   const component = mount(
@@ -37,7 +36,7 @@ describe('Containers::DataFiles', () => {
   it('should render correctly when there are not any data files', () => {
     const { component, table, h1 } = setup([]);
     const compProps = component.props();
-    expect(table.node).toNotExist();
+    expect(table.node).toBeFalsy();
     expect(h1.text()).toBe(`No data files found.`);
   });
 

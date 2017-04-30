@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import expect from 'expect';
 
 import { StaticFiles } from '../StaticFiles';
 
@@ -8,10 +7,10 @@ import { staticfile } from './fixtures';
 
 function setup(files=[staticfile]) {
   const actions = {
-    fetchStaticFiles: expect.createSpy(),
-    uploadStaticFiles: expect.createSpy(),
-    deleteStaticFile: expect.createSpy(),
-    search: expect.createSpy()
+    fetchStaticFiles: jest.fn(),
+    uploadStaticFiles: jest.fn(),
+    deleteStaticFile: jest.fn(),
+    search: jest.fn()
   };
 
   const component = mount(
@@ -34,15 +33,15 @@ describe('Containers::StaticFiles', () => {
   it('should render correctly', () => {
     const { h1, info, previewContainer } = setup();
     expect(h1.text()).toBe('Static Files');
-    expect(info.node).toNotExist();
-    expect(previewContainer.node).toExist();
+    expect(info.node).toBeFalsy();
+    expect(previewContainer.node).toBeTruthy();
   });
 
   it('should render correctly when there are not any files', () => {
     const { component, info, previewContainer, h1 } = setup([]);
     const compProps = component.props();
-    expect(info.node).toExist();
-    expect(previewContainer.node).toNotExist();
+    expect(info.node).toBeTruthy();
+    expect(previewContainer.node).toBeFalsy();
   });
 
   it('should call fetchStaticFiles action after mounted', () => {
