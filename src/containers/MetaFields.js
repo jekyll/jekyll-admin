@@ -26,10 +26,10 @@ export class MetaFields extends Component {
       convertField, key_prefix, dataview
     } = this.props;
 
-    let { raw_content, ...rest } = metadata;
+    let visibleKeys = metadata;
 
     if (!dataview) {
-      rest = _.omit(rest, ['title', 'path']);
+      visibleKeys = _.omit(visibleKeys, ['title', 'path', 'raw_content']);
     }
 
     const metafieldsClass = classnames({
@@ -37,7 +37,7 @@ export class MetaFields extends Component {
       'metafields': !dataview
     });
 
-    const metafields = _.map(rest, (field, key) => {
+    const metafields = _.map(visibleKeys, (field, key) => {
       let type = "simple";
       if (_.isObject(field)) type = "object";
       if (_.isArray(field)) type = "array";
