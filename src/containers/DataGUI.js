@@ -8,7 +8,7 @@ import {
   moveArrayItem, convertField
 } from '../actions/metadata';
 
-export class DataGUI extends Component {
+export class MetaFields extends Component {
 
   componentDidMount() {
     const { storeContentFields, fields } = this.props;
@@ -23,7 +23,7 @@ export class DataGUI extends Component {
     const { metadata, addField, removeField, updateFieldKey,
       updateFieldValue, moveArrayItem, convertField, key_prefix } = this.props;
 
-    const { path, raw_content, ...rest } = metadata;
+    const { path, title, raw_content, ...rest } = metadata;
 
     const metafields = _.map(rest, (field, key) => {
       let type = "simple";
@@ -49,19 +49,28 @@ export class DataGUI extends Component {
     });
 
     return (
-      <div className="datafields">
+      <div className="metafields">
         {metafields}
-        <div className="data-new">
-          <a onClick={() => addField('metadata')}>
-            <i className="fa fa-plus-circle" /> New data field
+        <div className="meta-new">
+          <a onClick={() => addField('metadata')} className="tooltip">
+            <i className="fa fa-plus-circle" /> New metadata field
+            <span className="tooltip-text">
+              Metadata will be stored as the <b>YAML front matter</b> within the document.
+            </span>
           </a>
+          <small className="tooltip pull-right">
+            <i className="fa fa-info-circle" />Special Keys
+            <span className="tooltip-text">
+              You can use special keys like <b>date</b>, <b>file</b>, <b>image</b> for user-friendly functionalities.
+            </span>
+          </small>
         </div>
       </div>
     );
   }
 }
 
-DataGUI.propTypes = {
+MetaFields.propTypes = {
   fields: PropTypes.object.isRequired,
   metadata: PropTypes.object.isRequired,
   key_prefix: PropTypes.string.isRequired,
@@ -89,4 +98,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   convertField
 }, dispatch);
 
-export default connect(mapStateToProps, mapDispatchToProps)(DataGUI);
+export default connect(mapStateToProps, mapDispatchToProps)(MetaFields);
