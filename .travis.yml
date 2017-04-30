@@ -6,6 +6,7 @@ install: script/bootstrap
 script: script/cibuild
 cache:
   bundler: true
+  yarn: true
   directories:
     - node_modules
 sudo: false
@@ -13,3 +14,5 @@ env:
   matrix:
     - TEST_SUITE=node
     - TEST_SUITE=ruby
+after_success:
+  - yarn run test:cover:CI
