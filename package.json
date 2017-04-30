@@ -191,14 +191,7 @@
           "ignoreTranspilerName": false
         }
       ],
-      "react/forbid-prop-types": [
-        1,
-        {
-          "forbid": [
-            "any"
-          ]
-        }
-      ],
+      "react/forbid-prop-types": 0,
       "react/jsx-boolean-value": 0,
       "react/jsx-closing-bracket-location": 0,
       "react/jsx-curly-spacing": 1,
