@@ -26,7 +26,11 @@ export class MetaFields extends Component {
       convertField, key_prefix, dataview
     } = this.props;
 
-    const { path, title, raw_content, ...rest } = metadata;
+    let { raw_content, ...rest } = metadata;
+
+    if (!dataview) {
+      rest = _.omit(rest, ['title', 'path']);
+    }
 
     const metafieldsClass = classnames({
       'datafields': dataview,
