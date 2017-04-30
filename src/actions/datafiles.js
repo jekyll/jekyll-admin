@@ -1,10 +1,10 @@
+/* eslint no-unused-vars: 0 */
+
 import * as ActionTypes from '../constants/actionTypes';
-import _ from 'underscore';
 import { validationError } from './utils';
-import { get, put, del } from '../utils/fetch';
+import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import {
-  getParserErrorMessage,
   getContentRequiredMessage,
   getFilenameRequiredMessage
 } from '../constants/lang';

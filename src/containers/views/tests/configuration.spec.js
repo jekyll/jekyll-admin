@@ -4,7 +4,6 @@ import Errors from '../../../components/Errors';
 import Editor from '../../../components/Editor';
 import Button from '../../../components/Button';
 import { Configuration } from '../Configuration';
-import { toYAML } from '../../../utils/helpers';
 import { config } from './fixtures';
 
 const defaultProps = {
@@ -31,7 +30,7 @@ const setup = (props = defaultProps) => {
 
 describe('Containers::Configuration', () => {
   it('should render correctly with initial props', () => {
-    const { component, editor, saveButton } = setup();
+    const { editor, saveButton } = setup();
     const { raw_content } = config;
     expect(editor.prop('content')).toEqual(raw_content);
     expect(saveButton.prop('active')).toBe(false);
@@ -39,7 +38,7 @@ describe('Containers::Configuration', () => {
   });
 
   it('should render correctly with updated props', () => {
-    const { component, editor, saveButton } = setup(
+    const { saveButton } = setup(
       Object.assign({}, defaultProps, {
         editorChanged: true,
         updated: true

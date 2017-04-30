@@ -34,8 +34,7 @@ describe('Containers::DataFiles', () => {
   });
 
   it('should render correctly when there are not any data files', () => {
-    const { component, table, h1 } = setup([]);
-    const compProps = component.props();
+    const { table, h1 } = setup([]);
     expect(table.node).toBeFalsy();
     expect(h1.text()).toBe(`No data files found.`);
   });

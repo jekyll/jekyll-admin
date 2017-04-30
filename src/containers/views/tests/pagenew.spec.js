@@ -1,12 +1,9 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { shallow } from 'enzyme';
 
 import { PageNew } from '../PageNew';
 import Errors from '../../../components/Errors';
 import Button from '../../../components/Button';
-
-import { page } from './fixtures';
 
 const defaultProps = {
   errors: [],

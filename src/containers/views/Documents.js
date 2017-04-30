@@ -10,11 +10,7 @@ import Button from '../../components/Button';
 import { fetchCollection, deleteDocument } from '../../actions/collections';
 import { filterBySearchInput } from '../../reducers/collections';
 import { search } from '../../actions/utils';
-import {
-  getLeaveMessage,
-  getDeleteMessage,
-  getNotFoundMessage
-} from '../../constants/lang';
+import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class Documents extends Component {

@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { mount } from 'enzyme';
-import { capitalize } from '../../../utils/helpers';
 import moment from 'moment';
 import InputPath from '../InputPath';
 
@@ -29,7 +27,7 @@ function setup(defaultProps = props) {
 
 describe('Components::InputPath', () => {
   it('should render correctly', () => {
-    const { component, links, input } = setup();
+    const { input } = setup();
     expect(input.node).toBeTruthy();
   });
 

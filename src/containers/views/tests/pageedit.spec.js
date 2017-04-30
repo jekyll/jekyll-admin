@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { shallow } from 'enzyme';
 
 import { PageEdit } from '../PageEdit';

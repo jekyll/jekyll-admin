@@ -1,6 +1,4 @@
 import React, { Component, PropTypes } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import ReactDropzone from 'react-dropzone';
 import FilePreview from './FilePreview';

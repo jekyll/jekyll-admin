@@ -21,10 +21,6 @@ function setup(props = {title: 'GSoC'}) {
 }
 
 describe('Components::InputTitle', () => {
-  it('should return the current input value', () => {
-    const { component, props} = setup();
-  });
-
   it('should call onChange', () => {
     const { textarea, actions } = setup();
     textarea.simulate('change');

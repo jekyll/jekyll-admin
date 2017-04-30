@@ -1,6 +1,5 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import _ from 'underscore';
 
 import { MetaFields } from '../MetaFields';
 import MetaField from '../../components/metadata/MetaField';
@@ -36,7 +35,7 @@ function setup() {
 
 describe('Containers::MetaFields', () => {
   it('should render MetaFields correctly', () => {
-    const { component, metafields } = setup();
+    const { component } = setup();
     expect(component.prop('key_prefix')).toBe('');
     expect(component.prop('metadata')).toEqual(content);
   });

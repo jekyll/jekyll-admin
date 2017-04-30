@@ -9,9 +9,7 @@ import InputSearch from '../../components/form/InputSearch';
 import { fetchPages, deletePage } from '../../actions/pages';
 import { search } from '../../actions/utils';
 import { filterBySearchInput } from '../../reducers/pages';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
+import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class Pages extends Component {

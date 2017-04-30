@@ -22,7 +22,7 @@ function setup() {
 
 describe('Containers::Header', () => {
   it('should render correctly', () => {
-    const { title, component } = setup();
+    const { title } = setup();
     const { content } = config;
     const actual = title.text();
     const expected = content.title;

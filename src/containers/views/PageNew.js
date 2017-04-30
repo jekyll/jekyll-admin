@@ -9,15 +9,12 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
-import Checkbox from '../../components/form/Checkbox';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
 import { createPage } from '../../actions/pages';
 import { clearErrors } from '../../actions/utils';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
+import { getLeaveMessage } from '../../constants/lang';
 
 export class PageNew extends Component {
 

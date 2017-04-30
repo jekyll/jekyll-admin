@@ -23,11 +23,11 @@ function setup(props = {content, editorChanged: false}) {
 
 describe('Components::Editor', () => {
   it('should render correctly', () => {
-    const { component, editor } = setup();
+    const { editor } = setup();
     expect(editor.prop('value')).toEqual(content);
   });
   it('should call onEditorChange if editor is not changed', () => {
-    const { actions, editor, component } = setup();
+    const { actions, editor } = setup();
     editor.simulate('change');
     expect(actions.onEditorChange).toHaveBeenCalled();
   });

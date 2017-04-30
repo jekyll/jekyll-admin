@@ -38,8 +38,7 @@ describe('Containers::StaticFiles', () => {
   });
 
   it('should render correctly when there are not any files', () => {
-    const { component, info, previewContainer, h1 } = setup([]);
-    const compProps = component.props();
+    const { info, previewContainer } = setup([]);
     expect(info.node).toBeTruthy();
     expect(previewContainer.node).toBeFalsy();
   });

@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { shallow } from 'enzyme';
 
 import { DataFileNew } from '../DataFileNew';
@@ -41,7 +40,7 @@ describe('Containers::DataFileNew', () => {
   });
 
   it('should call activate save button if a field is changed.', () => {
-    const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
+    const { saveButton } = setup(Object.assign({}, defaultProps, {
       datafileChanged: true
     }));
     expect(saveButton.prop('active')).toBe(true);

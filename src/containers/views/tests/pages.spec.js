@@ -30,13 +30,12 @@ function setup(pages=[page]) {
 
 describe('Containers::Pages', () => {
   it('should render correctly', () => {
-    const { component, table, h1 } = setup();
+    const { h1 } = setup();
     expect(h1.node).toBeFalsy();
   });
 
   it('should render correctly when there are not any pages', () => {
-    const { component, table, h1 } = setup([]);
-    const compProps = component.props();
+    const { table, h1 } = setup([]);
     expect(table.node).toBeFalsy();
     expect(h1.text()).toBe(`No pages found.`);
   });

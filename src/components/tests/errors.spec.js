@@ -17,7 +17,7 @@ function setup() {
 
 describe('Components::Errors', () => {
   it('should render errors correctly', () => {
-    const { component, listItem } = setup();
+    const { listItem } = setup();
     expect(listItem.length).toBe(errors.length);
   });
 });
