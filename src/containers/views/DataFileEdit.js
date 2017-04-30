@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
-import Metadata from '../DataGUI';
+import Metadata from '../MetaFields';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
@@ -56,18 +56,15 @@ export class DataFileEdit extends Component {
 
   handleClickSave(e) {
     const { datafileChanged, fieldChanged, putDataFile, params } = this.props;
-    let data, source = null;
 
     // Prevent the default event from bubbling
     preventDefault(e);
 
     if (fieldChanged) {
-      source = "gui";
+      putDataFile(params.data_file, null, 'gui');
     } else if (datafileChanged) {
-      data = this.refs.editor.getValue();
-      source = "editor";
+      putDataFile(params.data_file, this.refs.editor.getValue(), 'editor');
     }
-    putDataFile(params.data_file, data, source);
   }
 
   handleClickDelete(filename) {
@@ -89,17 +86,17 @@ export class DataFileEdit extends Component {
     return (
       <div className="content-side">
         <Button
-          onClick={this.toggleView.bind(this)}
-          type="view-toggle"
-          active={true}
-          triggered={this.state.guiView}
-          block />
-        <Button
           onClick={this.handleClickSave}
           type="save"
           active={activator}
           triggered={updated}
           icon="save"
+          block />
+        <Button
+          onClick={this.toggleView.bind(this)}
+          type="view-toggle"
+          active={true}
+          triggered={this.state.guiView}
           block />
         <Splitter />
         <Button
@@ -148,7 +145,7 @@ export class DataFileEdit extends Component {
                   CAUTION! Any existing comments will be lost when editing via this view.
                   Switch to the <strong>Raw Editor</strong> to preserve comments.
                 </div>
-                <Metadata fields={content} />
+                <Metadata fields={content} dataview/>
               </div>
           }
           {
