@@ -94,7 +94,6 @@ export class DataFileEdit extends Component {
           active={true}
           triggered={this.state.guiView}
           block />
-        <Splitter />
         <Button
           onClick={this.handleClickSave}
           type="save"
@@ -131,9 +130,6 @@ export class DataFileEdit extends Component {
       'save': this.handleClickSave,
     };
 
-    const editorView = this.state.guiView ? " hidden" : "";
-    const uiView = this.state.guiView ? "" : " hidden";
-
     return (
       <HotKeys
         handlers={keyboardHandlers}
@@ -144,26 +140,30 @@ export class DataFileEdit extends Component {
           <Breadcrumbs splat={filename} type="datafiles" />
         </div>
 
-        <div id="raw-editor" className={`content-wrapper${editorView}`}>
-          <div className="content-body">
-            <Editor
-              editorChanged={datafileChanged}
-              onEditorChange={onDataFileChanged}
-              content={raw_content}
-              ref="editor" />
-          </div>
-          {this.renderAside()}
-        </div>
+        <div className="content-wrapper">
+          {
+            this.state.guiView &&
+              <div className="content-body">
+                <div className="warning">
+                  CAUTION! Any existing comments will be lost when editing via this view.
+                  Switch to the <strong>Raw Editor</strong> to preserve comments.
+                </div>
+                <Metadata fields={content} />
+              </div>
+          }
+          {
+            !this.state.guiView &&
+              <div className="content-body">
+                <Editor
+                  editorChanged={datafileChanged}
+                  onEditorChange={onDataFileChanged}
+                  content={raw_content}
+                  ref="editor" />
+              </div>
+          }
 
-        <div id="gui" className={`content-wrapper${uiView}`}>
-          <div className="content-body">
-            <div className="warning">
-              CAUTION! Any existing comments will be lost when editing via this view.
-              Switch to the <strong>Raw Editor</strong> to preserve comments.
-            </div>
-            <Metadata fields={content} />
-          </div>
           {this.renderAside()}
+
         </div>
       </HotKeys>
     );
