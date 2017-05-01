@@ -226,9 +226,6 @@
     i {
       padding-right: 8px;
     }
-    &:hover {
-      text-decoration: underline;
-    }
   }
   .sortable-chosen, .sortable-chosen.sortable-ghost {
     & div {
@@ -262,7 +259,7 @@
           background: #fff;
         }
         .rw-btn:first-child { border-right: 1px solid #ccc; }
-        .rw-btn:hover { background: #fc0; }
+        .rw-btn:hover { background: $orange; }
       }
     }
   }
@@ -284,5 +281,39 @@
   }
   .rw-list-option {
     padding: 8px 5px;
+  }
+
+  .imagepicker {
+    position: relative;
+    .images-wrapper {
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: 100%;
+      padding: 2px;
+      button {
+        color: #333;
+        line-height: 2.286em;
+        height: 100%;
+        min-width: 37px;
+        display: inline-block;
+        margin: 0;
+        text-align: center;
+        vertical-align: middle;
+        background: white;
+        background-image: none;
+        border: none;
+        border-left: 1px solid #ccc;
+        padding: 0;
+        white-space: nowrap;
+        outline: none;
+        &:hover {
+          background: $orange;
+        }
+        i {
+          margin: 0;
+        }
+      }
+    }
   }
 }

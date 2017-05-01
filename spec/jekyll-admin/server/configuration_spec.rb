@@ -8,7 +8,7 @@ describe "configuration" do
   it "returns the configuration" do
     get "/configuration"
     expect(last_response).to be_ok
-    expect(last_response_parsed["foo"]).to eql("bar")
+    expect(last_response_parsed["content"]["foo"]).to eql("bar")
     expect(last_response_parsed.key?("source")).to eql(false)
   end
 

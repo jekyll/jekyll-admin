@@ -38,9 +38,18 @@ export default function collections(state = {
         isFetching: false
       });
     case FETCH_COLLECTIONS_FAILURE:
+      return Object.assign({}, state, {
+        collections: [],
+        isFetching: false
+      });
     case FETCH_COLLECTION_FAILURE:
+      return Object.assign({}, state, {
+        entries: [],
+        isFetching: false
+      });
     case FETCH_DOCUMENT_FAILURE:
       return Object.assign({}, state, {
+        currentDocument: {},
         isFetching: false
       });
     case PUT_DOCUMENT_SUCCESS:
@@ -63,9 +72,9 @@ export const filterBySearchInput = (list, input) => {
   if (input) {
     return _.filter(list, item => {
       if (item.type) {
-         return item.name.toLowerCase().indexOf(input.toLowerCase()) > -1;
+         return item.name.toLowerCase().includes(input.toLowerCase());
       } else {
-        return item.title.toLowerCase().indexOf(input.toLowerCase()) > -1;
+        return item.title.toLowerCase().includes(input.toLowerCase());
       }
     });
   }

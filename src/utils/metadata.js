@@ -13,7 +13,7 @@ export const addField = (state, namePrefix) => {
   let field = eval(`tmpState.${namePrefix}`);
   if (field === undefined) return tmpState.metadata;
   if (_.isArray(field)) field.push('');
-  else field['New field ' + state.new_field_count] = '';
+  else field[`New field ${state.new_field_count}`] = '';
   return tmpState.metadata;
 };
 
@@ -98,7 +98,7 @@ export const convertField = (state, nameAttr, convertType) => {
   if (field === undefined) return tmpState.metadata;
   if (convertType == 'array') field = [''];
   else if (convertType == 'object') {
-    let key = 'New field ' + state.new_field_count;
+    let key = `New field ${state.new_field_count}`;
     field = { [key]: '' };
   }
   else field = '';

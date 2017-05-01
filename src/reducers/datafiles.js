@@ -68,7 +68,7 @@ export default function datafiles(state = {
 export const filterByFilename = (datafiles, input) => {
   if (input) {
     return _.filter(datafiles, file => {
-      return file.path.toLowerCase().indexOf(input.toLowerCase()) > -1;
+      return file.path.toLowerCase().includes(input.toLowerCase());
     });
   }
   return datafiles;

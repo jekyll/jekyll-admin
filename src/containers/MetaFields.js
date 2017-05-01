@@ -58,6 +58,12 @@ export class MetaFields extends Component {
               Metadata will be stored as the <b>YAML front matter</b> within the document.
             </span>
           </a>
+          <small className="tooltip pull-right">
+            <i className="fa fa-info-circle" />Special Keys
+            <span className="tooltip-text">
+              You can use special keys like <b>date</b>, <b>file</b>, <b>image</b> for user-friendly functionalities.
+            </span>
+          </small>
         </div>
       </div>
     );

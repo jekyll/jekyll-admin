@@ -1,8 +1,11 @@
 export const config = {
-  title: "Your awesome title",
-  email: "your-email@domain.com",
-  description: "Write an awesome description for your new site here.\n",
-  url: "http://yourdomain.com"
+  content: {
+    title: "Your awesome title",
+    email: "your-email@domain.com",
+    baseurl: "",
+    url: "http://yourdomain.com"
+  },
+  raw_content: "title: Your awesome title\nemail: your-email@domain.com\nbaseurl:\nurl: http://yourdomain.com"
 };
 
 export const doc = {

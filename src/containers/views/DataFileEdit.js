@@ -3,13 +3,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
+import { HotKeys } from 'react-hotkeys';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
 import { clearErrors } from '../../actions/utils';
-import { getFilenameFromPath } from '../../utils/helpers';
+import { getFilenameFromPath, preventDefault } from '../../utils/helpers';
 import {
   fetchDataFile, putDataFile, deleteDataFile, onDataFileChanged
 } from '../../actions/datafiles';
@@ -19,6 +20,12 @@ import {
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileEdit extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.handleClickSave = this.handleClickSave.bind(this);
+  }
 
   componentDidMount() {
     const { fetchDataFile, params, router, route } = this.props;
@@ -40,8 +47,12 @@ export class DataFileEdit extends Component {
     }
   }
 
-  handleClickSave() {
+  handleClickSave(e) {
     const { datafileChanged, putDataFile, params } = this.props;
+
+    // Prevent the default event from bubbling
+    preventDefault(e);
+
     if (datafileChanged) {
       const value = this.refs.editor.getValue();
       putDataFile(params.data_file, value);
@@ -74,8 +85,14 @@ export class DataFileEdit extends Component {
     const { path, raw_content } = datafile;
     const filename = getFilenameFromPath(path);
 
+    const keyboardHandlers = {
+      'save': this.handleClickSave,
+    };
+
     return (
-      <div className="single">
+      <HotKeys
+        handlers={keyboardHandlers}
+        className="single">
         {errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
           <Breadcrumbs splat={filename} type="datafiles" />
@@ -92,7 +109,7 @@ export class DataFileEdit extends Component {
 
           <div className="content-side">
             <Button
-              onClick={() => this.handleClickSave()}
+              onClick={this.handleClickSave}
               type="save"
               active={datafileChanged}
               triggered={updated}
@@ -107,7 +124,7 @@ export class DataFileEdit extends Component {
               block />
           </div>
         </div>
-      </div>
+      </HotKeys>
     );
   }
 }
