@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
@@ -20,12 +21,23 @@ export class MetaFields extends Component {
   }
 
   render() {
-    const { metadata, addField, removeField, updateFieldKey,
-      updateFieldValue, moveArrayItem, convertField, key_prefix } = this.props;
+    const {
+      metadata, addField, removeField, updateFieldKey, updateFieldValue, moveArrayItem,
+      convertField, key_prefix, dataview
+    } = this.props;
 
-    const { path, title, raw_content, ...rest } = metadata;
+    let visibleKeys = metadata;
 
-    const metafields = _.map(rest, (field, key) => {
+    if (!dataview) {
+      visibleKeys = _.omit(visibleKeys, ['title', 'path', 'raw_content']);
+    }
+
+    const metafieldsClass = classnames({
+      'datafields': dataview,
+      'metafields': !dataview
+    });
+
+    const metafields = _.map(visibleKeys, (field, key) => {
       let type = "simple";
       if (_.isObject(field)) type = "object";
       if (_.isArray(field)) type = "array";
@@ -48,23 +60,33 @@ export class MetaFields extends Component {
       );
     });
 
+    const newWrapper = dataview ? (
+      <div className="data-new">
+        <a onClick={() => addField('metadata')}>
+          <i className="fa fa-plus-circle" /> New data field
+        </a>
+      </div>
+    ) : (
+      <div className="meta-new">
+        <a onClick={() => addField('metadata')} className="tooltip">
+          <i className="fa fa-plus-circle" /> New metadata field
+          <span className="tooltip-text">
+            Metadata will be stored as the <b>YAML front matter</b> within the document.
+          </span>
+        </a>
+        <small className="tooltip pull-right">
+          <i className="fa fa-info-circle" />Special Keys
+          <span className="tooltip-text">
+            You can use special keys like <b>date</b>, <b>file</b>, <b>image</b> for user-friendly functionalities.
+          </span>
+        </small>
+      </div>
+    );
+
     return (
-      <div className="metafields">
+      <div className={metafieldsClass}>
         {metafields}
-        <div className="meta-new">
-          <a onClick={() => addField('metadata')} className="tooltip">
-            <i className="fa fa-plus-circle" /> New metadata field
-            <span className="tooltip-text">
-              Metadata will be stored as the <b>YAML front matter</b> within the document.
-            </span>
-          </a>
-          <small className="tooltip pull-right">
-            <i className="fa fa-info-circle" />Special Keys
-            <span className="tooltip-text">
-              You can use special keys like <b>date</b>, <b>file</b>, <b>image</b> for user-friendly functionalities.
-            </span>
-          </small>
-        </div>
+        {newWrapper}
       </div>
     );
   }
@@ -80,7 +102,8 @@ MetaFields.propTypes = {
   updateFieldKey: PropTypes.func.isRequired,
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
-  convertField: PropTypes.func.isRequired
+  convertField: PropTypes.func.isRequired,
+  dataview: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({

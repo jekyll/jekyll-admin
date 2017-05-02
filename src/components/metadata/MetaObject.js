@@ -34,7 +34,7 @@ export class MetaObject extends Component {
         {items}
         <a onClick={() => addField(namePrefix)}
           className="add-field-object" title="Add new key/value pair">
-            New key/value pair
+            New key/value pair under <strong>{fieldKey}</strong>
         </a>
       </div>
     );

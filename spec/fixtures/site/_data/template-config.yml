@@ -10,8 +10,10 @@
 # These are used to personalize your new site. If you look in the HTML files, you will see them accessed via {{ site.title }}, {{ site.email }}, and so on.
 # You can create any custom variable you would like, and they will be accessible in the templates via {{ site.myvariable }}.
 title: Your awesome title
+path: /to/north-pole
+raw_content: "foo: bar\nbaz: boo"
 email: your-email@domain.com
-description: > # this means to ignore newlines until "baseurl:"
+description: >- # this means to ignore newlines until "baseurl:"
   Write an awesome description for your new site here. You can edit this
   line in _config.yml. It will appear in your document head meta (for
   Google search results) and in your feed.xml site description.
@@ -19,6 +21,23 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: jekyllrb
 github_username:  jekyll
+author:
+  name: John Doe
+  email: your-email@domain.com
+  web: http://www.example.com
+
+complex_data:
+  simple_key: value
+  object_key:
+    simple_key: value
+    object_key:
+      simple_key: value
+    list_key:
+      - value_1
+      - value_2
+      - value_3
+      - value_4
+
 
 # Build settings
 markdown: kramdown
