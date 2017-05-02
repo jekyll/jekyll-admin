@@ -51,7 +51,7 @@ export class Pages extends Component {
   }
 
   renderFileRow(file) {
-    const { name, path, api_url, http_url, title } = file;
+    const { name, path, http_url } = file;
     const to = `${ADMIN_PREFIX}/pages/${path}`;
     return (
       <tr key={name}>
@@ -84,7 +84,7 @@ export class Pages extends Component {
   }
 
   renderDirectoryRow(directory) {
-    const { name, path, api_url } = directory;
+    const { name, path } = directory;
     const to = `${ADMIN_PREFIX}/pages/${path}`;
     return (
       <tr key={name}>

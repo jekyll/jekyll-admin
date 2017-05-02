@@ -5,7 +5,7 @@ import { PageNew } from '../PageNew';
 import Errors from '../../../components/Errors';
 import Button from '../../../components/Button';
 
-import { config, page } from './fixtures';
+import { config } from './fixtures';
 
 const defaultProps = {
   errors: [],

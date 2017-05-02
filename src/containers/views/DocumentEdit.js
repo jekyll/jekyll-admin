@@ -110,7 +110,7 @@ export class DocumentEdit extends Component {
     }
 
     const {
-      title, raw_content, draft, http_url, path, collection, front_matter, name
+      title, raw_content, http_url, collection, front_matter, name
     } = currentDocument;
     const [directory, ...rest] = params.splat;
 

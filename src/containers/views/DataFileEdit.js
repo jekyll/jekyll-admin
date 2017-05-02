@@ -77,7 +77,7 @@ export class DataFileEdit extends Component {
   }
 
   renderAside() {
-    const { datafile, datafileChanged, onDataFileChanged, fieldChanged, updated } = this.props;
+    const { datafile, datafileChanged, fieldChanged, updated } = this.props;
     const { path } = datafile;
     const filename = getFilenameFromPath(path);
 
@@ -110,7 +110,7 @@ export class DataFileEdit extends Component {
   }
 
   render() {
-    const { datafileChanged, onDataFileChanged, datafile, isFetching, errors, params } = this.props;
+    const { datafileChanged, onDataFileChanged, datafile, isFetching, errors } = this.props;
 
     if (isFetching) {
       return null;

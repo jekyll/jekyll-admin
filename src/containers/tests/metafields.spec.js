@@ -37,7 +37,7 @@ function setup(props=defaultProps) {
 
 describe('Containers::MetaFields', () => {
   it('should render MetaFields correctly', () => {
-    let { component, metafields, addFieldButton, addDataFieldButton } = setup();
+    let { component, addFieldButton, addDataFieldButton } = setup();
 
     expect(component.find('div').first().hasClass('metafields')).toEqual(true);
     expect(addFieldButton.node).toBeTruthy();

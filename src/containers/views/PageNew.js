@@ -52,8 +52,9 @@ export class PageNew extends Component {
   }
 
   render() {
-    const { errors, updated, updateTitle, updateBody, updatePath,
-      updateDraft, fieldChanged, params, config } = this.props;
+    const {
+      errors, updated, updateTitle, updateBody, updatePath, fieldChanged, params, config
+    } = this.props;
 
     const metafields = injectDefaultFields(config, params.splat, 'pages');
     return (

@@ -1,5 +1,3 @@
-import _ from 'underscore';
-
 import {
   UPDATE_TITLE, UPDATE_BODY, UPDATE_PATH, UPDATE_DRAFT,
   ADD_METAFIELD, REMOVE_METAFIELD,

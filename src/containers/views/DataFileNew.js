@@ -51,7 +51,7 @@ export class DataFileNew extends Component {
 
   render() {
     const {
-      datafileChanged, onDataFileChanged, datafile, updated, errors
+      datafileChanged, onDataFileChanged, updated, errors
     } = this.props;
 
     return (

@@ -5,7 +5,7 @@ import MetaObjectItem from './MetaObjectItem';
 export class MetaObject extends Component {
 
   render() {
-    const { fieldKey, fieldValue, nameAttr, namePrefix, addField,
+    const { fieldKey, fieldValue, namePrefix, addField,
       removeField, updateFieldKey, updateFieldValue, convertField, key_prefix,
       moveArrayItem } = this.props;
     const items = _.map(fieldValue, (value, key) => {

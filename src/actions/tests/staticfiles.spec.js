@@ -56,6 +56,7 @@ describe('Actions::StaticFiles', () => {
       .put('/static_files')
       .reply(200, staticfile);
 
+    /* TODO
     const expectedActions = [
       { type: types.PUT_STATICFILE_REQUEST },
       { type: types.PUT_STATICFILE_SUCCESS, file: staticfile }
@@ -63,8 +64,9 @@ describe('Actions::StaticFiles', () => {
 
     const store = mockStore({ files: [] });
 
-    // TODO store.dispatch(actions.uploadStaticFiles([]));
-    //expect(store.getActions()).toEqual(expectedActions);
+    store.dispatch(actions.uploadStaticFiles([]));
+    expect(store.getActions()).toEqual(expectedActions);
+    */
   });
 
   it('creates PUT_STATICFILE_FAILURE when uploading static files failed', () => {
@@ -72,6 +74,7 @@ describe('Actions::StaticFiles', () => {
       .put('/static_files', staticfile)
       .replyWithError('something awful happened');
 
+    /* TODO
     const expectedActions = [
       { type: types.PUT_STATICFILE_REQUEST },
       { type: types.PUT_STATICFILE_FAILURE, error: 'something awful happened' }
@@ -79,8 +82,9 @@ describe('Actions::StaticFiles', () => {
 
     const store = mockStore({ files: [] });
 
-    // TODO store.dispatch(actions.uploadStaticFiles([]));
-    //expect(store.getActions()).toEqual(expectedActions);
+    store.dispatch(actions.uploadStaticFiles([]));
+    expect(store.getActions()).toEqual(expectedActions);
+    */
   });
 
   it('deletes static files successfully', () => {
