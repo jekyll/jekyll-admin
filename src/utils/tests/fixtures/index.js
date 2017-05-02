@@ -35,32 +35,34 @@ export const emptyState = {
 };
 
 export const config = {
-  defaults: [
-    {
-      scope: {
-        path: ''
+  content: {
+    defaults: [
+      {
+        scope: {
+          path: ''
+        },
+        values: {
+          some_front_matter: 'default'
+        }
       },
-      values: {
-        some_front_matter: 'default'
-      }
-    },
-    {
-      scope: {
-        type: 'posts',
-        path: ''
+      {
+        scope: {
+          type: 'posts',
+          path: ''
+        },
+        values: {
+          post_field: 'default'
+        }
       },
-      values: {
-        post_field: 'default'
+      {
+        scope: {
+          type: 'pages',
+          path: 'test'
+        },
+        values: {
+          page_field: 'default'
+        }
       }
-    },
-    {
-      scope: {
-        type: 'pages',
-        path: 'test'
-      },
-      values: {
-        page_field: 'default'
-      }
-    }
-  ]
+    ]
+  }
 };
