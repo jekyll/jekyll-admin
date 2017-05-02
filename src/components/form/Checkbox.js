@@ -3,7 +3,7 @@ import React, { Component, PropTypes } from 'react';
 export default class Checkbox extends Component {
 
   handleChange(e) {
-    const { onChange, checked } = this.props;
+    const { onChange } = this.props;
     onChange(e.target.checked);
   }
 

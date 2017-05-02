@@ -13,11 +13,8 @@ import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { createDocument } from '../../actions/collections';
 import { clearErrors } from '../../actions/utils';
-import { getFilenameFromPath } from '../../utils/helpers';
+import { getLeaveMessage } from '../../constants/lang';
 import { injectDefaultFields } from '../../utils/metadata';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {

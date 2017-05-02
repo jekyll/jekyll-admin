@@ -1,4 +1,3 @@
-import expect from 'expect';
 import reducer from '../metadata';
 import * as types from '../../constants/actionTypes';
 import _ from 'underscore';

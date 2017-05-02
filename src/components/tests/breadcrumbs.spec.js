@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import expect from 'expect';
 import { mount } from 'enzyme';
 import { capitalize } from '../../utils/helpers';
 import Breadcrumbs from '../Breadcrumbs';
@@ -23,7 +22,7 @@ function setup(defaultProps = props) {
 
 describe('Components::Breadcrumbs', () => {
   it('should render correctly', () => {
-    const { component, links, input, base } = setup();
+    const { links, base } = setup();
     expect(links.length).toBe(props.splat.split('/').length+1);//movies, test, some, other
     expect(links.first().text()).toBe(capitalize(props.type));
     expect(base.prop('to')).toBe(`${ADMIN_PREFIX}/collections/${props.type}`);

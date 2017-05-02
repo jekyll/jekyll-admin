@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, withRouter, Link } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
 import Splitter from '../../components/Splitter';
@@ -40,7 +40,7 @@ export class DocumentEdit extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { currentDocument, params } = this.props;
+    const { currentDocument } = this.props;
     if (this.props.updated !== nextProps.updated) {
       const new_path = nextProps.currentDocument.path;
       const path = currentDocument.path;
@@ -110,7 +110,7 @@ export class DocumentEdit extends Component {
     }
 
     const {
-      title, raw_content, draft, http_url, path, collection, front_matter, name
+      title, raw_content, http_url, collection, front_matter, name
     } = currentDocument;
     const [directory, ...rest] = params.splat;
 

@@ -1,4 +1,3 @@
-import expect from 'expect';
 import reducer from '../utils';
 import * as types from '../../constants/actionTypes';
 
