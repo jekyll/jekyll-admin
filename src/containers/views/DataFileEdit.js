@@ -79,9 +79,9 @@ export class DataFileEdit extends Component {
 
   renderAside() {
     const { datafile, datafileChanged, onDataFileChanged, fieldChanged, updated } = this.props;
-    const { path } = datafile;
+    const { path, ext } = datafile;
     const filename = getFilenameFromPath(path);
-
+    const guiSupport = (ext == ".yml" || ext == ".yaml" || ext == ".json") ? true : false;
     const activator = (datafileChanged || fieldChanged) ? true : false;
 
     return (
@@ -93,12 +93,15 @@ export class DataFileEdit extends Component {
           triggered={updated}
           icon="save"
           block />
-        <Button
-          onClick={this.toggleView.bind(this)}
-          type="view-toggle"
-          active={true}
-          triggered={this.state.guiView}
-          block />
+        {
+          guiSupport &&
+            <Button
+              onClick={this.toggleView.bind(this)}
+              type="view-toggle"
+              active={true}
+              triggered={this.state.guiView}
+              block />
+        }
         <Splitter />
         <Button
           onClick={() => this.handleClickDelete(filename)}
