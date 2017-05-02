@@ -2,7 +2,7 @@ import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
 import { validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
-import { toYAML } from '../utils/helpers';
+import { toYAML, toJSON } from '../utils/helpers';
 import { validator } from '../utils/validation';
 import {
   getParserErrorMessage,
@@ -38,7 +38,7 @@ export function fetchDataFile(filename) {
   };
 }
 
-export function putDataFile(filename, data, source = "editor") {
+export function putDataFile(filename, data, source = "editor", ext = "") {
   return (dispatch, getState) => {
     let payload = {};
     if (source == "editor") {
@@ -51,8 +51,11 @@ export function putDataFile(filename, data, source = "editor") {
       payload = { raw_content: data };
     } else if (source == "gui") {
       const metadata = getState().metadata.metadata;
-      const yaml_string = toYAML(metadata);
-      payload = { raw_content: yaml_string };
+      if (ext == ".yml" || ext == ".yaml") {
+        payload = { raw_content: toYAML(metadata) };
+      } else if (ext == ".json") {
+        payload = { raw_content: JSON.stringify(metadata, null, 2) };
+      }
     }
     return put(
       datafileAPIUrl(filename),

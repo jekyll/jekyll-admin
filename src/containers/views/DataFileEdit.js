@@ -55,13 +55,14 @@ export class DataFileEdit extends Component {
   }
 
   handleClickSave(e) {
-    const { datafileChanged, fieldChanged, putDataFile, params } = this.props;
+    const { datafile, datafileChanged, fieldChanged, putDataFile, params } = this.props;
+    const { ext } = datafile;
 
     // Prevent the default event from bubbling
     preventDefault(e);
 
     if (fieldChanged) {
-      putDataFile(params.data_file, null, 'gui');
+      putDataFile(params.data_file, null, 'gui', ext);
     } else if (datafileChanged) {
       putDataFile(params.data_file, this.refs.editor.getValue(), 'editor');
     }
@@ -120,7 +121,7 @@ export class DataFileEdit extends Component {
       return <h1>{getNotFoundMessage("data file")}</h1>;
     }
 
-    const { path, raw_content, content } = datafile;
+    const { path, raw_content, content, ext } = datafile;
     const filename = getFilenameFromPath(path);
 
     const keyboardHandlers = {
@@ -155,6 +156,7 @@ export class DataFileEdit extends Component {
                   editorChanged={datafileChanged}
                   onEditorChange={onDataFileChanged}
                   content={raw_content}
+                  ext={ext}
                   ref="editor" />
               </div>
           }
