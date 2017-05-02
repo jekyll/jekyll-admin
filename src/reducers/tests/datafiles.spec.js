@@ -11,7 +11,8 @@ describe('Reducers::DataFiles', () => {
       currentFile: {},
       isFetching: false,
       updated: false,
-      datafileChanged: false
+      datafileChanged: false,
+      fieldChanged: false
     });
   });
 

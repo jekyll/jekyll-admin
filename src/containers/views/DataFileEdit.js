@@ -153,7 +153,7 @@ export class DataFileEdit extends Component {
               </div>
           }
           {
-            !this.state.guiView &&
+            !this.state.guiView && raw_content &&
               <div className="content-body">
                 <Editor
                   editorChanged={datafileChanged}
