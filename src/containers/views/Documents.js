@@ -10,11 +10,7 @@ import Button from '../../components/Button';
 import { fetchCollection, deleteDocument } from '../../actions/collections';
 import { filterBySearchInput } from '../../reducers/collections';
 import { search } from '../../actions/utils';
-import {
-  getLeaveMessage,
-  getDeleteMessage,
-  getNotFoundMessage
-} from '../../constants/lang';
+import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class Documents extends Component {
@@ -104,7 +100,7 @@ export class Documents extends Component {
 
   renderDirectoryRow(directory) {
     const { params: { collection_name } } = this.props;
-    const { name, path, modified_time, api_url } = directory;
+    const { name, path, modified_time } = directory;
     const splat = path.substr(path.indexOf('/')+1, path.length);
     const to = `${ADMIN_PREFIX}/collections/${collection_name}/${splat}`;
     // date w/o timezone

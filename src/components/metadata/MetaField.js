@@ -20,7 +20,7 @@ export class MetaField extends Component {
     findDOMNode(this.refs.wrap).classList.remove('showing-dropdown');
   }
 
-  handleKeyBlur(e) {
+  handleKeyBlur() {
     const { namePrefix, fieldKey, updateFieldKey } = this.props;
     let currentValue = findDOMNode(this.refs.field_key).value;
     if (fieldKey != currentValue && currentValue != '') {

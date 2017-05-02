@@ -20,7 +20,7 @@ export class MetaObjectItem extends Component {
     findDOMNode(this.refs.wrap).classList.remove('showing-dropdown');
   }
 
-  handleKeyBlur(e) {
+  handleKeyBlur() {
     const { namePrefix, fieldKey, updateFieldKey } = this.props;
     let currentValue = findDOMNode(this.refs.field_key).value;
     if (fieldKey != currentValue && currentValue != '') {
@@ -34,7 +34,7 @@ export class MetaObjectItem extends Component {
   }
 
   render() {
-    const { type, fieldKey, fieldValue, nameAttr, namePrefix, addField,
+    const { type, fieldKey, fieldValue, nameAttr, addField,
       removeField, updateFieldKey, updateFieldValue, convertField, key_prefix,
       moveArrayItem } = this.props;
     const FieldTypes = {

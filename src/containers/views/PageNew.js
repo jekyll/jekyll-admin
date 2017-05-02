@@ -9,16 +9,13 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
-import Checkbox from '../../components/form/Checkbox';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
 import { createPage } from '../../actions/pages';
 import { clearErrors } from '../../actions/utils';
+import { getLeaveMessage } from '../../constants/lang';
 import { injectDefaultFields } from '../../utils/metadata';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
 
 export class PageNew extends Component {
 
@@ -55,8 +52,9 @@ export class PageNew extends Component {
   }
 
   render() {
-    const { errors, updated, updateTitle, updateBody, updatePath,
-      updateDraft, fieldChanged, params, config } = this.props;
+    const {
+      errors, updated, updateTitle, updateBody, updatePath, fieldChanged, params, config
+    } = this.props;
 
     const metafields = injectDefaultFields(config, params.splat, 'pages');
     return (

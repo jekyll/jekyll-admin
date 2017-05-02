@@ -1,13 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import expect from 'expect';
 import { Header } from '../Header';
 
 import { config } from './fixtures';
 
 function setup() {
   const actions = {
-    fetchConfig: expect.createSpy()
+    fetchConfig: jest.fn()
   };
 
   const component = mount(
@@ -23,7 +22,7 @@ function setup() {
 
 describe('Containers::Header', () => {
   it('should render correctly', () => {
-    const { title, component } = setup();
+    const { title } = setup();
     const { content } = config;
     const actual = title.text();
     const expected = content.title;

@@ -1,17 +1,14 @@
 import React from 'react';
-import { withRouter } from 'react-router';
-import { Link } from 'react-router';
 import { mount } from 'enzyme';
-import expect from 'expect';
 import { Documents } from '../Documents';
 
 import { doc } from './fixtures';
 
 function setup(documents=[doc]) {
   const actions = {
-    fetchCollection: expect.createSpy(),
-    deleteDocument: expect.createSpy(),
-    search: expect.createSpy()
+    fetchCollection: jest.fn(),
+    deleteDocument: jest.fn(),
+    search: jest.fn()
   };
 
   const props = {
@@ -41,14 +38,13 @@ describe('Containers::Documents', () => {
   });
 
   it('should render correctly when there are not any documents', () => {
-    const { component, table, h1 } = setup([]);
-    const compProps = component.props();
-    expect(table.node).toNotExist();
+    const { table, h1 } = setup([]);
+    expect(table.node).toBeFalsy();
     expect(h1.text()).toBe(`No documents found.`);
   });
 
   it('should show filename if title is empty', () => {
-    const { component, row_title } = setup([Object.assign({}, doc, {
+    const { row_title } = setup([Object.assign({}, doc, {
       title: ''
     })]);
     expect(row_title.text()).toBe(doc.name);
@@ -62,6 +58,6 @@ describe('Containers::Documents', () => {
   it('should fetch documents again when params change', () => {
     const { component, actions } = setup();
     component.setProps({params: {collection_name: "puppies"}});
-    expect(actions.fetchCollection.calls.length).toBe(2);
+    expect(actions.fetchCollection.mock.calls.length).toBe(2);
   });
 });

@@ -24,7 +24,7 @@ export class MetaArray extends Component {
   }
 
   render() {
-    const { fieldKey, fieldValue, nameAttr, namePrefix, addField,
+    const { fieldKey, fieldValue, namePrefix, addField,
       removeField, updateFieldKey, updateFieldValue, moveArrayItem,
       convertField, key_prefix} = this.props;
     const items = _.map(fieldValue, (item, i) => {

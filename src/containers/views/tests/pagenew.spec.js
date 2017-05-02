@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { shallow } from 'enzyme';
-import expect from 'expect';
 
 import { PageNew } from '../PageNew';
 import Errors from '../../../components/Errors';
 import Button from '../../../components/Button';
 
-import { config, page } from './fixtures';
+import { config } from './fixtures';
 
 const defaultProps = {
   errors: [],
@@ -21,12 +19,12 @@ const defaultProps = {
 
 function setup(props = defaultProps) {
   const actions = {
-    createPage: expect.createSpy(),
-    updateTitle: expect.createSpy(),
-    updateBody: expect.createSpy(),
-    updatePath: expect.createSpy(),
-    updateDraft: expect.createSpy(),
-    clearErrors: expect.createSpy()
+    createPage: jest.fn(),
+    updateTitle: jest.fn(),
+    updateBody: jest.fn(),
+    updatePath: jest.fn(),
+    updateDraft: jest.fn(),
+    clearErrors: jest.fn()
   };
 
   const component = shallow(
@@ -45,20 +43,20 @@ function setup(props = defaultProps) {
 describe('Containers::PageNew', () => {
   it('should not render error messages initially', () => {
     const { errors } = setup();
-    expect(errors.node).toNotExist();
+    expect(errors.node).toBeFalsy();
   });
 
   it('should render error messages', () => {
     const { errors } = setup(Object.assign({}, defaultProps, {
       errors: ['The path field is required!']
     }));
-    expect(errors.node).toExist();
+    expect(errors.node).toBeTruthy();
   });
 
   it('should not call createPage if a field is not changed.', () => {
     const { saveButton, actions } = setup();
     saveButton.simulate('click');
-    expect(actions.createPage).toNotHaveBeenCalled();
+    expect(actions.createPage).not.toHaveBeenCalled();
   });
 
   it('should call createPage if a field is changed.', () => {

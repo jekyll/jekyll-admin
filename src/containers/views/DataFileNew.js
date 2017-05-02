@@ -9,9 +9,7 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
+import { getLeaveMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileNew extends Component {
@@ -53,7 +51,7 @@ export class DataFileNew extends Component {
 
   render() {
     const {
-      datafileChanged, onDataFileChanged, datafile, updated, errors
+      datafileChanged, onDataFileChanged, updated, errors
     } = this.props;
 
     return (

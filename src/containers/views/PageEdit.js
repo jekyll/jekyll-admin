@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, withRouter, Link } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
 import Button from '../../components/Button';
@@ -17,9 +17,7 @@ import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault } from '../../utils/helpers';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
+import { getLeaveMessage, getDeleteMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class PageEdit extends Component {
@@ -104,7 +102,7 @@ export class PageEdit extends Component {
       'save': this.handleClickSave,
     };
 
-    const { name, raw_content, http_url, path, front_matter } = page;
+    const { name, raw_content, http_url, front_matter } = page;
     const [directory, ...rest] = params.splat;
 
     const title = front_matter && front_matter.title ? front_matter.title : '';
