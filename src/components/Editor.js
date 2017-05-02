@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import AceEditor from 'react-ace';
+import 'brace/mode/json';
 import 'brace/mode/yaml';
 import 'brace/theme/monokai';
 
@@ -21,11 +22,12 @@ class Editor extends Component {
   }
 
   render() {
-    const { content } = this.props;
+    const { content, ext } = this.props;
+    const mode = (ext == ".json") ? "json" : "yaml";
     return (
       <AceEditor
         value={content}
-        mode="yaml"
+        mode={mode}
         theme="monokai"
         width="100%"
         height="400px"
@@ -36,8 +38,7 @@ class Editor extends Component {
         fontSize={14}
         scrollMargin={[15, 15, 15, 15]}
         ref="ace"
-        onChange={() => this.handleChange()}
-      />
+        onChange={() => this.handleChange()} />
     );
   }
 }
@@ -45,7 +46,8 @@ class Editor extends Component {
 Editor.propTypes = {
   content: PropTypes.any.isRequired,
   onEditorChange: PropTypes.func.isRequired,
-  editorChanged: PropTypes.bool.isRequired
+  editorChanged: PropTypes.bool.isRequired,
+  ext: PropTypes.string
 };
 
 export default Editor;
