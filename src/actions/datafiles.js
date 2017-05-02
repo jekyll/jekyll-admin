@@ -35,17 +35,25 @@ export function fetchDataFile(filename) {
   };
 }
 
-export function putDataFile(filename, data) {
+export function putDataFile(filename, data, source = "editor") {
   return (dispatch, getState) => {
-    const errors = validateDatafile(filename, data);
-    if (errors.length) {
-      return dispatch(validationError(errors));
+    let payload = {};
+    if (source == "editor") {
+      const errors = validateDatafile(filename, data);
+      if (errors.length) {
+        return dispatch(validationError(errors));
+      }
+      // clear errors
+      dispatch({type: ActionTypes.CLEAR_ERRORS});
+      payload = { raw_content: data };
+    } else if (source == "gui") {
+      const metadata = getState().metadata.metadata;
+      const yaml_string = toYAML(metadata);
+      payload = { raw_content: yaml_string };
     }
-    // clear errors
-    dispatch({type: ActionTypes.CLEAR_ERRORS});
     return put(
       datafileAPIUrl(filename),
-      JSON.stringify({ raw_content: data }),
+      JSON.stringify(payload),
       { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.PUT_DATAFILE_FAILURE, name: "error"},
       dispatch

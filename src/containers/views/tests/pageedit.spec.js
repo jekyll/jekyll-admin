@@ -5,7 +5,7 @@ import { PageEdit } from '../PageEdit';
 import Errors from '../../../components/Errors';
 import Button from '../../../components/Button';
 
-import { page } from './fixtures';
+import { config, page } from './fixtures';
 
 const defaultProps = {
   page: page,
@@ -15,6 +15,7 @@ const defaultProps = {
   isFetching: false,
   router: {},
   route: {},
+  config: config,
   params: { splat: [null, "page", "md"] }
 };
 

@@ -3,10 +3,15 @@ import { mount } from 'enzyme';
 
 import { MetaFields } from '../MetaFields';
 import MetaField from '../../components/metadata/MetaField';
-
 import { content } from './fixtures';
 
-function setup() {
+const defaultProps = {
+  fields: content,
+  metadata: content,
+  key_prefix: ''
+};
+
+function setup(props=defaultProps) {
   const actions = {
     storeContentFields: jest.fn(),
     addField: jest.fn(),
@@ -18,16 +23,13 @@ function setup() {
   };
 
   const component = mount(
-    <MetaFields
-      fields={content}
-      metadata={content}
-      key_prefix=""
-      {...actions} />
+    <MetaFields {...props} {...actions} />
   );
 
   return {
     component,
     addFieldButton: component.find('.meta-new a'),
+    addDataFieldButton: component.find('.data-new a'),
     metafields: component.find(MetaField),
     actions: actions
   };
@@ -35,14 +37,31 @@ function setup() {
 
 describe('Containers::MetaFields', () => {
   it('should render MetaFields correctly', () => {
-    const { component } = setup();
+    let { component, metafields, addFieldButton, addDataFieldButton } = setup();
+
+    expect(component.find('div').first().hasClass('metafields')).toEqual(true);
+    expect(addFieldButton.node).toExist();
+    expect(addDataFieldButton.node).toNotExist();
+
+    const updatedSetup = setup(Object.assign({}, defaultProps, {
+      dataview: true
+    }));
+
+    expect(
+      updatedSetup.component.find('div').first().hasClass('datafields')
+    ).toEqual(true);
+    expect(updatedSetup.addFieldButton.node).toNotExist();
+    expect(updatedSetup.addDataFieldButton.node).toExist();
+
     expect(component.prop('key_prefix')).toBe('');
     expect(component.prop('metadata')).toEqual(content);
   });
+
   it('should call storeContentFields before mount', () => {
     const { actions } = setup();
     expect(actions.storeContentFields).toHaveBeenCalled();
   });
+
   it('should call addField when the button is clicked', () => {
     const { actions, addFieldButton } = setup();
     addFieldButton.simulate('click');

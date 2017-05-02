@@ -15,6 +15,10 @@ import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/
 import { createPage } from '../../actions/pages';
 import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
+import { injectDefaultFields } from '../../utils/metadata';
+import {
+  getLeaveMessage, getDeleteMessage, getNotFoundMessage
+} from '../../constants/lang';
 
 export class PageNew extends Component {
 
@@ -52,8 +56,9 @@ export class PageNew extends Component {
 
   render() {
     const { errors, updated, updateTitle, updateBody, updatePath,
-      updateDraft, fieldChanged, params } = this.props;
+      updateDraft, fieldChanged, params, config } = this.props;
 
+    const metafields = injectDefaultFields(config, params.splat, 'pages');
     return (
       <div className="single">
         {errors.length > 0 && <Errors errors={errors} />}
@@ -74,7 +79,7 @@ export class PageNew extends Component {
               initialValue=""
               ref="editor" />
             <Splitter />
-            <Metadata fields={{}} />
+            <Metadata fields={metafields} />
           </div>
 
           <div className="content-side">
@@ -104,14 +109,16 @@ PageNew.propTypes = {
   updated: PropTypes.bool.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   page: state.pages.page,
   fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors,
-  updated: state.pages.updated
+  updated: state.pages.updated,
+  config: state.config.config
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

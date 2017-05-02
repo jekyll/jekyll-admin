@@ -5,7 +5,7 @@ import { DocumentEdit } from '../DocumentEdit';
 import Errors from '../../../components/Errors';
 import Button from '../../../components/Button';
 
-import { doc } from './fixtures';
+import { config, doc } from './fixtures';
 
 const defaultProps = {
   currentDocument: doc,
@@ -15,6 +15,7 @@ const defaultProps = {
   isFetching: false,
   router: {},
   route: {},
+  config: config,
   params: { collection_name: "movies", splat: [null, "inception", "md"] }
 };
 

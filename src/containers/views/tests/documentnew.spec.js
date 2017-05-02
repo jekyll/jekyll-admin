@@ -5,7 +5,7 @@ import { DocumentNew } from '../DocumentNew';
 import Errors from '../../../components/Errors';
 import Button from '../../../components/Button';
 
-import { doc } from './fixtures';
+import { config, doc } from './fixtures';
 
 const defaultProps = {
   errors: [],
@@ -13,6 +13,7 @@ const defaultProps = {
   updated: false,
   router: {},
   route: {},
+  config: config,
   params: { collection_name: doc.collection }
 };
 

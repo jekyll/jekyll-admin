@@ -71,7 +71,7 @@ describe "collections" do
       it "includes front matter defaults" do
         get "/collections/posts/entries/"
         expect(last_response).to be_ok
-        expect(first_document.key?("some_front_matter")).to eq(true)
+        expect(first_document.key?("all")).to eq(true)
       end
 
       it "doesn't include the raw front matter" do
@@ -181,7 +181,7 @@ describe "collections" do
 
       it "contains front matter defaults" do
         get "/collections/posts/2016-01-01-test-post.md"
-        expect(last_response_parsed.key?("some_front_matter")).to eql(true)
+        expect(last_response_parsed.key?("all")).to eql(true)
       end
 
       it "contains raw front matter" do

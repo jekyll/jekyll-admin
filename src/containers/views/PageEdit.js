@@ -15,6 +15,7 @@ import Metadata from '../MetaFields';
 import { fetchPage, deletePage, putPage } from '../../actions/pages';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
+import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault } from '../../utils/helpers';
 import { getLeaveMessage, getDeleteMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
@@ -87,7 +88,7 @@ export class PageEdit extends Component {
 
   render() {
     const { isFetching, page, errors, updateTitle, updateBody, updatePath,
-      updated, fieldChanged, params } = this.props;
+      updated, fieldChanged, params, config } = this.props;
 
     if (isFetching) {
       return null;
@@ -103,7 +104,10 @@ export class PageEdit extends Component {
 
     const { name, raw_content, http_url, path, front_matter } = page;
     const [directory, ...rest] = params.splat;
+
     const title = front_matter && front_matter.title ? front_matter.title : '';
+    const metafields = injectDefaultFields(config, directory, 'pages', front_matter);
+
     return (
       <HotKeys
         handlers={keyboardHandlers}
@@ -124,7 +128,7 @@ export class PageEdit extends Component {
               initialValue={raw_content}
               ref="editor" />
             <Splitter />
-            <Metadata fields={{title, raw_content, path: name, ...front_matter}} />
+            <Metadata fields={{title, raw_content, path: name, ...metafields}} />
           </div>
 
           <div className="content-side">
@@ -171,7 +175,8 @@ PageEdit.propTypes = {
   updated: PropTypes.bool.isRequired,
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired
+  route: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -179,7 +184,8 @@ const mapStateToProps = (state) => ({
   isFetching: state.pages.isFetching,
   fieldChanged: state.metadata.fieldChanged,
   updated: state.pages.updated,
-  errors: state.utils.errors
+  errors: state.utils.errors,
+  config: state.config.config
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

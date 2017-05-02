@@ -15,6 +15,7 @@ import Metadata from '../../containers/MetaFields';
 import { fetchDocument, deleteDocument, putDocument } from '../../actions/collections';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
+import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
@@ -97,7 +98,7 @@ export class DocumentEdit extends Component {
   render() {
     const {
       isFetching, currentDocument, errors, updateTitle, updateBody, updatePath, updated,
-      fieldChanged, params
+      fieldChanged, params, config
     } = this.props;
 
     if (isFetching) {
@@ -112,6 +113,8 @@ export class DocumentEdit extends Component {
       title, raw_content, draft, http_url, path, collection, front_matter, name
     } = currentDocument;
     const [directory, ...rest] = params.splat;
+
+    const metafields = injectDefaultFields(config, directory, collection, front_matter);
 
     const keyboardHandlers = {
       'save': this.handleClickSave,
@@ -139,7 +142,7 @@ export class DocumentEdit extends Component {
               initialValue={raw_content}
               ref="editor" />
             <Splitter />
-            <Metadata fields={{title, path: name, raw_content, ...front_matter}} />
+            <Metadata fields={{title, path: name, raw_content, ...metafields}} />
           </div>
 
           <div className="content-side">
@@ -188,7 +191,8 @@ DocumentEdit.propTypes = {
   fieldChanged: PropTypes.bool.isRequired,
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired
+  route: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -196,7 +200,8 @@ const mapStateToProps = (state) => ({
   isFetching: state.collections.isFetching,
   fieldChanged: state.metadata.fieldChanged,
   updated: state.collections.updated,
-  errors: state.utils.errors
+  errors: state.utils.errors,
+  config: state.config.config
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

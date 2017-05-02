@@ -5,12 +5,15 @@ import { PageNew } from '../PageNew';
 import Errors from '../../../components/Errors';
 import Button from '../../../components/Button';
 
+import { config, page } from './fixtures';
+
 const defaultProps = {
   errors: [],
   fieldChanged: false,
   updated: false,
   router: {},
   route: {},
+  config: config,
   params: { splat: 'page-dir' }
 };
 
