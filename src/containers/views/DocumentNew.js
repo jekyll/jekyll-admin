@@ -15,9 +15,6 @@ import { createDocument } from '../../actions/collections';
 import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
 import { injectDefaultFields } from '../../utils/metadata';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {

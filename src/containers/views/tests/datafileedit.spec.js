@@ -7,6 +7,7 @@ const defaultProps = {
   datafile: {},
   updated: false,
   datafileChanged: false,
+  fieldChanged: false,
   router: {},
   route: {},
   params: { data_file: "data_file" },

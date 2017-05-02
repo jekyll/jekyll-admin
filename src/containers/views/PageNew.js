@@ -16,9 +16,6 @@ import { createPage } from '../../actions/pages';
 import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
 import { injectDefaultFields } from '../../utils/metadata';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
 
 export class PageNew extends Component {
 
