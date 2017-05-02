@@ -150,9 +150,10 @@ Async action for fetching data files.
 
 Async action for fetching the requested data file.
 
-### > `putDataFile(filename, data)`
+### > `putDataFile(filename, data, source="editor")`
 
-Async action for creating/updating the requested data file. It validates the given filename and data before the PUT request.
+Async action for creating/updating the requested data file. It validates the given filename and data before the PUT request if the `source` equals `editor` or `null`.
+When the `source` is `gui`, the requested file is updated by parsing user input into valid YAML.
 
 ### > `deleteDataFile(filename)`
 

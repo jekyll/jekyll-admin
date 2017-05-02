@@ -32,8 +32,12 @@ Container for displaying header which includes title and homepage link.
 
 ## MetaFields
 
-Main container for metafields. Generates list, object or plain inputs
-for front matters other than `title`, `body`, `path` and `draft`.
+Main container for metafields. Generates list, object or plain inputs for front
+matters other than `title`, `body`, `path` and `draft`. Doubles as a GUI to edit
+data files. The GUI will parse the input and write valid YAML to file,
+consequently removing any comments previously present, and also converting
+boolean to string literals i.e. `true` & `false` will be written as `'true'`
+and `'false'`.
 
 ### PropTypes
 
@@ -48,7 +52,8 @@ for front matters other than `title`, `body`, `path` and `draft`.
   updateFieldKey: Function,
   updateFieldValue: Function,
   moveArrayItem: Function,
-  convertField: Function
+  convertField: Function,
+  dataview: Boolean
 }
 ```
 
@@ -228,23 +233,26 @@ Container for DataFiles view. Lists data files.
 
 ## DataFileEdit
 
-Container for editing a data file.
+Container for editing a data file. Supports editing via a raw text editor or a YAML editor GUI.
 
 ### PropTypes
 
 ```javascript
 {
   datafile: Object,
+  isFetching: Boolean,
+  updated: Boolean,
+  datafileChanged: Boolean,
+  fieldChanged: Boolean,
   fetchDataFile: Function,
   putDataFile: Function,
   deleteDataFile: Function,
   clearErrors: Function,
   onDataFileChanged: Function,
-  isFetching: Boolean,
-  updated: Boolean,
-  datafileChanged: Boolean,
   errors: Array,
-  params: Object
+  params: Object,
+  router: Object,
+  route: Object
 }
 ```
 
