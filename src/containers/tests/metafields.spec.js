@@ -40,8 +40,8 @@ describe('Containers::MetaFields', () => {
     let { component, metafields, addFieldButton, addDataFieldButton } = setup();
 
     expect(component.find('div').first().hasClass('metafields')).toEqual(true);
-    expect(addFieldButton.node).toExist();
-    expect(addDataFieldButton.node).toNotExist();
+    expect(addFieldButton.node).toBeTruthy();
+    expect(addDataFieldButton.node).not.toBeTruthy();
 
     const updatedSetup = setup(Object.assign({}, defaultProps, {
       dataview: true
@@ -50,8 +50,8 @@ describe('Containers::MetaFields', () => {
     expect(
       updatedSetup.component.find('div').first().hasClass('datafields')
     ).toEqual(true);
-    expect(updatedSetup.addFieldButton.node).toNotExist();
-    expect(updatedSetup.addDataFieldButton.node).toExist();
+    expect(updatedSetup.addFieldButton.node).not.toBeTruthy();
+    expect(updatedSetup.addDataFieldButton.node).toBeTruthy();
 
     expect(component.prop('key_prefix')).toBe('');
     expect(component.prop('metadata')).toEqual(content);
