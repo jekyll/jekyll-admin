@@ -27,7 +27,7 @@ export default function pages(state = {
     case FETCH_PAGES_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
-        page: {}
+        pages: []
       });
     case FETCH_PAGE_SUCCESS:
       return Object.assign({}, state, {

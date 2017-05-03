@@ -2,6 +2,7 @@ import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
 import { validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
+import { toYAML } from '../utils/helpers';
 import { validator } from '../utils/validation';
 import {
   getParserErrorMessage,
@@ -37,24 +38,41 @@ export function fetchDataFile(directory, filename) {
   };
 }
 
-export function putDataFile(directory, filename, data, new_path = '') {
+export function putDataFile(directory, filename, data, new_path = '', source = "editor") {
   return (dispatch, getState) => {
-    const errors = validateDatafile(filename, data);
+    let payload = {};
+    let errors;
+
+    if (source == "editor") {
+      errors = validateDatafile(filename, data);
+
+      if (new_path) {
+        payload = { path: new_path, raw_content: data };
+      } else {
+        payload = { raw_content: data };
+      }
+
+    } else if (source == "gui") {
+      const metadata = getState().metadata.metadata;
+      const yaml_string = toYAML(metadata);
+      errors = validateDatafile(filename, metadata);
+
+      if (new_path) {
+        payload = { path: new_path, raw_content: yaml_string };
+      } else {
+        payload = { raw_content: yaml_string };
+      }
+    }
+
     if (errors.length) {
       return dispatch(validationError(errors));
     }
     // clear errors
     dispatch({type: ActionTypes.CLEAR_ERRORS});
 
-    let meta = {};
-    if (new_path) {
-      meta = { path: new_path, raw_content: data };
-    } else {
-      meta = { raw_content: data };
-    }
     return put(
       datafileAPIUrl(directory, filename),
-      JSON.stringify(meta),
+      JSON.stringify(payload),
       { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.PUT_DATAFILE_FAILURE, name: "error"},
       dispatch

@@ -46,7 +46,7 @@ export class MetaField extends Component {
     const CurrentComponent = FieldTypes[type];
     return (
       <div ref="wrap" className="metafield">
-        <div className="meta-key">
+        <div className={`meta-key ${type}`}>
           <input ref="field_key"
             onBlur={() => this.handleKeyBlur()}
             defaultValue={fieldKey}

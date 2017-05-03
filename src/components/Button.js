@@ -38,6 +38,10 @@ export default class Button extends Component {
       case 'upload':
         label = labels.upload.label;
         break;
+      case 'view-toggle':
+        label = labels.viewToggle.label;
+        triggeredLabel = labels.viewToggle.triggeredLabel;
+        break;
       default:
     }
 

@@ -22,6 +22,10 @@ export class MetaSimple extends Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
+  shouldComponentUpdate(nextProps) {
+    return nextProps.fieldValue !== this.props.fieldValue;
+  }
+
   handleOpenModal () {
     this.setState({ showModal: true });
   }
@@ -47,7 +51,7 @@ export class MetaSimple extends Component {
       <TextareaAutosize
         onChange={(e) => this.handleEditableChange(e)}
         className="field value-field"
-        defaultValue={fieldValue} />
+        value={fieldValue} />
     );
   }
 
@@ -58,7 +62,7 @@ export class MetaSimple extends Component {
       <DateTimePicker
         onChange={(v, d) => this.handleDatepickerChange(v, d)}
         className="date-field"
-        defaultValue={dateValue} />
+        value={dateValue} />
     );
   }
 
@@ -76,7 +80,7 @@ export class MetaSimple extends Component {
         <TextareaAutosize
           onChange={(e) => this.handleEditableChange(e)}
           className="field value-field"
-          defaultValue={fieldValue}
+          value={fieldValue}
           ref="imagepicker" />
         <span className="images-wrapper">
           <button onClick={this.handleOpenModal}>

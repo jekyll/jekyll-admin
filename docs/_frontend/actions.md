@@ -151,10 +151,11 @@ Async action for fetching data files in a directory.
 
 Async action for fetching the requested data file in a directory.
 
-### > `putDataFile(directory, filename, data, new_path)`
+### > `putDataFile(directory, filename, data, new_path="", source="editor")`
 
 Async action for creating/updating the requested data file in a directory. It validates the given filename and data before the PUT request.
 Optional parameter `new_path` will update the data file's `path` metadata.
+When another optional parameter `source` equals `gui`, the requested file is updated by parsing user input into valid YAML.
 
 ### > `deleteDataFile(directory, filename)`
 

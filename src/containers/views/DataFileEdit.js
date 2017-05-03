@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter, Link } from 'react-router';
 import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
+import Metadata from '../MetaFields';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import Splitter from '../../components/Splitter';
@@ -25,6 +26,9 @@ export class DataFileEdit extends Component {
   constructor(props) {
     super(props);
     this.handleClickSave = this.handleClickSave.bind(this);
+    this.state = {
+      guiView: false
+    };
   }
 
   componentDidMount() {
@@ -63,20 +67,25 @@ export class DataFileEdit extends Component {
     }
   }
 
+  toggleView() {
+    this.setState({ guiView: !this.state.guiView });
+  }
+
   handleClickSave(e) {
-    const { datafile, datafileChanged, putDataFile, params } = this.props;
+    const { datafile, datafileChanged, fieldChanged, putDataFile, params } = this.props;
     const { path, relative_path } = datafile;
     const data_dir = path.replace(relative_path, "");
     const [directory, ...rest] = params.splat || [""];
     const filename = rest.join('.');
+    const new_path = data_dir + this.refs.inputpath.refs.input.value;
 
     // Prevent the default event from bubbling
     preventDefault(e);
 
-    if (datafileChanged) {
-      const value = this.refs.editor.getValue();
-      const new_path = data_dir + this.refs.inputpath.refs.input.value;
-      putDataFile(directory, filename, value, new_path);
+    if (fieldChanged || (this.state.guiView && datafileChanged)) {
+      putDataFile(directory, filename, null, new_path, 'gui');
+    } else if (datafileChanged) {
+      putDataFile(directory, filename, this.refs.editor.getValue(), new_path, 'editor');
     }
   }
 
@@ -92,11 +101,41 @@ export class DataFileEdit extends Component {
     }
   }
 
+  renderAside() {
+    const { datafile, datafileChanged, onDataFileChanged, fieldChanged, updated } = this.props;
+    const { path } = datafile;
+    const filename = getFilenameFromPath(path);
+
+    const activator = (datafileChanged || fieldChanged) ? true : false;
+
+    return (
+      <div className="content-side">
+        <Button
+          onClick={this.handleClickSave}
+          type="save"
+          active={activator}
+          triggered={updated}
+          icon="save"
+          block />
+        <Button
+          onClick={this.toggleView.bind(this)}
+          type="view-toggle"
+          active={true}
+          triggered={this.state.guiView}
+          block />
+        <Splitter />
+        <Button
+          onClick={() => this.handleClickDelete(filename)}
+          type="delete"
+          active={true}
+          icon="trash"
+          block />
+      </div>
+    );
+  }
+
   render() {
-    const {
-      datafileChanged, onDataFileChanged, datafile, isFetching,
-      updated, errors, params
-    } = this.props;
+    const { datafileChanged, onDataFileChanged, datafile, isFetching, errors, params } = this.props;
 
     if (isFetching) {
       return null;
@@ -106,9 +145,17 @@ export class DataFileEdit extends Component {
       return <h1>{getNotFoundMessage("data file")}</h1>;
     }
 
-    const { path, relative_path, raw_content } = datafile;
+    const { path, relative_path, raw_content, content } = datafile;
     const [directory, ...rest] = params.splat || [""];
     const filename = getFilenameFromPath(path);
+
+    const input_path = (
+      <InputPath
+        onChange={onDataFileChanged}
+        type="data files"
+        path={relative_path}
+        ref="inputpath" />
+    );
 
     const keyboardHandlers = {
       'save': this.handleClickSave,
@@ -119,40 +166,37 @@ export class DataFileEdit extends Component {
         handlers={keyboardHandlers}
         className="single">
         {errors.length > 0 && <Errors errors={errors} />}
+
         <div className="content-header">
           <Breadcrumbs splat={directory || ""} type="data files" />
         </div>
 
         <div className="content-wrapper">
-          <div className="content-body">
-            <InputPath
-              onChange={onDataFileChanged}
-              type="data files"
-              path={relative_path}
-              ref="inputpath" />
-            <Editor
-              editorChanged={datafileChanged}
-              onEditorChange={onDataFileChanged}
-              content={raw_content}
-              ref="editor" />
-          </div>
+          {
+            this.state.guiView &&
+              <div className="content-body">
+                {input_path}
+                <div className="warning">
+                  CAUTION! Any existing comments will be lost when editing via this view.
+                  Switch to the <strong>Raw Editor</strong> to preserve comments.
+                </div>
+                <Metadata fields={content} dataview/>
+              </div>
+          }
+          {
+            !this.state.guiView &&
+              <div className="content-body">
+                {input_path}
+                <Editor
+                  editorChanged={datafileChanged}
+                  onEditorChange={onDataFileChanged}
+                  content={raw_content}
+                  ref="editor" />
+              </div>
+          }
 
-          <div className="content-side">
-            <Button
-              onClick={this.handleClickSave}
-              type="save"
-              active={datafileChanged}
-              triggered={updated}
-              icon="save"
-              block />
-            <Splitter />
-            <Button
-              onClick={() => this.handleClickDelete(relative_path)}
-              type="delete"
-              active={true}
-              icon="trash"
-              block />
-          </div>
+          {this.renderAside()}
+
         </div>
       </HotKeys>
     );
@@ -169,6 +213,7 @@ DataFileEdit.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   updated: PropTypes.bool.isRequired,
   datafileChanged: PropTypes.bool.isRequired,
+  fieldChanged: PropTypes.bool.isRequired,
   errors: PropTypes.array.isRequired,
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
@@ -180,6 +225,7 @@ const mapStateToProps = (state) => ({
   isFetching: state.datafiles.isFetching,
   updated: state.datafiles.updated,
   datafileChanged: state.datafiles.datafileChanged,
+  fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors
 });
 
