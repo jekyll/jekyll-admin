@@ -12,7 +12,8 @@ export default function datafiles(state = {
   currentFile: {},
   isFetching: false,
   updated: false,
-  datafileChanged: false
+  datafileChanged: false,
+  fieldChanged: false
 }, action) {
   switch (action.type) {
     case FETCH_DATAFILES_REQUEST:

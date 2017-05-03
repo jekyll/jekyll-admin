@@ -11,7 +11,7 @@ import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
 import { clearErrors } from '../../actions/utils';
-import { getFilenameFromPath, preventDefault } from '../../utils/helpers';
+import { getFilenameFromPath, getExtensionFromPath, preventDefault } from '../../utils/helpers';
 import {
   fetchDataFile, putDataFile, deleteDataFile, onDataFileChanged
 } from '../../actions/datafiles';
@@ -55,7 +55,7 @@ export class DataFileEdit extends Component {
   }
 
   handleClickSave(e) {
-    const { datafileChanged, fieldChanged, putDataFile, params } = this.props;
+    const { datafile, datafileChanged, fieldChanged, putDataFile, params } = this.props;
 
     // Prevent the default event from bubbling
     preventDefault(e);
@@ -80,24 +80,27 @@ export class DataFileEdit extends Component {
     const { datafile, datafileChanged, fieldChanged, updated } = this.props;
     const { path } = datafile;
     const filename = getFilenameFromPath(path);
-
-    const activator = (datafileChanged || fieldChanged) ? true : false;
+    const ext = getExtensionFromPath(path);
+    const guiSupport = (/yaml|yml|json/i.test(ext));
 
     return (
       <div className="content-side">
         <Button
           onClick={this.handleClickSave}
           type="save"
-          active={activator}
+          active={datafileChanged || fieldChanged}
           triggered={updated}
           icon="save"
           block />
-        <Button
-          onClick={this.toggleView.bind(this)}
-          type="view-toggle"
-          active={true}
-          triggered={this.state.guiView}
-          block />
+        {
+          guiSupport &&
+            <Button
+              onClick={this.toggleView.bind(this)}
+              type="view-toggle"
+              active={true}
+              triggered={this.state.guiView}
+              block />
+        }
         <Splitter />
         <Button
           onClick={() => this.handleClickDelete(filename)}
@@ -122,6 +125,7 @@ export class DataFileEdit extends Component {
 
     const { path, raw_content, content } = datafile;
     const filename = getFilenameFromPath(path);
+    const ext = getExtensionFromPath(path);
 
     const keyboardHandlers = {
       'save': this.handleClickSave,
@@ -149,12 +153,13 @@ export class DataFileEdit extends Component {
               </div>
           }
           {
-            !this.state.guiView &&
+            !this.state.guiView && raw_content &&
               <div className="content-body">
                 <Editor
                   editorChanged={datafileChanged}
                   onEditorChange={onDataFileChanged}
                   content={raw_content}
+                  type={ext || "yml"}
                   ref="editor" />
               </div>
           }
