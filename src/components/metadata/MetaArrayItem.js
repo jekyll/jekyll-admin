@@ -26,7 +26,7 @@ export class MetaArrayItem extends Component {
   }
 
   render() {
-    const { type, fieldKey, fieldValue, index, nameAttr, namePrefix,
+    const { type, fieldKey, fieldValue, index, nameAttr,
       addField, removeField, updateFieldKey, updateFieldValue, moveArrayItem,
       convertField, key_prefix } = this.props;
     const FieldTypes = {

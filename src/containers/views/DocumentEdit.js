@@ -1,7 +1,7 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, withRouter, Link } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
 import Splitter from '../../components/Splitter';
@@ -15,6 +15,7 @@ import Metadata from '../../containers/MetaFields';
 import { fetchDocument, deleteDocument, putDocument } from '../../actions/collections';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
+import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
@@ -39,7 +40,7 @@ export class DocumentEdit extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const { currentDocument, params } = this.props;
+    const { currentDocument } = this.props;
     if (this.props.updated !== nextProps.updated) {
       const new_path = nextProps.currentDocument.path;
       const path = currentDocument.path;
@@ -97,7 +98,7 @@ export class DocumentEdit extends Component {
   render() {
     const {
       isFetching, currentDocument, errors, updateTitle, updateBody, updatePath, updated,
-      fieldChanged, params
+      fieldChanged, params, config
     } = this.props;
 
     if (isFetching) {
@@ -109,9 +110,11 @@ export class DocumentEdit extends Component {
     }
 
     const {
-      title, raw_content, draft, http_url, path, collection, front_matter, name
+      title, raw_content, http_url, collection, front_matter, name
     } = currentDocument;
     const [directory, ...rest] = params.splat;
+
+    const metafields = injectDefaultFields(config, directory, collection, front_matter);
 
     const keyboardHandlers = {
       'save': this.handleClickSave,
@@ -139,7 +142,7 @@ export class DocumentEdit extends Component {
               initialValue={raw_content}
               ref="editor" />
             <Splitter />
-            <Metadata fields={{title, path: name, raw_content, ...front_matter}} />
+            <Metadata fields={{title, path: name, raw_content, ...metafields}} />
           </div>
 
           <div className="content-side">
@@ -188,7 +191,8 @@ DocumentEdit.propTypes = {
   fieldChanged: PropTypes.bool.isRequired,
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired
+  route: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -196,7 +200,8 @@ const mapStateToProps = (state) => ({
   isFetching: state.collections.isFetching,
   fieldChanged: state.metadata.fieldChanged,
   updated: state.collections.updated,
-  errors: state.utils.errors
+  errors: state.utils.errors,
+  config: state.config.config
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

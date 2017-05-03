@@ -1,7 +1,6 @@
 import * as ActionTypes from '../constants/actionTypes';
 import { getConfigurationUrl, putConfigurationUrl } from '../constants/api';
 import { getContentRequiredMessage } from '../constants/lang';
-import { addNotification } from './notifications';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { validationError } from './utils';
@@ -19,7 +18,7 @@ export function fetchConfig() {
 }
 
 export function putConfig(config) {
-  return (dispatch, getState) => {
+  return (dispatch) => {
     const errors = validateConfig(config);
     if (errors.length) {
       return dispatch(validationError(errors));

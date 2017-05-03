@@ -13,10 +13,8 @@ import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { createDocument } from '../../actions/collections';
 import { clearErrors } from '../../actions/utils';
-import { getFilenameFromPath } from '../../utils/helpers';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
+import { getLeaveMessage } from '../../constants/lang';
+import { injectDefaultFields } from '../../utils/metadata';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {
@@ -59,12 +57,13 @@ export class DocumentNew extends Component {
   }
 
   render() {
-    const {
-      errors, updated, updateTitle, updateBody, updatePath, fieldChanged, params
-    } = this.props;
+    const { errors, updated, updateTitle, updateBody, updatePath, fieldChanged,
+      params, config } = this.props;
 
     const collection = params.collection_name;
     const link = `${ADMIN_PREFIX}/collections/${collection}`;
+
+    const metafields = injectDefaultFields(config, params.splat, collection);
 
     return (
       <div className="single">
@@ -86,7 +85,7 @@ export class DocumentNew extends Component {
               initialValue=""
               ref="editor" />
             <Splitter />
-            <Metadata fields={{}} />
+            <Metadata fields={metafields} />
           </div>
 
           <div className="content-side">
@@ -115,14 +114,16 @@ DocumentNew.propTypes = {
   updated: PropTypes.bool.isRequired,
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired
+  route: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   currentDocument: state.collections.currentDocument,
   fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors,
-  updated: state.collections.updated
+  updated: state.collections.updated,
+  config: state.config.config
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
@@ -133,6 +134,4 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   clearErrors
 }, dispatch);
 
-export default withRouter(
-  connect(mapStateToProps, mapDispatchToProps)(DocumentNew)
-);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentNew));

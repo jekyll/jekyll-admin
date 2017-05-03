@@ -1,4 +1,3 @@
-import expect from 'expect';
 import reducer, { filterBySearchInput } from '../collections';
 import * as types from '../../constants/actionTypes';
 

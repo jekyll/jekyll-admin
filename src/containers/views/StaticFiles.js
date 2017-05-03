@@ -1,12 +1,11 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ADMIN_PREFIX } from '../../constants';
 import Dropzone from '../../components/Dropzone';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../actions/utils';
-import { existingUploadedFilenames } from '../../utils/helpers.js';
+import { existingUploadedFilenames } from '../../utils/helpers';
 import { filterByFilename } from '../../reducers/staticfiles';
 import { getOverrideMessage } from '../../constants/lang';
 import {

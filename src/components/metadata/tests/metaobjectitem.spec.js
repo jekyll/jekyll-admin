@@ -1,8 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
-import expect from 'expect';
 import { mount } from 'enzyme';
-import _ from 'underscore';
 
 import MetaButtons from '../MetaButtons';
 import MetaArray from '../MetaArray';
@@ -29,12 +26,12 @@ const defaultProps = {
 
 function setup(props = defaultProps) {
   const actions = {
-    addField: expect.createSpy(),
-    removeField: expect.createSpy(),
-    updateFieldKey: expect.createSpy(),
-    updateFieldValue: expect.createSpy(),
-    moveArrayItem: expect.createSpy(),
-    convertField: expect.createSpy()
+    addField: jest.fn(),
+    removeField: jest.fn(),
+    updateFieldKey: jest.fn(),
+    updateFieldValue: jest.fn(),
+    moveArrayItem: jest.fn(),
+    convertField: jest.fn()
   };
 
   let component = mount(
@@ -74,7 +71,7 @@ describe('Components::MetaObjectItem', () => {
   it('should call updateFieldKey when the input lose focus', () => {
     const { keyInput, actions } = setup();
     keyInput.simulate('blur');
-    expect(actions.updateFieldKey).toNotHaveBeenCalled();
+    expect(actions.updateFieldKey).not.toHaveBeenCalled();
     keyInput.node.value = 'post';
     keyInput.simulate('blur');
     expect(actions.updateFieldKey).toHaveBeenCalled();
@@ -84,8 +81,8 @@ describe('Components::MetaObjectItem', () => {
     let dropdownButton = metabuttons.find('.meta-button');
     dropdownButton.simulate('focus');
     expect(
-      component.find('.object-item-wrap').node.classList
-    ).toMatch(/showing-dropdown/);
+      component.find('.object-item-wrap').hasClass('showing-dropdown')
+    ).toEqual(true);
     dropdownButton.simulate('blur');
     expect(
       component.find('.object-item-wrap').node.classList.length

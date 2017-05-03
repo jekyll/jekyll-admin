@@ -5,7 +5,6 @@ import * as types from '../../constants/actionTypes';
 import { API } from '../../constants/api';
 import { getFilenameFromPath } from '../../utils/helpers';
 import nock from 'nock';
-import expect from 'expect';
 import _ from 'underscore';
 
 import {

@@ -9,15 +9,13 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
-import Checkbox from '../../components/form/Checkbox';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
 import { createPage } from '../../actions/pages';
 import { clearErrors } from '../../actions/utils';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
+import { getLeaveMessage } from '../../constants/lang';
+import { injectDefaultFields } from '../../utils/metadata';
 
 export class PageNew extends Component {
 
@@ -54,9 +52,11 @@ export class PageNew extends Component {
   }
 
   render() {
-    const { errors, updated, updateTitle, updateBody, updatePath,
-      updateDraft, fieldChanged, params } = this.props;
+    const {
+      errors, updated, updateTitle, updateBody, updatePath, fieldChanged, params, config
+    } = this.props;
 
+    const metafields = injectDefaultFields(config, params.splat, 'pages');
     return (
       <div className="single">
         {errors.length > 0 && <Errors errors={errors} />}
@@ -77,7 +77,7 @@ export class PageNew extends Component {
               initialValue=""
               ref="editor" />
             <Splitter />
-            <Metadata fields={{}} />
+            <Metadata fields={metafields} />
           </div>
 
           <div className="content-side">
@@ -107,14 +107,16 @@ PageNew.propTypes = {
   updated: PropTypes.bool.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
   page: state.pages.page,
   fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors,
-  updated: state.pages.updated
+  updated: state.pages.updated,
+  config: state.config.config
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

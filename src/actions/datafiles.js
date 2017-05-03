@@ -1,11 +1,9 @@
 import * as ActionTypes from '../constants/actionTypes';
-import _ from 'underscore';
 import { validationError } from './utils';
-import { get, put, del } from '../utils/fetch';
-import { toYAML } from '../utils/helpers';
+import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
+import { toYAML } from '../utils/helpers';
 import {
-  getParserErrorMessage,
   getContentRequiredMessage,
   getFilenameRequiredMessage
 } from '../constants/lang';
@@ -38,7 +36,7 @@ export function fetchDataFile(directory, filename) {
   };
 }
 
-export function putDataFile(directory, filename, data, new_path = '', source = "editor") {
+export function putDataFile(directory, filename, data, new_path = '', source = 'editor') {
   return (dispatch, getState) => {
     let payload = {};
     let errors;

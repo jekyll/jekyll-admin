@@ -32,10 +32,9 @@ export class DataFiles extends Component {
     const confirm = window.confirm(getDeleteMessage(path));
 
     if (confirm) {
-      const [directory, ...rest] = params.splat || [""];
       const filename = getFilenameFromPath(path);
 
-      deleteDataFile(directory, filename);
+      deleteDataFile(params.splat, filename);
       browserHistory.push(`${ADMIN_PREFIX}/datafiles`);
     }
   }

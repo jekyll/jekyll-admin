@@ -1,7 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, withRouter, Link } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
 import Metadata from '../MetaFields';
@@ -102,7 +102,7 @@ export class DataFileEdit extends Component {
   }
 
   renderAside() {
-    const { datafile, datafileChanged, onDataFileChanged, fieldChanged, updated } = this.props;
+    const { datafile, datafileChanged, fieldChanged, updated } = this.props;
     const { path } = datafile;
     const filename = getFilenameFromPath(path);
 
@@ -135,7 +135,7 @@ export class DataFileEdit extends Component {
   }
 
   render() {
-    const { datafileChanged, onDataFileChanged, datafile, isFetching, errors, params } = this.props;
+    const { datafileChanged, onDataFileChanged, datafile, isFetching, params, errors } = this.props;
 
     if (isFetching) {
       return null;

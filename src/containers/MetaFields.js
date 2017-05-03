@@ -17,7 +17,7 @@ export class MetaFields extends Component {
   }
 
   shouldComponentUpdate(nextProps) {
-    return nextProps.metadata !== this.props.metadata;
+    return !_.isEqual(nextProps.metadata, this.props.metadata);
   }
 
   render() {

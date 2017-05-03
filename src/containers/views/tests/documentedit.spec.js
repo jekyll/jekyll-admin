@@ -1,13 +1,11 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { shallow } from 'enzyme';
-import expect from 'expect';
 
 import { DocumentEdit } from '../DocumentEdit';
 import Errors from '../../../components/Errors';
 import Button from '../../../components/Button';
 
-import { doc } from './fixtures';
+import { config, doc } from './fixtures';
 
 const defaultProps = {
   currentDocument: doc,
@@ -17,18 +15,19 @@ const defaultProps = {
   isFetching: false,
   router: {},
   route: {},
+  config: config,
   params: { collection_name: "movies", splat: [null, "inception", "md"] }
 };
 
 const setup = (props = defaultProps) => {
   const actions = {
-    fetchDocument: expect.createSpy(),
-    putDocument: expect.createSpy(),
-    deleteDocument: expect.createSpy(),
-    updateTitle: expect.createSpy(),
-    updateBody: expect.createSpy(),
-    updatePath: expect.createSpy(),
-    clearErrors: expect.createSpy()
+    fetchDocument: jest.fn(),
+    putDocument: jest.fn(),
+    deleteDocument: jest.fn(),
+    updateTitle: jest.fn(),
+    updateBody: jest.fn(),
+    updatePath: jest.fn(),
+    clearErrors: jest.fn()
   };
 
   const component = shallow(<DocumentEdit {...actions} {...props} />);
@@ -51,25 +50,25 @@ describe('Containers::DocumentEdit', () => {
     component = setup(Object.assign(
       {}, defaultProps, { currentDocument: {} }
     )).component;
-    expect(component.find('h1').node).toExist();
+    expect(component.find('h1').node).toBeTruthy();
   });
 
   it('should not render error messages initially', () => {
     const { errors } = setup();
-    expect(errors.node).toNotExist();
+    expect(errors.node).toBeFalsy();
   });
 
   it('should render error messages', () => {
     const { errors } = setup(Object.assign({}, defaultProps, {
       errors: ['The title field is required!']
     }));
-    expect(errors.node).toExist();
+    expect(errors.node).toBeTruthy();
   });
 
   it('should not call putDocument if a field is not changed.', () => {
     const { saveButton, actions } = setup();
     saveButton.simulate('click');
-    expect(actions.putDocument).toNotHaveBeenCalled();
+    expect(actions.putDocument).not.toHaveBeenCalled();
   });
 
   it('should call putDocument if a field is changed.', () => {
@@ -83,6 +82,6 @@ describe('Containers::DocumentEdit', () => {
   it('should call deleteDocument', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');
-    expect(actions.deleteDocument).toNotHaveBeenCalled(); // TODO pass prompt
+    expect(actions.deleteDocument).not.toHaveBeenCalled(); // TODO pass prompt
   });
 });

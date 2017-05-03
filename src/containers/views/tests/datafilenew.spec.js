@@ -1,7 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
 import { shallow } from 'enzyme';
-import expect from 'expect';
 
 import { DataFileNew } from '../DataFileNew';
 
@@ -20,9 +18,9 @@ const defaultProps = {
 
 const setup = (props = defaultProps) => {
   const actions = {
-    putDataFile: expect.createSpy(),
-    onDataFileChanged: expect.createSpy(),
-    clearErrors: expect.createSpy()
+    putDataFile: jest.fn(),
+    onDataFileChanged: jest.fn(),
+    clearErrors: jest.fn()
   };
 
   const component = shallow(<DataFileNew {...actions} {...props} />);
@@ -39,11 +37,11 @@ describe('Containers::DataFileNew', () => {
   it('should not call putDataFile if a field is not changed.', () => {
     const { saveButton, actions } = setup();
     saveButton.simulate('click');
-    expect(actions.putDataFile).toNotHaveBeenCalled();
+    expect(actions.putDataFile).not.toHaveBeenCalled();
   });
 
   it('should call activate save button if a field is changed.', () => {
-    const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
+    const { saveButton } = setup(Object.assign({}, defaultProps, {
       datafileChanged: true
     }));
     expect(saveButton.prop('active')).toBe(true);

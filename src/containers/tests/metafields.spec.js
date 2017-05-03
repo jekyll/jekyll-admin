@@ -1,7 +1,5 @@
 import React from 'react';
-import expect from 'expect';
 import { mount } from 'enzyme';
-import _ from 'underscore';
 
 import { MetaFields } from '../MetaFields';
 import MetaField from '../../components/metadata/MetaField';
@@ -15,13 +13,13 @@ const defaultProps = {
 
 function setup(props=defaultProps) {
   const actions = {
-    storeContentFields: expect.createSpy(),
-    addField: expect.createSpy(),
-    removeField: expect.createSpy(),
-    updateFieldKey: expect.createSpy(),
-    updateFieldValue: expect.createSpy(),
-    moveArrayItem: expect.createSpy(),
-    convertField: expect.createSpy()
+    storeContentFields: jest.fn(),
+    addField: jest.fn(),
+    removeField: jest.fn(),
+    updateFieldKey: jest.fn(),
+    updateFieldValue: jest.fn(),
+    moveArrayItem: jest.fn(),
+    convertField: jest.fn()
   };
 
   const component = mount(
@@ -39,11 +37,11 @@ function setup(props=defaultProps) {
 
 describe('Containers::MetaFields', () => {
   it('should render MetaFields correctly', () => {
-    let { component, metafields, addFieldButton, addDataFieldButton } = setup();
+    let { component, addFieldButton, addDataFieldButton } = setup();
 
     expect(component.find('div').first().hasClass('metafields')).toEqual(true);
-    expect(addFieldButton.node).toExist();
-    expect(addDataFieldButton.node).toNotExist();
+    expect(addFieldButton.node).toBeTruthy();
+    expect(addDataFieldButton.node).not.toBeTruthy();
 
     const updatedSetup = setup(Object.assign({}, defaultProps, {
       dataview: true
@@ -52,8 +50,8 @@ describe('Containers::MetaFields', () => {
     expect(
       updatedSetup.component.find('div').first().hasClass('datafields')
     ).toEqual(true);
-    expect(updatedSetup.addFieldButton.node).toNotExist();
-    expect(updatedSetup.addDataFieldButton.node).toExist();
+    expect(updatedSetup.addFieldButton.node).not.toBeTruthy();
+    expect(updatedSetup.addDataFieldButton.node).toBeTruthy();
 
     expect(component.prop('key_prefix')).toBe('');
     expect(component.prop('metadata')).toEqual(content);
