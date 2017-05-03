@@ -22,8 +22,8 @@ class Editor extends Component {
   }
 
   render() {
-    const { content, ext } = this.props;
-    const mode = (ext == ".json") ? "json" : "yaml";
+    const { content, type } = this.props;
+    const mode = (/json/i.test(type)) ? "json" : "yaml"
     return (
       <AceEditor
         value={content}
@@ -47,7 +47,7 @@ Editor.propTypes = {
   content: PropTypes.any.isRequired,
   onEditorChange: PropTypes.func.isRequired,
   editorChanged: PropTypes.bool.isRequired,
-  ext: PropTypes.string
+  type: PropTypes.string
 };
 
 export default Editor;
