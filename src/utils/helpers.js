@@ -76,10 +76,11 @@ export const getFilenameFromPath = (path) => {
  */
 export const getExtensionFromPath = (path) => {
   if (!path) return '';
-  const index = path.lastIndexOf('.');
+  const filename = getFilenameFromPath(path);
+  const index = filename.lastIndexOf('.');
 
-  if (index >= 0) {
-    return path.substring(index + 1);
+  if (index > 0) {
+    return filename.substring(index + 1);
   } else {
     return '';
   }

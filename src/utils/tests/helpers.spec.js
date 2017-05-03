@@ -139,11 +139,19 @@ describe('Helper functions', () => {
     let expected = "";
     expect(getExtensionFromPath(path)).toEqual(expected);
 
+    path = "foo.yml";
+    expected = "yml";
+    expect(getExtensionFromPath(path)).toEqual(expected);
+
     path = "foo/bar.yml";
     expected = "yml";
     expect(getExtensionFromPath(path)).toEqual(expected);
 
     path = "foo/baz";
+    expected = "";
+    expect(getExtensionFromPath(path)).toEqual(expected);
+
+    path = "foo/.ignore";
     expected = "";
     expect(getExtensionFromPath(path)).toEqual(expected);
   });
