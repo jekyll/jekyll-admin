@@ -159,7 +159,7 @@ export class DataFileEdit extends Component {
                   editorChanged={datafileChanged}
                   onEditorChange={onDataFileChanged}
                   content={raw_content}
-                  type={ext}
+                  type={ext || "yml"}
                   ref="editor" />
               </div>
           }

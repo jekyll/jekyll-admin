@@ -72,11 +72,17 @@ export const getFilenameFromPath = (path) => {
 /**
  * Returns extension from the given path or filename
  * @param {String} path or filename
- * @return {String} extension
+ * @return {String} extension or nil
  */
 export const getExtensionFromPath = (path) => {
   if (!path) return '';
-  return path.substring(path.lastIndexOf('.') + 1);
+  const index = path.lastIndexOf('.');
+
+  if (index >= 0) {
+    return path.substring(index + 1);
+  } else {
+    return '';
+  }
 };
 
 /**

@@ -1,6 +1,6 @@
 import {
   toYAML, toJSON, capitalize, toTitleCase, slugify,
-  existingUploadedFilenames, getFilenameFromPath
+  existingUploadedFilenames, getFilenameFromPath, getExtensionFromPath
 } from '../helpers';
 
 describe('Helper functions', () => {
@@ -132,5 +132,19 @@ describe('Helper functions', () => {
     path = "test.md";
     expected = "test.md";
     expect(getFilenameFromPath(path)).toEqual(expected);
+  });
+
+  it('should return the extension from the given path', () => {
+    let path = "";
+    let expected = "";
+    expect(getExtensionFromPath(path)).toEqual(expected);
+
+    path = "foo/bar.yml";
+    expected = "yml";
+    expect(getExtensionFromPath(path)).toEqual(expected);
+
+    path = "foo/baz";
+    expected = "";
+    expect(getExtensionFromPath(path)).toEqual(expected);
   });
 });

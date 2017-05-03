@@ -23,7 +23,7 @@ class Editor extends Component {
 
   render() {
     const { content, type } = this.props;
-    const mode = (/json/i.test(type)) ? "json" : "yaml"
+    const mode = (/json/i.test(type)) ? "json" : "yaml";
     return (
       <AceEditor
         value={content}
