@@ -26,6 +26,8 @@ author:
   email: your-email@domain.com
   web: http://www.example.com
 
+hidden: false
+
 complex_data:
   simple_key: value
   object_key:

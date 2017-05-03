@@ -1,8 +1,8 @@
 import * as ActionTypes from '../constants/actionTypes';
 import { validationError } from './utils';
 import { get, put } from '../utils/fetch';
+import { toYAML, toJSON, getExtensionFromPath } from '../utils/helpers';
 import { validator } from '../utils/validation';
-import { toYAML } from '../utils/helpers';
 import {
   getContentRequiredMessage,
   getFilenameRequiredMessage
@@ -38,6 +38,7 @@ export function fetchDataFile(directory, filename) {
 
 export function putDataFile(directory, filename, data, new_path = '', source = 'editor') {
   return (dispatch, getState) => {
+    const ext = getExtensionFromPath(filename);
     let payload = {};
     let errors;
 
@@ -52,13 +53,23 @@ export function putDataFile(directory, filename, data, new_path = '', source = '
 
     } else if (source == "gui") {
       const metadata = getState().metadata.metadata;
+      const yaml = /yaml|yml/i.test(ext);
+      const json = /json/i.test(ext);
       const yaml_string = toYAML(metadata);
       errors = validateDatafile(filename, metadata);
 
-      if (new_path) {
-        payload = { path: new_path, raw_content: yaml_string };
-      } else {
-        payload = { raw_content: yaml_string };
+      if (yaml) {
+        if (new_path) {
+          payload = { path: new_path, raw_content: yaml_string };
+        } else {
+          payload = { raw_content: yaml_string };
+        }
+      } else if (json) {
+        if (new_path) {
+          payload = { path: new_path, raw_content: JSON.stringify(metadata, null, 2) };
+        } else {
+          payload = { raw_content: JSON.stringify(metadata, null, 2) };
+        }
       }
     }
 
