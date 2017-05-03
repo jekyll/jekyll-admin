@@ -3,16 +3,19 @@ import { mount } from 'enzyme';
 import { Link } from 'react-router';
 import { Sidebar } from '../Sidebar';
 
-import { collections } from './fixtures';
+import { collections, config } from './fixtures';
 
-function setup() {
+const defaultProps = {
+  config: config,
+  collections: collections,
+};
+
+function setup(props=defaultProps) {
   const actions = {
     fetchCollections: jest.fn()
   };
 
-  const component = mount(
-    <Sidebar collections={collections} {...actions} />
-  );
+  const component = mount(<Sidebar {...props} {...actions} />);
 
   return {
     component: component,
