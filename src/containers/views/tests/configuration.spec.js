@@ -1,11 +1,9 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import expect from 'expect';
 import Errors from '../../../components/Errors';
 import Editor from '../../../components/Editor';
 import Button from '../../../components/Button';
 import { Configuration } from '../Configuration';
-import { toYAML } from '../../../utils/helpers';
 import { config } from './fixtures';
 
 const defaultProps = {
@@ -15,9 +13,9 @@ const defaultProps = {
   router: {},
   route: {},
   updated: false,
-  clearErrors: expect.createSpy(),
-  onEditorChange: expect.createSpy(),
-  putConfig: expect.createSpy()
+  clearErrors: jest.fn(),
+  onEditorChange: jest.fn(),
+  putConfig: jest.fn()
 };
 
 const setup = (props = defaultProps) => {
@@ -32,7 +30,7 @@ const setup = (props = defaultProps) => {
 
 describe('Containers::Configuration', () => {
   it('should render correctly with initial props', () => {
-    const { component, editor, saveButton } = setup();
+    const { editor, saveButton } = setup();
     const { raw_content } = config;
     expect(editor.prop('content')).toEqual(raw_content);
     expect(saveButton.prop('active')).toBe(false);
@@ -40,7 +38,7 @@ describe('Containers::Configuration', () => {
   });
 
   it('should render correctly with updated props', () => {
-    const { component, editor, saveButton } = setup(
+    const { saveButton } = setup(
       Object.assign({}, defaultProps, {
         editorChanged: true,
         updated: true
@@ -52,13 +50,13 @@ describe('Containers::Configuration', () => {
 
   it('should not render error messages with initial props', () => {
     const { errors } = setup();
-    expect(errors.node).toNotExist();
+    expect(errors.node).toBeFalsy();
   });
 
   it('should render error messages when necessary', () => {
     const { errors } = setup(Object.assign({}, defaultProps, {
       errors: ['The content is required.']
     }));
-    expect(errors.node).toExist();
+    expect(errors.node).toBeTruthy();
   });
 });

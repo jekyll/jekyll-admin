@@ -17,7 +17,22 @@ defaults:
     scope:
       path: ""
     values:
-      some_front_matter: "default"
+      all: true
+  - scope:
+      path: ''
+      type: pages
+    values:
+      page_only: true
+  - scope:
+      path: ''
+      type: puppies
+    values:
+      breed: ''
+  - scope:
+      path: 'test'
+      type: posts
+    values:
+      post_test_only: true
 
 # Dummy Collection.
 collections:

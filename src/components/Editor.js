@@ -9,7 +9,7 @@ class Editor extends Component {
     return nextProps.content !== this.props.content;
   }
 
-  handleChange(value) {
+  handleChange() {
     // TODO better handling
     const { onEditorChange, editorChanged } = this.props;
     if (!editorChanged) {

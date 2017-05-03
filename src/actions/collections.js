@@ -4,7 +4,7 @@ import moment from 'moment';
 import { validationError } from '../actions/utils';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify, getFilenameFromPath } from '../utils/helpers';
+import { slugify } from '../utils/helpers';
 import {
   getTitleRequiredMessage,
   getFilenameRequiredMessage,

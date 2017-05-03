@@ -4,7 +4,6 @@ import * as actions from '../config';
 import * as types from '../../constants/actionTypes';
 import { API } from '../../constants/api';
 import nock from 'nock';
-import expect from 'expect';
 
 const middlewares = [ thunk ];
 const mockStore = configureMockStore(middlewares);

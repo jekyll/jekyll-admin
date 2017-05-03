@@ -1,4 +1,3 @@
-import expect from 'expect';
 import * as actions from '../metadata';
 import * as types from '../../constants/actionTypes';
 

@@ -9,7 +9,7 @@ import Button from '../../components/Button';
 import { putConfig, onEditorChange } from '../../actions/config';
 import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
-import { toYAML, preventDefault } from '../../utils/helpers';
+import { preventDefault } from '../../utils/helpers';
 
 export class Configuration extends Component {
 
