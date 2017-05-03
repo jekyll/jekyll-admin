@@ -1,8 +1,8 @@
 import * as ActionTypes from '../constants/actionTypes';
 import { validationError } from './utils';
 import { get, put } from '../utils/fetch';
+import { toYAML, toJSON, getExtensionFromPath } from '../utils/helpers';
 import { validator } from '../utils/validation';
-import { toYAML } from '../utils/helpers';
 import {
   getContentRequiredMessage,
   getFilenameRequiredMessage
@@ -38,7 +38,9 @@ export function fetchDataFile(filename) {
 
 export function putDataFile(filename, data, source = "editor") {
   return (dispatch, getState) => {
+    const ext = getExtensionFromPath(filename);
     let payload = {};
+
     if (source == "editor") {
       const errors = validateDatafile(filename, data);
       if (errors.length) {
@@ -47,10 +49,17 @@ export function putDataFile(filename, data, source = "editor") {
       // clear errors
       dispatch({type: ActionTypes.CLEAR_ERRORS});
       payload = { raw_content: data };
+
     } else if (source == "gui") {
       const metadata = getState().metadata.metadata;
-      const yaml_string = toYAML(metadata);
-      payload = { raw_content: yaml_string };
+      const yaml = /yaml|yml/i.test(ext);
+      const json = /json/i.test(ext);
+
+      if (yaml) {
+        payload = { raw_content: toYAML(metadata) };
+      } else if (json) {
+        payload = { raw_content: JSON.stringify(metadata, null, 2) };
+      }
     }
     return put(
       datafileAPIUrl(filename),

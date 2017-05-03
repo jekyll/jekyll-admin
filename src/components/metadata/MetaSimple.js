@@ -50,7 +50,7 @@ export class MetaSimple extends Component {
       <TextareaAutosize
         onChange={(e) => this.handleEditableChange(e)}
         className="field value-field"
-        value={fieldValue} />
+        value={`${fieldValue}`} />
     );
   }
 

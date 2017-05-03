@@ -29,7 +29,7 @@ describe "data" do
   it "gets the index" do
     get "/data"
     expect(last_response).to be_ok
-    expect(last_response_parsed.first).to eql(base_response)
+    expect(last_response_parsed[1]).to eql(base_response)
   end
 
   it "gets an individual data file" do
