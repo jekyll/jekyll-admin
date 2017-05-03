@@ -11,7 +11,7 @@ import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
 import { clearErrors } from '../../actions/utils';
-import { getFilenameFromPath, preventDefault } from '../../utils/helpers';
+import { getFilenameFromPath, getExtensionFromPath, preventDefault } from '../../utils/helpers';
 import {
   fetchDataFile, putDataFile, deleteDataFile, onDataFileChanged
 } from '../../actions/datafiles';
@@ -56,13 +56,12 @@ export class DataFileEdit extends Component {
 
   handleClickSave(e) {
     const { datafile, datafileChanged, fieldChanged, putDataFile, params } = this.props;
-    const { ext } = datafile;
 
     // Prevent the default event from bubbling
     preventDefault(e);
 
     if (fieldChanged) {
-      putDataFile(params.data_file, null, 'gui', ext);
+      putDataFile(params.data_file, null, 'gui');
     } else if (datafileChanged) {
       putDataFile(params.data_file, this.refs.editor.getValue(), 'editor');
     }
@@ -78,18 +77,18 @@ export class DataFileEdit extends Component {
   }
 
   renderAside() {
-    const { datafile, datafileChanged, onDataFileChanged, fieldChanged, updated } = this.props;
-    const { path, ext } = datafile;
+    const { datafile, datafileChanged, onDataFileChanged, fieldChanged, updated, params } = this.props;
+    const { path } = datafile;
     const filename = getFilenameFromPath(path);
-    const guiSupport = (ext == ".yml" || ext == ".yaml" || ext == ".json") ? true : false;
-    const activator = (datafileChanged || fieldChanged) ? true : false;
+    const ext = getExtensionFromPath(path);
+    const guiSupport = (/yaml|yml|json/i.test(ext));
 
     return (
       <div className="content-side">
         <Button
           onClick={this.handleClickSave}
           type="save"
-          active={activator}
+          active={datafileChanged || fieldChanged}
           triggered={updated}
           icon="save"
           block />
@@ -124,8 +123,9 @@ export class DataFileEdit extends Component {
       return <h1>{getNotFoundMessage("data file")}</h1>;
     }
 
-    const { path, raw_content, content, ext } = datafile;
+    const { path, raw_content, content } = datafile;
     const filename = getFilenameFromPath(path);
+    const ext = getExtensionFromPath(path);
 
     const keyboardHandlers = {
       'save': this.handleClickSave,

@@ -70,6 +70,16 @@ export const getFilenameFromPath = (path) => {
 };
 
 /**
+ * Returns extension from the given path or filename
+ * @param {String} path or filename
+ * @return {String} extension
+ */
+export const getExtensionFromPath = (path) => {
+  if (!path) return '';
+  return path.substring(path.lastIndexOf('.') + 1);
+};
+
+/**
  * returns the uploaded static files that are being overwritten
  * @param {Array} uploadedFiles
  * @param {Array} currentFiles

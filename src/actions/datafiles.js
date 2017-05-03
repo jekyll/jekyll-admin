@@ -2,7 +2,7 @@ import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
 import { validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
-import { toYAML, toJSON } from '../utils/helpers';
+import { toYAML, toJSON, getExtensionFromPath } from '../utils/helpers';
 import { validator } from '../utils/validation';
 import {
   getParserErrorMessage,
@@ -38,9 +38,11 @@ export function fetchDataFile(filename) {
   };
 }
 
-export function putDataFile(filename, data, source = "editor", ext = "") {
+export function putDataFile(filename, data, source = "editor") {
   return (dispatch, getState) => {
+    const ext = getExtensionFromPath(filename);
     let payload = {};
+
     if (source == "editor") {
       const errors = validateDatafile(filename, data);
       if (errors.length) {
@@ -49,11 +51,15 @@ export function putDataFile(filename, data, source = "editor", ext = "") {
       // clear errors
       dispatch({type: ActionTypes.CLEAR_ERRORS});
       payload = { raw_content: data };
+
     } else if (source == "gui") {
       const metadata = getState().metadata.metadata;
-      if (ext == ".yml" || ext == ".yaml") {
+      const yaml = /yaml|yml/i.test(ext);
+      const json = /json/i.test(ext);
+
+      if (yaml) {
         payload = { raw_content: toYAML(metadata) };
-      } else if (ext == ".json") {
+      } else if (json) {
         payload = { raw_content: JSON.stringify(metadata, null, 2) };
       }
     }
