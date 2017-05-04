@@ -30,7 +30,12 @@ export class DataFileNew extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
-      const filename = this.refs.inputpath.refs.input.value;
+      let filename;
+      if (this.state.guiView) {
+        filename = this.refs.filename.value + this.refs.datatype.value;
+      } else {
+        filename = this.refs.inputpath.refs.input.value;
+      }
       browserHistory.push(`${ADMIN_PREFIX}/datafiles/${filename}`);
     }
   }
@@ -44,7 +49,7 @@ export class DataFileNew extends Component {
   }
 
   routerWillLeave(nextLocation) {
-    if (this.props.datafileChanged) {
+    if (!this.state.guiView && this.props.datafileChanged) {
       return getLeaveMessage();
     }
   }
@@ -53,17 +58,53 @@ export class DataFileNew extends Component {
     this.setState({ guiView: !this.state.guiView });
   }
 
+  handleChange(e) {
+    const { onDataFileChanged } = this.props;
+    (e.target.value);
+    onDataFileChanged();
+  }
+
   handleClickSave() {
     const { datafileChanged, putDataFile } = this.props;
-
+    let filename;
     if (datafileChanged) {
-      const filename = this.refs.inputpath.refs.input.value;
       if (this.state.guiView) {
+        filename = this.refs.filename.value + this.refs.datatype.value;
         putDataFile(filename, null, "gui");
       } else {
+        filename = this.refs.inputpath.refs.input.value;
         putDataFile(filename, this.refs.editor.getValue());
       }
     }
+  }
+
+  renderGUInputs() {
+    return(
+      <form className="datafile-path">
+        <fieldset className="directory">
+          <legend>Directory</legend>
+          <input
+            type="text"
+            placeholder="directory"
+            disabled />
+        </fieldset>
+        <fieldset className="filename">
+          <legend>Filename (without extension)</legend>
+          <input
+            type="text"
+            ref="filename"
+            onChange={(e) => this.handleChange(e)}
+            placeholder="filename" />
+        </fieldset>
+        <fieldset className="file-type">
+          <legend>File Type</legend>
+          <select ref="datatype">
+            <option value=".yml">YAML</option>
+            <option value=".json">JSON</option>
+          </select>
+        </fieldset>
+      </form>
+    );
   }
 
   render() {
@@ -80,21 +121,23 @@ export class DataFileNew extends Component {
 
         <div className="content-wrapper">
           <div className="content-body">
-            <InputPath
-              onChange={onDataFileChanged}
-              type="datafiles"
-              path=""
-              ref="inputpath" />
             {
-              this.state.guiView && <DataGUI fields={{"Key": "Value"}} dataview />
+              this.state.guiView && <div>
+                {this.renderGUInputs()}
+                <DataGUI fields={{"key": "value"}} dataview /></div>
             }
             {
-              !this.state.guiView &&
+              !this.state.guiView && <div>
+                <InputPath
+                  onChange={onDataFileChanged}
+                  type="datafiles"
+                  path=""
+                  ref="inputpath" />
                 <Editor
                   editorChanged={datafileChanged}
                   onEditorChange={onDataFileChanged}
                   content={""}
-                  ref="editor" />
+                  ref="editor" /></div>
             }
           </div>
 
