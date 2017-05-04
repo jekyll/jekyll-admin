@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
+import DataGUI from '../MetaFields';
 import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
@@ -13,6 +14,14 @@ import { getLeaveMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileNew extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      guiView: false
+    };
+  }
 
   componentDidMount() {
     const { router, route } = this.props;
@@ -40,12 +49,20 @@ export class DataFileNew extends Component {
     }
   }
 
+  toggleView() {
+    this.setState({ guiView: !this.state.guiView });
+  }
+
   handleClickSave() {
     const { datafileChanged, putDataFile } = this.props;
+
     if (datafileChanged) {
       const filename = this.refs.inputpath.refs.input.value;
-      const value = this.refs.editor.getValue();
-      putDataFile(filename, value);
+      if (this.state.guiView) {
+        putDataFile(filename, null, "gui");
+      } else {
+        putDataFile(filename, this.refs.editor.getValue());
+      }
     }
   }
 
@@ -68,14 +85,26 @@ export class DataFileNew extends Component {
               type="datafiles"
               path=""
               ref="inputpath" />
-            <Editor
-              editorChanged={datafileChanged}
-              onEditorChange={onDataFileChanged}
-              content={''}
-              ref="editor" />
+            {
+              this.state.guiView && <DataGUI fields={{"Key": "Value"}} dataview />
+            }
+            {
+              !this.state.guiView &&
+                <Editor
+                  editorChanged={datafileChanged}
+                  onEditorChange={onDataFileChanged}
+                  content={""}
+                  ref="editor" />
+            }
           </div>
 
           <div className="content-side">
+            <Button
+              onClick={this.toggleView.bind(this)}
+              type="view-toggle"
+              active={true}
+              triggered={this.state.guiView}
+              block />
             <Button
               onClick={() => this.handleClickSave()}
               type="create"
