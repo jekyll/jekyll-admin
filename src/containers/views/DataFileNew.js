@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
+import { HotKeys } from 'react-hotkeys';
 import DataGUI from '../MetaFields';
 import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
@@ -10,6 +11,7 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
+import { preventDefault } from '../../utils/helpers';
 import { getLeaveMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -17,7 +19,7 @@ export class DataFileNew extends Component {
 
   constructor(props) {
     super(props);
-
+    this.handleClickSave = this.handleClickSave.bind(this);
     this.state = {
       guiView: false
     };
@@ -64,8 +66,12 @@ export class DataFileNew extends Component {
     onDataFileChanged();
   }
 
-  handleClickSave() {
+  handleClickSave(e) {
     const { datafileChanged, putDataFile } = this.props;
+
+    // Prevent the default event from bubbling
+    preventDefault(e);
+
     let filename;
     if (datafileChanged) {
       if (this.state.guiView) {
@@ -112,8 +118,12 @@ export class DataFileNew extends Component {
       datafileChanged, onDataFileChanged, updated, errors
     } = this.props;
 
+    const keyboardHandlers = {
+      'save': this.handleClickSave,
+    };
+
     return (
-      <div>
+      <HotKeys handlers={keyboardHandlers}>
         {errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
           <Breadcrumbs splat="" type="datafiles" />
@@ -157,7 +167,7 @@ export class DataFileNew extends Component {
               block />
           </div>
         </div>
-      </div>
+      </HotKeys>
     );
   }
 }
