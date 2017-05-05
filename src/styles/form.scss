@@ -162,5 +162,37 @@
     &:focus { outline: none; border-color: $dark-orange; }
   }
 
-  select { font-size: 15px; }
+  select {
+    font-size: 15px;
+    color: #ddd;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &:focus { outline: none; border-color: $dark-orange; }
+
+    option {
+      min-height: 21px;
+      &:hover { background-color: $dark-orange; }
+    }
+  }
+
+  .file-type {
+    legend {
+      position: relative;
+
+      // custom dropdown arrow
+      &:after {
+        content: "\25BC";
+        position: absolute;
+        top: 28px;
+        right: -54px;
+        padding: 12px 9px;
+        color: #bbb;
+        vertical-align: middle;
+        pointer-events: none;
+        border-left: 1px solid #454545;
+      }
+    }
+  }
 }
