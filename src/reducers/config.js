@@ -11,6 +11,7 @@ export default function config(state = {
   config: {},
   updated: false,
   editorChanged: false,
+  fieldChanged: false,
   isFetching: false
 }, action) {
   switch (action.type) {

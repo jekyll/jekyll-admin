@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import { HotKeys } from 'react-hotkeys';
+import DataGUI from '../MetaFields';
 import Editor from '../../components/Editor';
 import Errors from '../../components/Errors';
 import Button from '../../components/Button';
@@ -17,6 +18,10 @@ export class Configuration extends Component {
     super(props);
 
     this.handleClickSave = this.handleClickSave.bind(this);
+
+    this.state = {
+      guiView: false
+    };
   }
 
   componentDidMount() {
@@ -38,20 +43,26 @@ export class Configuration extends Component {
     }
   }
 
+  toggleView() {
+    this.setState({ guiView: !this.state.guiView });
+  }
+
   handleClickSave(e) {
     // Prevent the default event from bubbling
     preventDefault(e);
 
-    const { editorChanged, putConfig } = this.props;
+    const { editorChanged, fieldChanged, putConfig } = this.props;
     if (editorChanged) {
       const value = this.refs.editor.getValue();
       putConfig(value);
+    } else if (fieldChanged) {
+      putConfig(null, "gui")
     }
   }
 
   render() {
-    const { editorChanged, onEditorChange, config, updated, errors } = this.props;
-    const { raw_content } = config;
+    const { editorChanged, fieldChanged, onEditorChange, config, updated, errors } = this.props;
+    const { raw_content, content } = config;
     const keyboardHandlers = {
       'save': this.handleClickSave,
     };
@@ -61,16 +72,33 @@ export class Configuration extends Component {
         {errors && errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
           <h1>Configuration</h1>
-          <div className="page-buttons">
+          <div className="page-buttons multiple">
+            <Button // TODO: Hide toggle for non-YAML config files (e.g. '_config.toml')
+              onClick={this.toggleView.bind(this)}
+              type="view-toggle"
+              active={true}
+              triggered={this.state.guiView}
+              block />
             <Button
               onClick={this.handleClickSave}
               type="save"
-              active={editorChanged}
-              triggered={updated} />
+              active={editorChanged || fieldChanged}
+              triggered={updated}
+              block />
           </div>
         </div>
+          {
+            this.state.guiView && content &&
+              <div className="content-body">
+                <div className="warning">
+                  CAUTION! Any existing comments and formatting will be lost when editing via this view.
+                  Switch to the <strong>Raw Editor</strong> to preserve comments and formatting.
+                </div>
+                <DataGUI fields={content} dataview/>
+              </div>
+          }
         {
-          raw_content &&
+          !this.state.guiView && raw_content &&
             <Editor
               editorChanged={editorChanged}
               onEditorChange={onEditorChange}
@@ -88,6 +116,7 @@ Configuration.propTypes = {
   putConfig: PropTypes.func.isRequired,
   updated: PropTypes.bool.isRequired,
   editorChanged: PropTypes.bool.isRequired,
+  fieldChanged: PropTypes.bool.isRequired,
   errors: PropTypes.array.isRequired,
   clearErrors: PropTypes.func.isRequired,
   router: PropTypes.object.isRequired,
@@ -98,6 +127,7 @@ const mapStateToProps = (state) => ({
   config: state.config.config,
   updated: state.config.updated,
   editorChanged: state.config.editorChanged,
+  fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors
 });
 
