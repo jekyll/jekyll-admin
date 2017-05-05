@@ -105,6 +105,42 @@ describe('Actions::Datafiles', () => {
       });
   });
 
+  it('updates a yaml file successfully from the GUI editor', () => {
+    nock(API)
+      .put('/data/data_file.yaml')
+      .reply(200, datafile);
+
+    const expectedAction = [
+      { type: types.CLEAR_ERRORS },
+      { type: types.PUT_DATAFILE_SUCCESS, file: datafile }
+    ];
+
+    const store = mockStore({metadata: { metadata: datafile }});
+
+    return store.dispatch(actions.putDataFile('data_file.yaml', null, 'gui'))
+      .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedAction);
+      });
+  });
+
+  it('updates a json file successfully from the GUI editor', () => {
+    nock(API)
+      .put('/data/data_file.json')
+      .reply(200, datafile);
+
+    const expectedAction = [
+      { type: types.CLEAR_ERRORS },
+      { type: types.PUT_DATAFILE_SUCCESS, file: datafile }
+    ];
+
+    const store = mockStore({metadata: { metadata: datafile }});
+
+    return store.dispatch(actions.putDataFile('data_file.json', null, 'gui'))
+      .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedAction);
+      });
+  });
+
   it('creates PUT_DATAFILE_FAILURE when updating a datafile failed', () => {
     nock(API)
       .put('/data/data_file.yml', datafile)
@@ -173,5 +209,18 @@ describe('Actions::Datafiles', () => {
 
     store.dispatch(actions.putDataFile());
     expect(store.getActions()).toEqual(expectedActions);
+  });
+
+  it('creates DATAFILE_CHANGED when the content in editor is changed', () => {
+    const expectedAction = [
+      {
+        type: types.DATAFILE_CHANGED
+      }
+    ];
+
+    const store = mockStore({ config: {} });
+
+    store.dispatch(actions.onDataFileChanged());
+    expect(store.getActions()).toEqual(expectedAction);
   });
 });
