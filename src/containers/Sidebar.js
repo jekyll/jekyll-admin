@@ -26,7 +26,7 @@ export class Sidebar extends Component {
     return _.map(collections, (col, i) =>
       <li key={i}>
         <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/${col.label}`}>
-          <i className="fa fa-book" />{capitalize(col.label)}
+          <i className="fa fa-book" />Collection: {capitalize(col.label)}
         </Link>
       </li>
     );
@@ -36,6 +36,7 @@ export class Sidebar extends Component {
     return (
       <div className="sidebar">
         <Link className="logo" to={`${ADMIN_PREFIX}/pages`} />
+        <Splitter />
         <ul className="routes">
           <li>
             <Link activeClassName="active" to={`${ADMIN_PREFIX}/pages`}>

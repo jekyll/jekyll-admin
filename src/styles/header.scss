@@ -2,14 +2,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 75px;
-  background-color: white;
+  height: $header-height;
+  background-color: $header-color;
+  border-bottom: 1px solid #dedede;
   padding: 0 40px;
-  @include box-shadow(0 2px 4px 0 rgba(204, 204, 204, 0.4));
   .title {
     font-weight: normal;
     a {
-      color: #444444;
+      color: $dark-gray;
       &:hover {
         color: black;
       }
