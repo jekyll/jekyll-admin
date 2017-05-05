@@ -39,11 +39,11 @@ const setup = (props = defaultProps) => {
 
 describe('Containers::DataFileNew', () => {
   it('should render correctly', () => {
-    const { component, toggleButton, saveButton, editor, gui } = setup();
+    const { component, toggleButton, saveButton, editor } = setup();
     expect(toggleButton.node.props['type']).toEqual('view-toggle');
     expect(saveButton.node.props['type']).toEqual('create');
     expect(editor.node.props['content']).toEqual('');
-    expect(gui.node).toBeFalsy();
+    expect(component.state()).toEqual({'guiView': false});
   });
 
   it('should not render error messages initially', () => {
@@ -56,6 +56,27 @@ describe('Containers::DataFileNew', () => {
       errors: ['The content is required!']
     }));
     expect(errors.node).toBeTruthy();
+  });
+
+  it('should not call clearErrors on unmount if there are no errors.', () => {
+    const { component, errors, actions } = setup();
+    component.unmount();
+    expect(actions.clearErrors).not.toHaveBeenCalled();
+  });
+
+  it('should clear errors on unmount.', () => {
+    const { component, errors, actions } = setup(Object.assign({}, defaultProps, {
+      errors: ['The content is required!']
+    }));
+    component.unmount();
+    expect(actions.clearErrors).toHaveBeenCalled();
+  });
+
+  it('should toggle views.', () => {
+    const { component, toggleButton } = setup();
+    expect(component.state('guiView')).toBe(false);
+    toggleButton.simulate('click');
+    expect(component.state('guiView')).toBe(true);
   });
 
   it('should not call putDataFile if a field is not changed.', () => {
