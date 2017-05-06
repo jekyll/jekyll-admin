@@ -62,20 +62,6 @@ describe('Containers::DataFileEdit', () => {
     expect(errors.node).toBeTruthy();
   });
 
-  it('should not call putDataFile if a field is not changed.', () => {
-    const { saveButton, actions } = setup();
-    saveButton.simulate('click');
-    expect(actions.putDataFile).not.toHaveBeenCalled();
-  });
-
-  it('should call putDataFile if a field is changed.', () => {
-    const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
-      fieldChanged: true
-    }));
-    saveButton.simulate('click');
-    expect(actions.putDataFile).toHaveBeenCalled();
-  });
-
   it('should call deleteDataFile', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');

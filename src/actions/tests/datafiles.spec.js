@@ -141,6 +141,24 @@ describe('Actions::Datafiles', () => {
       });
   });
 
+  it('updates a file successfully from the GUI editor', () => {
+    nock(API)
+      .put('/data/data_file.json')
+      .reply(200, datafile);
+
+    const expectedAction = [
+      { type: types.CLEAR_ERRORS },
+      { type: types.PUT_DATAFILE_SUCCESS, file: datafile }
+    ];
+
+    const store = mockStore({metadata: { metadata: datafile }});
+
+    return store.dispatch(actions.putDataFile(null, 'data_file.json', null, null, 'gui'))
+      .then(() => { // return of async actions
+        expect(store.getActions()).toEqual(expectedAction);
+      });
+  });
+
   it('creates PUT_DATAFILE_FAILURE when updating a datafile failed', () => {
     nock(API)
       .put('/data/movies/actors.yml', datafile)
