@@ -36,52 +36,35 @@ export function fetchDataFile(directory, filename) {
   };
 }
 
-export function putDataFile(directory, filename, data, new_path = '', source = 'editor') {
+/**
+ * Creates and updates a data file.
+ * @param {String} directory : Dirname of data file
+ * @param {String} filename  : The data file
+ * @param {Object} data      : Content to be written to data file
+ * @param {String} path      : File path relative to config['source']
+ * @param {String} source    : Point of origin of file-content data.
+ *                             Either the default `#brace-editor`, or `<DataGUI/>`
+ */
+export function putDataFile(directory, filename, data, path, source = 'editor') {
   return (dispatch, getState) => {
-    const ext = getExtensionFromPath(filename);
-    let payload = {};
-    let errors;
+    const ext = getExtensionFromPath(path);
 
-    if (source == "editor") {
-      errors = validateDatafile(filename, data);
-
-      if (new_path) {
-        payload = { path: new_path, raw_content: data };
-      } else {
-        payload = { raw_content: data };
-      }
-
-    } else if (source == "gui") {
-      const metadata = getState().metadata.metadata;
-      const yaml = /yaml|yml/i.test(ext);
+    if (source == "gui") {
       const json = /json/i.test(ext);
-      const yaml_string = toYAML(metadata);
-      errors = validateDatafile(filename, metadata);
-
-      if (yaml) {
-        if (new_path) {
-          payload = { path: new_path, raw_content: yaml_string };
-        } else {
-          payload = { raw_content: yaml_string };
-        }
-      } else if (json) {
-        if (new_path) {
-          payload = { path: new_path, raw_content: JSON.stringify(metadata, null, 2) };
-        } else {
-          payload = { raw_content: JSON.stringify(metadata, null, 2) };
-        }
-      }
+      let metadata = getState().metadata.metadata;
+      data = json ? (JSON.stringify(metadata, null, 2)) : (toYAML(metadata));
     }
 
+    // handle errors
+    const errors = validateDatafile(filename, data);
     if (errors.length) {
       return dispatch(validationError(errors));
     }
-    // clear errors
     dispatch({type: ActionTypes.CLEAR_ERRORS});
 
     return put(
       datafileAPIUrl(directory, filename),
-      JSON.stringify(payload),
+      JSON.stringify({ path: path, raw_content: data }),
       { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.PUT_DATAFILE_FAILURE, name: "error"},
       dispatch
