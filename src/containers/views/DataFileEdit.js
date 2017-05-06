@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
-import Metadata from '../MetaFields';
+import DataGUI from '../MetaFields';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import Splitter from '../../components/Splitter';
@@ -184,7 +184,7 @@ export class DataFileEdit extends Component {
                   CAUTION! Any existing comments will be lost when editing via this view.
                   Switch to the <strong>Raw Editor</strong> to preserve comments.
                 </div>
-                <Metadata fields={content} dataview/>
+                <DataGUI fields={content} dataview/>
               </div>
           }
           {
