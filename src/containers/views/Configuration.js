@@ -40,7 +40,8 @@ export class Configuration extends Component {
   }
 
   routerWillLeave(nextLocation) {
-    if (this.props.editorChanged) {
+    const { editorChanged, fieldChanged } = this.props;
+    if (editorChanged || fieldChanged) {
       return getLeaveMessage();
     }
   }
