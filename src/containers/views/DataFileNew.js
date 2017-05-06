@@ -19,7 +19,11 @@ export class DataFileNew extends Component {
 
   constructor(props) {
     super(props);
+
+    this.routerWillLeave = this.routerWillLeave.bind(this);
     this.handleClickSave = this.handleClickSave.bind(this);
+    this.toggleView = this.toggleView.bind(this);
+
     this.state = {
       guiView: false
     };
@@ -27,7 +31,7 @@ export class DataFileNew extends Component {
 
   componentDidMount() {
     const { router, route } = this.props;
-    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+    router.setRouteLeaveHook(route, this.routerWillLeave);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -153,13 +157,13 @@ export class DataFileNew extends Component {
 
           <div className="content-side">
             <Button
-              onClick={this.toggleView.bind(this)}
+              onClick={this.toggleView}
               type="view-toggle"
               active={true}
               triggered={this.state.guiView}
               block />
             <Button
-              onClick={() => this.handleClickSave()}
+              onClick={this.handleClickSave}
               type="create"
               active={datafileChanged}
               triggered={updated}
