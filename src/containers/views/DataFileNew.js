@@ -23,9 +23,12 @@ export class DataFileNew extends Component {
     this.routerWillLeave = this.routerWillLeave.bind(this);
     this.handleClickSave = this.handleClickSave.bind(this);
     this.toggleView = this.toggleView.bind(this);
+    this.handleChange = this.handleChange.bind(this);
 
     this.state = {
-      guiView: false
+      guiView: false,
+      baseName: '',
+      extn: '.yml'
     };
   }
 
@@ -38,7 +41,7 @@ export class DataFileNew extends Component {
     if (this.props.updated !== nextProps.updated) {
       let filename;
       if (this.state.guiView) {
-        filename = this.refs.filename.value + this.refs.datatype.value;
+        filename = this.state.baseName + this.state.extn;
       } else {
         filename = this.refs.inputpath.refs.input.value;
       }
@@ -66,7 +69,12 @@ export class DataFileNew extends Component {
 
   handleChange(e) {
     const { onDataFileChanged } = this.props;
-    (e.target.value);
+    let obj = {};
+    const key = e.target.id;
+    const value = e.target.value;
+    obj[key] = value;
+
+    this.setState(obj);
     onDataFileChanged();
   }
 
@@ -79,7 +87,7 @@ export class DataFileNew extends Component {
     let filename;
     if (datafileChanged) {
       if (this.state.guiView) {
-        filename = this.refs.filename.value + this.refs.datatype.value;
+        filename = this.state.baseName + this.state.extn;
         putDataFile(filename, null, "gui");
       } else {
         filename = this.refs.inputpath.refs.input.value;
@@ -102,13 +110,13 @@ export class DataFileNew extends Component {
           <legend>Filename (without extension)</legend>
           <input
             type="text"
-            ref="filename"
-            onChange={(e) => this.handleChange(e)}
+            id="baseName"
+            onChange={this.handleChange}
             placeholder="filename" />
         </fieldset>
         <fieldset className="file-type">
           <legend>File Type</legend>
-          <select ref="datatype">
+          <select id="extn" value={this.state.extn} onChange={this.handleChange}>
             <option value=".yml">YAML</option>
             <option value=".json">JSON</option>
           </select>
@@ -119,12 +127,20 @@ export class DataFileNew extends Component {
 
   render() {
     const {
-      datafileChanged, onDataFileChanged, updated, errors
+      datafileChanged, fieldChanged, onDataFileChanged, updated, errors
     } = this.props;
 
     const keyboardHandlers = {
       'save': this.handleClickSave,
     };
+
+    // activate or deactivate `Create` button based on various states
+    let activator = false;
+    if (this.state.guiView && this.state.baseName) {
+      activator = datafileChanged || fieldChanged;
+    } else if (!this.state.guiView) {
+      activator = datafileChanged;
+    }
 
     return (
       <HotKeys handlers={keyboardHandlers}>
@@ -165,7 +181,7 @@ export class DataFileNew extends Component {
             <Button
               onClick={this.handleClickSave}
               type="create"
-              active={datafileChanged}
+              active={activator}
               triggered={updated}
               icon="plus-square"
               block />
@@ -185,13 +201,15 @@ DataFileNew.propTypes = {
   updated: PropTypes.bool.isRequired,
   datafileChanged: PropTypes.bool.isRequired,
   router: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired
+  route: PropTypes.object.isRequired,
+  fieldChanged: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   datafile: state.datafiles.currentFile,
   updated: state.datafiles.updated,
   datafileChanged: state.datafiles.datafileChanged,
+  fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors
 });
 

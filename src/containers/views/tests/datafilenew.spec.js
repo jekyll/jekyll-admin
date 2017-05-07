@@ -43,7 +43,7 @@ describe('Containers::DataFileNew', () => {
     expect(toggleButton.node.props['type']).toEqual('view-toggle');
     expect(saveButton.node.props['type']).toEqual('create');
     expect(editor.node.props['content']).toEqual('');
-    expect(component.state()).toEqual({'guiView': false});
+    expect(component.state()).toEqual({'baseName': '', 'extn': '.yml', 'guiView': false});
   });
 
   it('should not render error messages initially', () => {
@@ -85,7 +85,7 @@ describe('Containers::DataFileNew', () => {
     expect(actions.putDataFile).not.toHaveBeenCalled();
   });
 
-  it('should activate save button if a field is changed.', () => {
+  it('should activate save button when Editor or input field is changed.', () => {
     const { saveButton } = setup(Object.assign({}, defaultProps, {
       datafileChanged: true
     }));
