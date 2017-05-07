@@ -66,6 +66,13 @@ module JekyllAdmin
         # get the directories inside the requested directory
         directory = JekyllAdmin::Directory.new(directory_path, args)
         directories = directory.directories
+
+        # exclude root level directories which do not have drafts
+        if params["splat"].first.empty?
+          directories = directories.select do |d|
+            directory_drafts.include? d.name.to_s
+          end
+        end
         # merge directories with the drafts at the same level
         directories.concat(directory_drafts.sort_by(&:date).reverse)
       end
