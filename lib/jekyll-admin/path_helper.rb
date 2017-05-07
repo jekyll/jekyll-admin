@@ -57,6 +57,8 @@ module JekyllAdmin
         sanitized_path File.join(collection.relative_directory, params["splat"].first)
       when "data"
         sanitized_path File.join(DataFile.data_dir)
+      when "drafts"
+        sanitized_path File.join("_drafts", params["splat"].first)
       else
         sanitized_path params["splat"].first
       end
