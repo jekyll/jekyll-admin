@@ -12,6 +12,9 @@ exclude:
 
 foo: bar
 
+# show draft posts
+show_drafts: true
+
 defaults:
   -
     scope:
