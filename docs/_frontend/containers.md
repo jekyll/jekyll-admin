@@ -76,8 +76,12 @@ Contains all of the views linked with the routes.
 
 ## Configuration
 
-Container for Configuration view. Consists of a YAML editor and a save button.
-The button is activated when the editor changes.
+Container for Configuration view. Consists of a raw-text-editor, a YAML GUI-editor, a toggle button to switch between the two editors, and a save button.
+
+The save button is activated when either of the editors change.
+
+While the raw-text-editor will output raw-content as entered into the editor, the GUI-editor will output YAML data parsed from
+the input values which will result in removal of any existing comments and any extra spaces around the colon following the config key.
 
 ### PropTypes
 
@@ -89,6 +93,7 @@ The button is activated when the editor changes.
   error: String,
   updated: Boolean,
   editorChanged: Boolean,
+  fieldChanged: Boolean,
   errors: Array,
   clearErrors: Function,
   router: Object,

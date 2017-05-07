@@ -9,22 +9,29 @@ import { config } from './fixtures';
 const defaultProps = {
   config,
   editorChanged: false,
+  fieldChanged: false,
   errors: [],
   router: {},
   route: {},
-  updated: false,
-  clearErrors: jest.fn(),
-  onEditorChange: jest.fn(),
-  putConfig: jest.fn()
+  updated: false
 };
 
 const setup = (props = defaultProps) => {
-  const component = shallow(<Configuration {...props} />);
+  const actions = {
+    clearErrors: jest.fn(),
+    onEditorChange: jest.fn(),
+    putConfig: jest.fn()
+  };
+
+  const component = shallow(<Configuration {...props} {...actions} />);
   return {
     component,
+    props,
+    actions,
     editor: component.find(Editor),
     errors: component.find(Errors),
-    saveButton: component.find(Button)
+    toggleButton: component.find(Button).first(),
+    saveButton: component.find(Button).last()
   };
 };
 
@@ -59,4 +66,33 @@ describe('Containers::Configuration', () => {
     }));
     expect(errors.node).toBeTruthy();
   });
-});
+
+  it('should not call clearErrors on unmount if there are no errors.', () => {
+    const { component, errors, actions } = setup();
+    component.unmount();
+    expect(actions.clearErrors).not.toHaveBeenCalled();
+  });
+
+  it('should clear errors on unmount.', () => {
+    const { component, errors, actions } = setup(Object.assign({}, defaultProps, {
+      errors: ['The content is required!']
+    }));
+    component.unmount();
+    expect(actions.clearErrors).toHaveBeenCalled();
+  });
+
+  it('should toggle views.', () => {
+    const { component, toggleButton } = setup();
+    expect(component.state('guiView')).toBe(false);
+    toggleButton.simulate('click');
+    expect(component.state('guiView')).toBe(true);
+  });
+
+  it('should call putConfig if a field is changed.', () => {
+    const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
+      fieldChanged: true
+    }));
+    saveButton.simulate('click');
+    expect(actions.putConfig).toHaveBeenCalled();
+  });
+ });
