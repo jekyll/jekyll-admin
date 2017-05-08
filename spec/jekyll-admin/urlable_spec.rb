@@ -33,7 +33,7 @@ describe JekyllAdmin::URLable do
   end
 
   context "posts" do
-    subject { JekyllAdmin.site.posts.docs[2] }
+    subject { JekyllAdmin.site.posts.docs[4] }
     let(:http_url) { "#{url_base}/2016/01/01/test-post.html" }
     let(:api_url) { "#{url_base}/#{prefix}/collections/posts/2016-01-01-test-post.md" }
 
@@ -47,7 +47,7 @@ describe JekyllAdmin::URLable do
   end
 
   context "drafts" do
-    subject { JekyllAdmin.site.posts.docs.find_all(&:draft?).first }
+    subject { JekyllAdmin.site.posts.docs.find_all(&:draft?)[1] }
     let(:api_url) { "#{url_base}/#{prefix}/drafts/draft-dir/another-draft-post.md" }
 
     it "knows the API URL" do

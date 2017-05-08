@@ -33,13 +33,31 @@ module JekyllAdmin
 
       private
 
+      # return all documents in the 'posts' collection that output to an html
+      # file but reside in a separate directory, `<source_dir>/_drafts/`
       def drafts
         posts = site.collections.find { |l, _c| l == "posts" }
-        posts[1].docs.find_all(&:draft?) if posts
+        if posts
+          posts[1].docs.find_all { |d| d.output_ext == ".html" && d.draft? }
+        end
       end
 
+      # return drafts at the same level as directory
       def directory_drafts
         drafts.find_all { |d| File.dirname(d.path) == directory_path }
+      end
+
+      def reverse_sorted_drafts
+        directory_drafts.sort_by(&:date).reverse
+      end
+
+      # returns directories at the root of `/_drafts/` that contain drafts
+      def relevant_directory_paths
+        drafts.map { |doc| relative_draft_path(doc).split("/")[0] }.uniq
+      end
+
+      def relative_draft_path(document)
+        File.dirname(document.relative_path.sub("_drafts/", ""))
       end
 
       def ensure_directory
@@ -70,11 +88,11 @@ module JekyllAdmin
         # exclude root level directories which do not have drafts
         if params["splat"].first.empty?
           directories = directories.select do |d|
-            directory_drafts.include? d.name.to_s
+            relevant_directory_paths.include? d.name.to_s
           end
         end
         # merge directories with the drafts at the same level
-        directories.concat(directory_drafts.sort_by(&:date).reverse)
+        directories.concat(reverse_sorted_drafts)
       end
 
       def html_content?
