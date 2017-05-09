@@ -5,6 +5,7 @@ import { Link } from 'react-router';
 import { ADMIN_PREFIX } from '../constants';
 import Splitter from '../components/Splitter';
 import { fetchCollections } from '../actions/collections';
+import { fetchConfig } from '../actions/config';
 import { capitalize } from '../utils/helpers';
 import { sidebar } from '../constants/lang';
 import _ from 'underscore';
@@ -12,7 +13,8 @@ import _ from 'underscore';
 export class Sidebar extends Component {
 
   componentDidMount() {
-    const { fetchCollections } = this.props;
+    const { fetchCollections, fetchConfig } = this.props;
+    fetchConfig();
     fetchCollections();
   }
 
@@ -33,6 +35,7 @@ export class Sidebar extends Component {
   }
 
   render() {
+    const { config } = this.props;
     return (
       <div className="sidebar">
         <Link className="logo" to={`${ADMIN_PREFIX}/pages`} />
@@ -45,7 +48,15 @@ export class Sidebar extends Component {
           </li>
 
           {this.renderCollections()}
-
+          {
+            config.content && config.content.show_drafts &&
+              <li>
+                <Link activeClassName="active" to={`${ADMIN_PREFIX}/drafts`}>
+                  <i className="fa fa-edit" />
+                  {sidebar.drafts}
+                </Link>
+              </li>
+          }
           <Splitter />
           <li>
             <Link activeClassName="active" to={`${ADMIN_PREFIX}/datafiles`}>
@@ -74,14 +85,18 @@ export class Sidebar extends Component {
 
 Sidebar.propTypes = {
   collections: PropTypes.array.isRequired,
-  fetchCollections: PropTypes.func.isRequired
+  config: PropTypes.object.isRequired,
+  fetchCollections: PropTypes.func.isRequired,
+  fetchConfig: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
+  config: state.config.config,
   collections: state.collections.collections
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
+  fetchConfig,
   fetchCollections
 }, dispatch);
 

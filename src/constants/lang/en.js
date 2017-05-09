@@ -50,6 +50,7 @@ export const getFilenameNotValidMessage = () =>
 export const sidebar = {
   pages: 'Pages',
   posts: 'Posts',
+  drafts: 'Drafts',
   datafiles: 'Data Files',
   staticfiles: 'Static Files',
   configuration: 'Configuration'
