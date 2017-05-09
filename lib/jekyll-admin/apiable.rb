@@ -47,6 +47,10 @@ module JekyllAdmin
         output["name"] = basename
       end
 
+      if is_a?(Jekyll::Document) && draft?
+        output["relative_path"] = relative_path.sub("_drafts/", "")
+      end
+
       output
     end
 

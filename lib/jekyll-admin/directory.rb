@@ -38,7 +38,11 @@ module JekyllAdmin
     end
 
     def relative_path
-      path.relative_path_from(base).to_s
+      if content_type == "drafts"
+        path.relative_path_from(base).to_s.sub("_drafts/", "")
+      else
+        path.relative_path_from(base).to_s
+      end
     end
 
     def resource_path
