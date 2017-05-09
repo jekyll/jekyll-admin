@@ -9,6 +9,10 @@ export const pagesAPIUrl = (directory = '') => `${API}/pages/${directory}`;
 export const pageAPIUrl = (directory, filename) =>
   directory ? `${API}/pages/${directory}/${filename}` : `${API}/pages/${filename}`;
 
+export const draftsAPIUrl = (directory = '') => `${API}/drafts/${directory}`;
+export const draftAPIUrl = (directory, filename) =>
+  directory ? `${API}/drafts/${directory}/${filename}` : `${API}/drafts/${filename}`;
+
 export const collectionsAPIUrl = () => `${API}/collections`;
 export const collectionAPIUrl = (collection_name, directory) =>
   directory ? `${API}/collections/${collection_name}/entries/${directory}` :
