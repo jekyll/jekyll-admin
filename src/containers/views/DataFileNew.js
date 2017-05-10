@@ -79,13 +79,13 @@ export class DataFileNew extends Component {
   }
 
   handleClickSave(e) {
-    const { datafileChanged, putDataFile } = this.props;
+    const { datafileChanged, fieldChanged, putDataFile } = this.props;
 
     // Prevent the default event from bubbling
     preventDefault(e);
 
     let filename;
-    if (datafileChanged) {
+    if (datafileChanged || fieldChanged) {
       if (this.state.guiView) {
         filename = this.state.baseName + this.state.extn;
         putDataFile(filename, null, "gui");
