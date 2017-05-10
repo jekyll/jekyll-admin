@@ -3,15 +3,16 @@ import { mount } from 'enzyme';
 import { Link } from 'react-router';
 import { Sidebar } from '../Sidebar';
 
-import { collections } from './fixtures';
+import { collections, config } from './fixtures';
 
 function setup() {
   const actions = {
-    fetchCollections: jest.fn()
+    fetchCollections: jest.fn(),
+    fetchConfig: jest.fn()
   };
 
   const component = mount(
-    <Sidebar collections={collections} {...actions} />
+    <Sidebar collections={collections} config={config} {...actions} />
   );
 
   return {
@@ -30,8 +31,9 @@ describe('Containers::Sidebar', () => {
     expect(actual).toEqual(expected);
   });
 
-  it('should call fetchCollections action after mounted', () => {
+  it('should call fetchCollections and fetchConfig actions after beinng mounted', () => {
     const { actions } = setup();
     expect(actions.fetchCollections).toHaveBeenCalled();
+    expect(actions.fetchConfig).toHaveBeenCalled();
   });
 });

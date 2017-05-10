@@ -49,6 +49,22 @@ export const collection = {
   documents: [doc]
 };
 
+export const draft = {
+  raw_content: "# Test Draft\n",
+  name: "draft-post.md",
+  path: "_drafts/draft-post.md",
+  relative_path: "draft-post.md",
+  slug: "draft-post",
+  collection: "posts",
+  draft: true,
+  id: "/2017/05/09/draft-post",
+  date: "2017-05-09 00:00:00 +0200",
+  http_url: "/2017/05/09/draft-post.html",
+  front_matter: {
+    title: "Test Draft"
+  }
+};
+
 export const page = {
   name: "about",
   content: "<h1>This is a test content.</h1>",
@@ -78,6 +94,7 @@ const directory = {
 
 export const page_entries = [page, page1, directory];
 export const collection_entries = [doc, directory];
+export const draft_entries = [draft, directory];
 
 export const meta = {
   layout: "post",
