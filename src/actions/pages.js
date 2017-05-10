@@ -86,7 +86,7 @@ export function putPage(directory, filename) {
     dispatch({type: ActionTypes.CLEAR_ERRORS});
     // omit raw_content, path and empty-value keys in metadata state from front_matter
     const front_matter = _.omit(metadata, (value, key, object) => {
-      return key == 'raw_content' || key == 'path' || value == '';
+      return key == 'raw_content' || key == 'path' || value == null;
     });
     const relative_path = directory ?
       `${directory}/${path}` : `${path}`;

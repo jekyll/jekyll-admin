@@ -18,6 +18,7 @@ defaults:
       path: ""
     values:
       all: true
+      hidden: false
   - scope:
       path: ''
       type: pages

@@ -59,7 +59,7 @@ module JekyllAdmin
 
     def document_body
       body = if front_matter && !front_matter.empty?
-               YAML.dump(front_matter).strip
+               restored_front_matter
              else
                "---"
              end
@@ -80,6 +80,13 @@ module JekyllAdmin
     def namespace
       namespace = request.path_info.split("/")[1].to_s.downcase
       namespace if ROUTES.include?(namespace)
+    end
+
+    # restore boolean data in front matter
+    def restored_front_matter
+      YAML.dump(front_matter).strip
+        .gsub(": 'false'", ": false")
+        .gsub(": 'true'", ": true")
     end
   end
 end
