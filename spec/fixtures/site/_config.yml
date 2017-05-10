@@ -24,6 +24,7 @@ defaults:
       type: pages
     values:
       page_only: true
+      template: null
   - scope:
       path: ''
       type: puppies
