@@ -278,7 +278,8 @@ Simply input the file's basename, the filetype (`YAML` or `JSON`) and data. The 
   clearErrors: Function,
   errors: Array,
   updated: Boolean,
-  datafileChanged: Boolean
+  datafileChanged: Boolean,
+  fieldChanged: Boolean // optional
 }
 ```
 
