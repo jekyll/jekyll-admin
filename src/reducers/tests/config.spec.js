@@ -7,6 +7,7 @@ describe('Reducers::Config', () => {
       config: {},
       updated: false,
       editorChanged: false,
+      fieldChanged: false,
       isFetching: false
     });
   });

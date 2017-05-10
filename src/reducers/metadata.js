@@ -78,7 +78,7 @@ export default function metadata(state = {
         metadata: updateFieldValue(
           state,
           action.nameAttr,
-          action.value.trim()
+          action.value
         ),
         fieldChanged: true
       });
