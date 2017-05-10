@@ -263,7 +263,10 @@ Container for editing a data file. Supports editing via a raw text editor or a Y
 
 ## DataFileNew
 
-Container for creating a new data file
+Container for creating a new data file.
+
+Includes a *GUI Editor* for easily creating YAML or JSON data files.
+Simply input the file's basename, the filetype (`YAML` or `JSON`) and data. The GUI will create the corresponding file with suitable extensions. CSV files cannot be created via the GUI Editor.
 
 ### PropTypes
 
@@ -275,7 +278,8 @@ Container for creating a new data file
   clearErrors: Function,
   errors: Array,
   updated: Boolean,
-  datafileChanged: Boolean
+  datafileChanged: Boolean,
+  fieldChanged: Boolean // optional
 }
 ```
 
