@@ -59,7 +59,8 @@ module JekyllAdmin
 
     def document_body
       body = if front_matter && !front_matter.empty?
-               restored_front_matter
+               YAML.dump(restored_front_matter).strip
+                 .gsub(": 'null'", ": null") # restore null values
              else
                "---"
              end
@@ -84,9 +85,18 @@ module JekyllAdmin
 
     # restore boolean data in front matter
     def restored_front_matter
-      YAML.dump(front_matter).strip
-        .gsub(": 'false'", ": false")
-        .gsub(": 'true'", ": true")
+      front_matter.map do |key, value|
+        value = if value == "false"
+                  false
+                elsif value == "true"
+                  true
+                elsif value.nil?
+                  "null"
+                else
+                  value
+                end
+        [key, value]
+      end.to_h
     end
   end
 end
