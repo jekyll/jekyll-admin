@@ -43,12 +43,11 @@ export class DataFileEdit extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
       const new_path = nextProps.datafile.path;
-      const new_relative_path = nextProps.datafile.relative_path;
       const path = this.props.datafile.path;
 
       // redirect if the path is changed
       if (new_path != path) {
-        browserHistory.push(`${ADMIN_PREFIX}/datafiles/${new_relative_path}`);
+        browserHistory.push(`${ADMIN_PREFIX}/datafiles/${nextProps.datafile.relative_path}`);
       }
     }
   }
@@ -97,7 +96,8 @@ export class DataFileEdit extends Component {
       const [directory, ...rest] = params.splat || [""];
       const filename = getFilenameFromPath(path);
       deleteDataFile(directory, filename);
-      browserHistory.push(`${ADMIN_PREFIX}/datafiles`);
+      const dir = directory ? `${directory}/` : ''
+      browserHistory.push(`${ADMIN_PREFIX}/datafiles/${dir}`);
     }
   }
 

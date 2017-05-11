@@ -41,19 +41,21 @@ export function fetchDataFile(directory, filename) {
  * @param {String} directory : Dirname of data file
  * @param {String} filename  : The data file
  * @param {Object} data      : Content to be written to data file
- * @param {String} path      : File path relative to config['source']
+ * @param {String} new_path  : File path relative to config['source']
  * @param {String} source    : Point of origin of file-content data.
  *                             Either the default `#brace-editor`, or `<DataGUI/>`
  */
-export function putDataFile(directory, filename, data, path, source = 'editor') {
+export function putDataFile(directory, filename, data, new_path = '', source = 'editor') {
   return (dispatch, getState) => {
-    const ext = getExtensionFromPath(path);
+    const ext = getExtensionFromPath(filename);
 
     if (source == "gui") {
       const json = /json/i.test(ext);
       let metadata = getState().metadata.metadata;
       data = json ? (JSON.stringify(metadata, null, 2)) : (toYAML(metadata));
     }
+
+    const payload = new_path ? { path: new_path, raw_content: data } : { raw_content: data }
 
     // handle errors
     const errors = validateDatafile(filename, data);
@@ -64,7 +66,7 @@ export function putDataFile(directory, filename, data, path, source = 'editor') 
 
     return put(
       datafileAPIUrl(directory, filename),
-      JSON.stringify({ path: path, raw_content: data }),
+      JSON.stringify(payload),
       { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.PUT_DATAFILE_FAILURE, name: "error"},
       dispatch
@@ -85,12 +87,13 @@ function validateDatafile(filename, data) {
 
 export function deleteDataFile(directory, filename) {
   return (dispatch) => {
+    const currentDir = directory ? `${directory}/` : '';
     return fetch(datafileAPIUrl(directory, filename), {
       method: 'DELETE'
     })
     .then(data => {
       dispatch({ type: ActionTypes.DELETE_DATAFILE_SUCCESS });
-      dispatch(fetchDataFiles());
+      dispatch(fetchDataFiles(currentDir));
     })
     .catch(error => dispatch({
       type: ActionTypes.DELETE_DATAFILE_FAILURE,
