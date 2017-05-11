@@ -5,7 +5,15 @@ description: Container components which connect the presentational components to
 
 ## Sidebar
 
-Container for listing all of routes' links.
+Container for listing all of routes' links. The links can be hidden from `Sidebar` by adding
+an option to `_config.yml` like the following;
+
+```yaml
+jekyll_admin:
+  hidden_links:
+    - posts
+    - pages
+```
 
 ### PropTypes
 

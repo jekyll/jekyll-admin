@@ -1,18 +1,24 @@
 import React from 'react';
+import _ from 'underscore';
 import { mount } from 'enzyme';
 import { Link } from 'react-router';
 import { Sidebar } from '../Sidebar';
 
-import { collections } from './fixtures';
+import { collections, config } from './fixtures';
 
-function setup() {
+const defaultProps = {
+  config,
+  collections,
+};
+
+const nonCollectionLinks = ['pages', 'datafiles', 'staticfiles', 'configuration'];
+
+function setup(props=defaultProps) {
   const actions = {
     fetchCollections: jest.fn()
   };
 
-  const component = mount(
-    <Sidebar collections={collections} {...actions} />
-  );
+  const component = mount(<Sidebar {...props} {...actions} />);
 
   return {
     component: component,
@@ -25,8 +31,30 @@ describe('Containers::Sidebar', () => {
   it('should render correctly', () => {
     const { links, component } = setup();
     const actual = links.length;
-    const expected = 4 + component.prop('collections').length;
+    const expected = nonCollectionLinks.length + component.prop('collections').length;
 
+    expect(actual).toEqual(expected);
+  });
+
+  it('should not render hidden links', () => {
+    const config_with_hidden_links = _.extend(config, {
+      content: {
+        jekyll_admin: {
+          hidden_links: [
+            'posts',
+            'pages'
+          ]
+        }
+      }
+    });
+
+    const { component, links } = setup(Object.assign({}, defaultProps, {
+      config: config_with_hidden_links
+    }));
+
+    const actual = links.length;
+    const expected =
+      (nonCollectionLinks.length - 1) + (component.prop('collections').length - 1);
     expect(actual).toEqual(expected);
   });
 
