@@ -33,6 +33,7 @@ const setup = (props = defaultProps) => {
     component,
     actions,
     saveButton: component.find(Button).first(),
+    toggleButton: component.find(Button).at(1),
     deleteButton: component.find(Button).last(),
     errors: component.find(Errors),
     props
@@ -60,6 +61,27 @@ describe('Containers::DataFileEdit', () => {
       errors: ['The content is required!']
     }));
     expect(errors.node).toBeTruthy();
+  });
+
+  it('should not call clearErrors on unmount if there are no errors.', () => {
+    const { component, errors, actions } = setup();
+    component.unmount();
+    expect(actions.clearErrors).not.toHaveBeenCalled();
+  });
+
+  it('should clear errors on unmount.', () => {
+    const { component, errors, actions } = setup(Object.assign({}, defaultProps, {
+      errors: ['The content is required!']
+    }));
+    component.unmount();
+    expect(actions.clearErrors).toHaveBeenCalled();
+  });
+
+  it('should toggle views.', () => {
+    const { component, toggleButton } = setup();
+    expect(component.state('guiView')).toBe(false);
+    toggleButton.simulate('click');
+    expect(component.state('guiView')).toBe(true);
   });
 
   it('should call deleteDataFile', () => {

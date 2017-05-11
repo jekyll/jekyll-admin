@@ -153,7 +153,7 @@ describe('Actions::Datafiles', () => {
 
     const store = mockStore({metadata: { metadata: datafile }});
 
-    return store.dispatch(actions.putDataFile(null, 'data_file.json', null, null, 'gui'))
+    return store.dispatch(actions.putDataFile(null, 'data_file.json', null, '_data/new_data_file.yml', 'gui'))
       .then(() => { // return of async actions
         expect(store.getActions()).toEqual(expectedAction);
       });
