@@ -40,7 +40,13 @@ export class MetaSimple extends Component {
 
   handleEditableBlur(e) {
     const { nameAttr, updateFieldValue } = this.props;
-    updateFieldValue(nameAttr, e.target.value.trim());
+    let value = e.target.value;
+    try {
+      value = JSON.parse(value); // auto-casting
+    } catch (e) {
+      value = value.trim();
+    }
+    updateFieldValue(nameAttr, value);
   }
 
   handleDatepickerChange(date, dateStr) {
