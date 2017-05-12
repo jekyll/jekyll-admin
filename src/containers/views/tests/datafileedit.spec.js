@@ -13,7 +13,7 @@ const defaultProps = {
   fieldChanged: false,
   router: {},
   route: {},
-  params: { splat: ["movies", "actors", "yml"]},
+  params: { splat: ['movies', 'actors', 'yml']},
   errors: [],
   isFetching: false
 };
@@ -84,9 +84,71 @@ describe('Containers::DataFileEdit', () => {
     expect(component.state('guiView')).toBe(true);
   });
 
+  it('should update state on switch to GUI mode', () => {
+    const { component, toggleButton, actions } = setup();
+    expect(component.state()).toEqual({
+      'directory': '',
+      'baseName': '',
+      'extn': '',
+      'guiView': false
+    });
+    toggleButton.simulate('click');
+    expect(component.state()).toEqual({
+      'directory': 'movies',
+      'baseName': 'authors',
+      'extn': '.yml',
+      'guiView': true
+    });
+  });
+
+  it('should call putDataFile after datafileChanged in GUI mode', () => {
+    const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
+      datafileChanged: true
+    }));
+    toggleButton.simulate('click');
+    saveButton.simulate('click');
+    expect(actions.putDataFile).toHaveBeenCalledWith(
+      'movies', 'authors.yml', null, '_data/movies/authors.yml', 'gui'
+    );
+  });
+
+  it('should call putDataFile with different splats and datafileChanged in GUI mode', () => {
+    const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
+      params: { splat: ['', 'authors', 'yml']},
+      datafileChanged: true
+    }));
+    toggleButton.simulate('click');
+    saveButton.simulate('click');
+    expect(actions.putDataFile).toHaveBeenCalledWith(
+      '', 'authors.yml', null, '_data/authors.yml', 'gui'
+    );
+  });
+
+  it('should call putDataFile after fieldChanged in GUI mode', () => {
+    const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
+      datafile: datafile,
+      params: { splat: ['books', 'authors', 'yml']},
+      fieldChanged: true
+    }));
+    toggleButton.simulate('click');
+    saveButton.simulate('click');
+    expect(actions.putDataFile).toHaveBeenCalledWith(
+      'books', 'authors.yml', null, '', 'gui'
+    );
+  });
+
   it('should call deleteDataFile', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');
     expect(actions.deleteDataFile).not.toHaveBeenCalled(); // TODO pass prompt
+  });
+
+  it('should recieve updated props', () => {
+    const { component, actions } = setup();
+    component.setProps({
+      params: { splat: ['books', 'authors', 'yml']},
+      updated: true
+    });
+    expect(component.instance().props['datafile']['path']).toEqual('_data/books/authors.yml');
   });
 });
