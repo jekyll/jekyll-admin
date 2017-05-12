@@ -39,28 +39,29 @@ export function fetchDataFile(filename) {
 export function putDataFile(filename, data, source = "editor") {
   return (dispatch, getState) => {
     const ext = getExtensionFromPath(filename);
-    let payload = {};
+    let payload;
 
-    if (source == "editor") {
-      const errors = validateDatafile(filename, data);
-      if (errors.length) {
-        return dispatch(validationError(errors));
-      }
-      // clear errors
-      dispatch({type: ActionTypes.CLEAR_ERRORS});
-      payload = { raw_content: data };
-
-    } else if (source == "gui") {
-      const metadata = getState().metadata.metadata;
+    if (source == "gui") {
+      data = getState().metadata.metadata;
       const yaml = /yaml|yml/i.test(ext);
       const json = /json/i.test(ext);
 
       if (yaml) {
-        payload = { raw_content: toYAML(metadata) };
+        payload = { raw_content: toYAML(data) };
       } else if (json) {
-        payload = { raw_content: JSON.stringify(metadata, null, 2) };
+        payload = { raw_content: JSON.stringify(data, null, 2) };
       }
+    } else {
+      payload = { raw_content: data };
     }
+
+    // handle errors
+    const errors = validateDatafile(filename, data);
+    if (errors.length) {
+      return dispatch(validationError(errors));
+    }
+    dispatch({type: ActionTypes.CLEAR_ERRORS});
+
     return put(
       datafileAPIUrl(filename),
       JSON.stringify(payload),

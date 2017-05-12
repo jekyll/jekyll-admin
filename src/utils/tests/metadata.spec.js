@@ -180,8 +180,12 @@ describe('Metadata functions:', () => {
 
   describe('injectDefaultFields', () => {
     it('should inject relevant fields into the front_matter', () => {
-      let actual = injectDefaultFields(config, '', 'posts');
-      let expected = {
+      let actual = injectDefaultFields(undefined, '', 'posts');
+      let expected = {};
+      expect(actual).toEqual(expected);
+
+      actual = injectDefaultFields(config, '', 'posts');
+      expected = {
         some_front_matter: 'default',
         post_field: 'default'
       };

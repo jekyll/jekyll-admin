@@ -9,8 +9,14 @@ export const config = {
 };
 
 export const collections = [
-  {title: "Posts", path: "/posts" },
-  {title: "Movies", path: "/movies"}
+  {
+    label: "posts",
+    path: "/posts"
+  },
+  {
+    label: "movies",
+    path: "/movies"
+  }
 ];
 
 export const content = {

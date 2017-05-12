@@ -148,7 +148,7 @@ describe('Reducers::Metadata', () => {
     ).toEqual({
       metadata: {
         ...meta,
-        notexists: 'willExist'
+        notexists: '  willExist  '
       },
       new_field_count: 0,
       fieldChanged: true

@@ -2,6 +2,8 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
+import { HotKeys } from 'react-hotkeys';
+import DataGUI from '../MetaFields';
 import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
@@ -9,19 +11,40 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
+import { preventDefault } from '../../utils/helpers';
 import { getLeaveMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileNew extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.routerWillLeave = this.routerWillLeave.bind(this);
+    this.handleClickSave = this.handleClickSave.bind(this);
+    this.toggleView = this.toggleView.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+
+    this.state = {
+      guiView: false,
+      baseName: '',
+      extn: '.yml'
+    };
+  }
+
   componentDidMount() {
     const { router, route } = this.props;
-    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+    router.setRouteLeaveHook(route, this.routerWillLeave);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
-      const filename = this.refs.inputpath.refs.input.value;
+      let filename;
+      if (this.state.guiView) {
+        filename = this.state.baseName + this.state.extn;
+      } else {
+        filename = this.refs.inputpath.refs.input.value;
+      }
       browserHistory.push(`${ADMIN_PREFIX}/datafiles/${filename}`);
     }
   }
@@ -35,27 +58,92 @@ export class DataFileNew extends Component {
   }
 
   routerWillLeave(nextLocation) {
-    if (this.props.datafileChanged) {
+    if (!this.state.guiView && this.props.datafileChanged) {
       return getLeaveMessage();
     }
   }
 
-  handleClickSave() {
-    const { datafileChanged, putDataFile } = this.props;
-    if (datafileChanged) {
-      const filename = this.refs.inputpath.refs.input.value;
-      const value = this.refs.editor.getValue();
-      putDataFile(filename, value);
+  toggleView() {
+    this.setState({ guiView: !this.state.guiView });
+  }
+
+  handleChange(e) {
+    const { onDataFileChanged } = this.props;
+    let obj = {};
+    const key = e.target.id;
+    const value = e.target.value;
+    obj[key] = value;
+
+    this.setState(obj);
+    onDataFileChanged();
+  }
+
+  handleClickSave(e) {
+    const { datafileChanged, fieldChanged, putDataFile } = this.props;
+
+    // Prevent the default event from bubbling
+    preventDefault(e);
+
+    let filename;
+    if (datafileChanged || fieldChanged) {
+      if (this.state.guiView) {
+        filename = this.state.baseName + this.state.extn;
+        putDataFile(filename, null, "gui");
+      } else {
+        filename = this.refs.inputpath.refs.input.value;
+        putDataFile(filename, this.refs.editor.getValue());
+      }
     }
+  }
+
+  renderGUInputs() {
+    return(
+      <form className="datafile-path">
+        <fieldset className="directory">
+          <legend>Directory</legend>
+          <input
+            type="text"
+            placeholder="directory"
+            disabled />
+        </fieldset>
+        <fieldset className="filename">
+          <legend>Filename (without extension)</legend>
+          <input
+            type="text"
+            id="baseName"
+            onChange={this.handleChange}
+            placeholder="filename" />
+        </fieldset>
+        <fieldset className="file-type">
+          <legend>File Type</legend>
+          <select id="extn" value={this.state.extn} onChange={this.handleChange}>
+            <option value=".yml">YAML</option>
+            <option value=".json">JSON</option>
+          </select>
+        </fieldset>
+      </form>
+    );
   }
 
   render() {
     const {
-      datafileChanged, onDataFileChanged, updated, errors
+      datafileChanged, fieldChanged, onDataFileChanged, updated, errors
     } = this.props;
 
+    const keyboardHandlers = {
+      'save': this.handleClickSave,
+    };
+
+    // activate or deactivate `Create` button based on various states
+    let activator = false;
+    if (this.state.guiView && this.state.baseName) {
+      activator = datafileChanged || fieldChanged;
+    } else if (!this.state.guiView) {
+      activator = datafileChanged;
+    }
+
     return (
-      <div>
+      <HotKeys handlers={keyboardHandlers}>
         {errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
           <Breadcrumbs splat="" type="datafiles" />
@@ -63,29 +151,43 @@ export class DataFileNew extends Component {
 
         <div className="content-wrapper">
           <div className="content-body">
-            <InputPath
-              onChange={onDataFileChanged}
-              type="datafiles"
-              path=""
-              ref="inputpath" />
-            <Editor
-              editorChanged={datafileChanged}
-              onEditorChange={onDataFileChanged}
-              content={''}
-              ref="editor" />
+            {
+              this.state.guiView && <div>
+                {this.renderGUInputs()}
+                <DataGUI fields={{"key": "value"}} dataview /></div>
+            }
+            {
+              !this.state.guiView && <div>
+                <InputPath
+                  onChange={onDataFileChanged}
+                  type="datafiles"
+                  path=""
+                  ref="inputpath" />
+                <Editor
+                  editorChanged={datafileChanged}
+                  onEditorChange={onDataFileChanged}
+                  content={""}
+                  ref="editor" /></div>
+            }
           </div>
 
           <div className="content-side">
             <Button
-              onClick={() => this.handleClickSave()}
+              onClick={this.toggleView}
+              type="view-toggle"
+              active={true}
+              triggered={this.state.guiView}
+              block />
+            <Button
+              onClick={this.handleClickSave}
               type="create"
-              active={datafileChanged}
+              active={activator}
               triggered={updated}
               icon="plus-square"
               block />
           </div>
         </div>
-      </div>
+      </HotKeys>
     );
   }
 }
@@ -99,13 +201,15 @@ DataFileNew.propTypes = {
   updated: PropTypes.bool.isRequired,
   datafileChanged: PropTypes.bool.isRequired,
   router: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired
+  route: PropTypes.object.isRequired,
+  fieldChanged: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
   datafile: state.datafiles.currentFile,
   updated: state.datafiles.updated,
   datafileChanged: state.datafiles.datafileChanged,
+  fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors
 });
 
