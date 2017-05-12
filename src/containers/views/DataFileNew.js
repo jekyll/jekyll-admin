@@ -159,7 +159,7 @@ export class DataFileNew extends Component {
               !this.state.guiView && <div>
                 <InputPath
                   onChange={onDataFileChanged}
-                  type="datafiles"
+                  type="data files"
                   path=""
                   ref="inputpath" />
                 <Editor

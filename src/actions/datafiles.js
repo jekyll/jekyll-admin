@@ -55,7 +55,7 @@ export function putDataFile(directory, filename, data, new_path = '', source = '
       data = json ? (JSON.stringify(metadata, null, 2)) : (toYAML(metadata));
     }
 
-    const payload = new_path ? { path: new_path, raw_content: data } : { raw_content: data }
+    const payload = new_path ? { path: new_path, raw_content: data } : { raw_content: data };
 
     // handle errors
     const errors = validateDatafile(filename, data);
