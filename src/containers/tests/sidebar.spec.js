@@ -13,7 +13,7 @@ const defaultProps = {
 
 const nonCollectionLinks = ['pages', 'datafiles', 'staticfiles', 'configuration'];
 
-function setup(props=defaultProps) {
+function setup(props = defaultProps) {
   const actions = {
     fetchCollections: jest.fn()
   };
@@ -38,13 +38,11 @@ describe('Containers::Sidebar', () => {
 
   it('should not render hidden links', () => {
     const config_with_hidden_links = _.extend(config, {
-      content: {
-        jekyll_admin: {
-          hidden_links: [
-            'posts',
-            'pages'
-          ]
-        }
+      jekyll_admin: {
+        hidden_links: [
+          'posts',
+          'pages'
+        ]
       }
     });
 

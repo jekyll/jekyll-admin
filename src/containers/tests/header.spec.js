@@ -5,9 +5,9 @@ import { Header } from '../Header';
 import { config } from './fixtures';
 
 function setup() {
-
+  const siteConfig = config.content;
   const component = mount(
-    <Header config={config} />
+    <Header config={siteConfig} />
   );
 
   return {
@@ -18,10 +18,8 @@ function setup() {
 
 describe('Containers::Header', () => {
   it('should render correctly', () => {
-    const { title } = setup();
-    const { content } = config;
-    const actual = title.text();
-    const expected = content.title;
-    expect(actual).toEqual(expected);
+    const { component, title } = setup();
+    const { config } = component.props();
+    expect(title.text()).toEqual(config.title);
   });
 });
