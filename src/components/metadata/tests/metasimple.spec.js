@@ -12,6 +12,7 @@ const defaultProps = {
 
 function setup(props = defaultProps) {
   const actions = {
+    changeFieldValue: jest.fn(),
     updateFieldValue: jest.fn()
   };
 
@@ -43,10 +44,10 @@ describe('Components::MetaSimple', () => {
     expect(editable.node).toBeFalsy();
   });
 
-  it('should call updateFieldValue when the input is changed', () => {
+  it('should call changeFieldValue when the input is changed', () => {
     const { actions, editable } = setup();
     editable.simulate('change');
-    expect(actions.updateFieldValue).toHaveBeenCalled();
+    expect(actions.changeFieldValue).toHaveBeenCalled();
   });
 
   it('should call updateFieldValue when the input field is blurred', () => {

@@ -27,8 +27,8 @@ export class MetaArrayItem extends Component {
 
   render() {
     const { type, fieldKey, fieldValue, index, nameAttr,
-      addField, removeField, updateFieldKey, updateFieldValue, moveArrayItem,
-      convertField, key_prefix } = this.props;
+      addField, removeField, updateFieldKey, changeFieldValue, updateFieldValue,
+      moveArrayItem, convertField, key_prefix } = this.props;
     const FieldTypes = {
       'array': MetaArray,
       'object': MetaObject,
@@ -56,6 +56,7 @@ export class MetaArrayItem extends Component {
             addField={addField}
             removeField={removeField}
             updateFieldKey={updateFieldKey}
+            changeFieldValue={changeFieldValue}
             updateFieldValue={updateFieldValue}
             moveArrayItem={moveArrayItem}
             convertField={convertField}
@@ -75,6 +76,7 @@ MetaArrayItem.propTypes = {
   addField: PropTypes.func.isRequired,
   removeField: PropTypes.func.isRequired,
   updateFieldKey: PropTypes.func.isRequired,
+  changeFieldValue: PropTypes.func.isRequired,
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
   convertField: PropTypes.func.isRequired,

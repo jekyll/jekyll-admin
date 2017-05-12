@@ -5,8 +5,8 @@ import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import MetaField from '../components/metadata/MetaField';
 import {
-  storeContentFields, addField, removeField, updateFieldKey, updateFieldValue,
-  moveArrayItem, convertField
+  storeContentFields, addField, removeField, updateFieldKey, changeFieldValue,
+  updateFieldValue, moveArrayItem, convertField
 } from '../actions/metadata';
 
 export class MetaFields extends Component {
@@ -22,8 +22,8 @@ export class MetaFields extends Component {
 
   render() {
     const {
-      metadata, addField, removeField, updateFieldKey, updateFieldValue, moveArrayItem,
-      convertField, key_prefix, dataview
+      metadata, addField, removeField, updateFieldKey, changeFieldValue, updateFieldValue,
+      moveArrayItem, convertField, key_prefix, dataview
     } = this.props;
 
     let visibleKeys = metadata;
@@ -52,6 +52,7 @@ export class MetaFields extends Component {
           addField={addField}
           removeField={removeField}
           updateFieldKey={updateFieldKey}
+          changeFieldValue={changeFieldValue}
           updateFieldValue={updateFieldValue}
           moveArrayItem={moveArrayItem}
           convertField={convertField}
@@ -100,6 +101,7 @@ MetaFields.propTypes = {
   addField: PropTypes.func.isRequired,
   removeField: PropTypes.func.isRequired,
   updateFieldKey: PropTypes.func.isRequired,
+  changeFieldValue: PropTypes.func.isRequired,
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
   convertField: PropTypes.func.isRequired,
@@ -116,6 +118,7 @@ const mapDispatchToProps = (dispatch) => bindActionCreators({
   addField,
   removeField,
   updateFieldKey,
+  changeFieldValue,
   updateFieldValue,
   moveArrayItem,
   convertField

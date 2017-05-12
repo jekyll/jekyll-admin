@@ -35,8 +35,8 @@ export class MetaField extends Component {
 
   render() {
     const { type, parentType, fieldKey, fieldValue, namePrefix, addField,
-      removeField, updateFieldKey, updateFieldValue, moveArrayItem,
-      convertField, key_prefix } = this.props;
+      removeField, updateFieldKey, changeFieldValue, updateFieldValue,
+      moveArrayItem, convertField, key_prefix } = this.props;
 
     const FieldTypes = {
       'array': MetaArray,
@@ -69,6 +69,7 @@ export class MetaField extends Component {
           addField={addField}
           removeField={removeField}
           updateFieldKey={updateFieldKey}
+          changeFieldValue={changeFieldValue}
           updateFieldValue={updateFieldValue}
           moveArrayItem={moveArrayItem}
           convertField={convertField}
@@ -85,11 +86,12 @@ MetaField.propTypes = {
   addField: PropTypes.func.isRequired,
   removeField: PropTypes.func.isRequired,
   updateFieldKey: PropTypes.func.isRequired,
+  changeFieldValue: PropTypes.func.isRequired,
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
   convertField: PropTypes.func.isRequired,
   fieldKey: PropTypes.string.isRequired,
-  fieldValue: PropTypes.any.isRequired,
+  fieldValue: PropTypes.any,
   nameAttr: PropTypes.string.isRequired,
   namePrefix: PropTypes.string.isRequired,
   key_prefix: PropTypes.string.isRequired
