@@ -83,18 +83,10 @@ module JekyllAdmin
       namespace if ROUTES.include?(namespace)
     end
 
-    # restore boolean data in front matter
+    # verbose 'null' values in front matter
     def restored_front_matter
       front_matter.map do |key, value|
-        value = if value == "false"
-                  false
-                elsif value == "true"
-                  true
-                elsif value.nil?
-                  "null"
-                else
-                  value
-                end
+        value = value.nil? ? "null" : value
         [key, value]
       end.to_h
     end
