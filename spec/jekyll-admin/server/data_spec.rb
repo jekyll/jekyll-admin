@@ -32,20 +32,14 @@ describe "data" do
     expect(last_response_parsed[2]).to eql(base_response)
   end
 
-  it "gets an individual data file without an extension" do
-    get "/data/data_file"
-    expect(last_response).to be_ok
-    expect(last_response_parsed).to eql(response_with_content)
-  end
-
-  it "gets an individual data file with an extension" do
+  it "gets an individual data file" do
     get "/data/data_file.yml"
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql(response_with_content)
   end
 
   it "gets data files in a subdirectory" do
-    get "/data/movies/"
+    get "/data/movies"
 
     expected_response = {
       "path"          => "/_data/movies/actors.yml",
@@ -63,27 +57,6 @@ describe "data" do
 
   it "gets an individual data file in a subdirectory" do
     get "/data/movies/actors.yml"
-
-    expected_response = {
-      "path"          => "/_data/movies/actors.yml",
-      "relative_path" => "movies/actors.yml",
-      "slug"          => "actors",
-      "ext"           => ".yml",
-      "title"         => "Actors",
-      "raw_content"   => "foo: bar\n",
-      "content"       => {
-        "foo" => "bar",
-      },
-      "api_url"       => "http://localhost:4000/_api/data/movies/actors.yml",
-      "http_url"      => nil,
-    }
-
-    expect(last_response).to be_ok
-    expect(last_response_parsed).to eql(expected_response)
-  end
-
-  it "gets an individual data file without an extension in a subdirectory" do
-    get "/data/movies/actors"
 
     expected_response = {
       "path"          => "/_data/movies/actors.yml",
@@ -121,7 +94,7 @@ describe "data" do
     }
 
     request = { "content" => { "foo" => "bar" } }
-    put "/data/data-file-new", request.to_json
+    put "/data/data-file-new.yml", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql(expected_response)
@@ -148,7 +121,7 @@ describe "data" do
     }
 
     request = { "content" => { "foo" => "bar" } }
-    put "/data/test-dir/data-file-new", request.to_json
+    put "/data/test-dir/data-file-new.yml", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql(expected_response)
@@ -175,7 +148,7 @@ describe "data" do
     }
 
     request = { "raw_content" => "foo: bar\n" }
-    put "/data/data-file-new", request.to_json
+    put "/data/data-file-new.yml", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql(expected_response)
@@ -202,7 +175,7 @@ describe "data" do
     }
 
     request = { "raw_content" => "foo: bar\n" }
-    put "/data/test-dir/data-file-new", request.to_json
+    put "/data/test-dir/data-file-new.yml", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql(expected_response)
@@ -229,7 +202,7 @@ describe "data" do
     }
 
     request = { "content" => { "foo" => "bar2" } }
-    put "/data/data-file-update", request.to_json
+    put "/data/data-file-update.yml", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql(expected_response)
@@ -256,7 +229,7 @@ describe "data" do
     }
 
     request = { "content" => { "foo" => "bar2" } }
-    put "/data/test-dir/data-file-update", request.to_json
+    put "/data/test-dir/data-file-update.yml", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql(expected_response)
@@ -287,14 +260,14 @@ describe "data" do
       "path"    => "/_data/data-file-renamed.yml",
       "content" => { "foo" => "bar2" },
     }
-    put "/data/data-file-rename", request.to_json
+    put "/data/data-file-rename.yml", request.to_json
 
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql(expected_response)
     expect("_data/data-file-rename.yml").to_not be_an_existing_file
     expect("_data/data-file-renamed.yml").to be_an_existing_file
 
-    get "/data/data-file-renamed"
+    get "/data/data-file-renamed.yml"
     expect(last_response).to be_ok
     expect(last_response_parsed).to eql(expected_response)
 
@@ -303,14 +276,14 @@ describe "data" do
 
   it "deletes a data file" do
     write_file "_data/data-file-delete.yml", "foo2: bar2"
-    delete "/data/data-file-delete"
+    delete "/data/data-file-delete.yml"
     expect(last_response).to be_ok
     expect("_data/data-file-delete.yml").to_not be_an_existing_file
   end
 
   it "deletes a data file in a subdirectory" do
     write_file "_data/test-dir/data-file-delete.yml", "foo2: bar2"
-    delete "/data/test-dir/data-file-delete"
+    delete "/data/test-dir/data-file-delete.yml"
     expect(last_response).to be_ok
     expect("_data/test-dir/data-file-delete.yml").to_not be_an_existing_file
   end

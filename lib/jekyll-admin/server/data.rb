@@ -4,7 +4,7 @@ module JekyllAdmin
     EXTENSIONS = %w(yml json).freeze
 
     namespace "/data" do
-      get "/*?/?:path.?:ext?" do
+      get "/*?/?:path.:ext" do
         ensure_requested_file
         json requested_file.to_api(:include_content => true)
       end
@@ -14,7 +14,7 @@ module JekyllAdmin
         json entries.map(&:to_api)
       end
 
-      put "/*?/?:path.?:ext?" do
+      put "/*?/?:path.:ext" do
         if renamed?
           ensure_requested_file
           delete_file path
@@ -24,7 +24,7 @@ module JekyllAdmin
         json written_file.to_api(:include_content => true)
       end
 
-      delete "/*?/?:path.?:ext?" do
+      delete "/*?/?:path.:ext" do
         ensure_requested_file
         delete_file path
         content_type :json
