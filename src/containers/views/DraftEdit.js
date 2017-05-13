@@ -100,7 +100,7 @@ export class DraftEdit extends Component {
       "save": this.handleClickSave,
     };
 
-    const { name, raw_content, relative_path, collection, http_url, front_matter } = draft;
+    const { name, raw_content, collection, http_url, front_matter } = draft;
     const [directory, ...rest] = params.splat;
 
     const title = front_matter && front_matter.title ? front_matter.title : "";
@@ -117,7 +117,7 @@ export class DraftEdit extends Component {
 
         <div className="content-wrapper">
           <div className="content-body">
-            <InputPath onChange={updatePath} type="drafts" path={relative_path} />
+            <InputPath onChange={updatePath} type="drafts" path={name} />
             <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}
@@ -126,7 +126,7 @@ export class DraftEdit extends Component {
               initialValue={raw_content}
               ref="editor" />
             <Splitter />
-            <Metadata fields={{title, raw_content, path: relative_path, ...metafields}} />
+            <Metadata fields={{title, raw_content, path: name, ...metafields}} />
           </div>
 
           <div className="content-side">
