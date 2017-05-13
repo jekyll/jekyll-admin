@@ -30,13 +30,14 @@ export class DataFiles extends Component {
   handleClickDelete(path) {
     const { deleteDataFile, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(path));
-    const directory = params.splat ? (params.splat) : "";
+    const directory = params.splat || "";
+    const dir = directory ? `/${directory}` : ""
 
     if (confirm) {
       const filename = getFilenameFromPath(path);
 
       deleteDataFile(directory, filename);
-      browserHistory.push(`${ADMIN_PREFIX}/datafiles/${directory}`);
+      browserHistory.push(`${ADMIN_PREFIX}/datafiles${dir}`);
     }
   }
 
