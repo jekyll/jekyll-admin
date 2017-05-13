@@ -87,13 +87,12 @@ function validateDatafile(filename, data) {
 
 export function deleteDataFile(directory, filename) {
   return (dispatch) => {
-    const currentDir = directory ? `${directory}/` : '';
     return fetch(datafileAPIUrl(directory, filename), {
       method: 'DELETE'
     })
     .then(data => {
       dispatch({ type: ActionTypes.DELETE_DATAFILE_SUCCESS });
-      dispatch(fetchDataFiles(currentDir));
+      dispatch(fetchDataFiles(directory));
     })
     .catch(error => dispatch({
       type: ActionTypes.DELETE_DATAFILE_FAILURE,

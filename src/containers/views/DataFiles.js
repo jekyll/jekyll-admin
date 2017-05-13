@@ -30,14 +30,13 @@ export class DataFiles extends Component {
   handleClickDelete(path) {
     const { deleteDataFile, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(path));
-    const directory = params.splat ? (params.splat.replace(/\/$/, "")) : "";
-    const goTo = params.splat ? (params.splat) : "";
+    const directory = params.splat ? (params.splat) : "";
 
     if (confirm) {
       const filename = getFilenameFromPath(path);
 
       deleteDataFile(directory, filename);
-      browserHistory.push(`${ADMIN_PREFIX}/datafiles/${goTo}`);
+      browserHistory.push(`${ADMIN_PREFIX}/datafiles/${directory}`);
     }
   }
 
@@ -87,7 +86,7 @@ export class DataFiles extends Component {
 
   renderDirectoryRow(directory) {
     const { name, path, api_url } = directory;
-    const to = `${ADMIN_PREFIX}/datafiles/${path}/`;
+    const to = `${ADMIN_PREFIX}/datafiles/${path}`;
     return (
       <tr key={name}>
         <td className="row-title">
@@ -123,8 +122,8 @@ export class DataFiles extends Component {
 
     let to, dirSplat;
     if (params.splat) {
-      to = `${ADMIN_PREFIX}/datafiles/${params.splat.replace(/\/$/, "")}/new`;
-      dirSplat = params.splat.replace(/\/$/, "");
+      to = `${ADMIN_PREFIX}/datafiles/${params.splat}/new`;
+      dirSplat = params.splat;
     } else {
       to = `${ADMIN_PREFIX}/datafiles/new`;
       dirSplat = "";

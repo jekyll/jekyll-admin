@@ -133,8 +133,8 @@ export class DataFileEdit extends Component {
       const [directory, ...rest] = params.splat || [""];
       const filename = getFilenameFromPath(path);
       deleteDataFile(directory, filename);
-      const dir = directory ? `${directory}/` : '';
-      browserHistory.push(`${ADMIN_PREFIX}/datafiles/${dir}`);
+      const dir = directory ? `/${directory}` : '';
+      browserHistory.push(`${ADMIN_PREFIX}/datafiles${dir}`);
     }
   }
 

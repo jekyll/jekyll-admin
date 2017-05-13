@@ -117,7 +117,7 @@ export class DataFileNew extends Component {
       datafileChanged, fieldChanged, onDataFileChanged, datafile, updated, errors, params
     } = this.props;
     const { path, raw_content } = datafile;
-    const initialPath = params.splat ? (params.splat + "/") : "";
+    const initialPath = params.splat ? (params.splat) : "";
 
     const keyboardHandlers = {
       'save': this.handleClickSave,

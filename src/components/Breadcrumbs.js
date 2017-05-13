@@ -22,17 +22,10 @@ export default class Breadcrumbs extends Component {
       const paths = splat.split('/');
       links = _.map(paths, (path, i) => {
         const before = (i == 0) ? '' : paths.slice(0, i).join('/') + '/';
-        if (type == "data files") {
-          return {
-            href: `${base}/${before}${path}/`,
-            label: path
-          };
-        } else {
-          return {
-            href: `${base}/${before}${path}`,
-            label: path
-          };
-        }
+        return {
+          href: `${base}/${before}${path}`,
+          label: path
+        };
       });
     }
 
