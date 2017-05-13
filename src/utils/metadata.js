@@ -134,10 +134,12 @@ export const moveArrayItem = (state, namePrefix, srcInd, targetInd) => {
  * @return {Object} metadata
  */
 export const injectDefaultFields = (config, path, type, front_matter={}) => {
-  if (!config.content.defaults) {
+  let defaults;
+  try {
+    defaults = config.content.defaults;
+  } catch (e) {
     return {};
   }
-  const defaults = config.content.defaults;
   let metafields = {};
   _.each(defaults, field => {
     const scope = field.scope;

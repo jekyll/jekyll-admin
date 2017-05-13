@@ -123,3 +123,76 @@
     @include translateX(20px);
   }
 }
+
+.datafile-path {
+  margin-bottom: 8px;
+
+  fieldset {
+    display: inline-block;
+    margin: 0 4px;
+    padding: 0;
+    border-radius: 5px;
+    border-color: transparent;
+
+    &.directory { width: 53%; }
+    &.filename { width: 30%; }
+    &.file-type { width: 15%; }
+
+    &:first-of-type { margin-left: 0; }
+    &:last-of-type { margin-right: 0; }
+  }
+
+  legend {
+    margin-bottom: 8px;
+    font-weight: 700;
+  }
+
+  input, select {
+    min-height: 46px;
+    padding: 11px 10px;
+    width: 100%;
+    color: white;
+    background-color: #2b2b2b;
+    border: 1px solid transparent;
+    border-radius: 2px;
+  }
+
+  input {
+    &:disabled { background-color: #4d4d4d; }
+    &:focus { outline: none; border-color: $dark-orange; }
+  }
+
+  select {
+    font-size: 15px;
+    color: #ddd;
+    cursor: pointer;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+
+    &:focus { outline: none; border-color: $dark-orange; }
+
+    option {
+      min-height: 21px;
+      &:hover { background-color: $dark-orange; }
+    }
+  }
+
+  .file-type {
+    legend {
+      position: relative;
+
+      // custom dropdown arrow
+      &:after {
+        content: "\25BC";
+        position: absolute;
+        top: 28px;
+        right: -54px;
+        padding: 12px 9px;
+        color: #bbb;
+        vertical-align: middle;
+        pointer-events: none;
+        border-left: 1px solid #454545;
+      }
+    }
+  }
+}
