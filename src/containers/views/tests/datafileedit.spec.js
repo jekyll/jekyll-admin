@@ -87,15 +87,13 @@ describe('Containers::DataFileEdit', () => {
   it('should update state on switch to GUI mode', () => {
     const { component, toggleButton, actions } = setup();
     expect(component.state()).toEqual({
-      'directory': '',
-      'baseName': '',
+      'guiPath': '',
       'extn': '',
       'guiView': false
     });
     toggleButton.simulate('click');
     expect(component.state()).toEqual({
-      'directory': 'movies',
-      'baseName': 'authors',
+      'guiPath': 'authors',
       'extn': '.yml',
       'guiView': true
     });
@@ -108,7 +106,7 @@ describe('Containers::DataFileEdit', () => {
     toggleButton.simulate('click');
     saveButton.simulate('click');
     expect(actions.putDataFile).toHaveBeenCalledWith(
-      'movies', 'authors.yml', null, '_data/movies/authors.yml', 'gui'
+      'movies', 'actors.yml', null, '_data/movies/authors.yml', 'gui'
     );
   });
 

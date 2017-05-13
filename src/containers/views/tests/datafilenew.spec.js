@@ -45,8 +45,7 @@ describe('Containers::DataFileNew', () => {
     expect(saveButton.node.props['type']).toEqual('create');
     expect(editor.node.props['content']).toEqual('');
     expect(component.state()).toEqual({
-      'directory': 'books',
-      'baseName': '',
+      'guiPath': '',
       'extn': '.yml',
       'guiView': false
     });
@@ -90,7 +89,7 @@ describe('Containers::DataFileNew', () => {
       datafileChanged: true
     }));
     expect(saveButton.prop('active')).toBe(true);
-    component.setState({ baseName: 'foo', guiView: true });
+    component.setState({ guiPath: 'foo', guiView: true });
     expect(saveButton.prop('active')).toBe(true);
   });
 
@@ -104,7 +103,7 @@ describe('Containers::DataFileNew', () => {
     const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
       datafileChanged: true
     }));
-    component.setState({ baseName: 'foo', guiView: true });
+    component.setState({ guiPath: 'foo', guiView: true });
     saveButton.simulate('click');
     expect(actions.putDataFile).toHaveBeenCalledWith("books", "foo.yml", null, null, "gui");
   });
@@ -113,7 +112,7 @@ describe('Containers::DataFileNew', () => {
     const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
       fieldChanged: true
     }));
-    component.setState({ baseName: 'foo', guiView: true });
+    component.setState({ guiPath: 'foo', guiView: true });
     saveButton.simulate('click');
     expect(actions.putDataFile).toHaveBeenCalledWith("books", "foo.yml", null, null, "gui");
   });

@@ -108,6 +108,7 @@ export class DataFileEdit extends Component {
     if (datafileChanged || fieldChanged) {
       if (this.state.guiView) {
         name = this.state.guiPath + this.state.extn;
+        data = null;
         mode = "gui";
 
       } else {
