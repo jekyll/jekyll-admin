@@ -38,7 +38,6 @@ export class Sidebar extends Component {
 
   render() {
     const { config } = this.props;
-    const content = config.content;
 
     const defaults = {
       pages: {
@@ -68,7 +67,7 @@ export class Sidebar extends Component {
     const defaultLinks = _.keys(defaults);
     let hiddenLinks;
     try {
-      hiddenLinks = config.content.jekyll_admin.hidden_links;
+      hiddenLinks = config.jekyll_admin.hidden_links;
     } catch (e) {
       hiddenLinks = [];
     }
