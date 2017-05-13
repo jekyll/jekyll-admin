@@ -60,4 +60,14 @@ describe('Containers::Sidebar', () => {
     const { actions } = setup();
     expect(actions.fetchCollections).toHaveBeenCalled();
   });
+
+  it('should render fine with zero collections', () => {
+    const { component, links, actions } = setup(Object.assign({}, defaultProps, {
+      collections: [],
+      config: {
+        jekyll_admin: {}
+      }
+    }));
+    expect(links.length).toEqual(4);
+  });
 });
