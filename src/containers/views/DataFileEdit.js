@@ -33,8 +33,7 @@ export class DataFileEdit extends Component {
 
     this.state = {
       guiView: false,
-      directory: '',
-      baseName: '',
+      guiPath: '',
       extn: ''
     };
   }
@@ -75,12 +74,10 @@ export class DataFileEdit extends Component {
   }
 
   toggleView() {
-    const { datafile, params } = this.props;
-    const [directory, ...rest] = params.splat;
+    const { datafile } = this.props;
     this.setState({
       guiView: !this.state.guiView,
-      directory: directory,
-      baseName: datafile.slug,
+      guiPath: datafile.slug,
       extn: datafile.ext
     });
   }
@@ -101,30 +98,26 @@ export class DataFileEdit extends Component {
     const { path, relative_path } = datafile;
     const data_dir = path.replace(relative_path, "");
 
-    let filename, data, data_path, mode;
-    let [directory, ...rest] = params.splat || [""];
-    filename = rest.join(".");
+    let name, data, mode;
+    const [directory, ...rest] = params.splat || [""];
+    const filename = rest.join(".");
 
     // Prevent the default event from bubbling
     preventDefault(e);
 
     if (datafileChanged || fieldChanged) {
       if (this.state.guiView) {
-        directory = this.state.directory;
-        filename = this.state.baseName + this.state.extn;
-        data = null;
-        if (directory) {
-          data_path = data_dir + directory + "/" + filename;
-        } else {
-          data_path = data_dir + filename;
-        }
+        name = this.state.guiPath + this.state.extn;
         mode = "gui";
 
       } else {
+        name = this.refs.inputpath.refs.input.value;
         data = this.refs.editor.getValue();
-        data_path = data_dir + this.refs.inputpath.refs.input.value;
         mode = "editor";
       }
+
+      const data_path = directory ? (data_dir + `${directory}/` + name) :
+                                    (data_dir + name);
 
       const new_path = (data_path != path) ? data_path : "";
       putDataFile(directory, filename, data, new_path, mode);
@@ -149,21 +142,12 @@ export class DataFileEdit extends Component {
     const [directory] = params.splat;
     return(
       <form className="datafile-path">
-        <fieldset className="directory">
-          <legend>Directory</legend>
-          <input
-            type="text"
-            id="directory"
-            value={this.state.directory || ""}
-            onChange={this.handleChange}
-            placeholder="directory" />
-        </fieldset>
         <fieldset className="filename">
-          <legend>Filename (without extension)</legend>
+          <legend>Path (without extension)</legend>
           <input
             type="text"
-            id="baseName"
-            value={this.state.baseName}
+            id="guiPath"
+            value={this.state.guiPath}
             onChange={this.handleChange}
             placeholder="filename" />
         </fieldset>
@@ -188,12 +172,20 @@ export class DataFileEdit extends Component {
     const ext = getExtensionFromPath(path);
     const guiSupport = (/yaml|yml|json/i.test(ext));
 
+    // activate or deactivate `Create` button in GUI mode based on input state
+    let activator = false;
+    if (this.state.guiView && this.state.guiPath) {
+      activator = datafileChanged || fieldChanged;
+    } else if (!this.state.guiView) {
+      activator = datafileChanged;
+    }
+
     return (
       <div className="content-side">
         <Button
           onClick={this.handleClickSave}
           type="save"
-          active={datafileChanged || fieldChanged}
+          active={activator}
           triggered={updated}
           icon="save"
           block />
@@ -228,7 +220,7 @@ export class DataFileEdit extends Component {
       return <h1>{getNotFoundMessage("data file")}</h1>;
     }
 
-    const { path, relative_path, raw_content, content } = datafile;
+    const { path, raw_content, content } = datafile;
     const [directory, ...rest] = params.splat || [""];
     const filename = getFilenameFromPath(path);
     const ext = getExtensionFromPath(path);
@@ -237,7 +229,7 @@ export class DataFileEdit extends Component {
       <InputPath
         onChange={onDataFileChanged}
         type="data files"
-        path={relative_path}
+        path={filename}
         ref="inputpath" />
     );
 

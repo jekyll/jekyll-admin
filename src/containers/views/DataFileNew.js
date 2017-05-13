@@ -27,8 +27,7 @@ export class DataFileNew extends Component {
 
     this.state = {
       guiView: false,
-      directory: `${props.params.splat || ''}`,
-      baseName: '',
+      guiPath: '',
       extn: '.yml'
     };
   }
@@ -82,8 +81,8 @@ export class DataFileNew extends Component {
     let filename;
     if (datafileChanged || fieldChanged) {
       if (this.state.guiView) {
-        filename = this.state.baseName + this.state.extn;
-        putDataFile(this.state.directory, filename, null, null, "gui");
+        filename = this.state.guiPath + this.state.extn;
+        putDataFile(params.splat, filename, null, null, "gui");
       } else {
         filename = this.refs.inputpath.refs.input.value;
         putDataFile(params.splat, filename, this.refs.editor.getValue());
@@ -94,20 +93,11 @@ export class DataFileNew extends Component {
   renderGUInputs() {
     return(
       <form className="datafile-path">
-        <fieldset className="directory">
-          <legend>Directory</legend>
-          <input
-            type="text"
-            id="directory"
-            value={this.state.directory}
-            onChange={this.handleChange}
-            placeholder="directory" />
-        </fieldset>
         <fieldset className="filename">
-          <legend>Filename (without extension)</legend>
+          <legend>Path (without extension)</legend>
           <input
             type="text"
-            id="baseName"
+            id="guiPath"
             onChange={this.handleChange}
             placeholder="filename" />
         </fieldset>
@@ -133,9 +123,9 @@ export class DataFileNew extends Component {
       'save': this.handleClickSave,
     };
 
-    // activate or deactivate `Create` button based on various states
+    // activate or deactivate `Create` button in GUI mode based on input state
     let activator = false;
-    if (this.state.guiView && this.state.baseName) {
+    if (this.state.guiView && this.state.guiPath) {
       activator = datafileChanged || fieldChanged;
     } else if (!this.state.guiView) {
       activator = datafileChanged;
