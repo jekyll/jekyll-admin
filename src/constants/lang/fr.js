@@ -73,5 +73,9 @@ export const labels = {
   },
   upload: {
     label: 'Ajouter'
+  },
+  viewToggle: {
+    label: 'Changer de vue de GUI Editor',
+    triggeredLabel: 'Changer de vue de Raw Editor'
   }
 };
