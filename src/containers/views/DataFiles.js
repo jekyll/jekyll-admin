@@ -30,12 +30,14 @@ export class DataFiles extends Component {
   handleClickDelete(path) {
     const { deleteDataFile, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(path));
+    const directory = params.splat ? (params.splat.replace(/\/$/, "")) : "";
+    const goTo = params.splat ? (params.splat) : "";
 
     if (confirm) {
       const filename = getFilenameFromPath(path);
 
-      deleteDataFile(params.splat, filename);
-      browserHistory.push(`${ADMIN_PREFIX}/datafiles`);
+      deleteDataFile(directory, filename);
+      browserHistory.push(`${ADMIN_PREFIX}/datafiles/${goTo}`);
     }
   }
 
@@ -119,13 +121,19 @@ export class DataFiles extends Component {
       return null;
     }
 
-    const to = params.splat ? `${ADMIN_PREFIX}/datafiles/${params.splat}new` :
-      `${ADMIN_PREFIX}/datafiles/new`;
+    let to, dirSplat;
+    if (params.splat) {
+      to = `${ADMIN_PREFIX}/datafiles/${params.splat.replace(/\/$/, "")}/new`;
+      dirSplat = params.splat.replace(/\/$/, "");
+    } else {
+      to = `${ADMIN_PREFIX}/datafiles/new`;
+      dirSplat = "";
+    }
 
     return (
       <div>
         <div className="content-header">
-          <Breadcrumbs type="data files" splat={params.splat || ''} />
+          <Breadcrumbs type="data files" splat={dirSplat} />
           <div className="page-buttons">
             <Link className="btn btn-active" to={to}>New data file</Link>
           </div>
