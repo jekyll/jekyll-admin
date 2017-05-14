@@ -47,7 +47,7 @@ export function fetchDataFile(directory, filename) {
  */
 export function putDataFile(directory, filename, data, new_path = '', source = 'editor') {
   return (dispatch, getState) => {
-    const ext = getExtensionFromPath(filename);
+    const ext = getExtensionFromPath(new_path || filename);
 
     if (source == "gui") {
       const json = /json/i.test(ext);
