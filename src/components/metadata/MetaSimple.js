@@ -38,11 +38,6 @@ export class MetaSimple extends Component {
     updateFieldValue(nameAttr, e.target.value);
   }
 
-  handleEditableBlur(e) {
-    const { nameAttr, updateFieldValue } = this.props;
-    updateFieldValue(nameAttr, e.target.value.trim());
-  }
-
   handleDatepickerChange(date, dateStr) {
     const { nameAttr, updateFieldValue } = this.props;
     let formatted = moment(date).format("YYYY-MM-DD HH:mm:ss");
@@ -54,7 +49,6 @@ export class MetaSimple extends Component {
     return (
       <TextareaAutosize
         onChange={(e) => this.handleEditableChange(e)}
-        onBlur={(e) => this.handleEditableBlur(e)}
         className="field value-field"
         value={`${fieldValue}`} />
     );

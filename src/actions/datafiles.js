@@ -3,14 +3,8 @@ import { validationError } from './utils';
 import { get, put } from '../utils/fetch';
 import { toYAML, toJSON, getExtensionFromPath } from '../utils/helpers';
 import { validator } from '../utils/validation';
-import {
-  getContentRequiredMessage,
-  getFilenameRequiredMessage
-} from '../constants/lang';
-import {
-  datafilesAPIUrl,
-  datafileAPIUrl
-} from '../constants/api';
+import { getContentRequiredMessage, getFilenameRequiredMessage } from '../constants/lang';
+import { datafilesAPIUrl, datafileAPIUrl } from '../constants/api';
 
 export function fetchDataFiles() {
   return (dispatch) => {
@@ -64,23 +58,12 @@ export function putDataFile(filename, data, source = "editor") {
 
     return put(
       datafileAPIUrl(filename),
-      JSON.stringify(payload),
+      preparePayload(payload),
       { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.PUT_DATAFILE_FAILURE, name: "error"},
       dispatch
     );
   };
-}
-
-function validateDatafile(filename, data) {
-  return validator(
-    { filename, data },
-    { 'filename': 'required', 'data': 'required' },
-    {
-      'filename.required': getFilenameRequiredMessage(),
-      'data.required': getContentRequiredMessage()
-    }
-  );
 }
 
 export function deleteDataFile(filename) {
@@ -104,3 +87,16 @@ export function onDataFileChanged() {
     type: ActionTypes.DATAFILE_CHANGED
   };
 }
+
+const validateDatafile = (filename, data) => {
+  return validator(
+    { filename, data },
+    { 'filename': 'required', 'data': 'required' },
+    {
+      'filename.required': getFilenameRequiredMessage(),
+      'data.required': getContentRequiredMessage()
+    }
+  );
+};
+
+const preparePayload = (obj) => JSON.stringify(obj).replace(/"\s+|\s+"/g,'"');
