@@ -36,14 +36,19 @@ class App extends Component {
       <HotKeys
         keyMap={keyboardShortcuts}
         className="wrapper">
-        <Sidebar config={config} />
-        <div className="container">
-          <Header config={config} />
-          <div className="content">
-            {this.props.children}
+        {
+          config.content &&
+          <div>
+            <Sidebar config={config.content} />
+            <div className="container">
+              <Header config={config.content} />
+              <div className="content">
+                {this.props.children}
+              </div>
+            </div>
+            <Notifications />
           </div>
-        </div>
-        <Notifications />
+        }
       </HotKeys>
     );
   }

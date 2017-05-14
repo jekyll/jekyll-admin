@@ -11,7 +11,7 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
-import { preventDefault } from '../../utils/helpers';
+import { preventDefault, getFilenameFromPath } from '../../utils/helpers';
 import { getLeaveMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -27,7 +27,7 @@ export class DataFileNew extends Component {
 
     this.state = {
       guiView: false,
-      baseName: '',
+      guiPath: '',
       extn: '.yml'
     };
   }
@@ -39,13 +39,7 @@ export class DataFileNew extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
-      let filename;
-      if (this.state.guiView) {
-        filename = this.state.baseName + this.state.extn;
-      } else {
-        filename = this.refs.inputpath.refs.input.value;
-      }
-      browserHistory.push(`${ADMIN_PREFIX}/datafiles/${filename}`);
+      browserHistory.push(`${ADMIN_PREFIX}/datafiles/${nextProps.datafile.relative_path}`);
     }
   }
 
@@ -79,7 +73,7 @@ export class DataFileNew extends Component {
   }
 
   handleClickSave(e) {
-    const { datafileChanged, fieldChanged, putDataFile } = this.props;
+    const { datafileChanged, fieldChanged, putDataFile, params } = this.props;
 
     // Prevent the default event from bubbling
     preventDefault(e);
@@ -87,11 +81,11 @@ export class DataFileNew extends Component {
     let filename;
     if (datafileChanged || fieldChanged) {
       if (this.state.guiView) {
-        filename = this.state.baseName + this.state.extn;
-        putDataFile(filename, null, "gui");
+        filename = this.state.guiPath + this.state.extn;
+        putDataFile(params.splat, filename, null, null, "gui");
       } else {
         filename = this.refs.inputpath.refs.input.value;
-        putDataFile(filename, this.refs.editor.getValue());
+        putDataFile(params.splat, filename, this.refs.editor.getValue());
       }
     }
   }
@@ -99,18 +93,11 @@ export class DataFileNew extends Component {
   renderGUInputs() {
     return(
       <form className="datafile-path">
-        <fieldset className="directory">
-          <legend>Directory</legend>
-          <input
-            type="text"
-            placeholder="directory"
-            disabled />
-        </fieldset>
         <fieldset className="filename">
-          <legend>Filename (without extension)</legend>
+          <legend>Path (without extension)</legend>
           <input
             type="text"
-            id="baseName"
+            id="guiPath"
             onChange={this.handleChange}
             placeholder="filename" />
         </fieldset>
@@ -127,16 +114,17 @@ export class DataFileNew extends Component {
 
   render() {
     const {
-      datafileChanged, fieldChanged, onDataFileChanged, updated, errors
+      datafileChanged, fieldChanged, onDataFileChanged, datafile, updated, errors, params
     } = this.props;
+    const { path, raw_content } = datafile;
 
     const keyboardHandlers = {
       'save': this.handleClickSave,
     };
 
-    // activate or deactivate `Create` button based on various states
+    // activate or deactivate `Create` button in GUI mode based on input state
     let activator = false;
-    if (this.state.guiView && this.state.baseName) {
+    if (this.state.guiView && this.state.guiPath) {
       activator = datafileChanged || fieldChanged;
     } else if (!this.state.guiView) {
       activator = datafileChanged;
@@ -146,7 +134,7 @@ export class DataFileNew extends Component {
       <HotKeys handlers={keyboardHandlers}>
         {errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
-          <Breadcrumbs splat="" type="datafiles" />
+          <Breadcrumbs splat={params.splat || ""} type="data files" />
         </div>
 
         <div className="content-wrapper">
@@ -160,7 +148,7 @@ export class DataFileNew extends Component {
               !this.state.guiView && <div>
                 <InputPath
                   onChange={onDataFileChanged}
-                  type="datafiles"
+                  type="data files"
                   path=""
                   ref="inputpath" />
                 <Editor
@@ -173,17 +161,17 @@ export class DataFileNew extends Component {
 
           <div className="content-side">
             <Button
-              onClick={this.toggleView}
-              type="view-toggle"
-              active={true}
-              triggered={this.state.guiView}
-              block />
-            <Button
               onClick={this.handleClickSave}
               type="create"
               active={activator}
               triggered={updated}
               icon="plus-square"
+              block />
+            <Button
+              onClick={this.toggleView}
+              type="view-toggle"
+              active={true}
+              triggered={this.state.guiView}
               block />
           </div>
         </div>
@@ -202,6 +190,7 @@ DataFileNew.propTypes = {
   datafileChanged: PropTypes.bool.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
+  params: PropTypes.object.isRequired,
   fieldChanged: PropTypes.bool
 };
 

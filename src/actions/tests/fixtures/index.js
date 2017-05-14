@@ -144,7 +144,7 @@ export const state = {
 
 export const datafile = {
   path: "_data/data_file.yml",
-  relative_path: "_data/data_file.yml",
+  relative_path: "data_file.yml",
   slug: "data_file",
   ext: ".yml",
   title: "Data File",

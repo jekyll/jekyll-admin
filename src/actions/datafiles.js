@@ -6,11 +6,11 @@ import { validator } from '../utils/validation';
 import { getContentRequiredMessage, getFilenameRequiredMessage } from '../constants/lang';
 import { datafilesAPIUrl, datafileAPIUrl } from '../constants/api';
 
-export function fetchDataFiles() {
+export function fetchDataFiles(directory = '') {
   return (dispatch) => {
     dispatch({ type: ActionTypes.FETCH_DATAFILES_REQUEST});
     return get(
-      datafilesAPIUrl(),
+      datafilesAPIUrl(directory),
       { type: ActionTypes.FETCH_DATAFILES_SUCCESS, name: "files"},
       { type: ActionTypes.FETCH_DATAFILES_FAILURE, name: "error"},
       dispatch
@@ -18,11 +18,11 @@ export function fetchDataFiles() {
   };
 }
 
-export function fetchDataFile(filename) {
+export function fetchDataFile(directory, filename) {
   return (dispatch) => {
     dispatch({ type: ActionTypes.FETCH_DATAFILE_REQUEST});
     return get(
-      datafileAPIUrl(filename),
+      datafileAPIUrl(directory, filename),
       { type: ActionTypes.FETCH_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.FETCH_DATAFILE_FAILURE, name: "error"},
       dispatch
@@ -30,24 +30,26 @@ export function fetchDataFile(filename) {
   };
 }
 
-export function putDataFile(filename, data, source = "editor") {
+/**
+ * Creates and updates a data file.
+ * @param {String} directory : Dirname of data file
+ * @param {String} filename  : The data file
+ * @param {Object} data      : Content to be written to data file
+ * @param {String} new_path  : File path relative to config['source']
+ * @param {String} source    : Point of origin of file-content data.
+ *                             Either the default `#brace-editor`, or `<DataGUI/>`
+ */
+export function putDataFile(directory, filename, data, new_path = '', source = 'editor') {
   return (dispatch, getState) => {
-    const ext = getExtensionFromPath(filename);
-    let payload;
+    const ext = getExtensionFromPath(new_path || filename);
 
     if (source == "gui") {
-      data = getState().metadata.metadata;
-      const yaml = /yaml|yml/i.test(ext);
       const json = /json/i.test(ext);
-
-      if (yaml) {
-        payload = { raw_content: toYAML(data) };
-      } else if (json) {
-        payload = { raw_content: JSON.stringify(data, null, 2) };
-      }
-    } else {
-      payload = { raw_content: data };
+      let metadata = getState().metadata.metadata;
+      data = json ? (JSON.stringify(metadata, null, 2)) : (toYAML(metadata));
     }
+
+    const payload = new_path ? { path: new_path, raw_content: data } : { raw_content: data };
 
     // handle errors
     const errors = validateDatafile(filename, data);
@@ -66,14 +68,14 @@ export function putDataFile(filename, data, source = "editor") {
   };
 }
 
-export function deleteDataFile(filename) {
+export function deleteDataFile(directory, filename) {
   return (dispatch) => {
-    return fetch(datafileAPIUrl(filename), {
+    return fetch(datafileAPIUrl(directory, filename), {
       method: 'DELETE'
     })
     .then(data => {
       dispatch({ type: ActionTypes.DELETE_DATAFILE_SUCCESS });
-      dispatch(fetchDataFiles());
+      dispatch(fetchDataFiles(directory));
     })
     .catch(error => dispatch({
       type: ActionTypes.DELETE_DATAFILE_FAILURE,
