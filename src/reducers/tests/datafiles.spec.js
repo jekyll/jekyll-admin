@@ -1,7 +1,7 @@
-import reducer from '../datafiles';
+import reducer, { filterByFilename } from '../datafiles';
 import * as types from '../../constants/actionTypes';
 
-import { datafile } from './fixtures';
+import { datafile, data_files } from './fixtures';
 
 describe('Reducers::DataFiles', () => {
   it('should return the initial state', () => {
@@ -106,5 +106,10 @@ describe('Reducers::DataFiles', () => {
       datafileChanged: true,
       updated: false
     });
+  });
+
+  it('should filter data files and directories', () => {
+    expect(filterByFilename(data_files, '').length).toBe(2);
+    expect(filterByFilename(data_files, '.yml').length).toBe(1);
   });
 });

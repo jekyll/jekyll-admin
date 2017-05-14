@@ -4,8 +4,9 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
-import Metadata from '../MetaFields';
+import DataGUI from '../MetaFields';
 import Breadcrumbs from '../../components/Breadcrumbs';
+import InputPath from '../../components/form/InputPath';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
@@ -24,16 +25,38 @@ export class DataFileEdit extends Component {
 
   constructor(props) {
     super(props);
+
+    this.routerWillLeave = this.routerWillLeave.bind(this);
     this.handleClickSave = this.handleClickSave.bind(this);
+    this.toggleView = this.toggleView.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+
     this.state = {
-      guiView: false
+      guiView: false,
+      guiPath: '',
+      extn: ''
     };
   }
 
   componentDidMount() {
     const { fetchDataFile, params, router, route } = this.props;
-    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
-    fetchDataFile(params.data_file);
+    const [directory, ...rest] = params.splat || [""];
+    const filename = rest.join('.');
+
+    router.setRouteLeaveHook(route, this.routerWillLeave);
+    fetchDataFile(directory, filename);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.updated !== nextProps.updated) {
+      const new_path = nextProps.datafile.path;
+      const path = this.props.datafile.path;
+
+      // redirect if the path is changed
+      if (new_path != path) {
+        browserHistory.push(`${ADMIN_PREFIX}/datafiles/${nextProps.datafile.relative_path}`);
+      }
+    }
   }
 
   componentWillUnmount() {
@@ -51,29 +74,96 @@ export class DataFileEdit extends Component {
   }
 
   toggleView() {
-    this.setState({ guiView: !this.state.guiView });
+    const { datafile } = this.props;
+    this.setState({
+      guiView: !this.state.guiView,
+      guiPath: datafile.slug,
+      extn: datafile.ext
+    });
+  }
+
+  handleChange(e) {
+    const { onDataFileChanged } = this.props;
+    let obj = {};
+    const key = e.target.id;
+    const value = e.target.value;
+    obj[key] = value;
+
+    this.setState(obj);
+    onDataFileChanged();
   }
 
   handleClickSave(e) {
     const { datafile, datafileChanged, fieldChanged, putDataFile, params } = this.props;
+    const { path, relative_path } = datafile;
+    const data_dir = path.replace(relative_path, "");
+
+    let name, data, mode;
+    const [directory, ...rest] = params.splat || [""];
+    const filename = rest.join(".");
 
     // Prevent the default event from bubbling
     preventDefault(e);
 
-    if (fieldChanged) {
-      putDataFile(params.data_file, null, 'gui');
-    } else if (datafileChanged) {
-      putDataFile(params.data_file, this.refs.editor.getValue(), 'editor');
+    if (datafileChanged || fieldChanged) {
+      if (this.state.guiView) {
+        name = this.state.guiPath + this.state.extn;
+        data = null;
+        mode = "gui";
+
+      } else {
+        name = this.refs.inputpath.refs.input.value;
+        data = this.refs.editor.getValue();
+        mode = "editor";
+      }
+
+      const data_path = directory ? (data_dir + `${directory}/` + name) :
+                                    (data_dir + name);
+
+      const new_path = (data_path != path) ? data_path : "";
+      putDataFile(directory, filename, data, new_path, mode);
     }
   }
 
-  handleClickDelete(filename) {
-    const { deleteDataFile } = this.props;
-    const confirm = window.confirm(getDeleteMessage(filename));
+  handleClickDelete(path) {
+    const { deleteDataFile, params } = this.props;
+    const confirm = window.confirm(getDeleteMessage(path));
+
     if (confirm) {
-      deleteDataFile(filename);
-      browserHistory.push(`${ADMIN_PREFIX}/datafiles`);
+      const [directory, ...rest] = params.splat || [""];
+      const filename = getFilenameFromPath(path);
+      deleteDataFile(directory, filename);
+      const dir = directory ? `/${directory}` : '';
+      browserHistory.push(`${ADMIN_PREFIX}/datafiles${dir}`);
     }
+  }
+
+  renderGUInputs() {
+    const { datafile, params } = this.props;
+    const [directory] = params.splat;
+    return(
+      <form className="datafile-path">
+        <fieldset className="filename">
+          <legend>Path (without extension)</legend>
+          <input
+            type="text"
+            id="guiPath"
+            value={this.state.guiPath}
+            onChange={this.handleChange}
+            placeholder="filename" />
+        </fieldset>
+        <fieldset className="file-type">
+          <legend>File Type</legend>
+          <select
+            id="extn"
+            value={this.state.extn}
+            onChange={this.handleChange}>
+            <option value=".yml">YAML</option>
+            <option value=".json">JSON</option>
+          </select>
+        </fieldset>
+      </form>
+    );
   }
 
   renderAside() {
@@ -83,19 +173,27 @@ export class DataFileEdit extends Component {
     const ext = getExtensionFromPath(path);
     const guiSupport = (/yaml|yml|json/i.test(ext));
 
+    // activate or deactivate `Create` button in GUI mode based on input state
+    let activator = false;
+    if (this.state.guiView && this.state.guiPath) {
+      activator = datafileChanged || fieldChanged;
+    } else if (!this.state.guiView) {
+      activator = datafileChanged;
+    }
+
     return (
       <div className="content-side">
         <Button
           onClick={this.handleClickSave}
           type="save"
-          active={datafileChanged || fieldChanged}
+          active={activator}
           triggered={updated}
           icon="save"
           block />
         {
           guiSupport &&
             <Button
-              onClick={this.toggleView.bind(this)}
+              onClick={this.toggleView}
               type="view-toggle"
               active={true}
               triggered={this.state.guiView}
@@ -113,7 +211,7 @@ export class DataFileEdit extends Component {
   }
 
   render() {
-    const { datafileChanged, onDataFileChanged, datafile, isFetching, errors } = this.props;
+    const { datafileChanged, onDataFileChanged, datafile, isFetching, params, errors } = this.props;
 
     if (isFetching) {
       return null;
@@ -124,8 +222,17 @@ export class DataFileEdit extends Component {
     }
 
     const { path, raw_content, content } = datafile;
+    const [directory, ...rest] = params.splat || [""];
     const filename = getFilenameFromPath(path);
     const ext = getExtensionFromPath(path);
+
+    const input_path = (
+      <InputPath
+        onChange={onDataFileChanged}
+        type="data files"
+        path={filename}
+        ref="inputpath" />
+    );
 
     const keyboardHandlers = {
       'save': this.handleClickSave,
@@ -138,7 +245,7 @@ export class DataFileEdit extends Component {
         {errors.length > 0 && <Errors errors={errors} />}
 
         <div className="content-header">
-          <Breadcrumbs splat={filename} type="datafiles" />
+          <Breadcrumbs splat={directory || ""} type="data files" />
         </div>
 
         <div className="content-wrapper">
@@ -149,12 +256,14 @@ export class DataFileEdit extends Component {
                   CAUTION! Any existing comments will be lost when editing via this view.
                   Switch to the <strong>Raw Editor</strong> to preserve comments.
                 </div>
-                <Metadata fields={content} dataview/>
+                {this.renderGUInputs()}
+                <DataGUI fields={content} dataview/>
               </div>
           }
           {
             !this.state.guiView && raw_content &&
               <div className="content-body">
+                {input_path}
                 <Editor
                   editorChanged={datafileChanged}
                   onEditorChange={onDataFileChanged}

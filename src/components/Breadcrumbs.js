@@ -12,7 +12,7 @@ export default class Breadcrumbs extends Component {
     let base;
     if (type == 'pages') {
       base = `${ADMIN_PREFIX}/pages`;
-    } else if (type == 'datafiles') {
+    } else if (type == 'data files') {
       base = `${ADMIN_PREFIX}/datafiles`;
     } else {
       base = `${ADMIN_PREFIX}/collections/${type}`;

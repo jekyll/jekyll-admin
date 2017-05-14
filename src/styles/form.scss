@@ -134,8 +134,7 @@
     border-radius: 5px;
     border-color: transparent;
 
-    &.directory { width: 53%; }
-    &.filename { width: 30%; }
+    &.filename { width: 84%; }
     &.file-type { width: 15%; }
 
     &:first-of-type { margin-left: 0; }
@@ -160,6 +159,10 @@
   input {
     &:disabled { background-color: #4d4d4d; }
     &:focus { outline: none; border-color: $dark-orange; }
+    &:-webkit-autofill {
+      -webkit-box-shadow: 0 0 0px 1000px #2b2b2b inset;
+      -webkit-text-fill-color: white;
+    }
   }
 
   select {

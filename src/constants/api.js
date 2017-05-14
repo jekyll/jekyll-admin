@@ -17,8 +17,9 @@ export const documentAPIUrl = (collection_name, directory, filename) =>
   directory ? `${API}/collections/${collection_name}/${directory}/${filename}` :
   `${API}/collections/${collection_name}/${filename}`;
 
-export const datafilesAPIUrl = () => `${API}/data`;
-export const datafileAPIUrl = (filename) => `${API}/data/${filename}`;
+export const datafilesAPIUrl = (directory = '') => `${API}/data/${directory}`;
+export const datafileAPIUrl = (directory, filename) =>
+  directory ? `${API}/data/${directory}/${filename}` : `${API}/data/${filename}`;
 
 export const staticfilesAPIUrl = () => `${API}/static_files`;
 export const staticfileAPIUrl = (filename) => `${API}/static_files/${filename}`;
