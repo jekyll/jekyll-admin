@@ -119,8 +119,8 @@ export class DataFileEdit extends Component {
       return null;
     }
 
-    if (_.isEmpty(datafile)) {
-      return <h1>{getNotFoundMessage("data file")}</h1>;
+    if (_.isEmpty(datafile.content)) {
+      return <h1>{getNotFoundMessage("content")}</h1>;
     }
 
     const { path, raw_content, content } = datafile;
