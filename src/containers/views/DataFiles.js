@@ -31,7 +31,7 @@ export class DataFiles extends Component {
     const { deleteDataFile, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(path));
     const directory = params.splat || "";
-    const dir = directory ? `/${directory}` : ""
+    const dir = directory ? `/${directory}` : "";
 
     if (confirm) {
       const filename = getFilenameFromPath(path);
