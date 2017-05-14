@@ -29,8 +29,8 @@ const setup = (props = defaultProps) => {
   return {
     component,
     actions,
-    toggleButton: component.find(Button).first(),
-    saveButton: component.find(Button).last(),
+    saveButton: component.find(Button).first(),
+    toggleButton: component.find(Button).last(),
     editor: component.find(Editor).first(),
     gui: component.find(DataGUI).first(),
     errors: component.find(Errors),

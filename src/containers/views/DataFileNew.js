@@ -161,17 +161,17 @@ export class DataFileNew extends Component {
 
           <div className="content-side">
             <Button
-              onClick={this.toggleView}
-              type="view-toggle"
-              active={true}
-              triggered={this.state.guiView}
-              block />
-            <Button
               onClick={this.handleClickSave}
               type="create"
               active={activator}
               triggered={updated}
               icon="plus-square"
+              block />
+            <Button
+              onClick={this.toggleView}
+              type="view-toggle"
+              active={true}
+              triggered={this.state.guiView}
               block />
           </div>
         </div>
