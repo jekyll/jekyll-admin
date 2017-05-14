@@ -59,7 +59,7 @@ export function putDataFile(directory, filename, data, new_path = '', source = '
     dispatch({type: ActionTypes.CLEAR_ERRORS});
 
     return put(
-      datafileAPIUrl(filename),
+      datafileAPIUrl(directory, filename),
       preparePayload(payload),
       { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.PUT_DATAFILE_FAILURE, name: "error"},
