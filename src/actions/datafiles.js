@@ -1,7 +1,7 @@
 import * as ActionTypes from '../constants/actionTypes';
 import { validationError } from './utils';
 import { get, put } from '../utils/fetch';
-import { toYAML, toJSON, getExtensionFromPath } from '../utils/helpers';
+import { toYAML, toJSON, getExtensionFromPath, trimObject } from '../utils/helpers';
 import { validator } from '../utils/validation';
 import { getContentRequiredMessage, getFilenameRequiredMessage } from '../constants/lang';
 import { datafilesAPIUrl, datafileAPIUrl } from '../constants/api';
@@ -101,4 +101,4 @@ const validateDatafile = (filename, data) => {
   );
 };
 
-const preparePayload = (obj) => JSON.stringify(obj).replace(/"\s+|\s+"/g,'"');
+const preparePayload = (obj) => JSON.stringify(trimObject(obj));

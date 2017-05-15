@@ -4,7 +4,7 @@ import moment from 'moment';
 import { validationError } from '../actions/utils';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify } from '../utils/helpers';
+import { slugify, trimObject } from '../utils/helpers';
 import {
   getTitleRequiredMessage,
   getFilenameRequiredMessage,
@@ -167,4 +167,4 @@ const validateDocument = (metadata, collection) => {
   return validator(metadata, validations, messages);
 };
 
-const preparePayload = (obj) => JSON.stringify(obj).replace(/"\s+|\s+"/g,'"');
+const preparePayload = (obj) => JSON.stringify(trimObject(obj));

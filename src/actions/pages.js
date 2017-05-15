@@ -3,7 +3,7 @@ import _ from 'underscore';
 import { validationError } from '../actions/utils';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify } from '../utils/helpers';
+import { slugify, trimObject } from '../utils/helpers';
 import { getTitleRequiredMessage, getFilenameNotValidMessage } from '../constants/lang';
 import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
 
@@ -122,4 +122,4 @@ const validatePage = (metadata) => {
   );
 };
 
-const preparePayload = (obj) => JSON.stringify(obj).replace(/"\s+|\s+"/g,'"');
+const preparePayload = (obj) => JSON.stringify(trimObject(obj));

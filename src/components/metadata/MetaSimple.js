@@ -131,7 +131,7 @@ export class MetaSimple extends Component {
 MetaSimple.propTypes = {
   parentType: PropTypes.string.isRequired,
   fieldKey: PropTypes.string.isRequired,
-  fieldValue: PropTypes.any.isRequired,
+  fieldValue: PropTypes.any,
   updateFieldValue: PropTypes.func.isRequired,
   nameAttr: PropTypes.any.isRequired
 };
