@@ -25,6 +25,22 @@ Refer to the [installing plugins](https://jekyllrb.com/docs/plugins/#installing-
 1. Start Jekyll as you would normally (`bundle exec jekyll serve`)
 2. Navigate to `http://localhost:4000/admin` to access the administrative interface
 
+## Options
+
+Jekyll Admin related options can be specified in `_config.yml`
+under a key called `jekyll_admin`. Currently it has only one option `hidden_links`
+which is for hiding unwanted links on the sidebar. The following keys under `hidden_links` can be used in order to hide default links;
+
+```yaml
+jekyll_admin:
+  hidden_links:
+    - posts
+    - pages
+    - staticfiles
+    - datafiles
+    - configuration
+```
+
 ## Contributing
 
 Interested in contributing to Jekyll Admin? We’d love your help. Jekyll Admin is an open source project, built one contribution at a time by users like you. See [the contributing instructions](.github/CONTRIBUTING.md), and [the development docs](http://jekyll.github.io/jekyll-admin/development/) for more information.
