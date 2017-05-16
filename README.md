@@ -36,9 +36,9 @@ jekyll_admin:
   hidden_links:
     - posts
     - pages
-    - configuration
     - staticfiles
     - datafiles
+    - configuration
 ```
 
 ## Contributing
