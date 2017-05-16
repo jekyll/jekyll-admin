@@ -8,14 +8,15 @@ module JekyllAdmin
     include PathHelper
     extend PathHelper
 
-    alias_method :path, :relative_path
+    attr_reader :id
 
     # Initialize a new DataFile object
     #
     # id - the file ID as passed from the API. This may or may not have an extension
     def initialize(id)
-      @id ||= id
+      @id ||= File.extname(id).empty? ? "#{id}.yml" : id
     end
+    alias_method :path, :id
 
     def exists?
       @exists ||= File.exist?(absolute_path)
@@ -33,10 +34,10 @@ module JekyllAdmin
 
     # Returns the file's extension with preceeding `.`
     def ext
-      @ext ||= if File.extname(@id).to_s.empty?
+      @ext ||= if File.extname(id).to_s.empty?
                  ".yml"
                else
-                 File.extname(@id)
+                 File.extname(id)
                end
     end
     alias_method :extension, :ext
@@ -51,6 +52,16 @@ module JekyllAdmin
       @title ||= Jekyll::Utils.titleize_slug(slug.tr("_", "-"))
     end
 
+    # Return path relative to configured `data_dir`
+    def relative_path
+      id.sub("/#{DataFile.data_dir}/", "")
+    end
+
+    # Return the absolute path to given data file
+    def absolute_path
+      sanitized_path id
+    end
+
     # Mimics Jekyll's native to_liquid functionality by returning a hash
     # of data file metadata
     def to_liquid
@@ -59,7 +70,11 @@ module JekyllAdmin
 
     def self.all
       data_dir = sanitized_path DataFile.data_dir
-      Dir["#{data_dir}/*.{#{EXTENSIONS.join(",")}}"].map do |path|
+      files = Dir["#{data_dir}/**/*.{#{EXTENSIONS.join(",")}}"].reject do |d|
+        File.directory?(d)
+      end
+
+      files.map do |path|
         new path_without_site_source(path)
       end
     end
@@ -76,7 +91,7 @@ module JekyllAdmin
     end
 
     def basename
-      @basename ||= File.basename(@id, ".*")
+      @basename ||= File.basename(id, ".*")
     end
 
     def basename_with_extension

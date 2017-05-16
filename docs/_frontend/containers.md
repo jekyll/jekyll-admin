@@ -5,7 +5,15 @@ description: Container components which connect the presentational components to
 
 ## Sidebar
 
-Container for listing all of routes' links.
+Container for listing all of routes' links. The links can be hidden from `Sidebar` by adding
+an option to `_config.yml` like the following;
+
+```yaml
+jekyll_admin:
+  hidden_links:
+    - posts
+    - pages
+```
 
 ### PropTypes
 
@@ -232,7 +240,9 @@ Container for DataFiles view. Lists data files.
   fetchDataFiles: Function,
   deleteDataFile: Function,
   search: Function,
-  isFetching: Boolean
+  isFetching: Boolean,
+  search: Function,
+  params: Object
 }
 ```
 
@@ -279,6 +289,9 @@ Simply input the file's basename, the filetype (`YAML` or `JSON`) and data. The 
   errors: Array,
   updated: Boolean,
   datafileChanged: Boolean,
+  params: Object,
+  router: Object,
+  route: Object
   fieldChanged: Boolean // optional
 }
 ```

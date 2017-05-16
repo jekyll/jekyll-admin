@@ -73,5 +73,9 @@ export const labels = {
   },
   upload: {
     label: 'Upload filer'
+  },
+  viewToggle: {
+    label: 'Skift Udsigt til Raw Editor',
+    triggeredLabel: 'Skift Udsigt til Raw Editor'
   }
 };

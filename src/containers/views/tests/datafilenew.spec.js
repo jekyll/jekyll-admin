@@ -10,9 +10,10 @@ const defaultProps = {
   datafile: {},
   updated: false,
   datafileChanged: false,
-  editorChanged: false,
+  fieldChanged: false,
   router: {},
   route: {},
+  params: { splat: 'books' },
   errors: []
 };
 
@@ -28,8 +29,8 @@ const setup = (props = defaultProps) => {
   return {
     component,
     actions,
-    toggleButton: component.find(Button).first(),
-    saveButton: component.find(Button).last(),
+    saveButton: component.find(Button).first(),
+    toggleButton: component.find(Button).last(),
     editor: component.find(Editor).first(),
     gui: component.find(DataGUI).first(),
     errors: component.find(Errors),
@@ -43,7 +44,11 @@ describe('Containers::DataFileNew', () => {
     expect(toggleButton.node.props['type']).toEqual('view-toggle');
     expect(saveButton.node.props['type']).toEqual('create');
     expect(editor.node.props['content']).toEqual('');
-    expect(component.state()).toEqual({'baseName': '', 'extn': '.yml', 'guiView': false});
+    expect(component.state()).toEqual({
+      'guiPath': '',
+      'extn': '.yml',
+      'guiView': false
+    });
   });
 
   it('should not render error messages initially', () => {
@@ -79,16 +84,36 @@ describe('Containers::DataFileNew', () => {
     expect(component.state('guiView')).toBe(true);
   });
 
+  it('should activate save button when Editor or input field is changed.', () => {
+    const { component, saveButton } = setup(Object.assign({}, defaultProps, {
+      datafileChanged: true
+    }));
+    expect(saveButton.prop('active')).toBe(true);
+    component.setState({ guiPath: 'foo', guiView: true });
+    expect(saveButton.prop('active')).toBe(true);
+  });
+
   it('should not call putDataFile if a field is not changed.', () => {
     const { saveButton, actions } = setup();
     saveButton.simulate('click');
     expect(actions.putDataFile).not.toHaveBeenCalled();
   });
 
-  it('should activate save button when Editor or input field is changed.', () => {
-    const { saveButton } = setup(Object.assign({}, defaultProps, {
+  it('should call putDataFile if path input field in GUI mode is changed.', () => {
+    const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
       datafileChanged: true
     }));
-    expect(saveButton.prop('active')).toBe(true);
+    component.setState({ guiPath: 'foo', guiView: true });
+    saveButton.simulate('click');
+    expect(actions.putDataFile).toHaveBeenCalledWith("books", "foo.yml", null, null, "gui");
+  });
+
+  it('should call putDataFile if a GUI field is changed.', () => {
+    const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
+      fieldChanged: true
+    }));
+    component.setState({ guiPath: 'foo', guiView: true });
+    saveButton.simulate('click');
+    expect(actions.putDataFile).toHaveBeenCalledWith("books", "foo.yml", null, null, "gui");
   });
 });

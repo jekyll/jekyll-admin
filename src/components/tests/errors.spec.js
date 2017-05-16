@@ -11,13 +11,13 @@ function setup() {
 
   return {
     component,
-    listItem: component.find('li')
+    errorItems: component.find('.error-messages > div')
   };
 }
 
 describe('Components::Errors', () => {
   it('should render errors correctly', () => {
-    const { listItem } = setup();
-    expect(listItem.length).toBe(errors.length);
+    const { errorItems } = setup();
+    expect(errorItems.length).toEqual(errors.length);
   });
 });
