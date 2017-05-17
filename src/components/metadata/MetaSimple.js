@@ -55,7 +55,7 @@ export class MetaSimple extends Component {
       <TextareaAutosize
         onChange={(e) => this.handleEditableChange(e)}
         onBlur={(e) => this.handleEditableBlur(e)}
-        className='field value-field'
+        className="field value-field"
         value={`${fieldValue}`} />
     );
   }
@@ -66,7 +66,7 @@ export class MetaSimple extends Component {
     return (
       <DateTimePicker
         onChange={(v, d) => this.handleDatepickerChange(v, d)}
-        className='date-field'
+        className="date-field"
         value={dateValue} />
     );
   }
@@ -81,20 +81,20 @@ export class MetaSimple extends Component {
   renderStaticFilePicker() {
     const { fieldValue } = this.props;
     return (
-      <div className='imagepicker'>
+      <div className="imagepicker">
         <TextareaAutosize
           onChange={(e) => this.handleEditableChange(e)}
-          className='field value-field'
+          className="field value-field"
           value={fieldValue}
-          ref='imagepicker' />
-        <span className='images-wrapper'>
+          ref="imagepicker" />
+        <span className="images-wrapper">
           <button onClick={this.handleOpenModal}>
-            <i className='fa fa-picture-o' aria-hidden='true' />
+            <i className="fa fa-picture-o" aria-hidden="true" />
           </button>
           <Modal
              isOpen={this.state.showModal}
              onAfterOpen={this.fetchStaticFiles}
-             contentLabel='onRequestClose Example'
+             contentLabel="onRequestClose Example"
              onRequestClose={this.handleCloseModal}
              style={{
               overlay: {
@@ -127,7 +127,7 @@ export class MetaSimple extends Component {
         node = this.renderEditable();
     }
     return (
-      <div className='meta-value'>
+      <div className="meta-value">
         {node}
       </div>
     );

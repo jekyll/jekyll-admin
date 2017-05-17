@@ -124,51 +124,51 @@ export class DocumentEdit extends Component {
     return (
       <HotKeys
         handlers={keyboardHandlers}
-        className='single'>
+        className="single">
         {errors.length > 0 && <Errors errors={errors} />}
-        <div className='content-header'>
+        <div className="content-header">
           <Breadcrumbs
             splat={directory || ''}
             type={collection} />
         </div>
 
-        <div className='content-wrapper'>
-          <div className='content-body'>
+        <div className="content-wrapper">
+          <div className="content-body">
             <InputPath onChange={updatePath} type={collection} path={name} />
-            <InputTitle onChange={updateTitle} title={title} ref='title' />
+            <InputTitle onChange={updateTitle} title={title} ref="title" />
             <MarkdownEditor
               onChange={updateBody}
               onSave={this.handleClickSave}
-              placeholder='Body'
+              placeholder="Body"
               initialValue={raw_content}
-              ref='editor' />
+              ref="editor" />
             <Splitter />
             <Metadata fields={{title, path: name, raw_content, ...metafields}} />
           </div>
 
-          <div className='content-side'>
+          <div className="content-side">
             <Button
               onClick={this.handleClickSave}
-              type='save'
+              type="save"
               active={fieldChanged}
               triggered={updated}
-              icon='save'
+              icon="save"
               block />
             {
               http_url &&
                 <Button
                   to={http_url}
-                  type='view'
-                  icon='eye'
+                  type="view"
+                  icon="eye"
                   active={true}
                   block />
             }
             <Splitter />
             <Button
               onClick={() => this.handleClickDelete()}
-              type='delete'
+              type="delete"
               active={true}
-              icon='trash'
+              icon="trash"
               block />
           </div>
         </div>

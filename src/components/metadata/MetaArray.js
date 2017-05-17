@@ -50,11 +50,11 @@ export class MetaArray extends Component {
       );
     });
     return (
-      <div className='meta-value-array' ref={this.sortableGroupDecorator.bind(this)}>
+      <div className="meta-value-array" ref={this.sortableGroupDecorator.bind(this)}>
         {items}
         <a onClick={() => addField(namePrefix)}
-          className='add-field-array' title='Add new list item'>
-            <i className='fa fa-plus' />
+          className="add-field-array" title="Add new list item">
+            <i className="fa fa-plus" />
         </a>
       </div>
     );

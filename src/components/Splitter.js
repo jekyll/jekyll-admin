@@ -1,5 +1,5 @@
 import React from 'react';
 
-const Splitter = () => <div className='splitter' />;
+const Splitter = () => <div className="splitter" />;
 
 export default Splitter;

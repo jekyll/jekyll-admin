@@ -9,14 +9,14 @@ export class Header extends Component {
   render() {
     const { config } = this.props;
     return (
-      <div className='header'>
-        <h3 className='title'>
-          <Link target='_blank' to={config.url || '/'}>
-            <i className='fa fa-home' />
+      <div className="header">
+        <h3 className="title">
+          <Link target="_blank" to={config.url || '/'}>
+            <i className="fa fa-home" />
             <span>{config.title || 'You have no title!'}</span>
           </Link>
         </h3>
-        <span className='version'>{VERSION}</span>
+        <span className="version">{VERSION}</span>
       </div>
     );
   }

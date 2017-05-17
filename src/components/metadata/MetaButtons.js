@@ -15,41 +15,41 @@ export class MetaButtons extends Component {
   render() {
     const { currentType, parentType, onDropdownFocus, onDropdownBlur } = this.props;
     return (
-      <div className='meta-buttons'>
+      <div className="meta-buttons">
         {
           parentType == 'array' &&
-          <span className='move'><i className='fa fa-arrows'/></span>
+          <span className="move"><i className="fa fa-arrows"/></span>
         }
-        <span className='dropdown'>
+        <span className="dropdown">
           <a onFocus={() => onDropdownFocus()}
             onBlur={() => onDropdownBlur()}
-            className='meta-button'
-            tabIndex='1'>
-              <i className='fa fa-chevron-down'/>
+            className="meta-button"
+            tabIndex="1">
+              <i className="fa fa-chevron-down"/>
           </a>
-          <div className='dropdown-wrap'>
+          <div className="dropdown-wrap">
             {
               currentType != 'simple' &&
               <span onMouseDown={() => this.handleTypeChange('simple')}>
-                <i className='fa fa-pencil'/>Convert to Simple
+                <i className="fa fa-pencil"/>Convert to Simple
               </span>
             }
             {
               currentType != 'array' &&
               <span onMouseDown={() => this.handleTypeChange('array')}>
-                <i className='fa fa-list-ol'/>Convert to List
+                <i className="fa fa-list-ol"/>Convert to List
               </span>
             }
             {
               currentType != 'object' &&
               <span onMouseDown={() => this.handleTypeChange('object')}>
-                <i className='fa fa-th-large'/>Convert to Object
+                <i className="fa fa-th-large"/>Convert to Object
               </span>
             }
             <span
               onMouseDown={() => this.handleRemoveClick()}
-              className='remove-field'>
-                <i className='fa fa-trash-o'/>Remove field
+              className="remove-field">
+                <i className="fa fa-trash-o"/>Remove field
             </span>
           </div>
         </span>

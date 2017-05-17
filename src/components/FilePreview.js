@@ -21,20 +21,20 @@ export default class FilePreview extends Component {
     if (image) {
       node = <img src={file.http_url} />;
     } else {
-      node = <div><i className='fa fa-file-text-o' aria-hidden='true'/></div>;
+      node = <div><i className="fa fa-file-text-o" aria-hidden="true"/></div>;
     }
 
     let nodeLink;
     if (onClick) {
       nodeLink = <a onClick={onClick.bind(null, file.http_url)}>{node}</a>;
     } else {
-      nodeLink = <a href={file.http_url} target='_blank'>{node}</a>;
+      nodeLink = <a href={file.http_url} target="_blank">{node}</a>;
     }
     return (
-      <div className='file-preview'>
+      <div className="file-preview">
         {nodeLink}
-        <span className='filename'>{file.path}</span>
-        <button onClick={() => this.handleClickDelete(file.path)} className='delete' title='Delete file'>x</button>
+        <span className="filename">{file.path}</span>
+        <button onClick={() => this.handleClickDelete(file.path)} className="delete" title="Delete file">x</button>
       </div>
     );
   }

@@ -92,20 +92,20 @@ export class DataFileNew extends Component {
 
   renderGUInputs() {
     return(
-      <form className='datafile-path'>
-        <fieldset className='filename'>
+      <form className="datafile-path">
+        <fieldset className="filename">
           <legend>Path (without extension)</legend>
           <input
-            type='text'
-            id='guiPath'
+            type="text"
+            id="guiPath"
             onChange={this.handleChange}
-            placeholder='filename' />
+            placeholder="filename" />
         </fieldset>
-        <fieldset className='file-type'>
+        <fieldset className="file-type">
           <legend>File Type</legend>
-          <select id='extn' value={this.state.extn} onChange={this.handleChange}>
-            <option value='.yml'>YAML</option>
-            <option value='.json'>JSON</option>
+          <select id="extn" value={this.state.extn} onChange={this.handleChange}>
+            <option value=".yml">YAML</option>
+            <option value=".json">JSON</option>
           </select>
         </fieldset>
       </form>
@@ -133,12 +133,12 @@ export class DataFileNew extends Component {
     return (
       <HotKeys handlers={keyboardHandlers}>
         {errors.length > 0 && <Errors errors={errors} />}
-        <div className='content-header'>
-          <Breadcrumbs splat={params.splat || ''} type='data files' />
+        <div className="content-header">
+          <Breadcrumbs splat={params.splat || ''} type="data files" />
         </div>
 
-        <div className='content-wrapper'>
-          <div className='content-body'>
+        <div className="content-wrapper">
+          <div className="content-body">
             {
               this.state.guiView && <div>
                 {this.renderGUInputs()}
@@ -148,28 +148,28 @@ export class DataFileNew extends Component {
               !this.state.guiView && <div>
                 <InputPath
                   onChange={onDataFileChanged}
-                  type='data files'
-                  path=''
-                  ref='inputpath' />
+                  type="data files"
+                  path=""
+                  ref="inputpath" />
                 <Editor
                   editorChanged={datafileChanged}
                   onEditorChange={onDataFileChanged}
                   content={''}
-                  ref='editor' /></div>
+                  ref="editor" /></div>
             }
           </div>
 
-          <div className='content-side'>
+          <div className="content-side">
             <Button
               onClick={this.handleClickSave}
-              type='create'
+              type="create"
               active={activator}
               triggered={updated}
-              icon='plus-square'
+              icon="plus-square"
               block />
             <Button
               onClick={this.toggleView}
-              type='view-toggle'
+              type="view-toggle"
               active={true}
               triggered={this.state.guiView}
               block />

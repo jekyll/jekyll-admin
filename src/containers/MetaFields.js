@@ -46,7 +46,7 @@ export class MetaFields extends Component {
           key={key}
           key_prefix={key_prefix}
           type={type}
-          parentType='top'
+          parentType="top"
           fieldKey={key}
           fieldValue={field}
           addField={addField}
@@ -61,22 +61,22 @@ export class MetaFields extends Component {
     });
 
     const newWrapper = dataview ? (
-      <div className='data-new'>
+      <div className="data-new">
         <a onClick={() => addField('metadata')}>
-          <i className='fa fa-plus-circle' /> New data field
+          <i className="fa fa-plus-circle" /> New data field
         </a>
       </div>
     ) : (
-      <div className='meta-new'>
-        <a onClick={() => addField('metadata')} className='tooltip'>
-          <i className='fa fa-plus-circle' /> New metadata field
-          <span className='tooltip-text'>
+      <div className="meta-new">
+        <a onClick={() => addField('metadata')} className="tooltip">
+          <i className="fa fa-plus-circle" /> New metadata field
+          <span className="tooltip-text">
             Metadata will be stored as the <b>YAML front matter</b> within the document.
           </span>
         </a>
-        <small className='tooltip pull-right'>
-          <i className='fa fa-info-circle' />Special Keys
-          <span className='tooltip-text'>
+        <small className="tooltip pull-right">
+          <i className="fa fa-info-circle" />Special Keys
+          <span className="tooltip-text">
             You can use special keys like <b>date</b>, <b>file</b>, <b>image</b> for user-friendly functionalities.
           </span>
         </small>

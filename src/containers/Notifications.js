@@ -20,7 +20,7 @@ export class Notifications extends Component {
   }
 
   render() {
-    return <NotificationSystem ref='notificationSystem' />;
+    return <NotificationSystem ref="notificationSystem" />;
   }
 }
 

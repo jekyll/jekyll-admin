@@ -28,16 +28,16 @@ class Editor extends Component {
       <AceEditor
         value={content}
         mode={mode}
-        theme='monokai'
-        width='100%'
-        height='400px'
+        theme="monokai"
+        width="100%"
+        height="400px"
         showGutter={false}
         showPrintMargin={false}
         highlightActiveLine={false}
-        className='config-editor'
+        className="config-editor"
         fontSize={14}
         scrollMargin={[15, 15, 15, 15]}
-        ref='ace'
+        ref="ace"
         onChange={() => this.handleChange()} />
     );
   }

@@ -39,13 +39,13 @@ export class Documents extends Component {
 
   renderTable() {
     return (
-      <div className='content-table'>
+      <div className="content-table">
         <table>
           <thead>
             <tr>
               <th>Name</th>
               <th>Date</th>
-              <th className='th-actions'>Actions</th>
+              <th className="th-actions">Actions</th>
             </tr>
           </thead>
           <tbody>{this.renderRows()}</tbody>
@@ -66,29 +66,29 @@ export class Documents extends Component {
 
     return (
       <tr key={id}>
-        <td className='row-title'>
+        <td className="row-title">
           <strong>
             <Link to={to}>
-              <i className='fa fa-file-text-o' aria-hidden='true' />
+              <i className="fa fa-file-text-o" aria-hidden="true" />
               {title || name}
             </Link>
           </strong>
         </td>
         <td>{date}</td>
         <td>
-          <div className='row-actions'>
+          <div className="row-actions">
             <Button
               onClick={() => this.handleClickDelete(name)}
-              type='delete'
-              icon='trash'
+              type="delete"
+              icon="trash"
               active={true}
               thin />
             {
               http_url &&
               <Button
                 to={http_url}
-                type='view'
-                icon='eye'
+                type="view"
+                icon="eye"
                 active={true}
                 thin />
             }
@@ -108,9 +108,9 @@ export class Documents extends Component {
     date = moment(date).format('ll');
     return (
       <tr key={name}>
-        <td className='row-title'>
+        <td className="row-title">
           <strong>
-            <Link to={to}><i className='fa fa-folder' aria-hidden='true' />
+            <Link to={to}><i className="fa fa-folder" aria-hidden="true" />
               {name}
             </Link>
           </strong>
@@ -147,15 +147,15 @@ export class Documents extends Component {
 
     return (
       <div>
-        <div className='content-header'>
+        <div className="content-header">
           <Breadcrumbs type={collection_name} splat={splat} />
-          <div className='page-buttons'>
-            <Link className='btn btn-active' to={to}>
+          <div className="page-buttons">
+            <Link className="btn btn-active" to={to}>
               {collection_name == 'posts' ? 'New post' : 'New document'}
             </Link>
           </div>
-          <div className='pull-right'>
-            <InputSearch searchBy='title' search={search} />
+          <div className="pull-right">
+            <InputSearch searchBy="title" search={search} />
           </div>
         </div>
         {

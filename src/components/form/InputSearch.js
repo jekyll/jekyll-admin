@@ -14,8 +14,8 @@ export default class InputSearch extends Component {
     return (
       <input
         onKeyPress={(e) => this.handleKeyPress(e)}
-        type='text'
-        className='field'
+        type="text"
+        className="field"
         placeholder={`Search by ${searchBy}`} />
     );
   }

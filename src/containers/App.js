@@ -35,14 +35,14 @@ class App extends Component {
     return (
       <HotKeys
         keyMap={keyboardShortcuts}
-        className='wrapper'>
+        className="wrapper">
         {
           config.content &&
           <div>
             <Sidebar config={config.content} />
-            <div className='container'>
+            <div className="container">
               <Header config={config.content} />
-              <div className='content'>
+              <div className="content">
                 {this.props.children}
               </div>
             </div>

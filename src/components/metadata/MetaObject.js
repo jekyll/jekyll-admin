@@ -30,10 +30,10 @@ export class MetaObject extends Component {
       );
     });
     return (
-      <div className='meta-value-object'>
+      <div className="meta-value-object">
         {items}
         <a onClick={() => addField(namePrefix)}
-          className='add-field-object' title='Add new key/value pair'>
+          className="add-field-object" title="Add new key/value pair">
             New key/value pair under <strong>{fieldKey}</strong>
         </a>
       </div>
