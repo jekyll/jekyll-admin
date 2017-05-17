@@ -6,11 +6,23 @@
   @media(max-width: 768px) {
     padding: 15px;
   }
+
+  a {
+    color: $dark-orange;
+    font-weight: 700;
+    &:hover {
+      border-bottom: 1px dotted;
+    }
+  }
+
   .description {
-    background-color: #fefefe;
-    padding: 15px;
     margin: 0;
-    border-left: 2px solid #444;
+    padding: 15px;
+    color: #545454;
+    font-size: 16px;
+    font-weight: 700;
+    background-color: #fefefe;
+    border-left: 4px solid $dark-orange;
   }
 
   .content-header {

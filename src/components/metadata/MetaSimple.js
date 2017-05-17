@@ -21,10 +21,6 @@ export class MetaSimple extends Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.fieldValue !== this.props.fieldValue;
-  }
-
   handleOpenModal () {
     this.setState({ showModal: true });
   }

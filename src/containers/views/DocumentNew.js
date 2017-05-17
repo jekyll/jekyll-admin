@@ -2,6 +2,7 @@ import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
+import { HotKeys } from 'react-hotkeys';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -15,13 +16,21 @@ import { createDocument } from '../../actions/collections';
 import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
 import { injectDefaultFields } from '../../utils/metadata';
+import { preventDefault } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.routerWillLeave = this.routerWillLeave.bind(this);
+    this.handleClickSave = this.handleClickSave.bind(this);
+  }
+
   componentDidMount() {
     const { router, route } = this.props;
-    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+    router.setRouteLeaveHook(route, this.routerWillLeave);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -48,8 +57,12 @@ export class DocumentNew extends Component {
     }
   }
 
-  handleClickSave() {
+  handleClickSave(e) {
     const { fieldChanged, createDocument, params } = this.props;
+
+    // Prevent the default event from bubbling
+    preventDefault(e);
+
     if (fieldChanged) {
       const { collection_name, splat } = params;
       createDocument(collection_name, splat);
@@ -60,13 +73,17 @@ export class DocumentNew extends Component {
     const { errors, updated, updateTitle, updateBody, updatePath, fieldChanged,
       params, config } = this.props;
 
+    const keyboardHandlers = {
+      'save': this.handleClickSave,
+    };
+
     const collection = params.collection_name;
     const link = `${ADMIN_PREFIX}/collections/${collection}`;
 
     const metafields = injectDefaultFields(config, params.splat, collection);
 
     return (
-      <div className="single">
+      <HotKeys handlers={keyboardHandlers} className="single">
         {errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
           <Breadcrumbs
@@ -80,7 +97,7 @@ export class DocumentNew extends Component {
             <InputTitle onChange={updateTitle} title="" ref="title" />
             <MarkdownEditor
               onChange={updateBody}
-              onSave={() => this.handleClickSave()}
+              onSave={this.handleClickSave}
               placeholder="Body"
               initialValue=""
               ref="editor" />
@@ -90,7 +107,7 @@ export class DocumentNew extends Component {
 
           <div className="content-side">
             <Button
-              onClick={() => this.handleClickSave()}
+              onClick={this.handleClickSave}
               type="create"
               active={fieldChanged}
               triggered={updated}
@@ -98,7 +115,7 @@ export class DocumentNew extends Component {
               block />
           </div>
         </div>
-      </div>
+      </HotKeys>
     );
   }
 }
