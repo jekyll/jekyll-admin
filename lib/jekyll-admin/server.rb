@@ -86,7 +86,7 @@ module JekyllAdmin
     # verbose 'null' values in front matter
     def restored_front_matter
       front_matter.map do |key, value|
-        value = value.nil? ? "null" : value
+        value = "null" if value.nil?
         [key, value]
       end.to_h
     end
