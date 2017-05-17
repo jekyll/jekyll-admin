@@ -44,11 +44,17 @@ export class MetaSimple extends Component {
     updateFieldValue(nameAttr, formatted);
   }
 
+  handleEditableBlur(e) {
+    const { nameAttr, updateFieldValue } = this.props;
+    updateFieldValue(nameAttr, e.target.value.trim());
+  }
+
   renderEditable() {
     const { fieldValue } = this.props;
     return (
       <TextareaAutosize
         onChange={(e) => this.handleEditableChange(e)}
+        onBlur={(e) => this.handleEditableBlur(e)}
         className="field value-field"
         value={`${fieldValue}`} />
     );
