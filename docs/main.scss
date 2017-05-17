@@ -20,22 +20,32 @@ body {
   text-rendering: optimizeLegibility;
 }
 
-h1,h2,h3,h4,h5 {
-  color: #292929;
+h1, h2, h3, h4, h5 { color: #292929; }
+h3, h4, h5 {  margin: 20px 0 10px; }
+h2 {
+  margin-top: 45px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid #dadada;
 }
+
+p { margin: 5px 0; }
 
 ul {
   margin: 0;
+
+  ul {
+    padding-left: 24px;
+    list-style: none;
+  }
 }
 
 a {
-  color: $dark-orange;
   text-decoration: none;
 }
 
 a:hover {
   text-decoration: none;
-  color: $orange;
+  color: $dark-orange;
 }
 
 .wrapper {
@@ -70,4 +80,9 @@ code {
   color: #444;
   font-weight: bold;
   word-wrap: break-word;
+  &.hljs {
+    padding: 1em;
+    font-size: 14px;
+    line-height: 1.75;
+  }
 }

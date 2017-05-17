@@ -26,6 +26,7 @@ export class PageEdit extends Component {
     super(props);
 
     this.handleClickSave = this.handleClickSave.bind(this);
+    this.routerWillLeave = this.routerWillLeave.bind(this);
   }
 
   componentDidMount() {
@@ -34,7 +35,7 @@ export class PageEdit extends Component {
     const filename = rest.join('.');
     fetchPage(directory, filename);
 
-    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+    router.setRouteLeaveHook(route, this.routerWillLeave);
   }
 
   componentWillReceiveProps(nextProps) {
