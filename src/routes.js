@@ -19,28 +19,28 @@ import NotFound from './containers/views/NotFound';
 export default (
   <Route path={`${ADMIN_PREFIX}`} component={App}>
     <IndexRoute component={Pages}/>
-    <Route path="configuration" component={Configuration} />
-    <Route path="pages">
+    <Route path='configuration' component={Configuration} />
+    <Route path='pages'>
       <IndexRoute component={Pages} />
-      <Route path="(**/)new" component={PageNew} />
-      <Route path="(**/)*.*" component={PageEdit} />
-      <Route path="**" component={Pages} />
+      <Route path='(**/)new' component={PageNew} />
+      <Route path='(**/)*.*' component={PageEdit} />
+      <Route path='**' component={Pages} />
     </Route>
-    <Route path="collections">
-      <Route path=":collection_name">
+    <Route path='collections'>
+      <Route path=':collection_name'>
         <IndexRoute component={Documents} />
-        <Route path="(**/)new" component={DocumentNew} />
-        <Route path="(**/)*.*" component={DocumentEdit} />
-        <Route path="**" component={Documents} />
+        <Route path='(**/)new' component={DocumentNew} />
+        <Route path='(**/)*.*' component={DocumentEdit} />
+        <Route path='**' component={Documents} />
       </Route>
     </Route>
-    <Route path="datafiles">
+    <Route path='datafiles'>
       <IndexRoute component={DataFiles} />
-      <Route path="(**/)new" component={DataFileNew} />
-      <Route path="(**/)*.*" component={DataFileEdit} />
-      <Route path="**" component={DataFiles} />
+      <Route path='(**/)new' component={DataFileNew} />
+      <Route path='(**/)*.*' component={DataFileEdit} />
+      <Route path='**' component={DataFiles} />
     </Route>
-    <Route path="staticfiles" component={StaticFiles} />
+    <Route path='staticfiles' component={StaticFiles} />
     <Route path={`${ADMIN_PREFIX}/*`} component={NotFound} />
   </Route>
 );
