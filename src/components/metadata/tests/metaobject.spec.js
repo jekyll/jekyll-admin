@@ -21,6 +21,7 @@ function setup(props = defaultProps) {
     addField: jest.fn(),
     removeField: jest.fn(),
     updateFieldKey: jest.fn(),
+    changeFieldValue: jest.fn(),
     updateFieldValue: jest.fn(),
     moveArrayItem: jest.fn(),
     convertField: jest.fn()

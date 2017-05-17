@@ -1,8 +1,8 @@
 import {
   UPDATE_TITLE, UPDATE_BODY, UPDATE_PATH, UPDATE_DRAFT,
   ADD_METAFIELD, REMOVE_METAFIELD,
-  STORE_CONTENT_FIELDS, UPDATE_FIELD_KEY, UPDATE_FIELD_VALUE,
-  MOVE_ARRAY_ITEM, CONVERT_FIELD
+  STORE_CONTENT_FIELDS, UPDATE_FIELD_KEY, CHANGE_FIELD_VALUE,
+  UPDATE_FIELD_VALUE, MOVE_ARRAY_ITEM, CONVERT_FIELD
 } from '../constants/actionTypes';
 
 import { addField, removeField, updateFieldKey,
@@ -72,6 +72,15 @@ export default function metadata(state = {
           action.newKey.trim()
         ),
         fieldChanged: true
+      });
+    case CHANGE_FIELD_VALUE:
+      return Object.assign({}, state, {
+        metadata: updateFieldValue(
+          state,
+          action.nameAttr,
+          action.tempValue
+        ),
+        fieldChanged: false
       });
     case UPDATE_FIELD_VALUE:
       return Object.assign({}, state, {

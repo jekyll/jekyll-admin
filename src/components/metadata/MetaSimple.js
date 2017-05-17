@@ -30,13 +30,19 @@ export class MetaSimple extends Component {
   }
 
   handleEditableChange(e) {
-    const { nameAttr, updateFieldValue } = this.props;
-    updateFieldValue(nameAttr, e.target.value);
+    const { nameAttr, changeFieldValue } = this.props;
+    changeFieldValue(nameAttr, e.target.value);
   }
 
   handleEditableBlur(e) {
     const { nameAttr, updateFieldValue } = this.props;
-    updateFieldValue(nameAttr, e.target.value.trim());
+    let value = e.target.value;
+    try {
+      value = JSON.parse(value); // auto-casting
+    } catch (e) {
+      value = value.trim();
+    }
+    updateFieldValue(nameAttr, value);
   }
 
   handleDatepickerChange(date, dateStr) {
@@ -133,7 +139,8 @@ export class MetaSimple extends Component {
 MetaSimple.propTypes = {
   parentType: PropTypes.string.isRequired,
   fieldKey: PropTypes.string.isRequired,
-  fieldValue: PropTypes.any.isRequired,
+  fieldValue: PropTypes.any,
+  changeFieldValue: PropTypes.func.isRequired,
   updateFieldValue: PropTypes.func.isRequired,
   nameAttr: PropTypes.any.isRequired
 };

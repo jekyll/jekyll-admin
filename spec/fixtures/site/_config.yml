@@ -18,11 +18,13 @@ defaults:
       path: ""
     values:
       all: true
+      hidden: false
   - scope:
       path: ''
       type: pages
     values:
       page_only: true
+      template: null
   - scope:
       path: ''
       type: puppies

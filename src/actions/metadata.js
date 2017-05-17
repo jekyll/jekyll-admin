@@ -31,6 +31,14 @@ export function updateFieldKey(namePrefix, fieldKey, newKey) {
   };
 }
 
+export function changeFieldValue(nameAttr, tempValue) {
+  return {
+    type: ActionTypes.CHANGE_FIELD_VALUE,
+    nameAttr,
+    tempValue
+  };
+}
+
 export function updateFieldValue(nameAttr, value) {
   return {
     type: ActionTypes.UPDATE_FIELD_VALUE,
