@@ -34,15 +34,15 @@ export class MetaSimple extends Component {
     updateFieldValue(nameAttr, e.target.value);
   }
 
-  handleEditableBlur(e) {
-    const { nameAttr, updateFieldValue } = this.props;
-    updateFieldValue(nameAttr, e.target.value.trim());
-  }
-
   handleDatepickerChange(date, dateStr) {
     const { nameAttr, updateFieldValue } = this.props;
     let formatted = moment(date).format("YYYY-MM-DD HH:mm:ss");
     updateFieldValue(nameAttr, formatted);
+  }
+
+  handleEditableBlur(e) {
+    const { nameAttr, updateFieldValue } = this.props;
+    updateFieldValue(nameAttr, e.target.value.trim());
   }
 
   renderEditable() {
@@ -133,7 +133,7 @@ export class MetaSimple extends Component {
 MetaSimple.propTypes = {
   parentType: PropTypes.string.isRequired,
   fieldKey: PropTypes.string.isRequired,
-  fieldValue: PropTypes.any.isRequired,
+  fieldValue: PropTypes.any,
   updateFieldValue: PropTypes.func.isRequired,
   nameAttr: PropTypes.any.isRequired
 };

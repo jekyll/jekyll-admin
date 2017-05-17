@@ -1,16 +1,10 @@
 import * as ActionTypes from '../constants/actionTypes';
 import { validationError } from './utils';
 import { get, put } from '../utils/fetch';
-import { toYAML, toJSON, getExtensionFromPath } from '../utils/helpers';
+import { toYAML, toJSON, getExtensionFromPath, trimObject } from '../utils/helpers';
 import { validator } from '../utils/validation';
-import {
-  getContentRequiredMessage,
-  getFilenameRequiredMessage
-} from '../constants/lang';
-import {
-  datafilesAPIUrl,
-  datafileAPIUrl
-} from '../constants/api';
+import { getContentRequiredMessage, getFilenameRequiredMessage } from '../constants/lang';
+import { datafilesAPIUrl, datafileAPIUrl } from '../constants/api';
 
 export function fetchDataFiles(directory = '') {
   return (dispatch) => {
@@ -52,10 +46,13 @@ export function putDataFile(directory, filename, data, new_path = '', source = '
     if (source == "gui") {
       const json = /json/i.test(ext);
       let metadata = getState().metadata.metadata;
+      metadata = trimObject(metadata);
       data = json ? (JSON.stringify(metadata, null, 2)) : (toYAML(metadata));
     }
 
-    const payload = new_path ? { path: new_path, raw_content: data } : { raw_content: data };
+    const payload = new_path ?
+      { path: new_path, raw_content: data } :
+      { raw_content: data };
 
     // handle errors
     const errors = validateDatafile(filename, data);
@@ -72,17 +69,6 @@ export function putDataFile(directory, filename, data, new_path = '', source = '
       dispatch
     );
   };
-}
-
-function validateDatafile(filename, data) {
-  return validator(
-    { filename, data },
-    { 'filename': 'required', 'data': 'required' },
-    {
-      'filename.required': getFilenameRequiredMessage(),
-      'data.required': getContentRequiredMessage()
-    }
-  );
 }
 
 export function deleteDataFile(directory, filename) {
@@ -106,3 +92,14 @@ export function onDataFileChanged() {
     type: ActionTypes.DATAFILE_CHANGED
   };
 }
+
+const validateDatafile = (filename, data) => {
+  return validator(
+    { filename, data },
+    { 'filename': 'required', 'data': 'required' },
+    {
+      'filename.required': getFilenameRequiredMessage(),
+      'data.required': getContentRequiredMessage()
+    }
+  );
+};

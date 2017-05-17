@@ -48,10 +48,4 @@ describe('Components::MetaSimple', () => {
     editable.simulate('change');
     expect(actions.updateFieldValue).toHaveBeenCalled();
   });
-
-  it('should call updateFieldValue when the input field is blurred', () => {
-    const { actions, editable } = setup();
-    editable.simulate('blur');
-    expect(actions.updateFieldValue).toHaveBeenCalled();
-  });
 });

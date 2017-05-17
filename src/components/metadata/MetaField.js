@@ -89,7 +89,7 @@ MetaField.propTypes = {
   moveArrayItem: PropTypes.func.isRequired,
   convertField: PropTypes.func.isRequired,
   fieldKey: PropTypes.string.isRequired,
-  fieldValue: PropTypes.any.isRequired,
+  fieldValue: PropTypes.any,
   nameAttr: PropTypes.string.isRequired,
   namePrefix: PropTypes.string.isRequired,
   key_prefix: PropTypes.string.isRequired
