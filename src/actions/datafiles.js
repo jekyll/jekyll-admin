@@ -50,7 +50,9 @@ export function putDataFile(directory, filename, data, new_path = '', source = '
       data = json ? (JSON.stringify(metadata, null, 2)) : (toYAML(metadata));
     }
 
-    const payload = new_path ? { path: new_path, raw_content: data } : { raw_content: data };
+    const payload = new_path ?
+      { path: new_path, raw_content: data } :
+      { raw_content: data };
 
     // handle errors
     const errors = validateDatafile(filename, data);
@@ -61,7 +63,7 @@ export function putDataFile(directory, filename, data, new_path = '', source = '
 
     return put(
       datafileAPIUrl(directory, filename),
-      preparePayload(payload),
+      JSON.stringify(payload),
       { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: "file"},
       { type: ActionTypes.PUT_DATAFILE_FAILURE, name: "error"},
       dispatch
@@ -101,5 +103,3 @@ const validateDatafile = (filename, data) => {
     }
   );
 };
-
-const preparePayload = (obj) => JSON.stringify(trimObject(obj));
