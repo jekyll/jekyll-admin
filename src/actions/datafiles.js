@@ -46,6 +46,7 @@ export function putDataFile(directory, filename, data, new_path = '', source = '
     if (source == "gui") {
       const json = /json/i.test(ext);
       let metadata = getState().metadata.metadata;
+      metadata = trimObject(metadata);
       data = json ? (JSON.stringify(metadata, null, 2)) : (toYAML(metadata));
     }
 
