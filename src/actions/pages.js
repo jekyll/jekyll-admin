@@ -3,15 +3,9 @@ import _ from 'underscore';
 import { validationError } from '../actions/utils';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify } from '../utils/helpers';
-import {
-  getTitleRequiredMessage,
-  getFilenameNotValidMessage
-} from '../constants/lang';
-import {
-  pagesAPIUrl,
-  pageAPIUrl
-} from '../constants/api';
+import { slugify, trimObject } from '../utils/helpers';
+import { getTitleRequiredMessage, getFilenameNotValidMessage } from '../constants/lang';
+import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
 
 export function fetchPages(directory = '') {
   return (dispatch) => {
@@ -55,12 +49,12 @@ export function createPage(directory) {
     dispatch({type: ActionTypes.CLEAR_ERRORS});
     // omit raw_content, path and empty-value keys in metadata state from front_matter
     const front_matter = _.omit(metadata, (value, key, object) => {
-      return key == 'raw_content' || key == 'path' || value == '';
+      return key == 'raw_content' || key == 'path' || value === '';
     });
     //send the put request
     return put(
       pageAPIUrl(directory, path),
-      JSON.stringify({ front_matter, raw_content }),
+      preparePayload({ front_matter, raw_content }),
       { type: ActionTypes.PUT_PAGE_SUCCESS, name: "page"},
       { type: ActionTypes.PUT_PAGE_FAILURE, name: "error"},
       dispatch
@@ -86,31 +80,19 @@ export function putPage(directory, filename) {
     dispatch({type: ActionTypes.CLEAR_ERRORS});
     // omit raw_content, path and empty-value keys in metadata state from front_matter
     const front_matter = _.omit(metadata, (value, key, object) => {
-      return key == 'raw_content' || key == 'path' || value == '';
+      return key == 'raw_content' || key == 'path' || value === '';
     });
-    const relative_path = directory ?
-      `${directory}/${path}` : `${path}`;
+    const relative_path = directory ? `${directory}/${path}` : `${path}`;
     //send the put request
     return put(
       // create or update page according to filename existence
       pageAPIUrl(directory, filename),
-      JSON.stringify({ path: relative_path, front_matter, raw_content }),
+      preparePayload({ path: relative_path, front_matter, raw_content }),
       { type: ActionTypes.PUT_PAGE_SUCCESS, name: "page"},
       { type: ActionTypes.PUT_PAGE_FAILURE, name: "error"},
       dispatch
     );
   };
-}
-
-function validatePage(metadata) {
-  return validator(
-    metadata,
-    { 'path': 'required|filename' },
-    {
-      'path.required': getTitleRequiredMessage(),
-      'path.filename': getFilenameNotValidMessage()
-    }
-  );
 }
 
 export function deletePage(directory, filename) {
@@ -128,3 +110,16 @@ export function deletePage(directory, filename) {
     }));
   };
 }
+
+const validatePage = (metadata) => {
+  return validator(
+    metadata,
+    { 'path': 'required|filename' },
+    {
+      'path.required': getTitleRequiredMessage(),
+      'path.filename': getFilenameNotValidMessage()
+    }
+  );
+};
+
+const preparePayload = (obj) => JSON.stringify(trimObject(obj));

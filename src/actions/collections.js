@@ -4,7 +4,7 @@ import moment from 'moment';
 import { validationError } from '../actions/utils';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify } from '../utils/helpers';
+import { slugify, trimObject } from '../utils/helpers';
 import {
   getTitleRequiredMessage,
   getFilenameRequiredMessage,
@@ -76,7 +76,7 @@ export function createDocument(collection, directory) {
     return put(
       // create or update document according to filename existence
       documentAPIUrl(collection, directory, path),
-      JSON.stringify({ raw_content, front_matter }),
+      preparePayload({ raw_content, front_matter }),
       { type: ActionTypes.PUT_DOCUMENT_SUCCESS, name: "doc"},
       { type: ActionTypes.PUT_DOCUMENT_FAILURE, name: "error"},
       dispatch
@@ -111,11 +111,27 @@ export function putDocument(collection, directory, filename) {
     return put(
       // create or update document according to filename existence
       documentAPIUrl(collection, directory, filename),
-      JSON.stringify({ path: relative_path, raw_content, front_matter }),
+      preparePayload({ path: relative_path, raw_content, front_matter }),
       { type: ActionTypes.PUT_DOCUMENT_SUCCESS, name: "doc"},
       { type: ActionTypes.PUT_DOCUMENT_FAILURE, name: "error"},
       dispatch
     );
+  };
+}
+
+export function deleteDocument(collection, directory, filename) {
+  return (dispatch) => {
+    return fetch(documentAPIUrl(collection, directory, filename), {
+      method: 'DELETE'
+    })
+    .then(data => {
+      dispatch({ type: ActionTypes.DELETE_DOCUMENT_SUCCESS });
+      dispatch(fetchCollection(collection, directory));
+    })
+    .catch(error => dispatch({
+      type: ActionTypes.DELETE_DOCUMENT_FAILURE,
+      error
+    }));
   };
 }
 
@@ -151,18 +167,4 @@ const validateDocument = (metadata, collection) => {
   return validator(metadata, validations, messages);
 };
 
-export function deleteDocument(collection, directory, filename) {
-  return (dispatch) => {
-    return fetch(documentAPIUrl(collection, directory, filename), {
-      method: 'DELETE'
-    })
-    .then(data => {
-      dispatch({ type: ActionTypes.DELETE_DOCUMENT_SUCCESS });
-      dispatch(fetchCollection(collection, directory));
-    })
-    .catch(error => dispatch({
-      type: ActionTypes.DELETE_DOCUMENT_FAILURE,
-      error
-    }));
-  };
-}
+const preparePayload = (obj) => JSON.stringify(trimObject(obj));
