@@ -79,13 +79,7 @@ export const updateFieldKey = (state, namePrefix, fieldKey, newKey) => {
  */
 export const updateFieldValue = (state, nameAttr, value) => {
   let tmpState = cloneDeep(state);
-  let formattedValue;
-  try {
-    formattedValue = JSON.parse(value);
-  } catch (e) {
-    formattedValue = value;
-  }
-  eval(`tmpState.${nameAttr} = formattedValue`);
+  eval(`tmpState.${nameAttr} = value`);
   return tmpState.metadata;
 };
 

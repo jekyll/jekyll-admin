@@ -123,7 +123,11 @@ export const trimObject = (object) => {
   if (!_.isObject(object)) return object;
   return _.keys(object).reduce((acc, key) => {
     if (typeof object[key] == 'string') {
-      acc[key.trim()] = object[key].trim();
+      try {
+        acc[key.trim()] = JSON.parse(object[key].trim());
+      } catch (e) {
+        acc[key.trim()] = object[key].trim();
+      }
     } else {
       acc[key.trim()] = trimObject(object[key]);
     }
