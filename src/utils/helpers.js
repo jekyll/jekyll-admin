@@ -115,7 +115,7 @@ export const preventDefault = (event) => {
 };
 
 /**
- * Given an object, trims every key and value recursively.
+ * Given an object, trims every keys and values recursively.
  * @param {Object} object
  * @return {Object} trimmedObject
  */
