@@ -45,17 +45,17 @@ export class MetaField extends Component {
     };
     const CurrentComponent = FieldTypes[type];
     return (
-      <div ref="wrap" className="metafield">
+      <div ref='wrap' className='metafield'>
         <div className={`meta-key ${type}`}>
-          <input ref="field_key"
+          <input ref='field_key'
             onBlur={() => this.handleKeyBlur()}
             defaultValue={fieldKey}
-            className="field key-field"
-            type="text"
-            placeholder="Key" />
+            className='field key-field'
+            type='text'
+            placeholder='Key' />
           <MetaButtons
             currentType={type}
-            parentType="top"
+            parentType='top'
             onConvertClick={(type) => this.handleConvertClick(type)}
             onRemoveClick={() => this.handleRemoveClick()}
             onDropdownFocus={() => this.handleDropdownFocus()}

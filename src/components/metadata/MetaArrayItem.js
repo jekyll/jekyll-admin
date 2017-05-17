@@ -36,13 +36,13 @@ export class MetaArrayItem extends Component {
     };
     const CurrentComponent = FieldTypes[type];
     return (
-      <div ref="wrap" data-id={index} className="array-item-wrap">
-        <div className="array">
-          <div className="array-header">
-            <span className="array-field-num">{index+1}.</span>
+      <div ref='wrap' data-id={index} className='array-item-wrap'>
+        <div className='array'>
+          <div className='array-header'>
+            <span className='array-field-num'>{index+1}.</span>
             <MetaButtons
               currentType={type}
-              parentType="array"
+              parentType='array'
               onConvertClick={(type) => this.handleConvertClick(type)}
               onRemoveClick={() => this.handleRemoveClick()}
               onDropdownFocus={() => this.handleDropdownFocus()}
@@ -50,7 +50,7 @@ export class MetaArrayItem extends Component {
           </div>
           <CurrentComponent
             key_prefix={key_prefix}
-            parentType="array"
+            parentType='array'
             fieldKey={fieldKey}
             fieldValue={fieldValue}
             addField={addField}

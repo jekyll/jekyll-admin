@@ -44,26 +44,26 @@ export class MetaObjectItem extends Component {
     };
     const CurrentComponent = FieldTypes[type];
     return (
-      <div ref="wrap" className="object-item-wrap">
+      <div ref='wrap' className='object-item-wrap'>
         <div className={`object-key ${type}`}>
-          <input ref="field_key"
+          <input ref='field_key'
             onBlur={(e) => this.handleKeyBlur(e)}
             defaultValue={fieldKey}
-            className="field key-field"
-            type="text"
-            placeholder="Key" />
+            className='field key-field'
+            type='text'
+            placeholder='Key' />
           <MetaButtons
             currentType={type}
-            parentType="object"
+            parentType='object'
             onConvertClick={(type) => this.handleConvertClick(type)}
             onRemoveClick={() => this.handleRemoveClick()}
             onDropdownFocus={() => this.handleDropdownFocus()}
             onDropdownBlur={() => this.handleDropdownBlur()} />
         </div>
-        <div className="object-value">
+        <div className='object-value'>
           <CurrentComponent
             key_prefix={key_prefix}
-            parentType="object"
+            parentType='object'
             fieldKey={fieldKey}
             fieldValue={fieldValue}
             addField={addField}

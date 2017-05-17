@@ -44,17 +44,17 @@ class MarkdownEditor extends Component {
     ];
     if (onSave) {
       toolbarIcons.push({
-        name: "save",
+        name: 'save',
         action: () => {
           onSave();
         },
-        className: "fa fa-floppy-o",
-        title: "Save"
+        className: 'fa fa-floppy-o',
+        title: 'Save'
       });
     }
     opts['toolbar'] = toolbarIcons;
     this.editor = new SimpleMDE(opts);
-    this.editor.codemirror.on("change", () => {
+    this.editor.codemirror.on('change', () => {
       onChange(this.editor.value());
     });
   }

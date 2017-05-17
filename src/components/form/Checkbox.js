@@ -10,14 +10,14 @@ export default class Checkbox extends Component {
   render() {
     const { text, checked } = this.props;
     return (
-      <div className="checkbox-container">
+      <div className='checkbox-container'>
         {text}
-        <label className="switch">
+        <label className='switch'>
           <input onChange={(e) => this.handleChange(e)}
-            type="checkbox"
+            type='checkbox'
             defaultChecked={checked}
-            ref="checkbox" />
-          <div className="slider round" />
+            ref='checkbox' />
+          <div className='slider round' />
         </label>
       </div>
     );

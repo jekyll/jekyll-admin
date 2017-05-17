@@ -14,7 +14,7 @@ export class Dropzone extends Component {
     let node;
     if (files.length) {
       node = (
-        <div className="preview-container">
+        <div className='preview-container'>
           {
             _.map(files, (file, i) => {
               return (
@@ -30,8 +30,8 @@ export class Dropzone extends Component {
       );
     } else {
       node = (
-        <div className="preview-info">
-          <i className="fa fa-upload" aria-hidden="true" />
+        <div className='preview-info'>
+          <i className='fa fa-upload' aria-hidden='true' />
           <p>Drag and drop file(s) here to upload</p>
         </div>
       );
@@ -39,9 +39,9 @@ export class Dropzone extends Component {
     return (
       <ReactDropzone
         onDrop={onDrop}
-        ref="ReactDropzone"
-        className="dropzone"
-        activeClassName="dropzone-active"
+        ref='ReactDropzone'
+        className='dropzone'
+        activeClassName='dropzone-active'
         multiple={true}
         disableClick={true}>
           {node}

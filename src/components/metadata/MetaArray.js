@@ -10,9 +10,9 @@ export class MetaArray extends Component {
     const { moveArrayItem, namePrefix } = this.props;
     if (component) {
       const options = {
-        draggable: ".array-item-wrap",
-        group: { name: "meta-array-items", pull: false, put: false },
-        handle: ".move",
+        draggable: '.array-item-wrap',
+        group: { name: 'meta-array-items', pull: false, put: false },
+        handle: '.move',
         animation: 0,
         onEnd: (e) => {
           let srcInd = e.item.getAttribute('data-id');
@@ -28,9 +28,9 @@ export class MetaArray extends Component {
       removeField, updateFieldKey, updateFieldValue, moveArrayItem,
       convertField, key_prefix} = this.props;
     const items = _.map(fieldValue, (item, i) => {
-      let type = "simple";
-      if (_.isObject(item)) type = "object";
-      if (_.isArray(item)) type = "array";
+      let type = 'simple';
+      if (_.isObject(item)) type = 'object';
+      if (_.isArray(item)) type = 'array';
       return (
         <MetaArrayItem
           key={`${key_prefix}-${i}`}
@@ -50,11 +50,11 @@ export class MetaArray extends Component {
       );
     });
     return (
-      <div className="meta-value-array" ref={this.sortableGroupDecorator.bind(this)}>
+      <div className='meta-value-array' ref={this.sortableGroupDecorator.bind(this)}>
         {items}
         <a onClick={() => addField(namePrefix)}
-          className="add-field-array" title="Add new list item">
-            <i className="fa fa-plus" />
+          className='add-field-array' title='Add new list item'>
+            <i className='fa fa-plus' />
         </a>
       </div>
     );

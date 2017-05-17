@@ -38,7 +38,7 @@ export default class Breadcrumbs extends Component {
     });
 
     return (
-      <ul className="breadcrumbs">
+      <ul className='breadcrumbs'>
         <li><Link to={base}>{toTitleCase(type)}</Link></li>
         {nodes}
       </ul>

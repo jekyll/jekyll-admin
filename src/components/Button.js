@@ -46,12 +46,12 @@ export default class Button extends Component {
     }
 
     const iconNode = icon ?
-      <i className={`fa fa-${icon}`} aria-hidden="true" /> : null;
+      <i className={`fa fa-${icon}`} aria-hidden='true' /> : null;
     const clickEvent = !to ? onClick : null;
 
     return (
       <a href={to}
-        target="_blank"
+        target='_blank'
         onClick={clickEvent}
         className={btnClass}>
           {iconNode}
