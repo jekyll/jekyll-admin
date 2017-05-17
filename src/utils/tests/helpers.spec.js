@@ -166,6 +166,22 @@ describe('Helper functions', () => {
     expect(trimObject(obj)).toEqual(expected);
 
     obj = {
+      foo: ' 10 ',
+      bar: ' false ',
+      baz: {
+        jekyll: 'true    '
+      }
+    };
+    expected = {
+      foo: 10,
+      bar: false,
+      baz: {
+        jekyll: true
+      }
+    };
+    expect(trimObject(obj)).toEqual(expected);
+
+    obj = {
       foo: ' a "test" string ',
       'baz ': {
         foo: "this is 'also ' a test string      "
