@@ -30,8 +30,8 @@ export class DataFiles extends Component {
   handleClickDelete(path) {
     const { deleteDataFile, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(path));
-    const directory = params.splat || "";
-    const dir = directory ? `/${directory}` : "";
+    const directory = params.splat || '';
+    const dir = directory ? `/${directory}` : '';
 
     if (confirm) {
       const filename = getFilenameFromPath(path);
@@ -43,12 +43,12 @@ export class DataFiles extends Component {
 
   renderTable() {
     return (
-      <div className="content-table">
+      <div className='content-table'>
         <table>
           <thead>
             <tr>
               <th>Filename</th>
-              <th className="th-actions">Actions</th>
+              <th className='th-actions'>Actions</th>
             </tr>
           </thead>
           <tbody>{this.renderRows()}</tbody>
@@ -63,20 +63,20 @@ export class DataFiles extends Component {
     const to = `${ADMIN_PREFIX}/datafiles/${relative_path}`;
     return (
       <tr key={slug}>
-        <td className="row-title">
+        <td className='row-title'>
           <strong>
             <Link to={to}>
-              <i className="fa fa-file-text-o" aria-hidden="true" />
+              <i className='fa fa-file-text-o' aria-hidden='true' />
               {filename}
             </Link>
           </strong>
         </td>
         <td>
-          <div className="row-actions">
+          <div className='row-actions'>
             <Button
               onClick={() => this.handleClickDelete(relative_path)}
-              type="delete"
-              icon="trash"
+              type='delete'
+              icon='trash'
               active={true}
               thin />
           </div>
@@ -90,10 +90,10 @@ export class DataFiles extends Component {
     const to = `${ADMIN_PREFIX}/datafiles/${path}`;
     return (
       <tr key={name}>
-        <td className="row-title">
+        <td className='row-title'>
           <strong>
             <Link to={to}>
-              <i className="fa fa-folder" aria-hidden="true" />
+              <i className='fa fa-folder' aria-hidden='true' />
               {name}
             </Link>
           </strong>
@@ -127,25 +127,25 @@ export class DataFiles extends Component {
       dirSplat = params.splat;
     } else {
       to = `${ADMIN_PREFIX}/datafiles/new`;
-      dirSplat = "";
+      dirSplat = '';
     }
 
     return (
       <div>
-        <div className="content-header">
-          <Breadcrumbs type="data files" splat={dirSplat} />
-          <div className="page-buttons">
-            <Link className="btn btn-active" to={to}>New data file</Link>
+        <div className='content-header'>
+          <Breadcrumbs type='data files' splat={dirSplat} />
+          <div className='page-buttons'>
+            <Link className='btn btn-active' to={to}>New data file</Link>
           </div>
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
+          <div className='pull-right'>
+            <InputSearch searchBy='filename' search={search} />
           </div>
         </div>
         {
           files.length > 0 && this.renderTable()
         }
         {
-          !files.length && <h1>{getNotFoundMessage("data files")}</h1>
+          !files.length && <h1>{getNotFoundMessage('data files')}</h1>
         }
       </div>
     );

@@ -27,8 +27,8 @@ export class Sidebar extends Component {
       if (_.indexOf(hiddens, col.label) == -1) {
         return (
           <li key={i}>
-            <Link activeClassName="active" to={`${ADMIN_PREFIX}/collections/${col.label}`}>
-              <i className="fa fa-book" />{capitalize(col.label)}
+            <Link activeClassName='active' to={`${ADMIN_PREFIX}/collections/${col.label}`}>
+              <i className='fa fa-book' />{capitalize(col.label)}
             </Link>
           </li>
         );
@@ -82,7 +82,7 @@ export class Sidebar extends Component {
       }
       links.push(
         <li key={index}>
-          <Link activeClassName="active" to={`${ADMIN_PREFIX}/${current.link}`}>
+          <Link activeClassName='active' to={`${ADMIN_PREFIX}/${current.link}`}>
             <i className={`fa fa-${current.icon}`} />
             {SidebarTranslations[current.translation]}
           </Link>
@@ -91,9 +91,9 @@ export class Sidebar extends Component {
     });
 
     return (
-      <div className="sidebar">
-        <Link className="logo" to={`${ADMIN_PREFIX}/pages`} />
-        <ul className="routes">
+      <div className='sidebar'>
+        <Link className='logo' to={`${ADMIN_PREFIX}/pages`} />
+        <ul className='routes'>
           {this.renderCollections(hiddenLinks)}
           {links}
         </ul>

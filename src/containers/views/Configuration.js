@@ -59,7 +59,7 @@ export class Configuration extends Component {
       const value = this.refs.editor.getValue();
       putConfig(value);
     } else if (fieldChanged) {
-      putConfig(null, "gui");
+      putConfig(null, 'gui');
     }
   }
 
@@ -71,20 +71,20 @@ export class Configuration extends Component {
     };
 
     return (
-      <HotKeys handlers={keyboardHandlers} className="single">
+      <HotKeys handlers={keyboardHandlers} className='single'>
         {errors && errors.length > 0 && <Errors errors={errors} />}
-        <div className="content-header">
+        <div className='content-header'>
           <h1>Configuration</h1>
-          <div className="page-buttons multiple">
+          <div className='page-buttons multiple'>
             <Button // TODO: Hide toggle for non-YAML config files (e.g. '_config.toml')
               onClick={this.toggleView}
-              type="view-toggle"
+              type='view-toggle'
               active={true}
               triggered={this.state.guiView}
               block />
             <Button
               onClick={this.handleClickSave}
-              type="save"
+              type='save'
               active={editorChanged || fieldChanged}
               triggered={updated}
               block />
@@ -92,8 +92,8 @@ export class Configuration extends Component {
         </div>
           {
             this.state.guiView && content &&
-              <div className="content-body">
-                <div className="warning">
+              <div className='content-body'>
+                <div className='warning'>
                   CAUTION! Any existing comments and formatting will be lost when editing via this view.
                   Switch to the <strong>Raw Editor</strong> to preserve comments and formatting.
                 </div>
@@ -106,7 +106,7 @@ export class Configuration extends Component {
               editorChanged={editorChanged}
               onEditorChange={onEditorChange}
               content={raw_content}
-              ref="editor" />
+              ref='editor' />
         }
       </HotKeys>
     );

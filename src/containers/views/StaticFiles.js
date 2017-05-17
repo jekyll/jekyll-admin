@@ -44,19 +44,19 @@ export class StaticFiles extends Component {
 
     return (
       <div>
-        <div className="content-header">
+        <div className='content-header'>
           <h1>Static Files</h1>
           <Button
             onClick={() => this.openDropzone()}
-            type="upload"
-            icon="upload"
+            type='upload'
+            icon='upload'
             active={true} />
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
+          <div className='pull-right'>
+            <InputSearch searchBy='filename' search={search} />
           </div>
         </div>
         <Dropzone
-          ref="dropzone"
+          ref='dropzone'
           files={files}
           onClickItem={onClickStaticFile}
           onClickDelete={deleteStaticFile}

@@ -83,35 +83,35 @@ export class DocumentNew extends Component {
     const metafields = injectDefaultFields(config, params.splat, collection);
 
     return (
-      <HotKeys handlers={keyboardHandlers} className="single">
+      <HotKeys handlers={keyboardHandlers} className='single'>
         {errors.length > 0 && <Errors errors={errors} />}
-        <div className="content-header">
+        <div className='content-header'>
           <Breadcrumbs
             type={collection}
             splat={params.splat || ''} />
         </div>
 
-        <div className="content-wrapper">
-          <div className="content-body">
-            <InputPath onChange={updatePath} type={collection} path="" />
-            <InputTitle onChange={updateTitle} title="" ref="title" />
+        <div className='content-wrapper'>
+          <div className='content-body'>
+            <InputPath onChange={updatePath} type={collection} path='' />
+            <InputTitle onChange={updateTitle} title='' ref='title' />
             <MarkdownEditor
               onChange={updateBody}
               onSave={this.handleClickSave}
-              placeholder="Body"
-              initialValue=""
-              ref="editor" />
+              placeholder='Body'
+              initialValue=''
+              ref='editor' />
             <Splitter />
             <Metadata fields={metafields} />
           </div>
 
-          <div className="content-side">
+          <div className='content-side'>
             <Button
               onClick={this.handleClickSave}
-              type="create"
+              type='create'
               active={fieldChanged}
               triggered={updated}
-              icon="plus-square"
+              icon='plus-square'
               block />
           </div>
         </div>

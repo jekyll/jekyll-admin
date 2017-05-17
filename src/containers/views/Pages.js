@@ -36,12 +36,12 @@ export class Pages extends Component {
 
   renderTable() {
     return (
-      <div className="content-table">
+      <div className='content-table'>
         <table>
           <thead>
             <tr>
               <th>Filename</th>
-              <th className="th-actions">Actions</th>
+              <th className='th-actions'>Actions</th>
             </tr>
           </thead>
           <tbody>{this.renderRows()}</tbody>
@@ -55,26 +55,26 @@ export class Pages extends Component {
     const to = `${ADMIN_PREFIX}/pages/${path}`;
     return (
       <tr key={name}>
-        <td className="row-title">
+        <td className='row-title'>
           <strong>
             <Link to={to}>
-              <i className="fa fa-file-text-o" aria-hidden="true" />
+              <i className='fa fa-file-text-o' aria-hidden='true' />
               {name}
             </Link>
           </strong>
         </td>
         <td>
-          <div className="row-actions">
+          <div className='row-actions'>
             <Button
               onClick={() => this.handleClickDelete(name)}
-              type="delete"
-              icon="trash"
+              type='delete'
+              icon='trash'
               active={true}
               thin />
             <Button
               to={http_url}
-              type="view"
-              icon="eye"
+              type='view'
+              icon='eye'
               active={true}
               thin />
           </div>
@@ -88,10 +88,10 @@ export class Pages extends Component {
     const to = `${ADMIN_PREFIX}/pages/${path}`;
     return (
       <tr key={name}>
-        <td className="row-title">
+        <td className='row-title'>
           <strong>
             <Link to={to}>
-              <i className="fa fa-folder" aria-hidden="true" />
+              <i className='fa fa-folder' aria-hidden='true' />
               {name}
             </Link>
           </strong>
@@ -124,20 +124,20 @@ export class Pages extends Component {
 
     return (
       <div>
-        <div className="content-header">
-          <Breadcrumbs type="pages" splat={params.splat || ''} />
-          <div className="page-buttons">
-            <Link className="btn btn-active" to={to}>New page</Link>
+        <div className='content-header'>
+          <Breadcrumbs type='pages' splat={params.splat || ''} />
+          <div className='page-buttons'>
+            <Link className='btn btn-active' to={to}>New page</Link>
           </div>
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
+          <div className='pull-right'>
+            <InputSearch searchBy='filename' search={search} />
           </div>
         </div>
         {
           pages.length > 0 && this.renderTable()
         }
         {
-          !pages.length && <h1>{getNotFoundMessage("pages")}</h1>
+          !pages.length && <h1>{getNotFoundMessage('pages')}</h1>
         }
       </div>
     );
