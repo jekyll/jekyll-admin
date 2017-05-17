@@ -11,8 +11,8 @@ export function fetchConfig() {
     dispatch({ type: ActionTypes.FETCH_CONFIG_REQUEST});
     return get(
       getConfigurationUrl(),
-      { type: ActionTypes.FETCH_CONFIG_SUCCESS, name: "config"},
-      { type: ActionTypes.FETCH_CONFIG_FAILURE, name: "error"},
+      { type: ActionTypes.FETCH_CONFIG_SUCCESS, name: 'config'},
+      { type: ActionTypes.FETCH_CONFIG_FAILURE, name: 'error'},
       dispatch
     );
   };
@@ -39,8 +39,8 @@ export function putConfig(config, source='editor') {
     return put(
       putConfigurationUrl(),
       JSON.stringify(payload),
-      { type: ActionTypes.PUT_CONFIG_SUCCESS, name: "config"},
-      { type: ActionTypes.PUT_CONFIG_FAILURE, name: "error"},
+      { type: ActionTypes.PUT_CONFIG_SUCCESS, name: 'config'},
+      { type: ActionTypes.PUT_CONFIG_FAILURE, name: 'error'},
       dispatch
     );
   };
