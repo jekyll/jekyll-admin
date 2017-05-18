@@ -25,16 +25,17 @@ export class DraftEdit extends Component {
   constructor(props) {
     super(props);
 
+    this.routerWillLeave = this.routerWillLeave.bind(this);
     this.handleClickSave = this.handleClickSave.bind(this);
   }
 
   componentDidMount() {
     const { fetchDraft, params, router, route } = this.props;
     const [directory, ...rest] = params.splat;
-    const filename = rest.join(".");
+    const filename = rest.join('.');
     fetchDraft(directory, filename);
 
-    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+    router.setRouteLeaveHook(route, this.routerWillLeave);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -70,8 +71,8 @@ export class DraftEdit extends Component {
 
     if (fieldChanged) {
       const [directory, ...rest] = params.splat;
-      const filename = rest.join(".");
-      putDraft("edit", directory, filename);
+      const filename = rest.join('.');
+      putDraft('edit', directory, filename);
     }
   }
 
@@ -80,9 +81,9 @@ export class DraftEdit extends Component {
     const confirm = window.confirm(getDeleteMessage(name));
     if (confirm) {
       const [directory, ...rest] = params.splat;
-      const filename = rest.join(".");
+      const filename = rest.join('.');
       deleteDraft(directory, filename);
-      browserHistory.push(`${ADMIN_PREFIX}/drafts/${directory || ""}`);
+      browserHistory.push(`${ADMIN_PREFIX}/drafts/${directory || ''}`);
     }
   }
 
@@ -97,13 +98,13 @@ export class DraftEdit extends Component {
     }
 
     const keyboardHandlers = {
-      "save": this.handleClickSave,
+      'save': this.handleClickSave,
     };
 
     const { name, raw_content, collection, http_url, front_matter } = draft;
     const [directory, ...rest] = params.splat;
 
-    const title = front_matter && front_matter.title ? front_matter.title : "";
+    const title = front_matter && front_matter.title ? front_matter.title : '';
     const metafields = injectDefaultFields(config, directory, collection, front_matter);
 
     return (
@@ -112,7 +113,7 @@ export class DraftEdit extends Component {
         className="single">
         {errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
-          <Breadcrumbs splat={directory || ""} type="drafts" />
+          <Breadcrumbs splat={directory || ''} type="drafts" />
         </div>
 
         <div className="content-wrapper">

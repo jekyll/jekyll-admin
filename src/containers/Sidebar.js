@@ -102,7 +102,7 @@ export class Sidebar extends Component {
                   <i className="fa fa-edit" />
                   {SidebarTranslations.drafts}
                 </Link>
-                { !hiddenLinks.includes("posts") && <Splitter /> }
+                { !hiddenLinks.includes('posts') && <Splitter /> }
               </li>
           }
           {links}

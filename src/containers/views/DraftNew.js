@@ -16,6 +16,7 @@ import { putDraft } from '../../actions/drafts';
 import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
 import { injectDefaultFields } from '../../utils/metadata';
+import { preventDefault } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DraftNew extends Component {
@@ -23,12 +24,13 @@ export class DraftNew extends Component {
   constructor(props) {
     super(props);
 
+    this.routerWillLeave = this.routerWillLeave.bind(this);
     this.handleClickSave = this.handleClickSave.bind(this);
   }
 
   componentDidMount() {
     const { router, route } = this.props;
-    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+    router.setRouteLeaveHook(route, this.routerWillLeave);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -51,10 +53,14 @@ export class DraftNew extends Component {
     }
   }
 
-  handleClickSave() {
+  handleClickSave(e) {
     const { fieldChanged, putDraft, params } = this.props;
+
+    // Prevent the default event from bubbling
+    preventDefault(e);
+
     if (fieldChanged) {
-      putDraft("create", params.splat);
+      putDraft('create', params.splat);
     }
   }
 
@@ -62,10 +68,10 @@ export class DraftNew extends Component {
     const {
       errors, updated, updateTitle, updateBody, updatePath, fieldChanged, params, config
     } = this.props;
-    const metafields = injectDefaultFields(config, params.splat, "posts");
+    const metafields = injectDefaultFields(config, params.splat, 'posts');
 
     const keyboardHandlers = {
-      "save": this.handleClickSave,
+      'save': this.handleClickSave,
     };
 
     return (
@@ -76,7 +82,7 @@ export class DraftNew extends Component {
         <div className="content-header">
           <Breadcrumbs
             type="drafts"
-            splat={params.splat || ""} />
+            splat={params.splat || ''} />
         </div>
 
         <div className="content-wrapper">

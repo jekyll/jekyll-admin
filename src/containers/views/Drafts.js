@@ -104,7 +104,7 @@ export class Drafts extends Component {
   renderRows() {
     const { drafts } = this.props;
     return _.map(drafts, entry => {
-      if (entry.type && entry.type == "directory") {
+      if (entry.type && entry.type == 'directory') {
         return this.renderDirectoryRow(entry);
       } else {
         return this.renderFileRow(entry);
@@ -125,7 +125,7 @@ export class Drafts extends Component {
     return (
       <div>
         <div className="content-header">
-          <Breadcrumbs type="drafts" splat={params.splat || ""} />
+          <Breadcrumbs type="drafts" splat={params.splat || ''} />
           <div className="draft-buttons">
             <Link className="btn btn-active" to={to}>New draft</Link>
           </div>
@@ -137,7 +137,7 @@ export class Drafts extends Component {
           drafts.length > 0 && this.renderTable()
         }
         {
-          !drafts.length && <h1>{getNotFoundMessage("drafts")}</h1>
+          !drafts.length && <h1>{getNotFoundMessage('drafts')}</h1>
         }
       </div>
     );
