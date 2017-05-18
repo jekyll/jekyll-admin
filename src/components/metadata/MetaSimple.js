@@ -21,10 +21,6 @@ export class MetaSimple extends Component {
     this.handleCloseModal = this.handleCloseModal.bind(this);
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.fieldValue !== this.props.fieldValue;
-  }
-
   handleOpenModal () {
     this.setState({ showModal: true });
   }
@@ -38,15 +34,15 @@ export class MetaSimple extends Component {
     updateFieldValue(nameAttr, e.target.value);
   }
 
+  handleDatepickerChange(date, dateStr) {
+    const { nameAttr, updateFieldValue } = this.props;
+    let formatted = moment(date).format("YYYY-MM-DD HH:mm:ss");
+    updateFieldValue(nameAttr, formatted);
+  }
+
   handleEditableBlur(e) {
     const { nameAttr, updateFieldValue } = this.props;
     updateFieldValue(nameAttr, e.target.value.trim());
-  }
-
-  handleDatepickerChange(date, dateStr) {
-    const { nameAttr, updateFieldValue } = this.props;
-    let formatted = moment(date).format("YYYY-MM-DD hh:mm:ss");
-    updateFieldValue(nameAttr, formatted);
   }
 
   renderEditable() {
@@ -137,7 +133,7 @@ export class MetaSimple extends Component {
 MetaSimple.propTypes = {
   parentType: PropTypes.string.isRequired,
   fieldKey: PropTypes.string.isRequired,
-  fieldValue: PropTypes.any.isRequired,
+  fieldValue: PropTypes.any,
   updateFieldValue: PropTypes.func.isRequired,
   nameAttr: PropTypes.any.isRequired
 };

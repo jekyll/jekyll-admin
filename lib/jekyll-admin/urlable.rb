@@ -38,7 +38,7 @@ module JekyllAdmin
       elsif is_a?(Jekyll::Collection)
         "/collections/#{label}"
       elsif is_a?(JekyllAdmin::DataFile)
-        relative_path.sub(%r!\A/#{DataFile.data_dir}!, "/data")
+        "/data/#{relative_path}"
       elsif is_a?(Jekyll::StaticFile)
         "/static_files/#{relative_path}"
       elsif is_a?(Jekyll::Page)

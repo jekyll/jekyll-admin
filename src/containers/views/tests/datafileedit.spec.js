@@ -13,7 +13,7 @@ const defaultProps = {
   fieldChanged: false,
   router: {},
   route: {},
-  params: { data_file: "data_file" },
+  params: { splat: ['movies', 'actors', 'yml']},
   errors: [],
   isFetching: false
 };
@@ -33,6 +33,7 @@ const setup = (props = defaultProps) => {
     component,
     actions,
     saveButton: component.find(Button).first(),
+    toggleButton: component.find(Button).at(1),
     deleteButton: component.find(Button).last(),
     errors: component.find(Errors),
     props
@@ -62,23 +63,90 @@ describe('Containers::DataFileEdit', () => {
     expect(errors.node).toBeTruthy();
   });
 
-  it('should not call putDataFile if a field is not changed.', () => {
-    const { saveButton, actions } = setup();
-    saveButton.simulate('click');
-    expect(actions.putDataFile).not.toHaveBeenCalled();
+  it('should not call clearErrors on unmount if there are no errors.', () => {
+    const { component, errors, actions } = setup();
+    component.unmount();
+    expect(actions.clearErrors).not.toHaveBeenCalled();
   });
 
-  it('should call putDataFile if a field is changed.', () => {
-    const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
+  it('should clear errors on unmount.', () => {
+    const { component, errors, actions } = setup(Object.assign({}, defaultProps, {
+      errors: ['The content is required!']
+    }));
+    component.unmount();
+    expect(actions.clearErrors).toHaveBeenCalled();
+  });
+
+  it('should toggle views.', () => {
+    const { component, toggleButton } = setup();
+    expect(component.state('guiView')).toBe(false);
+    toggleButton.simulate('click');
+    expect(component.state('guiView')).toBe(true);
+  });
+
+  it('should update state on switch to GUI mode', () => {
+    const { component, toggleButton, actions } = setup();
+    expect(component.state()).toEqual({
+      'guiPath': '',
+      'extn': '',
+      'guiView': false
+    });
+    toggleButton.simulate('click');
+    expect(component.state()).toEqual({
+      'guiPath': 'authors',
+      'extn': '.yml',
+      'guiView': true
+    });
+  });
+
+  it('should call putDataFile after datafileChanged in GUI mode', () => {
+    const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
+      datafileChanged: true
+    }));
+    toggleButton.simulate('click');
+    saveButton.simulate('click');
+    expect(actions.putDataFile).toHaveBeenCalledWith(
+      'movies', 'actors.yml', null, '_data/movies/authors.yml', 'gui'
+    );
+  });
+
+  it('should call putDataFile with different splats and datafileChanged in GUI mode', () => {
+    const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
+      params: { splat: ['', 'authors', 'yml']},
+      datafileChanged: true
+    }));
+    toggleButton.simulate('click');
+    saveButton.simulate('click');
+    expect(actions.putDataFile).toHaveBeenCalledWith(
+      '', 'authors.yml', null, '_data/authors.yml', 'gui'
+    );
+  });
+
+  it('should call putDataFile after fieldChanged in GUI mode', () => {
+    const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
+      datafile: datafile,
+      params: { splat: ['books', 'authors', 'yml']},
       fieldChanged: true
     }));
+    toggleButton.simulate('click');
     saveButton.simulate('click');
-    expect(actions.putDataFile).toHaveBeenCalled();
+    expect(actions.putDataFile).toHaveBeenCalledWith(
+      'books', 'authors.yml', null, '', 'gui'
+    );
   });
 
   it('should call deleteDataFile', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');
     expect(actions.deleteDataFile).not.toHaveBeenCalled(); // TODO pass prompt
+  });
+
+  it('should recieve updated props', () => {
+    const { component, actions } = setup();
+    component.setProps({
+      params: { splat: ['books', 'authors', 'yml']},
+      updated: true
+    });
+    expect(component.instance().props['datafile']['path']).toEqual('_data/books/authors.yml');
   });
 });

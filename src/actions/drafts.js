@@ -3,15 +3,9 @@ import _ from 'underscore';
 import { validationError } from '../actions/utils';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify } from '../utils/helpers';
-import {
-  getTitleRequiredMessage,
-  getFilenameNotValidMessage
-} from '../constants/lang';
-import {
-  draftsAPIUrl,
-  draftAPIUrl
-} from '../constants/api';
+import { slugify, trimObject } from '../utils/helpers';
+import { getTitleRequiredMessage, getFilenameNotValidMessage } from '../constants/lang';
+import { draftsAPIUrl, draftAPIUrl } from '../constants/api';
 
 export function fetchDrafts(directory = '') {
   return (dispatch) => {
@@ -56,7 +50,7 @@ export function putDraft(mode, directory, filename = '') {
 
     // omit raw_content, path and empty-value keys in metadata state from front_matter
     const front_matter = _.omit(metadata, (value, key, object) => {
-      return key == 'raw_content' || key == 'path' || value == '';
+      return key == 'raw_content' || key == 'path' || value === '';
     });
 
     let payload;
@@ -73,23 +67,12 @@ export function putDraft(mode, directory, filename = '') {
     //send the put request
     return put(
       draftAPIUrl(directory, filename),
-      JSON.stringify(payload),
+      preparePayload(payload),
       { type: ActionTypes.PUT_DRAFT_SUCCESS, name: 'draft'},
       { type: ActionTypes.PUT_DRAFT_FAILURE, name: 'error'},
       dispatch
     );
   };
-}
-
-function validateDraft(metadata) {
-  return validator(
-    metadata,
-    { 'path': 'required|filename' },
-    {
-      'path.required': getTitleRequiredMessage(),
-      'path.filename': getFilenameNotValidMessage()
-    }
-  );
 }
 
 export function deleteDraft(directory, filename) {
@@ -107,3 +90,16 @@ export function deleteDraft(directory, filename) {
     }));
   };
 }
+
+const validateDraft = (metadata) => {
+  return validator(
+    metadata,
+    { 'path': 'required|filename' },
+    {
+      'path.required': getTitleRequiredMessage(),
+      'path.filename': getFilenameNotValidMessage()
+    }
+  );
+};
+
+const preparePayload = (obj) => JSON.stringify(trimObject(obj));

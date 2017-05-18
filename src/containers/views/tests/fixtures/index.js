@@ -53,11 +53,11 @@ export const draft = {
 };
 
 export const datafile = {
-  path: "_data/data_file.yml",
-  relative_path: "_data/data_file.yml",
-  slug: "data_file",
+  path: "_data/books/authors.yml",
+  relative_path: "books/authors.yml",
+  slug: "authors",
   ext: ".yml",
-  title: "Data File",
+  title: "Authors",
   raw_content: "foo: bar\n",
   content: {
     foo: "bar"

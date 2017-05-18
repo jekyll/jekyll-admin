@@ -240,7 +240,9 @@ Container for DataFiles view. Lists data files.
   fetchDataFiles: Function,
   deleteDataFile: Function,
   search: Function,
-  isFetching: Boolean
+  isFetching: Boolean,
+  search: Function,
+  params: Object
 }
 ```
 
@@ -287,6 +289,9 @@ Simply input the file's basename, the filetype (`YAML` or `JSON`) and data. The 
   errors: Array,
   updated: Boolean,
   datafileChanged: Boolean,
+  params: Object,
+  router: Object,
+  route: Object
   fieldChanged: Boolean // optional
 }
 ```

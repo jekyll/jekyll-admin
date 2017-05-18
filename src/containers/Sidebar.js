@@ -38,7 +38,6 @@ export class Sidebar extends Component {
 
   render() {
     const { config } = this.props;
-    const siteConfig = config.content;
 
     const defaults = {
       pages: {
@@ -68,7 +67,7 @@ export class Sidebar extends Component {
     const defaultLinks = _.keys(defaults);
     let hiddenLinks;
     try {
-      hiddenLinks = siteConfig.jekyll_admin.hidden_links;
+      hiddenLinks = config.jekyll_admin.hidden_links;
     } catch (e) {
       hiddenLinks = [];
     }
@@ -97,7 +96,7 @@ export class Sidebar extends Component {
         <ul className="routes">
           {this.renderCollections(hiddenLinks)}
           {
-            siteConfig && siteConfig.show_drafts &&
+            config && config.show_drafts &&
               <li>
                 <Link activeClassName="active" to={`${ADMIN_PREFIX}/drafts`}>
                   <i className="fa fa-edit" />

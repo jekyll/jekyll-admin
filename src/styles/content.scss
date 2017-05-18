@@ -156,14 +156,22 @@
     }
   }
   .error-messages {
-    color: $dark-red;
-    padding: 0 10px 0 20px;
     margin-bottom: 40px;
+    padding: 10px 15px;
     font-size: 18px;
-    li{
+    color: $dark-red;
+    background-color: lighten($dark-red, 37%);
+
+    div {
       padding: 10px 0;
+      &:before {
+        content: "\f071";
+        font-family: "FontAwesome";
+        margin-right: 5px;
+      }
     }
   }
+
   .splitter {
     margin: 15px 0;
     background: #cfcfcf;

@@ -4,6 +4,7 @@ import { mount } from 'enzyme';
 import { DataFiles } from '../DataFiles';
 
 import { datafile } from './fixtures';
+import Button from '../../../components/Button';
 
 function setup(datafiles=[datafile]) {
   const actions = {
@@ -16,6 +17,7 @@ function setup(datafiles=[datafile]) {
     <DataFiles
       files={datafiles}
       isFetching={false}
+      params={{ splat: 'movies' }}
       {...actions} />
   );
 
@@ -23,14 +25,15 @@ function setup(datafiles=[datafile]) {
     component: component,
     actions: actions,
     h1: component.find('h1').last(),
-    table: component.find('.content-table')
+    table: component.find('.content-table'),
+    deleteButton: component.find(Button).last()
   };
 }
 
 describe('Containers::DataFiles', () => {
   it('should render correctly', () => {
     const { h1 } = setup();
-    expect(h1.text()).toBe('Data Files');
+    expect(h1.node).toBeFalsy();
   });
 
   it('should render correctly when there are not any data files', () => {
@@ -42,5 +45,11 @@ describe('Containers::DataFiles', () => {
   it('should call fetchDataFiles action after mounted', () => {
     const { actions } = setup();
     expect(actions.fetchDataFiles).toHaveBeenCalled();
+  });
+
+  it('should call deleteDataFile', () => {
+    const { deleteButton, actions } = setup();
+    deleteButton.simulate('click');
+    expect(actions.deleteDataFile).not.toHaveBeenCalled(); // TODO pass prompt
   });
 });
