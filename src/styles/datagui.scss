@@ -49,6 +49,11 @@
           border-color: $dark-orange;
         }
       }
+      &:after {
+        clear: both;
+        display: table;
+        content: "";
+      }
     }
     .meta-value-array {
       position: relative;
@@ -212,7 +217,7 @@
           color: #ddd;
           background: #353535;
           border: 1px solid #323232;
-          border-radius: 2px;
+          @include border-radius(2px);
           z-index: 30;
           span {
             display: block;
@@ -258,78 +263,143 @@
     z-index: 30;
   }
   .date-field {
-    @include border-radius(2px);
-    border-color: $border-color;
+    float: right;
+    right: 34px;
+    width: calc(100% - 240px);
+    background: #222;
+    &.rw-widget {
+      @include border-radius(2px);
+      border-color: transparent;
+    }
     input {
       padding: 11px 13px;
+      width: calc(100% - 3px);
       min-height: 46px;
+      @include border-radius(2px);
+      color: white;
+      background: #2b2b2b;
     }
+  }
+  .rw-popup {
+    padding: 10px;
+    color: #818181;
+    background: #2b2b2b;
+    border-color: #222;
   }
   .rw-datetimepicker {
     box-shadow: none !important;
     font-size: 16px !important;
     .rw-btn {
+      color: #fff;
       min-width: 37px;
+      &:hover {
+        color: #222;
+        background: $dark-orange;
+      }
       i { margin: 0; }
     }
     &.rw-has-both {
-      padding-right: 74px;
+      padding-right: 93px;
       > .rw-select {
-        width: 75px;
-        &:hover {
-          background: #fff;
+        width: 95px;
+        border: none;
+        .rw-btn {
+          margin: 0 1px;
+          min-width: 46px;
+          color: #818181;
+          background: #2b2b2b;
+          &:last-child { margin-right: 0; }
+          &:hover {
+            color: #2b2b2b;
+            background: $dark-orange;
+          }
         }
-        .rw-btn:first-child { border-right: 1px solid #ccc; }
-        .rw-btn:hover { background: $orange; }
       }
     }
   }
   .rw-calendar-popup {
     left: auto !important;
     right: -10px !important;
+    width: 19em;
   }
   .rw-calendar {
+    color: #999;
+    background: #2b2b2b;
     .rw-header {
       padding-bottom: 15px;
-      .rw-btn-view { width: 188px; }
+      .rw-btn-view {
+        width: 188px;
+        background: transparent;
+        border-radius: 0;
+        &:hover { color: #222; background: $dark-orange; }
+        &:focus { outline: none; }
+      }
+    }
+    thead > tr { border-bottom: 1px solid #454545; }
+    .rw-footer { border-top: 1px solid #454545; }
+  }
+  .rw-calendar-grid {
+    &.rw-nav-view .rw-btn { padding: 0; }
+    th {
+      padding-bottom: 10px;
+      text-align: center;
+    }
+    td .rw-btn {
+      border-radius: 0;
+      &.rw-off-range { color: #727272; }
     }
   }
-  .rw-calendar-grid th {
-    padding-bottom: 8px;
-  }
   .rw-state-focus {
-    border: 1px solid $dark-orange !important;
+    color: #2b2b2b !important;
+    background: $dark-orange;
+    border: 1px solid $dark-orange;
   }
-  .rw-list-option {
-    padding: 8px 5px;
+  .rw-list {
+    max-height: 329px;
+    .rw-list-option {
+      padding: 8px 5px;
+      border-radius: 0;
+      &:hover {
+        color: #cdcdcd;
+        background: #454545;
+        border-color: transparent;
+      }
+      &.rw-state-focus {
+        color: #222;
+        background-color: $dark-orange;
+        border-color: transparent;
+      }
+      &:focus { outline: none; }
+    }
   }
 
   .imagepicker {
     position: relative;
+    width: calc(100% - 34px);
+    textarea { width: calc(100% - 255px) !important; }
     .images-wrapper {
       position: absolute;
       right: 0;
       top: 0;
       height: 100%;
-      padding: 2px;
       button {
-        color: #333;
-        line-height: 2.286em;
-        height: 100%;
-        min-width: 37px;
-        display: inline-block;
         margin: 0;
+        padding: 0;
+        display: inline-block;
+        min-width: 48px;
+        height: 100%;
+        color: #818181;
+        line-height: 2.286em;
         text-align: center;
         vertical-align: middle;
-        background: white;
+        white-space: nowrap;
+        background: #2b2b2b;
         background-image: none;
         border: none;
-        border-left: 1px solid #ccc;
-        padding: 0;
-        white-space: nowrap;
         outline: none;
         &:hover {
-          background: $orange;
+          color: #2b2b2b;
+          background: $dark-orange;
         }
         i {
           margin: 0;
