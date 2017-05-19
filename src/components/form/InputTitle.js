@@ -21,8 +21,7 @@ export default class InputTitle extends Component {
           onChange={(e) => this.handleChange(e)}
           placeholder="Title"
           defaultValue={title}
-          ref="input"
-        />
+          ref="input" />
       </div>
     );
   }

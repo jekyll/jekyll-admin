@@ -107,7 +107,7 @@ export class DocumentEdit extends Component {
     }
 
     if (_.isEmpty(currentDocument)) {
-      return <h1>{getNotFoundMessage("document")}</h1>;
+      return <h1>{getNotFoundMessage('document')}</h1>;
     }
 
     const {

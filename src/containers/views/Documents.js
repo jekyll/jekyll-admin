@@ -59,10 +59,10 @@ export class Documents extends Component {
     const splat = path.substr(path.indexOf('/')+1, path.length);
     const to = `${ADMIN_PREFIX}/collections/${collection}/${splat}`;
     // date w/o timezone
-    let date = doc.date.substring(0, doc.date.lastIndexOf(" "));
-    date = moment(date).format("hh:mm:ss") == '12:00:00' ?
-      moment(date).format("ll") :
-      moment(date).format("lll");
+    let date = doc.date.substring(0, doc.date.lastIndexOf(' '));
+    date = moment(date).format('hh:mm:ss') == '12:00:00' ?
+      moment(date).format('ll') :
+      moment(date).format('lll');
 
     return (
       <tr key={id}>
@@ -104,8 +104,8 @@ export class Documents extends Component {
     const splat = path.substr(path.indexOf('/')+1, path.length);
     const to = `${ADMIN_PREFIX}/collections/${collection_name}/${splat}`;
     // date w/o timezone
-    let date = modified_time.substring(0, modified_time.lastIndexOf(" "));
-    date = moment(date).format("ll");
+    let date = modified_time.substring(0, modified_time.lastIndexOf(' '));
+    date = moment(date).format('ll');
     return (
       <tr key={name}>
         <td className="row-title">
@@ -151,7 +151,7 @@ export class Documents extends Component {
           <Breadcrumbs type={collection_name} splat={splat} />
           <div className="page-buttons">
             <Link className="btn btn-active" to={to}>
-              {collection_name == "posts" ? "New post" : "New document"}
+              {collection_name == 'posts' ? 'New post' : 'New document'}
             </Link>
           </div>
           <div className="pull-right">
@@ -162,7 +162,7 @@ export class Documents extends Component {
           documents.length > 0 && this.renderTable()
         }
         {
-          !documents.length && <h1>{getNotFoundMessage("documents")}</h1>
+          !documents.length && <h1>{getNotFoundMessage('documents')}</h1>
         }
       </div>
     );
