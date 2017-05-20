@@ -8,7 +8,7 @@ module Jekyll
 
           jekyll_admin_monkey_patch(server)
 
-          Jekyll.logger.info "Server address:", server_address(server, opts)
+          Jekyll.logger.info "Server address:", build_server_address(server, opts)
           launch_browser server, opts if opts["open_url"]
           boot_or_detach server, opts
         end
@@ -17,6 +17,16 @@ module Jekyll
           server.mount "/admin", Rack::Handler::WEBrick, JekyllAdmin::StaticServer
           server.mount "/_api",  Rack::Handler::WEBrick, JekyllAdmin::Server
           Jekyll.logger.info "JekyllAdmin mode:", ENV["RACK_ENV"] || "production"
+        end
+
+        private
+        def build_server_address(server, opts)
+          server_address(
+            server.config[:SSLEnable],
+            server.config[:BindAddress],
+            server.config[:Port],
+            opts["baseurl"]
+          )
         end
       end
     end
