@@ -317,3 +317,40 @@
     }
   }
 }
+
+.tags-wrap {
+  display: inline-block;
+}
+
+.tags-list {
+  float: left;
+  max-width: 809px;
+}
+.tag {
+  display: inline-block;
+  margin-right: 5px;
+  padding: 1px 5px;
+  font-size: 15px;
+  font-weight: 900;
+  color: #212121;
+  background: #ffd699;
+  @include border-radius(4px);
+  .delete-tag:after {
+    margin-left: 4px;
+    content: "\f057";
+    font-family: FontAwesome;
+    color: #cc8f33;
+    cursor: pointer;
+  }
+}
+.tags-input {
+  display: flex;
+  input {
+    width: 100%;
+    height: 24px;
+    border: none;
+    &:focus {
+      outline: none;
+    }
+  }
+}

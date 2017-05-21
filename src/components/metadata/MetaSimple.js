@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Modal from 'react-modal';
+import _ from 'underscore';
 import StaticFiles from '../../containers/views/StaticFiles';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
@@ -11,11 +12,14 @@ momentLocalizer(moment);
 
 export class MetaSimple extends Component {
 
-  constructor() {
+  constructor(props) {
     super();
+
     this.state = {
       staticfiles: [],
-      showModal: false
+      showModal: false,
+      tagInput: '',
+      pageTags: props.fieldValue || []
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -108,6 +112,73 @@ export class MetaSimple extends Component {
     );
   }
 
+  createTag(e) {
+    const { pageTags } = this.state;
+    const clone = pageTags.slice();
+
+    // delimit tags with either the 'comma' key or the 'Enter' key
+    if ( e.target.value.length > 0 && ( e.keyCode === 188 || e.keyCode === 13 )) {
+      // create tags only if they do not exist already
+      if (!clone.includes(e.target.value)) {
+        clone.push(e.target.value);
+
+        this.setState({
+          pageTags: clone,
+          tagInput: ""
+        });
+      }
+    }
+    this.updateTagField();
+  }
+
+  deleteTag(index) {
+    const { pageTags } = this.state;
+    const clone = pageTags.slice();
+
+    if (index != -1) {
+      clone.splice(index, 1);
+      this.setState({ pageTags: clone });
+      this.refs.taginput.focus();
+    }
+  }
+
+  updateTagField() {
+    const { nameAttr, updateFieldValue } = this.props;
+    updateFieldValue(nameAttr, this.state.pageTags);
+  }
+
+  renderTagsInput() {
+    const { fieldValue } = this.props;
+    const tagPool = this.state.pageTags || fieldValue;
+
+    const tags = _.map(tagPool, (tag, i) => {
+      return (
+        <span key={i} className="tag">
+          {tag}
+          <span className="delete-tag" onClick={(e) => this.deleteTag(i)} />
+        </span>
+      );
+    });
+
+    return (
+      <div className="field value-field tags-wrap" >
+        <div className="tags-list">{tags}</div>
+        <div className="tags-input">
+          <input
+            type="text"
+            onChange={(e) => this.setState({ tagInput: e.target.value })}
+            onKeyDown={(e) => this.createTag(e)}
+            value = {this.state.tagInput.replace(/,|\s+/, '')}
+            ref="taginput"/>
+          <TextareaAutosize
+            className="field value-field"
+            value={`[${this.state.pageTags}]`}
+            hidden />            
+        </div>
+      </div>
+    );
+  }
+
   render() {
     const { fieldKey } = this.props;
     let node;
@@ -118,6 +189,9 @@ export class MetaSimple extends Component {
       case 'image':
       case 'file':
         node = this.renderStaticFilePicker();
+        break;
+      case 'tags':
+        node = this.renderTagsInput();
         break;
       default:
         node = this.renderEditable();

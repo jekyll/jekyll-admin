@@ -41,6 +41,7 @@ export class MetaFields extends Component {
       let type = 'simple';
       if (_.isObject(field)) type = 'object';
       if (_.isArray(field)) type = 'array';
+      if (_.isArray(field) && key == 'tags') type = 'simple';
       return (
         <MetaField
           key={key}
