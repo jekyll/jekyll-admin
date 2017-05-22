@@ -18,7 +18,7 @@ export class MetaTags extends Component {
     this.setState({ pageTags: nextProps.fieldValue });
   }
 
-  updateTagField() {
+  componentDidUpdate() {
     const { nameAttr, updateFieldValue } = this.props;
     updateFieldValue(nameAttr, this.state.pageTags);
   }
@@ -89,7 +89,6 @@ export class MetaTags extends Component {
             type="text"
             onChange={(e) => this.setState({ tagInput: e.target.value })}
             onKeyDown={(e) => this.handleKeyDown(e)}
-            onBlur={(e) => this.updateTagField(e)}
             value = {this.state.tagInput.replace(/,|\s+/, '')}
             ref="taginput"/>
           <TextareaAutosize
