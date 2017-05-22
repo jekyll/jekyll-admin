@@ -6,12 +6,16 @@ import _ from 'underscore';
 export class MetaTags extends Component {
 
   constructor(props) {
-    super();
+    super(props);
 
     this.state = {
       tagInput: '',
       pageTags: props.fieldValue || []
     };
+  }
+
+  componentWillReceiveProps(nextProps) {
+    this.setState({ pageTags: nextProps.fieldValue });
   }
 
   updateTagField() {
