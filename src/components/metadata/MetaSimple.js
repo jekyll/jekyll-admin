@@ -7,19 +7,18 @@ import StaticFiles from '../../containers/views/StaticFiles';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 import 'react-widgets/dist/css/react-widgets.css';
+import MetaTags from './MetaTags';
 
 momentLocalizer(moment);
 
 export class MetaSimple extends Component {
 
-  constructor(props) {
+  constructor() {
     super();
 
     this.state = {
       staticfiles: [],
-      showModal: false,
-      tagInput: '',
-      pageTags: props.fieldValue || []
+      showModal: false
     };
     this.handleOpenModal = this.handleOpenModal.bind(this);
     this.handleCloseModal = this.handleCloseModal.bind(this);
@@ -112,70 +111,14 @@ export class MetaSimple extends Component {
     );
   }
 
-  createTag(e) {
-    const { pageTags } = this.state;
-    const clone = pageTags.slice();
-
-    // delimit tags with either the 'comma' key or the 'Enter' key
-    if ( e.target.value.length > 0 && ( e.keyCode === 188 || e.keyCode === 13 )) {
-      // create tags only if they do not exist already
-      if (!clone.includes(e.target.value)) {
-        clone.push(e.target.value);
-
-        this.setState({
-          pageTags: clone,
-          tagInput: ""
-        });
-      }
-    }
-    this.updateTagField();
-  }
-
-  deleteTag(index) {
-    const { pageTags } = this.state;
-    const clone = pageTags.slice();
-
-    if (index != -1) {
-      clone.splice(index, 1);
-      this.setState({ pageTags: clone });
-      this.refs.taginput.focus();
-    }
-  }
-
-  updateTagField() {
-    const { nameAttr, updateFieldValue } = this.props;
-    updateFieldValue(nameAttr, this.state.pageTags);
-  }
-
   renderTagsInput() {
-    const { fieldValue } = this.props;
-    const tagPool = this.state.pageTags || fieldValue;
-
-    const tags = _.map(tagPool, (tag, i) => {
-      return (
-        <span key={i} className="tag">
-          {tag}
-          <span className="delete-tag" onClick={(e) => this.deleteTag(i)} />
-        </span>
-      );
-    });
+    const { fieldValue, nameAttr, updateFieldValue } = this.props;
 
     return (
-      <div className="field value-field tags-wrap" >
-        <div className="tags-list">{tags}</div>
-        <div className="tags-input">
-          <input
-            type="text"
-            onChange={(e) => this.setState({ tagInput: e.target.value })}
-            onKeyDown={(e) => this.createTag(e)}
-            value = {this.state.tagInput.replace(/,|\s+/, '')}
-            ref="taginput"/>
-          <TextareaAutosize
-            className="field value-field"
-            value={`[${this.state.pageTags}]`}
-            hidden />            
-        </div>
-      </div>
+      <MetaTags
+        fieldValue={fieldValue}
+        nameAttr={nameAttr}
+        updateFieldValue={updateFieldValue} />
     );
   }
 
