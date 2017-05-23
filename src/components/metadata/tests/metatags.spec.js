@@ -38,6 +38,14 @@ describe('Components::MetaTags', () => {
     expect(editable.node).toBeTruthy();
   });
 
+  it('should render an error if fieldValue prop is a String', () => {
+    const { component, editable } = setup(Object.assign({}, defaultProps, {
+      fieldValue: 'foo'
+    }));
+    expect(component.find('.meta-error').text()).toEqual('Invalid array of tags! Found string: "foo"');
+    expect(editable.node).toBeFalsy();
+  });
+
   it('should create tags on certain keypresses', () => {
     const { component, editable } = setup();
     editable.node.value = 'foo';

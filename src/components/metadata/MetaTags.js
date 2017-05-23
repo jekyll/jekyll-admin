@@ -63,14 +63,21 @@ export class MetaTags extends Component {
   }
 
   render() {
-    const { fieldValue } = this.props;
-    const pageTags = this.state.pageTags.filter(
+    const { pageTags } = this.state;
+
+    if (pageTags.length > 0 && !(pageTags instanceof(Array))) {
+      return (
+        <span className="meta-error">
+          Invalid array of tags! Found string: <b>"{pageTags}"</b>
+        </span>
+      );
+    }
+
+    const tagPool = pageTags.filter(
       function(tag, index, self) {
         return index == self.indexOf(tag);
       }
     );
-
-    const tagPool = pageTags || fieldValue;
 
     const tags = _.map(tagPool, (tag, i) => {
       return (

@@ -316,6 +316,20 @@
       }
     }
   }
+
+  .meta-error {
+    display: flex;
+    padding: 5px;
+    background-color: lighten($dark-red, 37%);
+  }
+}
+
+.meta-error {
+  color: $dark-red;
+  b {
+    margin-left: 5px;
+    color: $dark-red;
+  }
 }
 
 .tags-wrap {
