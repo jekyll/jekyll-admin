@@ -100,6 +100,36 @@ describe('Components::MetaTags', () => {
     expect(actions.updateFieldValue).toHaveBeenCalled();
   });
 
+  it('should render a dropdown list of all tags in site payload', () => {
+    const { component, editable } = setup(Object.assign({}, defaultProps, {
+      suggestions: ['foo', 'bar', 'baz']
+    }));
+    component.setState({ autoSuggest: true });
+    const suggestedTags = component.find('.tag-suggestions li');
+    expect(suggestedTags.map((item) => item.text())).toEqual(['foo', 'bar', 'baz']);
+  });
+
+  it('should render a dropdown list of tags not already used in current document', () => {
+    const { component, editable } = setup(Object.assign({}, defaultProps, {
+      fieldValue: ['foo'],
+      suggestions: ['foo', 'bar', 'baz']
+    }));
+    component.setState({ autoSuggest: true });
+    const suggestedTags = component.find('.tag-suggestions li');
+    expect(suggestedTags.map((item) => item.text())).toEqual(['bar', 'baz']);
+  });
+
+  it('should create a tag from the dropdown list of suggested tags', () => {
+    const { component, editable } = setup(Object.assign({}, defaultProps, {
+      fieldValue: ['foo'],
+      suggestions: ['foo', 'bar', 'baz']
+    }));
+    component.setState({ autoSuggest: true });
+    const suggestedTags = component.find('.tag-suggestions li');
+    suggestedTags.first().simulate('click');
+    expect(component.state('pageTags')).toEqual(['foo', 'bar']);
+  });
+
   it('should update with new props', () => {
     const { component } = setup(Object.assign({}, defaultProps, {
       fieldValue: ['foo']

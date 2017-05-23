@@ -332,14 +332,11 @@
   }
 }
 
-.tags-wrap {
-  display: inline-block;
-}
-
 .tags-list {
   float: left;
   max-width: 809px;
 }
+
 .tag {
   display: inline-block;
   margin-right: 5px;
@@ -357,6 +354,7 @@
     cursor: pointer;
   }
 }
+
 .tags-input {
   display: flex;
   input {
@@ -365,6 +363,26 @@
     border: none;
     &:focus {
       outline: none;
+    }
+  }
+}
+
+.tag-suggestions {
+  width: 100%;
+  display: table;
+  margin-top: -1px;
+  padding: 0;
+  border-radius: 0;
+  ul {
+    padding: 0;
+    li {
+      padding: 0.429em 0.875em;
+      list-style: none;
+      font-weight: 700;
+      &:hover {
+        color: white;
+        background-color: $dark-orange;
+      }
     }
   }
 }
