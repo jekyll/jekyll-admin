@@ -137,7 +137,7 @@ export class Pages extends Component {
           pages.length > 0 && this.renderTable()
         }
         {
-          !pages.length && <h1>{getNotFoundMessage("pages")}</h1>
+          !pages.length && <h1>{getNotFoundMessage('pages')}</h1>
         }
       </div>
     );

@@ -12,8 +12,8 @@ export function fetchPages(directory = '') {
     dispatch({ type: ActionTypes.FETCH_PAGES_REQUEST});
     return get(
       pagesAPIUrl(directory),
-      { type: ActionTypes.FETCH_PAGES_SUCCESS, name: "pages"},
-      { type: ActionTypes.FETCH_PAGES_FAILURE, name: "error"},
+      { type: ActionTypes.FETCH_PAGES_SUCCESS, name: 'pages'},
+      { type: ActionTypes.FETCH_PAGES_FAILURE, name: 'error'},
       dispatch
     );
   };
@@ -24,8 +24,8 @@ export function fetchPage(directory, filename) {
     dispatch({ type: ActionTypes.FETCH_PAGE_REQUEST});
     return get(
       pageAPIUrl(directory, filename),
-      { type: ActionTypes.FETCH_PAGE_SUCCESS, name: "page"},
-      { type: ActionTypes.FETCH_PAGE_FAILURE, name: "error"},
+      { type: ActionTypes.FETCH_PAGE_SUCCESS, name: 'page'},
+      { type: ActionTypes.FETCH_PAGE_FAILURE, name: 'error'},
       dispatch
     );
   };
@@ -55,8 +55,8 @@ export function createPage(directory) {
     return put(
       pageAPIUrl(directory, path),
       preparePayload({ front_matter, raw_content }),
-      { type: ActionTypes.PUT_PAGE_SUCCESS, name: "page"},
-      { type: ActionTypes.PUT_PAGE_FAILURE, name: "error"},
+      { type: ActionTypes.PUT_PAGE_SUCCESS, name: 'page'},
+      { type: ActionTypes.PUT_PAGE_FAILURE, name: 'error'},
       dispatch
     );
   };
@@ -88,8 +88,8 @@ export function putPage(directory, filename) {
       // create or update page according to filename existence
       pageAPIUrl(directory, filename),
       preparePayload({ path: relative_path, front_matter, raw_content }),
-      { type: ActionTypes.PUT_PAGE_SUCCESS, name: "page"},
-      { type: ActionTypes.PUT_PAGE_FAILURE, name: "error"},
+      { type: ActionTypes.PUT_PAGE_SUCCESS, name: 'page'},
+      { type: ActionTypes.PUT_PAGE_FAILURE, name: 'error'},
       dispatch
     );
   };

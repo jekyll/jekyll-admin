@@ -59,7 +59,7 @@ export class Configuration extends Component {
       const value = this.refs.editor.getValue();
       putConfig(value);
     } else if (fieldChanged) {
-      putConfig(null, "gui");
+      putConfig(null, 'gui');
     }
   }
 

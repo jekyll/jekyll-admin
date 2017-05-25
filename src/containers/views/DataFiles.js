@@ -30,8 +30,8 @@ export class DataFiles extends Component {
   handleClickDelete(path) {
     const { deleteDataFile, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(path));
-    const directory = params.splat || "";
-    const dir = directory ? `/${directory}` : "";
+    const directory = params.splat || '';
+    const dir = directory ? `/${directory}` : '';
 
     if (confirm) {
       const filename = getFilenameFromPath(path);
@@ -127,7 +127,7 @@ export class DataFiles extends Component {
       dirSplat = params.splat;
     } else {
       to = `${ADMIN_PREFIX}/datafiles/new`;
-      dirSplat = "";
+      dirSplat = '';
     }
 
     return (
@@ -145,7 +145,7 @@ export class DataFiles extends Component {
           files.length > 0 && this.renderTable()
         }
         {
-          !files.length && <h1>{getNotFoundMessage("data files")}</h1>
+          !files.length && <h1>{getNotFoundMessage('data files')}</h1>
         }
       </div>
     );

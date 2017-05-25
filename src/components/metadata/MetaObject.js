@@ -9,9 +9,9 @@ export class MetaObject extends Component {
       removeField, updateFieldKey, updateFieldValue, convertField, key_prefix,
       moveArrayItem } = this.props;
     const items = _.map(fieldValue, (value, key) => {
-      let type = "simple";
-      if (_.isObject(value)) type = "object";
-      if (_.isArray(value)) type = "array";
+      let type = 'simple';
+      if (_.isObject(value)) type = 'object';
+      if (_.isArray(value)) type = 'array';
       return (
         <MetaObjectItem
           key={key}

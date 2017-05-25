@@ -82,7 +82,7 @@ export class DataFileNew extends Component {
     if (datafileChanged || fieldChanged) {
       if (this.state.guiView) {
         filename = this.state.guiPath + this.state.extn;
-        putDataFile(params.splat, filename, null, null, "gui");
+        putDataFile(params.splat, filename, null, null, 'gui');
       } else {
         filename = this.refs.inputpath.refs.input.value;
         putDataFile(params.splat, filename, this.refs.editor.getValue());
@@ -134,7 +134,7 @@ export class DataFileNew extends Component {
       <HotKeys handlers={keyboardHandlers}>
         {errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
-          <Breadcrumbs splat={params.splat || ""} type="data files" />
+          <Breadcrumbs splat={params.splat || ''} type="data files" />
         </div>
 
         <div className="content-wrapper">
@@ -142,7 +142,7 @@ export class DataFileNew extends Component {
             {
               this.state.guiView && <div>
                 {this.renderGUInputs()}
-                <DataGUI fields={{"key": "value"}} dataview /></div>
+                <DataGUI fields={{'key': 'value'}} dataview /></div>
             }
             {
               !this.state.guiView && <div>
@@ -154,7 +154,7 @@ export class DataFileNew extends Component {
                 <Editor
                   editorChanged={datafileChanged}
                   onEditorChange={onDataFileChanged}
-                  content={""}
+                  content={''}
                   ref="editor" /></div>
             }
           </div>
