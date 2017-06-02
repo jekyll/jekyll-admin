@@ -1,6 +1,6 @@
 {
   "name": "jekyll-admin",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Admin Panel for Jekyll",
   "private": true,
   "scripts": {
