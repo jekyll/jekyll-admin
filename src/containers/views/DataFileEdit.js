@@ -183,29 +183,31 @@ export class DataFileEdit extends Component {
 
     return (
       <div className="content-side">
-        <Button
-          onClick={this.handleClickSave}
-          type="save"
-          active={activator}
-          triggered={updated}
-          icon="save"
-          block />
-        {
-          guiSupport &&
-            <Button
-              onClick={this.toggleView}
-              type="view-toggle"
-              active={true}
-              triggered={this.state.guiView}
-              block />
-        }
-        <Splitter />
-        <Button
-          onClick={() => this.handleClickDelete(filename)}
-          type="delete"
-          active={true}
-          icon="trash"
-          block />
+        <div className="sticky">
+          <Button
+            onClick={this.handleClickSave}
+            type="save"
+            active={activator}
+            triggered={updated}
+            icon="save"
+            block />
+          {
+            guiSupport &&
+              <Button
+                onClick={this.toggleView}
+                type="view-toggle"
+                active={true}
+                triggered={this.state.guiView}
+                block />
+          }
+          <Splitter />
+          <Button
+            onClick={() => this.handleClickDelete(filename)}
+            type="delete"
+            active={true}
+            icon="trash"
+            block />
+        </div>
       </div>
     );
   }
