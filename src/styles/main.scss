@@ -99,6 +99,11 @@ div:focus {
   }
 }
 
+.sticky {
+  position: sticky;
+  top: 0;
+}
+
 @font-face {
   font-family: "lato";
   src: url(../assets/fonts/lato-regular.ttf);

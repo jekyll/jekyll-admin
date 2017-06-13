@@ -98,13 +98,15 @@ export class PageNew extends Component {
           </div>
 
           <div className="content-side">
-            <Button
-              onClick={this.handleClickSave}
-              type="create"
-              active={fieldChanged}
-              triggered={updated}
-              icon="plus-square"
-              block />
+            <div className="sticky">
+              <Button
+                onClick={this.handleClickSave}
+                type="create"
+                active={fieldChanged}
+                triggered={updated}
+                icon="plus-square"
+                block />
+            </div>
           </div>
         </div>
       </HotKeys>

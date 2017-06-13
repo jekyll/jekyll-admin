@@ -147,29 +147,31 @@ export class DocumentEdit extends Component {
           </div>
 
           <div className="content-side">
-            <Button
-              onClick={this.handleClickSave}
-              type="save"
-              active={fieldChanged}
-              triggered={updated}
-              icon="save"
-              block />
-            {
-              http_url &&
-                <Button
-                  to={http_url}
-                  type="view"
-                  icon="eye"
-                  active={true}
-                  block />
-            }
-            <Splitter />
-            <Button
-              onClick={() => this.handleClickDelete()}
-              type="delete"
-              active={true}
-              icon="trash"
-              block />
+            <div className="sticky">
+              <Button
+                onClick={this.handleClickSave}
+                type="save"
+                active={fieldChanged}
+                triggered={updated}
+                icon="save"
+                block />
+              {
+                http_url &&
+                  <Button
+                    to={http_url}
+                    type="view"
+                    icon="eye"
+                    active={true}
+                    block />
+              }
+              <Splitter />
+              <Button
+                onClick={() => this.handleClickDelete()}
+                type="delete"
+                active={true}
+                icon="trash"
+                block />
+            </div>
           </div>
         </div>
       </HotKeys>
