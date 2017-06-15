@@ -119,15 +119,16 @@
   .content-wrapper {
     display: flex;
     .content-body {
-      width: 100%;
+      width: calc(100% - #{$content-side-width} - 40px);
       h1 {
         margin: 0 0 30px 0;
         font-size: 40px;
       }
     }
     .content-side {
+      position: fixed;
+      right: 40px;
       width: $content-side-width;
-      margin-left: 40px;
       font-size: 16px;
 
       .delete-link {
