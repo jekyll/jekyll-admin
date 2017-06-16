@@ -16,6 +16,10 @@ install:
 
 build: off
 
+branches:
+  only:
+    - master
+
 before_test:
   - node --version
   - npm --version

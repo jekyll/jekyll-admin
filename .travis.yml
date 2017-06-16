@@ -16,3 +16,6 @@ env:
     - TEST_SUITE=ruby
 after_success:
   - npm run test:cover:CI
+branches:
+  only:
+    - master
