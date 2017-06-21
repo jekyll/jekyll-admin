@@ -140,7 +140,7 @@ export const trimObject = (object) => {
  * @param {String} string
  */
 export const setTitleTag = (string) => {
-  let title;
+  let title = 'Jekyll Admin';
   if (string) {
     if (string.includes('.')) {
       title = string;
@@ -148,6 +148,5 @@ export const setTitleTag = (string) => {
       title = toTitleCase(string);
     }
   }
-
   document.title = title;
 };
