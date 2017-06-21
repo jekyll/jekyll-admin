@@ -16,7 +16,7 @@ import { createDocument } from '../../actions/collections';
 import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault } from '../../utils/helpers';
+import { preventDefault, setTitleTag } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {
@@ -85,6 +85,7 @@ export class DocumentNew extends Component {
     return (
       <HotKeys handlers={keyboardHandlers} className="single">
         {errors.length > 0 && <Errors errors={errors} />}
+        {setTitleTag(`new doc | ${collection}`)}
         <div className="content-header">
           <Breadcrumbs
             type={collection}

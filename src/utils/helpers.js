@@ -134,3 +134,20 @@ export const trimObject = (object) => {
     return acc;
   }, Array.isArray(object) ? [] : {});
 };
+
+/**
+ * Set the view's page title with toTitleCase() called on given String.
+ * @param {String} string
+ */
+export const setTitleTag = (string) => {
+  let title;
+  if (string) {
+    if (string.includes('.')) {
+      title = string;
+    } else {
+      title = toTitleCase(string);
+    }
+  }
+
+  document.title = title;
+};

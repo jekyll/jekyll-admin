@@ -16,7 +16,7 @@ import { createPage } from '../../actions/pages';
 import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault } from '../../utils/helpers';
+import { preventDefault, setTitleTag } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class PageNew extends Component {
@@ -77,6 +77,7 @@ export class PageNew extends Component {
     return (
       <HotKeys handlers={keyboardHandlers} className="single">
         {errors.length > 0 && <Errors errors={errors} />}
+        {setTitleTag('New page')}
         <div className="content-header">
           <Breadcrumbs
             type="pages"

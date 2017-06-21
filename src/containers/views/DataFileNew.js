@@ -11,7 +11,7 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
 import { clearErrors } from '../../actions/utils';
-import { preventDefault, getFilenameFromPath } from '../../utils/helpers';
+import { preventDefault, getFilenameFromPath, setTitleTag } from '../../utils/helpers';
 import { getLeaveMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -133,6 +133,7 @@ export class DataFileNew extends Component {
     return (
       <HotKeys handlers={keyboardHandlers}>
         {errors.length > 0 && <Errors errors={errors} />}
+        {setTitleTag('New data file')}
         <div className="content-header">
           <Breadcrumbs splat={params.splat || ''} type="data files" />
         </div>

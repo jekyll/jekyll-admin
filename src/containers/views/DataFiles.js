@@ -10,7 +10,7 @@ import Button from '../../components/Button';
 import { fetchDataFiles, deleteDataFile } from '../../actions/datafiles';
 import { search } from '../../actions/utils';
 import { filterByFilename } from '../../reducers/datafiles';
-import { getFilenameFromPath } from '../../utils/helpers';
+import { getFilenameFromPath, setTitleTag } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFiles extends Component {
@@ -132,6 +132,7 @@ export class DataFiles extends Component {
 
     return (
       <div>
+        {setTitleTag('Data files')}
         <div className="content-header">
           <Breadcrumbs type="data files" splat={dirSplat} />
           <div className="page-buttons">

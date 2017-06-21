@@ -5,7 +5,7 @@ import Dropzone from '../../components/Dropzone';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../actions/utils';
-import { existingUploadedFilenames } from '../../utils/helpers';
+import { existingUploadedFilenames, setTitleTag } from '../../utils/helpers';
 import { filterByFilename } from '../../reducers/staticfiles';
 import { getOverrideMessage } from '../../constants/lang';
 import {
@@ -44,6 +44,7 @@ export class StaticFiles extends Component {
 
     return (
       <div>
+        {setTitleTag('Static files')}
         <div className="content-header">
           <h1>Static Files</h1>
           <Button
