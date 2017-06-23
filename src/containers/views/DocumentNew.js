@@ -84,8 +84,8 @@ export class DocumentNew extends Component {
     const metafields = injectDefaultFields(config, params.splat, collection);
 
     const document_title = params.splat ?
-      `Create a document - ${params.splat} - ${capitalize(collection)}` :
-      `Create a document - ${capitalize(collection)}`;
+      `New document - ${params.splat} - ${capitalize(collection)}` :
+      `New document - ${capitalize(collection)}`;
 
     return (
       <DocumentTitle title={document_title}>
