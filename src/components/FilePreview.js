@@ -32,9 +32,18 @@ export default class FilePreview extends Component {
     }
     return (
       <div className="file-preview">
+        {
+          file.from_theme &&
+            <span className="theme-indicator">
+              <i className="fa fa-diamond" aria-hidden="true" title="Theme Asset" />
+            </span>
+        }
         {nodeLink}
         <span className="filename">{file.path}</span>
-        <button onClick={() => this.handleClickDelete(file.path)} className="delete" title="Delete file">x</button>
+        {
+          !file.from_theme &&
+            <button onClick={() => this.handleClickDelete(file.path)} className="delete" title="Delete file">x</button>
+        }
       </div>
     );
   }
