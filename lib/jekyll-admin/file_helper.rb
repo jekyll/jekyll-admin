@@ -21,14 +21,29 @@ module JekyllAdmin
       File.open(path, "wb") do |file|
         file.write(content)
       end
-      site.process
+      if ENV["RACK_ENV"]
+        Jekyll.logger.debug "PROCESSING"
+        site.process
+      else
+        site.read
+      end
     end
 
     # Delete the file at the given path
     def delete_file(path)
       Jekyll.logger.debug "DELETING:", path
       FileUtils.rm_f sanitized_path(path)
-      site.process
+      if ENV["RACK_ENV"]
+        Jekyll.logger.debug "PROCESSING"
+        site.process
+      else
+        site.read
+      end
+    end
+
+    def delete_file_without_process(path)
+      Jekyll.logger.debug "DELETING:", path
+      FileUtils.rm_f sanitized_path(path)
     end
 
     private
