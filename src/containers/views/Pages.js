@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
+import DocumentTitle from 'react-document-title';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
@@ -122,24 +123,28 @@ export class Pages extends Component {
     const to = params.splat ? `${ADMIN_PREFIX}/pages/${params.splat}/new` :
       `${ADMIN_PREFIX}/pages/new`;
 
+    const title = params.splat ? `${params.splat} | Pages` : 'Pages';
+
     return (
-      <div>
-        <div className="content-header">
-          <Breadcrumbs type="pages" splat={params.splat || ''} />
-          <div className="page-buttons">
-            <Link className="btn btn-active" to={to}>New page</Link>
+      <DocumentTitle title={title}>
+        <div>
+          <div className="content-header">
+            <Breadcrumbs type="pages" splat={params.splat || ''} />
+            <div className="page-buttons">
+              <Link className="btn btn-active" to={to}>New page</Link>
+            </div>
+            <div className="pull-right">
+              <InputSearch searchBy="filename" search={search} />
+            </div>
           </div>
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
-          </div>
+          {
+            pages.length > 0 && this.renderTable()
+          }
+          {
+            !pages.length && <h1>{getNotFoundMessage('pages')}</h1>
+          }
         </div>
-        {
-          pages.length > 0 && this.renderTable()
-        }
-        {
-          !pages.length && <h1>{getNotFoundMessage('pages')}</h1>
-        }
-      </div>
+      </DocumentTitle>
     );
   }
 }

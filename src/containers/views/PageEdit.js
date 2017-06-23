@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
+import DocumentTitle from 'react-document-title';
 import Button from '../../components/Button';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
@@ -109,53 +110,60 @@ export class PageEdit extends Component {
     const title = front_matter && front_matter.title ? front_matter.title : '';
     const metafields = injectDefaultFields(config, directory, 'pages', front_matter);
 
+    const document_title = directory ?
+      `${name} - ${directory} - Pages` :
+      `${name} - Pages`;
+
     return (
-      <HotKeys
-        handlers={keyboardHandlers}
-        className="single">
-        {errors.length > 0 && <Errors errors={errors} />}
-        <div className="content-header">
-          <Breadcrumbs splat={directory || ''} type="pages" />
-        </div>
+      <DocumentTitle title={document_title}>
+        <HotKeys handlers={keyboardHandlers} className="single">
 
-        <div className="content-wrapper">
-          <div className="content-body">
-            <InputPath onChange={updatePath} type="pages" path={name} />
-            <InputTitle onChange={updateTitle} title={title} ref="title" />
-            <MarkdownEditor
-              onChange={updateBody}
-              onSave={this.handleClickSave}
-              placeholder="Body"
-              initialValue={raw_content}
-              ref="editor" />
-            <Splitter />
-            <Metadata fields={{title, raw_content, path: name, ...metafields}} />
+          {errors.length > 0 && <Errors errors={errors} />}
+
+          <div className="content-header">
+            <Breadcrumbs splat={directory || ''} type="pages" />
           </div>
 
-          <div className="content-side">
-            <Button
-              onClick={this.handleClickSave}
-              type="save"
-              active={fieldChanged}
-              triggered={updated}
-              icon="save"
-              block />
-            <Button
-              to={http_url}
-              type="view"
-              icon="eye"
-              active={true}
-              block />
-            <Splitter />
-            <Button
-              onClick={() => this.handleClickDelete(name)}
-              type="delete"
-              active={true}
-              icon="trash"
-              block />
+          <div className="content-wrapper">
+            <div className="content-body">
+              <InputPath onChange={updatePath} type="pages" path={name} />
+              <InputTitle onChange={updateTitle} title={title} ref="title" />
+              <MarkdownEditor
+                onChange={updateBody}
+                onSave={this.handleClickSave}
+                placeholder="Body"
+                initialValue={raw_content}
+                ref="editor" />
+              <Splitter />
+              <Metadata fields={{title, raw_content, path: name, ...metafields}} />
+            </div>
+
+            <div className="content-side">
+              <Button
+                onClick={this.handleClickSave}
+                type="save"
+                active={fieldChanged}
+                triggered={updated}
+                icon="save"
+                block />
+              <Button
+                to={http_url}
+                type="view"
+                icon="eye"
+                active={true}
+                block />
+              <Splitter />
+              <Button
+                onClick={() => this.handleClickDelete(name)}
+                type="delete"
+                active={true}
+                icon="trash"
+                block />
+            </div>
           </div>
-        </div>
-      </HotKeys>
+          
+        </HotKeys>
+      </DocumentTitle>
     );
   }
 
