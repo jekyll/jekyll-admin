@@ -10,7 +10,7 @@ import Button from '../../components/Button';
 import { putConfig, onEditorChange } from '../../actions/config';
 import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
-import { preventDefault } from '../../utils/helpers';
+import { preventDefault, setTitleTag } from '../../utils/helpers';
 
 export class Configuration extends Component {
 
@@ -73,6 +73,7 @@ export class Configuration extends Component {
     return (
       <HotKeys handlers={keyboardHandlers} className="single">
         {errors && errors.length > 0 && <Errors errors={errors} />}
+        {setTitleTag('Configuration')}
         <div className="content-header">
           <h1>Configuration</h1>
           <div className="page-buttons multiple">

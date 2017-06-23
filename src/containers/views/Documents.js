@@ -10,6 +10,7 @@ import Button from '../../components/Button';
 import { fetchCollection, deleteDocument } from '../../actions/collections';
 import { filterBySearchInput } from '../../reducers/collections';
 import { search } from '../../actions/utils';
+import { setTitleTag } from '../../utils/helpers';
 import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -147,6 +148,7 @@ export class Documents extends Component {
 
     return (
       <div>
+        {setTitleTag(collection_name)}
         <div className="content-header">
           <Breadcrumbs type={collection_name} splat={splat} />
           <div className="page-buttons">

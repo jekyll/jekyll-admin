@@ -16,7 +16,7 @@ import { fetchPage, deletePage, putPage } from '../../actions/pages';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault } from '../../utils/helpers';
+import { preventDefault, setTitleTag } from '../../utils/helpers';
 import { getLeaveMessage, getDeleteMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -114,6 +114,7 @@ export class PageEdit extends Component {
         handlers={keyboardHandlers}
         className="single">
         {errors.length > 0 && <Errors errors={errors} />}
+        {setTitleTag(title)}
         <div className="content-header">
           <Breadcrumbs splat={directory || ''} type="pages" />
         </div>

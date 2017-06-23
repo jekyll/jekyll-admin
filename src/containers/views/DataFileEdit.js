@@ -12,7 +12,9 @@ import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
 import { clearErrors } from '../../actions/utils';
-import { getFilenameFromPath, getExtensionFromPath, preventDefault } from '../../utils/helpers';
+import {
+  getFilenameFromPath, getExtensionFromPath, preventDefault, setTitleTag
+} from '../../utils/helpers';
 import {
   fetchDataFile, putDataFile, deleteDataFile, onDataFileChanged
 } from '../../actions/datafiles';
@@ -242,6 +244,7 @@ export class DataFileEdit extends Component {
       <HotKeys
         handlers={keyboardHandlers}
         className="single">
+        {setTitleTag(rest.join('.'))}
         {errors.length > 0 && <Errors errors={errors} />}
 
         <div className="content-header">

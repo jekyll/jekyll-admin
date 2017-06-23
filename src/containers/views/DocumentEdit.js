@@ -16,7 +16,7 @@ import { fetchDocument, deleteDocument, putDocument } from '../../actions/collec
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault } from '../../utils/helpers';
+import { preventDefault, setTitleTag } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
 } from '../../constants/lang';
@@ -126,6 +126,7 @@ export class DocumentEdit extends Component {
         handlers={keyboardHandlers}
         className="single">
         {errors.length > 0 && <Errors errors={errors} />}
+        {setTitleTag(`${title} | ${collection}`)}
         <div className="content-header">
           <Breadcrumbs
             splat={directory || ''}

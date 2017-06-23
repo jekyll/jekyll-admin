@@ -10,6 +10,7 @@ import { fetchPages, deletePage } from '../../actions/pages';
 import { search } from '../../actions/utils';
 import { filterBySearchInput } from '../../reducers/pages';
 import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
+import { setTitleTag } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class Pages extends Component {
@@ -124,6 +125,7 @@ export class Pages extends Component {
 
     return (
       <div>
+        {setTitleTag('Pages')}
         <div className="content-header">
           <Breadcrumbs type="pages" splat={params.splat || ''} />
           <div className="page-buttons">
