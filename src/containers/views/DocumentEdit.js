@@ -123,8 +123,8 @@ export class DocumentEdit extends Component {
     };
 
     const document_title = directory ?
-      `${name} - ${directory} - ${capitalize(collection)}` :
-      `${name} - ${capitalize(collection)}`;
+      `${title} - ${directory} - ${capitalize(collection)}` :
+      `${title} - ${capitalize(collection)}`;
 
     return (
       <DocumentTitle title={document_title}>

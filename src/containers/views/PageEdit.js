@@ -111,8 +111,8 @@ export class PageEdit extends Component {
     const metafields = injectDefaultFields(config, directory, 'pages', front_matter);
 
     const document_title = directory ?
-      `${name} - ${directory} - Pages` :
-      `${name} - Pages`;
+      `${title || name} - ${directory} - Pages` :
+      `${title || name} - Pages`;
 
     return (
       <DocumentTitle title={document_title}>
