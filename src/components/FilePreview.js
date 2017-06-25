@@ -5,16 +5,16 @@ import { getFilenameFromPath } from '../utils/helpers';
 export default class FilePreview extends Component {
 
   handleClickDelete(path) {
-    const { onClickDelete } = this.props;
+    const { splat, onClickDelete } = this.props;
     const filename = getFilenameFromPath(path);
     const confirm = window.confirm(getDeleteMessage(filename));
     if (confirm) {
-      onClickDelete(filename);
+      onClickDelete(splat, filename);
     }
   }
 
   render() {
-    const { onClick, file } = this.props;
+    const { onClick, file, splat } = this.props;
     const extension = file.extname.substring(1);
     const image = /png|jpg|gif|jpeg|svg|ico/i.test(extension);
     let node;
@@ -30,11 +30,19 @@ export default class FilePreview extends Component {
     } else {
       nodeLink = <a href={file.http_url} target="_blank">{node}</a>;
     }
+
+    let overlay;
+    if (splat != 'index') {
+      overlay = (
+        <button onClick={() => this.handleClickDelete(file.path)} className="delete" title="Delete file">x</button>
+      );
+    }
+
     return (
       <div className="file-preview">
+        {overlay}
         {nodeLink}
         <span className="filename">{file.path}</span>
-        <button onClick={() => this.handleClickDelete(file.path)} className="delete" title="Delete file">x</button>
       </div>
     );
   }
@@ -42,6 +50,7 @@ export default class FilePreview extends Component {
 
 FilePreview.propTypes = {
   file: PropTypes.object.isRequired,
+  splat: PropTypes.string.isRequired,
   onClickDelete: PropTypes.func.isRequired,
   onClick: PropTypes.func
 };

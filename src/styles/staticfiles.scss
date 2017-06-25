@@ -3,7 +3,7 @@
   padding: 20px;
   color: #9098A3;
   background-color: white;
-  border: 1px solid $border-color;
+  border: 2px dashed $border-color;
   @include border-radius($border-radius);
   position: relative;
   .preview-info {
@@ -23,6 +23,12 @@
   color: white;
 }
 
+.static-list {
+  padding: 25px;
+  background-color: #fafafa;
+  border: 1px solid $border-color;
+}
+
 .preview-container {
   display: flex;
   flex-wrap: wrap;
@@ -38,14 +44,15 @@
       opacity: 1;
     }
     div {
+      display: table;
       width: 150px;
       height: 150px;
       text-align: center;
       i {
+        display: table-cell;
         color: #ccc;
-        padding-top: 50px;
         font-size: 64px;
-        display: inline-table;
+        vertical-align: middle;
       }
     }
     span.filename {
@@ -79,6 +86,28 @@
       background: #cf3f3f;
       border: none;
     }
+  }
+  .splitter {
+    margin-top: 25px;
+    opacity: 0.5
+  }
+  .preview-tip {
+    width: calc(100% - 0px); // override flex-wrap css
+  }
+}
+
+.preview-info {
+  padding: 20px;
+  text-align: center;
+  color: #454545;
+  i {
+    display: inline;
+    font-size: 96px;
+    margin: 0;
+  }
+  h2, h4 {
+    margin: 0;
+    line-height: 1.5;
   }
 }
 

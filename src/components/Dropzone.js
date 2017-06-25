@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import _ from 'underscore';
 import ReactDropzone from 'react-dropzone';
 import FilePreview from './FilePreview';
+import Splitter from './Splitter';
 
 export class Dropzone extends Component {
 
@@ -10,7 +11,7 @@ export class Dropzone extends Component {
   }
 
   render() {
-    const { files, onDrop, onClickDelete, onClickItem } = this.props;
+    const { files, splat, onDrop, onClickDelete, onClickItem } = this.props;
     let node;
     if (files.length) {
       node = (
@@ -22,10 +23,15 @@ export class Dropzone extends Component {
                   key={i}
                   onClick={onClickItem}
                   onClickDelete={onClickDelete}
+                  splat={splat}
                   file={file} />
               );
             })
           }
+          <Splitter />
+          <div className="preview-tip">
+            Drag and drop file(s) here to upload additional items
+          </div>
         </div>
       );
     } else {
@@ -52,6 +58,7 @@ export class Dropzone extends Component {
 
 Dropzone.propTypes = {
   files: PropTypes.array.isRequired,
+  splat: PropTypes.string.isRequired,
   onDrop: PropTypes.func.isRequired,
   onClickDelete: PropTypes.func.isRequired,
   onClickItem: PropTypes.func,

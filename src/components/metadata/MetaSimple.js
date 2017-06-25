@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Modal from 'react-modal';
-import StaticFiles from '../../containers/views/StaticFiles';
+import StaticIndex from '../../containers/views/StaticIndex';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
 import 'react-widgets/dist/css/react-widgets.css';
@@ -98,10 +98,15 @@ export class MetaSimple extends Component {
                 zIndex: 10,
               },
               content: {
-                margin: 50,
+                margin: 20,
+                paddingTop: 0,
+                paddingRight: 10,
+                paddingLeft: 15,
               }
             }} >
-             <StaticFiles onClickStaticFile={(url) => this.onClickPickerItem(url)} />
+            <div className="content">
+              <StaticIndex onClickStaticFile={(url) => this.onClickPickerItem(url)} modalView={true} />
+            </div>
           </Modal>
         </span>
       </div>
