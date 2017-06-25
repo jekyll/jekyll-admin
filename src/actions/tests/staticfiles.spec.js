@@ -15,9 +15,9 @@ describe('Actions::StaticFiles', () => {
     nock.cleanAll();
   });
 
-  it('fetches static files successfully', () => {
+  it('fetches all static files successfully', () => {
     nock(API)
-      .get('/static_files')
+      .get('/static_files/index')
       .reply(200, [staticfile]);
 
     const expectedActions = [
@@ -27,7 +27,7 @@ describe('Actions::StaticFiles', () => {
 
     const store = mockStore({ files: [] });
 
-    return store.dispatch(actions.fetchStaticFiles())
+    return store.dispatch(actions.fetchStaticFiles('index'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
@@ -99,7 +99,7 @@ describe('Actions::StaticFiles', () => {
 
     const store = mockStore({ files: [] });
 
-    return store.dispatch(actions.deleteStaticFile('index.html'))
+    return store.dispatch(actions.deleteStaticFile(null, 'index.html'))
       .then(() => {
         expect(store.getActions()).toEqual(expectedActions);
       });
