@@ -2,7 +2,6 @@ import React, { Component, PropTypes } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Modal from 'react-modal';
-import _ from 'underscore';
 import StaticFiles from '../../containers/views/StaticFiles';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';

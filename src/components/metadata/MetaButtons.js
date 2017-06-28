@@ -13,7 +13,7 @@ export class MetaButtons extends Component {
   }
 
   render() {
-    const { currentType, parentType, onDropdownFocus, onDropdownBlur } = this.props;
+    const { currentType, parentType, parentKey, onDropdownFocus, onDropdownBlur } = this.props;
     return (
       <div className="meta-buttons">
         {
@@ -35,7 +35,7 @@ export class MetaButtons extends Component {
               </span>
             }
             {
-              currentType != 'array' &&
+              parentKey != 'tags' && currentType != 'array' &&
               <span onMouseDown={() => this.handleTypeChange('array')}>
                 <i className="fa fa-list-ol"/>Convert to List
               </span>
@@ -65,7 +65,8 @@ MetaButtons.propTypes = {
   onConvertClick: PropTypes.func.isRequired,
   onRemoveClick: PropTypes.func.isRequired,
   onDropdownFocus: PropTypes.func.isRequired,
-  onDropdownBlur: PropTypes.func.isRequired
+  onDropdownBlur: PropTypes.func.isRequired,
+  parentKey: PropTypes.string
 };
 
 export default MetaButtons;

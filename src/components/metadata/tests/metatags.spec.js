@@ -42,7 +42,8 @@ describe('Components::MetaTags', () => {
     const { component, editable } = setup(Object.assign({}, defaultProps, {
       fieldValue: 'foo'
     }));
-    expect(component.find('.meta-error').text()).toEqual('Invalid array of tags! Found string: "foo"');
+    const error = 'Invalid array of tags! Found string: "foo"Click here to correct.';
+    expect(component.find('.meta-error').text()).toEqual(error);
     expect(editable.node).toBeFalsy();
   });
 

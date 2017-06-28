@@ -78,7 +78,7 @@ export class MetaFields extends Component {
         <small className="tooltip pull-right">
           <i className="fa fa-info-circle" />Special Keys
           <span className="tooltip-text">
-            You can use special keys like <b>date</b>, <b>file</b>, <b>image</b> for user-friendly functionalities.
+            You can use special keys like <b>date</b>, <b>file</b>, <b>image</b>, <b>tags</b> for user-friendly functionalities.
           </span>
         </small>
       </div>
