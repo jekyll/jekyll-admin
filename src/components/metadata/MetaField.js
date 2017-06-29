@@ -7,6 +7,13 @@ import MetaButtons from './MetaButtons';
 
 export class MetaField extends Component {
 
+  componentDidMount(){
+    const { fieldCount, fieldKey } = this.props;
+    if(fieldKey == `New field ${fieldCount}`){
+      this.refs.field_key.focus();
+    }
+  }
+
   handleConvertClick(type) {
     const { convertField, nameAttr } = this.props;
     convertField(nameAttr, type);
@@ -36,7 +43,7 @@ export class MetaField extends Component {
   render() {
     const { type, parentType, fieldKey, fieldValue, namePrefix, addField,
       removeField, updateFieldKey, updateFieldValue, moveArrayItem,
-      convertField, key_prefix } = this.props;
+      convertField, key_prefix, fieldCount } = this.props;
 
     const FieldTypes = {
       'array': MetaArray,
@@ -92,7 +99,8 @@ MetaField.propTypes = {
   fieldValue: PropTypes.any,
   nameAttr: PropTypes.string.isRequired,
   namePrefix: PropTypes.string.isRequired,
-  key_prefix: PropTypes.string.isRequired
+  key_prefix: PropTypes.string.isRequired,
+  fieldCount: PropTypes.number.isRequired
 };
 
 export default MetaField;
