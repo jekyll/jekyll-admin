@@ -10,7 +10,7 @@ export class MetaField extends Component {
   componentDidMount(){
     const { fieldCount, fieldKey } = this.props;
     if(fieldKey == `New field ${fieldCount}`){
-      this.refs.field_key.focus();
+      this.refs.field_key.select();
     }
   }
 
