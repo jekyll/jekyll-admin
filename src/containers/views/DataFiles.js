@@ -3,6 +3,7 @@ import { browserHistory, withRouter, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
+import DocumentTitle from 'react-document-title';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
 import InputSearch from '../../components/form/InputSearch';
@@ -130,24 +131,28 @@ export class DataFiles extends Component {
       dirSplat = '';
     }
 
+    const document_title = params.splat ? `${params.splat} - Data Files` : 'Data Files';
+
     return (
-      <div>
-        <div className="content-header">
-          <Breadcrumbs type="data files" splat={dirSplat} />
-          <div className="page-buttons">
-            <Link className="btn btn-active" to={to}>New data file</Link>
+      <DocumentTitle title={document_title}>
+        <div>
+          <div className="content-header">
+            <Breadcrumbs type="data files" splat={dirSplat} />
+            <div className="page-buttons">
+              <Link className="btn btn-active" to={to}>New data file</Link>
+            </div>
+            <div className="pull-right">
+              <InputSearch searchBy="filename" search={search} />
+            </div>
           </div>
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
-          </div>
+          {
+            files.length > 0 && this.renderTable()
+          }
+          {
+            !files.length && <h1>{getNotFoundMessage('data files')}</h1>
+          }
         </div>
-        {
-          files.length > 0 && this.renderTable()
-        }
-        {
-          !files.length && <h1>{getNotFoundMessage('data files')}</h1>
-        }
-      </div>
+      </DocumentTitle>
     );
   }
 }
