@@ -21,8 +21,7 @@ const defaultProps = {
   fieldValue: 'page',
   nameAttr: 'metadata["layout"]',
   namePrefix: 'metadata',
-  key_prefix: '',
-  fieldCount: 1
+  key_prefix: ''
 };
 
 function setup(props = defaultProps) {

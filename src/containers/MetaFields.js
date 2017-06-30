@@ -23,7 +23,7 @@ export class MetaFields extends Component {
   render() {
     const {
       metadata, addField, removeField, updateFieldKey, updateFieldValue, moveArrayItem,
-      convertField, key_prefix, new_field_count, dataview
+      convertField, key_prefix, dataview
     } = this.props;
 
     let visibleKeys = metadata;
@@ -46,7 +46,6 @@ export class MetaFields extends Component {
           key={key}
           key_prefix={key_prefix}
           type={type}
-          fieldCount={new_field_count-1}
           parentType="top"
           fieldKey={key}
           fieldValue={field}
@@ -97,7 +96,6 @@ MetaFields.propTypes = {
   fields: PropTypes.object.isRequired,
   metadata: PropTypes.object.isRequired,
   key_prefix: PropTypes.string.isRequired,
-  new_field_count: PropTypes.number.isRequired,
   storeContentFields: PropTypes.func.isRequired,
   addField: PropTypes.func.isRequired,
   removeField: PropTypes.func.isRequired,
@@ -110,8 +108,7 @@ MetaFields.propTypes = {
 
 const mapStateToProps = (state) => ({
   metadata: state.metadata.metadata,
-  key_prefix: state.metadata.key_prefix,
-  new_field_count: state.metadata.new_field_count
+  key_prefix: state.metadata.key_prefix
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
