@@ -97,6 +97,7 @@ MetaFields.propTypes = {
   fields: PropTypes.object.isRequired,
   metadata: PropTypes.object.isRequired,
   key_prefix: PropTypes.string.isRequired,
+  new_field_count: PropTypes.number.isRequired,
   storeContentFields: PropTypes.func.isRequired,
   addField: PropTypes.func.isRequired,
   removeField: PropTypes.func.isRequired,
