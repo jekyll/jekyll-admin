@@ -32,7 +32,13 @@ export default class FilePreview extends Component {
     }
 
     let overlay;
-    if (splat != 'index') {
+    if (file.from_theme) {
+      overlay = (
+        <span className="theme-indicator">
+          <i className="fa fa-diamond" aria-hidden="true" title="Theme Asset" />
+        </span>
+      );
+    } else if (splat != 'index') {
       overlay = (
         <button onClick={() => this.handleClickDelete(file.path)} className="delete" title="Delete file">x</button>
       );

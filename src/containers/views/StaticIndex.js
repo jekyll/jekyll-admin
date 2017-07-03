@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
+import DocumentTitle from 'react-document-title';
 import FilePreview from '../../components/FilePreview';
 import Button from '../../components/Button';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -11,7 +12,7 @@ import { search } from '../../actions/utils';
 import { existingUploadedFilenames } from '../../utils/helpers';
 import { filterByFilename } from '../../reducers/staticfiles';
 import { getOverrideMessage } from '../../constants/lang';
-import { fetchStaticFiles, uploadStaticFiles, deleteStaticFile } from '../../actions/staticfiles';
+import { fetchStaticFiles } from '../../actions/staticfiles';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class StaticIndex extends Component {
@@ -28,7 +29,7 @@ export class StaticIndex extends Component {
       return null;
     }
 
-    const { files, deleteStaticFile, search, onClickStaticFile, modalView } = this.props;
+    const { files, search, onClickStaticFile, modalView } = this.props;
 
     let node;
     if (files.length) {
@@ -40,7 +41,6 @@ export class StaticIndex extends Component {
                 <FilePreview
                   key={i}
                   onClick={onClickStaticFile}
-                  onClickDelete={deleteStaticFile}
                   splat="index"
                   file={file} />
               );
@@ -59,23 +59,25 @@ export class StaticIndex extends Component {
     }
 
     return (
-      <div>
-        <div className="content-header">
-          <Breadcrumbs type="static files" splat="" />
-          {
-            !modalView &&
-              <div className="page-buttons">
-                <Link className="btn btn-view" to={`${ADMIN_PREFIX}/staticfiles`}>
-                  Directory Listing
-                </Link>
-              </div>
-          }
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
+      <DocumentTitle title="Static File Listing">
+        <div>
+          <div className="content-header">
+            <Breadcrumbs type="static files" splat="" />
+            {
+              !modalView &&
+                <div className="page-buttons">
+                  <Link className="btn btn-view" to={`${ADMIN_PREFIX}/staticfiles`}>
+                    Directory Listing
+                  </Link>
+                </div>
+            }
+            <div className="pull-right">
+              <InputSearch searchBy="filename" search={search} />
+            </div>
           </div>
+          <div className="static-list">{node}</div>
         </div>
-        <div className="static-list">{node}</div>
-      </div>
+      </DocumentTitle>
     );
   }
 }
@@ -84,11 +86,9 @@ StaticIndex.propTypes = {
   files: PropTypes.array.isRequired,
   isFetching: PropTypes.bool.isRequired,
   fetchStaticFiles: PropTypes.func.isRequired,
-  uploadStaticFiles: PropTypes.func.isRequired,
-  deleteStaticFile: PropTypes.func.isRequired,
-  modalView: PropTypes.bool,
+  search: PropTypes.func.isRequired,
   onClickStaticFile: PropTypes.func,
-  search: PropTypes.func.isRequired
+  modalView: PropTypes.bool
 };
 
 const mapStateToProps = (state) => ({
@@ -98,8 +98,6 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({
   fetchStaticFiles,
-  uploadStaticFiles,
-  deleteStaticFile,
   search
 }, dispatch);
 

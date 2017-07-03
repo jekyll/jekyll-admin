@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
+import DocumentTitle from 'react-document-title';
 import Dropzone from '../../components/Dropzone';
 import Button from '../../components/Button';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -92,46 +93,48 @@ export class StaticFiles extends Component {
     );
 
     return (
-      <div>
-        <div className="content-header">
-          <Breadcrumbs type="static files" splat={params.splat || ''} />
-          <div className="page-buttons multiple">
-            <Link className="btn btn-view" to={`${ADMIN_PREFIX}/staticfiles/index`}>
-              Index Listing
-            </Link>
-            <Button
-              onClick={() => this.openDropzone()}
-              type="upload"
-              icon="upload"
-              active={true} />
+      <DocumentTitle title="Static Files">
+        <div>
+          <div className="content-header">
+            <Breadcrumbs type="static files" splat={params.splat || ''} />
+            <div className="page-buttons multiple">
+              <Link className="btn btn-view" to={`${ADMIN_PREFIX}/staticfiles/index`}>
+                Index Listing
+              </Link>
+              <Button
+                onClick={() => this.openDropzone()}
+                type="upload"
+                icon="upload"
+                active={true} />
+            </div>
+            <div className="pull-right">
+              <InputSearch searchBy="filename" search={search} />
+            </div>
           </div>
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
-          </div>
-        </div>
 
-        <div className="content-table">
-          <table>
-            <thead>
-              <tr>
-                <th>Directory Contents</th>
-              </tr>
-            </thead>
-            <tbody>
-              {!_.isEmpty(dirs) && dir_rows}
-              <tr><td>
-                <Dropzone
-                  ref="dropzone"
-                  splat={params.splat || ''}
-                  files={static_files}
-                  onClickItem={onClickStaticFile}
-                  onClickDelete={deleteStaticFile}
-                  onDrop={(static_files) => this.onDrop(static_files)} />
-              </td></tr>
-            </tbody>
-          </table>
+          <div className="content-table">
+            <table>
+              <thead>
+                <tr>
+                  <th>Directory Contents</th>
+                </tr>
+              </thead>
+              <tbody>
+                {!_.isEmpty(dirs) && dir_rows}
+                <tr><td>
+                  <Dropzone
+                    ref="dropzone"
+                    splat={params.splat || ''}
+                    files={static_files}
+                    onClickItem={onClickStaticFile}
+                    onClickDelete={deleteStaticFile}
+                    onDrop={(static_files) => this.onDrop(static_files)} />
+                </td></tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
+      </DocumentTitle>
     );
   }
 }
