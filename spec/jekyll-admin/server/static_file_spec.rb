@@ -9,7 +9,7 @@ describe "static_files" do
     it "returns the index" do
       get "/static_files"
       expect(last_response).to be_ok
-      expect(last_response_parsed.last["path"]).to eql("/static-file.txt")
+      expect(last_response_parsed.last["path"]).to eql("/index.html")
     end
 
     it "doesn't include the encoded content" do
@@ -20,10 +20,10 @@ describe "static_files" do
   end
 
   it "returns a single static file" do
-    get "/static_files/static-file.txt"
+    get "/static_files/assets/static-file.txt"
     expect(last_response).to be_ok
     expect(last_response_parsed["extname"]).to eql(".txt")
-    expect(last_response_parsed["path"]).to eql("/static-file.txt")
+    expect(last_response_parsed["path"]).to eql("/assets/static-file.txt")
     expect(last_response_parsed["encoded_content"]).to eql("VEVTVAo=\n")
   end
 
