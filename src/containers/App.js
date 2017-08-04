@@ -2,6 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { HotKeys } from 'react-hotkeys';
+import DocumentTitle from 'react-document-title';
 
 import { fetchConfig } from '../actions/config';
 import keyboardShortcuts from '../constants/keyboardShortcuts';
@@ -33,23 +34,25 @@ class App extends Component {
     }
 
     return (
-      <HotKeys
-        keyMap={keyboardShortcuts}
-        className="wrapper">
-        {
-          config.content &&
-          <div>
-            <Sidebar config={config.content} />
-            <div className="container">
-              <Header config={config.content} />
-              <div className="content">
-                {this.props.children}
+      <DocumentTitle title="Jekyll Admin">
+        <HotKeys
+          keyMap={keyboardShortcuts}
+          className="wrapper">
+          {
+            config.content &&
+            <div>
+              <Sidebar config={config.content} />
+              <div className="container">
+                <Header config={config.content} />
+                <div className="content">
+                  {this.props.children}
+                </div>
               </div>
+              <Notifications />
             </div>
-            <Notifications />
-          </div>
-        }
-      </HotKeys>
+          }
+        </HotKeys>
+      </DocumentTitle>
     );
   }
 }
