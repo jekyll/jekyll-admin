@@ -28,7 +28,7 @@ module JekyllAdmin
     def delete_file(path)
       Jekyll.logger.debug "DELETING:", path
       FileUtils.rm_f sanitized_path(path)
-      site.read
+      site.process
     end
 
     def delete_file_without_process(path)
