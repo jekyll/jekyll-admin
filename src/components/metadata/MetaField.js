@@ -7,6 +7,11 @@ import MetaButtons from './MetaButtons';
 
 export class MetaField extends Component {
 
+  componentDidMount() {
+    const isNewField = /New field/.test(this.props.fieldKey);
+    isNewField && this.refs.field_key.select();
+  }
+
   handleConvertClick(type) {
     const { convertField, nameAttr } = this.props;
     convertField(nameAttr, type);

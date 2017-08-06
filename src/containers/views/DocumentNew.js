@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import { HotKeys } from 'react-hotkeys';
+import DocumentTitle from 'react-document-title';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -16,7 +17,7 @@ import { createDocument } from '../../actions/collections';
 import { clearErrors } from '../../actions/utils';
 import { getLeaveMessage } from '../../constants/lang';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault } from '../../utils/helpers';
+import { capitalize, preventDefault } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {
@@ -82,40 +83,47 @@ export class DocumentNew extends Component {
 
     const metafields = injectDefaultFields(config, params.splat, collection);
 
+    const document_title = params.splat ?
+      `New document - ${params.splat} - ${capitalize(collection)}` :
+      `New document - ${capitalize(collection)}`;
+
     return (
-      <HotKeys handlers={keyboardHandlers} className="single">
-        {errors.length > 0 && <Errors errors={errors} />}
-        <div className="content-header">
-          <Breadcrumbs
-            type={collection}
-            splat={params.splat || ''} />
-        </div>
+      <DocumentTitle title={document_title}>
+        <HotKeys handlers={keyboardHandlers} className="single">
 
-        <div className="content-wrapper">
-          <div className="content-body">
-            <InputPath onChange={updatePath} type={collection} path="" />
-            <InputTitle onChange={updateTitle} title="" ref="title" />
-            <MarkdownEditor
-              onChange={updateBody}
-              onSave={this.handleClickSave}
-              placeholder="Body"
-              initialValue=""
-              ref="editor" />
-            <Splitter />
-            <Metadata fields={metafields} />
+          {errors.length > 0 && <Errors errors={errors} />}
+
+          <div className="content-header">
+            <Breadcrumbs type={collection} splat={params.splat || ''} />
           </div>
 
-          <div className="content-side">
-            <Button
-              onClick={this.handleClickSave}
-              type="create"
-              active={fieldChanged}
-              triggered={updated}
-              icon="plus-square"
-              block />
+          <div className="content-wrapper">
+            <div className="content-body">
+              <InputPath onChange={updatePath} type={collection} path="" />
+              <InputTitle onChange={updateTitle} title="" ref="title" />
+              <MarkdownEditor
+                onChange={updateBody}
+                onSave={this.handleClickSave}
+                placeholder="Body"
+                initialValue=""
+                ref="editor" />
+              <Splitter />
+              <Metadata fields={metafields} />
+            </div>
+
+            <div className="content-side">
+              <Button
+                onClick={this.handleClickSave}
+                type="create"
+                active={fieldChanged}
+                triggered={updated}
+                icon="plus-square"
+                block />
+            </div>
           </div>
-        </div>
-      </HotKeys>
+
+        </HotKeys>
+      </DocumentTitle>
     );
   }
 }
