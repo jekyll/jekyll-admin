@@ -2,7 +2,7 @@ describe JekyllAdmin::DataFile do
   let(:data_dir) { "_data" }
   let(:relative_path) { "data_file.yml" }
   let(:absolute_path) { in_source_dir(relative_path) }
-  let(:id) { "/#{data_dir}/data_file.yml" }
+  let(:id) { "data_file.yml" }
 
   subject { described_class.new(id) }
 
