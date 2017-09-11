@@ -1,8 +1,10 @@
 import React, { PropTypes, Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, withRouter, Link } from 'react-router';
+import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
+import { HotKeys } from 'react-hotkeys';
+import DocumentTitle from 'react-document-title';
 import Button from '../../components/Button';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
@@ -14,12 +16,19 @@ import Metadata from '../MetaFields';
 import { fetchPage, deletePage, putPage } from '../../actions/pages';
 import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
 import { clearErrors } from '../../actions/utils';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
+import { injectDefaultFields } from '../../utils/metadata';
+import { preventDefault } from '../../utils/helpers';
+import { getLeaveMessage, getDeleteMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class PageEdit extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.handleClickSave = this.handleClickSave.bind(this);
+    this.routerWillLeave = this.routerWillLeave.bind(this);
+  }
 
   componentDidMount() {
     const { fetchPage, params, router, route } = this.props;
@@ -27,7 +36,7 @@ export class PageEdit extends Component {
     const filename = rest.join('.');
     fetchPage(directory, filename);
 
-    router.setRouteLeaveHook(route, this.routerWillLeave.bind(this));
+    router.setRouteLeaveHook(route, this.routerWillLeave);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -55,8 +64,12 @@ export class PageEdit extends Component {
     }
   }
 
-  handleClickSave() {
+  handleClickSave(e) {
     const { putPage, fieldChanged, params } = this.props;
+
+    // Prevent the default event from bubbling
+    preventDefault(e);
+
     if (fieldChanged) {
       const [directory, ...rest] = params.splat;
       const filename = rest.join('.');
@@ -77,7 +90,7 @@ export class PageEdit extends Component {
 
   render() {
     const { isFetching, page, errors, updateTitle, updateBody, updatePath,
-      updated, fieldChanged, params } = this.props;
+      updated, fieldChanged, params, config } = this.props;
 
     if (isFetching) {
       return null;
@@ -87,54 +100,70 @@ export class PageEdit extends Component {
       return <h1>{`Could not find the page.`}</h1>;
     }
 
-    const { name, raw_content, http_url, path, front_matter } = page;
+    const keyboardHandlers = {
+      'save': this.handleClickSave,
+    };
+
+    const { name, raw_content, http_url, front_matter } = page;
     const [directory, ...rest] = params.splat;
+
     const title = front_matter && front_matter.title ? front_matter.title : '';
+    const metafields = injectDefaultFields(config, directory, 'pages', front_matter);
+
+    const document_title = directory ?
+      `${title || name} - ${directory} - Pages` :
+      `${title || name} - Pages`;
+
     return (
-      <div className="single">
-        {errors.length > 0 && <Errors errors={errors} />}
-        <div className="content-header">
-          <Breadcrumbs splat={directory || ''} type="pages" />
-        </div>
+      <DocumentTitle title={document_title}>
+        <HotKeys handlers={keyboardHandlers} className="single">
 
-        <div className="content-wrapper">
-          <div className="content-body">
-            <InputPath onChange={updatePath} type="pages" path={name} />
-            <InputTitle onChange={updateTitle} title={title} ref="title" />
-            <MarkdownEditor
-              onChange={updateBody}
-              onSave={() => this.handleClickSave()}
-              placeholder="Body"
-              initialValue={raw_content}
-              ref="editor" />
-            <Splitter />
-            <Metadata fields={{title, raw_content, path: name, ...front_matter}} />
+          {errors.length > 0 && <Errors errors={errors} />}
+
+          <div className="content-header">
+            <Breadcrumbs splat={directory || ''} type="pages" />
           </div>
 
-          <div className="content-side">
-            <Button
-              onClick={() => this.handleClickSave()}
-              type="save"
-              active={fieldChanged}
-              triggered={updated}
-              icon="save"
-              block />
-            <Button
-              to={http_url}
-              type="view"
-              icon="eye"
-              active={true}
-              block />
-            <Splitter />
-            <Button
-              onClick={() => this.handleClickDelete(name)}
-              type="delete"
-              active={true}
-              icon="trash"
-              block />
+          <div className="content-wrapper">
+            <div className="content-body">
+              <InputPath onChange={updatePath} type="pages" path={name} />
+              <InputTitle onChange={updateTitle} title={title} ref="title" />
+              <MarkdownEditor
+                onChange={updateBody}
+                onSave={this.handleClickSave}
+                placeholder="Body"
+                initialValue={raw_content}
+                ref="editor" />
+              <Splitter />
+              <Metadata fields={{title, raw_content, path: name, ...metafields}} />
+            </div>
+
+            <div className="content-side">
+              <Button
+                onClick={this.handleClickSave}
+                type="save"
+                active={fieldChanged}
+                triggered={updated}
+                icon="save"
+                block />
+              <Button
+                to={http_url}
+                type="view"
+                icon="eye"
+                active={true}
+                block />
+              <Splitter />
+              <Button
+                onClick={() => this.handleClickDelete(name)}
+                type="delete"
+                active={true}
+                icon="trash"
+                block />
+            </div>
           </div>
-        </div>
-      </div>
+          
+        </HotKeys>
+      </DocumentTitle>
     );
   }
 
@@ -155,7 +184,8 @@ PageEdit.propTypes = {
   updated: PropTypes.bool.isRequired,
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired
+  route: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -163,7 +193,8 @@ const mapStateToProps = (state) => ({
   isFetching: state.pages.isFetching,
   fieldChanged: state.metadata.fieldChanged,
   updated: state.pages.updated,
-  errors: state.utils.errors
+  errors: state.utils.errors,
+  config: state.config.config
 });
 
 const mapDispatchToProps = (dispatch) => bindActionCreators({

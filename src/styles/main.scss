@@ -8,6 +8,7 @@
 @import "content";
 @import "form";
 @import "metafields";
+@import "datagui";
 @import "breadcrumbs";
 @import "editor";
 @import "button";
@@ -51,8 +52,16 @@ b {
   color: $orange;
 }
 
+div:focus {
+  outline: none;
+}
+
 .wrapper {
   height: 100%;
+
+  &:focus {
+    outline: none;
+  }
 }
 
 .container {
@@ -68,7 +77,15 @@ b {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
+}
+
+.warning {
+  margin-bottom: 10px;
+  padding: 10px;
+  color: #8a6e00;
+  text-align: center;
+  background-color: #fff5cc;
 }
 
 .pull-right {

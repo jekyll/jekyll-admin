@@ -1,8 +1,11 @@
 export const config = {
-  title: "Your awesome title",
-  email: "your-email@domain.com",
-  description: "Write an awesome description for your new site here.\n",
-  url: "http://yourdomain.com"
+  content: {
+    title: "Your awesome title",
+    email: "your-email@domain.com",
+    baseurl: "",
+    url: "http://yourdomain.com"
+  },
+  raw_content: "title: Your awesome title\nemail: your-email@domain.com\nbaseurl:\nurl: http://yourdomain.com"
 };
 
 export const doc = {
@@ -34,11 +37,11 @@ export const page = {
 };
 
 export const datafile = {
-  path: "_data/data_file.yml",
-  relative_path: "_data/data_file.yml",
-  slug: "data_file",
+  path: "_data/books/authors.yml",
+  relative_path: "books/authors.yml",
+  slug: "authors",
   ext: ".yml",
-  title: "Data File",
+  title: "Authors",
   raw_content: "foo: bar\n",
   content: {
     foo: "bar"

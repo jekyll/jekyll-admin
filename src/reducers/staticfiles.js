@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import {
   FETCH_STATICFILES_REQUEST, FETCH_STATICFILES_SUCCESS, FETCH_STATICFILES_FAILURE,
   PUT_STATICFILE_REQUEST, PUT_STATICFILE_SUCCESS, PUT_STATICFILE_FAILURE,
@@ -45,7 +44,7 @@ export default function staticfiles(state = {
 export const filterByFilename = (staticfiles, input) => {
   if (input) {
     return staticfiles.filter(
-      sf => sf.path.toLowerCase().indexOf(input.toLowerCase()) > -1
+      sf => sf.path.toLowerCase().includes(input.toLowerCase())
     );
   }
   return staticfiles;

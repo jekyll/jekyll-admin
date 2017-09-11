@@ -1,41 +1,51 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import expect from 'expect';
+import Errors from '../../../components/Errors';
 import Editor from '../../../components/Editor';
 import Button from '../../../components/Button';
 import { Configuration } from '../Configuration';
-import { toYAML } from '../../../utils/helpers';
 import { config } from './fixtures';
 
 const defaultProps = {
   config,
   editorChanged: false,
-  updated: false,
+  fieldChanged: false,
+  errors: [],
   router: {},
   route: {},
-  onEditorChange: expect.createSpy(),
-  putConfig: expect.createSpy()
+  updated: false
 };
 
 const setup = (props = defaultProps) => {
-  const component = shallow(<Configuration {...props} />);
+  const actions = {
+    clearErrors: jest.fn(),
+    onEditorChange: jest.fn(),
+    putConfig: jest.fn()
+  };
+
+  const component = shallow(<Configuration {...props} {...actions} />);
   return {
     component,
+    props,
+    actions,
     editor: component.find(Editor),
-    saveButton: component.find(Button)
+    errors: component.find(Errors),
+    toggleButton: component.find(Button).first(),
+    saveButton: component.find(Button).last()
   };
 };
 
 describe('Containers::Configuration', () => {
   it('should render correctly with initial props', () => {
-    const { component, editor, saveButton } = setup();
-    expect(editor.prop('content')).toEqual(toYAML(config));
+    const { editor, saveButton } = setup();
+    const { raw_content } = config;
+    expect(editor.prop('content')).toEqual(raw_content);
     expect(saveButton.prop('active')).toBe(false);
     expect(saveButton.prop('triggered')).toBe(false);
   });
 
   it('should render correctly with updated props', () => {
-    const { component, editor, saveButton } = setup(
+    const { saveButton } = setup(
       Object.assign({}, defaultProps, {
         editorChanged: true,
         updated: true
@@ -44,4 +54,45 @@ describe('Containers::Configuration', () => {
     expect(saveButton.prop('triggered')).toBe(true);
     expect(saveButton.prop('active')).toBe(true);
   });
-});
+
+  it('should not render error messages with initial props', () => {
+    const { errors } = setup();
+    expect(errors.node).toBeFalsy();
+  });
+
+  it('should render error messages when necessary', () => {
+    const { errors } = setup(Object.assign({}, defaultProps, {
+      errors: ['The content is required.']
+    }));
+    expect(errors.node).toBeTruthy();
+  });
+
+  it('should not call clearErrors on unmount if there are no errors.', () => {
+    const { component, errors, actions } = setup();
+    component.unmount();
+    expect(actions.clearErrors).not.toHaveBeenCalled();
+  });
+
+  it('should clear errors on unmount.', () => {
+    const { component, errors, actions } = setup(Object.assign({}, defaultProps, {
+      errors: ['The content is required!']
+    }));
+    component.unmount();
+    expect(actions.clearErrors).toHaveBeenCalled();
+  });
+
+  it('should toggle views.', () => {
+    const { component, toggleButton } = setup();
+    expect(component.state('guiView')).toBe(false);
+    toggleButton.simulate('click');
+    expect(component.state('guiView')).toBe(true);
+  });
+
+  it('should call putConfig if a field is changed.', () => {
+    const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
+      fieldChanged: true
+    }));
+    saveButton.simulate('click');
+    expect(actions.putConfig).toHaveBeenCalled();
+  });
+ });

@@ -109,6 +109,8 @@ export const datafile = {
   }
 };
 
+export const data_files = [datafile, directory];
+
 export const staticfile = {
   extname: ".html",
   modified_time: "2016-08-11 23:40:41 +0300",

@@ -1,6 +1,5 @@
 import yaml from 'js-yaml';
 import _ from 'underscore';
-import slug from 'slug';
 
 /**
  * Converts the object into YAML string.
@@ -43,10 +42,22 @@ export const toTitleCase = (string) => {
  * @param {String} string
  * @return {String} string
  */
-export const slugify = (string) => {
-  if (!string) return '';
-  return slug(string,{lower:true}).replace(/^-+|-+$/g, '');
-};
+ export const slugify = (string) => {
+   if (!string) return '';
+   const a = 'àáäâèéëêìíïîıòóöôùúüûñçşßÿœæŕśńṕẃǵğǹḿǘẍźḧ·/_,:;';
+   const b = 'aaaaeeeeiiiiioooouuuuncssyoarsnpwggnmuxzh------';
+   const p = new RegExp(a.split('').join('|'), 'g');
+
+   return string.toString().toLowerCase()
+     .replace(/\s+/g, '-')           // Replace spaces with -
+     .replace(p, c =>
+         b.charAt(a.indexOf(c)))     // Replace special chars
+     .replace(/&/g, '-')             // Replace & with 'and'
+     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
+     .replace(/\-\-+/g, '-')         // Replace multiple - with single -
+     .replace(/^-+/, '')             // Trim - from start of text
+     .replace(/-+$/, '');             // Trim - from end of text
+ };
 
 /**
  * Returns filename from the given path
@@ -56,6 +67,23 @@ export const slugify = (string) => {
 export const getFilenameFromPath = (path) => {
   if (!path) return '';
   return path.substring(path.lastIndexOf('/') + 1);
+};
+
+/**
+ * Returns extension from the given path or filename
+ * @param {String} path or filename
+ * @return {String} extension or nil
+ */
+export const getExtensionFromPath = (path) => {
+  if (!path) return '';
+  const filename = getFilenameFromPath(path);
+  const index = filename.lastIndexOf('.');
+
+  if (index > 0) {
+    return filename.substring(index + 1);
+  } else {
+    return '';
+  }
 };
 
 /**
@@ -70,7 +98,39 @@ export const existingUploadedFilenames = (uploadedFiles, currentFiles) => {
   }
   const currentFilenames = _.map(currentFiles, cf => getFilenameFromPath(cf.path));
   return _.chain(uploadedFiles)
-    .filter(file => currentFilenames.indexOf(file.name) > -1)
+    .filter(file => currentFilenames.includes(file.name))
     .map(file => file.name)
     .value();
+};
+
+/**
+ * Given an Event object, prevents the default event
+ * from bubbling, if possible.
+ * @param {Event} event
+ */
+export const preventDefault = (event) => {
+  if (event && event.preventDefault) {
+    event.preventDefault();
+  }
+};
+
+/**
+ * Given an object, trims every keys and values recursively.
+ * @param {Object} object
+ * @return {Object} trimmedObject
+ */
+export const trimObject = (object) => {
+  if (!_.isObject(object)) return object;
+  return _.keys(object).reduce((acc, key) => {
+    if (typeof object[key] == 'string') {
+      try {
+        acc[key.trim()] = JSON.parse(object[key].trim());
+      } catch (e) {
+        acc[key.trim()] = object[key].trim();
+      }
+    } else {
+      acc[key.trim()] = trimObject(object[key]);
+    }
+    return acc;
+  }, Array.isArray(object) ? [] : {});
 };

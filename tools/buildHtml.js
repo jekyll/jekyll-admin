@@ -2,7 +2,7 @@
 /* eslint-disable no-console */
 
 import fs from 'fs';
-import {chalkSuccess, chalkError, chalkWarning} from './chalkConfig';
+import {chalkSuccess, chalkError} from './chalkConfig';
 import cheerio from 'cheerio';
 
 fs.readFile('src/index.html', 'utf8', (readError, markup) => {

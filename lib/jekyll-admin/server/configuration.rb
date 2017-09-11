@@ -2,12 +2,15 @@ module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/configuration" do
       get do
-        json raw_configuration.to_liquid
+        json({
+          :content     => parsed_configuration,
+          :raw_content => raw_configuration,
+        })
       end
 
       put do
         write_file(configuration_path, configuration_body)
-        json raw_configuration.to_liquid
+        json request_payload
       end
 
       private
@@ -23,9 +26,17 @@ module JekyllAdmin
         @configuration ||= Jekyll.configuration(overrides)
       end
 
-      # Raw configuration, as it sits on disk
-      def raw_configuration
+      # Configuration data, as read by Jekyll
+      def parsed_configuration
         configuration.read_config_file(configuration_path)
+      end
+
+      # Raw configuration content, as it sits on disk
+      def raw_configuration
+        File.read(
+          configuration_path,
+          Jekyll::Utils.merged_file_read_opts(site, {})
+        )
       end
 
       # Returns the path to the *first* config file discovered
@@ -34,8 +45,12 @@ module JekyllAdmin
       end
 
       # The user's uploaded configuration for updates
+      # Instead of extracting `raw_content` directly from the `request_payload`,
+      #   assign the data to a new variable and then extract the `raw_content`
+      #   from it to circumvent CORS violation in `development` mode.
       def configuration_body
-        YAML.dump request_payload
+        payload = request_payload
+        payload["raw_content"]
       end
     end
   end

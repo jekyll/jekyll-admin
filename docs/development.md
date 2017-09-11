@@ -36,6 +36,8 @@ If you just want to click around and see how things work, or if you're making ch
 
 This will run the front end server via Node's development stack, meaning changes will be reloaded on subsequent requests and is generally useful when making changes to the front end side of things. In the background, it's also going to call `script/test-server` for you, so that the front end has an API that it can make calls to.
 
+**Note**: Node version should be >= v6.0.0
+
 ### Running installation/test scripts on Windows
 
 You are going to need a Unix-like environment. The best choice would be Git Bash which comes with the [Git Windows Installation](https://git-for-windows.github.io/) or [MSYS](http://www.mingw.org/wiki/msys). Try to avoid any POSIX compliant software (e.g. Cygwin) that will get you in trouble.

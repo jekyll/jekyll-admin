@@ -73,5 +73,9 @@ export const labels = {
   },
   upload: {
     label: 'Upload filer'
+  },
+  viewToggle: {
+    label: 'Skift visning til grafisk redigering',
+    triggeredLabel: 'Skift visning til tekst redigering'
   }
 };

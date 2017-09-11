@@ -1,15 +1,12 @@
 import React, { Component, PropTypes } from 'react';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import _ from 'underscore';
-import { ADMIN_PREFIX } from '../../constants';
-import Dropzone from 'react-dropzone';
+import DocumentTitle from 'react-document-title';
+import Dropzone from '../../components/Dropzone';
 import Button from '../../components/Button';
-import FilePreview from '../../components/FilePreview';
 import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../actions/utils';
-import { existingUploadedFilenames } from '../../utils/helpers.js';
+import { existingUploadedFilenames } from '../../utils/helpers';
 import { filterByFilename } from '../../reducers/staticfiles';
 import { getOverrideMessage } from '../../constants/lang';
 import {
@@ -36,62 +33,38 @@ export class StaticFiles extends Component {
   }
 
   openDropzone() {
-    this.refs.dropzone.open();
-  }
-
-  renderDropzone() {
-    const { files, deleteStaticFile } = this.props;
-    return (
-      <Dropzone
-        onDrop={(files) => this.onDrop(files)}
-        ref="dropzone"
-        className="dropzone"
-        activeClassName="dropzone-active"
-        multiple={true}
-        disableClick={true}>
-          {
-            files.length > 0 &&
-            <div className="preview-container">
-              {
-                _.map(files, (file, i) => {
-                  return <FilePreview onClickDelete={deleteStaticFile} key={i} file={file} />;
-                })
-              }
-            </div>
-          }
-          {
-            !files.length &&
-            <div className="preview-info">
-              <i className="fa fa-upload" aria-hidden="true" />
-              <p>Drag and drop file(s) here to upload</p>
-            </div>
-          }
-      </Dropzone>
-    );
+    this.refs.dropzone.refs.ReactDropzone.open();
   }
 
   render() {
-    const { files, isFetching, search } = this.props;
+    const { files, isFetching, deleteStaticFile, search, onClickStaticFile } = this.props;
 
     if (isFetching) {
       return null;
     }
 
     return (
-      <div>
-        <div className="content-header">
-          <h1>Static Files</h1>
-          <Button
-            onClick={() => this.openDropzone()}
-            type="upload"
-            icon="upload"
-            active={true} />
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
+      <DocumentTitle title="Static Files">
+        <div>
+          <div className="content-header">
+            <h1>Static Files</h1>
+            <Button
+              onClick={() => this.openDropzone()}
+              type="upload"
+              icon="upload"
+              active={true} />
+            <div className="pull-right">
+              <InputSearch searchBy="filename" search={search} />
+            </div>
           </div>
+          <Dropzone
+            ref="dropzone"
+            files={files}
+            onClickItem={onClickStaticFile}
+            onClickDelete={deleteStaticFile}
+            onDrop={(files) => this.onDrop(files)} />
         </div>
-        {this.renderDropzone()}
-      </div>
+      </DocumentTitle>
     );
   }
 }
@@ -102,6 +75,7 @@ StaticFiles.propTypes = {
   fetchStaticFiles: PropTypes.func.isRequired,
   uploadStaticFiles: PropTypes.func.isRequired,
   deleteStaticFile: PropTypes.func.isRequired,
+  onClickStaticFile: PropTypes.func,
   search: PropTypes.func.isRequired
 };
 

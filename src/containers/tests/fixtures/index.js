@@ -1,14 +1,22 @@
 export const config = {
-  title: "Your awesome title",
-  email: "your-email@domain.com",
-  description: "Write an awesome description for your new site here.",
-  baseurl: "",
-  url: "http://yourdomain.com"
+  content: {
+    title: "Your awesome title",
+    email: "your-email@domain.com",
+    baseurl: "",
+    url: "http://yourdomain.com"
+  },
+  raw_content: "title: Your awesome title\nemail: your-email@domain.com\nbaseurl:\nurl: http://yourdomain.com"
 };
 
 export const collections = [
-  {title: "Posts", path: "/posts" },
-  {title: "Movies", path: "/movies"}
+  {
+    label: "posts",
+    path: "/posts"
+  },
+  {
+    label: "movies",
+    path: "/movies"
+  }
 ];
 
 export const content = {

@@ -13,7 +13,7 @@ export const addField = (state, namePrefix) => {
   let field = eval(`tmpState.${namePrefix}`);
   if (field === undefined) return tmpState.metadata;
   if (_.isArray(field)) field.push('');
-  else field['New field ' + state.new_field_count] = '';
+  else field[`New field ${state.new_field_count}`] = '';
   return tmpState.metadata;
 };
 
@@ -98,7 +98,7 @@ export const convertField = (state, nameAttr, convertType) => {
   if (field === undefined) return tmpState.metadata;
   if (convertType == 'array') field = [''];
   else if (convertType == 'object') {
-    let key = 'New field ' + state.new_field_count;
+    let key = `New field ${state.new_field_count}`;
     field = { [key]: '' };
   }
   else field = '';
@@ -122,4 +122,30 @@ export const moveArrayItem = (state, namePrefix, srcInd, targetInd) => {
   if (!_.isArray(arr)) return tmpState.metadata;
   arr.splice(targetInd, 0, arr.splice(srcInd, 1)[0]);
   return tmpState.metadata;
+};
+
+/**
+ * Injects the relevant default front matter fields read from the config file into
+ * the provided front matter object
+ * @param {Object} config
+ * @param {String} path
+ * @param {String} type
+ * @param {Object} front_matter
+ * @return {Object} metadata
+ */
+export const injectDefaultFields = (config, path, type, front_matter={}) => {
+  let defaults;
+  try {
+    defaults = config.content.defaults;
+  } catch (e) {
+    return {};
+  }
+  let metafields = {};
+  _.each(defaults, field => {
+    const scope = field.scope;
+    if ((!scope.type || scope.type == type) && (!scope.path || scope.path == path)) {
+      _.extend(metafields, field.values);
+    }
+  });
+  return _.extend(metafields, front_matter);
 };

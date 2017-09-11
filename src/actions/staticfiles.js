@@ -1,6 +1,6 @@
 import * as ActionTypes from '../constants/actionTypes';
 import _ from 'underscore';
-import { get, put, del } from '../utils/fetch';
+import { get } from '../utils/fetch';
 import { addNotification } from './notifications';
 import {
   getSuccessMessage,
@@ -18,8 +18,8 @@ export function fetchStaticFiles() {
     dispatch({ type: ActionTypes.FETCH_STATICFILES_REQUEST});
     return get(
       staticfilesAPIUrl(),
-      { type: ActionTypes.FETCH_STATICFILES_SUCCESS, name: "files"},
-      { type: ActionTypes.FETCH_STATICFILES_FAILURE, name: "error"},
+      { type: ActionTypes.FETCH_STATICFILES_SUCCESS, name: 'files'},
+      { type: ActionTypes.FETCH_STATICFILES_FAILURE, name: 'error'},
       dispatch
     );
   };

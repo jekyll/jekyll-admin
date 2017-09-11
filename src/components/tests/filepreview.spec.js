@@ -1,5 +1,4 @@
 import React from 'react';
-import expect from 'expect';
 import { mount } from 'enzyme';
 
 import FilePreview from '../FilePreview';
@@ -8,7 +7,7 @@ import { staticfile } from './fixtures';
 
 function setup(file=staticfile) {
   const actions = {
-    onClickDelete: expect.createSpy()
+    onClickDelete: jest.fn()
   };
 
   let component = mount(
@@ -20,19 +19,32 @@ function setup(file=staticfile) {
     filename: component.find('.filename'),
     image: component.find('img'),
     div: component.find('.file-preview a div'),
+    indicator: component.find('.file-preview .theme-indicator'),
+    delete_btn: component.find('.file-preview .delete'),
     actions: actions
   };
 }
 
 describe('Components::FilePreview', () => {
   it('should render an image if the file has an image extension', () => {
-    const { component, image, div } = setup();
-    expect(image.node).toExist();
-    expect(div.node).toNotExist();
+    const { image, div } = setup();
+    expect(image.node).toBeTruthy();
+    expect(div.node).toBeFalsy();
   });
+
   it('should render a div if the file does not have an image extension', () => {
-    const { component, image, div } = setup({...staticfile, extname: 'html'});
-    expect(image.node).toNotExist();
-    expect(div.node).toExist();
+    const { image, div } = setup({...staticfile, extname: 'html'});
+    expect(image.node).toBeFalsy();
+    expect(div.node).toBeTruthy();
+  });
+
+  it('should render an indicator if file is from theme-gem', () => {
+    const { indicator } = setup({...staticfile, from_theme: true});
+    expect(indicator.node).toBeTruthy();
+  });
+
+  it('should not render a delete-button if file is from theme-gem', () => {
+    const { delete_btn } = setup({...staticfile, from_theme: true});
+    expect(delete_btn.node).toBeFalsy();
   });
 });

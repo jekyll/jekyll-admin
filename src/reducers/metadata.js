@@ -1,5 +1,3 @@
-import _ from 'underscore';
-
 import {
   UPDATE_TITLE, UPDATE_BODY, UPDATE_PATH, UPDATE_DRAFT,
   ADD_METAFIELD, REMOVE_METAFIELD,
@@ -14,7 +12,7 @@ import { addField, removeField, updateFieldKey,
 export default function metadata(state = {
   metadata: {},
   new_field_count: 1,
-  key_prefix: '', // force children to be destroyed on sort
+  key_prefix: '', // force children to be rerendered on sort
   fieldChanged: false
 }, action) {
   switch (action.type) {
@@ -63,7 +61,7 @@ export default function metadata(state = {
       return Object.assign({}, state, {
         metadata: removeField(state, action.namePrefix, action.key),
         fieldChanged: true,
-        key_prefix: Math.random() * 100 + ''
+        key_prefix: `${Math.random() * 100}`
       });
     case UPDATE_FIELD_KEY:
       return Object.assign({}, state, {
@@ -71,7 +69,7 @@ export default function metadata(state = {
           state,
           action.namePrefix,
           action.fieldKey,
-          action.newKey
+          action.newKey.trim()
         ),
         fieldChanged: true
       });
@@ -92,7 +90,7 @@ export default function metadata(state = {
           action.srcInd,
           action.targetInd
         ),
-        key_prefix: Math.random() * 100 + '',
+        key_prefix: `${Math.random() * 100}`,
         fieldChanged: true
       });
     case CONVERT_FIELD:

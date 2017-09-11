@@ -7,6 +7,11 @@ import MetaButtons from './MetaButtons';
 
 export class MetaField extends Component {
 
+  componentDidMount() {
+    const isNewField = /New field/.test(this.props.fieldKey);
+    isNewField && this.refs.field_key.select();
+  }
+
   handleConvertClick(type) {
     const { convertField, nameAttr } = this.props;
     convertField(nameAttr, type);
@@ -20,7 +25,7 @@ export class MetaField extends Component {
     findDOMNode(this.refs.wrap).classList.remove('showing-dropdown');
   }
 
-  handleKeyBlur(e) {
+  handleKeyBlur() {
     const { namePrefix, fieldKey, updateFieldKey } = this.props;
     let currentValue = findDOMNode(this.refs.field_key).value;
     if (fieldKey != currentValue && currentValue != '') {
@@ -46,7 +51,7 @@ export class MetaField extends Component {
     const CurrentComponent = FieldTypes[type];
     return (
       <div ref="wrap" className="metafield">
-        <div className="meta-key">
+        <div className={`meta-key ${type}`}>
           <input ref="field_key"
             onBlur={() => this.handleKeyBlur()}
             defaultValue={fieldKey}
@@ -89,7 +94,7 @@ MetaField.propTypes = {
   moveArrayItem: PropTypes.func.isRequired,
   convertField: PropTypes.func.isRequired,
   fieldKey: PropTypes.string.isRequired,
-  fieldValue: PropTypes.any.isRequired,
+  fieldValue: PropTypes.any,
   nameAttr: PropTypes.string.isRequired,
   namePrefix: PropTypes.string.isRequired,
   key_prefix: PropTypes.string.isRequired

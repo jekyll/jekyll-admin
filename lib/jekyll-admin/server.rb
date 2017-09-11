@@ -17,7 +17,7 @@ module JekyllAdmin
       register Sinatra::CrossOrigin
       enable  :cross_origin
       disable :allow_credentials
-      set :allow_methods, %i(delete get options post put)
+      set :allow_methods, %i[delete get options post put]
     end
 
     get "/" do
@@ -60,7 +60,8 @@ module JekyllAdmin
 
     def document_body
       body = if front_matter && !front_matter.empty?
-               YAML.dump(front_matter).strip
+               YAML.dump(restored_front_matter).strip
+                 .gsub(": 'null'", ": null") # restore null values
              else
                "---"
              end
@@ -81,6 +82,14 @@ module JekyllAdmin
     def namespace
       namespace = request.path_info.split("/")[1].to_s.downcase
       namespace if ROUTES.include?(namespace)
+    end
+
+    # verbose 'null' values in front matter
+    def restored_front_matter
+      front_matter.map do |key, value|
+        value = "null" if value.nil?
+        [key, value]
+      end.to_h
     end
   end
 end

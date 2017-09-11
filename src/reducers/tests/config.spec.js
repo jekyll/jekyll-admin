@@ -1,4 +1,3 @@
-import expect from 'expect';
 import reducer from '../config';
 import * as types from '../../constants/actionTypes';
 
@@ -8,6 +7,7 @@ describe('Reducers::Config', () => {
       config: {},
       updated: false,
       editorChanged: false,
+      fieldChanged: false,
       isFetching: false
     });
   });
