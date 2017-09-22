@@ -1,5 +1,4 @@
 import React from 'react';
-import expect from 'expect';
 import { mount } from 'enzyme';
 
 import Button from '../Button';
@@ -7,7 +6,7 @@ const defaultProps = {type: 'save', active: true};
 
 function setup(props=defaultProps) {
   const actions = {
-    onClick: expect.createSpy()
+    onClick: jest.fn()
   };
 
   const component = mount(<Button {...props} {...actions} />);
@@ -24,7 +23,7 @@ describe('Components::Button', () => {
   it('should render correctly', () => {
     const { link, icon } = setup();
     expect(link.text()).toBe('Save');
-    expect(icon.node).toNotExist();
+    expect(icon.node).toBeFalsy();
   });
 
   it('should have correct class names', () => {
@@ -50,7 +49,7 @@ describe('Components::Button', () => {
     const { icon } = setup(Object.assign({}, defaultProps, {
       icon: 'eye'
     }));
-    expect(icon.node).toExist();
+    expect(icon.node).toBeTruthy();
   });
 
   it('should call onClick', () => {
@@ -64,6 +63,6 @@ describe('Components::Button', () => {
       to: 'some_link'
     }));
     link.simulate('click');
-    expect(actions.onClick).toNotHaveBeenCalled();
+    expect(actions.onClick).not.toHaveBeenCalled();
   });
 });

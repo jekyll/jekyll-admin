@@ -1,12 +1,11 @@
 import React from 'react';
-import expect from 'expect';
 import { mount } from 'enzyme';
 
 import Checkbox from '../Checkbox';
 
 function setup(props = {text: 'GSoC', checked: false}) {
   let actions = {
-    onChange: expect.createSpy()
+    onChange: jest.fn()
   };
 
   let component = mount(
@@ -28,7 +27,7 @@ describe('Components::Checkbox', () => {
     expect(label.text()).toBe(props.text);
   });
   it('should call onChange', () => {
-    const { component, checkbox, actions } = setup();
+    const { checkbox, actions } = setup();
     checkbox.simulate('change');
     expect(actions.onChange).toHaveBeenCalled();
   });

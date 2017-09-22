@@ -18,7 +18,9 @@ module JekyllAdmin
       Jekyll.logger.debug "WRITING:", path
       path = sanitized_path(path)
       FileUtils.mkdir_p File.dirname(path)
-      File.write(path, content)
+      File.open(path, "wb") do |file|
+        file.write(content)
+      end
       site.process
     end
 

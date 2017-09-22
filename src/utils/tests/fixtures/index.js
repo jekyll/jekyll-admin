@@ -33,3 +33,36 @@ export const emptyState = {
   metadata: {},
   new_field_count: 0
 };
+
+export const config = {
+  content: {
+    defaults: [
+      {
+        scope: {
+          path: ''
+        },
+        values: {
+          some_front_matter: 'default'
+        }
+      },
+      {
+        scope: {
+          type: 'posts',
+          path: ''
+        },
+        values: {
+          post_field: 'default'
+        }
+      },
+      {
+        scope: {
+          type: 'pages',
+          path: 'test'
+        },
+        values: {
+          page_field: 'default'
+        }
+      }
+    ]
+  }
+};

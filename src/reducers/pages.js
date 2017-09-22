@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import {
   FETCH_PAGES_REQUEST, FETCH_PAGES_SUCCESS, FETCH_PAGES_FAILURE,
   FETCH_PAGE_REQUEST, FETCH_PAGE_SUCCESS, FETCH_PAGE_FAILURE,
@@ -27,7 +26,7 @@ export default function pages(state = {
     case FETCH_PAGES_FAILURE:
       return Object.assign({}, state, {
         isFetching: false,
-        page: {}
+        pages: []
       });
     case FETCH_PAGE_SUCCESS:
       return Object.assign({}, state, {

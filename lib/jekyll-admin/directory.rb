@@ -44,6 +44,8 @@ module JekyllAdmin
     def resource_path
       if content_type == "pages"
         "/pages/#{splat}/#{name}"
+      elsif content_type == "data"
+        "/data/#{splat}/#{name}/"
       else
         "/collections/#{content_type}/entries/#{splat}/#{name}"
       end

@@ -1,4 +1,3 @@
-import expect from 'expect';
 import reducer, { filterBySearchInput } from '../pages';
 import * as types from '../../constants/actionTypes';
 
@@ -37,7 +36,7 @@ describe('Reducers::Pages', () => {
         type: types.FETCH_PAGES_FAILURE
       })
     ).toEqual({
-      page: {},
+      pages: [],
       isFetching: false
     });
   });

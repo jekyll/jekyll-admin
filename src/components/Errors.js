@@ -2,9 +2,9 @@ import React, { PropTypes} from 'react';
 import _ from 'underscore';
 
 const Errors = ({errors}) => (
-  <ul className="error-messages">
-    {_.map(errors, (error,i) => <li key={i}>{error}</li>)}
-  </ul>
+  <div className="error-messages">
+    {_.map(errors, (error,i) => <div key={i}>{error}</div>)}
+  </div>
 );
 
 Errors.propTypes = {

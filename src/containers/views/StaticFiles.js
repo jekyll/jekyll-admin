@@ -1,12 +1,12 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ADMIN_PREFIX } from '../../constants';
+import DocumentTitle from 'react-document-title';
 import Dropzone from '../../components/Dropzone';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../actions/utils';
-import { existingUploadedFilenames } from '../../utils/helpers.js';
+import { existingUploadedFilenames } from '../../utils/helpers';
 import { filterByFilename } from '../../reducers/staticfiles';
 import { getOverrideMessage } from '../../constants/lang';
 import {
@@ -44,25 +44,27 @@ export class StaticFiles extends Component {
     }
 
     return (
-      <div>
-        <div className="content-header">
-          <h1>Static Files</h1>
-          <Button
-            onClick={() => this.openDropzone()}
-            type="upload"
-            icon="upload"
-            active={true} />
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
+      <DocumentTitle title="Static Files">
+        <div>
+          <div className="content-header">
+            <h1>Static Files</h1>
+            <Button
+              onClick={() => this.openDropzone()}
+              type="upload"
+              icon="upload"
+              active={true} />
+            <div className="pull-right">
+              <InputSearch searchBy="filename" search={search} />
+            </div>
           </div>
+          <Dropzone
+            ref="dropzone"
+            files={files}
+            onClickItem={onClickStaticFile}
+            onClickDelete={deleteStaticFile}
+            onDrop={(files) => this.onDrop(files)} />
         </div>
-        <Dropzone
-          ref="dropzone"
-          files={files}
-          onClickItem={onClickStaticFile}
-          onClickDelete={deleteStaticFile}
-          onDrop={(files) => this.onDrop(files)} />
-      </div>
+      </DocumentTitle>
     );
   }
 }

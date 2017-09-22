@@ -20,7 +20,7 @@ export class MetaObjectItem extends Component {
     findDOMNode(this.refs.wrap).classList.remove('showing-dropdown');
   }
 
-  handleKeyBlur(e) {
+  handleKeyBlur() {
     const { namePrefix, fieldKey, updateFieldKey } = this.props;
     let currentValue = findDOMNode(this.refs.field_key).value;
     if (fieldKey != currentValue && currentValue != '') {
@@ -34,7 +34,7 @@ export class MetaObjectItem extends Component {
   }
 
   render() {
-    const { type, fieldKey, fieldValue, nameAttr, namePrefix, addField,
+    const { type, fieldKey, fieldValue, nameAttr, addField,
       removeField, updateFieldKey, updateFieldValue, convertField, key_prefix,
       moveArrayItem } = this.props;
     const FieldTypes = {
@@ -45,7 +45,7 @@ export class MetaObjectItem extends Component {
     const CurrentComponent = FieldTypes[type];
     return (
       <div ref="wrap" className="object-item-wrap">
-        <div className="object-key">
+        <div className={`object-key ${type}`}>
           <input ref="field_key"
             onBlur={(e) => this.handleKeyBlur(e)}
             defaultValue={fieldKey}

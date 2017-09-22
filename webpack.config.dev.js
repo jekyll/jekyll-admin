@@ -1,6 +1,7 @@
 import webpack from 'webpack';
 import path from 'path';
 import { ADMIN_PREFIX } from './src/constants';
+import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('development'),
@@ -34,6 +35,11 @@ export default {
         },
         context: '/'
       }
+    }),
+    new BundleAnalyzerPlugin({
+      analyzerMode: 'static',
+      logLevel: 'silent',
+      openAnalyzer: false
     })
   ],
   module: {

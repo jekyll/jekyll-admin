@@ -45,7 +45,8 @@ describe "pages" do
     it "includes front matter defaults" do
       get "/pages"
       expect(last_response).to be_ok
-      expect(first_page).to have_key("some_front_matter")
+      expect(first_page).to have_key("all")
+      expect(first_page).to have_key("page_only")
     end
 
     it "doesn't include the raw front matter" do
@@ -101,7 +102,8 @@ describe "pages" do
 
       it "contains front matter defaults" do
         get "/pages/page.md"
-        expect(last_response_parsed.key?("some_front_matter")).to eql(true)
+        expect(last_response_parsed.key?("all")).to eql(true)
+        expect(last_response_parsed.key?("page_only")).to eql(true)
       end
 
       it "contains raw front matter" do
@@ -112,7 +114,7 @@ describe "pages" do
 
       it "raw front matter doesn't include defaults" do
         get "/pages/page.md"
-        expect(front_matter.key?("some_front_matter")).to eql(false)
+        expect(front_matter.key?("all")).to eql(false)
       end
     end
 

@@ -5,13 +5,13 @@ import MetaObjectItem from './MetaObjectItem';
 export class MetaObject extends Component {
 
   render() {
-    const { fieldKey, fieldValue, nameAttr, namePrefix, addField,
+    const { fieldKey, fieldValue, namePrefix, addField,
       removeField, updateFieldKey, updateFieldValue, convertField, key_prefix,
       moveArrayItem } = this.props;
     const items = _.map(fieldValue, (value, key) => {
-      let type = "simple";
-      if (_.isObject(value)) type = "object";
-      if (_.isArray(value)) type = "array";
+      let type = 'simple';
+      if (_.isObject(value)) type = 'object';
+      if (_.isArray(value)) type = 'array';
       return (
         <MetaObjectItem
           key={key}
@@ -34,7 +34,7 @@ export class MetaObject extends Component {
         {items}
         <a onClick={() => addField(namePrefix)}
           className="add-field-object" title="Add new key/value pair">
-            New key/value pair
+            New key/value pair under <strong>{fieldKey}</strong>
         </a>
       </div>
     );

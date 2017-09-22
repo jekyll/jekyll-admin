@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import _ from 'underscore';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Modal from 'react-modal';
 import StaticFiles from '../../containers/views/StaticFiles';
@@ -31,14 +30,19 @@ export class MetaSimple extends Component {
   }
 
   handleEditableChange(e) {
-    const { nameAttr, fieldValue, updateFieldValue } = this.props;
+    const { nameAttr, updateFieldValue } = this.props;
     updateFieldValue(nameAttr, e.target.value);
   }
 
   handleDatepickerChange(date, dateStr) {
-    const { nameAttr, fieldValue, updateFieldValue } = this.props;
-    let formatted = moment(date).format("YYYY-MM-DD hh:mm:ss");
+    const { nameAttr, updateFieldValue } = this.props;
+    let formatted = moment(date).format('YYYY-MM-DD HH:mm:ss');
     updateFieldValue(nameAttr, formatted);
+  }
+
+  handleEditableBlur(e) {
+    const { nameAttr, updateFieldValue } = this.props;
+    updateFieldValue(nameAttr, e.target.value.trim());
   }
 
   renderEditable() {
@@ -46,8 +50,9 @@ export class MetaSimple extends Component {
     return (
       <TextareaAutosize
         onChange={(e) => this.handleEditableChange(e)}
+        onBlur={(e) => this.handleEditableBlur(e)}
         className="field value-field"
-        defaultValue={fieldValue} />
+        value={`${fieldValue}`} />
     );
   }
 
@@ -58,7 +63,7 @@ export class MetaSimple extends Component {
       <DateTimePicker
         onChange={(v, d) => this.handleDatepickerChange(v, d)}
         className="date-field"
-        defaultValue={dateValue} />
+        value={dateValue} />
     );
   }
 
@@ -76,7 +81,7 @@ export class MetaSimple extends Component {
         <TextareaAutosize
           onChange={(e) => this.handleEditableChange(e)}
           className="field value-field"
-          defaultValue={fieldValue}
+          value={fieldValue}
           ref="imagepicker" />
         <span className="images-wrapper">
           <button onClick={this.handleOpenModal}>
@@ -128,7 +133,7 @@ export class MetaSimple extends Component {
 MetaSimple.propTypes = {
   parentType: PropTypes.string.isRequired,
   fieldKey: PropTypes.string.isRequired,
-  fieldValue: PropTypes.any.isRequired,
+  fieldValue: PropTypes.any,
   updateFieldValue: PropTypes.func.isRequired,
   nameAttr: PropTypes.any.isRequired
 };

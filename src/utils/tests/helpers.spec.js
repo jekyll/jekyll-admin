@@ -1,8 +1,6 @@
-import expect from 'expect';
-
 import {
   toYAML, toJSON, capitalize, toTitleCase, slugify,
-  existingUploadedFilenames, getFilenameFromPath
+  existingUploadedFilenames, getFilenameFromPath, getExtensionFromPath, trimObject
 } from '../helpers';
 
 describe('Helper functions', () => {
@@ -134,5 +132,69 @@ describe('Helper functions', () => {
     path = "test.md";
     expected = "test.md";
     expect(getFilenameFromPath(path)).toEqual(expected);
+  });
+
+  it('should return the extension from the given path', () => {
+    let path = "";
+    let expected = "";
+    expect(getExtensionFromPath(path)).toEqual(expected);
+
+    path = "foo.yml";
+    expected = "yml";
+    expect(getExtensionFromPath(path)).toEqual(expected);
+
+    path = "foo/bar.yml";
+    expected = "yml";
+    expect(getExtensionFromPath(path)).toEqual(expected);
+
+    path = "foo/baz";
+    expected = "";
+    expect(getExtensionFromPath(path)).toEqual(expected);
+
+    path = "foo/.ignore";
+    expected = "";
+    expect(getExtensionFromPath(path)).toEqual(expected);
+  });
+
+  it('should trim whitespaces in object keys and values', () => {
+    let obj = {};
+    let expected = {};
+    expect(trimObject(obj)).toEqual(expected);
+
+    obj = { ' foo ': ' bar ' };
+    expected = { foo: 'bar' };
+    expect(trimObject(obj)).toEqual(expected);
+
+    obj = {
+      foo: ' 10 ',
+      bar: ' false ',
+      baz: {
+        jekyll: 'true    '
+      }
+    };
+    expected = {
+      foo: 10,
+      bar: false,
+      baz: {
+        jekyll: true
+      }
+    };
+    expect(trimObject(obj)).toEqual(expected);
+
+    obj = {
+      foo: ' a "test" string ',
+      'baz ': {
+        foo: "this is 'also ' a test string      "
+      },
+      bar: 10
+    };
+    expected = {
+      foo: 'a "test" string',
+      baz: {
+        foo: "this is 'also ' a test string"
+      },
+      bar: 10
+    };
+    expect(trimObject(obj)).toEqual(expected);
   });
 });

@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router';
-import expect from 'expect';
 import { mount } from 'enzyme';
 import _ from 'underscore';
 
@@ -20,12 +18,12 @@ const defaultProps = {
 
 function setup(props = defaultProps) {
   const actions = {
-    addField: expect.createSpy(),
-    removeField: expect.createSpy(),
-    updateFieldKey: expect.createSpy(),
-    updateFieldValue: expect.createSpy(),
-    moveArrayItem: expect.createSpy(),
-    convertField: expect.createSpy()
+    addField: jest.fn(),
+    removeField: jest.fn(),
+    updateFieldKey: jest.fn(),
+    updateFieldValue: jest.fn(),
+    moveArrayItem: jest.fn(),
+    convertField: jest.fn()
   };
 
   let component = mount(

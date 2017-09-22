@@ -73,5 +73,9 @@ export const labels = {
   },
   upload: {
     label: 'Ladda upp filer'
+  },
+  viewToggle: {
+    label: 'Byt vy till GUI Editor',
+    triggeredLabel: 'Byt vy till Raw Editor'
   }
 };

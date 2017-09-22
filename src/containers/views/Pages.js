@@ -3,15 +3,14 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
+import DocumentTitle from 'react-document-title';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
 import { fetchPages, deletePage } from '../../actions/pages';
 import { search } from '../../actions/utils';
 import { filterBySearchInput } from '../../reducers/pages';
-import {
-  getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
+import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class Pages extends Component {
@@ -53,7 +52,7 @@ export class Pages extends Component {
   }
 
   renderFileRow(file) {
-    const { name, path, api_url, http_url, title } = file;
+    const { name, path, http_url } = file;
     const to = `${ADMIN_PREFIX}/pages/${path}`;
     return (
       <tr key={name}>
@@ -86,7 +85,7 @@ export class Pages extends Component {
   }
 
   renderDirectoryRow(directory) {
-    const { name, path, api_url } = directory;
+    const { name, path } = directory;
     const to = `${ADMIN_PREFIX}/pages/${path}`;
     return (
       <tr key={name}>
@@ -124,24 +123,28 @@ export class Pages extends Component {
     const to = params.splat ? `${ADMIN_PREFIX}/pages/${params.splat}/new` :
       `${ADMIN_PREFIX}/pages/new`;
 
+    const title = params.splat ? `${params.splat} | Pages` : 'Pages';
+
     return (
-      <div>
-        <div className="content-header">
-          <Breadcrumbs type="pages" splat={params.splat || ''} />
-          <div className="page-buttons">
-            <Link className="btn btn-active" to={to}>New page</Link>
+      <DocumentTitle title={title}>
+        <div>
+          <div className="content-header">
+            <Breadcrumbs type="pages" splat={params.splat || ''} />
+            <div className="page-buttons">
+              <Link className="btn btn-active" to={to}>New page</Link>
+            </div>
+            <div className="pull-right">
+              <InputSearch searchBy="filename" search={search} />
+            </div>
           </div>
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
-          </div>
+          {
+            pages.length > 0 && this.renderTable()
+          }
+          {
+            !pages.length && <h1>{getNotFoundMessage('pages')}</h1>
+          }
         </div>
-        {
-          pages.length > 0 && this.renderTable()
-        }
-        {
-          !pages.length && <h1>{getNotFoundMessage("pages")}</h1>
-        }
-      </div>
+      </DocumentTitle>
     );
   }
 }
