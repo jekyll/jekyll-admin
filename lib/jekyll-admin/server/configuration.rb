@@ -39,9 +39,15 @@ module JekyllAdmin
         )
       end
 
-      # Returns the path to the *first* config file discovered
+      # Returns the path to the *first* config file from the list passed to terminal
+      # switch +--config+ or the first of default config files to be discovered at the
+      # site's source directory.
       def configuration_path
-        sanitized_path configuration.config_files(overrides).first
+        if site.config["config"]
+          sanitized_path site.config["config"].first
+        else
+          sanitized_path configuration.config_files(overrides).first
+        end
       end
 
       # The user's uploaded configuration for updates
