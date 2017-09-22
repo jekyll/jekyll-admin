@@ -31,10 +31,6 @@ module JekyllAdmin
         configuration.read_config_file(configuration_path)
       end
 
-      def custom_configs
-        Jekyll::Commands::Serve.custom_configs
-      end
-
       # Raw configuration content, as it sits on disk
       def raw_configuration
         File.read(
@@ -43,10 +39,12 @@ module JekyllAdmin
         )
       end
 
-      # Returns the path to the *first* config file discovered
+      # Returns the path to the *first* config file from the list passed to terminal
+      # switch +--config+ or the first of default config files to be discovered at the
+      # site's source directory.
       def configuration_path
-        if custom_configs
-          sanitized_path custom_configs.first
+        if site.config["config"]
+          sanitized_path site.config["config"].first
         else
           sanitized_path configuration.config_files(overrides).first
         end
