@@ -11,3 +11,6 @@ AllCops:
 
 Metrics/BlockLength:
   Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
