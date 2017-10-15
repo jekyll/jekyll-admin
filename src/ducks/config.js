@@ -5,55 +5,54 @@ import { validator } from '../utils/validation';
 import { CLEAR_ERRORS, validationError } from './utils';
 import { toYAML } from '../utils/helpers';
 
+// Action Types
 export const FETCH_CONFIG_REQUEST = 'FETCH_CONFIG_REQUEST';
 export const FETCH_CONFIG_SUCCESS = 'FETCH_CONFIG_SUCCESS';
 export const FETCH_CONFIG_FAILURE = 'FETCH_CONFIG_FAILURE';
-
 export const PUT_CONFIG_REQUEST = 'PUT_CONFIG_REQUEST';
 export const PUT_CONFIG_SUCCESS = 'PUT_CONFIG_SUCCESS';
 export const PUT_CONFIG_FAILURE = 'PUT_CONFIG_FAILURE';
-
 export const CONFIG_EDITOR_CHANGED = 'CONFIG_EDITOR_CHANGED';
 
-export function fetchConfig() {
-  return dispatch => {
-    dispatch({ type: FETCH_CONFIG_REQUEST });
-    return get(
-      getConfigurationUrl(),
-      { type: FETCH_CONFIG_SUCCESS, name: 'config' },
-      { type: FETCH_CONFIG_FAILURE, name: 'error' },
-      dispatch
-    );
-  };
-}
+// Actions
+export const fetchConfig = () => dispatch => {
+  dispatch({ type: FETCH_CONFIG_REQUEST });
+  return get(
+    getConfigurationUrl(),
+    { type: FETCH_CONFIG_SUCCESS, name: 'config' },
+    { type: FETCH_CONFIG_FAILURE, name: 'error' },
+    dispatch
+  );
+};
 
-export function putConfig(config, source = 'editor') {
-  return (dispatch, getState) => {
-    let payload;
+export const putConfig = (config, source = 'editor') => (
+  dispatch,
+  getState
+) => {
+  let payload;
 
-    if (source == 'gui') {
-      config = getState().metadata.metadata;
-      payload = { raw_content: toYAML(config) };
-    } else {
-      payload = { raw_content: config };
-    }
+  if (source == 'gui') {
+    config = getState().metadata.metadata;
+    payload = { raw_content: toYAML(config) };
+  } else {
+    payload = { raw_content: config };
+  }
 
-    // handle errors
-    const errors = validateConfig(config);
-    if (errors.length) {
-      return dispatch(validationError(errors));
-    }
-    dispatch({ type: CLEAR_ERRORS });
+  // handle errors
+  const errors = validateConfig(config);
+  if (errors.length) {
+    return dispatch(validationError(errors));
+  }
+  dispatch({ type: CLEAR_ERRORS });
 
-    return put(
-      putConfigurationUrl(),
-      JSON.stringify(payload),
-      { type: PUT_CONFIG_SUCCESS, name: 'config' },
-      { type: PUT_CONFIG_FAILURE, name: 'error' },
-      dispatch
-    );
-  };
-}
+  return put(
+    putConfigurationUrl(),
+    JSON.stringify(payload),
+    { type: PUT_CONFIG_SUCCESS, name: 'config' },
+    { type: PUT_CONFIG_FAILURE, name: 'error' },
+    dispatch
+  );
+};
 
 const validateConfig = config =>
   validator(
@@ -68,6 +67,7 @@ export const onEditorChange = () => ({
   type: CONFIG_EDITOR_CHANGED
 });
 
+// Reducer
 export default function config(
   state = {
     config: {},

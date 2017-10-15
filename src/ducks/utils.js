@@ -1,7 +1,9 @@
+// Action Types
 export const SEARCH_CONTENT = 'SEARCH_CONTENT';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const VALIDATION_ERROR = 'VALIDATION_ERROR';
 
+// Actions
 export const search = input => ({
   type: SEARCH_CONTENT,
   input
@@ -16,6 +18,7 @@ export const validationError = errors => ({
   errors
 });
 
+// Reducer
 export default function utils(
   state = {
     input: '',

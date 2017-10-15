@@ -15,149 +15,148 @@ import {
   documentAPIUrl
 } from '../constants/api';
 
+// Action Types
 export const FETCH_COLLECTIONS_REQUEST = 'FETCH_COLLECTIONS_REQUEST';
 export const FETCH_COLLECTIONS_SUCCESS = 'FETCH_COLLECTIONS_SUCCESS';
 export const FETCH_COLLECTIONS_FAILURE = 'FETCH_COLLECTIONS_FAILURE';
-
 export const FETCH_COLLECTION_REQUEST = 'FETCH_COLLECTION_REQUEST';
 export const FETCH_COLLECTION_SUCCESS = 'FETCH_COLLECTION_SUCCESS';
 export const FETCH_COLLECTION_FAILURE = 'FETCH_COLLECTION_FAILURE';
-
 export const FETCH_DOCUMENT_REQUEST = 'FETCH_DOCUMENT_REQUEST';
 export const FETCH_DOCUMENT_SUCCESS = 'FETCH_DOCUMENT_SUCCESS';
 export const FETCH_DOCUMENT_FAILURE = 'FETCH_DOCUMENT_FAILURE';
-
 export const PUT_DOCUMENT_REQUEST = 'PUT_DOCUMENT_REQUEST';
 export const PUT_DOCUMENT_SUCCESS = 'PUT_DOCUMENT_SUCCESS';
 export const PUT_DOCUMENT_FAILURE = 'PUT_DOCUMENT_FAILURE';
-
 export const DELETE_DOCUMENT_REQUEST = 'DELETE_DOCUMENT_REQUEST';
 export const DELETE_DOCUMENT_SUCCESS = 'DELETE_DOCUMENT_SUCCESS';
 export const DELETE_DOCUMENT_FAILURE = 'DELETE_DOCUMENT_FAILURE';
 
-export function fetchCollections() {
-  return dispatch => {
-    dispatch({ type: FETCH_COLLECTIONS_REQUEST });
-    return get(
-      collectionsAPIUrl(),
-      { type: FETCH_COLLECTIONS_SUCCESS, name: 'collections' },
-      { type: FETCH_COLLECTIONS_FAILURE, name: 'error' },
-      dispatch
-    );
-  };
-}
+// Actions
+export const fetchCollections = () => dispatch => {
+  dispatch({ type: FETCH_COLLECTIONS_REQUEST });
+  return get(
+    collectionsAPIUrl(),
+    { type: FETCH_COLLECTIONS_SUCCESS, name: 'collections' },
+    { type: FETCH_COLLECTIONS_FAILURE, name: 'error' },
+    dispatch
+  );
+};
 
-export function fetchCollection(collection_name, directory = '') {
-  return dispatch => {
-    dispatch({ type: FETCH_COLLECTION_REQUEST });
-    return get(
-      collectionAPIUrl(collection_name, directory),
-      { type: FETCH_COLLECTION_SUCCESS, name: 'entries' },
-      { type: FETCH_COLLECTION_FAILURE, name: 'error' },
-      dispatch
-    );
-  };
-}
+export const fetchCollection = (
+  collection_name,
+  directory = ''
+) => dispatch => {
+  dispatch({ type: FETCH_COLLECTION_REQUEST });
+  return get(
+    collectionAPIUrl(collection_name, directory),
+    { type: FETCH_COLLECTION_SUCCESS, name: 'entries' },
+    { type: FETCH_COLLECTION_FAILURE, name: 'error' },
+    dispatch
+  );
+};
 
-export function fetchDocument(collection_name, directory, filename) {
-  return dispatch => {
-    dispatch({ type: FETCH_DOCUMENT_REQUEST });
-    return get(
-      documentAPIUrl(collection_name, directory, filename),
-      { type: FETCH_DOCUMENT_SUCCESS, name: 'doc' },
-      { type: FETCH_DOCUMENT_FAILURE, name: 'error' },
-      dispatch
-    );
-  };
-}
+export const fetchDocument = (
+  collection_name,
+  directory,
+  filename
+) => dispatch => {
+  dispatch({ type: FETCH_DOCUMENT_REQUEST });
+  return get(
+    documentAPIUrl(collection_name, directory, filename),
+    { type: FETCH_DOCUMENT_SUCCESS, name: 'doc' },
+    { type: FETCH_DOCUMENT_FAILURE, name: 'error' },
+    dispatch
+  );
+};
 
-export function createDocument(collection, directory) {
-  return (dispatch, getState) => {
-    // get edited fields from metadata state
-    const metadata = getState().metadata.metadata;
-    let { path, raw_content, title } = metadata;
-    // if path is not given or equals to directory, generate filename from the title
-    if ((!path || `${path}/` == directory) && title) {
-      path = generateFilenameFromTitle(metadata, collection); // override empty path
-    } else {
-      // validate otherwise
-      const errors = validateDocument(metadata, collection);
-      if (errors.length) {
-        return dispatch(validationError(errors));
-      }
+export const createDocument = (collection, directory) => (
+  dispatch,
+  getState
+) => {
+  // get edited fields from metadata state
+  const metadata = getState().metadata.metadata;
+  let { path, raw_content, title } = metadata;
+  // if path is not given or equals to directory, generate filename from the title
+  if ((!path || `${path}/` == directory) && title) {
+    path = generateFilenameFromTitle(metadata, collection); // override empty path
+  } else {
+    // validate otherwise
+    const errors = validateDocument(metadata, collection);
+    if (errors.length) {
+      return dispatch(validationError(errors));
     }
-    // clear errors
-    dispatch({ type: CLEAR_ERRORS });
-    // omit raw_content, path and empty-value keys in metadata state from front_matter
-    const front_matter = _.omit(metadata, (value, key, object) => {
-      return key == 'raw_content' || key == 'path' || value == '';
-    });
-    // send the put request
-    return put(
-      // create or update document according to filename existence
-      documentAPIUrl(collection, directory, path),
-      preparePayload({ raw_content, front_matter }),
-      { type: PUT_DOCUMENT_SUCCESS, name: 'doc' },
-      { type: PUT_DOCUMENT_FAILURE, name: 'error' },
-      dispatch
-    );
-  };
-}
+  }
+  // clear errors
+  dispatch({ type: CLEAR_ERRORS });
+  // omit raw_content, path and empty-value keys in metadata state from front_matter
+  const front_matter = _.omit(metadata, (value, key, object) => {
+    return key == 'raw_content' || key == 'path' || value == '';
+  });
+  // send the put request
+  return put(
+    // create or update document according to filename existence
+    documentAPIUrl(collection, directory, path),
+    preparePayload({ raw_content, front_matter }),
+    { type: PUT_DOCUMENT_SUCCESS, name: 'doc' },
+    { type: PUT_DOCUMENT_FAILURE, name: 'error' },
+    dispatch
+  );
+};
 
-export function putDocument(collection, directory, filename) {
-  return (dispatch, getState) => {
-    // get edited fields from metadata state
-    const metadata = getState().metadata.metadata;
-    let { path, raw_content, title } = metadata;
-    // if path is not given or equals to directory, generate filename from the title
-    if ((!path || `${path}/` == directory) && title) {
-      path = generateFilenameFromTitle(metadata, collection); // override empty path
-    } else {
-      // validate otherwise
-      const errors = validateDocument(metadata, collection);
-      if (errors.length) {
-        return dispatch(validationError(errors));
-      }
+export const putDocument = (collection, directory, filename) => (
+  dispatch,
+  getState
+) => {
+  // get edited fields from metadata state
+  const metadata = getState().metadata.metadata;
+  let { path, raw_content, title } = metadata;
+  // if path is not given or equals to directory, generate filename from the title
+  if ((!path || `${path}/` == directory) && title) {
+    path = generateFilenameFromTitle(metadata, collection); // override empty path
+  } else {
+    // validate otherwise
+    const errors = validateDocument(metadata, collection);
+    if (errors.length) {
+      return dispatch(validationError(errors));
     }
-    // clear errors
-    dispatch({ type: CLEAR_ERRORS });
-    // omit raw_content, path and empty-value keys in metadata state from front_matter
-    const front_matter = _.omit(metadata, (value, key, object) => {
-      return key == 'raw_content' || key == 'path' || value == '';
-    });
-    // add collection type prefix to relative path
-    const relative_path = directory
-      ? `_${collection}/${directory}/${path}`
-      : `_${collection}/${path}`;
-    // send the put request
-    return put(
-      // create or update document according to filename existence
-      documentAPIUrl(collection, directory, filename),
-      preparePayload({ path: relative_path, raw_content, front_matter }),
-      { type: PUT_DOCUMENT_SUCCESS, name: 'doc' },
-      { type: PUT_DOCUMENT_FAILURE, name: 'error' },
-      dispatch
-    );
-  };
-}
+  }
+  // clear errors
+  dispatch({ type: CLEAR_ERRORS });
+  // omit raw_content, path and empty-value keys in metadata state from front_matter
+  const front_matter = _.omit(metadata, (value, key, object) => {
+    return key == 'raw_content' || key == 'path' || value == '';
+  });
+  // add collection type prefix to relative path
+  const relative_path = directory
+    ? `_${collection}/${directory}/${path}`
+    : `_${collection}/${path}`;
+  // send the put request
+  return put(
+    // create or update document according to filename existence
+    documentAPIUrl(collection, directory, filename),
+    preparePayload({ path: relative_path, raw_content, front_matter }),
+    { type: PUT_DOCUMENT_SUCCESS, name: 'doc' },
+    { type: PUT_DOCUMENT_FAILURE, name: 'error' },
+    dispatch
+  );
+};
 
-export function deleteDocument(collection, directory, filename) {
-  return dispatch => {
-    return fetch(documentAPIUrl(collection, directory, filename), {
-      method: 'DELETE'
+export const deleteDocument = (collection, directory, filename) => dispatch => {
+  return fetch(documentAPIUrl(collection, directory, filename), {
+    method: 'DELETE'
+  })
+    .then(data => {
+      dispatch({ type: DELETE_DOCUMENT_SUCCESS });
+      dispatch(fetchCollection(collection, directory));
     })
-      .then(data => {
-        dispatch({ type: DELETE_DOCUMENT_SUCCESS });
-        dispatch(fetchCollection(collection, directory));
+    .catch(error =>
+      dispatch({
+        type: DELETE_DOCUMENT_FAILURE,
+        error
       })
-      .catch(error =>
-        dispatch({
-          type: DELETE_DOCUMENT_FAILURE,
-          error
-        })
-      );
-  };
-}
+    );
+};
 
 const generateFilenameFromTitle = (metadata, collection) => {
   if (collection == 'posts') {
@@ -193,6 +192,7 @@ const validateDocument = (metadata, collection) => {
 
 const preparePayload = obj => JSON.stringify(trimObject(obj));
 
+// Reducer
 export default function collections(
   state = {
     collections: [],
@@ -207,48 +207,57 @@ export default function collections(
     case FETCH_COLLECTIONS_REQUEST:
     case FETCH_COLLECTION_REQUEST:
     case FETCH_DOCUMENT_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true
-      });
+      };
     case FETCH_COLLECTIONS_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         collections: action.collections,
         isFetching: false
-      });
+      };
     case FETCH_COLLECTION_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         entries: action.entries,
         isFetching: false
-      });
+      };
     case FETCH_DOCUMENT_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentDocument: action.doc,
         isFetching: false
-      });
+      };
     case FETCH_COLLECTIONS_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         collections: [],
         isFetching: false
-      });
+      };
     case FETCH_COLLECTION_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         entries: [],
         isFetching: false
-      });
+      };
     case FETCH_DOCUMENT_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentDocument: {},
         isFetching: false
-      });
+      };
     case PUT_DOCUMENT_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentDocument: action.doc,
         updated: true
-      });
+      };
     default:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         updated: false
-      });
+      };
   }
 }
 

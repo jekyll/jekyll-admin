@@ -1,5 +1,7 @@
+// Action Types
 export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';
 
+// Actions
 export const addNotification = (title, message, level) => ({
   type: ADD_NOTIFICATION,
   notification: {
@@ -9,6 +11,7 @@ export const addNotification = (title, message, level) => ({
   }
 });
 
+// Reducer
 export default function notifications(
   state = {
     notification: {}

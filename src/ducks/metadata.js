@@ -7,6 +7,7 @@ import {
   convertMetadataField
 } from '../utils/metadata';
 
+// Action Types
 export const UPDATE_TITLE = 'UPDATE_TITLE';
 export const UPDATE_BODY = 'UPDATE_BODY';
 export const UPDATE_PATH = 'UPDATE_PATH';
@@ -19,6 +20,7 @@ export const UPDATE_FIELD_VALUE = 'UPDATE_FIELD_VALUE';
 export const MOVE_ARRAY_ITEM = 'MOVE_ARRAY_ITEM';
 export const CONVERT_FIELD = 'CONVERT_FIELD';
 
+// Actions
 export const storeContentFields = content => ({
   type: STORE_CONTENT_FIELDS,
   content
@@ -48,14 +50,12 @@ export const updateFieldValue = (nameAttr, value) => ({
   value
 });
 
-export function moveArrayItem(namePrefix, srcInd, targetInd) {
-  return {
-    type: MOVE_ARRAY_ITEM,
-    namePrefix,
-    srcInd,
-    targetInd
-  };
-}
+export const moveArrayItem = (namePrefix, srcInd, targetInd) => ({
+  type: MOVE_ARRAY_ITEM,
+  namePrefix,
+  srcInd,
+  targetInd
+});
 
 export const convertField = (nameAttr, convertType) => ({
   type: CONVERT_FIELD,
@@ -83,8 +83,8 @@ export const updatePath = path => ({
   path
 });
 
-// TODO normalize the metadata
-export default function metadata(
+// Reducer
+export default function metadata( // TODO normalize the metadata
   state = {
     metadata: {},
     new_field_count: 1,
