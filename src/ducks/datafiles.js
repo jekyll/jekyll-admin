@@ -121,14 +121,12 @@ export function deleteDataFile(directory, filename) {
   };
 }
 
-export function onDataFileChanged() {
-  return {
-    type: DATAFILE_CHANGED
-  };
-}
+export const onDataFileChanged = () => ({
+  type: DATAFILE_CHANGED
+});
 
-const validateDatafile = (filename, data) => {
-  return validator(
+const validateDatafile = (filename, data) =>
+  validator(
     { filename, data },
     { filename: 'required', data: 'required' },
     {
@@ -136,7 +134,6 @@ const validateDatafile = (filename, data) => {
       'data.required': getContentRequiredMessage()
     }
   );
-};
 
 export default function datafiles(
   state = {
@@ -152,50 +149,59 @@ export default function datafiles(
   switch (action.type) {
     case FETCH_DATAFILES_REQUEST:
     case FETCH_DATAFILE_REQUEST:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: true
-      });
+      };
     case FETCH_DATAFILES_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         files: action.files,
         isFetching: false,
         currentFile: {}
-      });
+      };
     case FETCH_DATAFILES_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         isFetching: false,
         currentFile: {}
-      });
+      };
     case FETCH_DATAFILE_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentFile: action.file,
         isFetching: false
-      });
+      };
     case FETCH_DATAFILE_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentFile: {},
         isFetching: false
-      });
+      };
     case PUT_DATAFILE_SUCCESS:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         currentFile: action.file,
         updated: true,
         datafileChanged: false
-      });
+      };
     case PUT_DATAFILE_FAILURE:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         datafileChanged: false
-      });
+      };
     case DATAFILE_CHANGED:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         datafileChanged: true,
         updated: false
-      });
+      };
     default:
-      return Object.assign({}, state, {
+      return {
+        ...state,
         updated: false,
         datafileChanged: false
-      });
+      };
   }
 }
 

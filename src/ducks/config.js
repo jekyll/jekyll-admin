@@ -55,21 +55,18 @@ export function putConfig(config, source = 'editor') {
   };
 }
 
-function validateConfig(config) {
-  return validator(
+const validateConfig = config =>
+  validator(
     { config },
     { config: 'required' },
     {
       'config.required': getContentRequiredMessage()
     }
   );
-}
 
-export function onEditorChange() {
-  return {
-    type: CONFIG_EDITOR_CHANGED
-  };
-}
+export const onEditorChange = () => ({
+  type: CONFIG_EDITOR_CHANGED
+});
 
 export default function config(
   state = {
