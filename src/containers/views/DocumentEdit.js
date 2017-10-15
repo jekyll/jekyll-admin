@@ -13,14 +13,14 @@ import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
-import { fetchDocument, deleteDocument, putDocument } from '../../actions/collections';
-import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
-import { clearErrors } from '../../actions/utils';
+import { fetchDocument, deleteDocument, putDocument } from '../../ducks/collections';
+import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
+import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
 import { capitalize, preventDefault } from '../../utils/helpers';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
+} from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentEdit extends Component {

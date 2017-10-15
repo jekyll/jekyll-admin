@@ -7,14 +7,12 @@ import DocumentTitle from 'react-document-title';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
-import { fetchPages, deletePage } from '../../actions/pages';
-import { search } from '../../actions/utils';
-import { filterBySearchInput } from '../../reducers/pages';
-import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
+import { fetchPages, deletePage, filterBySearchInput } from '../../ducks/pages';
+import { search } from '../../ducks/utils';
+import { getDeleteMessage, getNotFoundMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class Pages extends Component {
-
   componentDidMount() {
     const { fetchPages, params } = this.props;
     fetchPages(params.splat);
@@ -71,13 +69,9 @@ export class Pages extends Component {
               type="delete"
               icon="trash"
               active={true}
-              thin />
-            <Button
-              to={http_url}
-              type="view"
-              icon="eye"
-              active={true}
-              thin />
+              thin
+            />
+            <Button to={http_url} type="view" icon="eye" active={true} thin />
           </div>
         </td>
       </tr>
@@ -120,8 +114,9 @@ export class Pages extends Component {
       return null;
     }
 
-    const to = params.splat ? `${ADMIN_PREFIX}/pages/${params.splat}/new` :
-      `${ADMIN_PREFIX}/pages/new`;
+    const to = params.splat
+      ? `${ADMIN_PREFIX}/pages/${params.splat}/new`
+      : `${ADMIN_PREFIX}/pages/new`;
 
     const title = params.splat ? `${params.splat} | Pages` : 'Pages';
 
@@ -131,18 +126,16 @@ export class Pages extends Component {
           <div className="content-header">
             <Breadcrumbs type="pages" splat={params.splat || ''} />
             <div className="page-buttons">
-              <Link className="btn btn-active" to={to}>New page</Link>
+              <Link className="btn btn-active" to={to}>
+                New page
+              </Link>
             </div>
             <div className="pull-right">
               <InputSearch searchBy="filename" search={search} />
             </div>
           </div>
-          {
-            pages.length > 0 && this.renderTable()
-          }
-          {
-            !pages.length && <h1>{getNotFoundMessage('pages')}</h1>
-          }
+          {pages.length > 0 && this.renderTable()}
+          {!pages.length && <h1>{getNotFoundMessage('pages')}</h1>}
         </div>
       </DocumentTitle>
     );
@@ -158,15 +151,19 @@ Pages.propTypes = {
   params: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   pages: filterBySearchInput(state.pages.pages, state.utils.input),
   isFetching: state.pages.isFetching
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchPages,
-  deletePage,
-  search
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchPages,
+      deletePage,
+      search
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(Pages);

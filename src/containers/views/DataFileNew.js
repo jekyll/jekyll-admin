@@ -10,10 +10,10 @@ import Editor from '../../components/Editor';
 import Button from '../../components/Button';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
-import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
-import { clearErrors } from '../../actions/utils';
+import { putDataFile, onDataFileChanged } from '../../ducks/datafiles';
+import { clearErrors } from '../../ducks/utils';
 import { preventDefault, getFilenameFromPath } from '../../utils/helpers';
-import { getLeaveMessage } from '../../constants/lang';
+import { getLeaveMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileNew extends Component {
