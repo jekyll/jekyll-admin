@@ -30,11 +30,25 @@ export default class FilePreview extends Component {
     } else {
       nodeLink = <a href={file.http_url} target="_blank">{node}</a>;
     }
+
+    let overlay;
+    if (file.from_theme) {
+      overlay = (
+        <span className="theme-indicator">
+          <i className="fa fa-diamond" aria-hidden="true" title="Theme Asset" />
+        </span>
+      );
+    } else {
+      overlay = (
+        <button onClick={() => this.handleClickDelete(file.path)} className="delete" title="Delete file">x</button>
+      );
+    }
+
     return (
       <div className="file-preview">
+        {overlay}
         {nodeLink}
         <span className="filename">{file.path}</span>
-        <button onClick={() => this.handleClickDelete(file.path)} className="delete" title="Delete file">x</button>
       </div>
     );
   }

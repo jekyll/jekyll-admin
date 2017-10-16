@@ -48,6 +48,21 @@
         display: inline-table;
       }
     }
+    span.theme-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 0;
+      width: 32px;
+      height: 32px;
+      text-align: left;
+      background: $dark-red;
+      i {
+        margin: 0;
+        padding: 8px 7px 7px;
+        color: white;
+        font-size: 16px;
+      }
+    }
     span.filename {
       font-size: 14px;
       line-height: 2;

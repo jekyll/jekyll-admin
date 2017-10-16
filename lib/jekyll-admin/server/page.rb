@@ -16,7 +16,7 @@ module JekyllAdmin
 
         if renamed?
           ensure_requested_file
-          delete_file path
+          delete_file_without_process path
         end
 
         write_file write_path, page_body

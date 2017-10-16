@@ -13,3 +13,5 @@ Metrics/BlockLength:
   Enabled: false
 Metrics/PerceivedComplexity:
   Max: 9
+Style/FrozenStringLiteralComment:
+  Enabled: false

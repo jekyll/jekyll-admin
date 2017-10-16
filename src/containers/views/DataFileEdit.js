@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
+import DocumentTitle from 'react-document-title';
 import DataGUI from '../MetaFields';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
@@ -40,7 +41,7 @@ export class DataFileEdit extends Component {
 
   componentDidMount() {
     const { fetchDataFile, params, router, route } = this.props;
-    const [directory, ...rest] = params.splat || [""];
+    const [directory, ...rest] = params.splat || [''];
     const filename = rest.join('.');
 
     router.setRouteLeaveHook(route, this.routerWillLeave);
@@ -96,11 +97,11 @@ export class DataFileEdit extends Component {
   handleClickSave(e) {
     const { datafile, datafileChanged, fieldChanged, putDataFile, params } = this.props;
     const { path, relative_path } = datafile;
-    const data_dir = path.replace(relative_path, "");
+    const data_dir = path.replace(relative_path, '');
 
     let name, data, mode;
-    const [directory, ...rest] = params.splat || [""];
-    const filename = rest.join(".");
+    const [directory, ...rest] = params.splat || [''];
+    const filename = rest.join('.');
 
     // Prevent the default event from bubbling
     preventDefault(e);
@@ -109,18 +110,18 @@ export class DataFileEdit extends Component {
       if (this.state.guiView) {
         name = this.state.guiPath + this.state.extn;
         data = null;
-        mode = "gui";
+        mode = 'gui';
 
       } else {
         name = this.refs.inputpath.refs.input.value;
         data = this.refs.editor.getValue();
-        mode = "editor";
+        mode = 'editor';
       }
 
       const data_path = directory ? (data_dir + `${directory}/` + name) :
                                     (data_dir + name);
 
-      const new_path = (data_path != path) ? data_path : "";
+      const new_path = (data_path != path) ? data_path : '';
       putDataFile(directory, filename, data, new_path, mode);
     }
   }
@@ -130,7 +131,7 @@ export class DataFileEdit extends Component {
     const confirm = window.confirm(getDeleteMessage(path));
 
     if (confirm) {
-      const [directory, ...rest] = params.splat || [""];
+      const [directory, ...rest] = params.splat || [''];
       const filename = getFilenameFromPath(path);
       deleteDataFile(directory, filename);
       const dir = directory ? `/${directory}` : '';
@@ -218,11 +219,11 @@ export class DataFileEdit extends Component {
     }
 
     if (_.isEmpty(datafile.content)) {
-      return <h1>{getNotFoundMessage("content")}</h1>;
+      return <h1>{getNotFoundMessage('content')}</h1>;
     }
 
     const { path, raw_content, content } = datafile;
-    const [directory, ...rest] = params.splat || [""];
+    const [directory, ...rest] = params.splat || [''];
     const filename = getFilenameFromPath(path);
     const ext = getExtensionFromPath(path);
 
@@ -238,45 +239,51 @@ export class DataFileEdit extends Component {
       'save': this.handleClickSave,
     };
 
+    const document_title = directory ?
+      `${filename} - ${directory} - Data Files` :
+      `${filename} - Data Files`;
+
     return (
-      <HotKeys
-        handlers={keyboardHandlers}
-        className="single">
-        {errors.length > 0 && <Errors errors={errors} />}
+      <DocumentTitle title={document_title}>
+        <HotKeys
+          handlers={keyboardHandlers}
+          className="single">
+          {errors.length > 0 && <Errors errors={errors} />}
 
-        <div className="content-header">
-          <Breadcrumbs splat={directory || ""} type="data files" />
-        </div>
+          <div className="content-header">
+            <Breadcrumbs splat={directory || ''} type="data files" />
+          </div>
 
-        <div className="content-wrapper">
-          {
-            this.state.guiView &&
-              <div className="content-body">
-                <div className="warning">
-                  CAUTION! Any existing comments will be lost when editing via this view.
-                  Switch to the <strong>Raw Editor</strong> to preserve comments.
+          <div className="content-wrapper">
+            {
+              this.state.guiView &&
+                <div className="content-body">
+                  <div className="warning">
+                    CAUTION! Any existing comments will be lost when editing via this view.
+                    Switch to the <strong>Raw Editor</strong> to preserve comments.
+                  </div>
+                  {this.renderGUInputs()}
+                  <DataGUI fields={content} dataview/>
                 </div>
-                {this.renderGUInputs()}
-                <DataGUI fields={content} dataview/>
-              </div>
-          }
-          {
-            !this.state.guiView && raw_content &&
-              <div className="content-body">
-                {input_path}
-                <Editor
-                  editorChanged={datafileChanged}
-                  onEditorChange={onDataFileChanged}
-                  content={raw_content}
-                  type={ext || "yml"}
-                  ref="editor" />
-              </div>
-          }
+            }
+            {
+              !this.state.guiView && raw_content &&
+                <div className="content-body">
+                  {input_path}
+                  <Editor
+                    editorChanged={datafileChanged}
+                    onEditorChange={onDataFileChanged}
+                    content={raw_content}
+                    type={ext || 'yml'}
+                    ref="editor" />
+                </div>
+            }
 
-          {this.renderAside()}
+            {this.renderAside()}
 
-        </div>
-      </HotKeys>
+          </div>
+        </HotKeys>
+      </DocumentTitle>
     );
   }
 }

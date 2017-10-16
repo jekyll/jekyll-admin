@@ -19,6 +19,8 @@ function setup(file=staticfile) {
     filename: component.find('.filename'),
     image: component.find('img'),
     div: component.find('.file-preview a div'),
+    indicator: component.find('.file-preview .theme-indicator'),
+    delete_btn: component.find('.file-preview .delete'),
     actions: actions
   };
 }
@@ -29,9 +31,20 @@ describe('Components::FilePreview', () => {
     expect(image.node).toBeTruthy();
     expect(div.node).toBeFalsy();
   });
+
   it('should render a div if the file does not have an image extension', () => {
     const { image, div } = setup({...staticfile, extname: 'html'});
     expect(image.node).toBeFalsy();
     expect(div.node).toBeTruthy();
+  });
+
+  it('should render an indicator if file is from theme-gem', () => {
+    const { indicator } = setup({...staticfile, from_theme: true});
+    expect(indicator.node).toBeTruthy();
+  });
+
+  it('should not render a delete-button if file is from theme-gem', () => {
+    const { delete_btn } = setup({...staticfile, from_theme: true});
+    expect(delete_btn.node).toBeFalsy();
   });
 });

@@ -4,12 +4,14 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import moment from 'moment';
+import DocumentTitle from 'react-document-title';
 import InputSearch from '../../components/form/InputSearch';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import { fetchCollection, deleteDocument } from '../../actions/collections';
 import { filterBySearchInput } from '../../reducers/collections';
 import { search } from '../../actions/utils';
+import { capitalize } from '../../utils/helpers';
 import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -59,10 +61,10 @@ export class Documents extends Component {
     const splat = path.substr(path.indexOf('/')+1, path.length);
     const to = `${ADMIN_PREFIX}/collections/${collection}/${splat}`;
     // date w/o timezone
-    let date = doc.date.substring(0, doc.date.lastIndexOf(" "));
-    date = moment(date).format("hh:mm:ss") == '12:00:00' ?
-      moment(date).format("ll") :
-      moment(date).format("lll");
+    let date = doc.date.substring(0, doc.date.lastIndexOf(' '));
+    date = moment(date).format('hh:mm:ss') == '12:00:00' ?
+      moment(date).format('ll') :
+      moment(date).format('lll');
 
     return (
       <tr key={id}>
@@ -104,8 +106,8 @@ export class Documents extends Component {
     const splat = path.substr(path.indexOf('/')+1, path.length);
     const to = `${ADMIN_PREFIX}/collections/${collection_name}/${splat}`;
     // date w/o timezone
-    let date = modified_time.substring(0, modified_time.lastIndexOf(" "));
-    date = moment(date).format("ll");
+    let date = modified_time.substring(0, modified_time.lastIndexOf(' '));
+    date = moment(date).format('ll');
     return (
       <tr key={name}>
         <td className="row-title">
@@ -145,26 +147,32 @@ export class Documents extends Component {
       `${ADMIN_PREFIX}/collections/${collection_name}/${splat}/new` :
       `${ADMIN_PREFIX}/collections/${collection_name}/new`;
 
+    const document_title = params.splat ?
+      `${params.splat} | ${capitalize(collection_name)}` :
+      capitalize(collection_name);
+
     return (
-      <div>
-        <div className="content-header">
-          <Breadcrumbs type={collection_name} splat={splat} />
-          <div className="page-buttons">
-            <Link className="btn btn-active" to={to}>
-              {collection_name == "posts" ? "New post" : "New document"}
-            </Link>
+      <DocumentTitle title={document_title}>
+        <div>
+          <div className="content-header">
+            <Breadcrumbs type={collection_name} splat={splat} />
+            <div className="page-buttons">
+              <Link className="btn btn-active" to={to}>
+                {collection_name == 'posts' ? 'New post' : 'New document'}
+              </Link>
+            </div>
+            <div className="pull-right">
+              <InputSearch searchBy="title" search={search} />
+            </div>
           </div>
-          <div className="pull-right">
-            <InputSearch searchBy="title" search={search} />
-          </div>
+          {
+            documents.length > 0 && this.renderTable()
+          }
+          {
+            !documents.length && <h1>{getNotFoundMessage('documents')}</h1>
+          }
         </div>
-        {
-          documents.length > 0 && this.renderTable()
-        }
-        {
-          !documents.length && <h1>{getNotFoundMessage("documents")}</h1>
-        }
-      </div>
+      </DocumentTitle>
     );
   }
 }

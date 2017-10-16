@@ -12,7 +12,7 @@ import { addField, removeField, updateFieldKey,
 export default function metadata(state = {
   metadata: {},
   new_field_count: 1,
-  key_prefix: '', // force children to be destroyed on sort
+  key_prefix: '', // force children to be rerendered on sort
   fieldChanged: false
 }, action) {
   switch (action.type) {

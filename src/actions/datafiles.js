@@ -11,8 +11,8 @@ export function fetchDataFiles(directory = '') {
     dispatch({ type: ActionTypes.FETCH_DATAFILES_REQUEST});
     return get(
       datafilesAPIUrl(directory),
-      { type: ActionTypes.FETCH_DATAFILES_SUCCESS, name: "files"},
-      { type: ActionTypes.FETCH_DATAFILES_FAILURE, name: "error"},
+      { type: ActionTypes.FETCH_DATAFILES_SUCCESS, name: 'files'},
+      { type: ActionTypes.FETCH_DATAFILES_FAILURE, name: 'error'},
       dispatch
     );
   };
@@ -23,8 +23,8 @@ export function fetchDataFile(directory, filename) {
     dispatch({ type: ActionTypes.FETCH_DATAFILE_REQUEST});
     return get(
       datafileAPIUrl(directory, filename),
-      { type: ActionTypes.FETCH_DATAFILE_SUCCESS, name: "file"},
-      { type: ActionTypes.FETCH_DATAFILE_FAILURE, name: "error"},
+      { type: ActionTypes.FETCH_DATAFILE_SUCCESS, name: 'file'},
+      { type: ActionTypes.FETCH_DATAFILE_FAILURE, name: 'error'},
       dispatch
     );
   };
@@ -43,7 +43,7 @@ export function putDataFile(directory, filename, data, new_path = '', source = '
   return (dispatch, getState) => {
     const ext = getExtensionFromPath(new_path || filename);
 
-    if (source == "gui") {
+    if (source == 'gui') {
       const json = /json/i.test(ext);
       let metadata = getState().metadata.metadata;
       metadata = trimObject(metadata);
@@ -64,8 +64,8 @@ export function putDataFile(directory, filename, data, new_path = '', source = '
     return put(
       datafileAPIUrl(directory, filename),
       JSON.stringify(payload),
-      { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: "file"},
-      { type: ActionTypes.PUT_DATAFILE_FAILURE, name: "error"},
+      { type: ActionTypes.PUT_DATAFILE_SUCCESS, name: 'file'},
+      { type: ActionTypes.PUT_DATAFILE_FAILURE, name: 'error'},
       dispatch
     );
   };

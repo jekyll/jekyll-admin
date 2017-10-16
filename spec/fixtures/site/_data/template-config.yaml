@@ -28,18 +28,41 @@ author:
 
 hidden: false
 
+# interactive GUI fields
+image: logo.png
+date: "May 21 2018 09:00:00"
+file:
+  - "file 1"
+  - "file 2"
+  - "file 3"
+cabinet:
+  image: foo.png
+  date: "Apr 09 2017 09:30:00"
+  file:
+    - red-tape
+    - dossier
+    - adverts
+#
 complex_data:
   simple_key: value
   object_key:
-    simple_key: value
-    object_key:
-      simple_key: value
-    list_key:
+    simple_subkey: value
+    object_subkey:
+      simple_subkey: value
+    list_subkey:
       - value_1
       - value_2
       - value_3
       - value_4
-
+  list_key:
+    - key_1: value_1a
+      key_2: value_2a
+      image: foo.png
+      date: "May 14 2017 09:00:00"
+    - key_1: value_1b
+      key_2: value_2b
+      image: bar.png
+      date: "May 14 2017 10:30:00"
 
 # Build settings
 markdown: kramdown

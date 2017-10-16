@@ -18,8 +18,15 @@ module JekyllAdmin
       Jekyll.logger.debug "WRITING:", path
       path = sanitized_path(path)
       FileUtils.mkdir_p File.dirname(path)
-      File.write(path, content)
-      site.process
+      File.open(path, "wb") do |file|
+        file.write(content)
+      end
+      # we should fully process in dev mode for tests to pass
+      if ENV["RACK_ENV"] == "production"
+        site.read
+      else
+        site.process
+      end
     end
 
     # Delete the file at the given path
@@ -27,6 +34,11 @@ module JekyllAdmin
       Jekyll.logger.debug "DELETING:", path
       FileUtils.rm_f sanitized_path(path)
       site.process
+    end
+
+    def delete_file_without_process(path)
+      Jekyll.logger.debug "DELETING:", path
+      FileUtils.rm_f sanitized_path(path)
     end
 
     private

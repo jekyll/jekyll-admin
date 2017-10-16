@@ -39,7 +39,6 @@ end
 
 # Monkey Patches
 require_relative "./jekyll/commands/serve"
-require_relative "./jekyll/commands/build"
 
 [Jekyll::Page, Jekyll::Document, Jekyll::StaticFile, Jekyll::Collection].each do |klass|
   klass.include JekyllAdmin::APIable

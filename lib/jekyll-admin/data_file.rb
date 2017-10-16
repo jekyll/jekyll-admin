@@ -16,7 +16,7 @@ module JekyllAdmin
     def initialize(id)
       @id ||= File.extname(id).empty? ? "#{id}.yml" : id
     end
-    alias_method :path, :id
+    alias_method :relative_path, :id
 
     def exists?
       @exists ||= File.exist?(absolute_path)
@@ -52,15 +52,15 @@ module JekyllAdmin
       @title ||= Jekyll::Utils.titleize_slug(slug.tr("_", "-"))
     end
 
-    # Return path relative to configured `data_dir`
-    def relative_path
-      id.sub("/#{DataFile.data_dir}/", "")
+    # Returns path relative to site source
+    def path
+      ensure_leading_slash(File.join(DataFile.data_dir, relative_path))
     end
 
-    # Return the absolute path to given data file
     def absolute_path
-      sanitized_path id
+      sanitized_path(path)
     end
+    alias_method :file_path, :absolute_path
 
     # Mimics Jekyll's native to_liquid functionality by returning a hash
     # of data file metadata
@@ -69,13 +69,10 @@ module JekyllAdmin
     end
 
     def self.all
-      data_dir = sanitized_path DataFile.data_dir
-      files = Dir["#{data_dir}/**/*.{#{EXTENSIONS.join(",")}}"].reject do |d|
-        File.directory?(d)
-      end
-
-      files.map do |path|
-        new path_without_site_source(path)
+      data_dir = Jekyll.sanitized_path(JekyllAdmin.site.source, DataFile.data_dir)
+      data_dir = Pathname.new(data_dir)
+      Dir["#{data_dir}/**/*.{#{EXTENSIONS.join(",")}}"].map do |path|
+        new(Pathname.new(path).relative_path_from(data_dir).to_s)
       end
     end
 

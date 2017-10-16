@@ -1,6 +1,6 @@
 {
   "name": "jekyll-admin",
-  "version": "0.5.0",
+  "version": "0.7.0",
   "description": "Admin Panel for Jekyll",
   "private": true,
   "scripts": {
@@ -36,6 +36,7 @@
     "moment": "2.17.1",
     "react": "15.4.1",
     "react-ace": "4.1.5",
+    "react-document-title": "^2.0.3",
     "react-dom": "15.4.1",
     "react-dropzone": "3.10.0",
     "react-hotkeys": "^0.9.0",
@@ -102,7 +103,9 @@
       "\\.(css|scss)$": "identity-obj-proxy",
       "^.+\\.(gif|ttf|eot|svg|woff|woff2|ico)$": "<rootDir>/tools/fileMock.js"
     },
-    "roots": ["src"],
+    "roots": [
+      "src"
+    ],
     "testMatch": [
       "**/*.spec.js"
     ]
