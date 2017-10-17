@@ -11,16 +11,20 @@ import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
-import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
-import { putDraft } from '../../actions/drafts';
-import { clearErrors } from '../../actions/utils';
-import { getLeaveMessage } from '../../constants/lang';
+import { putDraft } from '../../ducks/drafts';
+import { clearErrors } from '../../ducks/utils';
+import { getLeaveMessage } from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
+import {
+  updateTitle,
+  updateBody,
+  updatePath,
+  updateDraft
+} from '../../ducks/metadata';
 
 export class DraftNew extends Component {
-
   constructor(props) {
     super(props);
 
@@ -35,12 +39,14 @@ export class DraftNew extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
-      browserHistory.push(`${ADMIN_PREFIX}/drafts/${nextProps.draft.relative_path}`);
+      browserHistory.push(
+        `${ADMIN_PREFIX}/drafts/${nextProps.draft.relative_path}`
+      );
     }
   }
 
   componentWillUnmount() {
-    const { clearErrors, errors} = this.props;
+    const { clearErrors, errors } = this.props;
     // clear errors if any
     if (errors.length) {
       clearErrors();
@@ -66,23 +72,26 @@ export class DraftNew extends Component {
 
   render() {
     const {
-      errors, updated, updateTitle, updateBody, updatePath, fieldChanged, params, config
+      errors,
+      updated,
+      updateTitle,
+      updateBody,
+      updatePath,
+      fieldChanged,
+      params,
+      config
     } = this.props;
     const metafields = injectDefaultFields(config, params.splat, 'posts');
 
     const keyboardHandlers = {
-      'save': this.handleClickSave,
+      save: this.handleClickSave
     };
 
     return (
-      <HotKeys
-        handlers={keyboardHandlers}
-        className="single">
+      <HotKeys handlers={keyboardHandlers} className="single">
         {errors.length > 0 && <Errors errors={errors} />}
         <div className="content-header">
-          <Breadcrumbs
-            type="drafts"
-            splat={params.splat || ''} />
+          <Breadcrumbs type="drafts" splat={params.splat || ''} />
         </div>
 
         <div className="content-wrapper">
@@ -94,7 +103,8 @@ export class DraftNew extends Component {
               onSave={this.handleClickSave}
               placeholder="Body"
               initialValue=""
-              ref="editor" />
+              ref="editor"
+            />
             <Splitter />
             <Metadata fields={metafields} />
           </div>
@@ -106,7 +116,8 @@ export class DraftNew extends Component {
               active={fieldChanged}
               triggered={updated}
               icon="plus-square"
-              block />
+              block
+            />
           </div>
         </div>
       </HotKeys>
@@ -130,7 +141,7 @@ DraftNew.propTypes = {
   config: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   draft: state.drafts.draft,
   fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors,
@@ -138,13 +149,19 @@ const mapStateToProps = (state) => ({
   config: state.config.config
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateTitle,
-  updateBody,
-  updatePath,
-  updateDraft,
-  putDraft,
-  clearErrors
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      updateTitle,
+      updateBody,
+      updatePath,
+      updateDraft,
+      putDraft,
+      clearErrors
+    },
+    dispatch
+  );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DraftNew));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DraftNew)
+);

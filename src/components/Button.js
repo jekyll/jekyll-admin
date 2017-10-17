@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import classnames from 'classnames';
-import { labels } from '../constants/lang';
+import { labels } from '../translations';
 
 export default class Button extends Component {
 

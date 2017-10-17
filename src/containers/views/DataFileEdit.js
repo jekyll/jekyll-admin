@@ -12,14 +12,14 @@ import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
-import { clearErrors } from '../../actions/utils';
+import { clearErrors } from '../../ducks/utils';
 import { getFilenameFromPath, getExtensionFromPath, preventDefault } from '../../utils/helpers';
 import {
   fetchDataFile, putDataFile, deleteDataFile, onDataFileChanged
-} from '../../actions/datafiles';
+} from '../../ducks/datafiles';
 import {
   getLeaveMessage, getDeleteMessage, getNotFoundMessage
-} from '../../constants/lang';
+} from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileEdit extends Component {

@@ -6,14 +6,16 @@ import _ from 'underscore';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
-import { fetchDrafts, deleteDraft } from '../../actions/drafts';
-import { search } from '../../actions/utils';
-import { filterBySearchInput } from '../../reducers/drafts';
-import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
+import { search } from '../../ducks/utils';
+import { getDeleteMessage, getNotFoundMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
+import {
+  fetchDrafts,
+  deleteDraft,
+  filterBySearchInput
+} from '../../ducks/drafts';
 
 export class Drafts extends Component {
-
   componentDidMount() {
     const { fetchDrafts, params } = this.props;
     fetchDrafts(params.splat);
@@ -70,13 +72,9 @@ export class Drafts extends Component {
               type="delete"
               icon="trash"
               active={true}
-              thin />
-            <Button
-              to={http_url}
-              type="view"
-              icon="eye"
-              active={true}
-              thin />
+              thin
+            />
+            <Button to={http_url} type="view" icon="eye" active={true} thin />
           </div>
         </td>
       </tr>
@@ -119,26 +117,25 @@ export class Drafts extends Component {
       return null;
     }
 
-    const to = params.splat ? `${ADMIN_PREFIX}/drafts/${params.splat}/new` :
-      `${ADMIN_PREFIX}/drafts/new`;
+    const to = params.splat
+      ? `${ADMIN_PREFIX}/drafts/${params.splat}/new`
+      : `${ADMIN_PREFIX}/drafts/new`;
 
     return (
       <div>
         <div className="content-header">
           <Breadcrumbs type="drafts" splat={params.splat || ''} />
           <div className="draft-buttons">
-            <Link className="btn btn-active" to={to}>New draft</Link>
+            <Link className="btn btn-active" to={to}>
+              New draft
+            </Link>
           </div>
           <div className="pull-right">
             <InputSearch searchBy="filename" search={search} />
           </div>
         </div>
-        {
-          drafts.length > 0 && this.renderTable()
-        }
-        {
-          !drafts.length && <h1>{getNotFoundMessage('drafts')}</h1>
-        }
+        {drafts.length > 0 && this.renderTable()}
+        {!drafts.length && <h1>{getNotFoundMessage('drafts')}</h1>}
       </div>
     );
   }
@@ -153,15 +150,19 @@ Drafts.propTypes = {
   params: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   drafts: filterBySearchInput(state.drafts.drafts, state.utils.input),
   isFetching: state.drafts.isFetching
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchDrafts,
-  deleteDraft,
-  search
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchDrafts,
+      deleteDraft,
+      search
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(Drafts);

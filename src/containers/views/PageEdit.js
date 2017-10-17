@@ -13,12 +13,12 @@ import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../MetaFields';
-import { fetchPage, deletePage, putPage } from '../../actions/pages';
-import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
-import { clearErrors } from '../../actions/utils';
+import { fetchPage, deletePage, putPage } from '../../ducks/pages';
+import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
+import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault } from '../../utils/helpers';
-import { getLeaveMessage, getDeleteMessage } from '../../constants/lang';
+import { getLeaveMessage, getDeleteMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class PageEdit extends Component {

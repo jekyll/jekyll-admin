@@ -5,17 +5,19 @@ import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
 import Breadcrumbs from '../../components/Breadcrumbs';
-import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
+import { getDeleteMessage, getNotFoundMessage } from '../../translations';
 import InputSearch from '../../components/form/InputSearch';
 import Button from '../../components/Button';
-import { fetchDataFiles, deleteDataFile } from '../../actions/datafiles';
-import { search } from '../../actions/utils';
-import { filterByFilename } from '../../reducers/datafiles';
+import {
+  fetchDataFiles,
+  deleteDataFile,
+  filterByFilename
+} from '../../ducks/datafiles';
+import { search } from '../../ducks/utils';
 import { getFilenameFromPath } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFiles extends Component {
-
   componentDidMount() {
     const { fetchDataFiles, params } = this.props;
     fetchDataFiles(params.splat);
@@ -79,7 +81,8 @@ export class DataFiles extends Component {
               type="delete"
               icon="trash"
               active={true}
-              thin />
+              thin
+            />
           </div>
         </td>
       </tr>
@@ -131,7 +134,9 @@ export class DataFiles extends Component {
       dirSplat = '';
     }
 
-    const document_title = params.splat ? `${params.splat} - Data Files` : 'Data Files';
+    const document_title = params.splat
+      ? `${params.splat} - Data Files`
+      : 'Data Files';
 
     return (
       <DocumentTitle title={document_title}>
@@ -139,18 +144,16 @@ export class DataFiles extends Component {
           <div className="content-header">
             <Breadcrumbs type="data files" splat={dirSplat} />
             <div className="page-buttons">
-              <Link className="btn btn-active" to={to}>New data file</Link>
+              <Link className="btn btn-active" to={to}>
+                New data file
+              </Link>
             </div>
             <div className="pull-right">
               <InputSearch searchBy="filename" search={search} />
             </div>
           </div>
-          {
-            files.length > 0 && this.renderTable()
-          }
-          {
-            !files.length && <h1>{getNotFoundMessage('data files')}</h1>
-          }
+          {files.length > 0 && this.renderTable()}
+          {!files.length && <h1>{getNotFoundMessage('data files')}</h1>}
         </div>
       </DocumentTitle>
     );
@@ -166,15 +169,21 @@ DataFiles.propTypes = {
   params: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   files: filterByFilename(state.datafiles.files, state.utils.input),
   isFetching: state.datafiles.isFetching
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchDataFiles,
-  deleteDataFile,
-  search
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchDataFiles,
+      deleteDataFile,
+      search
+    },
+    dispatch
+  );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DataFiles));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DataFiles)
+);

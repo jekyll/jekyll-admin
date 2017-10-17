@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { HotKeys } from 'react-hotkeys';
 import DocumentTitle from 'react-document-title';
 
-import { fetchConfig } from '../actions/config';
+import { fetchConfig } from '../ducks/config';
 import keyboardShortcuts from '../constants/keyboardShortcuts';
 
 // Components
@@ -13,7 +13,6 @@ import Header from './Header';
 import Notifications from './Notifications';
 
 class App extends Component {
-
   componentDidMount() {
     const { fetchConfig } = this.props;
     fetchConfig();
@@ -35,22 +34,17 @@ class App extends Component {
 
     return (
       <DocumentTitle title="Jekyll Admin">
-        <HotKeys
-          keyMap={keyboardShortcuts}
-          className="wrapper">
-          {
-            config.content &&
+        <HotKeys keyMap={keyboardShortcuts} className="wrapper">
+          {config.content && (
             <div>
               <Sidebar config={config.content} />
               <div className="container">
                 <Header config={config.content} />
-                <div className="content">
-                  {this.props.children}
-                </div>
+                <div className="content">{this.props.children}</div>
               </div>
               <Notifications />
             </div>
-          }
+          )}
         </HotKeys>
       </DocumentTitle>
     );
@@ -65,14 +59,18 @@ App.propTypes = {
   updated: PropTypes.bool
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   config: state.config.config,
   updated: state.config.updated,
-  isFetching: state.config.isFetching,
+  isFetching: state.config.isFetching
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchConfig
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchConfig
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
