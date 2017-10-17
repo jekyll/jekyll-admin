@@ -98,6 +98,16 @@ export class Sidebar extends Component {
         <Link className="logo" to={`${ADMIN_PREFIX}/pages`} />
         <ul className="routes">
           {this.renderCollections(hiddenLinks)}
+          {
+            config && config.show_drafts &&
+              <li>
+                <Link activeClassName="active" to={`${ADMIN_PREFIX}/drafts`}>
+                  <i className="fa fa-edit" />
+                  {SidebarTranslations.drafts}
+                </Link>
+                { !hiddenLinks.includes('posts') && <Splitter /> }
+              </li>
+          }
           {links}
         </ul>
       </div>

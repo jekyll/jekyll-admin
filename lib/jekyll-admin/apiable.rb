@@ -44,6 +44,7 @@ module JekyllAdmin
       end
 
       if is_a?(Jekyll::Document)
+        output["relative_path"] = relative_path.sub("_drafts/", "") if draft?
         output["name"] = basename
       end
 

@@ -5,6 +5,7 @@ import config from './config';
 import pages from './pages';
 import collections from './collections';
 import metadata from './metadata';
+import drafts from './drafts';
 import datafiles from './datafiles';
 import staticfiles from './staticfiles';
 import utils from './utils';
@@ -16,6 +17,7 @@ export default combineReducers({
   pages,
   collections,
   metadata,
+  drafts,
   datafiles,
   staticfiles,
   utils,

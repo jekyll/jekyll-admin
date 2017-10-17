@@ -31,7 +31,9 @@ module JekyllAdmin
     # URL path relative to `_api/` to retreive the given resource via the API
     # Note: we can't use a case statement here, because === doesn't like includes
     def resource_path
-      if is_a?(Jekyll::Document)
+      if is_a?(Jekyll::Document) && draft?
+        "/#{relative_path.sub(%r!\A_!, "")}"
+      elsif is_a?(Jekyll::Document)
         "/collections/#{relative_path.sub(%r!\A_!, "")}"
       elsif is_a?(Jekyll::Collection)
         "/collections/#{label}"
