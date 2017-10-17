@@ -13,6 +13,9 @@ import DocumentNew from './containers/views/DocumentNew';
 import DataFiles from './containers/views/DataFiles';
 import DataFileEdit from './containers/views/DataFileEdit';
 import DataFileNew from './containers/views/DataFileNew';
+import Drafts from './containers/views/Drafts';
+import DraftEdit from './containers/views/DraftEdit';
+import DraftNew from './containers/views/DraftNew';
 import StaticFiles from './containers/views/StaticFiles';
 import NotFound from './containers/views/NotFound';
 
@@ -33,6 +36,12 @@ export default (
         <Route path="(**/)*.*" component={DocumentEdit} />
         <Route path="**" component={Documents} />
       </Route>
+    </Route>
+    <Route path="drafts">
+      <IndexRoute component={Drafts} />
+      <Route path="(**/)new" component={DraftNew} />
+      <Route path="(**/)*.*" component={DraftEdit} />
+      <Route path="**" component={Drafts} />
     </Route>
     <Route path="datafiles">
       <IndexRoute component={DataFiles} />

@@ -57,6 +57,8 @@ module JekyllAdmin
                 collection.docs
               when "data"
                 DataFile.all
+              when "drafts"
+                drafts
               when "pages", "static_files"
                 site.public_send(namespace.to_sym)
               else

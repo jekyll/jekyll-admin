@@ -52,14 +52,18 @@ module JekyllAdmin
 
     # Returns the path to the requested file's containing directory
     def directory_path
-      case namespace
-      when "collections"
-        sanitized_path File.join(collection.relative_directory, params["splat"].first)
-      when "data"
-        sanitized_path File.join(DataFile.data_dir, params["splat"].first)
-      else
-        sanitized_path params["splat"].first
-      end
+      sanitized_path(
+        case namespace
+        when "collections"
+          File.join(collection.relative_directory, params["splat"].first)
+        when "data"
+          File.join(DataFile.data_dir, params["splat"].first)
+        when "drafts"
+          File.join("_drafts", params["splat"].first)
+        else
+          params["splat"].first
+        end
+      )
     end
 
     def ensure_leading_slash(input)

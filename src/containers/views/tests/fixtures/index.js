@@ -36,6 +36,22 @@ export const page = {
   }
 };
 
+export const draft = {
+  raw_content: "# Test Draft\n",
+  name: "test-draft.md",
+  path: "_drafts/test-draft.md",
+  relative_path: "test-draft.md",
+  slug: "test-draft",
+  collection: "posts",
+  draft: true,
+  id: "/2017/05/09/test-draft",
+  date: "2017-05-09 00:00:00 +0200",
+  http_url: "/2017/05/09/test-draft.html",
+  front_matter: {
+    title: "Test Draft"
+  }
+};
+
 export const datafile = {
   path: "_data/books/authors.yml",
   relative_path: "books/authors.yml",

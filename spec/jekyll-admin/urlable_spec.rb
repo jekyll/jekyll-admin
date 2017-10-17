@@ -33,13 +33,22 @@ describe JekyllAdmin::URLable do
   end
 
   context "posts" do
-    subject { JekyllAdmin.site.posts.docs.first }
+    subject { JekyllAdmin.site.posts.docs[4] }
     let(:http_url) { "#{url_base}/2016/01/01/test-post.html" }
     let(:api_url) { "#{url_base}/#{prefix}/collections/posts/2016-01-01-test-post.md" }
 
     it "knows the HTTP URL" do
       expect(subject.http_url).to eql(http_url)
     end
+
+    it "knows the API URL" do
+      expect(subject.api_url).to eql(api_url)
+    end
+  end
+
+  context "drafts" do
+    subject { JekyllAdmin.site.posts.docs.find_all(&:draft?)[1] }
+    let(:api_url) { "#{url_base}/#{prefix}/drafts/draft-dir/another-draft-post.md" }
 
     it "knows the API URL" do
       expect(subject.api_url).to eql(api_url)

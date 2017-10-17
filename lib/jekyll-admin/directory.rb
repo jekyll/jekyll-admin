@@ -38,14 +38,17 @@ module JekyllAdmin
     end
 
     def relative_path
-      path.relative_path_from(base).to_s
+      if content_type == "drafts"
+        path.relative_path_from(base).to_s.sub("_drafts/", "")
+      else
+        path.relative_path_from(base).to_s
+      end
     end
 
     def resource_path
-      if content_type == "pages"
-        "/pages/#{splat}/#{name}"
-      elsif content_type == "data"
-        "/data/#{splat}/#{name}/"
+      types = %w(pages data drafts)
+      if types.include?(content_type)
+        "/#{content_type}/#{splat}/#{name}"
       else
         "/collections/#{content_type}/entries/#{splat}/#{name}"
       end
