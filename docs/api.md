@@ -186,6 +186,151 @@ Create or update the requested page, writing its contents to disk.
 
 Delete the requested page from disk.
 
+### Drafts
+
+The end-points for drafts are modelled similar to `Pages` even though the resource inherently belongs to a `Posts` collection.
+
+#### Parameters
+
+* `directory` - the *optional* sub-directory for a draft, relative to `_drafts` at the site root (e.g., `draft-dir`) (`String`).
+* `filename` - the draft's filename.
+* `raw_content` - the drafts's body (`String`)
+* `front_matter` - the drafts's YAML front matter (`Object`)
+
+While `path` for a sub-directory, is the same as the parameter `directory` itself, for a draft-file, it is the entire path relative to the site's root 
+
+#### `GET /drafts/:directory`
+
+Returns an array of drafts and directories for the requested directory path. If `directory`
+is not provided, entries at the root level (`./_drafts/*`) are returned.
+
+The response does not include drafts' body.
+
+##### Example response
+
+```
+GET /drafts
+```
+
+```json
+[
+  {
+    "name": "draft-dir",
+    "modified_time": "2017-09-24 19:08:41 -0400",
+    "path": "draft-dir",
+    "type": "directory",
+    "http_url": null,
+    "api_url": "http://localhost:4000/_api/drafts/draft-dir"
+  },
+  {
+    "path": "_drafts/draft-post.md",
+    "id": "/2017/09/24/draft-post",
+    "url": "/2017/09/24/draft-post.html",
+    "relative_path": "draft-post.md",
+    "collection": "posts",
+    "draft": true,
+    "categories": [
+
+    ],
+    "all": true,
+    "foo": "bar",
+    "title": "Draft Post",
+    "slug": "draft-post",
+    "ext": ".md",
+    "tags": [
+
+    ],
+    "date": "2017-09-24 18:03:49 -0400",
+    "http_url": "http://localhost:4000/2017/09/24/draft-post.html",
+    "api_url": "http://localhost:4000/_api/drafts/draft-post.md",
+    "name": "draft-post.md"
+  }
+]
+```
+
+#### `GET /drafts/:directory/:filename`
+
+Returns the requested draft. The response includes the draft body.
+
+##### Example response
+
+```
+GET /drafts/draft-dir/another-draft-post.md
+```
+
+```json
+{
+  "next": {
+    "path": "_drafts/draft-post.md",
+    "id": "/2017/09/24/draft-post",
+    "url": "/2017/09/24/draft-post.html",
+    "relative_path": "draft-post.md",
+    "collection": "posts",
+    "draft": true,
+    "categories": [],
+    "all": true,
+    "foo": "bar",
+    "title": "Draft Post",
+    "slug": "draft-post",
+    "ext": ".md",
+    "tags": [],
+    "date": "2017-09-24 18:03:49 -0400",
+    "http_url": "http://localhost:4000/2017/09/24/draft-post.html",
+    "api_url": "http://localhost:4000/_api/drafts/draft-post.md",
+    "name": "draft-post.md"
+  },
+  "path": "_drafts/draft-dir/another-draft-post.md",
+  "previous": {
+    "path": "_drafts/draft-dir/WIP/yet-another-draft-post.md",
+    "id": "/2017/09/24/yet-another-draft-post",
+    "url": "/2017/09/24/yet-another-draft-post.html",
+    "relative_path": "draft-dir/WIP/yet-another-draft-post.md",
+    "collection": "posts",
+    "draft": true,
+    "categories": [],
+    "all": true,
+    "foo": "bar",
+    "title": "Yet Another Draft Post",
+    "slug": "yet-another-draft-post",
+    "ext": ".md",
+    "tags": [],
+    "date": "2017-09-24 18:03:49 -0400",
+    "http_url": "http://localhost:4000/2017/09/24/yet-another-draft-post.html",
+    "api_url": "http://localhost:4000/_api/drafts/draft-dir/WIP/yet-another-draft-post.md",
+    "name": "yet-another-draft-post.md"
+  },
+  "content": "<h1 id=\"another-draft-post\">Another Draft Post</h1>\n",
+  "id": "/2017/09/24/another-draft-post",
+  "url": "/2017/09/24/another-draft-post.html",
+  "relative_path": "draft-dir/another-draft-post.md",
+  "collection": "posts",
+  "excerpt": "<h1 id=\"another-draft-post\">Another Draft Post</h1>\n",
+  "draft": true,
+  "categories": [],
+  "all": true,
+  "foo": "bar",
+  "title": "Another Draft Post",
+  "slug": "another-draft-post",
+  "ext": ".md",
+  "tags": [],
+  "date": "2017-09-24 18:03:49 -0400",
+  "http_url": "http://localhost:4000/2017/09/24/another-draft-post.html",
+  "api_url": "http://localhost:4000/_api/drafts/draft-dir/another-draft-post.md",
+  "raw_content": "# Another Draft Post\n",
+  "front_matter": {
+    "foo": "bar"
+  },
+  "name": "another-draft-post.md"
+}
+```
+#### `PUT /drafts/:directory/:filename`
+
+Create or update the requested page, writing its contents to disk.
+
+#### `DELETE /drafts/:directory/:filename`
+
+Delete the requested page from disk.
+
 ### Configuration
 
 #### `GET /configuration`
