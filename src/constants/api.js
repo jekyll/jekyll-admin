@@ -2,6 +2,8 @@ export const API = process.env.NODE_ENV === 'production' ?
   '/_api' :
   'http://localhost:4000/_api';
 
+export const getDashboardUrl = () => `${API}/dashboard`;
+
 export const getConfigurationUrl = () => `${API}/configuration`;
 export const putConfigurationUrl = () => `${API}/configuration`;
 
