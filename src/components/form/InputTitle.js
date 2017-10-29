@@ -7,10 +7,10 @@ export default class InputTitle extends Component {
     return nextProps.title !== this.props.title;
   }
 
-  handleChange(e) {
+  handleChange = e => {
     const { onChange } = this.props;
     onChange(e.target.value);
-  }
+  };
 
   render() {
     const { title } = this.props;
@@ -18,7 +18,7 @@ export default class InputTitle extends Component {
       <div className="input-title">
         <label>Title</label>
         <TextareaAutosize
-          onChange={e => this.handleChange(e)}
+          onChange={this.handleChange}
           placeholder="Title"
           defaultValue={title}
           ref="input"

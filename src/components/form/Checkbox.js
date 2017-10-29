@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class Checkbox extends Component {
-  handleChange(e) {
+  handleChange = e => {
     const { onChange } = this.props;
     onChange(e.target.checked);
-  }
+  };
 
   render() {
     const { text, checked } = this.props;
@@ -14,7 +14,7 @@ export default class Checkbox extends Component {
         {text}
         <label className="switch">
           <input
-            onChange={e => this.handleChange(e)}
+            onChange={this.handleChange}
             type="checkbox"
             defaultChecked={checked}
             ref="checkbox"

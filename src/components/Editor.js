@@ -10,13 +10,10 @@ class Editor extends Component {
     return nextProps.content !== this.props.content;
   }
 
-  handleChange() {
-    // TODO better handling
+  handleChange = () => {
     const { onEditorChange, editorChanged } = this.props;
-    if (!editorChanged) {
-      onEditorChange();
-    }
-  }
+    !editorChanged && onEditorChange();
+  };
 
   getValue() {
     return this.refs.ace.editor.getValue();
@@ -39,7 +36,7 @@ class Editor extends Component {
         fontSize={14}
         scrollMargin={[15, 15, 15, 15]}
         ref="ace"
-        onChange={() => this.handleChange()}
+        onChange={this.handleChange}
       />
     );
   }
