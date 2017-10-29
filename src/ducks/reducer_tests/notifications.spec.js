@@ -6,7 +6,7 @@ const reducer = notificationsDuck.default;
 describe('Reducers::Notifications', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
-      notification: {}
+      notification: {},
     });
   });
 
@@ -16,11 +16,11 @@ describe('Reducers::Notifications', () => {
         {},
         {
           type: notificationsDuck.ADD_NOTIFICATION,
-          notification
+          notification,
         }
       )
     ).toEqual({
-      notification
+      notification,
     });
   });
 });

@@ -1,3 +1,3 @@
 export default {
-  'save': 'mod+s',
+  save: 'mod+s',
 };

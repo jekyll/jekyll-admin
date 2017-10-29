@@ -5,11 +5,11 @@ describe('Actions::Notifications', () => {
     const notification = {
       title: 'Test',
       message: 'Testing notifications',
-      level: 'success'
+      level: 'success',
     };
     const expectedAction = {
       type: notificationsDuck.ADD_NOTIFICATION,
-      notification
+      notification,
     };
     expect(
       notificationsDuck.addNotification(

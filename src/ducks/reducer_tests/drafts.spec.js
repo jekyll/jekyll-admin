@@ -9,7 +9,7 @@ describe('Reducers::Drafts', () => {
       drafts: [],
       draft: {},
       isFetching: false,
-      updated: false
+      updated: false,
     });
   });
 
@@ -18,35 +18,35 @@ describe('Reducers::Drafts', () => {
       reducer(
         {},
         {
-          type: draftsDuck.FETCH_DRAFTS_REQUEST
+          type: draftsDuck.FETCH_DRAFTS_REQUEST,
         }
       )
     ).toEqual({
-      isFetching: true
+      isFetching: true,
     });
     expect(
       reducer(
         { draft },
         {
           type: draftsDuck.FETCH_DRAFTS_SUCCESS,
-          drafts: [draft]
+          drafts: [draft],
         }
       )
     ).toEqual({
       drafts: [draft],
       draft: {},
-      isFetching: false
+      isFetching: false,
     });
     expect(
       reducer(
         {},
         {
-          type: draftsDuck.FETCH_DRAFTS_FAILURE
+          type: draftsDuck.FETCH_DRAFTS_FAILURE,
         }
       )
     ).toEqual({
       drafts: [],
-      isFetching: false
+      isFetching: false,
     });
   });
 
@@ -55,34 +55,34 @@ describe('Reducers::Drafts', () => {
       reducer(
         {},
         {
-          type: draftsDuck.FETCH_DRAFT_REQUEST
+          type: draftsDuck.FETCH_DRAFT_REQUEST,
         }
       )
     ).toEqual({
-      isFetching: true
+      isFetching: true,
     });
     expect(
       reducer(
         {},
         {
           type: draftsDuck.FETCH_DRAFT_SUCCESS,
-          draft
+          draft,
         }
       )
     ).toEqual({
       draft,
-      isFetching: false
+      isFetching: false,
     });
     expect(
       reducer(
         {},
         {
-          type: draftsDuck.FETCH_DRAFT_FAILURE
+          type: draftsDuck.FETCH_DRAFT_FAILURE,
         }
       )
     ).toEqual({
       draft: {},
-      isFetching: false
+      isFetching: false,
     });
   });
 
@@ -92,15 +92,15 @@ describe('Reducers::Drafts', () => {
         {},
         {
           type: draftsDuck.PUT_DRAFT_SUCCESS,
-          draft
+          draft,
         }
       )
     ).toEqual({
       draft,
-      updated: true
+      updated: true,
     });
     expect(reducer({ updated: true }, {})).toEqual({
-      updated: false
+      updated: false,
     });
   });
 

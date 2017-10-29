@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
@@ -21,13 +22,6 @@ import { capitalize, preventDefault } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {
-  constructor(props) {
-    super(props);
-
-    this.routerWillLeave = this.routerWillLeave.bind(this);
-    this.handleClickSave = this.handleClickSave.bind(this);
-  }
-
   componentDidMount() {
     const { router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave);
@@ -46,29 +40,24 @@ export class DocumentNew extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+
+    errors.length && clearErrors();
   }
 
-  routerWillLeave(nextLocation) {
+  routerWillLeave = nextLocation => {
     if (this.props.fieldChanged) {
       return getLeaveMessage();
     }
-  }
+  };
 
-  handleClickSave(e) {
-    const { fieldChanged, createDocument, params } = this.props;
-
-    // Prevent the default event from bubbling
+  handleClickSave = e => {
     preventDefault(e);
-
+    const { fieldChanged, createDocument, params } = this.props;
     if (fieldChanged) {
       const { collection_name, splat } = params;
       createDocument(collection_name, splat);
     }
-  }
+  };
 
   render() {
     const {
@@ -79,11 +68,11 @@ export class DocumentNew extends Component {
       updatePath,
       fieldChanged,
       params,
-      config
+      config,
     } = this.props;
 
     const keyboardHandlers = {
-      save: this.handleClickSave
+      save: this.handleClickSave,
     };
 
     const collection = params.collection_name;
@@ -148,7 +137,7 @@ DocumentNew.propTypes = {
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -156,7 +145,7 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors,
   updated: state.collections.updated,
-  config: state.config.config
+  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -166,7 +155,7 @@ const mapDispatchToProps = dispatch =>
       updateBody,
       updatePath,
       createDocument,
-      clearErrors
+      clearErrors,
     },
     dispatch
   );

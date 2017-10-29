@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,7 +12,7 @@ import {
   updateFieldKey,
   updateFieldValue,
   moveArrayItem,
-  convertField
+  convertField,
 } from '../ducks/metadata';
 
 export class MetaFields extends Component {
@@ -34,7 +35,7 @@ export class MetaFields extends Component {
       moveArrayItem,
       convertField,
       key_prefix,
-      dataview
+      dataview,
     } = this.props;
 
     let visibleKeys = metadata;
@@ -45,7 +46,7 @@ export class MetaFields extends Component {
 
     const metafieldsClass = classnames({
       datafields: dataview,
-      metafields: !dataview
+      metafields: !dataview,
     });
 
     const metafields = _.map(visibleKeys, (field, key) => {
@@ -117,12 +118,12 @@ MetaFields.propTypes = {
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
   convertField: PropTypes.func.isRequired,
-  dataview: PropTypes.bool
+  dataview: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   metadata: state.metadata.metadata,
-  key_prefix: state.metadata.key_prefix
+  key_prefix: state.metadata.key_prefix,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -134,7 +135,7 @@ const mapDispatchToProps = dispatch =>
       updateFieldKey,
       updateFieldValue,
       moveArrayItem,
-      convertField
+      convertField,
     },
     dispatch
   );

@@ -6,12 +6,12 @@ import {
   toYAML,
   toJSON,
   getExtensionFromPath,
-  trimObject
+  trimObject,
 } from '../utils/helpers';
 import { validator } from '../utils/validation';
 import {
   getContentRequiredMessage,
-  getFilenameRequiredMessage
+  getFilenameRequiredMessage,
 } from '../translations';
 
 // Action Types
@@ -97,7 +97,7 @@ export const putDataFile = (
 
 export const deleteDataFile = (directory, filename) => dispatch => {
   return fetch(datafileAPIUrl(directory, filename), {
-    method: 'DELETE'
+    method: 'DELETE',
   })
     .then(data => {
       dispatch({ type: DELETE_DATAFILE_SUCCESS });
@@ -106,13 +106,13 @@ export const deleteDataFile = (directory, filename) => dispatch => {
     .catch(error =>
       dispatch({
         type: DELETE_DATAFILE_FAILURE,
-        error
+        error,
       })
     );
 };
 
 export const onDataFileChanged = () => ({
-  type: DATAFILE_CHANGED
+  type: DATAFILE_CHANGED,
 });
 
 const validateDatafile = (filename, data) =>
@@ -121,7 +121,7 @@ const validateDatafile = (filename, data) =>
     { filename: 'required', data: 'required' },
     {
       'filename.required': getFilenameRequiredMessage(),
-      'data.required': getContentRequiredMessage()
+      'data.required': getContentRequiredMessage(),
     }
   );
 
@@ -133,7 +133,7 @@ export default function datafiles(
     isFetching: false,
     updated: false,
     datafileChanged: false,
-    fieldChanged: false
+    fieldChanged: false,
   },
   action
 ) {
@@ -142,56 +142,56 @@ export default function datafiles(
     case FETCH_DATAFILE_REQUEST:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       };
     case FETCH_DATAFILES_SUCCESS:
       return {
         ...state,
         files: action.files,
         isFetching: false,
-        currentFile: {}
+        currentFile: {},
       };
     case FETCH_DATAFILES_FAILURE:
       return {
         ...state,
         isFetching: false,
-        currentFile: {}
+        currentFile: {},
       };
     case FETCH_DATAFILE_SUCCESS:
       return {
         ...state,
         currentFile: action.file,
-        isFetching: false
+        isFetching: false,
       };
     case FETCH_DATAFILE_FAILURE:
       return {
         ...state,
         currentFile: {},
-        isFetching: false
+        isFetching: false,
       };
     case PUT_DATAFILE_SUCCESS:
       return {
         ...state,
         currentFile: action.file,
         updated: true,
-        datafileChanged: false
+        datafileChanged: false,
       };
     case PUT_DATAFILE_FAILURE:
       return {
         ...state,
-        datafileChanged: false
+        datafileChanged: false,
       };
     case DATAFILE_CHANGED:
       return {
         ...state,
         datafileChanged: true,
-        updated: false
+        updated: false,
       };
     default:
       return {
         ...state,
         updated: false,
-        datafileChanged: false
+        datafileChanged: false,
       };
   }
 }

@@ -22,7 +22,7 @@ describe('Actions::Pages', () => {
 
     const expectedActions = [
       { type: pagesDuck.FETCH_PAGES_REQUEST },
-      { type: pagesDuck.FETCH_PAGES_SUCCESS, pages: [page] }
+      { type: pagesDuck.FETCH_PAGES_SUCCESS, pages: [page] },
     ];
 
     const store = mockStore({ pages: [], isFetching: false });
@@ -39,7 +39,7 @@ describe('Actions::Pages', () => {
 
     const expectedActions = [
       { type: pagesDuck.FETCH_PAGE_REQUEST },
-      { type: pagesDuck.FETCH_PAGE_SUCCESS, page }
+      { type: pagesDuck.FETCH_PAGE_SUCCESS, page },
     ];
 
     const store = mockStore({ page: {}, isFetching: true });
@@ -56,7 +56,7 @@ describe('Actions::Pages', () => {
 
     const expectedActions = [
       { type: pagesDuck.DELETE_PAGE_SUCCESS },
-      { type: pagesDuck.FETCH_PAGES_REQUEST }
+      { type: pagesDuck.FETCH_PAGES_REQUEST },
     ];
 
     const store = mockStore({});
@@ -75,7 +75,7 @@ describe('Actions::Pages', () => {
 
     const expectedAction = {
       type: pagesDuck.DELETE_PAGE_FAILURE,
-      error: 'something awful happened'
+      error: 'something awful happened',
     };
 
     const store = mockStore({ pages: [page] });
@@ -92,7 +92,7 @@ describe('Actions::Pages', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: pagesDuck.PUT_PAGE_SUCCESS, page }
+      { type: pagesDuck.PUT_PAGE_SUCCESS, page },
     ];
 
     const store = mockStore({ metadata: { metadata: page } });
@@ -109,7 +109,7 @@ describe('Actions::Pages', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: pagesDuck.PUT_PAGE_SUCCESS, page }
+      { type: pagesDuck.PUT_PAGE_SUCCESS, page },
     ];
 
     const store = mockStore({ metadata: { metadata: page } });
@@ -126,11 +126,11 @@ describe('Actions::Pages', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: pagesDuck.PUT_PAGE_SUCCESS, page }
+      { type: pagesDuck.PUT_PAGE_SUCCESS, page },
     ];
 
     const store = mockStore({
-      metadata: { metadata: { ...new_page, path: '' } }
+      metadata: { metadata: { ...new_page, path: '' } },
     });
 
     return store.dispatch(pagesDuck.createPage('')).then(() => {
@@ -145,7 +145,7 @@ describe('Actions::Pages', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: pagesDuck.PUT_PAGE_FAILURE, error: 'something awful happened' }
+      { type: pagesDuck.PUT_PAGE_FAILURE, error: 'something awful happened' },
     ];
 
     const store = mockStore({ metadata: { metadata: page } });
@@ -159,8 +159,8 @@ describe('Actions::Pages', () => {
     const expectedActions = [
       {
         type: utilsDuck.VALIDATION_ERROR,
-        errors: ['The filename is not valid.']
-      }
+        errors: ['The filename is not valid.'],
+      },
     ];
 
     const store = mockStore({ metadata: { metadata: { path: '.invalid.' } } });

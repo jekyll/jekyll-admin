@@ -1,8 +1,10 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
+import DocumentTitle from 'react-document-title';
 import { HotKeys } from 'react-hotkeys';
 import Button from '../../components/Button';
 import Splitter from '../../components/Splitter';
@@ -21,13 +23,6 @@ import { getLeaveMessage, getDeleteMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DraftEdit extends Component {
-  constructor(props) {
-    super(props);
-
-    this.routerWillLeave = this.routerWillLeave.bind(this);
-    this.handleClickSave = this.handleClickSave.bind(this);
-  }
-
   componentDidMount() {
     const { fetchDraft, params, router, route } = this.props;
     const [directory, ...rest] = params.splat;
@@ -52,30 +47,24 @@ export class DraftEdit extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    errors.length && clearErrors();
   }
 
-  routerWillLeave(nextLocation) {
+  routerWillLeave = nextLocation => {
     if (this.props.fieldChanged) {
       return getLeaveMessage();
     }
-  }
+  };
 
-  handleClickSave(e) {
-    const { putDraft, fieldChanged, params } = this.props;
-
-    // Prevent the default event from bubbling
+  handleClickSave = e => {
     preventDefault(e);
-
+    const { putDraft, fieldChanged, params } = this.props;
     if (fieldChanged) {
       const [directory, ...rest] = params.splat;
       const filename = rest.join('.');
       putDraft('edit', directory, filename);
     }
-  }
+  };
 
   handleClickDelete(name) {
     const { deleteDraft, params } = this.props;
@@ -99,7 +88,7 @@ export class DraftEdit extends Component {
       updated,
       fieldChanged,
       params,
-      config
+      config,
     } = this.props;
 
     if (isFetching) {
@@ -109,7 +98,7 @@ export class DraftEdit extends Component {
     }
 
     const keyboardHandlers = {
-      save: this.handleClickSave
+      save: this.handleClickSave,
     };
 
     const { name, raw_content, collection, http_url, front_matter } = draft;
@@ -122,52 +111,63 @@ export class DraftEdit extends Component {
       collection,
       front_matter
     );
+    const document_title = directory
+      ? `${title || name} - ${directory} - Drafts`
+      : `${title || name} - Drafts`;
 
     return (
-      <HotKeys handlers={keyboardHandlers} className="single">
-        {errors.length > 0 && <Errors errors={errors} />}
-        <div className="content-header">
-          <Breadcrumbs splat={directory || ''} type="drafts" />
-        </div>
-
-        <div className="content-wrapper">
-          <div className="content-body">
-            <InputPath onChange={updatePath} type="drafts" path={name} />
-            <InputTitle onChange={updateTitle} title={title} ref="title" />
-            <MarkdownEditor
-              onChange={updateBody}
-              onSave={this.handleClickSave}
-              placeholder="Body"
-              initialValue={raw_content}
-              ref="editor"
-            />
-            <Splitter />
-            <Metadata
-              fields={{ title, raw_content, path: name, ...metafields }}
-            />
+      <DocumentTitle title={document_title}>
+        <HotKeys handlers={keyboardHandlers} className="single">
+          {errors.length > 0 && <Errors errors={errors} />}
+          <div className="content-header">
+            <Breadcrumbs splat={directory || ''} type="drafts" />
           </div>
 
-          <div className="content-side">
-            <Button
-              onClick={this.handleClickSave}
-              type="save"
-              active={fieldChanged}
-              triggered={updated}
-              icon="save"
-              block
-            />
-            <Button to={http_url} type="view" icon="eye" active={true} block />
-            <Splitter />
-            <Button
-              onClick={() => this.handleClickDelete(name)}
-              type="delete"
-              active={true}
-              icon="trash"
-              block
-            />
+          <div className="content-wrapper">
+            <div className="content-body">
+              <InputPath onChange={updatePath} type="drafts" path={name} />
+              <InputTitle onChange={updateTitle} title={title} ref="title" />
+              <MarkdownEditor
+                onChange={updateBody}
+                onSave={this.handleClickSave}
+                placeholder="Body"
+                initialValue={raw_content}
+                ref="editor"
+              />
+              <Splitter />
+              <Metadata
+                fields={{ title, raw_content, path: name, ...metafields }}
+              />
+            </div>
+
+            <div className="content-side">
+              <Button
+                onClick={this.handleClickSave}
+                type="save"
+                active={fieldChanged}
+                triggered={updated}
+                icon="save"
+                block
+              />
+              <Button
+                to={http_url}
+                type="view"
+                icon="eye"
+                active={true}
+                block
+              />
+              <Splitter />
+              <Button
+                onClick={() => this.handleClickDelete(name)}
+                type="delete"
+                active={true}
+                icon="trash"
+                block
+              />
+            </div>
           </div>
-        </div>
-      </HotKeys>
+        </HotKeys>
+      </DocumentTitle>
     );
   }
 }
@@ -188,7 +188,7 @@ DraftEdit.propTypes = {
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -197,7 +197,7 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   updated: state.drafts.updated,
   errors: state.utils.errors,
-  config: state.config.config
+  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -209,7 +209,7 @@ const mapDispatchToProps = dispatch =>
       updateTitle,
       updateBody,
       updatePath,
-      clearErrors
+      clearErrors,
     },
     dispatch
   );

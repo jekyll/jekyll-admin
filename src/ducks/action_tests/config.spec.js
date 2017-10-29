@@ -22,7 +22,7 @@ describe('Actions::Config', () => {
 
     const expectedActions = [
       { type: configDuck.FETCH_CONFIG_REQUEST },
-      { type: configDuck.FETCH_CONFIG_SUCCESS, config }
+      { type: configDuck.FETCH_CONFIG_SUCCESS, config },
     ];
 
     const store = mockStore({ config: {} });
@@ -39,7 +39,7 @@ describe('Actions::Config', () => {
 
     const expectedAction = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: configDuck.PUT_CONFIG_SUCCESS, config }
+      { type: configDuck.PUT_CONFIG_SUCCESS, config },
     ];
 
     const store = mockStore({ config: {} });
@@ -55,7 +55,7 @@ describe('Actions::Config', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: configDuck.PUT_CONFIG_SUCCESS, config }
+      { type: configDuck.PUT_CONFIG_SUCCESS, config },
     ];
 
     const store = mockStore({ metadata: { metadata: config } });
@@ -71,7 +71,7 @@ describe('Actions::Config', () => {
 
     const expectedAction = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: configDuck.PUT_CONFIG_FAILURE }
+      { type: configDuck.PUT_CONFIG_FAILURE },
     ];
 
     const store = mockStore({ config: {} });
@@ -85,8 +85,8 @@ describe('Actions::Config', () => {
     const expectedActions = [
       {
         type: utilsDuck.VALIDATION_ERROR,
-        errors: ['The content is required.']
-      }
+        errors: ['The content is required.'],
+      },
     ];
 
     const store = mockStore({ config: {} });
@@ -98,8 +98,8 @@ describe('Actions::Config', () => {
   it('creates CONFIG_EDITOR_CHANGED when the content in editor is changed', () => {
     const expectedAction = [
       {
-        type: configDuck.CONFIG_EDITOR_CHANGED
-      }
+        type: configDuck.CONFIG_EDITOR_CHANGED,
+      },
     ];
 
     const store = mockStore({ config: {} });

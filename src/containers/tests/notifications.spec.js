@@ -5,13 +5,10 @@ import { Notifications } from '../Notifications';
 import { notification } from './fixtures';
 
 function setup() {
-
-  const component = mount(
-    <Notifications notification={notification} />
-  );
+  const component = mount(<Notifications notification={notification} />);
 
   return {
-    component: component
+    component: component,
   };
 }
 

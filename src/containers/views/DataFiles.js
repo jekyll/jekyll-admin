@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { browserHistory, withRouter, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -11,7 +12,7 @@ import Button from '../../components/Button';
 import {
   fetchDataFiles,
   deleteDataFile,
-  filterByFilename
+  filterByFilename,
 } from '../../ducks/datafiles';
 import { search } from '../../ducks/utils';
 import { getFilenameFromPath } from '../../utils/helpers';
@@ -38,7 +39,6 @@ export class DataFiles extends Component {
 
     if (confirm) {
       const filename = getFilenameFromPath(path);
-
       deleteDataFile(directory, filename);
       browserHistory.push(`${ADMIN_PREFIX}/datafiles${dir}`);
     }
@@ -109,13 +109,13 @@ export class DataFiles extends Component {
 
   renderRows() {
     const { files } = this.props;
-    return _.map(files, entry => {
-      if (entry.type && entry.type == 'directory') {
-        return this.renderDirectoryRow(entry);
-      } else {
-        return this.renderFileRow(entry);
-      }
-    });
+    return _.map(
+      files,
+      entry =>
+        entry.type && entry.type == 'directory'
+          ? this.renderDirectoryRow(entry)
+          : this.renderFileRow(entry)
+    );
   }
 
   render() {
@@ -166,12 +166,12 @@ DataFiles.propTypes = {
   deleteDataFile: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   search: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   files: filterByFilename(state.datafiles.files, state.utils.input),
-  isFetching: state.datafiles.isFetching
+  isFetching: state.datafiles.isFetching,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -179,7 +179,7 @@ const mapDispatchToProps = dispatch =>
     {
       fetchDataFiles,
       deleteDataFile,
-      search
+      search,
     },
     dispatch
   );

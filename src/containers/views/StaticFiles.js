@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DocumentTitle from 'react-document-title';
@@ -12,7 +13,7 @@ import {
   fetchStaticFiles,
   uploadStaticFiles,
   deleteStaticFile,
-  filterByFilename
+  filterByFilename,
 } from '../../ducks/staticfiles';
 
 export class StaticFiles extends Component {
@@ -35,9 +36,9 @@ export class StaticFiles extends Component {
     uploadStaticFiles(uploadedFiles);
   }
 
-  openDropzone() {
-    this.refs.dropzone.refs.ReactDropzone.open();
-  }
+  openDropzone = () => {
+    this.refs.dropzone.openDropzone();
+  };
 
   render() {
     const {
@@ -45,7 +46,7 @@ export class StaticFiles extends Component {
       isFetching,
       deleteStaticFile,
       search,
-      onClickStaticFile
+      onClickStaticFile,
     } = this.props;
 
     if (isFetching) {
@@ -58,7 +59,7 @@ export class StaticFiles extends Component {
           <div className="content-header">
             <h1>Static Files</h1>
             <Button
-              onClick={() => this.openDropzone()}
+              onClick={this.openDropzone}
               type="upload"
               icon="upload"
               active={true}
@@ -87,12 +88,12 @@ StaticFiles.propTypes = {
   uploadStaticFiles: PropTypes.func.isRequired,
   deleteStaticFile: PropTypes.func.isRequired,
   onClickStaticFile: PropTypes.func,
-  search: PropTypes.func.isRequired
+  search: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   files: filterByFilename(state.staticfiles.files, state.utils.input),
-  isFetching: state.staticfiles.isFetching
+  isFetching: state.staticfiles.isFetching,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -101,7 +102,7 @@ const mapDispatchToProps = dispatch =>
       fetchStaticFiles,
       uploadStaticFiles,
       deleteStaticFile,
-      search
+      search,
     },
     dispatch
   );

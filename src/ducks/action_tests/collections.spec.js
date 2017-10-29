@@ -13,7 +13,7 @@ import {
   doc,
   new_doc,
   post,
-  new_post_with_date
+  new_post_with_date,
 } from './fixtures';
 
 const middlewares = [thunk];
@@ -32,7 +32,7 @@ describe('Actions::Collections', () => {
 
     const expectedActions = [
       { type: collectionsDuck.FETCH_COLLECTIONS_REQUEST },
-      { type: collectionsDuck.FETCH_COLLECTIONS_SUCCESS, collections }
+      { type: collectionsDuck.FETCH_COLLECTIONS_SUCCESS, collections },
     ];
 
     const store = mockStore({ collections: [] });
@@ -50,7 +50,7 @@ describe('Actions::Collections', () => {
 
     const expectedActions = [
       { type: collectionsDuck.FETCH_COLLECTION_REQUEST },
-      { type: collectionsDuck.FETCH_COLLECTION_SUCCESS, entries: [collection] }
+      { type: collectionsDuck.FETCH_COLLECTION_SUCCESS, entries: [collection] },
     ];
 
     const store = mockStore({ movies: {} });
@@ -69,7 +69,7 @@ describe('Actions::Collections', () => {
 
     const expectedActions = [
       { type: collectionsDuck.FETCH_DOCUMENT_REQUEST },
-      { type: collectionsDuck.FETCH_DOCUMENT_SUCCESS, doc }
+      { type: collectionsDuck.FETCH_DOCUMENT_SUCCESS, doc },
     ];
 
     const store = mockStore({ currentDocument: {} });
@@ -88,7 +88,7 @@ describe('Actions::Collections', () => {
 
     const expectedActions = [
       { type: collectionsDuck.DELETE_DOCUMENT_SUCCESS },
-      { type: collectionsDuck.FETCH_COLLECTION_REQUEST }
+      { type: collectionsDuck.FETCH_COLLECTION_REQUEST },
     ];
 
     const store = mockStore({});
@@ -107,7 +107,7 @@ describe('Actions::Collections', () => {
 
     const expectedAction = {
       type: collectionsDuck.DELETE_DOCUMENT_FAILURE,
-      error: 'something awful happened'
+      error: 'something awful happened',
     };
 
     const store = mockStore({});
@@ -126,7 +126,7 @@ describe('Actions::Collections', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: collectionsDuck.PUT_DOCUMENT_SUCCESS, doc }
+      { type: collectionsDuck.PUT_DOCUMENT_SUCCESS, doc },
     ];
 
     const store = mockStore({ metadata: { metadata: doc } });
@@ -147,8 +147,8 @@ describe('Actions::Collections', () => {
       { type: utilsDuck.CLEAR_ERRORS },
       {
         type: collectionsDuck.PUT_DOCUMENT_FAILURE,
-        error: 'something awful happened'
-      }
+        error: 'something awful happened',
+      },
     ];
 
     const store = mockStore({ metadata: { metadata: doc } });
@@ -167,7 +167,7 @@ describe('Actions::Collections', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: collectionsDuck.PUT_DOCUMENT_SUCCESS, doc }
+      { type: collectionsDuck.PUT_DOCUMENT_SUCCESS, doc },
     ];
 
     const store = mockStore({ metadata: { metadata: new_doc } });
@@ -186,11 +186,11 @@ describe('Actions::Collections', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: collectionsDuck.PUT_DOCUMENT_SUCCESS, doc }
+      { type: collectionsDuck.PUT_DOCUMENT_SUCCESS, doc },
     ];
 
     const store = mockStore({
-      metadata: { metadata: { ...new_doc, path: '' } }
+      metadata: { metadata: { ...new_doc, path: '' } },
     });
 
     return store
@@ -209,7 +209,7 @@ describe('Actions::Collections', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: collectionsDuck.PUT_DOCUMENT_SUCCESS, doc: post }
+      { type: collectionsDuck.PUT_DOCUMENT_SUCCESS, doc: post },
     ];
 
     const store = mockStore({
@@ -217,9 +217,9 @@ describe('Actions::Collections', () => {
         metadata: {
           ...new_post_with_date,
           path: '',
-          front_matter: { date: new_post_with_date.date }
-        }
-      }
+          front_matter: { date: new_post_with_date.date },
+        },
+      },
     });
 
     return store
@@ -238,13 +238,13 @@ describe('Actions::Collections', () => {
         errors: [
           'The title is required.',
           'The filename is required.',
-          'The filename is not valid.'
-        ]
-      }
+          'The filename is not valid.',
+        ],
+      },
     ];
 
     const store = mockStore({
-      metadata: { metadata: _.omit(doc, ['title', 'path']) }
+      metadata: { metadata: _.omit(doc, ['title', 'path']) },
     });
 
     store.dispatch(collectionsDuck.putDocument(doc.collection, doc.id));
@@ -255,12 +255,12 @@ describe('Actions::Collections', () => {
     const expectedActions = [
       {
         type: utilsDuck.VALIDATION_ERROR,
-        errors: ['The filename is not valid.']
-      }
+        errors: ['The filename is not valid.'],
+      },
     ];
 
     const store = mockStore({
-      metadata: { metadata: { title: 'test', path: '2016-33-33-title.md' } }
+      metadata: { metadata: { title: 'test', path: '2016-33-33-title.md' } },
     });
 
     store.dispatch(collectionsDuck.putDocument('posts', doc.id));

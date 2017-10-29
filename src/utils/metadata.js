@@ -1,5 +1,5 @@
-import _ from "underscore";
-import cloneDeep from "lodash/cloneDeep";
+import _ from 'underscore';
+import cloneDeep from 'lodash/cloneDeep';
 
 /**
  * Returns the metadata of the state with the new empty field. If the field does
@@ -12,8 +12,8 @@ export const addFieldToMetadata = (state, namePrefix) => {
   let tmpState = cloneDeep(state);
   let field = eval(`tmpState.${namePrefix}`);
   if (field === undefined) return tmpState.metadata;
-  if (_.isArray(field)) field.push("");
-  else field[`New field ${state.new_field_count}`] = "";
+  if (_.isArray(field)) field.push('');
+  else field[`New field ${state.new_field_count}`] = '';
   return tmpState.metadata;
 };
 
@@ -94,11 +94,11 @@ export const convertMetadataField = (state, nameAttr, convertType) => {
   let tmpState = cloneDeep(state);
   let field = eval(`tmpState.${nameAttr}`);
   if (field === undefined) return tmpState.metadata;
-  if (convertType == "array") field = [""];
-  else if (convertType == "object") {
+  if (convertType == 'array') field = [''];
+  else if (convertType == 'object') {
     let key = `New field ${state.new_field_count}`;
-    field = { [key]: "" };
-  } else field = "";
+    field = { [key]: '' };
+  } else field = '';
   eval(`tmpState.${nameAttr} = field`);
   return tmpState.metadata;
 };

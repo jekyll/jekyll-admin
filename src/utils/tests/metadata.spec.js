@@ -5,7 +5,7 @@ import {
   updateMetadataFieldValue,
   convertMetadataField,
   moveMetadataArrayItem,
-  injectDefaultFields
+  injectDefaultFields,
 } from '../metadata';
 
 import { state, emptyState, config } from './fixtures';
@@ -257,7 +257,7 @@ describe('Metadata functions:', () => {
       actual = injectDefaultFields(config, '', 'posts');
       expected = {
         some_front_matter: 'default',
-        post_field: 'default'
+        post_field: 'default',
       };
       expect(actual).toEqual(expected);
 
@@ -265,14 +265,14 @@ describe('Metadata functions:', () => {
       expected = {
         some_front_matter: 'default',
         existing: 'hi',
-        post_field: 'default'
+        post_field: 'default',
       };
       expect(actual).toEqual(expected);
 
       actual = injectDefaultFields(config, 'test', 'pages');
       expected = {
         some_front_matter: 'default',
-        page_field: 'default'
+        page_field: 'default',
       };
       expect(actual).toEqual(expected);
     });

@@ -21,5 +21,5 @@ export default combineReducers({
   datafiles,
   staticfiles,
   utils,
-  notifications
+  notifications,
 });

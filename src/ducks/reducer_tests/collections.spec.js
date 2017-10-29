@@ -10,7 +10,7 @@ describe('Reducers::Collections', () => {
       currentDocument: {},
       collections: [],
       isFetching: false,
-      updated: false
+      updated: false,
     });
   });
 
@@ -19,34 +19,34 @@ describe('Reducers::Collections', () => {
       reducer(
         {},
         {
-          type: collectionsDuck.FETCH_COLLECTIONS_REQUEST
+          type: collectionsDuck.FETCH_COLLECTIONS_REQUEST,
         }
       )
     ).toEqual({
-      isFetching: true
+      isFetching: true,
     });
     expect(
       reducer(
         { isFetching: true },
         {
           type: collectionsDuck.FETCH_COLLECTIONS_SUCCESS,
-          collections
+          collections,
         }
       )
     ).toEqual({
       collections,
-      isFetching: false
+      isFetching: false,
     });
     expect(
       reducer(
         { isFetching: true },
         {
-          type: collectionsDuck.FETCH_COLLECTIONS_FAILURE
+          type: collectionsDuck.FETCH_COLLECTIONS_FAILURE,
         }
       )
     ).toEqual({
       isFetching: false,
-      collections: []
+      collections: [],
     });
   });
 
@@ -55,34 +55,34 @@ describe('Reducers::Collections', () => {
       reducer(
         {},
         {
-          type: collectionsDuck.FETCH_COLLECTION_REQUEST
+          type: collectionsDuck.FETCH_COLLECTION_REQUEST,
         }
       )
     ).toEqual({
-      isFetching: true
+      isFetching: true,
     });
     expect(
       reducer(
         {},
         {
           type: collectionsDuck.FETCH_COLLECTION_SUCCESS,
-          entries: [collection]
+          entries: [collection],
         }
       )
     ).toEqual({
       entries: [collection],
-      isFetching: false
+      isFetching: false,
     });
     expect(
       reducer(
         { isFetching: true },
         {
-          type: collectionsDuck.FETCH_COLLECTION_FAILURE
+          type: collectionsDuck.FETCH_COLLECTION_FAILURE,
         }
       )
     ).toEqual({
       entries: [],
-      isFetching: false
+      isFetching: false,
     });
   });
 
@@ -92,15 +92,15 @@ describe('Reducers::Collections', () => {
         {},
         {
           type: collectionsDuck.PUT_DOCUMENT_SUCCESS,
-          doc
+          doc,
         }
       )
     ).toEqual({
       currentDocument: doc,
-      updated: true
+      updated: true,
     });
     expect(reducer({ updated: true }, {})).toEqual({
-      updated: false
+      updated: false,
     });
   });
 

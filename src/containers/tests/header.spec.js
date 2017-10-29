@@ -6,13 +6,11 @@ import { config } from './fixtures';
 const defaultProps = { config: config.content };
 
 function setup(props = defaultProps) {
-  const component = mount(
-    <Header {...props} />
-  );
+  const component = mount(<Header {...props} />);
 
   return {
     component: component,
-    title: component.find('h3 span')
+    title: component.find('h3 span'),
   };
 }
 
@@ -24,9 +22,11 @@ describe('Containers::Header', () => {
   });
 
   it('should render placeholder title', () => {
-    const { component, title } = setup(Object.assign({}, defaultProps, {
-      config: {}
-    }));
+    const { component, title } = setup(
+      Object.assign({}, defaultProps, {
+        config: {},
+      })
+    );
     const { config } = component.props();
     expect(title.text()).toEqual('You have no title!');
   });

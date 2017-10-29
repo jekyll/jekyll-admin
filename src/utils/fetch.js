@@ -4,7 +4,7 @@ import {
   getErrorMessage,
   getFetchErrorMessage,
   getUpdateErrorMessage,
-  getDeleteMessage
+  getDeleteMessage,
 } from '../translations';
 import { BadInputError } from './api_errors';
 
@@ -22,13 +22,13 @@ export const get = (url, action_success, action_failure, dispatch) => {
     .then(data =>
       dispatch({
         type: action_success.type,
-        [action_success.name]: data
+        [action_success.name]: data,
       })
     )
     .catch(error => {
       dispatch({
         type: action_failure.type,
-        [action_failure.name]: error
+        [action_failure.name]: error,
       });
       dispatch(
         addNotification(
@@ -52,7 +52,7 @@ export const get = (url, action_success, action_failure, dispatch) => {
 export const put = (url, body, action_success, action_failure, dispatch) => {
   return fetch(url, {
     method: 'PUT',
-    body
+    body,
   })
     .then(res => res.json())
     .then(data => {
@@ -61,13 +61,13 @@ export const put = (url, body, action_success, action_failure, dispatch) => {
       }
       dispatch({
         type: action_success.type,
-        [action_success.name]: data
+        [action_success.name]: data,
       });
     })
     .catch(error => {
       dispatch({
         type: action_failure.type,
-        [action_failure.name]: error
+        [action_failure.name]: error,
       });
       let error_message =
         error.name === 'BadInputError'
@@ -87,18 +87,18 @@ export const put = (url, body, action_success, action_failure, dispatch) => {
  */
 export const del = (url, action_success, action_failure, dispatch) => {
   return fetch(url, {
-    method: 'DELETE'
+    method: 'DELETE',
   })
     .then(data =>
       dispatch({
         type: action_success.type,
-        id: action_success.id
+        id: action_success.id,
       })
     )
     .catch(error => {
       dispatch({
         type: action_failure.type,
-        [action_failure.name]: error
+        [action_failure.name]: error,
       });
       dispatch(
         addNotification(

@@ -10,11 +10,11 @@ describe('Actions::Utils', () => {
   it('creates VALIDATION_ERROR', () => {
     const errors = {
       title: 'Title is required.',
-      draft: 'Should be boolean type.'
+      draft: 'Should be boolean type.',
     };
     const expectedAction = {
       type: utilsDuck.VALIDATION_ERROR,
-      errors
+      errors,
     };
     expect(utilsDuck.validationError(errors)).toEqual(expectedAction);
   });

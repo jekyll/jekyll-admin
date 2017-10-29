@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -28,9 +29,7 @@ export class Pages extends Component {
   handleClickDelete(filename) {
     const { deletePage, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(filename));
-    if (confirm) {
-      deletePage(params.splat, filename);
-    }
+    confirm && deletePage(params.splat, filename);
   }
 
   renderTable() {
@@ -148,12 +147,12 @@ Pages.propTypes = {
   deletePage: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   search: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   pages: filterBySearchInput(state.pages.pages, state.utils.input),
-  isFetching: state.pages.isFetching
+  isFetching: state.pages.isFetching,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -161,7 +160,7 @@ const mapDispatchToProps = dispatch =>
     {
       fetchPages,
       deletePage,
-      search
+      search,
     },
     dispatch
   );

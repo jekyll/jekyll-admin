@@ -6,7 +6,7 @@ import {
   getSuccessMessage,
   getErrorMessage,
   getUploadSuccessMessage,
-  getUploadErrorMessage
+  getUploadErrorMessage,
 } from '../translations';
 
 // Action Types
@@ -40,12 +40,12 @@ export const uploadStaticFiles = files => dispatch => {
     reader.readAsDataURL(file);
     reader.onloadend = () => {
       const payload = JSON.stringify({
-        encoded_content: reader.result.split('base64,')[1]
+        encoded_content: reader.result.split('base64,')[1],
       });
       // send the put request
       return fetch(staticfileAPIUrl(file.name), {
         method: 'PUT',
-        body: payload
+        body: payload,
       })
         .then(data => {
           dispatch({ type: PUT_STATICFILE_SUCCESS });
@@ -61,7 +61,7 @@ export const uploadStaticFiles = files => dispatch => {
         .catch(error => {
           dispatch({
             type: PUT_STATICFILE_FAILURE,
-            error
+            error,
           });
           dispatch(
             addNotification(getErrorMessage(), getUploadErrorMessage(), 'error')
@@ -73,7 +73,7 @@ export const uploadStaticFiles = files => dispatch => {
 
 export const deleteStaticFile = filename => dispatch => {
   return fetch(staticfileAPIUrl(filename), {
-    method: 'DELETE'
+    method: 'DELETE',
   })
     .then(data => {
       dispatch({ type: DELETE_STATICFILE_SUCCESS });
@@ -82,7 +82,7 @@ export const deleteStaticFile = filename => dispatch => {
     .catch(error =>
       dispatch({
         type: DELETE_STATICFILE_FAILURE,
-        error
+        error,
       })
     );
 };
@@ -92,7 +92,7 @@ export default function staticfiles(
   state = {
     files: [],
     isFetching: false,
-    uploading: false // TODO show loading gif
+    uploading: false, // TODO show loading gif
   },
   action
 ) {
@@ -100,33 +100,33 @@ export default function staticfiles(
     case FETCH_STATICFILES_REQUEST:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       };
     case FETCH_STATICFILES_SUCCESS:
       return {
         ...state,
         files: action.files,
-        isFetching: false
+        isFetching: false,
       };
     case FETCH_STATICFILES_FAILURE:
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
       };
     case PUT_STATICFILE_REQUEST:
       return {
         ...state,
-        uploading: true
+        uploading: true,
       };
     case PUT_STATICFILE_SUCCESS:
       return {
         ...state,
-        uploading: false
+        uploading: false,
       };
     case PUT_STATICFILE_FAILURE:
       return {
         ...state,
-        uploading: false
+        uploading: false,
       };
     default:
       return state;

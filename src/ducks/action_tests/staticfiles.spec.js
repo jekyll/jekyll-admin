@@ -22,7 +22,7 @@ describe('Actions::StaticFiles', () => {
 
     const expectedActions = [
       { type: staticfilesDuck.FETCH_STATICFILES_REQUEST },
-      { type: staticfilesDuck.FETCH_STATICFILES_SUCCESS, files: [staticfile] }
+      { type: staticfilesDuck.FETCH_STATICFILES_SUCCESS, files: [staticfile] },
     ];
 
     const store = mockStore({ files: [] });
@@ -41,8 +41,8 @@ describe('Actions::StaticFiles', () => {
       { type: staticfilesDuck.FETCH_STATICFILES_REQUEST },
       {
         type: staticfilesDuck.FETCH_STATICFILES_FAILURE,
-        error: 'something awful happened'
-      }
+        error: 'something awful happened',
+      },
     ];
 
     const store = mockStore({ files: [] });
@@ -95,7 +95,7 @@ describe('Actions::StaticFiles', () => {
 
     const expectedActions = [
       { type: staticfilesDuck.DELETE_STATICFILE_SUCCESS },
-      { type: staticfilesDuck.FETCH_STATICFILES_REQUEST }
+      { type: staticfilesDuck.FETCH_STATICFILES_REQUEST },
     ];
 
     const store = mockStore({ files: [] });
@@ -115,8 +115,8 @@ describe('Actions::StaticFiles', () => {
     const expectedActions = [
       {
         type: staticfilesDuck.DELETE_STATICFILE_FAILURE,
-        error: 'something awful happened'
-      }
+        error: 'something awful happened',
+      },
     ];
 
     const store = mockStore({ files: [] });

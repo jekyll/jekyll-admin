@@ -1,8 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
+import DocumentTitle from 'react-document-title';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
@@ -12,7 +14,7 @@ import { ADMIN_PREFIX } from '../../constants';
 import {
   fetchDrafts,
   deleteDraft,
-  filterBySearchInput
+  filterBySearchInput,
 } from '../../ducks/drafts';
 
 export class Drafts extends Component {
@@ -31,9 +33,7 @@ export class Drafts extends Component {
   handleClickDelete(filename) {
     const { deleteDraft, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(filename));
-    if (confirm) {
-      deleteDraft(params.splat, filename);
-    }
+    confirm && deleteDraft(params.splat, filename);
   }
 
   renderTable() {
@@ -120,23 +120,26 @@ export class Drafts extends Component {
     const to = params.splat
       ? `${ADMIN_PREFIX}/drafts/${params.splat}/new`
       : `${ADMIN_PREFIX}/drafts/new`;
+    const title = params.splat ? `${params.splat} | Drafts` : 'Drafts';
 
     return (
-      <div>
-        <div className="content-header">
-          <Breadcrumbs type="drafts" splat={params.splat || ''} />
-          <div className="draft-buttons">
-            <Link className="btn btn-active" to={to}>
-              New draft
-            </Link>
+      <DocumentTitle title={title}>
+        <div>
+          <div className="content-header">
+            <Breadcrumbs type="drafts" splat={params.splat || ''} />
+            <div className="draft-buttons">
+              <Link className="btn btn-active" to={to}>
+                New draft
+              </Link>
+            </div>
+            <div className="pull-right">
+              <InputSearch searchBy="filename" search={search} />
+            </div>
           </div>
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
-          </div>
+          {drafts.length > 0 && this.renderTable()}
+          {!drafts.length && <h1>{getNotFoundMessage('drafts')}</h1>}
         </div>
-        {drafts.length > 0 && this.renderTable()}
-        {!drafts.length && <h1>{getNotFoundMessage('drafts')}</h1>}
-      </div>
+      </DocumentTitle>
     );
   }
 }
@@ -147,12 +150,12 @@ Drafts.propTypes = {
   deleteDraft: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   search: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   drafts: filterBySearchInput(state.drafts.drafts, state.utils.input),
-  isFetching: state.drafts.isFetching
+  isFetching: state.drafts.isFetching,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -160,7 +163,7 @@ const mapDispatchToProps = dispatch =>
     {
       fetchDrafts,
       deleteDraft,
-      search
+      search,
     },
     dispatch
   );

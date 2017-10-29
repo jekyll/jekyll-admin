@@ -9,7 +9,7 @@ describe('Reducers::Pages', () => {
       pages: [],
       page: {},
       isFetching: false,
-      updated: false
+      updated: false,
     });
   });
 
@@ -18,35 +18,35 @@ describe('Reducers::Pages', () => {
       reducer(
         {},
         {
-          type: pagesDuck.FETCH_PAGES_REQUEST
+          type: pagesDuck.FETCH_PAGES_REQUEST,
         }
       )
     ).toEqual({
-      isFetching: true
+      isFetching: true,
     });
     expect(
       reducer(
         { page },
         {
           type: pagesDuck.FETCH_PAGES_SUCCESS,
-          pages: [page]
+          pages: [page],
         }
       )
     ).toEqual({
       pages: [page],
       page: {},
-      isFetching: false
+      isFetching: false,
     });
     expect(
       reducer(
         {},
         {
-          type: pagesDuck.FETCH_PAGES_FAILURE
+          type: pagesDuck.FETCH_PAGES_FAILURE,
         }
       )
     ).toEqual({
       pages: [],
-      isFetching: false
+      isFetching: false,
     });
   });
 
@@ -55,34 +55,34 @@ describe('Reducers::Pages', () => {
       reducer(
         {},
         {
-          type: pagesDuck.FETCH_PAGE_REQUEST
+          type: pagesDuck.FETCH_PAGE_REQUEST,
         }
       )
     ).toEqual({
-      isFetching: true
+      isFetching: true,
     });
     expect(
       reducer(
         {},
         {
           type: pagesDuck.FETCH_PAGE_SUCCESS,
-          page
+          page,
         }
       )
     ).toEqual({
       page,
-      isFetching: false
+      isFetching: false,
     });
     expect(
       reducer(
         {},
         {
-          type: pagesDuck.FETCH_PAGE_FAILURE
+          type: pagesDuck.FETCH_PAGE_FAILURE,
         }
       )
     ).toEqual({
       page: {},
-      isFetching: false
+      isFetching: false,
     });
   });
 
@@ -92,15 +92,15 @@ describe('Reducers::Pages', () => {
         {},
         {
           type: pagesDuck.PUT_PAGE_SUCCESS,
-          page
+          page,
         }
       )
     ).toEqual({
       page,
-      updated: true
+      updated: true,
     });
     expect(reducer({ updated: true }, {})).toEqual({
-      updated: false
+      updated: false,
     });
   });
 

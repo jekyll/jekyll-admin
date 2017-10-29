@@ -11,11 +11,16 @@ const defaultProps = {
   collections,
 };
 
-const nonCollectionLinks = ['pages', 'datafiles', 'staticfiles', 'configuration'];
+const nonCollectionLinks = [
+  'pages',
+  'datafiles',
+  'staticfiles',
+  'configuration',
+];
 
 function setup(props = defaultProps) {
   const actions = {
-    fetchCollections: jest.fn()
+    fetchCollections: jest.fn(),
   };
 
   const component = mount(<Sidebar {...props} {...actions} />);
@@ -23,7 +28,7 @@ function setup(props = defaultProps) {
   return {
     component: component,
     actions: actions,
-    links: component.find('.routes').find(Link)
+    links: component.find('.routes').find(Link),
   };
 }
 
@@ -31,7 +36,8 @@ describe('Containers::Sidebar', () => {
   it('should render correctly', () => {
     const { links, component } = setup();
     const actual = links.length;
-    const expected = nonCollectionLinks.length + component.prop('collections').length;
+    const expected =
+      nonCollectionLinks.length + component.prop('collections').length;
 
     expect(actual).toEqual(expected);
   });
@@ -39,20 +45,21 @@ describe('Containers::Sidebar', () => {
   it('should not render hidden links', () => {
     const config_with_hidden_links = _.extend(config, {
       jekyll_admin: {
-        hidden_links: [
-          'posts',
-          'pages'
-        ]
-      }
+        hidden_links: ['posts', 'pages'],
+      },
     });
 
-    const { component, links } = setup(Object.assign({}, defaultProps, {
-      config: config_with_hidden_links
-    }));
+    const { component, links } = setup(
+      Object.assign({}, defaultProps, {
+        config: config_with_hidden_links,
+      })
+    );
 
     const actual = links.length;
     const expected =
-      (nonCollectionLinks.length - 1) + (component.prop('collections').length - 1);
+      nonCollectionLinks.length -
+      1 +
+      (component.prop('collections').length - 1);
     expect(actual).toEqual(expected);
   });
 
@@ -62,12 +69,14 @@ describe('Containers::Sidebar', () => {
   });
 
   it('should render fine with zero collections', () => {
-    const { component, links, actions } = setup(Object.assign({}, defaultProps, {
-      collections: [],
-      config: {
-        jekyll_admin: {}
-      }
-    }));
+    const { component, links, actions } = setup(
+      Object.assign({}, defaultProps, {
+        collections: [],
+        config: {
+          jekyll_admin: {},
+        },
+      })
+    );
     expect(links.length).toEqual(4);
   });
 });

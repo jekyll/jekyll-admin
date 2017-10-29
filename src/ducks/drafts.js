@@ -6,7 +6,7 @@ import { slugify, trimObject } from '../utils/helpers';
 import { draftsAPIUrl, draftAPIUrl } from '../constants/api';
 import {
   getTitleRequiredMessage,
-  getFilenameNotValidMessage
+  getFilenameNotValidMessage,
 } from '../translations';
 
 export const FETCH_DRAFTS_REQUEST = 'FETCH_DRAFTS_REQUEST';
@@ -91,7 +91,7 @@ export const putDraft = (mode, directory, filename = '') => (
 
 export const deleteDraft = (directory, filename) => dispatch => {
   return fetch(draftAPIUrl(directory, filename), {
-    method: 'DELETE'
+    method: 'DELETE',
   })
     .then(data => {
       dispatch({ type: DELETE_DRAFT_SUCCESS });
@@ -100,7 +100,7 @@ export const deleteDraft = (directory, filename) => dispatch => {
     .catch(error =>
       dispatch({
         type: DELETE_DRAFT_FAILURE,
-        error
+        error,
       })
     );
 };
@@ -111,7 +111,7 @@ const validateDraft = metadata =>
     { path: 'required|filename' },
     {
       'path.required': getTitleRequiredMessage(),
-      'path.filename': getFilenameNotValidMessage()
+      'path.filename': getFilenameNotValidMessage(),
     }
   );
 
@@ -122,7 +122,7 @@ export default function drafts(
     drafts: [],
     draft: {},
     isFetching: false,
-    updated: false
+    updated: false,
   },
   action
 ) {
@@ -131,43 +131,43 @@ export default function drafts(
     case FETCH_DRAFT_REQUEST:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       };
     case FETCH_DRAFTS_SUCCESS:
       return {
         ...state,
         drafts: action.drafts,
         isFetching: false,
-        draft: {}
+        draft: {},
       };
     case FETCH_DRAFTS_FAILURE:
       return {
         ...state,
         isFetching: false,
-        drafts: []
+        drafts: [],
       };
     case FETCH_DRAFT_SUCCESS:
       return {
         ...state,
         draft: action.draft,
-        isFetching: false
+        isFetching: false,
       };
     case FETCH_DRAFT_FAILURE:
       return {
         ...state,
         draft: {},
-        isFetching: false
+        isFetching: false,
       };
     case PUT_DRAFT_SUCCESS:
       return {
         ...state,
         draft: action.draft,
-        updated: true
+        updated: true,
       };
     default:
       return {
         ...state,
-        updated: false
+        updated: false,
       };
   }
 }

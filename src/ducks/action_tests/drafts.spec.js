@@ -22,7 +22,7 @@ describe('Actions::Drafts', () => {
 
     const expectedActions = [
       { type: draftsDuck.FETCH_DRAFTS_REQUEST },
-      { type: draftsDuck.FETCH_DRAFTS_SUCCESS, drafts: [draft] }
+      { type: draftsDuck.FETCH_DRAFTS_SUCCESS, drafts: [draft] },
     ];
 
     const store = mockStore({ drafts: [], isFetching: false });
@@ -39,7 +39,7 @@ describe('Actions::Drafts', () => {
 
     const expectedActions = [
       { type: draftsDuck.FETCH_DRAFT_REQUEST },
-      { type: draftsDuck.FETCH_DRAFT_SUCCESS, draft }
+      { type: draftsDuck.FETCH_DRAFT_SUCCESS, draft },
     ];
 
     const store = mockStore({ draft: {}, isFetching: true });
@@ -58,7 +58,7 @@ describe('Actions::Drafts', () => {
 
     const expectedActions = [
       { type: draftsDuck.DELETE_DRAFT_SUCCESS },
-      { type: draftsDuck.FETCH_DRAFTS_REQUEST }
+      { type: draftsDuck.FETCH_DRAFTS_REQUEST },
     ];
 
     const store = mockStore({});
@@ -77,7 +77,7 @@ describe('Actions::Drafts', () => {
 
     const expectedAction = {
       type: draftsDuck.DELETE_DRAFT_FAILURE,
-      error: 'something awful happened'
+      error: 'something awful happened',
     };
 
     const store = mockStore({ drafts: [draft] });
@@ -94,7 +94,7 @@ describe('Actions::Drafts', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: draftsDuck.PUT_DRAFT_SUCCESS, draft }
+      { type: draftsDuck.PUT_DRAFT_SUCCESS, draft },
     ];
 
     const store = mockStore({ metadata: { metadata: draft } });
@@ -113,7 +113,7 @@ describe('Actions::Drafts', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: draftsDuck.PUT_DRAFT_SUCCESS, draft }
+      { type: draftsDuck.PUT_DRAFT_SUCCESS, draft },
     ];
 
     const store = mockStore({ metadata: { metadata: new_draft } });
@@ -130,11 +130,11 @@ describe('Actions::Drafts', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: draftsDuck.PUT_DRAFT_SUCCESS, draft }
+      { type: draftsDuck.PUT_DRAFT_SUCCESS, draft },
     ];
 
     const store = mockStore({
-      metadata: { metadata: { ...new_draft, path: '' } }
+      metadata: { metadata: { ...new_draft, path: '' } },
     });
 
     return store.dispatch(draftsDuck.putDraft('create')).then(() => {
@@ -149,7 +149,7 @@ describe('Actions::Drafts', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: draftsDuck.PUT_DRAFT_FAILURE, error: 'something awful happened' }
+      { type: draftsDuck.PUT_DRAFT_FAILURE, error: 'something awful happened' },
     ];
 
     const store = mockStore({ metadata: { metadata: draft } });
@@ -163,12 +163,12 @@ describe('Actions::Drafts', () => {
     const expectedActions = [
       {
         type: utilsDuck.VALIDATION_ERROR,
-        errors: ['The title is required.', 'The filename is not valid.']
-      }
+        errors: ['The title is required.', 'The filename is not valid.'],
+      },
     ];
 
     const store = mockStore({
-      metadata: { metadata: { path: '', title: '' } }
+      metadata: { metadata: { path: '', title: '' } },
     });
 
     store.dispatch(draftsDuck.putDraft('create'));

@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
@@ -46,25 +47,25 @@ export class Sidebar extends Component {
       pages: {
         icon: 'file-text',
         link: 'pages',
-        translation: 'pages'
+        translation: 'pages',
       },
       datafiles: {
         icon: 'database',
         link: 'datafiles',
         translation: 'datafiles',
-        splitterBefore: true
+        splitterBefore: true,
       },
       staticfiles: {
         icon: 'file',
         link: 'staticfiles',
-        translation: 'staticfiles'
+        translation: 'staticfiles',
       },
       configuration: {
         icon: 'cog',
         link: 'configuration',
         translation: 'configuration',
-        splitterBefore: true
-      }
+        splitterBefore: true,
+      },
     };
 
     const defaultLinks = _.keys(defaults);
@@ -98,16 +99,16 @@ export class Sidebar extends Component {
         <Link className="logo" to={`${ADMIN_PREFIX}/pages`} />
         <ul className="routes">
           {this.renderCollections(hiddenLinks)}
-          {
-            config && config.show_drafts &&
+          {config &&
+            config.show_drafts && (
               <li>
                 <Link activeClassName="active" to={`${ADMIN_PREFIX}/drafts`}>
                   <i className="fa fa-edit" />
                   {SidebarTranslations.drafts}
                 </Link>
-                { !hiddenLinks.includes('posts') && <Splitter /> }
+                {!hiddenLinks.includes('posts') && <Splitter />}
               </li>
-          }
+            )}
           {links}
         </ul>
       </div>
@@ -118,17 +119,17 @@ export class Sidebar extends Component {
 Sidebar.propTypes = {
   collections: PropTypes.array.isRequired,
   fetchCollections: PropTypes.func.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  collections: state.collections.collections
+  collections: state.collections.collections,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchCollections
+      fetchCollections,
     },
     dispatch
   );

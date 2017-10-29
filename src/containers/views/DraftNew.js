@@ -1,8 +1,10 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import { HotKeys } from 'react-hotkeys';
+import DocumentTitle from 'react-document-title';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -21,17 +23,10 @@ import {
   updateTitle,
   updateBody,
   updatePath,
-  updateDraft
+  updateDraft,
 } from '../../ducks/metadata';
 
 export class DraftNew extends Component {
-  constructor(props) {
-    super(props);
-
-    this.routerWillLeave = this.routerWillLeave.bind(this);
-    this.handleClickSave = this.handleClickSave.bind(this);
-  }
-
   componentDidMount() {
     const { router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave);
@@ -47,28 +42,20 @@ export class DraftNew extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    errors.length && clearErrors();
   }
 
-  routerWillLeave(nextLocation) {
+  routerWillLeave = nextLocation => {
     if (this.props.fieldChanged) {
       return getLeaveMessage();
     }
-  }
+  };
 
-  handleClickSave(e) {
-    const { fieldChanged, putDraft, params } = this.props;
-
-    // Prevent the default event from bubbling
+  handleClickSave = e => {
     preventDefault(e);
-
-    if (fieldChanged) {
-      putDraft('create', params.splat);
-    }
-  }
+    const { fieldChanged, putDraft, params } = this.props;
+    fieldChanged && putDraft('create', params.splat);
+  };
 
   render() {
     const {
@@ -79,48 +66,54 @@ export class DraftNew extends Component {
       updatePath,
       fieldChanged,
       params,
-      config
+      config,
     } = this.props;
     const metafields = injectDefaultFields(config, params.splat, 'posts');
 
     const keyboardHandlers = {
-      save: this.handleClickSave
+      save: this.handleClickSave,
     };
 
+    const document_title = params.splat
+      ? `New draft - ${params.splat} - Drafts`
+      : `New draft - Drafts`;
+
     return (
-      <HotKeys handlers={keyboardHandlers} className="single">
-        {errors.length > 0 && <Errors errors={errors} />}
-        <div className="content-header">
-          <Breadcrumbs type="drafts" splat={params.splat || ''} />
-        </div>
-
-        <div className="content-wrapper">
-          <div className="content-body">
-            <InputPath onChange={updatePath} type="drafts" path="" />
-            <InputTitle onChange={updateTitle} title="" ref="title" />
-            <MarkdownEditor
-              onChange={updateBody}
-              onSave={this.handleClickSave}
-              placeholder="Body"
-              initialValue=""
-              ref="editor"
-            />
-            <Splitter />
-            <Metadata fields={metafields} />
+      <DocumentTitle title={document_title}>
+        <HotKeys handlers={keyboardHandlers} className="single">
+          {errors.length > 0 && <Errors errors={errors} />}
+          <div className="content-header">
+            <Breadcrumbs type="drafts" splat={params.splat || ''} />
           </div>
 
-          <div className="content-side">
-            <Button
-              onClick={this.handleClickSave}
-              type="create"
-              active={fieldChanged}
-              triggered={updated}
-              icon="plus-square"
-              block
-            />
+          <div className="content-wrapper">
+            <div className="content-body">
+              <InputPath onChange={updatePath} type="drafts" path="" />
+              <InputTitle onChange={updateTitle} title="" ref="title" />
+              <MarkdownEditor
+                onChange={updateBody}
+                onSave={this.handleClickSave}
+                placeholder="Body"
+                initialValue=""
+                ref="editor"
+              />
+              <Splitter />
+              <Metadata fields={metafields} />
+            </div>
+
+            <div className="content-side">
+              <Button
+                onClick={this.handleClickSave}
+                type="create"
+                active={fieldChanged}
+                triggered={updated}
+                icon="plus-square"
+                block
+              />
+            </div>
           </div>
-        </div>
-      </HotKeys>
+        </HotKeys>
+      </DocumentTitle>
     );
   }
 }
@@ -138,7 +131,7 @@ DraftNew.propTypes = {
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -146,7 +139,7 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors,
   updated: state.drafts.updated,
-  config: state.config.config
+  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -157,7 +150,7 @@ const mapDispatchToProps = dispatch =>
       updatePath,
       updateDraft,
       putDraft,
-      clearErrors
+      clearErrors,
     },
     dispatch
   );
