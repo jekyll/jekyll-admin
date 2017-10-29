@@ -11,7 +11,7 @@ export default function Button({
   block,
   thin,
   icon,
-  to
+  to,
 }) {
   const btnClass = classnames({
     btn: true,
@@ -21,7 +21,7 @@ export default function Button({
     'btn-view': type == 'view',
     'btn-inactive': !active,
     'btn-fat': block,
-    'btn-thin': thin
+    'btn-thin': thin,
   });
 
   let label = '';
@@ -72,5 +72,5 @@ Button.propTypes = {
   block: PropTypes.bool,
   thin: PropTypes.bool,
   icon: PropTypes.string,
-  to: PropTypes.string
+  to: PropTypes.string,
 };

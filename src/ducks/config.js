@@ -59,12 +59,12 @@ const validateConfig = config =>
     { config },
     { config: 'required' },
     {
-      'config.required': getContentRequiredMessage()
+      'config.required': getContentRequiredMessage(),
     }
   );
 
 export const onEditorChange = () => ({
-  type: CONFIG_EDITOR_CHANGED
+  type: CONFIG_EDITOR_CHANGED,
 });
 
 // Reducer
@@ -74,7 +74,7 @@ export default function config(
     updated: false,
     editorChanged: false,
     fieldChanged: false,
-    isFetching: false
+    isFetching: false,
   },
   action
 ) {
@@ -82,42 +82,42 @@ export default function config(
     case FETCH_CONFIG_REQUEST:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       };
     case FETCH_CONFIG_SUCCESS:
       return {
         ...state,
         config: action.config,
-        isFetching: false
+        isFetching: false,
       };
     case FETCH_CONFIG_FAILURE:
       return {
         ...state,
-        isFetching: false
+        isFetching: false,
       };
     case PUT_CONFIG_SUCCESS:
       return {
         ...state,
         config: action.config,
         editorChanged: false,
-        updated: true
+        updated: true,
       };
     case PUT_CONFIG_FAILURE:
       return {
         ...state,
-        editorChanged: false
+        editorChanged: false,
       };
     case CONFIG_EDITOR_CHANGED:
       return {
         ...state,
         editorChanged: true,
-        updated: false
+        updated: false,
       };
     default:
       return {
         ...state,
         updated: false,
-        editorChanged: false
+        editorChanged: false,
       };
   }
 }

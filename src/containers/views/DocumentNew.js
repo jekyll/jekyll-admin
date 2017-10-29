@@ -72,11 +72,11 @@ export class DocumentNew extends Component {
       updatePath,
       fieldChanged,
       params,
-      config
+      config,
     } = this.props;
 
     const keyboardHandlers = {
-      save: this.handleClickSave
+      save: this.handleClickSave,
     };
 
     const collection = params.collection_name;
@@ -141,7 +141,7 @@ DocumentNew.propTypes = {
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -149,7 +149,7 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors,
   updated: state.collections.updated,
-  config: state.config.config
+  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -159,7 +159,7 @@ const mapDispatchToProps = dispatch =>
       updateBody,
       updatePath,
       createDocument,
-      clearErrors
+      clearErrors,
     },
     dispatch
   );

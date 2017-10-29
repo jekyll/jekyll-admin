@@ -9,7 +9,7 @@ const Errors = ({ errors }) => (
 );
 
 Errors.propTypes = {
-  errors: PropTypes.array.isRequired
+  errors: PropTypes.array.isRequired,
 };
 
 export default Errors;

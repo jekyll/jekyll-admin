@@ -6,7 +6,7 @@ describe('Reducers::Utils', () => {
   it('should return the initial state', () => {
     expect(reducer(undefined, {})).toEqual({
       input: '',
-      errors: []
+      errors: [],
     });
   });
 
@@ -16,11 +16,11 @@ describe('Reducers::Utils', () => {
         {},
         {
           type: utilsDuck.SEARCH_CONTENT,
-          input: 'Some post'
+          input: 'Some post',
         }
       )
     ).toEqual({
-      input: 'Some post'
+      input: 'Some post',
     });
   });
 
@@ -29,11 +29,11 @@ describe('Reducers::Utils', () => {
       reducer(
         { errors: ['The title is required'] },
         {
-          type: utilsDuck.CLEAR_ERRORS
+          type: utilsDuck.CLEAR_ERRORS,
         }
       )
     ).toEqual({
-      errors: []
+      errors: [],
     });
   });
 
@@ -43,11 +43,11 @@ describe('Reducers::Utils', () => {
         {},
         {
           type: utilsDuck.VALIDATION_ERROR,
-          errors: ['The title is required']
+          errors: ['The title is required'],
         }
       )
     ).toEqual({
-      errors: ['The title is required']
+      errors: ['The title is required'],
     });
   });
 });

@@ -51,13 +51,13 @@ export class MetaField extends Component {
       updateFieldValue,
       moveArrayItem,
       convertField,
-      key_prefix
+      key_prefix,
     } = this.props;
 
     const FieldTypes = {
       array: MetaArray,
       object: MetaObject,
-      simple: MetaSimple
+      simple: MetaSimple,
     };
     const CurrentComponent = FieldTypes[type];
     return (
@@ -112,7 +112,7 @@ MetaField.propTypes = {
   fieldValue: PropTypes.any,
   nameAttr: PropTypes.string.isRequired,
   namePrefix: PropTypes.string.isRequired,
-  key_prefix: PropTypes.string.isRequired
+  key_prefix: PropTypes.string.isRequired,
 };
 
 export default MetaField;

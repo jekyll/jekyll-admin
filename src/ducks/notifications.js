@@ -7,14 +7,14 @@ export const addNotification = (title, message, level) => ({
   notification: {
     title,
     message,
-    level
-  }
+    level,
+  },
 });
 
 // Reducer
 export default function notifications(
   state = {
-    notification: {}
+    notification: {},
   },
   action
 ) {
@@ -22,7 +22,7 @@ export default function notifications(
     case ADD_NOTIFICATION:
       return {
         ...state,
-        notification: action.notification
+        notification: action.notification,
       };
     default:
       return state;

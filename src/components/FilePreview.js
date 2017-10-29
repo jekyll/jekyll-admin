@@ -58,5 +58,5 @@ export default class FilePreview extends Component {
 FilePreview.propTypes = {
   file: PropTypes.object.isRequired,
   onClickDelete: PropTypes.func.isRequired,
-  onClick: PropTypes.func
+  onClick: PropTypes.func,
 };

@@ -17,7 +17,7 @@ export class MetaButtons extends Component {
       currentType,
       parentType,
       onDropdownFocus,
-      onDropdownBlur
+      onDropdownBlur,
     } = this.props;
     return (
       <div className="meta-buttons">
@@ -70,7 +70,7 @@ MetaButtons.propTypes = {
   onConvertClick: PropTypes.func.isRequired,
   onRemoveClick: PropTypes.func.isRequired,
   onDropdownFocus: PropTypes.func.isRequired,
-  onDropdownBlur: PropTypes.func.isRequired
+  onDropdownBlur: PropTypes.func.isRequired,
 };
 
 export default MetaButtons;

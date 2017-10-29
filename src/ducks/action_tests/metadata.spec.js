@@ -7,7 +7,7 @@ describe('Actions::Metadata', () => {
     const content = state.metadata;
     const expectedAction = {
       type: metadataDuck.STORE_CONTENT_FIELDS,
-      content
+      content,
     };
     expect(metadataDuck.storeContentFields(content)).toEqual(expectedAction);
   });
@@ -15,7 +15,7 @@ describe('Actions::Metadata', () => {
   it('creates ADD_METAFIELD', () => {
     const expectedAction = {
       type: metadataDuck.ADD_METAFIELD,
-      namePrefix: 'metadata["mentors"]'
+      namePrefix: 'metadata["mentors"]',
     };
     expect(metadataDuck.addField('metadata["mentors"]')).toEqual(
       expectedAction
@@ -26,7 +26,7 @@ describe('Actions::Metadata', () => {
     const expectedAction = {
       type: metadataDuck.REMOVE_METAFIELD,
       namePrefix: 'metadata',
-      key: 'layout'
+      key: 'layout',
     };
     expect(metadataDuck.removeField('metadata', 'layout')).toEqual(
       expectedAction
@@ -38,7 +38,7 @@ describe('Actions::Metadata', () => {
       type: metadataDuck.UPDATE_FIELD_KEY,
       namePrefix: 'metadata',
       fieldKey: 'layout',
-      newKey: 'layout1'
+      newKey: 'layout1',
     };
     expect(
       metadataDuck.updateFieldKey('metadata', 'layout', 'layout1')
@@ -49,7 +49,7 @@ describe('Actions::Metadata', () => {
     const expectedAction = {
       type: metadataDuck.UPDATE_FIELD_VALUE,
       nameAttr: 'metadata["layout"]',
-      value: 'post1'
+      value: 'post1',
     };
     expect(
       metadataDuck.updateFieldValue('metadata["layout"]', 'post1')
@@ -61,7 +61,7 @@ describe('Actions::Metadata', () => {
       type: metadataDuck.MOVE_ARRAY_ITEM,
       namePrefix: 'metadata["mentors"]',
       srcInd: 0,
-      targetInd: 1
+      targetInd: 1,
     };
     expect(metadataDuck.moveArrayItem('metadata["mentors"]', 0, 1)).toEqual(
       expectedAction
@@ -72,7 +72,7 @@ describe('Actions::Metadata', () => {
     const expectedAction = {
       type: metadataDuck.CONVERT_FIELD,
       nameAttr: 'metadata["mentors"]',
-      convertType: 'simple'
+      convertType: 'simple',
     };
     expect(metadataDuck.convertField('metadata["mentors"]', 'simple')).toEqual(
       expectedAction
@@ -82,7 +82,7 @@ describe('Actions::Metadata', () => {
   it('creates UPDATE_TITLE', () => {
     const expectedAction = {
       type: metadataDuck.UPDATE_TITLE,
-      title: 'Test Title'
+      title: 'Test Title',
     };
     expect(metadataDuck.updateTitle('Test Title')).toEqual(expectedAction);
   });
@@ -90,7 +90,7 @@ describe('Actions::Metadata', () => {
   it('creates UPDATE_BODY', () => {
     const expectedAction = {
       type: metadataDuck.UPDATE_BODY,
-      body: 'Test Body'
+      body: 'Test Body',
     };
     expect(metadataDuck.updateBody('Test Body')).toEqual(expectedAction);
   });
@@ -98,7 +98,7 @@ describe('Actions::Metadata', () => {
   it('creates UPDATE_DRAFT', () => {
     const expectedAction = {
       type: metadataDuck.UPDATE_DRAFT,
-      draft: false
+      draft: false,
     };
     expect(metadataDuck.updateDraft(false)).toEqual(expectedAction);
   });
@@ -106,7 +106,7 @@ describe('Actions::Metadata', () => {
   it('creates UPDATE_PATH', () => {
     const expectedAction = {
       type: metadataDuck.UPDATE_PATH,
-      path: 'test.md'
+      path: 'test.md',
     };
     expect(metadataDuck.updatePath('test.md')).toEqual(expectedAction);
   });

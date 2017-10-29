@@ -13,7 +13,7 @@ momentLocalizer(moment);
 export class MetaSimple extends Component {
   state = {
     staticfiles: [],
-    showModal: false
+    showModal: false,
   };
 
   handleOpenModal = () => {
@@ -94,11 +94,11 @@ export class MetaSimple extends Component {
             style={{
               overlay: {
                 backgroundColor: 'rgba(0,0,0,0.6)',
-                zIndex: 10
+                zIndex: 10,
               },
               content: {
-                margin: 50
-              }
+                margin: 50,
+              },
             }}
           >
             <StaticFiles onClickStaticFile={this.onClickPickerItem} />
@@ -131,7 +131,7 @@ MetaSimple.propTypes = {
   fieldKey: PropTypes.string.isRequired,
   fieldValue: PropTypes.any,
   updateFieldValue: PropTypes.func.isRequired,
-  nameAttr: PropTypes.any.isRequired
+  nameAttr: PropTypes.any.isRequired,
 };
 
 export default MetaSimple;

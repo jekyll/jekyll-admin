@@ -9,7 +9,7 @@ describe('Reducers::Config', () => {
       updated: false,
       editorChanged: false,
       fieldChanged: false,
-      isFetching: false
+      isFetching: false,
     });
   });
 
@@ -18,35 +18,35 @@ describe('Reducers::Config', () => {
       reducer(
         {},
         {
-          type: configDuck.FETCH_CONFIG_REQUEST
+          type: configDuck.FETCH_CONFIG_REQUEST,
         }
       )
     ).toEqual({
-      isFetching: true
+      isFetching: true,
     });
     expect(
       reducer(
         { isFetching: true },
         {
           type: configDuck.FETCH_CONFIG_SUCCESS,
-          config: { title: 'Awesome again' }
+          config: { title: 'Awesome again' },
         }
       )
     ).toEqual({
       config: {
-        title: 'Awesome again'
+        title: 'Awesome again',
       },
-      isFetching: false
+      isFetching: false,
     });
     expect(
       reducer(
         { isFetching: true },
         {
-          type: configDuck.FETCH_CONFIG_FAILURE
+          type: configDuck.FETCH_CONFIG_FAILURE,
         }
       )
     ).toEqual({
-      isFetching: false
+      isFetching: false,
     });
   });
 
@@ -56,26 +56,26 @@ describe('Reducers::Config', () => {
         { updated: false },
         {
           type: configDuck.PUT_CONFIG_SUCCESS,
-          config: { title: 'Awesome again' }
+          config: { title: 'Awesome again' },
         }
       )
     ).toEqual({
       config: {
-        title: 'Awesome again'
+        title: 'Awesome again',
       },
       editorChanged: false,
-      updated: true
+      updated: true,
     });
 
     expect(
       reducer(
         {},
         {
-          type: configDuck.PUT_CONFIG_FAILURE
+          type: configDuck.PUT_CONFIG_FAILURE,
         }
       )
     ).toEqual({
-      editorChanged: false
+      editorChanged: false,
     });
   });
 
@@ -84,23 +84,23 @@ describe('Reducers::Config', () => {
       reducer(
         {},
         {
-          type: configDuck.CONFIG_EDITOR_CHANGED
+          type: configDuck.CONFIG_EDITOR_CHANGED,
         }
       )
     ).toEqual({
       editorChanged: true,
-      updated: false
+      updated: false,
     });
     expect(
       reducer(
         { updated: true },
         {
-          type: configDuck.CONFIG_EDITOR_CHANGED
+          type: configDuck.CONFIG_EDITOR_CHANGED,
         }
       )
     ).toEqual({
       editorChanged: true,
-      updated: false
+      updated: false,
     });
   });
 });

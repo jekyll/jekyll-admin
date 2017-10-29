@@ -11,7 +11,7 @@ describe('Reducers::DataFiles', () => {
       isFetching: false,
       updated: false,
       datafileChanged: false,
-      fieldChanged: false
+      fieldChanged: false,
     });
   });
 
@@ -20,36 +20,36 @@ describe('Reducers::DataFiles', () => {
       reducer(
         {},
         {
-          type: datafilesDuck.FETCH_DATAFILES_REQUEST
+          type: datafilesDuck.FETCH_DATAFILES_REQUEST,
         }
       )
     ).toEqual({
-      isFetching: true
+      isFetching: true,
     });
     expect(
       reducer(
         { isFetching: true },
         {
           type: datafilesDuck.FETCH_DATAFILES_SUCCESS,
-          files: [datafile]
+          files: [datafile],
         }
       )
     ).toEqual({
       files: [datafile],
       isFetching: false,
-      currentFile: {}
+      currentFile: {},
     });
     expect(
       reducer(
         { isFetching: true, files: [] },
         {
-          type: datafilesDuck.FETCH_DATAFILES_FAILURE
+          type: datafilesDuck.FETCH_DATAFILES_FAILURE,
         }
       )
     ).toEqual({
       files: [],
       isFetching: false,
-      currentFile: {}
+      currentFile: {},
     });
   });
 
@@ -58,34 +58,34 @@ describe('Reducers::DataFiles', () => {
       reducer(
         {},
         {
-          type: datafilesDuck.FETCH_DATAFILE_REQUEST
+          type: datafilesDuck.FETCH_DATAFILE_REQUEST,
         }
       )
     ).toEqual({
-      isFetching: true
+      isFetching: true,
     });
     expect(
       reducer(
         { isFetching: true },
         {
           type: datafilesDuck.FETCH_DATAFILE_SUCCESS,
-          file: datafile
+          file: datafile,
         }
       )
     ).toEqual({
       currentFile: datafile,
-      isFetching: false
+      isFetching: false,
     });
     expect(
       reducer(
         { isFetching: true },
         {
-          type: datafilesDuck.FETCH_DATAFILE_FAILURE
+          type: datafilesDuck.FETCH_DATAFILE_FAILURE,
         }
       )
     ).toEqual({
       isFetching: false,
-      currentFile: {}
+      currentFile: {},
     });
   });
 
@@ -95,27 +95,27 @@ describe('Reducers::DataFiles', () => {
         { updated: false },
         {
           type: datafilesDuck.PUT_DATAFILE_SUCCESS,
-          file: datafile
+          file: datafile,
         }
       )
     ).toEqual({
       currentFile: datafile,
       datafileChanged: false,
-      updated: true
+      updated: true,
     });
     expect(reducer({ updated: true, datafileChanged: true }, {})).toEqual({
       updated: false,
-      datafileChanged: false
+      datafileChanged: false,
     });
     expect(
       reducer(
         { datafileChanged: true },
         {
-          type: datafilesDuck.PUT_DATAFILE_FAILURE
+          type: datafilesDuck.PUT_DATAFILE_FAILURE,
         }
       )
     ).toEqual({
-      datafileChanged: false
+      datafileChanged: false,
     });
   });
 
@@ -124,12 +124,12 @@ describe('Reducers::DataFiles', () => {
       reducer(
         { updated: true },
         {
-          type: datafilesDuck.DATAFILE_CHANGED
+          type: datafilesDuck.DATAFILE_CHANGED,
         }
       )
     ).toEqual({
       datafileChanged: true,
-      updated: false
+      updated: false,
     });
   });
 

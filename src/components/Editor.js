@@ -46,7 +46,7 @@ Editor.propTypes = {
   content: PropTypes.any.isRequired,
   onEditorChange: PropTypes.func.isRequired,
   editorChanged: PropTypes.bool.isRequired,
-  type: PropTypes.string
+  type: PropTypes.string,
 };
 
 export default Editor;

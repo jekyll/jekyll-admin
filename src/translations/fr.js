@@ -1,47 +1,43 @@
 // messages en ligne
-export const getDeleteMessage = (filename) =>
+export const getDeleteMessage = filename =>
   `Êtes-vous sûr de vouloir supprimer "${filename}" ?`;
 
 export const getLeaveMessage = () =>
-  "Il y a des modifications non sauvegardées sur cette page. Êtes-vous sûr de vouloir quitter ?";
+  'Il y a des modifications non sauvegardées sur cette page. Êtes-vous sûr de vouloir quitter ?';
 
-export const getNotFoundMessage = (type) =>
-  `Pas de ${type} trouvés.`;
+export const getNotFoundMessage = type => `Pas de ${type} trouvés.`;
 
-export const getOverrideMessage = (filename) =>
+export const getOverrideMessage = filename =>
   `${filename} sera écrasé. Poursuivre quand même ?`;
 
 // messages de notification
-export const getParserErrorMessage = () => "Erreur de parsing";
+export const getParserErrorMessage = () => 'Erreur de parsing';
 
-export const getSuccessMessage = () => "Succès";
+export const getSuccessMessage = () => 'Succès';
 
-export const getErrorMessage = () => "Erreur";
+export const getErrorMessage = () => 'Erreur';
 
-export const getUploadSuccessMessage = (filename) =>
+export const getUploadSuccessMessage = filename =>
   `${filename} a bien été téléversé.`;
 
 export const getUploadErrorMessage = () =>
   `Erreur pendant le chargement du fichier.`;
 
-export const getFetchErrorMessage = (filename) =>
+export const getFetchErrorMessage = filename =>
   `Impossible de télécharger ${filename}`;
 
-export const getUpdateErrorMessage = (filename) =>
+export const getUpdateErrorMessage = filename =>
   `Impossible de mettre à jour ${filename}`;
 
-export const getDeleteErrorMessage = (filename) =>
+export const getDeleteErrorMessage = filename =>
   `Impossible d'effacer  ${filename}`;
 
 // messages de validation
-export const getTitleRequiredMessage = () =>
-  "Titre requis";
+export const getTitleRequiredMessage = () => 'Titre requis';
 
-export const getFilenameRequiredMessage = () =>
-  "Nom de fichier requis.";
+export const getFilenameRequiredMessage = () => 'Nom de fichier requis.';
 
-export const getContentRequiredMessage = () =>
-  "Contenu requis.";
+export const getContentRequiredMessage = () => 'Contenu requis.';
 
 export const getFilenameNotValidMessage = () =>
   "Le nom de fichier n'est pas valide.";
@@ -52,30 +48,30 @@ export const sidebar = {
   posts: 'Articles',
   datafiles: 'Fichiers de données',
   staticfiles: 'Fichiers statiques',
-  configuration: 'Configuration'
+  configuration: 'Configuration',
 };
 
 // libellés des boutons
 export const labels = {
   save: {
     label: 'Enregistrer',
-    triggeredLabel: 'Enregistré'
+    triggeredLabel: 'Enregistré',
   },
   create: {
     label: 'Créer',
-    triggeredLabel: 'Crée'
+    triggeredLabel: 'Crée',
   },
   delete: {
-    label: 'Supprimer'
+    label: 'Supprimer',
   },
   view: {
-    label: 'Voir'
+    label: 'Voir',
   },
   upload: {
-    label: 'Ajouter'
+    label: 'Ajouter',
   },
   viewToggle: {
     label: 'Changer de vue de GUI Editor',
-    triggeredLabel: 'Changer de vue de Raw Editor'
-  }
+    triggeredLabel: 'Changer de vue de Raw Editor',
+  },
 };

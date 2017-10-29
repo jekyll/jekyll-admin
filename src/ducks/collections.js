@@ -7,12 +7,12 @@ import { slugify, trimObject } from '../utils/helpers';
 import {
   getTitleRequiredMessage,
   getFilenameRequiredMessage,
-  getFilenameNotValidMessage
+  getFilenameNotValidMessage,
 } from '../translations';
 import {
   collectionsAPIUrl,
   collectionAPIUrl,
-  documentAPIUrl
+  documentAPIUrl,
 } from '../constants/api';
 
 // Action Types
@@ -144,7 +144,7 @@ export const putDocument = (collection, directory, filename) => (
 
 export const deleteDocument = (collection, directory, filename) => dispatch => {
   return fetch(documentAPIUrl(collection, directory, filename), {
-    method: 'DELETE'
+    method: 'DELETE',
   })
     .then(data => {
       dispatch({ type: DELETE_DOCUMENT_SUCCESS });
@@ -153,7 +153,7 @@ export const deleteDocument = (collection, directory, filename) => dispatch => {
     .catch(error =>
       dispatch({
         type: DELETE_DOCUMENT_FAILURE,
-        error
+        error,
       })
     );
 };
@@ -177,7 +177,7 @@ const validateDocument = (metadata, collection) => {
   // base messages
   let messages = {
     'title.required': getTitleRequiredMessage(),
-    'path.required': getFilenameRequiredMessage()
+    'path.required': getFilenameRequiredMessage(),
   };
 
   if (collection == 'posts') {
@@ -199,7 +199,7 @@ export default function collections(
     entries: [],
     currentDocument: {},
     isFetching: false,
-    updated: false
+    updated: false,
   },
   action
 ) {
@@ -209,54 +209,54 @@ export default function collections(
     case FETCH_DOCUMENT_REQUEST:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       };
     case FETCH_COLLECTIONS_SUCCESS:
       return {
         ...state,
         collections: action.collections,
-        isFetching: false
+        isFetching: false,
       };
     case FETCH_COLLECTION_SUCCESS:
       return {
         ...state,
         entries: action.entries,
-        isFetching: false
+        isFetching: false,
       };
     case FETCH_DOCUMENT_SUCCESS:
       return {
         ...state,
         currentDocument: action.doc,
-        isFetching: false
+        isFetching: false,
       };
     case FETCH_COLLECTIONS_FAILURE:
       return {
         ...state,
         collections: [],
-        isFetching: false
+        isFetching: false,
       };
     case FETCH_COLLECTION_FAILURE:
       return {
         ...state,
         entries: [],
-        isFetching: false
+        isFetching: false,
       };
     case FETCH_DOCUMENT_FAILURE:
       return {
         ...state,
         currentDocument: {},
-        isFetching: false
+        isFetching: false,
       };
     case PUT_DOCUMENT_SUCCESS:
       return {
         ...state,
         currentDocument: action.doc,
-        updated: true
+        updated: true,
       };
     default:
       return {
         ...state,
-        updated: false
+        updated: false,
       };
   }
 }

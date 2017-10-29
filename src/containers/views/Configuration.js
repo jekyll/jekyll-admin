@@ -16,7 +16,7 @@ import { preventDefault } from '../../utils/helpers';
 
 export class Configuration extends Component {
   state = {
-    guiView: false
+    guiView: false,
   };
 
   componentDidMount() {
@@ -62,11 +62,11 @@ export class Configuration extends Component {
       onEditorChange,
       config,
       updated,
-      errors
+      errors,
     } = this.props;
     const { raw_content, content } = config;
     const keyboardHandlers = {
-      save: this.handleClickSave
+      save: this.handleClickSave,
     };
 
     return (
@@ -129,7 +129,7 @@ Configuration.propTypes = {
   errors: PropTypes.array.isRequired,
   clearErrors: PropTypes.func.isRequired,
   router: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired
+  route: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -137,7 +137,7 @@ const mapStateToProps = state => ({
   updated: state.config.updated,
   editorChanged: state.config.editorChanged,
   fieldChanged: state.metadata.fieldChanged,
-  errors: state.utils.errors
+  errors: state.utils.errors,
 });
 
 const mapDispatchToProps = dispatch =>

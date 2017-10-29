@@ -57,13 +57,13 @@ App.propTypes = {
   fetchConfig: PropTypes.func.isRequired,
   config: PropTypes.object.isRequired,
   isFetching: PropTypes.bool.isRequired,
-  updated: PropTypes.bool
+  updated: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   config: state.config.config,
   updated: state.config.updated,
-  isFetching: state.config.isFetching
+  isFetching: state.config.isFetching,
 });
 
 const mapDispatchToProps = dispatch =>

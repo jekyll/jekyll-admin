@@ -10,13 +10,13 @@ describe('Reducers::Metadata', () => {
       metadata: {},
       new_field_count: 1,
       key_prefix: '',
-      fieldChanged: false
+      fieldChanged: false,
     });
   });
 
   it('should reset fieldChanged', () => {
     expect(reducer({ fieldChanged: true }, {})).toEqual({
-      fieldChanged: false
+      fieldChanged: false,
     });
   });
 
@@ -26,22 +26,22 @@ describe('Reducers::Metadata', () => {
         {},
         {
           type: metadataDuck.STORE_CONTENT_FIELDS,
-          content: meta
+          content: meta,
         }
       )
     ).toEqual({
-      metadata: meta
+      metadata: meta,
     });
     expect(
       reducer(
         {},
         {
           type: metadataDuck.STORE_CONTENT_FIELDS,
-          content: {}
+          content: {},
         }
       )
     ).toEqual({
-      metadata: {}
+      metadata: {},
     });
   });
 
@@ -51,42 +51,42 @@ describe('Reducers::Metadata', () => {
         { metadata: meta, new_field_count: 0 },
         {
           type: metadataDuck.ADD_METAFIELD,
-          namePrefix: 'metadata["notexists"]'
+          namePrefix: 'metadata["notexists"]',
         }
       )
     ).toEqual({
       metadata: meta,
-      new_field_count: 1
+      new_field_count: 1,
     });
     expect(
       reducer(
         { metadata: meta, new_field_count: 1 },
         {
           type: metadataDuck.ADD_METAFIELD,
-          namePrefix: 'metadata'
+          namePrefix: 'metadata',
         }
       )
     ).toEqual({
       metadata: {
         ...meta,
-        'New field 1': ''
+        'New field 1': '',
       },
-      new_field_count: 2
+      new_field_count: 2,
     });
     expect(
       reducer(
         { metadata: meta, new_field_count: 1 },
         {
           type: metadataDuck.ADD_METAFIELD,
-          namePrefix: 'metadata["students"]'
+          namePrefix: 'metadata["students"]',
         }
       )
     ).toEqual({
       metadata: {
         ...meta,
-        students: [...meta.students, '']
+        students: [...meta.students, ''],
       },
-      new_field_count: 2
+      new_field_count: 2,
     });
   });
 
@@ -97,7 +97,7 @@ describe('Reducers::Metadata', () => {
           { metadata: meta, new_field_count: 0 },
           {
             type: metadataDuck.REMOVE_METAFIELD,
-            namePrefix: 'metadata["notexists"]'
+            namePrefix: 'metadata["notexists"]',
           }
         ),
         'key_prefix'
@@ -105,7 +105,7 @@ describe('Reducers::Metadata', () => {
     ).toEqual({
       metadata: meta,
       new_field_count: 0,
-      fieldChanged: true
+      fieldChanged: true,
     });
     expect(
       _.omit(
@@ -114,7 +114,7 @@ describe('Reducers::Metadata', () => {
           {
             type: metadataDuck.REMOVE_METAFIELD,
             namePrefix: 'metadata["students"][0]',
-            key: 'email'
+            key: 'email',
           }
         ),
         'key_prefix'
@@ -122,10 +122,13 @@ describe('Reducers::Metadata', () => {
     ).toEqual({
       metadata: {
         ...meta,
-        students: [_.omit(meta.students[0], 'email'), ...meta.students.slice(1)]
+        students: [
+          _.omit(meta.students[0], 'email'),
+          ...meta.students.slice(1),
+        ],
       },
       new_field_count: 0,
-      fieldChanged: true
+      fieldChanged: true,
     });
   });
 
@@ -137,13 +140,13 @@ describe('Reducers::Metadata', () => {
           type: metadataDuck.UPDATE_FIELD_KEY,
           namePrefix: 'metadata["notexists"]',
           fieldKey: 'key',
-          newKey: 'new key'
+          newKey: 'new key',
         }
       )
     ).toEqual({
       metadata: meta,
       new_field_count: 0,
-      fieldChanged: true
+      fieldChanged: true,
     });
     expect(
       reducer(
@@ -152,16 +155,16 @@ describe('Reducers::Metadata', () => {
           type: metadataDuck.UPDATE_FIELD_KEY,
           namePrefix: 'metadata',
           fieldKey: 'layout',
-          newKey: '  new_layout  '
+          newKey: '  new_layout  ',
         }
       )
     ).toEqual({
       metadata: {
         ..._.omit(meta, 'layout'),
-        new_layout: meta.layout
+        new_layout: meta.layout,
       },
       new_field_count: 0,
-      fieldChanged: true
+      fieldChanged: true,
     });
   });
 
@@ -172,16 +175,16 @@ describe('Reducers::Metadata', () => {
         {
           type: metadataDuck.UPDATE_FIELD_VALUE,
           nameAttr: 'metadata["notexists"]',
-          value: '  willExist  '
+          value: '  willExist  ',
         }
       )
     ).toEqual({
       metadata: {
         ...meta,
-        notexists: '  willExist  '
+        notexists: '  willExist  ',
       },
       new_field_count: 0,
-      fieldChanged: true
+      fieldChanged: true,
     });
     expect(
       reducer(
@@ -189,16 +192,16 @@ describe('Reducers::Metadata', () => {
         {
           type: metadataDuck.UPDATE_FIELD_VALUE,
           nameAttr: 'metadata["layout"]',
-          value: 'post2'
+          value: 'post2',
         }
       )
     ).toEqual({
       metadata: {
         ...meta,
-        layout: 'post2'
+        layout: 'post2',
       },
       new_field_count: 0,
-      fieldChanged: true
+      fieldChanged: true,
     });
   });
 
@@ -211,7 +214,7 @@ describe('Reducers::Metadata', () => {
             type: metadataDuck.MOVE_ARRAY_ITEM,
             namePrefix: 'metadata["layout"]',
             srcInd: 0,
-            targetInd: 2
+            targetInd: 2,
           }
         ),
         'key_prefix'
@@ -219,7 +222,7 @@ describe('Reducers::Metadata', () => {
     ).toEqual({
       metadata: meta,
       new_field_count: 0,
-      fieldChanged: true
+      fieldChanged: true,
     });
     expect(
       _.omit(
@@ -229,7 +232,7 @@ describe('Reducers::Metadata', () => {
             type: metadataDuck.MOVE_ARRAY_ITEM,
             namePrefix: 'metadata["mentors"]',
             srcInd: 0,
-            targetInd: 2
+            targetInd: 2,
           }
         ),
         'key_prefix'
@@ -237,10 +240,10 @@ describe('Reducers::Metadata', () => {
     ).toEqual({
       metadata: {
         ...meta,
-        mentors: [...meta.mentors.slice(1), meta.mentors[0]]
+        mentors: [...meta.mentors.slice(1), meta.mentors[0]],
       },
       new_field_count: 0,
-      fieldChanged: true
+      fieldChanged: true,
     });
   });
 
@@ -251,13 +254,13 @@ describe('Reducers::Metadata', () => {
         {
           type: metadataDuck.CONVERT_FIELD,
           nameAttr: 'metadata["notexists"]',
-          convertType: 'array'
+          convertType: 'array',
         }
       )
     ).toEqual({
       metadata: meta,
       new_field_count: 1,
-      fieldChanged: true
+      fieldChanged: true,
     });
     expect(
       reducer(
@@ -265,13 +268,13 @@ describe('Reducers::Metadata', () => {
         {
           type: metadataDuck.CONVERT_FIELD,
           nameAttr: 'metadata',
-          convertType: 'array'
+          convertType: 'array',
         }
       )
     ).toEqual({
       metadata: [''],
       new_field_count: 1,
-      fieldChanged: true
+      fieldChanged: true,
     });
     expect(
       reducer(
@@ -279,16 +282,16 @@ describe('Reducers::Metadata', () => {
         {
           type: metadataDuck.CONVERT_FIELD,
           nameAttr: 'metadata["mentors"]',
-          convertType: 'object'
+          convertType: 'object',
         }
       )
     ).toEqual({
       metadata: {
         ...meta,
-        mentors: { 'New field 2': '' }
+        mentors: { 'New field 2': '' },
       },
       new_field_count: 3,
-      fieldChanged: true
+      fieldChanged: true,
     });
   });
 });

@@ -15,7 +15,7 @@ export class MetaObject extends Component {
       updateFieldValue,
       convertField,
       key_prefix,
-      moveArrayItem
+      moveArrayItem,
     } = this.props;
     const items = _.map(fieldValue, (value, key) => {
       let type = 'simple';
@@ -65,7 +65,7 @@ MetaObject.propTypes = {
   updateFieldKey: PropTypes.func.isRequired,
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
-  key_prefix: PropTypes.string.isRequired
+  key_prefix: PropTypes.string.isRequired,
 };
 
 export default MetaObject;

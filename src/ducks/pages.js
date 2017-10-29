@@ -6,7 +6,7 @@ import { slugify, trimObject } from '../utils/helpers';
 import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
 import {
   getTitleRequiredMessage,
-  getFilenameNotValidMessage
+  getFilenameNotValidMessage,
 } from '../translations';
 
 // Action Types
@@ -106,7 +106,7 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
 
 export const deletePage = (directory, filename) => dispatch => {
   return fetch(pageAPIUrl(directory, filename), {
-    method: 'DELETE'
+    method: 'DELETE',
   })
     .then(data => {
       dispatch({ type: DELETE_PAGE_SUCCESS });
@@ -115,7 +115,7 @@ export const deletePage = (directory, filename) => dispatch => {
     .catch(error =>
       dispatch({
         type: DELETE_PAGE_FAILURE,
-        error
+        error,
       })
     );
 };
@@ -126,7 +126,7 @@ const validatePage = metadata =>
     { path: 'required|filename' },
     {
       'path.required': getTitleRequiredMessage(),
-      'path.filename': getFilenameNotValidMessage()
+      'path.filename': getFilenameNotValidMessage(),
     }
   );
 
@@ -138,7 +138,7 @@ export default function pages(
     pages: [],
     page: {},
     isFetching: false,
-    updated: false
+    updated: false,
   },
   action
 ) {
@@ -147,43 +147,43 @@ export default function pages(
     case FETCH_PAGE_REQUEST:
       return {
         ...state,
-        isFetching: true
+        isFetching: true,
       };
     case FETCH_PAGES_SUCCESS:
       return {
         ...state,
         pages: action.pages,
         isFetching: false,
-        page: {}
+        page: {},
       };
     case FETCH_PAGES_FAILURE:
       return {
         ...state,
         isFetching: false,
-        pages: []
+        pages: [],
       };
     case FETCH_PAGE_SUCCESS:
       return {
         ...state,
         page: action.page,
-        isFetching: false
+        isFetching: false,
       };
     case FETCH_PAGE_FAILURE:
       return {
         ...state,
         page: {},
-        isFetching: false
+        isFetching: false,
       };
     case PUT_PAGE_SUCCESS:
       return {
         ...state,
         page: action.page,
-        updated: true
+        updated: true,
       };
     default:
       return {
         ...state,
-        updated: false
+        updated: false,
       };
   }
 }

@@ -22,7 +22,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedActions = [
       { type: datafilesDuck.FETCH_DATAFILES_REQUEST },
-      { type: datafilesDuck.FETCH_DATAFILES_SUCCESS, files: [datafile] }
+      { type: datafilesDuck.FETCH_DATAFILES_SUCCESS, files: [datafile] },
     ];
 
     const store = mockStore({ files: [] });
@@ -40,7 +40,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedActions = [
       { type: datafilesDuck.FETCH_DATAFILES_REQUEST },
-      { type: datafilesDuck.FETCH_DATAFILES_SUCCESS, files: [datafile] }
+      { type: datafilesDuck.FETCH_DATAFILES_SUCCESS, files: [datafile] },
     ];
 
     const store = mockStore({ files: [] });
@@ -58,7 +58,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedActions = [
       { type: datafilesDuck.FETCH_DATAFILES_REQUEST },
-      { type: datafilesDuck.FETCH_DATAFILES_FAILURE }
+      { type: datafilesDuck.FETCH_DATAFILES_FAILURE },
     ];
 
     const store = mockStore({ files: [] });
@@ -76,7 +76,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedActions = [
       { type: datafilesDuck.FETCH_DATAFILE_REQUEST },
-      { type: datafilesDuck.FETCH_DATAFILE_SUCCESS, file: datafile }
+      { type: datafilesDuck.FETCH_DATAFILE_SUCCESS, file: datafile },
     ];
 
     const store = mockStore({ currentFile: {} });
@@ -96,7 +96,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedActions = [
       { type: datafilesDuck.FETCH_DATAFILE_REQUEST },
-      { type: datafilesDuck.FETCH_DATAFILE_SUCCESS, file: datafile }
+      { type: datafilesDuck.FETCH_DATAFILE_SUCCESS, file: datafile },
     ];
 
     const store = mockStore({ currentFile: {} });
@@ -116,7 +116,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedActions = [
       { type: datafilesDuck.FETCH_DATAFILE_REQUEST },
-      { type: datafilesDuck.FETCH_DATAFILE_FAILURE }
+      { type: datafilesDuck.FETCH_DATAFILE_FAILURE },
     ];
 
     const store = mockStore({ currentFile: {} });
@@ -136,7 +136,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedAction = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: datafilesDuck.PUT_DATAFILE_SUCCESS, file: datafile }
+      { type: datafilesDuck.PUT_DATAFILE_SUCCESS, file: datafile },
     ];
 
     const store = mockStore({ currentFile: {} });
@@ -158,7 +158,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedAction = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: datafilesDuck.PUT_DATAFILE_SUCCESS, file: datafile }
+      { type: datafilesDuck.PUT_DATAFILE_SUCCESS, file: datafile },
     ];
 
     const store = mockStore({ metadata: { metadata: datafile } });
@@ -186,7 +186,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedAction = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: datafilesDuck.PUT_DATAFILE_SUCCESS, file: datafile }
+      { type: datafilesDuck.PUT_DATAFILE_SUCCESS, file: datafile },
     ];
 
     const store = mockStore({ metadata: { metadata: datafile } });
@@ -208,7 +208,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedAction = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: datafilesDuck.PUT_DATAFILE_SUCCESS, file: datafile }
+      { type: datafilesDuck.PUT_DATAFILE_SUCCESS, file: datafile },
     ];
 
     const store = mockStore({ metadata: { metadata: datafile } });
@@ -230,7 +230,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedActions = [
       { type: utilsDuck.CLEAR_ERRORS },
-      { type: datafilesDuck.PUT_DATAFILE_FAILURE }
+      { type: datafilesDuck.PUT_DATAFILE_FAILURE },
     ];
 
     const store = mockStore({ currentFile: {} });
@@ -250,7 +250,7 @@ describe('Actions::Datafiles', () => {
 
     const expectedAction = [
       { type: datafilesDuck.DELETE_DATAFILE_SUCCESS },
-      { type: datafilesDuck.FETCH_DATAFILES_REQUEST }
+      { type: datafilesDuck.FETCH_DATAFILES_REQUEST },
     ];
 
     const store = mockStore({ files: [] });
@@ -269,7 +269,7 @@ describe('Actions::Datafiles', () => {
       .replyWithError('something awful happened');
 
     const expectedAction = {
-      type: datafilesDuck.DELETE_DATAFILE_FAILURE
+      type: datafilesDuck.DELETE_DATAFILE_FAILURE,
     };
 
     const store = mockStore({ currentFile: {} });
@@ -286,8 +286,8 @@ describe('Actions::Datafiles', () => {
     const expectedActions = [
       {
         type: utilsDuck.VALIDATION_ERROR,
-        errors: ['The filename is required.', 'The content is required.']
-      }
+        errors: ['The filename is required.', 'The content is required.'],
+      },
     ];
 
     const store = mockStore({ currentFile: {} });
@@ -299,8 +299,8 @@ describe('Actions::Datafiles', () => {
   it('creates DATAFILE_CHANGED when the content in editor is changed', () => {
     const expectedAction = [
       {
-        type: datafilesDuck.DATAFILE_CHANGED
-      }
+        type: datafilesDuck.DATAFILE_CHANGED,
+      },
     ];
 
     const store = mockStore({ config: {} });

@@ -12,7 +12,7 @@ import Button from '../../components/Button';
 import {
   fetchCollection,
   deleteDocument,
-  filterBySearchInput
+  filterBySearchInput,
 } from '../../ducks/collections';
 import { search } from '../../ducks/utils';
 import { capitalize } from '../../utils/helpers';
@@ -181,12 +181,12 @@ Documents.propTypes = {
   fetchCollection: PropTypes.func.isRequired,
   deleteDocument: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   documents: filterBySearchInput(state.collections.entries, state.utils.input),
-  isFetching: state.collections.isFetching
+  isFetching: state.collections.isFetching,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -194,7 +194,7 @@ const mapDispatchToProps = dispatch =>
     {
       fetchCollection,
       deleteDocument,
-      search
+      search,
     },
     dispatch
   );

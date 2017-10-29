@@ -54,7 +54,7 @@ Dropzone.propTypes = {
   files: PropTypes.array.isRequired,
   onDrop: PropTypes.func.isRequired,
   onClickDelete: PropTypes.func.isRequired,
-  onClickItem: PropTypes.func
+  onClickItem: PropTypes.func,
 };
 
 export default Dropzone;

@@ -21,7 +21,7 @@ import NotFound from './containers/views/NotFound';
 
 export default (
   <Route path={`${ADMIN_PREFIX}`} component={App}>
-    <IndexRoute component={Pages}/>
+    <IndexRoute component={Pages} />
     <Route path="configuration" component={Configuration} />
     <Route path="pages">
       <IndexRoute component={Pages} />

@@ -12,7 +12,7 @@ import Button from '../../components/Button';
 import {
   fetchDataFiles,
   deleteDataFile,
-  filterByFilename
+  filterByFilename,
 } from '../../ducks/datafiles';
 import { search } from '../../ducks/utils';
 import { getFilenameFromPath } from '../../utils/helpers';
@@ -167,12 +167,12 @@ DataFiles.propTypes = {
   deleteDataFile: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   search: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   files: filterByFilename(state.datafiles.files, state.utils.input),
-  isFetching: state.datafiles.isFetching
+  isFetching: state.datafiles.isFetching,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -180,7 +180,7 @@ const mapDispatchToProps = dispatch =>
     {
       fetchDataFiles,
       deleteDataFile,
-      search
+      search,
     },
     dispatch
   );

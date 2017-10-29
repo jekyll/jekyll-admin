@@ -4,7 +4,7 @@ import {
   updateMetadataFieldKey,
   updateMetadataFieldValue,
   moveMetadataArrayItem,
-  convertMetadataField
+  convertMetadataField,
 } from '../utils/metadata';
 
 // Action Types
@@ -23,64 +23,64 @@ export const CONVERT_FIELD = 'CONVERT_FIELD';
 // Actions
 export const storeContentFields = content => ({
   type: STORE_CONTENT_FIELDS,
-  content
+  content,
 });
 
 export const addField = namePrefix => ({
   type: ADD_METAFIELD,
-  namePrefix
+  namePrefix,
 });
 
 export const removeField = (namePrefix, key) => ({
   type: REMOVE_METAFIELD,
   namePrefix,
-  key
+  key,
 });
 
 export const updateFieldKey = (namePrefix, fieldKey, newKey) => ({
   type: UPDATE_FIELD_KEY,
   namePrefix,
   fieldKey,
-  newKey
+  newKey,
 });
 
 export const updateFieldValue = (nameAttr, value) => ({
   type: UPDATE_FIELD_VALUE,
   nameAttr,
-  value
+  value,
 });
 
 export const moveArrayItem = (namePrefix, srcInd, targetInd) => ({
   type: MOVE_ARRAY_ITEM,
   namePrefix,
   srcInd,
-  targetInd
+  targetInd,
 });
 
 export const convertField = (nameAttr, convertType) => ({
   type: CONVERT_FIELD,
   nameAttr,
-  convertType
+  convertType,
 });
 
 export const updateTitle = title => ({
   type: UPDATE_TITLE,
-  title
+  title,
 });
 
 export const updateBody = body => ({
   type: UPDATE_BODY,
-  body
+  body,
 });
 
 export const updateDraft = draft => ({
   type: UPDATE_DRAFT,
-  draft
+  draft,
 });
 
 export const updatePath = path => ({
   type: UPDATE_PATH,
-  path
+  path,
 });
 
 // Reducer
@@ -89,7 +89,7 @@ export default function metadata( // TODO normalize the metadata
     metadata: {},
     new_field_count: 1,
     key_prefix: '', // force children to be rerendered on sort
-    fieldChanged: false
+    fieldChanged: false,
   },
   action
 ) {
@@ -99,54 +99,54 @@ export default function metadata( // TODO normalize the metadata
         ...state,
         metadata: {
           ...state.metadata,
-          title: action.title
+          title: action.title,
         },
-        fieldChanged: true
+        fieldChanged: true,
       };
     case UPDATE_BODY:
       return {
         ...state,
         metadata: {
           ...state.metadata,
-          raw_content: action.body
+          raw_content: action.body,
         },
-        fieldChanged: true
+        fieldChanged: true,
       };
     case UPDATE_PATH:
       return {
         ...state,
         metadata: {
           ...state.metadata,
-          path: action.path
+          path: action.path,
         },
-        fieldChanged: true
+        fieldChanged: true,
       };
     case UPDATE_DRAFT:
       return {
         ...state,
         draft: {
           ...state.metadata,
-          draft: action.draft
+          draft: action.draft,
         },
-        fieldChanged: true
+        fieldChanged: true,
       };
     case STORE_CONTENT_FIELDS:
       return {
         ...state,
-        metadata: action.content
+        metadata: action.content,
       };
     case ADD_METAFIELD:
       return {
         ...state,
         metadata: addFieldToMetadata(state, action.namePrefix),
-        new_field_count: state.new_field_count + 1
+        new_field_count: state.new_field_count + 1,
       };
     case REMOVE_METAFIELD:
       return {
         ...state,
         metadata: removeFieldFromMetadata(state, action.namePrefix, action.key),
         fieldChanged: true,
-        key_prefix: `${Math.random() * 100}`
+        key_prefix: `${Math.random() * 100}`,
       };
     case UPDATE_FIELD_KEY:
       return {
@@ -157,7 +157,7 @@ export default function metadata( // TODO normalize the metadata
           action.fieldKey,
           action.newKey.trim()
         ),
-        fieldChanged: true
+        fieldChanged: true,
       };
     case UPDATE_FIELD_VALUE:
       return {
@@ -167,7 +167,7 @@ export default function metadata( // TODO normalize the metadata
           action.nameAttr,
           action.value
         ),
-        fieldChanged: true
+        fieldChanged: true,
       };
     case MOVE_ARRAY_ITEM:
       return {
@@ -179,7 +179,7 @@ export default function metadata( // TODO normalize the metadata
           action.targetInd
         ),
         key_prefix: `${Math.random() * 100}`,
-        fieldChanged: true
+        fieldChanged: true,
       };
     case CONVERT_FIELD:
       return {
@@ -190,12 +190,12 @@ export default function metadata( // TODO normalize the metadata
           action.convertType
         ),
         new_field_count: state.new_field_count + 1,
-        fieldChanged: true
+        fieldChanged: true,
       };
     default:
       return {
         ...state,
-        fieldChanged: false
+        fieldChanged: false,
       };
   }
 }

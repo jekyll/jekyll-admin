@@ -24,7 +24,7 @@ export default function Breadcrumbs({ splat, type }) {
       const before = i == 0 ? '' : paths.slice(0, i).join('/') + '/';
       return {
         href: `${base}/${before}${path}`,
-        label: path
+        label: path,
       };
     });
   }
@@ -53,5 +53,5 @@ export default function Breadcrumbs({ splat, type }) {
 
 Breadcrumbs.propTypes = {
   splat: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
 };

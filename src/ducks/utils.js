@@ -6,23 +6,23 @@ export const VALIDATION_ERROR = 'VALIDATION_ERROR';
 // Actions
 export const search = input => ({
   type: SEARCH_CONTENT,
-  input
+  input,
 });
 
 export const clearErrors = () => ({
-  type: CLEAR_ERRORS
+  type: CLEAR_ERRORS,
 });
 
 export const validationError = errors => ({
   type: VALIDATION_ERROR,
-  errors
+  errors,
 });
 
 // Reducer
 export default function utils(
   state = {
     input: '',
-    errors: []
+    errors: [],
   },
   action
 ) {
@@ -30,22 +30,22 @@ export default function utils(
     case SEARCH_CONTENT:
       return {
         ...state,
-        input: action.input
+        input: action.input,
       };
     case CLEAR_ERRORS:
       return {
         ...state,
-        errors: []
+        errors: [],
       };
     case VALIDATION_ERROR:
       return {
         ...state,
-        errors: action.errors
+        errors: action.errors,
       };
     default:
       return {
         ...state,
-        input: ''
+        input: '',
       };
   }
 }

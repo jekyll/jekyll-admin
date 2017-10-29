@@ -17,7 +17,7 @@ export class MetaArray extends Component {
         onEnd: e => {
           let srcInd = e.item.getAttribute('data-id');
           moveArrayItem(namePrefix, srcInd, e.newIndex);
-        }
+        },
       };
       Sortable.create(component, options);
     }
@@ -34,7 +34,7 @@ export class MetaArray extends Component {
       updateFieldValue,
       moveArrayItem,
       convertField,
-      key_prefix
+      key_prefix,
     } = this.props;
     const items = _.map(fieldValue, (item, i) => {
       let type = 'simple';
@@ -88,7 +88,7 @@ MetaArray.propTypes = {
   updateFieldValue: PropTypes.func.isRequired,
   convertField: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
-  key_prefix: PropTypes.string.isRequired
+  key_prefix: PropTypes.string.isRequired,
 };
 
 export default MetaArray;

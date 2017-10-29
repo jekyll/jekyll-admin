@@ -17,18 +17,18 @@ import { clearErrors } from '../../ducks/utils';
 import {
   getFilenameFromPath,
   getExtensionFromPath,
-  preventDefault
+  preventDefault,
 } from '../../utils/helpers';
 import {
   fetchDataFile,
   putDataFile,
   deleteDataFile,
-  onDataFileChanged
+  onDataFileChanged,
 } from '../../ducks/datafiles';
 import {
   getLeaveMessage,
   getDeleteMessage,
-  getNotFoundMessage
+  getNotFoundMessage,
 } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -36,7 +36,7 @@ export class DataFileEdit extends Component {
   state = {
     guiView: false,
     guiPath: '',
-    extn: ''
+    extn: '',
   };
 
   componentDidMount() {
@@ -81,7 +81,7 @@ export class DataFileEdit extends Component {
     this.setState({
       guiView: !this.state.guiView,
       guiPath: datafile.slug,
-      extn: datafile.ext
+      extn: datafile.ext,
     });
   };
 
@@ -102,7 +102,7 @@ export class DataFileEdit extends Component {
       datafileChanged,
       fieldChanged,
       putDataFile,
-      params
+      params,
     } = this.props;
     const { path, relative_path } = datafile;
     const data_dir = path.replace(relative_path, '');
@@ -229,7 +229,7 @@ export class DataFileEdit extends Component {
       datafile,
       isFetching,
       params,
-      errors
+      errors,
     } = this.props;
 
     if (isFetching) {
@@ -255,7 +255,7 @@ export class DataFileEdit extends Component {
     );
 
     const keyboardHandlers = {
-      save: this.handleClickSave
+      save: this.handleClickSave,
     };
 
     const document_title = directory
@@ -319,7 +319,7 @@ DataFileEdit.propTypes = {
   errors: PropTypes.array.isRequired,
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
-  route: PropTypes.object.isRequired
+  route: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -328,7 +328,7 @@ const mapStateToProps = state => ({
   updated: state.datafiles.updated,
   datafileChanged: state.datafiles.datafileChanged,
   fieldChanged: state.metadata.fieldChanged,
-  errors: state.utils.errors
+  errors: state.utils.errors,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -338,7 +338,7 @@ const mapDispatchToProps = dispatch =>
       putDataFile,
       deleteDataFile,
       onDataFileChanged,
-      clearErrors
+      clearErrors,
     },
     dispatch
   );

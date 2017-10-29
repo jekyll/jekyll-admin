@@ -21,7 +21,7 @@ export class DataFileNew extends Component {
   state = {
     guiView: false,
     guiPath: '',
-    extn: '.yml'
+    extn: '.yml',
   };
 
   componentDidMount() {
@@ -118,12 +118,12 @@ export class DataFileNew extends Component {
       datafile,
       updated,
       errors,
-      params
+      params,
     } = this.props;
     const { path, raw_content } = datafile;
 
     const keyboardHandlers = {
-      save: this.handleClickSave
+      save: this.handleClickSave,
     };
 
     // activate or deactivate `Create` button in GUI mode based on input state
@@ -208,7 +208,7 @@ DataFileNew.propTypes = {
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
-  fieldChanged: PropTypes.bool
+  fieldChanged: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
@@ -216,7 +216,7 @@ const mapStateToProps = state => ({
   updated: state.datafiles.updated,
   datafileChanged: state.datafiles.datafileChanged,
   fieldChanged: state.metadata.fieldChanged,
-  errors: state.utils.errors
+  errors: state.utils.errors,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -224,7 +224,7 @@ const mapDispatchToProps = dispatch =>
     {
       putDataFile,
       onDataFileChanged,
-      clearErrors
+      clearErrors,
     },
     dispatch
   );

@@ -47,25 +47,25 @@ export class Sidebar extends Component {
       pages: {
         icon: 'file-text',
         link: 'pages',
-        translation: 'pages'
+        translation: 'pages',
       },
       datafiles: {
         icon: 'database',
         link: 'datafiles',
         translation: 'datafiles',
-        splitterBefore: true
+        splitterBefore: true,
       },
       staticfiles: {
         icon: 'file',
         link: 'staticfiles',
-        translation: 'staticfiles'
+        translation: 'staticfiles',
       },
       configuration: {
         icon: 'cog',
         link: 'configuration',
         translation: 'configuration',
-        splitterBefore: true
-      }
+        splitterBefore: true,
+      },
     };
 
     const defaultLinks = _.keys(defaults);
@@ -119,17 +119,17 @@ export class Sidebar extends Component {
 Sidebar.propTypes = {
   collections: PropTypes.array.isRequired,
   fetchCollections: PropTypes.func.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
-  collections: state.collections.collections
+  collections: state.collections.collections,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchCollections
+      fetchCollections,
     },
     dispatch
   );

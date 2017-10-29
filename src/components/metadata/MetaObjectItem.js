@@ -45,12 +45,12 @@ export class MetaObjectItem extends Component {
       updateFieldValue,
       convertField,
       key_prefix,
-      moveArrayItem
+      moveArrayItem,
     } = this.props;
     const FieldTypes = {
       array: MetaArray,
       object: MetaObject,
-      simple: MetaSimple
+      simple: MetaSimple,
     };
     const CurrentComponent = FieldTypes[type];
     return (
@@ -106,6 +106,6 @@ MetaObjectItem.propTypes = {
   updateFieldKey: PropTypes.func.isRequired,
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
-  key_prefix: PropTypes.string.isRequired
+  key_prefix: PropTypes.string.isRequired,
 };
 export default MetaObjectItem;

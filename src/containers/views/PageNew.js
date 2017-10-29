@@ -17,7 +17,7 @@ import {
   updateTitle,
   updateBody,
   updatePath,
-  updateDraft
+  updateDraft,
 } from '../../ducks/metadata';
 import { createPage } from '../../ducks/pages';
 import { clearErrors } from '../../ducks/utils';
@@ -67,11 +67,11 @@ export class PageNew extends Component {
       updatePath,
       fieldChanged,
       params,
-      config
+      config,
     } = this.props;
 
     const keyboardHandlers = {
-      save: this.handleClickSave
+      save: this.handleClickSave,
     };
 
     const metafields = injectDefaultFields(config, params.splat, 'pages');
@@ -134,7 +134,7 @@ PageNew.propTypes = {
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -142,7 +142,7 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors,
   updated: state.pages.updated,
-  config: state.config.config
+  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -153,7 +153,7 @@ const mapDispatchToProps = dispatch =>
       updatePath,
       updateDraft,
       createPage,
-      clearErrors
+      clearErrors,
     },
     dispatch
   );

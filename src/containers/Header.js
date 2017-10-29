@@ -23,7 +23,7 @@ export class Header extends Component {
 }
 
 Header.propTypes = {
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
 export default Header;

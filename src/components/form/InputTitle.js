@@ -30,5 +30,5 @@ export default class InputTitle extends Component {
 
 InputTitle.propTypes = {
   title: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };

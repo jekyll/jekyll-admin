@@ -24,5 +24,5 @@ export default class InputSearch extends Component {
 
 InputSearch.propTypes = {
   search: PropTypes.func.isRequired,
-  searchBy: PropTypes.string.isRequired
+  searchBy: PropTypes.string.isRequired,
 };

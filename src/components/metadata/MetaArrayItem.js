@@ -38,12 +38,12 @@ export class MetaArrayItem extends Component {
       updateFieldValue,
       moveArrayItem,
       convertField,
-      key_prefix
+      key_prefix,
     } = this.props;
     const FieldTypes = {
       array: MetaArray,
       object: MetaObject,
-      simple: MetaSimple
+      simple: MetaSimple,
     };
     const CurrentComponent = FieldTypes[type];
     return (
@@ -93,7 +93,7 @@ MetaArrayItem.propTypes = {
   convertField: PropTypes.func.isRequired,
   nameAttr: PropTypes.string.isRequired,
   namePrefix: PropTypes.string.isRequired,
-  key_prefix: PropTypes.string.isRequired
+  key_prefix: PropTypes.string.isRequired,
 };
 
 export default MetaArrayItem;

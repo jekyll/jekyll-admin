@@ -91,7 +91,7 @@ export class PageEdit extends Component {
       updated,
       fieldChanged,
       params,
-      config
+      config,
     } = this.props;
 
     if (isFetching) {
@@ -103,7 +103,7 @@ export class PageEdit extends Component {
     }
 
     const keyboardHandlers = {
-      save: this.handleClickSave
+      save: this.handleClickSave,
     };
 
     const { name, raw_content, http_url, front_matter } = page;
@@ -195,7 +195,7 @@ PageEdit.propTypes = {
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -204,7 +204,7 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   updated: state.pages.updated,
   errors: state.utils.errors,
-  config: state.config.config
+  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -216,7 +216,7 @@ const mapDispatchToProps = dispatch =>
       updateTitle,
       updateBody,
       updatePath,
-      clearErrors
+      clearErrors,
     },
     dispatch
   );

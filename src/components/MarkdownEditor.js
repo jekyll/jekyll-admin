@@ -7,7 +7,7 @@ const classNames = [
   'editor-toolbar',
   'CodeMirror',
   'editor-preview-side',
-  'editor-statusbar'
+  'editor-statusbar',
 ];
 
 class MarkdownEditor extends Component {
@@ -36,7 +36,7 @@ class MarkdownEditor extends Component {
     opts['autoDownloadFontAwesome'] = false;
     opts['spellChecker'] = false;
     opts['renderingConfig'] = {
-      codeSyntaxHighlighting: true
+      codeSyntaxHighlighting: true,
     };
     let toolbarIcons = [
       'bold',
@@ -54,7 +54,7 @@ class MarkdownEditor extends Component {
       'preview',
       'side-by-side',
       'fullscreen',
-      '|'
+      '|',
     ];
     if (onSave) {
       toolbarIcons.push({
@@ -63,7 +63,7 @@ class MarkdownEditor extends Component {
           onSave();
         },
         className: 'fa fa-floppy-o',
-        title: 'Save'
+        title: 'Save',
       });
     }
     opts['toolbar'] = toolbarIcons;
@@ -94,7 +94,7 @@ class MarkdownEditor extends Component {
 MarkdownEditor.propTypes = {
   initialValue: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired
+  onSave: PropTypes.func.isRequired,
 };
 
 export default MarkdownEditor;

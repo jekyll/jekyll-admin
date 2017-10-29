@@ -13,7 +13,7 @@ import { ADMIN_PREFIX } from '../../constants';
 import {
   fetchDrafts,
   deleteDraft,
-  filterBySearchInput
+  filterBySearchInput,
 } from '../../ducks/drafts';
 
 export class Drafts extends Component {
@@ -148,12 +148,12 @@ Drafts.propTypes = {
   deleteDraft: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   search: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   drafts: filterBySearchInput(state.drafts.drafts, state.utils.input),
-  isFetching: state.drafts.isFetching
+  isFetching: state.drafts.isFetching,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -161,7 +161,7 @@ const mapDispatchToProps = dispatch =>
     {
       fetchDrafts,
       deleteDraft,
-      search
+      search,
     },
     dispatch
   );

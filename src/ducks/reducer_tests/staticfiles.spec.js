@@ -8,7 +8,7 @@ describe('Reducers::StaticFiles', () => {
     expect(reducer(undefined, {})).toEqual({
       files: [],
       isFetching: false,
-      uploading: false
+      uploading: false,
     });
   });
 
@@ -17,33 +17,33 @@ describe('Reducers::StaticFiles', () => {
       reducer(
         {},
         {
-          type: staticfilesDuck.FETCH_STATICFILES_REQUEST
+          type: staticfilesDuck.FETCH_STATICFILES_REQUEST,
         }
       )
     ).toEqual({
-      isFetching: true
+      isFetching: true,
     });
     expect(
       reducer(
         {},
         {
           type: staticfilesDuck.FETCH_STATICFILES_SUCCESS,
-          files: [staticfile]
+          files: [staticfile],
         }
       )
     ).toEqual({
       files: [staticfile],
-      isFetching: false
+      isFetching: false,
     });
     expect(
       reducer(
         {},
         {
-          type: staticfilesDuck.FETCH_STATICFILES_FAILURE
+          type: staticfilesDuck.FETCH_STATICFILES_FAILURE,
         }
       )
     ).toEqual({
-      isFetching: false
+      isFetching: false,
     });
   });
 
@@ -52,32 +52,32 @@ describe('Reducers::StaticFiles', () => {
       reducer(
         { uploading: false },
         {
-          type: staticfilesDuck.PUT_STATICFILE_REQUEST
+          type: staticfilesDuck.PUT_STATICFILE_REQUEST,
         }
       )
     ).toEqual({
-      uploading: true
+      uploading: true,
     });
     expect(
       reducer(
         { uploading: true },
         {
           type: staticfilesDuck.PUT_STATICFILE_SUCCESS,
-          file: staticfile
+          file: staticfile,
         }
       )
     ).toEqual({
-      uploading: false
+      uploading: false,
     });
     expect(
       reducer(
         { uploading: true },
         {
-          type: staticfilesDuck.PUT_STATICFILE_FAILURE
+          type: staticfilesDuck.PUT_STATICFILE_FAILURE,
         }
       )
     ).toEqual({
-      uploading: false
+      uploading: false,
     });
   });
 });

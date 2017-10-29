@@ -49,5 +49,5 @@ export default class InputFilename extends Component {
 InputFilename.propTypes = {
   path: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired
+  onChange: PropTypes.func.isRequired,
 };

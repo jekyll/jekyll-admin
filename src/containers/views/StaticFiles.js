@@ -13,7 +13,7 @@ import {
   fetchStaticFiles,
   uploadStaticFiles,
   deleteStaticFile,
-  filterByFilename
+  filterByFilename,
 } from '../../ducks/staticfiles';
 
 export class StaticFiles extends Component {
@@ -46,7 +46,7 @@ export class StaticFiles extends Component {
       isFetching,
       deleteStaticFile,
       search,
-      onClickStaticFile
+      onClickStaticFile,
     } = this.props;
 
     if (isFetching) {
@@ -88,12 +88,12 @@ StaticFiles.propTypes = {
   uploadStaticFiles: PropTypes.func.isRequired,
   deleteStaticFile: PropTypes.func.isRequired,
   onClickStaticFile: PropTypes.func,
-  search: PropTypes.func.isRequired
+  search: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   files: filterByFilename(state.staticfiles.files, state.utils.input),
-  isFetching: state.staticfiles.isFetching
+  isFetching: state.staticfiles.isFetching,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -102,7 +102,7 @@ const mapDispatchToProps = dispatch =>
       fetchStaticFiles,
       uploadStaticFiles,
       deleteStaticFile,
-      search
+      search,
     },
     dispatch
   );

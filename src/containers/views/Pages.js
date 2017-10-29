@@ -147,12 +147,12 @@ Pages.propTypes = {
   deletePage: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   search: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
   pages: filterBySearchInput(state.pages.pages, state.utils.input),
-  isFetching: state.pages.isFetching
+  isFetching: state.pages.isFetching,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -160,7 +160,7 @@ const mapDispatchToProps = dispatch =>
     {
       fetchPages,
       deletePage,
-      search
+      search,
     },
     dispatch
   );

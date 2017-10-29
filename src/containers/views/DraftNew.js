@@ -22,7 +22,7 @@ import {
   updateTitle,
   updateBody,
   updatePath,
-  updateDraft
+  updateDraft,
 } from '../../ducks/metadata';
 
 export class DraftNew extends Component {
@@ -72,12 +72,12 @@ export class DraftNew extends Component {
       updatePath,
       fieldChanged,
       params,
-      config
+      config,
     } = this.props;
     const metafields = injectDefaultFields(config, params.splat, 'posts');
 
     const keyboardHandlers = {
-      save: this.handleClickSave
+      save: this.handleClickSave,
     };
 
     return (
@@ -131,7 +131,7 @@ DraftNew.propTypes = {
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -139,7 +139,7 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors,
   updated: state.drafts.updated,
-  config: state.config.config
+  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -150,7 +150,7 @@ const mapDispatchToProps = dispatch =>
       updatePath,
       updateDraft,
       putDraft,
-      clearErrors
+      clearErrors,
     },
     dispatch
   );

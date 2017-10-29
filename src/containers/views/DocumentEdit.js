@@ -17,7 +17,7 @@ import Metadata from '../../containers/MetaFields';
 import {
   fetchDocument,
   deleteDocument,
-  putDocument
+  putDocument,
 } from '../../ducks/collections';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
@@ -26,7 +26,7 @@ import { capitalize, preventDefault } from '../../utils/helpers';
 import {
   getLeaveMessage,
   getDeleteMessage,
-  getNotFoundMessage
+  getNotFoundMessage,
 } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -114,7 +114,7 @@ export class DocumentEdit extends Component {
       updated,
       fieldChanged,
       params,
-      config
+      config,
     } = this.props;
 
     if (isFetching) {
@@ -131,7 +131,7 @@ export class DocumentEdit extends Component {
       http_url,
       collection,
       front_matter,
-      name
+      name,
     } = currentDocument;
     const [directory, ...rest] = params.splat;
 
@@ -143,7 +143,7 @@ export class DocumentEdit extends Component {
     );
 
     const keyboardHandlers = {
-      save: this.handleClickSave
+      save: this.handleClickSave,
     };
 
     const document_title = directory
@@ -226,7 +226,7 @@ DocumentEdit.propTypes = {
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -235,7 +235,7 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   updated: state.collections.updated,
   errors: state.utils.errors,
-  config: state.config.config
+  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>
@@ -247,7 +247,7 @@ const mapDispatchToProps = dispatch =>
       updateTitle,
       updateBody,
       updatePath,
-      clearErrors
+      clearErrors,
     },
     dispatch
   );
