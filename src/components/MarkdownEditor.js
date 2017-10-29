@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import SimpleMDE from 'simplemde';
 import hljs from 'highlight.js';
 
@@ -10,7 +11,6 @@ const classNames = [
 ];
 
 class MarkdownEditor extends Component {
-
   componentDidMount() {
     this.create();
     window.hljs = hljs; // TODO: fix this after the next release of SimpleMDE
@@ -21,7 +21,8 @@ class MarkdownEditor extends Component {
   }
 
   componentDidUpdate() {
-    this.destroy(); this.create();
+    this.destroy();
+    this.create();
   }
 
   componentWillUnmount() {
@@ -38,9 +39,22 @@ class MarkdownEditor extends Component {
       codeSyntaxHighlighting: true
     };
     let toolbarIcons = [
-      'bold', 'italic', 'heading', '|',
-      'code', 'quote', 'unordered-list', 'ordered-list',
-      '|', 'link', 'image', '|', 'preview', 'side-by-side', 'fullscreen', '|'
+      'bold',
+      'italic',
+      'heading',
+      '|',
+      'code',
+      'quote',
+      'unordered-list',
+      'ordered-list',
+      '|',
+      'link',
+      'image',
+      '|',
+      'preview',
+      'side-by-side',
+      'fullscreen',
+      '|'
     ];
     if (onSave) {
       toolbarIcons.push({
@@ -61,13 +75,17 @@ class MarkdownEditor extends Component {
 
   destroy() {
     for (let i in classNames) {
-      let elementToRemove = this.refs.container.querySelector('.' + classNames[i]);
+      let elementToRemove = this.refs.container.querySelector(
+        '.' + classNames[i]
+      );
       elementToRemove && elementToRemove.remove();
     }
   }
 
   render() {
-    return React.createElement('div', { ref: 'container' },
+    return React.createElement(
+      'div',
+      { ref: 'container' },
       React.createElement('textarea', { ref: 'text' })
     );
   }

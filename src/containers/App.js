@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { HotKeys } from 'react-hotkeys';
@@ -66,11 +67,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-      fetchConfig
-    },
-    dispatch
-  );
+  bindActionCreators({ fetchConfig }, dispatch);
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

@@ -1,10 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 import moment from 'moment';
 
 export default class InputFilename extends Component {
-
-  handleChange(e){
+  handleChange(e) {
     const { onChange } = this.props;
     onChange(e.target.value);
   }
@@ -36,10 +36,11 @@ export default class InputFilename extends Component {
         <label>Path {tooltip}</label>
         <TextareaAutosize
           key={path}
-          onChange={(e) => this.handleChange(e)}
+          onChange={e => this.handleChange(e)}
           placeholder={placeholder}
           defaultValue={path}
-          ref="input" />
+          ref="input"
+        />
       </div>
     );
   }

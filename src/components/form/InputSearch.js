@@ -1,7 +1,7 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class InputSearch extends Component {
-
   handleKeyPress(event) {
     const { search } = this.props;
     if (event.charCode == 13) {
@@ -13,10 +13,11 @@ export default class InputSearch extends Component {
     const { searchBy } = this.props;
     return (
       <input
-        onKeyPress={(e) => this.handleKeyPress(e)}
+        onKeyPress={e => this.handleKeyPress(e)}
         type="text"
         className="field"
-        placeholder={`Search by ${searchBy}`} />
+        placeholder={`Search by ${searchBy}`}
+      />
     );
   }
 }

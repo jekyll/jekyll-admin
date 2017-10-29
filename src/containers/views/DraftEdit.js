@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
@@ -21,13 +22,6 @@ import { getLeaveMessage, getDeleteMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DraftEdit extends Component {
-  constructor(props) {
-    super(props);
-
-    this.routerWillLeave = this.routerWillLeave.bind(this);
-    this.handleClickSave = this.handleClickSave.bind(this);
-  }
-
   componentDidMount() {
     const { fetchDraft, params, router, route } = this.props;
     const [directory, ...rest] = params.splat;
@@ -58,13 +52,13 @@ export class DraftEdit extends Component {
     }
   }
 
-  routerWillLeave(nextLocation) {
+  routerWillLeave = nextLocation => {
     if (this.props.fieldChanged) {
       return getLeaveMessage();
     }
-  }
+  };
 
-  handleClickSave(e) {
+  handleClickSave = e => {
     const { putDraft, fieldChanged, params } = this.props;
 
     // Prevent the default event from bubbling
@@ -75,7 +69,7 @@ export class DraftEdit extends Component {
       const filename = rest.join('.');
       putDraft('edit', directory, filename);
     }
-  }
+  };
 
   handleClickDelete(name) {
     const { deleteDraft, params } = this.props;

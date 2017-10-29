@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import NotificationSystem from 'react-notification-system';
 
 export class Notifications extends Component {
-
   componentDidMount() {
     this.notificationSystem = this.refs.notificationSystem;
   }
@@ -28,7 +28,7 @@ Notifications.propTypes = {
   notification: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   notification: state.notifications.notification
 });
 

@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
@@ -25,13 +26,6 @@ import {
 } from '../../ducks/metadata';
 
 export class DraftNew extends Component {
-  constructor(props) {
-    super(props);
-
-    this.routerWillLeave = this.routerWillLeave.bind(this);
-    this.handleClickSave = this.handleClickSave.bind(this);
-  }
-
   componentDidMount() {
     const { router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave);
@@ -53,22 +47,21 @@ export class DraftNew extends Component {
     }
   }
 
-  routerWillLeave(nextLocation) {
+  routerWillLeave = nextLocation => {
     if (this.props.fieldChanged) {
       return getLeaveMessage();
     }
-  }
+  };
 
-  handleClickSave(e) {
+  handleClickSave = e => {
     const { fieldChanged, putDraft, params } = this.props;
 
-    // Prevent the default event from bubbling
     preventDefault(e);
 
     if (fieldChanged) {
       putDraft('create', params.splat);
     }
-  }
+  };
 
   render() {
     const {

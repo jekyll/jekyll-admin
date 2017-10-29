@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
@@ -14,18 +15,9 @@ import { getLeaveMessage } from '../../translations';
 import { preventDefault } from '../../utils/helpers';
 
 export class Configuration extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.routerWillLeave = this.routerWillLeave.bind(this);
-    this.handleClickSave = this.handleClickSave.bind(this);
-    this.toggleView = this.toggleView.bind(this);
-
-    this.state = {
-      guiView: false
-    };
-  }
+  state = {
+    guiView: false
+  };
 
   componentDidMount() {
     const { router, route } = this.props;
@@ -40,19 +32,18 @@ export class Configuration extends Component {
     }
   }
 
-  routerWillLeave(nextLocation) {
+  routerWillLeave = nextLocation => {
     const { editorChanged, fieldChanged } = this.props;
     if (editorChanged || fieldChanged) {
       return getLeaveMessage();
     }
-  }
+  };
 
-  toggleView() {
+  toggleView = () => {
     this.setState({ guiView: !this.state.guiView });
-  }
+  };
 
-  handleClickSave(e) {
-    // Prevent the default event from bubbling
+  handleClickSave = e => {
     preventDefault(e);
 
     const { editorChanged, fieldChanged, putConfig } = this.props;
@@ -62,13 +53,20 @@ export class Configuration extends Component {
     } else if (fieldChanged) {
       putConfig(null, 'gui');
     }
-  }
+  };
 
   render() {
-    const { editorChanged, fieldChanged, onEditorChange, config, updated, errors } = this.props;
+    const {
+      editorChanged,
+      fieldChanged,
+      onEditorChange,
+      config,
+      updated,
+      errors
+    } = this.props;
     const { raw_content, content } = config;
     const keyboardHandlers = {
-      'save': this.handleClickSave,
+      save: this.handleClickSave
     };
 
     return (
@@ -78,38 +76,43 @@ export class Configuration extends Component {
           <div className="content-header">
             <h1>Configuration</h1>
             <div className="page-buttons multiple">
-              <Button // TODO: Hide toggle for non-YAML config files (e.g. '_config.toml')
+              <Button
                 onClick={this.toggleView}
                 type="view-toggle"
                 active={true}
                 triggered={this.state.guiView}
-                block />
+                block
+              />
               <Button
                 onClick={this.handleClickSave}
                 type="save"
                 active={editorChanged || fieldChanged}
                 triggered={updated}
-                block />
+                block
+              />
             </div>
           </div>
-            {
-              this.state.guiView && content &&
-                <div className="content-body">
-                  <div className="warning">
-                    CAUTION! Any existing comments and formatting will be lost when editing via this view.
-                    Switch to the <strong>Raw Editor</strong> to preserve comments and formatting.
-                  </div>
-                  <DataGUI fields={content} dataview/>
+          {this.state.guiView &&
+            content && (
+              <div className="content-body">
+                <div className="warning">
+                  CAUTION! Any existing comments and formatting will be lost
+                  when editing via this view. Switch to the{' '}
+                  <strong>Raw Editor</strong> to preserve comments and
+                  formatting.
                 </div>
-            }
-          {
-            !this.state.guiView && raw_content &&
+                <DataGUI fields={content} dataview />
+              </div>
+            )}
+          {!this.state.guiView &&
+            raw_content && (
               <Editor
                 editorChanged={editorChanged}
                 onEditorChange={onEditorChange}
                 content={raw_content}
-                ref="editor" />
-          }
+                ref="editor"
+              />
+            )}
         </HotKeys>
       </DocumentTitle>
     );
@@ -129,7 +132,7 @@ Configuration.propTypes = {
   route: PropTypes.object.isRequired
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   config: state.config.config,
   updated: state.config.updated,
   editorChanged: state.config.editorChanged,
@@ -137,10 +140,9 @@ const mapStateToProps = (state) => ({
   errors: state.utils.errors
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  putConfig,
-  onEditorChange,
-  clearErrors
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ putConfig, onEditorChange, clearErrors }, dispatch);
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Configuration));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(Configuration)
+);

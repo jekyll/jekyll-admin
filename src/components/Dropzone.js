@@ -1,10 +1,10 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'underscore';
 import ReactDropzone from 'react-dropzone';
 import FilePreview from './FilePreview';
 
 export class Dropzone extends Component {
-
   openDropzone() {
     this.refs.dropzone.open();
   }
@@ -15,17 +15,16 @@ export class Dropzone extends Component {
     if (files.length) {
       node = (
         <div className="preview-container">
-          {
-            _.map(files, (file, i) => {
-              return (
-                <FilePreview
-                  key={i}
-                  onClick={onClickItem}
-                  onClickDelete={onClickDelete}
-                  file={file} />
-              );
-            })
-          }
+          {_.map(files, (file, i) => {
+            return (
+              <FilePreview
+                key={i}
+                onClick={onClickItem}
+                onClickDelete={onClickDelete}
+                file={file}
+              />
+            );
+          })}
         </div>
       );
     } else {
@@ -43,8 +42,9 @@ export class Dropzone extends Component {
         className="dropzone"
         activeClassName="dropzone-active"
         multiple={true}
-        disableClick={true}>
-          {node}
+        disableClick={true}
+      >
+        {node}
       </ReactDropzone>
     );
   }
@@ -54,7 +54,7 @@ Dropzone.propTypes = {
   files: PropTypes.array.isRequired,
   onDrop: PropTypes.func.isRequired,
   onClickDelete: PropTypes.func.isRequired,
-  onClickItem: PropTypes.func,
+  onClickItem: PropTypes.func
 };
 
 export default Dropzone;

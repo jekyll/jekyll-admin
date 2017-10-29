@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { browserHistory, withRouter, Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -109,13 +110,13 @@ export class DataFiles extends Component {
 
   renderRows() {
     const { files } = this.props;
-    return _.map(files, entry => {
-      if (entry.type && entry.type == 'directory') {
-        return this.renderDirectoryRow(entry);
-      } else {
-        return this.renderFileRow(entry);
-      }
-    });
+    return _.map(
+      files,
+      entry =>
+        entry.type && entry.type == 'directory'
+          ? this.renderDirectoryRow(entry)
+          : this.renderFileRow(entry)
+    );
   }
 
   render() {

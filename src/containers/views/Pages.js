@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -28,9 +29,7 @@ export class Pages extends Component {
   handleClickDelete(filename) {
     const { deletePage, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(filename));
-    if (confirm) {
-      deletePage(params.splat, filename);
-    }
+    confirm && deletePage(params.splat, filename);
   }
 
   renderTable() {
