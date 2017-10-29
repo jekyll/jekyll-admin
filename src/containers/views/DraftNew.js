@@ -42,10 +42,7 @@ export class DraftNew extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    errors.length && clearErrors();
   }
 
   routerWillLeave = nextLocation => {
@@ -55,13 +52,9 @@ export class DraftNew extends Component {
   };
 
   handleClickSave = e => {
-    const { fieldChanged, putDraft, params } = this.props;
-
     preventDefault(e);
-
-    if (fieldChanged) {
-      putDraft('create', params.splat);
-    }
+    const { fieldChanged, putDraft, params } = this.props;
+    fieldChanged && putDraft('create', params.splat);
   };
 
   render() {

@@ -43,7 +43,6 @@ export class DataFileEdit extends Component {
     const { fetchDataFile, params, router, route } = this.props;
     const [directory, ...rest] = params.splat || [''];
     const filename = rest.join('.');
-
     router.setRouteLeaveHook(route, this.routerWillLeave);
     fetchDataFile(directory, filename);
   }
@@ -64,10 +63,7 @@ export class DataFileEdit extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    errors.length && clearErrors();
   }
 
   routerWillLeave = nextLocation => {
@@ -97,6 +93,7 @@ export class DataFileEdit extends Component {
   };
 
   handleClickSave = e => {
+    preventDefault(e);
     const {
       datafile,
       datafileChanged,
@@ -110,9 +107,6 @@ export class DataFileEdit extends Component {
     let name, data, mode;
     const [directory, ...rest] = params.splat || [''];
     const filename = rest.join('.');
-
-    preventDefault(e);
-
     if (datafileChanged || fieldChanged) {
       if (this.state.guiView) {
         name = this.state.guiPath + this.state.extn;

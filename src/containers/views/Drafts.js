@@ -33,9 +33,7 @@ export class Drafts extends Component {
   handleClickDelete(filename) {
     const { deleteDraft, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(filename));
-    if (confirm) {
-      deleteDraft(params.splat, filename);
-    }
+    confirm && deleteDraft(params.splat, filename);
   }
 
   renderTable() {

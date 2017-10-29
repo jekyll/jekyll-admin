@@ -40,10 +40,8 @@ export class DocumentNew extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+
+    errors.length && clearErrors();
   }
 
   routerWillLeave = nextLocation => {
@@ -53,10 +51,8 @@ export class DocumentNew extends Component {
   };
 
   handleClickSave = e => {
-    const { fieldChanged, createDocument, params } = this.props;
-
     preventDefault(e);
-
+    const { fieldChanged, createDocument, params } = this.props;
     if (fieldChanged) {
       const { collection_name, splat } = params;
       createDocument(collection_name, splat);

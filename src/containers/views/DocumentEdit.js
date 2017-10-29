@@ -31,19 +31,11 @@ import {
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentEdit extends Component {
-  constructor(props) {
-    super(props);
-
-    this.handleClickSave = this.handleClickSave.bind(this);
-    this.routerWillLeave = this.routerWillLeave.bind(this);
-  }
-
   componentDidMount() {
     const { fetchDocument, params, router, route } = this.props;
     const [directory, ...rest] = params.splat;
     const filename = rest.join('.');
     fetchDocument(params.collection_name, directory, filename);
-
     router.setRouteLeaveHook(route, this.routerWillLeave);
   }
 
@@ -63,10 +55,7 @@ export class DocumentEdit extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    errors.length && clearErrors();
   }
 
   routerWillLeave = nextLocation => {
@@ -76,11 +65,8 @@ export class DocumentEdit extends Component {
   };
 
   handleClickSave = e => {
-    const { putDocument, fieldChanged, params } = this.props;
-
-    // Prevent the default event from bubbling
     preventDefault(e);
-
+    const { putDocument, fieldChanged, params } = this.props;
     if (fieldChanged) {
       const collection = params.collection_name;
       const [directory, ...rest] = params.splat;

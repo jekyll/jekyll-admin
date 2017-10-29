@@ -26,10 +26,7 @@ export class Configuration extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    errors.length && clearErrors();
   }
 
   routerWillLeave = nextLocation => {
@@ -45,7 +42,6 @@ export class Configuration extends Component {
 
   handleClickSave = e => {
     preventDefault(e);
-
     const { editorChanged, fieldChanged, putConfig } = this.props;
     if (editorChanged) {
       const value = this.refs.editor.getValue();

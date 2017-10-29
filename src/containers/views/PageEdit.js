@@ -45,10 +45,7 @@ export class PageEdit extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    errors.length && clearErrors();
   }
 
   routerWillLeave = nextLocation => {
@@ -58,10 +55,8 @@ export class PageEdit extends Component {
   };
 
   handleClickSave = e => {
-    const { putPage, fieldChanged, params } = this.props;
-
     preventDefault(e);
-
+    const { putPage, fieldChanged, params } = this.props;
     if (fieldChanged) {
       const [directory, ...rest] = params.splat;
       const filename = rest.join('.');

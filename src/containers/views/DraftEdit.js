@@ -47,10 +47,7 @@ export class DraftEdit extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    errors.length && clearErrors();
   }
 
   routerWillLeave = nextLocation => {
@@ -60,11 +57,8 @@ export class DraftEdit extends Component {
   };
 
   handleClickSave = e => {
-    const { putDraft, fieldChanged, params } = this.props;
-
-    // Prevent the default event from bubbling
     preventDefault(e);
-
+    const { putDraft, fieldChanged, params } = this.props;
     if (fieldChanged) {
       const [directory, ...rest] = params.splat;
       const filename = rest.join('.');

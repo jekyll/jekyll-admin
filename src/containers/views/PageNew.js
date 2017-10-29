@@ -40,10 +40,7 @@ export class PageNew extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    errors.length && clearErrors();
   }
 
   routerWillLeave = nextLocation => {
@@ -53,8 +50,8 @@ export class PageNew extends Component {
   };
 
   handleClickSave = e => {
-    const { fieldChanged, createPage, params } = this.props;
     preventDefault(e);
+    const { fieldChanged, createPage, params } = this.props;
     fieldChanged && createPage(params.splat);
   };
 

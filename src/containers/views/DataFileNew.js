@@ -39,10 +39,7 @@ export class DataFileNew extends Component {
 
   componentWillUnmount() {
     const { clearErrors, errors } = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    errors.length && clearErrors();
   }
 
   routerWillLeave = nextLocation => {
@@ -67,10 +64,8 @@ export class DataFileNew extends Component {
   };
 
   handleClickSave = e => {
-    const { datafileChanged, fieldChanged, putDataFile, params } = this.props;
-
     preventDefault(e);
-
+    const { datafileChanged, fieldChanged, putDataFile, params } = this.props;
     let filename;
     if (datafileChanged || fieldChanged) {
       if (this.state.guiView) {

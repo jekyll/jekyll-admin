@@ -39,9 +39,7 @@ export class Documents extends Component {
   handleClickDelete(filename) {
     const { deleteDocument, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(filename));
-    if (confirm) {
-      deleteDocument(params.collection_name, params.splat, filename);
-    }
+    confirm && deleteDocument(params.collection_name, params.splat, filename);
   }
 
   renderTable() {

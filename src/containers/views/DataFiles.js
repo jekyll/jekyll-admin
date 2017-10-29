@@ -39,7 +39,6 @@ export class DataFiles extends Component {
 
     if (confirm) {
       const filename = getFilenameFromPath(path);
-
       deleteDataFile(directory, filename);
       browserHistory.push(`${ADMIN_PREFIX}/datafiles${dir}`);
     }
