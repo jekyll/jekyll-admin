@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import { HotKeys } from 'react-hotkeys';
+import DocumentTitle from 'react-document-title';
 import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Breadcrumbs from '../../components/Breadcrumbs';
@@ -80,40 +81,46 @@ export class DraftNew extends Component {
       save: this.handleClickSave,
     };
 
+    const document_title = params.splat
+      ? `New draft - ${params.splat} - Drafts`
+      : `New draft - Drafts`;
+
     return (
-      <HotKeys handlers={keyboardHandlers} className="single">
-        {errors.length > 0 && <Errors errors={errors} />}
-        <div className="content-header">
-          <Breadcrumbs type="drafts" splat={params.splat || ''} />
-        </div>
-
-        <div className="content-wrapper">
-          <div className="content-body">
-            <InputPath onChange={updatePath} type="drafts" path="" />
-            <InputTitle onChange={updateTitle} title="" ref="title" />
-            <MarkdownEditor
-              onChange={updateBody}
-              onSave={this.handleClickSave}
-              placeholder="Body"
-              initialValue=""
-              ref="editor"
-            />
-            <Splitter />
-            <Metadata fields={metafields} />
+      <DocumentTitle title={document_title}>
+        <HotKeys handlers={keyboardHandlers} className="single">
+          {errors.length > 0 && <Errors errors={errors} />}
+          <div className="content-header">
+            <Breadcrumbs type="drafts" splat={params.splat || ''} />
           </div>
 
-          <div className="content-side">
-            <Button
-              onClick={this.handleClickSave}
-              type="create"
-              active={fieldChanged}
-              triggered={updated}
-              icon="plus-square"
-              block
-            />
+          <div className="content-wrapper">
+            <div className="content-body">
+              <InputPath onChange={updatePath} type="drafts" path="" />
+              <InputTitle onChange={updateTitle} title="" ref="title" />
+              <MarkdownEditor
+                onChange={updateBody}
+                onSave={this.handleClickSave}
+                placeholder="Body"
+                initialValue=""
+                ref="editor"
+              />
+              <Splitter />
+              <Metadata fields={metafields} />
+            </div>
+
+            <div className="content-side">
+              <Button
+                onClick={this.handleClickSave}
+                type="create"
+                active={fieldChanged}
+                triggered={updated}
+                icon="plus-square"
+                block
+              />
+            </div>
           </div>
-        </div>
-      </HotKeys>
+        </HotKeys>
+      </DocumentTitle>
     );
   }
 }

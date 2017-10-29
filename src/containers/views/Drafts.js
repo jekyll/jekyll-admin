@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
+import DocumentTitle from 'react-document-title';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
@@ -121,23 +122,26 @@ export class Drafts extends Component {
     const to = params.splat
       ? `${ADMIN_PREFIX}/drafts/${params.splat}/new`
       : `${ADMIN_PREFIX}/drafts/new`;
+    const title = params.splat ? `${params.splat} | Drafts` : 'Drafts';
 
     return (
-      <div>
-        <div className="content-header">
-          <Breadcrumbs type="drafts" splat={params.splat || ''} />
-          <div className="draft-buttons">
-            <Link className="btn btn-active" to={to}>
-              New draft
-            </Link>
+      <DocumentTitle title={title}>
+        <div>
+          <div className="content-header">
+            <Breadcrumbs type="drafts" splat={params.splat || ''} />
+            <div className="draft-buttons">
+              <Link className="btn btn-active" to={to}>
+                New draft
+              </Link>
+            </div>
+            <div className="pull-right">
+              <InputSearch searchBy="filename" search={search} />
+            </div>
           </div>
-          <div className="pull-right">
-            <InputSearch searchBy="filename" search={search} />
-          </div>
+          {drafts.length > 0 && this.renderTable()}
+          {!drafts.length && <h1>{getNotFoundMessage('drafts')}</h1>}
         </div>
-        {drafts.length > 0 && this.renderTable()}
-        {!drafts.length && <h1>{getNotFoundMessage('drafts')}</h1>}
-      </div>
+      </DocumentTitle>
     );
   }
 }

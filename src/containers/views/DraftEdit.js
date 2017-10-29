@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
+import DocumentTitle from 'react-document-title';
 import { HotKeys } from 'react-hotkeys';
 import Button from '../../components/Button';
 import Splitter from '../../components/Splitter';
@@ -116,52 +117,63 @@ export class DraftEdit extends Component {
       collection,
       front_matter
     );
+    const document_title = directory
+      ? `${title || name} - ${directory} - Drafts`
+      : `${title || name} - Drafts`;
 
     return (
-      <HotKeys handlers={keyboardHandlers} className="single">
-        {errors.length > 0 && <Errors errors={errors} />}
-        <div className="content-header">
-          <Breadcrumbs splat={directory || ''} type="drafts" />
-        </div>
-
-        <div className="content-wrapper">
-          <div className="content-body">
-            <InputPath onChange={updatePath} type="drafts" path={name} />
-            <InputTitle onChange={updateTitle} title={title} ref="title" />
-            <MarkdownEditor
-              onChange={updateBody}
-              onSave={this.handleClickSave}
-              placeholder="Body"
-              initialValue={raw_content}
-              ref="editor"
-            />
-            <Splitter />
-            <Metadata
-              fields={{ title, raw_content, path: name, ...metafields }}
-            />
+      <DocumentTitle title={document_title}>
+        <HotKeys handlers={keyboardHandlers} className="single">
+          {errors.length > 0 && <Errors errors={errors} />}
+          <div className="content-header">
+            <Breadcrumbs splat={directory || ''} type="drafts" />
           </div>
 
-          <div className="content-side">
-            <Button
-              onClick={this.handleClickSave}
-              type="save"
-              active={fieldChanged}
-              triggered={updated}
-              icon="save"
-              block
-            />
-            <Button to={http_url} type="view" icon="eye" active={true} block />
-            <Splitter />
-            <Button
-              onClick={() => this.handleClickDelete(name)}
-              type="delete"
-              active={true}
-              icon="trash"
-              block
-            />
+          <div className="content-wrapper">
+            <div className="content-body">
+              <InputPath onChange={updatePath} type="drafts" path={name} />
+              <InputTitle onChange={updateTitle} title={title} ref="title" />
+              <MarkdownEditor
+                onChange={updateBody}
+                onSave={this.handleClickSave}
+                placeholder="Body"
+                initialValue={raw_content}
+                ref="editor"
+              />
+              <Splitter />
+              <Metadata
+                fields={{ title, raw_content, path: name, ...metafields }}
+              />
+            </div>
+
+            <div className="content-side">
+              <Button
+                onClick={this.handleClickSave}
+                type="save"
+                active={fieldChanged}
+                triggered={updated}
+                icon="save"
+                block
+              />
+              <Button
+                to={http_url}
+                type="view"
+                icon="eye"
+                active={true}
+                block
+              />
+              <Splitter />
+              <Button
+                onClick={() => this.handleClickDelete(name)}
+                type="delete"
+                active={true}
+                icon="trash"
+                block
+              />
+            </div>
           </div>
-        </div>
-      </HotKeys>
+        </HotKeys>
+      </DocumentTitle>
     );
   }
 }

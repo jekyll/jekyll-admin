@@ -29,13 +29,13 @@
     "precommit": "lint-staged"
   },
   "lint-staged": {
-    "*.js": ["prettier --single-quote --trailing-comma es5 --write"]
+    "*.js": [
+      "prettier --single-quote --trailing-comma --print-width 80 es5 --write"
+    ]
   },
   "author": "Mert Kahyaoğlu",
   "license": "MIT",
   "dependencies": {
-    "babel-plugin-transform-class-properties": "^6.24.1",
-    "babel-preset-latest": "^6.24.1",
     "brace": "0.9.1",
     "classnames": "2.2.5",
     "highlight.js": "^9.10.0",
