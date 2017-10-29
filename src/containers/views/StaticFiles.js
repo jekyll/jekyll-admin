@@ -36,9 +36,9 @@ export class StaticFiles extends Component {
     uploadStaticFiles(uploadedFiles);
   }
 
-  openDropzone() {
-    this.refs.dropzone.refs.ReactDropzone.open();
-  }
+  openDropzone = () => {
+    this.refs.dropzone.openDropzone();
+  };
 
   render() {
     const {
@@ -59,7 +59,7 @@ export class StaticFiles extends Component {
           <div className="content-header">
             <h1>Static Files</h1>
             <Button
-              onClick={() => this.openDropzone()}
+              onClick={this.openDropzone}
               type="upload"
               icon="upload"
               active={true}
