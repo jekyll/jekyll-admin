@@ -16,7 +16,7 @@ const defaultProps = {
   router: {},
   route: {},
   config: config,
-  params: { splat: [null, "page", "md"] }
+  params: { splat: [null, 'page', 'md'] },
 };
 
 const setup = (props = defaultProps) => {
@@ -28,7 +28,7 @@ const setup = (props = defaultProps) => {
     updateBody: jest.fn(),
     updatePath: jest.fn(),
     updateDraft: jest.fn(),
-    clearErrors: jest.fn()
+    clearErrors: jest.fn(),
   };
 
   const component = shallow(<PageEdit {...actions} {...props} />);
@@ -39,18 +39,14 @@ const setup = (props = defaultProps) => {
     saveButton: component.find(Button).first(),
     deleteButton: component.find(Button).last(),
     errors: component.find(Errors),
-    props
+    props,
   };
 };
 
 describe('Containers::PageEdit', () => {
   it('should render correctly', () => {
-    let { component } = setup(Object.assign(
-      {}, defaultProps, { isFetching: true }
-    ));
-    component = setup(Object.assign(
-      {}, defaultProps, { page: {} }
-    )).component;
+    let { component } = setup({ ...defaultProps, isFetching: true });
+    component = setup({ ...defaultProps, page: {} }).component;
     expect(component.find('h1').node).toBeTruthy();
   });
 
@@ -60,9 +56,10 @@ describe('Containers::PageEdit', () => {
   });
 
   it('should render error messages', () => {
-    const { errors } = setup(Object.assign({}, defaultProps, {
-      errors: ['The title field is required!']
-    }));
+    const { errors } = setup({
+      ...defaultProps,
+      errors: ['The title field is required!'],
+    });
     expect(errors.node).toBeTruthy();
   });
 
@@ -73,9 +70,10 @@ describe('Containers::PageEdit', () => {
   });
 
   it('should call putPage if a field is changed.', () => {
-    const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
-      fieldChanged: true
-    }));
+    const { saveButton, actions } = setup({
+      ...defaultProps,
+      fieldChanged: true,
+    });
     saveButton.simulate('click');
     expect(actions.putPage).toHaveBeenCalled();
   });

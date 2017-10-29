@@ -6102,6 +6102,10 @@ react-side-effect@^1.0.2:
     exenv "^1.2.1"
     shallowequal "^1.0.1"
 
+react-test-renderer@15.4.1:
+  version "15.4.1"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.4.1.tgz#e38cd7057868d4a655d3764689735b4b97260706"
+
 react-textarea-autosize@4.0.5:
   version "4.0.5"
   resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-4.0.5.tgz#55379f6a6fa575fc87d1b8de2756e57e3b6c995d"

@@ -22,11 +22,7 @@ describe('Containers::Header', () => {
   });
 
   it('should render placeholder title', () => {
-    const { component, title } = setup(
-      Object.assign({}, defaultProps, {
-        config: {},
-      })
-    );
+    const { component, title } = setup({ ...defaultProps, config: {} });
     const { config } = component.props();
     expect(title.text()).toEqual('You have no title!');
   });

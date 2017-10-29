@@ -13,14 +13,14 @@ const defaultProps = {
   errors: [],
   router: {},
   route: {},
-  updated: false
+  updated: false,
 };
 
 const setup = (props = defaultProps) => {
   const actions = {
     clearErrors: jest.fn(),
     onEditorChange: jest.fn(),
-    putConfig: jest.fn()
+    putConfig: jest.fn(),
   };
 
   const component = shallow(<Configuration {...props} {...actions} />);
@@ -31,7 +31,7 @@ const setup = (props = defaultProps) => {
     editor: component.find(Editor),
     errors: component.find(Errors),
     toggleButton: component.find(Button).first(),
-    saveButton: component.find(Button).last()
+    saveButton: component.find(Button).last(),
   };
 };
 
@@ -45,12 +45,11 @@ describe('Containers::Configuration', () => {
   });
 
   it('should render correctly with updated props', () => {
-    const { saveButton } = setup(
-      Object.assign({}, defaultProps, {
-        editorChanged: true,
-        updated: true
-      })
-    );
+    const { saveButton } = setup({
+      ...defaultProps,
+      editorChanged: true,
+      updated: true,
+    });
     expect(saveButton.prop('triggered')).toBe(true);
     expect(saveButton.prop('active')).toBe(true);
   });
@@ -61,9 +60,10 @@ describe('Containers::Configuration', () => {
   });
 
   it('should render error messages when necessary', () => {
-    const { errors } = setup(Object.assign({}, defaultProps, {
-      errors: ['The content is required.']
-    }));
+    const { errors } = setup({
+      ...defaultProps,
+      errors: ['The content is required.'],
+    });
     expect(errors.node).toBeTruthy();
   });
 
@@ -74,9 +74,10 @@ describe('Containers::Configuration', () => {
   });
 
   it('should clear errors on unmount.', () => {
-    const { component, errors, actions } = setup(Object.assign({}, defaultProps, {
-      errors: ['The content is required!']
-    }));
+    const { component, errors, actions } = setup({
+      ...defaultProps,
+      errors: ['The content is required!'],
+    });
     component.unmount();
     expect(actions.clearErrors).toHaveBeenCalled();
   });
@@ -89,10 +90,11 @@ describe('Containers::Configuration', () => {
   });
 
   it('should call putConfig if a field is changed.', () => {
-    const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
-      fieldChanged: true
-    }));
+    const { saveButton, actions } = setup({
+      ...defaultProps,
+      fieldChanged: true,
+    });
     saveButton.simulate('click');
     expect(actions.putConfig).toHaveBeenCalled();
   });
- });
+});

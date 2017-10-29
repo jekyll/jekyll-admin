@@ -49,11 +49,10 @@ describe('Containers::Sidebar', () => {
       },
     });
 
-    const { component, links } = setup(
-      Object.assign({}, defaultProps, {
-        config: config_with_hidden_links,
-      })
-    );
+    const { component, links } = setup({
+      ...defaultProps,
+      config: config_with_hidden_links,
+    });
 
     const actual = links.length;
     const expected =
@@ -69,14 +68,13 @@ describe('Containers::Sidebar', () => {
   });
 
   it('should render fine with zero collections', () => {
-    const { component, links, actions } = setup(
-      Object.assign({}, defaultProps, {
-        collections: [],
-        config: {
-          jekyll_admin: {},
-        },
-      })
-    );
+    const { component, links, actions } = setup({
+      ...defaultProps,
+      collections: [],
+      config: {
+        jekyll_admin: {},
+      },
+    });
     expect(links.length).toEqual(4);
   });
 });

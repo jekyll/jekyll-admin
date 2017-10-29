@@ -4,24 +4,22 @@ import moment from 'moment';
 import InputPath from '../InputPath';
 
 const props = {
-  path: "test.md",
-  type: "posts",
-  splat: "test/some/other"
+  path: 'test.md',
+  type: 'posts',
+  splat: 'test/some/other',
 };
 
 function setup(defaultProps = props) {
   const actions = {
-    onChange: jest.fn()
+    onChange: jest.fn(),
   };
 
-  let component = mount(
-    <InputPath {...defaultProps} {...actions}/>
-  );
+  let component = mount(<InputPath {...defaultProps} {...actions} />);
 
   return {
     component: component,
     input: component.find('textarea'),
-    actions
+    actions,
   };
 }
 
@@ -32,9 +30,7 @@ describe('Components::InputPath', () => {
   });
 
   it('should prepend date to input value/placeholder for new post', () => {
-    const { input } = setup(Object.assign({}, props, {
-      type: 'posts'
-    }));
+    const { input } = setup({ ...props, type: 'posts' });
     const expectedValue = moment().format('YYYY-MM-DD') + '-your-title.md';
     expect(input.prop('placeholder')).toBe(expectedValue);
   });

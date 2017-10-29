@@ -46,12 +46,10 @@ describe('Containers::MetaFields', () => {
     expect(addFieldButton.node).toBeTruthy();
     expect(addDataFieldButton.node).not.toBeTruthy();
 
-    const updatedSetup = setup(
-      Object.assign({}, defaultProps, {
-        dataview: true,
-      })
-    );
-
+    const updatedSetup = setup({
+      ...defaultProps,
+      dataview: true,
+    });
     expect(
       updatedSetup.component
         .find('div')

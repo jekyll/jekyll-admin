@@ -1,12 +1,12 @@
 import fetch from 'isomorphic-fetch';
 import { addNotification } from '../ducks/notifications';
+import { BadInputError } from './apiErrors';
 import {
   getErrorMessage,
   getFetchErrorMessage,
   getUpdateErrorMessage,
   getDeleteMessage,
 } from '../translations';
-import { BadInputError } from './api_errors';
 
 /**
  * Fetch wrapper for GET request that dispatches actions according to the

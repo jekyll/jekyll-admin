@@ -14,7 +14,7 @@ const defaultProps = {
   router: {},
   route: {},
   config: config,
-  params: { splat: 'page-dir' }
+  params: { splat: 'page-dir' },
 };
 
 function setup(props = defaultProps) {
@@ -24,19 +24,17 @@ function setup(props = defaultProps) {
     updateBody: jest.fn(),
     updatePath: jest.fn(),
     updateDraft: jest.fn(),
-    clearErrors: jest.fn()
+    clearErrors: jest.fn(),
   };
 
-  const component = shallow(
-    <PageNew {...actions} {...props} />
-  );
+  const component = shallow(<PageNew {...actions} {...props} />);
 
   return {
     component,
     actions,
     saveButton: component.find(Button),
     errors: component.find(Errors),
-    props
+    props,
   };
 }
 
@@ -47,9 +45,10 @@ describe('Containers::PageNew', () => {
   });
 
   it('should render error messages', () => {
-    const { errors } = setup(Object.assign({}, defaultProps, {
-      errors: ['The path field is required!']
-    }));
+    const { errors } = setup({
+      ...defaultProps,
+      errors: ['The path field is required!'],
+    });
     expect(errors.node).toBeTruthy();
   });
 
@@ -60,9 +59,10 @@ describe('Containers::PageNew', () => {
   });
 
   it('should call createPage if a field is changed.', () => {
-    const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
-      fieldChanged: true
-    }));
+    const { saveButton, actions } = setup({
+      ...defaultProps,
+      fieldChanged: true,
+    });
     saveButton.simulate('click');
     expect(actions.createPage).toHaveBeenCalled();
   });
