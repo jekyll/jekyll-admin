@@ -11,17 +11,17 @@ const defaultProps = {
   key_prefix: '',
 };
 
-function setup(props = defaultProps) {
-  const actions = {
-    storeContentFields: jest.fn(),
-    addField: jest.fn(),
-    removeField: jest.fn(),
-    updateFieldKey: jest.fn(),
-    updateFieldValue: jest.fn(),
-    moveArrayItem: jest.fn(),
-    convertField: jest.fn(),
-  };
+const actions = {
+  storeContentFields: jest.fn(),
+  addField: jest.fn(),
+  removeField: jest.fn(),
+  updateFieldKey: jest.fn(),
+  updateFieldValue: jest.fn(),
+  moveArrayItem: jest.fn(),
+  convertField: jest.fn(),
+};
 
+function setup(props = defaultProps) {
   const component = mount(<MetaFields {...props} {...actions} />);
 
   return {
@@ -34,7 +34,7 @@ function setup(props = defaultProps) {
 }
 
 describe('Containers::MetaFields', () => {
-  it('should render MetaFields correctly', () => {
+  it('renders MetaFields correctly', () => {
     let { component, addFieldButton, addDataFieldButton } = setup();
 
     expect(
@@ -63,12 +63,12 @@ describe('Containers::MetaFields', () => {
     expect(component.prop('metadata')).toEqual(content);
   });
 
-  it('should call storeContentFields before mount', () => {
+  it('calls storeContentFields before mount', () => {
     const { actions } = setup();
     expect(actions.storeContentFields).toHaveBeenCalled();
   });
 
-  it('should call addField when the button is clicked', () => {
+  it('calls addField when the button is clicked', () => {
     const { actions, addFieldButton } = setup();
     addFieldButton.simulate('click');
     expect(actions.addField).toHaveBeenCalled();
