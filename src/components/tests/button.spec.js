@@ -30,31 +30,22 @@ describe('Components::Button', () => {
     let { link } = setup();
     expect(link.prop('className')).toBe('btn btn-active btn-success');
 
-    link = setup(
-      Object.assign({}, defaultProps, {
-        type: 'delete',
-        active: false,
-        block: true,
-      })
-    ).link;
+    link = setup({
+      ...defaultProps,
+      type: 'delete',
+      active: false,
+      block: true,
+    }).link;
     expect(link.prop('className')).toBe('btn btn-delete btn-inactive btn-fat');
   });
 
   it('should render triggered text', () => {
-    const { link } = setup(
-      Object.assign({}, defaultProps, {
-        triggered: true,
-      })
-    );
+    const { link } = setup({ ...defaultProps, triggered: true });
     expect(link.text()).toBe('Saved');
   });
 
   it('should render icon', () => {
-    const { icon } = setup(
-      Object.assign({}, defaultProps, {
-        icon: 'eye',
-      })
-    );
+    const { icon } = setup({ ...defaultProps, icon: 'eye' });
     expect(icon.node).toBeTruthy();
   });
 
@@ -65,11 +56,7 @@ describe('Components::Button', () => {
   });
 
   it('should not call onClick if it is a link', () => {
-    const { link, actions } = setup(
-      Object.assign({}, defaultProps, {
-        to: 'some_link',
-      })
-    );
+    const { link, actions } = setup({ ...defaultProps, to: 'some_link' });
     link.simulate('click');
     expect(actions.onClick).not.toHaveBeenCalled();
   });

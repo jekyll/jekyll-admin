@@ -1,20 +1,20 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import ReactDOM from 'react-dom';
+import renderer from 'react-test-renderer';
 import { Notifications } from '../Notifications';
 
 import { notification } from './fixtures';
 
-function setup() {
-  const component = mount(<Notifications notification={notification} />);
+describe('Containers::Notification', () => {
+  it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<Notifications notification={notification} />, div);
+  });
 
-  return {
-    component: component,
-  };
-}
-
-describe('Containers::Notifications', () => {
-  it('should render correctly', () => {
-    const { component } = setup();
-    expect(component).toBeTruthy();
+  it('renders correctly', () => {
+    const tree = renderer
+      .create(<Notifications notification={notification} />)
+      .toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });
