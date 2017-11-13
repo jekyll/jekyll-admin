@@ -33,8 +33,11 @@ module JekyllAdmin
 
       # Raw configuration content, as it sits on disk
       def raw_configuration
+        fixed_config_path = configuration_path.to_s.sub(/#{$PROJECT_SOURCE}/, '')
+        puts "PROJECT SOURCE IS " + $PROJECT_SOURCE
+        puts "FIXED PATH IS " + fixed_config_path
         File.read(
-          configuration_path,
+          fixed_config_path,
           Jekyll::Utils.merged_file_read_opts(site, {})
         )
       end
