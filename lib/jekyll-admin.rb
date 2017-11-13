@@ -74,7 +74,7 @@ $PROJECT_SOURCE = config_source
 
 # Ensure there is a trailing slash at end of source
 slashes_matched = $PROJECT_SOURCE.scan(/\/$/)
-if slashes_matched.length == 0
+if slashes_matched.length == 0 && $PROJECT_SOURCE != ''
   # There is not a trailing slash
   $PROJECT_SOURCE = $PROJECT_SOURCE + "/"
 end
