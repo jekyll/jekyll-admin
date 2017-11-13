@@ -15,17 +15,14 @@
     "add-dist": "mkdirp ./lib/jekyll-admin/public",
     "remove-dist": "rimraf ./lib/jekyll-admin/public",
     "build:html": "babel-node tools/buildHtml.js",
-    "prebuild":
-      "npm run clean-dist && npm run build:html && npm run lint && npm test",
+    "prebuild": "npm run clean-dist && npm run build:html && npm run lint && npm test",
     "build": "babel-node tools/build.js",
     "test": "jest",
     "test:CI": "babel-node tools/testCi.js",
     "test:cover": "npm run test -- --coverage ",
-    "test:cover:CI":
-      "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
+    "test:cover:CI": "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "test:watch": "npm run test -- --watch",
-    "open:cover":
-      "npm run test:cover && open ./coverage/lcov-report/index.html",
+    "open:cover": "npm run test:cover && open ./coverage/lcov-report/index.html",
     "precommit": "lint-staged"
   },
   "lint-staged": {
@@ -117,13 +114,22 @@
       "\\.(css|scss)$": "identity-obj-proxy",
       "^.+\\.(gif|ttf|eot|svg|woff|woff2|ico)$": "<rootDir>/tools/fileMock.js"
     },
-    "roots": ["src"],
-    "testMatch": ["**/*.spec.js"]
+    "roots": [
+      "src"
+    ],
+    "testMatch": [
+      "**/*.spec.js"
+    ]
   },
   "babel": {
     "env": {
       "development": {
-        "presets": ["env", "react", "react-hmre", "stage-1"]
+        "presets": [
+          "env",
+          "react",
+          "react-hmre",
+          "stage-1"
+        ]
       },
       "production": {
         "presets": [
@@ -148,7 +154,11 @@
         ]
       },
       "test": {
-        "presets": ["env", "react", "stage-1"]
+        "presets": [
+          "env",
+          "react",
+          "stage-1"
+        ]
       }
     }
   },
@@ -159,7 +169,9 @@
       "plugin:import/errors",
       "plugin:import/warnings"
     ],
-    "plugins": ["react"],
+    "plugins": [
+      "react"
+    ],
     "parser": "babel-eslint",
     "parserOptions": {
       "ecmaVersion": 6,
@@ -183,7 +195,10 @@
       "no-unused-vars": 0,
       "no-debugger": 1,
       "no-var": 1,
-      "semi": [1, "always"],
+      "semi": [
+        1,
+        "always"
+      ],
       "no-trailing-spaces": 0,
       "eol-last": 0,
       "no-underscore-dangle": 0,

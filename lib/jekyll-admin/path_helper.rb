@@ -4,8 +4,8 @@ module JekyllAdmin
       jekyllConfig = Jekyll.configuration({})
       config_source = ""
 
-      if $jekyllConfig['source']
-        config_source = $jekyllConfig['source']
+      if jekyllConfig['source']
+        config_source = jekyllConfig['source']
       end
 
       dir  = Dir.pwd
