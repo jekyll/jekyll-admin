@@ -44,3 +44,37 @@ require_relative "./jekyll/commands/serve"
   klass.include JekyllAdmin::APIable
   klass.include JekyllAdmin::URLable
 end
+
+#----------------------------------------------------
+# Getting the user's source directory (if applicable)
+# This code snippet is taken from the Jekyll-Pug Plugin
+# https://github.com/dougbeney/jekyll-pug/
+#----------------------------------------------------
+
+$jekyllConfig = Jekyll.configuration({})
+
+config_source = ""
+
+if $jekyllConfig['source']
+  config_source = $jekyllConfig['source']
+end
+
+dir  = Dir.pwd
+
+# Here, we get the project source from the config.
+# The the user did not specify a source folder
+# It will return the absolute path to the project.
+# We don't want that, so we use some regex wizardry.
+
+# This global variable returns the source folder.
+# If no source is specified, this variable is a blank string.
+$PROJECT_SOURCE = config_source
+  .sub(/#{dir}/, '')
+  .sub(/^\//, '')
+
+# Ensure there is a trailing slash at end of source
+slashes_matched = $PROJECT_SOURCE.scan(/\/$/)
+if slashes_matched.length == 0
+  # There is not a trailing slash
+  $PROJECT_SOURCE = $PROJECT_SOURCE + "/"
+end
