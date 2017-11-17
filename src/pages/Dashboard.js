@@ -1,16 +1,10 @@
-import React, { Component } from 'react'
-import PropTypes from 'prop-types'
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Dashboard extends Component {
-  static propTypes = {
-    prop: PropTypes
-  }
+  static propTypes = {};
 
   render() {
-    return (
-      <div>
-        test
-      </div>
-    )
+    return <div>test</div>;
   }
 }
