@@ -1,10 +1,3 @@
 {
-  "label.genericError": "Genel bir hata oluştu.",
-  "form.VerifyConsumer.email": "E-posta adresiniz",
-  "form.VerifyConsumer.button": "Ödemeye Devam Et",
-  "form.validation.email": "Email formatı geçersiz",
-  "form.validation.required": "Bu alan boş bırakılamaz",
-  "page.VerifyConsumer.title": "Kart ile Ödeme",
-  "page.Address.orderTitle": "Sipariş Bilgileri",
-  "page.Address.shippingTitle": "Teslimat Bilgileri"
+  "sidebar.pages": "Sayfalar"
 }

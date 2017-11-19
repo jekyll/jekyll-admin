@@ -13,31 +13,7 @@ import theme from './theme';
 const history = createBrowserHistory();
 
 /* eslint-disable no-unused-expressions*/
-injectGlobal`@import url('//fonts.googleapis.com/css?family=Source+Sans+Pro');`;
 injectGlobal`${normalize()}`;
-injectGlobal`
-  html {
-    font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
-  }
-
-  body {
-    margin: 0;
-  }
-
-  a {
-    text-decoration: none;
-  }
-
-  ul {
-    margin: 0;
-    list-style: none;
-  }
-
-  h1, h2, h3 {
-    margin: 0;
-  }
-
-`;
 
 ReactDOM.render(
   <Provider store={store}>

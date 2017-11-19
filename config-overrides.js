@@ -25,7 +25,10 @@ module.exports = function override(config, env) {
   );
 
   config = rewireLess.withLoaderOptions({
-    modifyVars: { '@primary-color': theme.primaryColor },
+    modifyVars: {
+      '@primary-color': theme.primaryColor,
+      '@font-size-base': theme.fontSize,
+    },
   })(config, env);
 
   return config;

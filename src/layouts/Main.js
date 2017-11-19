@@ -1,97 +1,124 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
-import withApi from '../utils/withApi';
-import { getConfiguration } from '../config/api';
-import { Layout, Menu, Breadcrumb, Icon } from 'antd';
+import { Link } from 'react-router-dom';
+import { Layout, Menu, Icon } from 'antd';
+import { ADMIN_PREFIX } from 'config';
+import { getConfiguration } from 'config/api';
+import { FormattedMessage } from 'react-intl';
+import logoImg from './logo.png';
+
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
 
-class Main extends Component {
+export default class Main extends Component {
   state = {
     collapsed: false,
+    config: null,
   };
 
   onCollapse = collapsed => {
     this.setState({ collapsed });
   };
 
+  async componentDidMount() {
+    const result = await getConfiguration();
+    if (result.ok) {
+      this.setState({ config: result.data.content });
+    }
+  }
+
   render() {
-    console.log(this.props);
+    const { config } = this.state;
     return (
-      <Layout style={{ minHeight: '100vh' }}>
+      <StyledLayout>
         <Sider
           collapsible
           collapsed={this.state.collapsed}
           onCollapse={this.onCollapse}
         >
-          <Logo />
+          <LogoWrapper>
+            <Logo src={logoImg} />
+          </LogoWrapper>
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <Menu.Item key="1">
-              <Icon type="pie-chart" />
-              <span>Option 1</span>
+              <Link to={`${ADMIN_PREFIX}/pages`}>
+                <Icon type="file-text" />
+                <FormattedMessage id="sidebar.pages" />
+              </Link>
             </Menu.Item>
-            <Menu.Item key="2">
-              <Icon type="desktop" />
-              <span>Option 2</span>
+            <Menu.Item>
+              <Link to={`${ADMIN_PREFIX}/posts`}>
+                <Icon type="file-ppt" />
+                <FormattedMessage id="sidebar.posts" />
+              </Link>
             </Menu.Item>
             <SubMenu
-              key="sub1"
               title={
                 <span>
-                  <Icon type="user" />
-                  <span>User</span>
+                  <Icon type="book" />
+                  <FormattedMessage id="sidebar.collections" />
                 </span>
               }
             >
-              <Menu.Item key="3">Tom</Menu.Item>
-              <Menu.Item key="4">Bill</Menu.Item>
-              <Menu.Item key="5">Alex</Menu.Item>
+              {config &&
+                Object.keys(config.collections).map(collection => (
+                  <Menu.Item key={collection}>
+                    <Link to={`${ADMIN_PREFIX}/${collection}`}>
+                      {collection}
+                    </Link>
+                  </Menu.Item>
+                ))}
             </SubMenu>
-            <SubMenu
-              key="sub2"
-              title={
-                <span>
-                  <Icon type="team" />
-                  <span>Team</span>
-                </span>
-              }
-            >
-              <Menu.Item key="6">Team 1</Menu.Item>
-              <Menu.Item key="8">Team 2</Menu.Item>
-            </SubMenu>
-            <Menu.Item key="9">
-              <Icon type="file" />
-              <span>File</span>
+            <Menu.Item>
+              <Link to={`${ADMIN_PREFIX}/datafiles`}>
+                <Icon type="hdd" />
+                <FormattedMessage id="sidebar.datafiles" />
+              </Link>
+            </Menu.Item>
+            <Menu.Item>
+              <Link to={`${ADMIN_PREFIX}/staticfiles`}>
+                <Icon type="file" />
+                <FormattedMessage id="sidebar.staticfiles" />
+              </Link>
             </Menu.Item>
           </Menu>
         </Sider>
         <Layout>
-          <Header style={{ background: '#fff', padding: 0 }} />
-          <Content style={{ margin: '0 16px' }}>
-            <Breadcrumb style={{ margin: '16px 0' }}>
-              <Breadcrumb.Item>User</Breadcrumb.Item>
-              <Breadcrumb.Item>Bill</Breadcrumb.Item>
-            </Breadcrumb>
-            <ContentBody>{this.props.children}</ContentBody>
-          </Content>
+          <StyledHeader>
+            {(config && config.title) || 'Your awesome title!'}
+            <Version>1.0.0</Version>
+          </StyledHeader>
+          <StyledContent>{this.props.children}</StyledContent>
           <Footer>Jekyll Admin © 2017</Footer>
         </Layout>
-      </Layout>
+      </StyledLayout>
     );
   }
 }
 
-export default withApi(getConfiguration, Main);
-
-const ContentBody = styled.div`
-  padding: 24px;
-  background: #fff;
-  min-height: 360;
+const StyledLayout = styled(Layout)`
+  min-height: 100vh;
 `;
 
-const Logo = styled.div`
-  height: 32px;
-  background: #333;
-  border-radius: 6px;
-  margin: 16px;
+const StyledContent = styled(Content)`
+  margin: 0 16px;
+`;
+
+const StyledHeader = styled(Header)`
+  background: #fff;
+  padding: 0 16px;
+  font-weight: bold;
+`;
+
+const LogoWrapper = styled.div`
+  text-align: center;
+  padding: 10px 0;
+`;
+
+const Logo = styled.img`
+  height: 39px;
+`;
+
+const Version = styled.span`
+  float: right;
 `;
