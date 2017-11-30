@@ -6,7 +6,7 @@ collections:
     permalink: /frontend/:path/
     output: true
 
-gems:
+plugins:
   - jekyll-seo-tag
   - jekyll-sitemap
 
