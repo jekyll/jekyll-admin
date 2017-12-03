@@ -14,6 +14,7 @@
 
   <ul class="routes">
     <li><a href="{{ "/" | relative_url }}" {% if page.url == '/' %}class="active"{% endif %}>Index</a></li>
+    <li><a href="{{ "/configs" | relative_url }}" {% if active[1] == 'configs' %}class="active"{% endif %}>Configs</a></li>
     <li><a href="{{ "/api" | relative_url }}" {% if active[1] == 'api' %}class="active"{% endif %}>API</a></li>
     <li><a href="{{ "/frontend" | relative_url }}" {% if active[1] == 'frontend' %}class="active"{% endif %}>Front End</a>
       <ul>
