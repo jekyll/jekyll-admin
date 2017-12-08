@@ -1,23 +1,29 @@
-/* eslint-disable import/default */
 import React from 'react';
-import { syncHistoryWithStore } from 'react-router-redux';
-import { render } from 'react-dom';
+import ReactDOM from 'react-dom';
+import { injectGlobal, ThemeProvider } from 'styled-components';
+import { normalize } from 'polished';
+import { Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { Router, browserHistory, Redirect } from 'react-router';
-import routes from './routes';
-import configureStore from './store';
-import { ADMIN_PREFIX } from './constants';
-import './styles/main.scss';
-import './assets/favicon.ico';
+import { IntlProvider } from 'react-intl-redux';
+import { createBrowserHistory } from 'history';
+import store from './createStore';
+import App from './layouts/App';
+import theme from './theme';
 
-const store = configureStore();
-const history = syncHistoryWithStore(browserHistory, store);
+const history = createBrowserHistory();
 
-render(
+/* eslint-disable no-unused-expressions*/
+injectGlobal`${normalize()}`;
+
+ReactDOM.render(
   <Provider store={store}>
-    <Router history={history} routes={routes}>
-      <Redirect from={`${ADMIN_PREFIX}/`} to={`${ADMIN_PREFIX}/pages/`} />
-    </Router>
+    <IntlProvider>
+      <ThemeProvider theme={theme}>
+        <Router history={history}>
+          <App />
+        </Router>
+      </ThemeProvider>
+    </IntlProvider>
   </Provider>,
   document.getElementById('root')
 );
