@@ -48,3 +48,29 @@ export const DocumentSingle = asyncComponent({
   LoadingComponent: () => <div>Loading</div>,
   ErrorComponent: () => <div>Error</div>,
 });
+
+export const DatafileList = asyncComponent({
+  resolve: () =>
+    new Promise(resolve =>
+      require.ensure(
+        [],
+        require => resolve(require('./DatafileList')),
+        'DatafileList'
+      )
+    ),
+  LoadingComponent: () => <div>Loading</div>,
+  ErrorComponent: () => <div>Error</div>,
+});
+
+export const DatafileSingle = asyncComponent({
+  resolve: () =>
+    new Promise(resolve =>
+      require.ensure(
+        [],
+        require => resolve(require('./DatafileSingle')),
+        'DatafileSingle'
+      )
+    ),
+  LoadingComponent: () => <div>Loading</div>,
+  ErrorComponent: () => <div>Error</div>,
+});

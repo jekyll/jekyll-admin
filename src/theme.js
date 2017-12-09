@@ -5,7 +5,6 @@ module.exports = {
   lg: 992,
   xl: 1200,
   fontFamily: "'Source Sans Pro', Helvetica, Arial, sans-serif",
-  fontSize: 14,
   primaryColor: '#ff9900',
   secondaryColor: '#f4f4f4',
   thirdColor: '#808080',

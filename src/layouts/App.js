@@ -1,8 +1,16 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import Main from './Main';
-import { PageList, PageSingle, DocumentList, DocumentSingle } from '../pages';
 import { ADMIN_PREFIX } from '../config';
+import {
+  PageList,
+  PageSingle,
+  DocumentList,
+  DocumentSingle,
+  DatafileList,
+  DatafileSingle,
+} from '../pages';
+
 export default class App extends Component {
   render() {
     return (
@@ -18,7 +26,14 @@ export default class App extends Component {
             component={PageSingle}
           />
           <Route path={`${ADMIN_PREFIX}/pages/:splat*`} component={PageList} />
-
+          <Route
+            path={`${ADMIN_PREFIX}/datafiles/:splat*/:filename.:ext`}
+            component={DatafileSingle}
+          />
+          <Route
+            path={`${ADMIN_PREFIX}/datafiles/:splat*`}
+            component={DatafileList}
+          />
           <Route
             path={`${ADMIN_PREFIX}/:collection/:splat*/:filename.:ext`}
             component={DocumentSingle}

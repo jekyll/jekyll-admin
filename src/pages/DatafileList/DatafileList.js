@@ -7,57 +7,53 @@ import { Table, Input, Button, Icon, Alert, Popconfirm } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { ADMIN_PREFIX } from 'config';
-import { getDocuments, deleteDocument } from 'config/api';
+import { getDatafiles, deleteDatafile } from 'config/api';
 import Breadcrumbs from 'components/Breadcrumbs';
 
-class DocumentList extends Component {
+class DatafileList extends Component {
   state = {
-    documents: [],
+    datafiles: [],
     message: null,
     messageType: null,
   };
 
   async componentDidMount() {
-    const { match: { params: { collection, splat } } } = this.props;
-    const { ok, data } = await getDocuments(collection, splat);
+    const { match: { params: { splat } } } = this.props;
+    const { ok, data } = await getDatafiles(splat);
     if (ok) {
-      this.setState({ documents: data });
+      this.setState({ datafiles: data });
     } else {
       this.setState({
         messageType: 'error',
-        message: 'Could not fetch documents.',
+        message: 'Could not fetch datafiles.',
       });
     }
   }
 
   async componentWillReceiveProps(nextProps) {
-    const { match: { params: { collection, splat } } } = nextProps;
-
-    if (
-      this.props.match.params.splat !== splat ||
-      this.props.match.params.collection !== collection
-    ) {
-      const { ok, data } = await getDocuments(collection, splat);
+    const { match: { params: { splat } } } = nextProps;
+    if (this.props.match.params.splat !== splat) {
+      const { ok, data } = await getDatafiles(splat);
       if (ok) {
-        this.setState({ documents: data });
+        this.setState({ datafiles: data });
       } else {
         this.setState({
           messageType: 'error',
-          message: 'Could not fetch documents.',
+          message: 'Could not fetch datafiles.',
         });
       }
     }
   }
 
   handleDeleteClick = async name => {
-    const { match: { params: { collection, splat } } } = this.props;
-    const { documents } = this.state;
-    const { ok } = await deleteDocument(collection, splat, name);
+    const { match: { params: { splat } } } = this.props;
+    const { datafiles } = this.state;
+    const { ok } = await deleteDatafile(splat, name);
     if (ok) {
       this.setState({
         messageType: 'success',
         message: 'Deleted',
-        documents: documents.filter(post => post.name !== name),
+        datafiles: datafiles.filter(datafile => datafile.name !== name),
       });
     } else {
       this.setState({ messageType: 'error', message: 'Error' });
@@ -65,27 +61,27 @@ class DocumentList extends Component {
   };
 
   generateTableData = () => {
-    const { documents } = this.state;
-    return documents.map((document, index) => ({
+    const { datafiles } = this.state;
+    return datafiles.map((datafile, index) => ({
       key: index,
-      name: document.name,
-      type: document.type,
-      path: document.path.substr(1),
-      http_url: document.http_url,
+      name:
+        datafile.type === 'directory'
+          ? datafile.name
+          : datafile.slug + datafile.ext,
+      type: datafile.type,
+      path: datafile.path,
+      http_url: datafile.http_url,
     }));
   };
 
   generateTableColumns = () => {
-    const {
-      intl: { messages, formatMessage },
-      match: { params: { collection } },
-    } = this.props;
+    const { intl: { messages, formatMessage } } = this.props;
     return [
       {
         title: messages['label.name'],
         dataIndex: 'name',
         render: (text, { name, path, type }) => (
-          <Link to={`${ADMIN_PREFIX}/${path}`}>
+          <Link to={`${ADMIN_PREFIX}/datafiles/${path}`}>
             <Icon type={type === 'directory' ? 'folder' : 'file-text'} /> {name}
           </Link>
         ),
@@ -95,13 +91,6 @@ class DocumentList extends Component {
         dataIndex: 'action',
         render: (text, { http_url, name, type }) => (
           <RightSpan>
-            {http_url && (
-              <Link to={http_url} target="_blank">
-                <Button type="primary" icon="eye" ghost>
-                  {messages['label.view']}
-                </Button>
-              </Link>
-            )}{' '}
             {type !== 'directory' && (
               <Popconfirm
                 placement="topRight"
@@ -123,10 +112,7 @@ class DocumentList extends Component {
 
   render() {
     const { message, messageType } = this.state;
-    const {
-      match: { params: { collection, splat } },
-      intl: { messages },
-    } = this.props;
+    const { match: { params: { splat } }, intl: { messages } } = this.props;
     return (
       <div>
         {message && (
@@ -143,12 +129,12 @@ class DocumentList extends Component {
             closable
           />
         )}
-        <Breadcrumbs root={collection} splat={splat} />
+        <Breadcrumbs root="datafiles" splat={splat} />
         <ContentBody>
           <Table
             columns={this.generateTableColumns()}
             dataSource={this.generateTableData()}
-            pagination={{ pageSize: 5 }}
+            pagination={{ datafilesize: 5 }}
           />
         </ContentBody>
       </div>
@@ -156,7 +142,7 @@ class DocumentList extends Component {
   }
 }
 
-export default compose(withRouter, injectIntl)(DocumentList);
+export default compose(withRouter, injectIntl)(DatafileList);
 
 const ContentBody = styled.div`
   padding: 24px;
