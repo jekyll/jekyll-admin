@@ -17,3 +17,22 @@ export const deletePage = (dir = '', filename) => {
   const endpoint = dir ? `/pages/${dir}/${filename}` : `/pages/${filename}`;
   return api.delete(endpoint);
 };
+
+export const updatePage = (dir = '', filename) => {
+  const endpoint = dir ? `/pages/${dir}/${filename}` : `/pages/${filename}`;
+  return api.post(endpoint);
+};
+
+export const getDocuments = (collection, dir) => {
+  const endpoint = dir
+    ? `/collections/${collection}/entries/${dir}`
+    : `/collections/${collection}/entries`;
+  return api.get(endpoint);
+};
+
+export const deleteDocument = (collection, dir = '', filename) => {
+  const endpoint = dir
+    ? `/${collection}/${dir}/${filename}`
+    : `/${collection}/${filename}`;
+  return api.delete(endpoint);
+};

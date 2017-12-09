@@ -1,12 +1,19 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+import { withRouter } from 'react-router';
+import { compose } from 'redux';
+import { FormattedMessage, injectIntl } from 'react-intl';
 
-export default class PageSingle extends Component {
-  static propTypes = {
-    prop: PropTypes,
-  };
+import Breadcrumbs from 'components/Breadcrumbs';
 
+class PageSingle extends Component {
   render() {
-    return <div>single</div>;
+    const { match: { params: { splat, filename, ext } } } = this.props;
+    return (
+      <div>
+        <Breadcrumbs root="pages" splat={`${splat}/${filename}.${ext}`} />
+      </div>
+    );
   }
 }
+
+export default compose(withRouter, injectIntl)(PageSingle);
