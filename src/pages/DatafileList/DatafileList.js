@@ -3,12 +3,14 @@ import { withRouter } from 'react-router';
 import { compose } from 'redux';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { Table, Input, Button, Icon, Alert, Popconfirm } from 'antd';
+import { Table, Input, Button, Icon, Popconfirm } from 'antd';
 import { FormattedMessage, injectIntl } from 'react-intl';
 
 import { ADMIN_PREFIX } from 'config';
 import { getDatafiles, deleteDatafile } from 'config/api';
 import Breadcrumbs from 'components/Breadcrumbs';
+
+import { ContentBody, RightSpan, StyledAlert } from 'styles';
 
 class DatafileList extends Component {
   state = {
@@ -143,17 +145,3 @@ class DatafileList extends Component {
 }
 
 export default compose(withRouter, injectIntl)(DatafileList);
-
-const ContentBody = styled.div`
-  padding: 24px;
-  background: #fff;
-  min-height: 360px;
-`;
-
-const StyledAlert = styled(Alert)`
-  margin-top: 16px;
-`;
-
-const RightSpan = styled.span`
-  float: right;
-`;

@@ -13,6 +13,11 @@ export const getConfiguration = () => api.get('/configuration');
 
 export const getPages = (splat = '') => api.get(`/pages/${splat}`);
 
+export const getPage = (splat = '', filename) => {
+  const endpoint = splat ? `/pages/${splat}/${filename}` : `/pages/${filename}`;
+  return api.get(endpoint);
+};
+
 export const deletePage = (splat = '', filename) => {
   const endpoint = splat ? `/pages/${splat}/${filename}` : `/pages/${filename}`;
   return api.delete(endpoint);

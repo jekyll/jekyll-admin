@@ -23,7 +23,6 @@ const translateTitle = root => {
 };
 
 const Breadcrumbs = ({ root, splat }) => {
-  console.log(root, splat);
   const fullPath = splat ? [root, splat].join('/') : root;
   const breadcrumbs = [];
   fullPath.split('/').reduce((path, dir, index, arr) => {

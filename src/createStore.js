@@ -15,7 +15,7 @@ const loggerMiddleware = createLogger();
 const rootReducers = combineReducers({
   ...reducers,
   form: formReducer,
-  intl: intlReducer
+  intl: intlReducer,
 });
 
 function configureStore() {
@@ -25,11 +25,11 @@ function configureStore() {
       intl: {
         defaultLocale: 'en',
         locale: 'en',
-        messages: translations.en
-      }
+        messages: translations.en,
+      },
     },
     compose(
-      applyMiddleware(thunkMiddleware, loggerMiddleware),
+      applyMiddleware(thunkMiddleware),
       typeof global.__REDUX_DEVTOOLS_EXTENSION__ !== 'undefined'
         ? global.__REDUX_DEVTOOLS_EXTENSION__()
         : f => f

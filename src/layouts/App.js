@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Route, Redirect, Switch } from 'react-router-dom';
+import { ADMIN_PREFIX } from 'config';
 import Main from './Main';
-import { ADMIN_PREFIX } from '../config';
 import {
   PageList,
   PageSingle,
@@ -9,7 +9,7 @@ import {
   DocumentSingle,
   DatafileList,
   DatafileSingle,
-} from '../pages';
+} from 'pages';
 
 export default class App extends Component {
   render() {
