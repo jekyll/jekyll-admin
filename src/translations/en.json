@@ -1,0 +1,16 @@
+{
+  "label.success": "Success",
+  "label.Error": "Error",
+  "label.yes": "Yes",
+  "label.no": "No",
+  "label.view": "View",
+  "label.delete": "Delete",
+  "label.action": "Action",
+  "label.name": "Name",
+  "label.delete?": "Are you sure to delete this {type}?",
+  "sidebar.pages": "Pages",
+  "sidebar.posts": "Posts",
+  "sidebar.datafiles": "Data Files",
+  "sidebar.staticfiles": "Static Files",
+  "sidebar.collections": "Collections"
+}

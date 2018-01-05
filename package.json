@@ -1,232 +1,60 @@
 {
   "name": "jekyll-admin",
-  "version": "0.7.0",
-  "description": "Admin Panel for Jekyll",
+  "version": "1.0.0",
   "private": true,
+  "dependencies": {
+    "antd": "^3.0.0",
+    "apisauce": "^0.14.1",
+    "history": "^4.7.2",
+    "hoist-non-react-statics": "^2.3.1",
+    "isomorphic-fetch": "^2.2.1",
+    "polished": "^1.7.0",
+    "prop-types": "^15.6.0",
+    "query-string": "^5.0.0",
+    "react": "^16.2.0",
+    "react-async-component": "^1.0.1",
+    "react-dom": "^16.2.0",
+    "react-helmet": "^5.2.0",
+    "react-hotkeys": "^0.10.0",
+    "react-intl": "^2.4.0",
+    "react-intl-redux": "^0.6.0",
+    "react-redux": "^5.0.6",
+    "react-router-dom": "^4.2.2",
+    "recompose": "^0.25.1",
+    "redux": "^3.7.2",
+    "redux-form": "^7.0.4",
+    "redux-logger": "^3.0.6",
+    "redux-thunk": "^2.2.0",
+    "simplemde": "^1.11.2",
+    "styled-components": "^2.2.1"
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^3.2.12",
+    "@storybook/addon-info": "^3.2.12",
+    "@storybook/react": "^3.2.12",
+    "babel-plugin-import": "^1.6.2",
+    "babel-plugin-styled-components": "^1.2.1",
+    "enzyme": "^3.1.0",
+    "eslint": "^4.8.0",
+    "lint-staged": "^4.2.3",
+    "prettier": "^1.7.4",
+    "react-app-rewire-less": "^2.1.0",
+    "react-app-rewired": "^1.3.1",
+    "react-scripts": "1.0.14",
+    "react-test-renderer": "^16.2.0"
+  },
   "scripts": {
-    "start-message": "babel-node tools/startMessage.js",
-    "prestart": "npm-run-all --parallel start-message remove-dist",
-    "start": "npm-run-all --parallel start-api test:watch open:src lint:watch",
-    "start-api": "sh script/test-server",
-    "open:src": "babel-node tools/srcServer.js",
-    "lint": "esw webpack.config.* src tools",
-    "lint:watch": "npm run lint -- --watch",
-    "clean-dist": "npm run remove-dist  && npm run add-dist",
-    "add-dist": "mkdirp ./lib/jekyll-admin/public",
-    "remove-dist": "rimraf ./lib/jekyll-admin/public",
-    "build:html": "babel-node tools/buildHtml.js",
-    "prebuild":
-      "npm run clean-dist && npm run build:html && npm run lint && npm test",
-    "build": "babel-node tools/build.js",
-    "test": "jest",
-    "test:CI": "babel-node tools/testCi.js",
-    "test:cover": "npm run test -- --coverage ",
-    "test:cover:CI":
-      "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
-    "test:watch": "npm run test -- --watch",
-    "open:cover":
-      "npm run test:cover && open ./coverage/lcov-report/index.html",
-    "precommit": "lint-staged"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
+    "storybook": "start-storybook -p 9001 -c .storybook",
+    "build-storybook": "build-storybook -s .storybook",
+    "eject": "react-scripts eject"
   },
   "lint-staged": {
     "*.js": [
-      "prettier --single-quote --trailing-comma --print-width 80 es5 --write"
+      "prettier --single-quote --trailing-comma es5 --write",
+      "git add"
     ]
-  },
-  "author": "Mert Kahyaoğlu",
-  "license": "MIT",
-  "dependencies": {
-    "brace": "0.9.1",
-    "classnames": "2.2.5",
-    "highlight.js": "^9.10.0",
-    "isomorphic-fetch": "2.2.1",
-    "js-yaml": "3.6.1",
-    "lint-staged": "^4.3.0",
-    "lodash": "4.13.1",
-    "moment": "2.17.1",
-    "prop-types": "^15.6.0",
-    "react": "15.4.1",
-    "react-ace": "4.1.5",
-    "react-document-title": "^2.0.3",
-    "react-dom": "15.4.1",
-    "react-dropzone": "3.10.0",
-    "react-hotkeys": "^0.9.0",
-    "react-modal": "^1.7.3",
-    "react-notification-system": "0.2.7",
-    "react-redux": "5.0.1",
-    "react-router": "3.0.0",
-    "react-router-redux": "4.0.7",
-    "react-textarea-autosize": "^5.1.0",
-    "react-widgets": "3.4.5",
-    "redux": "3.6.0",
-    "redux-logger": "2.6.1",
-    "redux-thunk": "2.1.0",
-    "simplemde": "1.11.2",
-    "sortablejs": "1.4.2",
-    "underscore": "1.8.3"
-  },
-  "devDependencies": {
-    "babel-cli": "6.24.1",
-    "babel-core": "6.25.0",
-    "babel-eslint": "7.2.3",
-    "babel-jest": "20.0.3",
-    "babel-loader": "7.1.1",
-    "babel-plugin-transform-react-constant-elements": "6.23.0",
-    "babel-plugin-transform-react-remove-prop-types": "0.4.6",
-    "babel-polyfill": "6.23.0",
-    "babel-preset-env": "1.6.0",
-    "babel-preset-react": "6.24.1",
-    "babel-preset-react-hmre": "1.1.1",
-    "babel-preset-stage-1": "6.24.1",
-    "browser-sync": "2.18.5",
-    "chalk": "1.1.3",
-    "cheerio": "0.20.0",
-    "coveralls": "^2.13.1",
-    "css-loader": "0.26.1",
-    "enzyme": "2.6.0",
-    "eslint": "3.12.2",
-    "eslint-plugin-import": "2.2.0",
-    "eslint-plugin-react": "6.8.0",
-    "eslint-watch": "2.1.14",
-    "extract-text-webpack-plugin": "2.0.0-beta.4",
-    "file-loader": "0.9.0",
-    "husky": "^0.14.3",
-    "identity-obj-proxy": "^3.0.0",
-    "jest": "^19.0.2",
-    "jsdom": "^9.2.1",
-    "mkdirp": "^0.5.1",
-    "mocha": "2.4.5",
-    "nock": "^8.0.0",
-    "node-sass": "3.7.0",
-    "npm-run-all": "3.1.2",
-    "prettier": "^1.7.4",
-    "react-addons-test-utils": "15.4.1",
-    "react-test-renderer": "15.4.1",
-    "redux-immutable-state-invariant": "1.2.4",
-    "redux-mock-store": "^1.0.4",
-    "rimraf": "2.5.4",
-    "sass-loader": "4.1.0",
-    "style-loader": "0.13.1",
-    "webpack": "2.2.1",
-    "webpack-bundle-analyzer": "^2.4.0",
-    "webpack-dev-middleware": "1.9.0",
-    "webpack-hot-middleware": "2.13.2"
-  },
-  "jest": {
-    "moduleNameMapper": {
-      "\\.(css|scss)$": "identity-obj-proxy",
-      "^.+\\.(gif|ttf|eot|svg|woff|woff2|ico)$": "<rootDir>/tools/fileMock.js"
-    },
-    "roots": ["src"],
-    "testMatch": ["**/*.spec.js"]
-  },
-  "babel": {
-    "env": {
-      "development": {
-        "presets": ["env", "react", "react-hmre", "stage-1"]
-      },
-      "production": {
-        "presets": [
-          [
-            "env",
-            {
-              "es2015": {
-                "modules": false
-              },
-              "targets": {
-                "ie": 9,
-                "uglify": true
-              }
-            }
-          ],
-          "react",
-          "stage-1"
-        ],
-        "plugins": [
-          "transform-react-constant-elements",
-          "transform-react-remove-prop-types"
-        ]
-      },
-      "test": {
-        "presets": ["env", "react", "stage-1"]
-      }
-    }
-  },
-  "eslintConfig": {
-    "root": true,
-    "extends": [
-      "eslint:recommended",
-      "plugin:import/errors",
-      "plugin:import/warnings"
-    ],
-    "plugins": ["react"],
-    "parser": "babel-eslint",
-    "parserOptions": {
-      "ecmaVersion": 6,
-      "sourceType": "module",
-      "ecmaFeatures": {
-        "jsx": true,
-        "experimentalObjectRestSpread": true
-      }
-    },
-    "env": {
-      "es6": true,
-      "browser": true,
-      "node": true,
-      "jquery": true,
-      "jest": true
-    },
-    "rules": {
-      "import/no-named-as-default": 0,
-      "quotes": 0,
-      "no-console": 1,
-      "no-unused-vars": 0,
-      "no-debugger": 1,
-      "no-var": 1,
-      "semi": [1, "always"],
-      "no-trailing-spaces": 0,
-      "eol-last": 0,
-      "no-underscore-dangle": 0,
-      "no-alert": 0,
-      "no-lone-blocks": 0,
-      "jsx-quotes": 1,
-      "react/display-name": [
-        1,
-        {
-          "ignoreTranspilerName": false
-        }
-      ],
-      "react/forbid-prop-types": 0,
-      "react/jsx-boolean-value": 0,
-      "react/jsx-closing-bracket-location": 0,
-      "react/jsx-curly-spacing": 1,
-      "react/jsx-indent-props": 0,
-      "react/jsx-key": 1,
-      "react/jsx-max-props-per-line": 0,
-      "react/jsx-no-bind": 0,
-      "react/jsx-no-duplicate-props": 1,
-      "react/jsx-no-literals": 0,
-      "react/jsx-no-undef": 1,
-      "react/jsx-pascal-case": 1,
-      "react/jsx-sort-prop-types": 0,
-      "react/jsx-sort-props": 0,
-      "react/jsx-uses-react": 1,
-      "react/jsx-uses-vars": 1,
-      "react/jsx-wrap-multilines": 1,
-      "react/no-danger": 1,
-      "react/no-did-mount-set-state": 1,
-      "react/no-did-update-set-state": 1,
-      "react/no-direct-mutation-state": 1,
-      "react/no-multi-comp": 1,
-      "react/no-set-state": 0,
-      "react/no-unknown-property": 1,
-      "react/prefer-es6-class": 1,
-      "react/prop-types": 1,
-      "react/react-in-jsx-scope": 1,
-      "import/extensions": 1,
-      "react/self-closing-comp": 1,
-      "react/sort-comp": 1
-    },
-    "globals": {}
   }
 }
