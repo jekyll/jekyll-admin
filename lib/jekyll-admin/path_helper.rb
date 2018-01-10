@@ -1,8 +1,30 @@
 module JekyllAdmin
   module PathHelper
+    def config_source_path
+      jekyllConfig = Jekyll.configuration({})
+      config_source = ""
+
+      if jekyllConfig['source']
+        config_source = jekyllConfig['source']
+      end
+
+      dir  = Dir.pwd
+      
+      config_source = config_source
+        .sub(%r{#{dir}}, '')
+        .sub(%r{^\/}, '')
+        .sub(%r{\/$}, '')
+
+      # Return the source value
+      config_source
+    end
+
     def sanitized_path(path)
       path = path_without_site_source(path)
-      Jekyll.sanitized_path JekyllAdmin.site.source, path
+      fixed_site_source = JekyllAdmin.site.source.to_s.sub(%r{#{config_source_path}\/?}, '')
+      # Remove trailing slash
+      fixed_site_source = fixed_site_source.sub(%r{\/$}, '')
+      Jekyll.sanitized_path fixed_site_source, path
     end
 
     # Returns the basename + extension for the requested file
