@@ -1,20 +1,17 @@
 import React, { Component } from 'react';
-import styled from 'styled-components';
 import { withRouter } from 'react-router';
 import { compose, bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { reduxForm, Field } from 'redux-form';
 import { FormattedMessage, injectIntl } from 'react-intl';
 import { Helmet } from 'react-helmet';
 import { HotKeys } from 'react-hotkeys';
 
-import { Row, Col, Input, Button, Divider } from 'antd';
+import { Divider, Icon } from 'antd';
 
 import { ADMIN_PREFIX } from 'config';
 import { getPage, deletePage } from 'config/api';
 import Breadcrumbs from 'components/Breadcrumbs';
-import MarkdownEditor from 'components/MarkdownEditor';
 import { ContentBody, StyledAlert } from 'styles';
+import PageForm from './PageForm';
 
 class PageSingle extends Component {
   state = {
@@ -36,43 +33,19 @@ class PageSingle extends Component {
   }
 
   handleSave = values => {
-    setTimeout(() => {
-      console.log(values);
-    }, 1900);
+    console.log(values);
   };
 
-  renderField = ({ input, label, meta: { touched, error }, ...rest }) => (
-    <div style={{ marginBottom: 32 }}>
-      <strong>{label}</strong>
-      <Input {...input} placeholder={label} {...rest} />
-      {touched && error && <span>{error}</span>}
-    </div>
-  );
-
-  renderMarkdownEditor = ({
-    input,
-    label,
-    meta: { touched, error },
-    ...rest
-  }) => (
-    <div>
-      <strong>{label}</strong>
-      <MarkdownEditor placeholder="Body" {...input} />
-      {touched && error && <span>{error}</span>}
-    </div>
-  );
-
   render() {
+    const { page } = this.state;
     const {
       match: { params: { splat, filename, ext } },
       handleSubmit,
       submitting,
     } = this.props;
-    const pageSplat = splat
-      ? `${splat}/${filename}.${ext}`
-      : `${filename}.${ext}`;
 
-    const { page } = this.state;
+    const fullFilename = `${filename}.${ext}`;
+    const pageSplat = splat ? `${splat}/${fullFilename}` : `${fullFilename}`;
 
     const handlers = {
       save: event => event,
@@ -81,51 +54,16 @@ class PageSingle extends Component {
     return (
       <div>
         <Helmet>
-          <title>My Title</title>
+          <title>{fullFilename}</title>
         </Helmet>
         <HotKeys handlers={handlers}>
           <Breadcrumbs root="pages" splat={pageSplat} />
           <ContentBody>
-            <form onSubmit={handleSubmit(this.handleSave)}>
-              <Row gutter={32}>
-                <Col span={20}>
-                  <Field
-                    name="title"
-                    size="large"
-                    component={this.renderField}
-                    label="Title"
-                  />
-                  <Field
-                    name="title"
-                    component={this.renderField}
-                    label="Filename"
-                    addonBefore={splat ? `${splat}/` : null}
-                  />
-                  <Field
-                    name="raw_content"
-                    component={this.renderMarkdownEditor}
-                    label="Body"
-                  />
-                </Col>
-                <Col span={4}>
-                  <BlockButton
-                    type="primary"
-                    htmlType="submit"
-                    icon="save"
-                    size="large"
-                    loading={submitting}
-                  >
-                    SAVE
-                  </BlockButton>
-                  <BlockButton type="primary" icon="eye" size="large">
-                    VIEW
-                  </BlockButton>
-                  <BlockButton type="danger" icon="delete" size="large">
-                    DELETE
-                  </BlockButton>
-                </Col>
-              </Row>
-            </form>
+            <PageForm
+              splat={splat}
+              page={page}
+              onFormSubmit={this.handleSave}
+            />
           </ContentBody>
         </HotKeys>
       </div>
@@ -133,31 +71,4 @@ class PageSingle extends Component {
   }
 }
 
-const validate = values => {
-  const errors = {};
-
-  return errors;
-};
-
-const mapStateToProps = state => {
-  const form = 'page';
-  return {
-    form,
-  };
-};
-
-const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch);
-
-export default compose(
-  connect(mapStateToProps, mapDispatchToProps),
-  reduxForm({
-    validate,
-  }),
-  withRouter,
-  injectIntl
-)(PageSingle);
-
-const BlockButton = styled(Button)`
-  width: 100%;
-  margin-bottom: 16px;
-`;
+export default compose(withRouter, injectIntl)(PageSingle);

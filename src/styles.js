@@ -14,3 +14,9 @@ export const StyledAlert = styled(Alert)`
 export const RightSpan = styled.span`
   float: right;
 `;
+
+export const Label = styled.strong`
+  display: inline-block;
+  font-weight: bold;
+  margin-bottom: 4px;
+`;

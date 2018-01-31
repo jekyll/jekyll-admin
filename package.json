@@ -20,6 +20,7 @@
     "react-intl-redux": "^0.6.0",
     "react-redux": "^5.0.6",
     "react-router-dom": "^4.2.2",
+    "react-simplemde-editor": "^3.6.11",
     "recompose": "^0.25.1",
     "redux": "^3.7.2",
     "redux-form": "^7.0.4",
@@ -53,7 +54,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier --single-quote --trailing-comma es5 --write",
+      "prettier --single-quote --trailing-comma es5 --print-width 100 --write",
       "git add"
     ]
   }

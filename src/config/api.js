@@ -23,9 +23,9 @@ export const deletePage = (splat = '', filename) => {
   return api.delete(endpoint);
 };
 
-export const updatePage = (splat = '', filename) => {
+export const updatePage = (splat = '', filename, payload) => {
   const endpoint = splat ? `/pages/${splat}/${filename}` : `/pages/${filename}`;
-  return api.post(endpoint);
+  return api.post(endpoint, payload);
 };
 
 export const getDocuments = (collection, splat) => {

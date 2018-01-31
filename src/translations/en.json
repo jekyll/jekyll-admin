@@ -12,5 +12,8 @@
   "sidebar.posts": "Posts",
   "sidebar.datafiles": "Data Files",
   "sidebar.staticfiles": "Static Files",
-  "sidebar.collections": "Collections"
+  "sidebar.collections": "Collections",
+  "button.save": "SAVE",
+  "button.delete": "DELETE",
+  "button.view": "VIEW"
 }
