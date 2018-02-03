@@ -42,7 +42,13 @@ class PageForm extends Component {
   };
 
   render() {
-    const { onFormSubmit, splat, handleSubmit, submitting } = this.props;
+    const {
+      onFormSubmit,
+      onPageDelete,
+      splat,
+      handleSubmit,
+      submitting,
+    } = this.props;
     const menu = (
       <Menu>
         <Menu.Item key="0">
@@ -137,7 +143,12 @@ class PageForm extends Component {
             <BlockButton type="primary" icon="eye" size="large">
               <FormattedMessage id="button.view" />
             </BlockButton>
-            <BlockButton type="danger" icon="delete" size="large">
+            <BlockButton
+              onClick={onPageDelete}
+              type="danger"
+              icon="delete"
+              size="large"
+            >
               <FormattedMessage id="button.delete" />
             </BlockButton>
           </Col>

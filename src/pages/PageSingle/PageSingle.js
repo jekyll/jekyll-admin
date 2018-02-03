@@ -36,6 +36,19 @@ class PageSingle extends Component {
     console.log(values);
   };
 
+  handleDelete = async () => {
+    const { match: { params: { splat, filename, ext } }, history } = this.props;
+    const { ok, data } = await deletePage(splat, `${filename}.${ext}`);
+    if (ok) {
+      history.push(`${ADMIN_PREFIX}/pages/${splat}`);
+    } else {
+      this.setState({
+        messageType: 'error',
+        message: 'Could not delete the page.',
+      });
+    }
+  };
+
   render() {
     const { page } = this.state;
     const {
@@ -63,6 +76,7 @@ class PageSingle extends Component {
               splat={splat}
               page={page}
               onFormSubmit={this.handleSave}
+              onPageDelete={this.handleDelete}
             />
           </ContentBody>
         </HotKeys>
