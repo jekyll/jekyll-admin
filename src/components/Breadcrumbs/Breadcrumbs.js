@@ -45,7 +45,7 @@ Breadcrumbs.propTypes = {
 };
 
 const StyledBreadcrumb = styled(Breadcrumb)`
-  margin: 16px 0;
+  margin: 24px 0;
 `;
 
 export default Breadcrumbs;

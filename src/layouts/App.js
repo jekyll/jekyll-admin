@@ -22,6 +22,10 @@ export default class App extends Component {
             render={() => <Redirect to={`${ADMIN_PREFIX}/pages/`} />}
           />
           <Route
+            path={`${ADMIN_PREFIX}/pages/:splat*/new`}
+            component={PageSingle}
+          />
+          <Route
             path={`${ADMIN_PREFIX}/pages/:splat*/:filename.:ext`}
             component={PageSingle}
           />

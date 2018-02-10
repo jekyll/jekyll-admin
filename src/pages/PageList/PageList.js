@@ -10,7 +10,7 @@ import { ADMIN_PREFIX } from 'config';
 import { getPages, deletePage } from 'config/api';
 import Breadcrumbs from 'components/Breadcrumbs';
 
-import { ContentBody, RightSpan, StyledAlert } from 'styles';
+import { ContentBody, RightSpan, StyledAlert, Header } from 'styles';
 
 class PageList extends Component {
   state = {
@@ -118,7 +118,14 @@ class PageList extends Component {
 
   render() {
     const { message, messageType } = this.state;
-    const { match: { params: { splat } }, intl: { messages } } = this.props;
+    const {
+      match: { params: { splat } },
+      intl: { messages },
+      history,
+    } = this.props;
+    const createRoute = splat
+      ? `${ADMIN_PREFIX}/pages/${splat}/new`
+      : `${ADMIN_PREFIX}/pages/new`;
     return (
       <div>
         {message && (
@@ -135,7 +142,17 @@ class PageList extends Component {
             closable
           />
         )}
-        <Breadcrumbs root="pages" splat={splat} />
+        <Header>
+          <Breadcrumbs root="pages" splat={splat} />
+          <Button
+            onClick={() => history.push(createRoute)}
+            type="primary"
+            size="small"
+            icon="plus-circle-o"
+          >
+            <FormattedMessage id="button.create" />
+          </Button>
+        </Header>
         <ContentBody>
           <Table
             columns={this.generateTableColumns()}

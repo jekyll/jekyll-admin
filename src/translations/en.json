@@ -15,5 +15,6 @@
   "sidebar.collections": "Collections",
   "button.save": "SAVE",
   "button.delete": "DELETE",
-  "button.view": "VIEW"
+  "button.view": "VIEW",
+  "button.create": "CREATE"
 }

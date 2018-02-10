@@ -5,12 +5,12 @@ import { FormattedMessage, injectIntl } from 'react-intl';
 import { Helmet } from 'react-helmet';
 import { HotKeys } from 'react-hotkeys';
 
-import { Divider, Icon } from 'antd';
+import { Button } from 'antd';
 
 import { ADMIN_PREFIX } from 'config';
 import { getPage, deletePage } from 'config/api';
 import Breadcrumbs from 'components/Breadcrumbs';
-import { ContentBody, StyledAlert } from 'styles';
+import { ContentBody, StyledAlert, Header } from 'styles';
 import PageForm from './PageForm';
 
 class PageSingle extends Component {
@@ -55,10 +55,17 @@ class PageSingle extends Component {
       match: { params: { splat, filename, ext } },
       handleSubmit,
       submitting,
+      history,
     } = this.props;
-
+    const isCreate = !filename && !ext;
     const fullFilename = `${filename}.${ext}`;
-    const pageSplat = splat ? `${splat}/${fullFilename}` : `${fullFilename}`;
+    const title = isCreate ? 'New page' : fullFilename;
+    const pageSplat = isCreate
+      ? splat
+      : splat ? `${splat}/${fullFilename}` : `${fullFilename}`;
+    const createRoute = splat
+      ? `${ADMIN_PREFIX}/pages/${splat}/new`
+      : `${ADMIN_PREFIX}/pages/new`;
 
     const handlers = {
       save: event => event,
@@ -67,10 +74,21 @@ class PageSingle extends Component {
     return (
       <div>
         <Helmet>
-          <title>{fullFilename}</title>
+          <title>{title}</title>
         </Helmet>
         <HotKeys handlers={handlers}>
-          <Breadcrumbs root="pages" splat={pageSplat} />
+          <Header>
+            <Breadcrumbs root="pages" splat={pageSplat} />
+            <Button
+              onClick={() => history.push(createRoute)}
+              type="primary"
+              size="small"
+              icon="plus-circle-o"
+            >
+              <FormattedMessage id="button.create" />
+            </Button>
+          </Header>
+
           <ContentBody>
             <PageForm
               splat={splat}

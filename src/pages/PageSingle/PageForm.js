@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import styled from 'styled-components';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
@@ -31,7 +32,6 @@ class PageForm extends Component {
     meta: { touched, error },
     ...rest
   }) => {
-    console.log(input);
     return (
       <div>
         <Label>{label}</Label>
@@ -165,19 +165,26 @@ const validate = values => {
   return errors;
 };
 
-const mapStateToProps = (state, { page }) => {
+const mapStateToProps = (
+  state,
+  { page, match: { params: { filename, ext } } }
+) => {
   const form = 'page';
+  const isCreate = !filename && !ext;
   return {
     form,
-    initialValues: {
-      title: page.title || page.name,
-      path: page.name,
-      raw_content: page.raw_content,
-    },
+    initialValues: isCreate
+      ? null
+      : {
+          title: page.title || page.name,
+          path: page.name,
+          raw_content: page.raw_content,
+        },
   };
 };
 
 export default compose(
+  withRouter,
   connect(mapStateToProps),
   reduxForm({
     validate,
