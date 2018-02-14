@@ -2828,6 +2828,12 @@ doctrine@^2.0.0:
     esutils "^2.0.2"
     isarray "^1.0.0"
 
+doctrine@^2.0.2:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/doctrine/-/doctrine-2.1.0.tgz#5cd01fc101621b42c4cd7f5d1a66243716d3f39d"
+  dependencies:
+    esutils "^2.0.2"
+
 dom-align@1.x:
   version "1.6.5"
   resolved "https://registry.yarnpkg.com/dom-align/-/dom-align-1.6.5.tgz#48890ee37563dd43d3b580b75cfb79a6ac8fa004"
@@ -3242,6 +3248,15 @@ eslint-plugin-react@7.1.0:
     doctrine "^2.0.0"
     has "^1.0.1"
     jsx-ast-utils "^1.4.1"
+
+eslint-plugin-react@^7.6.1:
+  version "7.6.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-react/-/eslint-plugin-react-7.6.1.tgz#5d0e908be599f0c02fbf4eef0c7ed6f29dff7633"
+  dependencies:
+    doctrine "^2.0.2"
+    has "^1.0.1"
+    jsx-ast-utils "^2.0.1"
+    prop-types "^15.6.0"
 
 eslint-scope@^3.7.1:
   version "3.7.1"
@@ -5185,6 +5200,12 @@ jstransform@^11.0.3:
 jsx-ast-utils@^1.4.0, jsx-ast-utils@^1.4.1:
   version "1.4.1"
   resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-1.4.1.tgz#3867213e8dd79bf1e8f2300c0cfc1efb182c0df1"
+
+jsx-ast-utils@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/jsx-ast-utils/-/jsx-ast-utils-2.0.1.tgz#e801b1b39985e20fffc87b40e3748080e2dcac7f"
+  dependencies:
+    array-includes "^3.0.3"
 
 keycode@^2.1.8:
   version "2.1.9"

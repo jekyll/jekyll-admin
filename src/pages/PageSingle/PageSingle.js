@@ -11,7 +11,7 @@ import { ADMIN_PREFIX } from 'config';
 import { getPage, deletePage } from 'config/api';
 import Breadcrumbs from 'components/Breadcrumbs';
 import { ContentBody, StyledAlert, Header } from 'styles';
-import PageForm from './PageForm';
+import Form from './Form';
 
 class PageSingle extends Component {
   state = {
@@ -90,7 +90,7 @@ class PageSingle extends Component {
           </Header>
 
           <ContentBody>
-            <PageForm
+            <Form
               splat={splat}
               page={page}
               onFormSubmit={this.handleSave}
