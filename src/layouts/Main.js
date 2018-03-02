@@ -92,7 +92,7 @@ export default class Main extends Component {
               <Version>1.0.0</Version>
             </StyledHeader>
             <StyledContent>{this.props.children}</StyledContent>
-            <Footer>Jekyll Admin © 2017</Footer>
+            <Footer>Jekyll Admin © {new Date().getFullYear()}</Footer>
           </Layout>
         </StyledLayout>
       </HotKeys>

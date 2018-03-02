@@ -1,5 +1,4 @@
-import isObject from 'lodash/isObject';
-import isArray from 'lodash/isArray';
+import cloneDeepWith from 'lodash/cloneDeepWith';
 
 /**
  * Capitalize the given string.
@@ -17,38 +16,9 @@ export const capitalize = string => {
  * @param {String} json
  * @return {Array} tree
  */
-export const generateInputTreeFromJSON = json => {
-  const object = JSON.parse(json);
+export const generateInputTreeFromFrontmatter = frontmatter => {
+  const values = {};
+  cloneDeepWith(frontmatter, (val, key, obj, stack) => {
+    console.log(key, val);
+  });
 };
-
-var tree = [
-  {
-    name: 'test',
-    type: 'text',
-    value: 'Test',
-  },
-  {
-    name: 'test2',
-    type: 'array',
-    value: [
-      {
-        name: 'test21',
-        type: 'text',
-        value: 'Test 2.1',
-      },
-      {
-        name: 'test22',
-        type: 'text',
-        value: 'Test 2.2',
-      },
-    ],
-  },
-  {
-    name: 'test3',
-    type: 'object',
-    value: {
-      name: 'test31',
-      value: 'Test 3.1',
-    },
-  },
-];

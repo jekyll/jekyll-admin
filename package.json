@@ -23,7 +23,7 @@
     "react-simplemde-editor": "^3.6.11",
     "recompose": "^0.25.1",
     "redux": "^3.7.2",
-    "redux-form": "^7.0.4",
+    "redux-form": "^7.2.3",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
     "simplemde": "^1.11.2",

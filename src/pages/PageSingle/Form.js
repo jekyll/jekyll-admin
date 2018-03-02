@@ -8,9 +8,10 @@ import PropTypes from 'prop-types';
 import { reduxForm, Field } from 'redux-form';
 import { ContentBody, StyledAlert, Label } from 'styles';
 import { Row, Col, Input, Button, Divider, Icon, Menu, Dropdown } from 'antd';
-import MetaField from 'components/MetaField';
+import InputObjectField from 'components/InputObjectField';
 import InputField from 'components/InputField';
 import MarkdownEditorField from 'components/MarkdownEditorField';
+import { generateInputTreeFromFrontmatter } from 'utils/helpers';
 
 class Form extends Component {
   static propTypes = {
@@ -24,8 +25,9 @@ class Form extends Component {
       splat,
       handleSubmit,
       submitting,
+      page,
     } = this.props;
-
+    generateInputTreeFromFrontmatter(page);
     return (
       <form onSubmit={handleSubmit(onFormSubmit)}>
         <Row gutter={32}>
@@ -50,7 +52,7 @@ class Form extends Component {
 
             <div>
               <Label>Metafields</Label>
-              <MetaField name="front_matter.foo" />
+              <InputObjectField name="front_matter.foo" />
             </div>
           </Col>
           <Col span={6}>
