@@ -107,6 +107,7 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
 export const deletePage = (directory, filename) => dispatch => {
   return fetch(pageAPIUrl(directory, filename), {
     method: 'DELETE',
+    credentials: 'same-origin',
   })
     .then(data => {
       dispatch({ type: DELETE_PAGE_SUCCESS });
