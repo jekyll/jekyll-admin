@@ -145,6 +145,7 @@ export const putDocument = (collection, directory, filename) => (
 export const deleteDocument = (collection, directory, filename) => dispatch => {
   return fetch(documentAPIUrl(collection, directory, filename), {
     method: 'DELETE',
+    credentials: 'same-origin',
   })
     .then(data => {
       dispatch({ type: DELETE_DOCUMENT_SUCCESS });
