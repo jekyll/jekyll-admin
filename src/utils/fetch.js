@@ -17,7 +17,7 @@ import {
  * @return {Function} dispatch
  */
 export const get = (url, action_success, action_failure, dispatch) => {
-  return fetch(url)
+  return fetch(url, { credentials: 'same-origin' })
     .then(res => res.json())
     .then(data =>
       dispatch({
@@ -52,6 +52,7 @@ export const get = (url, action_success, action_failure, dispatch) => {
 export const put = (url, body, action_success, action_failure, dispatch) => {
   return fetch(url, {
     method: 'PUT',
+    credentials: 'same-origin',
     body,
   })
     .then(res => res.json())
@@ -88,6 +89,7 @@ export const put = (url, body, action_success, action_failure, dispatch) => {
 export const del = (url, action_success, action_failure, dispatch) => {
   return fetch(url, {
     method: 'DELETE',
+    credentials: 'same-origin',
   })
     .then(data =>
       dispatch({

@@ -46,6 +46,7 @@ export const uploadStaticFiles = files => dispatch => {
       return fetch(staticfileAPIUrl(file.name), {
         method: 'PUT',
         body: payload,
+        credentials: 'same-origin',
       })
         .then(data => {
           dispatch({ type: PUT_STATICFILE_SUCCESS });
@@ -74,6 +75,7 @@ export const uploadStaticFiles = files => dispatch => {
 export const deleteStaticFile = filename => dispatch => {
   return fetch(staticfileAPIUrl(filename), {
     method: 'DELETE',
+    credentials: 'same-origin',
   })
     .then(data => {
       dispatch({ type: DELETE_STATICFILE_SUCCESS });
