@@ -1,0 +1,62 @@
+.bottom-cta {
+	background: linear-gradient(to bottom, $brand-color 0%, $middle-gradient-color 100%);
+	color: #fff;
+	text-align: center;
+	margin: 0;
+	padding: 100px 0;
+
+	h2 {
+		margin-bottom: 50px;
+	}
+}
+
+.testimonial {
+	background: #f5f5f5;
+	margin: 0;
+	padding: 100px 0;
+
+	.testimonial-block {
+		max-width: 750px;
+		width: 98%;
+		margin: 0 auto;
+
+		@media #{$tablet} {
+			@include flexbox;
+
+			blockquote {
+				-webkit-flex: 1;
+				flex: 1;
+			}
+		}
+	}
+}
+
+.hero {
+	color: #ffffff;
+	text-align: center;
+	background: linear-gradient(to bottom, $middle-gradient-color 0%, $secondary-brand-color 100%) no-repeat #a05fb7;
+	padding-top: 50px;
+
+	p {
+		color: #fff;
+	}
+}
+
+
+@media #{$desktop} {
+	.flex {
+		@include flexbox;
+		align-items: center;
+		flex-direction: row;
+
+		.text, .image {
+			-webkit-flex: 1;
+			flex: 1;
+			padding: 0 20px;
+		}
+	}
+
+	.content section:nth-child(even) .flex {
+		flex-direction: row-reverse;
+	}
+}

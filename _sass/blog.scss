@@ -1,0 +1,125 @@
+.blog-posts {
+	list-style: none;
+	padding: 0;
+
+	li {
+		margin: 100px 0;
+	}
+}
+
+.blog-post {
+	.author {
+		padding: 30px 0 0 0;
+		border: 1px solid #eee;
+		margin: 30px 0;
+		font-size: .8em;
+
+		.square-image {
+			width: 125px;
+			height: 125px;
+			margin-top: 0;
+		}
+		.blurb {
+			text-align: center;
+		}
+	}
+
+	h3 {
+		margin: 0;
+		a {
+			color: #000;
+			text-decoration: none;
+			font-weight: normal;
+			font-size: 1.3em;
+		}
+	}
+
+	h2 {
+		text-align: left;
+	}
+
+	.blog-navigation {
+		font-size: 14px;
+		display: block;
+		width: auto;
+		overflow: hidden;
+		a {
+			display: block;
+			width: 50%;
+			float: left;
+			margin: 1em 0;
+		}
+
+		.next {
+			text-align: right;
+		}
+	}
+
+	.post-details {
+		border-bottom: 1px solid #eee;
+		font-size: .9em;
+
+		.blog-filter {
+			display: inline-block;
+			text-align: left;
+
+			a {
+				position: relative;
+				top: -5px;
+			}
+		}
+
+		a {
+			text-decoration: none;
+		}
+
+		.post-date {
+			float: right;
+		}
+
+		&:after {
+			content: "";
+			display: table;
+			clear: both;
+		}
+	}
+
+	.post-content {
+		.button {
+			margin: 30px 0 0 0;
+		}
+	}
+}
+
+.pagination {
+	text-align: center;
+}
+
+.blog-filter {
+	text-align: center;
+	a {
+		background: #eee;
+    padding: 3px 5px;
+    font-size: .8em;
+    border-radius: 5px;
+    color: #888;
+		transition: .2s ease-in-out;
+
+		&:hover {
+			color: #555;
+			text-decoration: none;
+		}
+	}
+}
+
+.blog-filter.cross a {
+	padding-right: 8px;
+
+	&:after {
+		content: "x";
+		font-size: .5em;
+		position: relative;
+		bottom: 4px;
+		right: -3px;
+	}
+}
