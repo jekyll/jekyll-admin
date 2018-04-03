@@ -6,17 +6,17 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 
 		<!-- Begin Jekyll SEO tag v2.4.0 -->
-<title>Not Found | Hydra Template</title>
+<title>Contact | Hydra Template</title>
 <meta name="generator" content="Jekyll v3.7.2" />
-<meta property="og:title" content="Not Found" />
+<meta property="og:title" content="Contact" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="This does not exist" />
-<meta property="og:description" content="This does not exist" />
-<link rel="canonical" href="https://proud-alligator.cloudvent.net/404.html" />
-<meta property="og:url" content="https://proud-alligator.cloudvent.net/404.html" />
+<meta name="description" content="We’d love to help you improve your sales." />
+<meta property="og:description" content="We’d love to help you improve your sales." />
+<link rel="canonical" href="https://proud-alligator.cloudvent.net/contact/" />
+<meta property="og:url" content="https://proud-alligator.cloudvent.net/contact/" />
 <meta property="og:site_name" content="Hydra Template" />
 <script type="application/ld+json">
-{"description":"This does not exist","@type":"WebPage","url":"https://proud-alligator.cloudvent.net/404.html","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://proud-alligator.cloudvent.net/siteicon.png"}},"headline":"Not Found","@context":"http://schema.org"}</script>
+{"description":"We’d love to help you improve your sales.","@type":"WebPage","url":"https://proud-alligator.cloudvent.net/contact/","publisher":{"@type":"Organization","logo":{"@type":"ImageObject","url":"https://proud-alligator.cloudvent.net/siteicon.png"}},"headline":"Contact","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
 		<link type="application/atom+xml" rel="alternate" href="https://proud-alligator.cloudvent.net/feed.xml" title="Hydra Template" />
@@ -67,7 +67,7 @@
 
 		
 		<a href="/contact/
-" class="" >Contact</a>
+" class=" active" >Contact</a>
 	
 		
 		
@@ -89,14 +89,181 @@
 		</header>
 		<div class="content">
 	<section class="page">
-		<div class="container ">
+		<div class="container max-container">
 			
-				<h2>Not Found</h2>
-			
-			
-				<p class="subtext">This does not exist</p>
+				<h2>Get in touch today</h2>
 			
 			
+				<p class="subtext">We'd love to help you improve your sales.</p>
+			
+			<div class="map" id="map"></div>
+
+
+<div class="contact-box">
+	<form action="/contact-success/" method="post" class="contact-form">
+		<input type="hidden" name="_to" value="support@example.com" />
+		<input type="text" name="_gotcha" style="display: none;" />
+
+		<label for="name">Full Name</label>
+		<input type="text" name="name" id="name" placeholder="Enter your name..." />
+
+		<label for="email">Email Address</label>
+		<input type="email" name="email" id="email" placeholder="Enter your email..." required />
+
+		<label for="message">Message</label>
+		<textarea name="message" id="message" placeholder="Enter your message..."></textarea>
+
+		<input type="submit" value="Send Message" />
+	</form>
+
+	<div class="contact-details">
+		<h3 class="editable" data-cms-source="/contact.html" data-cms-index="0">Address</h3>
+		<address><a target="_blank" href="https://www.google.com/maps/place/1+George+Street%2C+Dunedin%2C+New+Zealand">1 George Street, <br>Dunedin, <br>New Zealand</a></address>
+
+		<h3 class="editable" data-cms-source="/contact.html" data-cms-index="1">Email</h3>
+		<p><a href="mailto:support@example.com">support@example.com</a></p>
+	</div>
+</div>
+
+<script type="text/javascript">
+	window.mapData = {"latitude":-45.8787605,"longitude":170.5027976,"address":"1 George Street, Dunedin, New Zealand","zoom":13};
+
+	function initMap() {
+		var myOptions = {
+			scrollwheel: false,
+			draggable: false,
+			panControl: false,
+			disableDefaultUI: true,
+			styles: [{
+				"featureType": "all",
+				"elementType": "labels.text.fill",
+				"stylers": [{
+					"saturation": 36
+				}, {
+					"color": "#000000"
+				}, {
+					"lightness": 40
+				}]
+			}, {
+				"featureType": "all",
+				"elementType": "labels.text.stroke",
+				"stylers": [{
+					"visibility": "on"
+				}, {
+					"color": "#000000"
+				}, {
+					"lightness": 16
+				}]
+			}, {
+				"featureType": "all",
+				"elementType": "labels.icon",
+				"stylers": [{
+					"visibility": "off"
+				}]
+			}, {
+				"featureType": "administrative",
+				"elementType": "geometry.fill",
+				"stylers": [{
+					"color": "#000000"
+				}, {
+					"lightness": 20
+				}]
+			}, {
+				"featureType": "administrative",
+				"elementType": "geometry.stroke",
+				"stylers": [{
+					"color": "#000000"
+				}, {
+					"lightness": 17
+				}, {
+					"weight": 1.2
+				}]
+			}, {
+				"featureType": "landscape",
+				"elementType": "geometry",
+				"stylers": [{
+					"color": "#000000"
+				}, {
+					"lightness": 20
+				}]
+			}, {
+				"featureType": "poi",
+				"elementType": "geometry",
+				"stylers": [{
+					"color": "#000000"
+				}, {
+					"lightness": 21
+				}]
+			}, {
+				"featureType": "road.highway",
+				"elementType": "geometry.fill",
+				"stylers": [{
+					"color": "#000000"
+				}, {
+					"lightness": 17
+				}]
+			}, {
+				"featureType": "road.highway",
+				"elementType": "geometry.stroke",
+				"stylers": [{
+					"color": "#000000"
+				}, {
+					"lightness": 29
+				}, {
+					"weight": 0.2
+				}]
+			}, {
+				"featureType": "road.arterial",
+				"elementType": "geometry",
+				"stylers": [{
+					"color": "#000000"
+				}, {
+					"lightness": 18
+				}]
+			}, {
+				"featureType": "road.local",
+				"elementType": "geometry",
+				"stylers": [{
+					"color": "#000000"
+				}, {
+					"lightness": 16
+				}]
+			}, {
+				"featureType": "transit",
+				"elementType": "geometry",
+				"stylers": [{
+					"color": "#000000"
+				}, {
+					"lightness": 19
+				}]
+			}, {
+				"featureType": "water",
+				"elementType": "geometry",
+				"stylers": [{
+					"color": "#000000"
+				}, {
+					"lightness": 17
+				}]
+			}],
+			zoom: window.mapData.zoom,
+			maxZoom: window.mapData.zoom,
+			minZoom: window.mapData.zoom,
+			center: new google.maps.LatLng(window.mapData.latitude, window.mapData.longitude),
+			mapTypeId: google.maps.MapTypeId.ROADMAP
+		};
+		map = new google.maps.Map(document.getElementById("map"), myOptions);
+		marker = new google.maps.Marker({
+			map: map,
+			position: new google.maps.LatLng(window.mapData.latitude, window.mapData.longitude)
+		});
+
+		google.maps.event.addDomListener(window, "resize", function () {
+			map.setCenter(myOptions.center);
+		});
+	}
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=&amp;callback=initMap"></script>
+
 		</div>
 	</section>
 </div>
