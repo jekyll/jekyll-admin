@@ -1,5 +1,0 @@
----
-foo: bar
----
-
-# Test Page

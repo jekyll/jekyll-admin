@@ -1,6 +1,0 @@
-#!/bin/sh
-
-set -e
-
-cd docs || exit
-bundle exec jekyll serve
