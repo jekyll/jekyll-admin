@@ -17,3 +17,11 @@ Metrics/PerceivedComplexity:
 
 Style/FrozenStringLiteralComment:
   Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - lib/jekyll-admin/page_without_a_file.rb
+
+Naming/UncommunicativeMethodParamName:
+  Exclude:
+    - lib/jekyll-admin/data_file.rb

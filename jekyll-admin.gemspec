@@ -35,7 +35,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "bundler", "~> 1.7"
   spec.add_development_dependency "rake", "~> 10.0"
   spec.add_development_dependency "rspec", "~> 3.4"
-  spec.add_development_dependency "rubocop", "~> 0.48.1"
+  spec.add_development_dependency "rubocop", "~> 0.57.2"
   spec.add_development_dependency "sinatra-cross_origin", "~> 0.3"
   spec.add_development_dependency "gem-release", "~> 0.7"
 end
