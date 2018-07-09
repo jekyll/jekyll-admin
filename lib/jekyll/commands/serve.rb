@@ -3,6 +3,10 @@ module Jekyll
     class Serve < Command
       class << self
         def start_up_webrick(opts, destination)
+          if opts["livereload"]
+            @reload_reactor.start(opts)
+          end
+
           server = WEBrick::HTTPServer.new(webrick_opts(opts)).tap { |o| o.unmount("") }
           server.mount(opts["baseurl"], Servlet, destination, file_handler_opts)
 
