@@ -23,7 +23,7 @@ exports[`Containers::Header renders correctly 1`] = `
   <span
     className="version"
   >
-    v0.8.0
+    v0.8.1
   </span>
 </div>
 `;
@@ -51,7 +51,7 @@ exports[`Containers::Header renders placeholder title 1`] = `
   <span
     className="version"
   >
-    v0.8.0
+    v0.8.1
   </span>
 </div>
 `;
