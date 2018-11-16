@@ -84,6 +84,10 @@ export class DocumentNew extends Component {
       ? `New document - ${params.splat} - ${capitalize(collection)}`
       : `New document - ${capitalize(collection)}`;
 
+    let confcon = config.content;
+    let config_field = Object.keys(confcon).indexOf("default_content") != -1 ? confcon.default_content[collection] : undefined;
+    let initial_value =  config_field != undefined ? config_field : "";
+
     return (
       <DocumentTitle title={document_title}>
         <HotKeys handlers={keyboardHandlers} className="single">
@@ -101,7 +105,7 @@ export class DocumentNew extends Component {
                 onChange={updateBody}
                 onSave={this.handleClickSave}
                 placeholder="Body"
-                initialValue=""
+                initialValue={initial_value}
                 ref="editor"
               />
               <Splitter />
