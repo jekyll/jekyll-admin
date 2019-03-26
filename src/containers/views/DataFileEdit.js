@@ -113,7 +113,8 @@ export class DataFileEdit extends Component {
         data = null;
         mode = 'gui';
       } else {
-        name = this.refs.inputpath.refs.input.value;
+        name = this.refs.inputpath.refs.input.value ||
+          this.refs.inputpath.refs.input.props.defaultValue;
         data = this.refs.editor.getValue();
         mode = 'editor';
       }
