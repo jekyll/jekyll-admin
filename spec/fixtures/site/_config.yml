@@ -1,6 +1,6 @@
 title: Your awesome title
 
-baseurl: /example
+baseurl: ''
 
 # Load the admin interface.
 plugins:
