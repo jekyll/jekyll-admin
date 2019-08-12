@@ -1,6 +1,5 @@
 import webpack from 'webpack';
 import path from 'path';
-import { ADMIN_PREFIX } from './src/constants';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const GLOBALS = {
@@ -18,7 +17,7 @@ export default {
   target: 'web', // necessary per https://webpack.github.io/docs/testing.html#compile-and-test
   output: {
     path: `${__dirname}/lib/jekyll-admin/public`, // Note: Physical files are only output by the production build task `npm run build`.
-    publicPath: `http://localhost:3000${ADMIN_PREFIX}/`, // Use absolute paths to avoid the way that URLs are resolved by Chrome when they're parsed from a dynamically loaded CSS blob. Note: Only necessary in Dev.
+    publicPath: `http://localhost:3000/`, // Use absolute paths to avoid the way that URLs are resolved by Chrome when they're parsed from a dynamically loaded CSS blob. Note: Only necessary in Dev.
     filename: 'bundle.js'
   },
   plugins: [
