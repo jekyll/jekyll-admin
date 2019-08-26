@@ -1,5 +1,5 @@
 language: ruby
-rvm: 2.2
+rvm: 2.6
 before_install:
   - nvm install 6
 install: script/bootstrap
