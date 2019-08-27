@@ -63,6 +63,7 @@ module JekyllAdmin
       path.entries.map do |entry|
         next if [".", ".."].include? entry.to_s
         next unless path.join(entry).directory?
+
         self.class.new(
           path.join(entry),
           :base => base, :content_type => content_type, :splat => splat

@@ -9,13 +9,25 @@ AllCops:
     - Gemfile
     - jekyll-admin.gemspec
 
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
 Metrics/BlockLength:
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
   Enabled: false
 
 Metrics/PerceivedComplexity:
   Max: 9
 
 Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/IfUnlessModifier:
+  Enabled: false
+
+Style/SymbolArray:
   Enabled: false
 
 Naming/MemoizedInstanceVariableName:

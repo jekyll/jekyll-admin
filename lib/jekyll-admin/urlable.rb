@@ -2,7 +2,6 @@ module JekyllAdmin
   # Abstract module to be included in Convertible and Document to provide
   # additional, URL-specific functionality without duplicating logic
   module URLable
-
     # Absolute URL to the HTTP(S) rendered/served representation of this resource
     def http_url
       return if is_a?(Jekyll::Collection) || is_a?(JekyllAdmin::DataFile)
