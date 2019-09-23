@@ -6,7 +6,7 @@ description: Jekyll Admin exists in two parts, a Ruby back end and a Javascript 
 
 ## How Jekyll Admin hooks into Jekyll
 
-Jekyll Admin piggybacks on Jekyll's built-in Webrick server. We monkey patch the `jekyll serve` command to hook in two Sinatra servers, one to serve the static front end that lives in `lib/jekyll-admin/public/dist` via `/admin`, and one to serve the Ruby API via `/_api`. Once the Sinatra servers are mounted, they work just like any other Jekyll server (and we rely on third-party plugins like `sintra-json` and `sinatra-cross_origin`).
+Jekyll Admin piggybacks on Jekyll's built-in Webrick server. We monkey patch the `jekyll serve` command to hook in two Sinatra servers, one to serve the static front end that lives in `lib/jekyll-admin/public/dist` via `/admin`, and one to serve the Ruby API via `/_api`. Once the Sinatra servers are mounted, they work just like any other Jekyll server (and we rely on third-party plugins like `sinatra-json` and `sinatra-cross_origin`).
 
 ## How Jekyll Admin formats Jekyll objects for the API
 
