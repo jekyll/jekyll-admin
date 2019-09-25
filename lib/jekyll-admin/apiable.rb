@@ -2,7 +2,6 @@ module JekyllAdmin
   # Abstract module to be included in Convertible and Document to provide
   # additional, API-specific functionality without duplicating logic
   module APIable
-
     CONTENT_FIELDS = %w(next previous content excerpt).freeze
 
     # Returns a hash suitable for use as an API response.
@@ -48,9 +47,7 @@ module JekyllAdmin
         output["name"] = basename
       end
 
-      if is_a?(Jekyll::StaticFile)
-        output["from_theme"] = from_theme_gem?
-      end
+      output["from_theme"] = from_theme_gem? if is_a?(Jekyll::StaticFile)
 
       output
     end
@@ -89,6 +86,7 @@ module JekyllAdmin
 
     def front_matter
       return unless file_exists?
+
       @front_matter ||= if file_contents =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
                           SafeYAML.load(Regexp.last_match(1))
                         else
@@ -98,6 +96,7 @@ module JekyllAdmin
 
     def raw_content
       return unless file_exists?
+
       @raw_content ||= if file_contents =~ Jekyll::Document::YAML_FRONT_MATTER_REGEXP
                          $POSTMATCH
                        else
@@ -111,6 +110,7 @@ module JekyllAdmin
 
     def file_exists?
       return @file_exists if defined? @file_exists
+
       @file_exists = File.exist?(file_path)
     end
 
@@ -153,6 +153,7 @@ module JekyllAdmin
 
     def url_fields
       return {} unless respond_to?(:http_url) && respond_to?(:api_url)
+
       {
         "http_url" => http_url,
         "api_url"  => api_url,

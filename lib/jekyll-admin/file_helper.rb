@@ -1,6 +1,5 @@
 module JekyllAdmin
   module FileHelper
-
     # The file the user requested in the URL
     def requested_file
       find_by_path(path)

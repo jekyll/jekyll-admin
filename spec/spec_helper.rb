@@ -30,6 +30,7 @@ end
 
 def with_index_stubbed
   return yield if File.exist?(index_path)
+
   stub_index
   yield
   FileUtils.rm_f(index_path)

@@ -14,7 +14,7 @@ module JekyllAdmin
     #
     # id - the file ID as passed from the API. This may or may not have an extension
     def initialize(id)
-      @id ||= File.extname(id).empty? ? "#{id}.yml" : id
+      @id = File.extname(id).empty? ? "#{id}.yml" : id
     end
     alias_method :relative_path, :id
 

@@ -14,12 +14,12 @@ describe "data" do
   end
 
   let(:response_with_content) do
-    base_response.merge({
+    base_response.merge(
       "raw_content" => "foo: bar\n",
       "content"     => {
         "foo" => "bar",
-      },
-    })
+      }
+    )
   end
 
   def app
@@ -29,7 +29,7 @@ describe "data" do
   it "gets the index" do
     get "/data"
     expect(last_response).to be_ok
-    expect(last_response_parsed.select { |file| file["slug"] === "data_file" }[0]).to eql(base_response)
+    expect(last_response_parsed.find { |file| file["slug"] == "data_file" }).to eql(base_response)
   end
 
   it "gets an individual data file" do
