@@ -13,7 +13,8 @@ cache:
 env:
   matrix:
     - TEST_SUITE=node
-    - TEST_SUITE=ruby
+    - TEST_SUITE=ruby JEKYLL_VERSION="~> 3.8"
+    - TEST_SUITE=ruby JEKYLL_VERSION="~> 4.0"
 after_success:
   - npm run test:cover:CI
 branches:
