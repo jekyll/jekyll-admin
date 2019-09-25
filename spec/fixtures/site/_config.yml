@@ -1,5 +1,7 @@
 title: Your awesome title
 
+# baseurl: /example
+
 # Load the admin interface.
 plugins:
   - jekyll-admin

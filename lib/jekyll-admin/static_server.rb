@@ -6,7 +6,7 @@ module JekyllAdmin
 
     # Allow `/admin` and `/admin/`, and `/admin/*` to serve `/public/dist/index.html`
     get "/*" do
-      send_file index_path
+      File.read(index_path).gsub("%baseurl%", JekyllAdmin.site.config["baseurl"])
     end
 
     # Provide a descriptive error message in dev. if frontend is not build

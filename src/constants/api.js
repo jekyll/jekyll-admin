@@ -1,7 +1,9 @@
 export const API =
   process.env.NODE_ENV === 'production'
-    ? '/_api'
-    : 'http://localhost:4000/_api';
+    ? `${window.location.pathname.split('/admin')[0]}/_api`
+    : `http://localhost:4000${
+        window.location.pathname.split('/admin')[0]
+      }/_api`;
 
 export const getConfigurationUrl = () => `${API}/configuration`;
 export const putConfigurationUrl = () => `${API}/configuration`;

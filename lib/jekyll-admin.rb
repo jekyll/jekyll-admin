@@ -32,6 +32,9 @@ module JekyllAdmin
     @site ||= begin
       site = Jekyll.sites.first
       site.future = true
+      if site.config["baseurl"].nil?
+        site.config["baseurl"] = ""
+      end
       site
     end
   end

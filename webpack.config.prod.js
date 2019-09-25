@@ -1,7 +1,6 @@
 import webpack from 'webpack';
 import path from 'path';
 import ExtractTextPlugin from 'extract-text-webpack-plugin';
-import { ADMIN_PREFIX } from './src/constants';
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'),
@@ -15,7 +14,7 @@ export default {
   target: 'web',
   output: {
     path: `${__dirname}/lib/jekyll-admin/public`,
-    publicPath: `${ADMIN_PREFIX}/`,
+    publicPath: `./`,
     filename: 'bundle.js'
   },
   plugins: [
