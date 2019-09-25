@@ -1,7 +1,6 @@
 module JekyllAdmin
   # Abstract module to be included in Convertible and Document to provide
   # additional, API-specific functionality without duplicating logic
-
   module APIable
     CONTENT_FIELDS = %w(next previous content excerpt).freeze
 
@@ -48,9 +47,7 @@ module JekyllAdmin
         output["name"] = basename
       end
 
-      if is_a?(Jekyll::StaticFile)
-        output["from_theme"] = from_theme_gem?
-      end
+      output["from_theme"] = from_theme_gem? if is_a?(Jekyll::StaticFile)
 
       output
     end

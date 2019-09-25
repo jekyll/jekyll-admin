@@ -37,9 +37,7 @@ module JekyllAdmin
       # file but reside in a separate directory, `<source_dir>/_drafts/`
       def drafts
         posts = site.collections.find { |l, _c| l == "posts" }
-        if posts
-          posts[1].docs.find_all { |d| d.output_ext == ".html" && d.draft? }
-        end
+        posts[1].docs.find_all { |d| d.output_ext == ".html" && d.draft? } if posts
       end
 
       # return drafts at the same level as directory
@@ -71,6 +69,7 @@ module JekyllAdmin
 
       def ensure_html_content
         return if html_content?
+
         content_type :json
         halt 422, json("error_message" => "Invalid file extension for drafts")
       end

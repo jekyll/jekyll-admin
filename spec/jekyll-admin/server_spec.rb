@@ -21,6 +21,7 @@ describe JekyllAdmin::Server do
     expect(last_response_parsed["foo"]).to eq("bar")
   end
 
+  # rubocop:disable Style/BracesAroundHashParameters
   it "responds to CORS preflight checks" do
     options "/", {}, { "HTTP_ORIGIN" => "http://localhost:3000" }
     expect(last_response.status).to eql(204)
@@ -34,4 +35,5 @@ describe JekyllAdmin::Server do
       expect(last_response.headers[key]).to eql(value)
     end
   end
+  # rubocop:enable Style/BracesAroundHashParameters
 end
