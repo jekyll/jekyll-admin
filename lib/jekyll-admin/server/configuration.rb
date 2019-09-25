@@ -2,10 +2,10 @@ module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/configuration" do
       get do
-        json({
+        json(
           :content     => parsed_configuration,
-          :raw_content => raw_configuration,
-        })
+          :raw_content => raw_configuration
+        )
       end
 
       put do

@@ -16,7 +16,7 @@ module JekyllAdmin
       register Sinatra::CrossOrigin
       enable  :cross_origin
       disable :allow_credentials
-      set :allow_methods, %i[delete get options post put]
+      set :allow_methods, [:delete, :get, :options, :post, :put]
     end
 
     get "/" do
@@ -67,9 +67,7 @@ module JekyllAdmin
       body << "\n---\n\n"
       body << request_payload["raw_content"].to_s
     end
-    alias page_body document_body
-
-    private
+    alias_method :page_body, :document_body
 
     def request_body
       @request_body ||= begin

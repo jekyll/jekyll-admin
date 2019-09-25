@@ -45,6 +45,7 @@ module JekyllAdmin
     # Is this request renaming a file?
     def renamed?
       return false unless request_payload["path"]
+
       ensure_leading_slash(request_payload["path"]) != relative_path
     end
 
@@ -68,6 +69,7 @@ module JekyllAdmin
 
     def ensure_leading_slash(input)
       return input if input.nil? || input.empty? || input.start_with?("/")
+
       "/#{input}"
     end
 

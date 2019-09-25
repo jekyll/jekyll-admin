@@ -2,11 +2,11 @@ module JekyllAdmin
   # Abstract module to be included in Convertible and Document to provide
   # additional, URL-specific functionality without duplicating logic
   module URLable
-
     # Absolute URL to the HTTP(S) rendered/served representation of this resource
     def http_url
       return if is_a?(Jekyll::Collection) || is_a?(JekyllAdmin::DataFile)
       return if is_a?(Jekyll::Document) && !collection.write?
+
       @http_url ||= Addressable::URI.new(
         :scheme => scheme, :host => host, :port => port,
         :path => path_with_base(JekyllAdmin.site.config["baseurl"], url)
@@ -23,6 +23,7 @@ module JekyllAdmin
 
     def entries_url
       return unless is_a?(Jekyll::Collection)
+
       "#{api_url}/entries"
     end
 
@@ -30,6 +31,8 @@ module JekyllAdmin
 
     # URL path relative to `_api/` to retreive the given resource via the API
     # Note: we can't use a case statement here, because === doesn't like includes
+    #
+    # rubocop:disable Metrics/CyclomaticComplexity
     def resource_path
       if is_a?(Jekyll::Document) && draft?
         "/#{relative_path.sub(%r!\A_!, "")}"
@@ -45,6 +48,7 @@ module JekyllAdmin
         "/pages/#{relative_path}"
       end
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
 
     # URI.join doesn't like joining two relative paths, and File.join may join
     # with `\` rather than with `/` on windows
