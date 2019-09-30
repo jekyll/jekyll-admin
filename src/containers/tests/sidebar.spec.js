@@ -28,6 +28,18 @@ describe('Containers::Sidebar', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it('renders an accordion for collections other than posts and drafts', () => {
+    const container = mount(<Sidebar {...defaultProps} {...actions} />);
+    const accordion = container.find('ul li.accordion-label');
+    const trigger = accordion.find('a').first();
+
+    expect(accordion.prop('className')).toMatch('collapsed');
+    expect(trigger.text()).toMatch('Collections');
+
+    trigger.simulate('click');
+    expect(accordion.prop('className')).not.toMatch('collapsed');
+  });
+
   it('does not render hidden links', () => {
     const props = {
       ...defaultProps,
