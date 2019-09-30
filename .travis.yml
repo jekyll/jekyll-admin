@@ -3,12 +3,13 @@ rvm: 2.4
 before_install:
   - nvm install 6
   - gem update --system --no-document
+  - bundle config path vendor/bundle
 install: script/bootstrap
 script: script/cibuild
 cache:
-  bundler: true
   yarn: true
   directories:
+    - vendor/bundle
     - node_modules
 env:
   matrix:
