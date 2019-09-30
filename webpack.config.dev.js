@@ -9,8 +9,9 @@ const GLOBALS = {
 };
 
 export default {
+  mode: 'development',
   node: { fs: 'empty' },
-  devtool: 'cheap-module-eval-source-map', // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
+  devtool: 'cheap-module-eval-source-map', // more info: https://webpack.js.org/configuration/devtool/#devtool
   entry: [
     'webpack-hot-middleware/client?reload=true',
     './src/index'
@@ -30,9 +31,6 @@ export default {
       debug: true,
       noInfo: true, // set to false to see a list of every file being bundled.
       options: {
-        sassLoader: {
-          includePaths: [path.resolve(__dirname, 'src', 'scss')]
-        },
         context: '/'
       }
     }),
