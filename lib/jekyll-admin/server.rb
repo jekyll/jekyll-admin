@@ -1,7 +1,6 @@
 module JekyllAdmin
   class Server < Sinatra::Base
     ROUTES = %w(collections configuration data drafts pages static_files).freeze
-    include JekyllAdmin::PrettyJSON if ENV["RACK_ENV"] == "development"
     include JekyllAdmin::PathHelper
     include JekyllAdmin::FileHelper
 
@@ -31,6 +30,11 @@ module JekyllAdmin
     end
 
     private
+
+    def json(object, options = {})
+      content_type :json
+      JSON.pretty_generate(object, options)
+    end
 
     def site
       JekyllAdmin.site
