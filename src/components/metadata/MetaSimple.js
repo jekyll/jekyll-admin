@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Modal from 'react-modal';
@@ -10,98 +11,97 @@ import 'react-widgets/dist/css/react-widgets.css';
 momentLocalizer(moment);
 
 export class MetaSimple extends Component {
+  state = {
+    staticfiles: [],
+    showModal: false,
+  };
 
-  constructor() {
-    super();
-    this.state = {
-      staticfiles: [],
-      showModal: false
-    };
-    this.handleOpenModal = this.handleOpenModal.bind(this);
-    this.handleCloseModal = this.handleCloseModal.bind(this);
-  }
-
-  handleOpenModal () {
+  handleOpenModal = () => {
     this.setState({ showModal: true });
-  }
+  };
 
-  handleCloseModal () {
+  handleCloseModal = () => {
     this.setState({ showModal: false });
-  }
+  };
 
-  handleEditableChange(e) {
+  handleEditableChange = e => {
     const { nameAttr, updateFieldValue } = this.props;
     updateFieldValue(nameAttr, e.target.value);
-  }
+  };
 
-  handleDatepickerChange(date, dateStr) {
+  handleDatepickerChange = (date, dateStr) => {
     const { nameAttr, updateFieldValue } = this.props;
     let formatted = moment(date).format('YYYY-MM-DD HH:mm:ss');
     updateFieldValue(nameAttr, formatted);
-  }
+  };
 
-  handleEditableBlur(e) {
+  handleEditableBlur = e => {
     const { nameAttr, updateFieldValue } = this.props;
     updateFieldValue(nameAttr, e.target.value.trim());
-  }
+  };
 
   renderEditable() {
     const { fieldValue } = this.props;
     return (
       <TextareaAutosize
-        onChange={(e) => this.handleEditableChange(e)}
-        onBlur={(e) => this.handleEditableBlur(e)}
+        onChange={this.handleEditableChange}
+        onBlur={this.handleEditableBlur}
         className="field value-field"
-        value={`${fieldValue}`} />
+        value={`${fieldValue}`}
+      />
     );
   }
 
   renderDatepicker() {
     const { fieldValue } = this.props;
-    let dateValue = (new Date(fieldValue) == 'Invalid Date') ? null : new Date(fieldValue);
+    let dateValue =
+      new Date(fieldValue) == 'Invalid Date' ? null : new Date(fieldValue);
     return (
       <DateTimePicker
-        onChange={(v, d) => this.handleDatepickerChange(v, d)}
+        onChange={this.handleDatepickerChange}
         className="date-field"
-        value={dateValue} />
+        value={dateValue}
+      />
     );
   }
 
-  onClickPickerItem(url) {
+  onClickPickerItem = url => {
     const { nameAttr, updateFieldValue } = this.props;
     this.refs.imagepicker.value = url;
     updateFieldValue(nameAttr, url);
     this.handleCloseModal();
-  }
+  };
 
   renderStaticFilePicker() {
     const { fieldValue } = this.props;
     return (
       <div className="imagepicker">
         <TextareaAutosize
-          onChange={(e) => this.handleEditableChange(e)}
+          onChange={this.handleEditableChange}
           className="field value-field"
           value={fieldValue}
-          ref="imagepicker" />
+          ref="imagepicker"
+        />
         <span className="images-wrapper">
           <button onClick={this.handleOpenModal}>
             <i className="fa fa-picture-o" aria-hidden="true" />
           </button>
           <Modal
-             isOpen={this.state.showModal}
-             onAfterOpen={this.fetchStaticFiles}
-             contentLabel="onRequestClose Example"
-             onRequestClose={this.handleCloseModal}
-             style={{
+            isOpen={this.state.showModal}
+            onAfterOpen={this.fetchStaticFiles}
+            contentLabel="onRequestClose Example"
+            onRequestClose={this.handleCloseModal}
+            style={{
               overlay: {
                 backgroundColor: 'rgba(0,0,0,0.6)',
                 zIndex: 10,
               },
               content: {
                 margin: 50,
-              }
-            }} >
-             <StaticFiles onClickStaticFile={(url) => this.onClickPickerItem(url)} />
+              },
+            }}
+          >
+            <StaticFiles onClickStaticFile={this.onClickPickerItem} />
           </Modal>
         </span>
       </div>
@@ -122,11 +122,7 @@ export class MetaSimple extends Component {
       default:
         node = this.renderEditable();
     }
-    return (
-      <div className="meta-value">
-        {node}
-      </div>
-    );
+    return <div className="meta-value">{node}</div>;
   }
 }
 
@@ -135,7 +131,7 @@ MetaSimple.propTypes = {
   fieldKey: PropTypes.string.isRequired,
   fieldValue: PropTypes.any,
   updateFieldValue: PropTypes.func.isRequired,
-  nameAttr: PropTypes.any.isRequired
+  nameAttr: PropTypes.any.isRequired,
 };
 
 export default MetaSimple;

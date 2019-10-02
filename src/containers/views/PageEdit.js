@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
@@ -13,23 +14,15 @@ import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../MetaFields';
-import { fetchPage, deletePage, putPage } from '../../actions/pages';
-import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
-import { clearErrors } from '../../actions/utils';
+import { fetchPage, deletePage, putPage } from '../../ducks/pages';
+import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
+import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault } from '../../utils/helpers';
-import { getLeaveMessage, getDeleteMessage } from '../../constants/lang';
+import { getLeaveMessage, getDeleteMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class PageEdit extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.handleClickSave = this.handleClickSave.bind(this);
-    this.routerWillLeave = this.routerWillLeave.bind(this);
-  }
-
   componentDidMount() {
     const { fetchPage, params, router, route } = this.props;
     const [directory, ...rest] = params.splat;
@@ -51,31 +44,25 @@ export class PageEdit extends Component {
   }
 
   componentWillUnmount() {
-    const { clearErrors, errors} = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    const { clearErrors, errors } = this.props;
+    errors.length && clearErrors();
   }
 
-  routerWillLeave(nextLocation) {
+  routerWillLeave = nextLocation => {
     if (this.props.fieldChanged) {
       return getLeaveMessage();
     }
-  }
+  };
 
-  handleClickSave(e) {
-    const { putPage, fieldChanged, params } = this.props;
-
-    // Prevent the default event from bubbling
+  handleClickSave = e => {
     preventDefault(e);
-
+    const { putPage, fieldChanged, params } = this.props;
     if (fieldChanged) {
       const [directory, ...rest] = params.splat;
       const filename = rest.join('.');
       putPage(directory, filename);
     }
-  }
+  };
 
   handleClickDelete(name) {
     const { deletePage, params } = this.props;
@@ -89,8 +76,18 @@ export class PageEdit extends Component {
   }
 
   render() {
-    const { isFetching, page, errors, updateTitle, updateBody, updatePath,
-      updated, fieldChanged, params, config } = this.props;
+    const {
+      isFetching,
+      page,
+      errors,
+      updateTitle,
+      updateBody,
+      updatePath,
+      updated,
+      fieldChanged,
+      params,
+      config,
+    } = this.props;
 
     if (isFetching) {
       return null;
@@ -101,23 +98,27 @@ export class PageEdit extends Component {
     }
 
     const keyboardHandlers = {
-      'save': this.handleClickSave,
+      save: this.handleClickSave,
     };
 
     const { name, raw_content, http_url, front_matter } = page;
     const [directory, ...rest] = params.splat;
 
     const title = front_matter && front_matter.title ? front_matter.title : '';
-    const metafields = injectDefaultFields(config, directory, 'pages', front_matter);
+    const metafields = injectDefaultFields(
+      config,
+      directory,
+      'pages',
+      front_matter
+    );
 
-    const document_title = directory ?
-      `${title || name} - ${directory} - Pages` :
-      `${title || name} - Pages`;
+    const document_title = directory
+      ? `${title || name} - ${directory} - Pages`
+      : `${title || name} - Pages`;
 
     return (
       <DocumentTitle title={document_title}>
         <HotKeys handlers={keyboardHandlers} className="single">
-
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
@@ -133,9 +134,12 @@ export class PageEdit extends Component {
                 onSave={this.handleClickSave}
                 placeholder="Body"
                 initialValue={raw_content}
-                ref="editor" />
+                ref="editor"
+              />
               <Splitter />
-              <Metadata fields={{title, raw_content, path: name, ...metafields}} />
+              <Metadata
+                fields={{ title, raw_content, path: name, ...metafields }}
+              />
             </div>
 
             <div className="content-side">
@@ -145,28 +149,29 @@ export class PageEdit extends Component {
                 active={fieldChanged}
                 triggered={updated}
                 icon="save"
-                block />
+                block
+              />
               <Button
                 to={http_url}
                 type="view"
                 icon="eye"
                 active={true}
-                block />
+                block
+              />
               <Splitter />
               <Button
                 onClick={() => this.handleClickDelete(name)}
                 type="delete"
                 active={true}
                 icon="trash"
-                block />
+                block
+              />
             </div>
           </div>
-          
         </HotKeys>
       </DocumentTitle>
     );
   }
-
 }
 
 PageEdit.propTypes = {
@@ -185,26 +190,32 @@ PageEdit.propTypes = {
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   page: state.pages.page,
   isFetching: state.pages.isFetching,
   fieldChanged: state.metadata.fieldChanged,
   updated: state.pages.updated,
   errors: state.utils.errors,
-  config: state.config.config
+  config: state.config.config,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchPage,
-  deletePage,
-  putPage,
-  updateTitle,
-  updateBody,
-  updatePath,
-  clearErrors
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchPage,
+      deletePage,
+      putPage,
+      updateTitle,
+      updateBody,
+      updatePath,
+      clearErrors,
+    },
+    dispatch
+  );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageEdit));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(PageEdit)
+);

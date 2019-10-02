@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
@@ -12,23 +13,20 @@ import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
-import { updateTitle, updateBody, updatePath, updateDraft } from '../../actions/metadata';
-import { createPage } from '../../actions/pages';
-import { clearErrors } from '../../actions/utils';
-import { getLeaveMessage } from '../../constants/lang';
+import {
+  updateTitle,
+  updateBody,
+  updatePath,
+  updateDraft,
+} from '../../ducks/metadata';
+import { createPage } from '../../ducks/pages';
+import { clearErrors } from '../../ducks/utils';
+import { getLeaveMessage } from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class PageNew extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.routerWillLeave = this.routerWillLeave.bind(this);
-    this.handleClickSave = this.handleClickSave.bind(this);
-  }
-
   componentDidMount() {
     const { router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave);
@@ -41,55 +39,51 @@ export class PageNew extends Component {
   }
 
   componentWillUnmount() {
-    const { clearErrors, errors} = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    const { clearErrors, errors } = this.props;
+    errors.length && clearErrors();
   }
 
-  routerWillLeave(nextLocation) {
+  routerWillLeave = nextLocation => {
     if (this.props.fieldChanged) {
       return getLeaveMessage();
     }
-  }
+  };
 
-  handleClickSave(e) {
-    const { fieldChanged, createPage, params } = this.props;
-
-    // Prevent the default event from bubbling
+  handleClickSave = e => {
     preventDefault(e);
-
-    if (fieldChanged) {
-      createPage(params.splat);
-    }
-  }
+    const { fieldChanged, createPage, params } = this.props;
+    fieldChanged && createPage(params.splat);
+  };
 
   render() {
     const {
-      errors, updated, updateTitle, updateBody, updatePath, fieldChanged, params, config
+      errors,
+      updated,
+      updateTitle,
+      updateBody,
+      updatePath,
+      fieldChanged,
+      params,
+      config,
     } = this.props;
 
     const keyboardHandlers = {
-      'save': this.handleClickSave,
+      save: this.handleClickSave,
     };
 
     const metafields = injectDefaultFields(config, params.splat, 'pages');
 
-    const document_title = params.splat ?
-      `New page - ${params.splat} - Pages` :
-      `New page - Pages`;
+    const document_title = params.splat
+      ? `New page - ${params.splat} - Pages`
+      : `New page - Pages`;
 
     return (
       <DocumentTitle title={document_title}>
         <HotKeys handlers={keyboardHandlers} className="single">
-
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
-            <Breadcrumbs
-              type="pages"
-              splat={params.splat || ''} />
+            <Breadcrumbs type="pages" splat={params.splat || ''} />
           </div>
 
           <div className="content-wrapper">
@@ -101,7 +95,8 @@ export class PageNew extends Component {
                 onSave={this.handleClickSave}
                 placeholder="Body"
                 initialValue=""
-                ref="editor" />
+                ref="editor"
+              />
               <Splitter />
               <Metadata fields={metafields} />
             </div>
@@ -113,10 +108,10 @@ export class PageNew extends Component {
                 active={fieldChanged}
                 triggered={updated}
                 icon="plus-square"
-                block />
+                block
+              />
             </div>
           </div>
-          
         </HotKeys>
       </DocumentTitle>
     );
@@ -136,24 +131,30 @@ PageNew.propTypes = {
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   page: state.pages.page,
   fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors,
   updated: state.pages.updated,
-  config: state.config.config
+  config: state.config.config,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateTitle,
-  updateBody,
-  updatePath,
-  updateDraft,
-  createPage,
-  clearErrors
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      updateTitle,
+      updateBody,
+      updatePath,
+      updateDraft,
+      createPage,
+      clearErrors,
+    },
+    dispatch
+  );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(PageNew));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(PageNew)
+);

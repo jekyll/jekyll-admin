@@ -1,11 +1,11 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import Sortable from 'sortablejs';
 import _ from 'underscore';
 
 import MetaArrayItem from './MetaArrayItem';
 
 export class MetaArray extends Component {
-
   sortableGroupDecorator(component) {
     const { moveArrayItem, namePrefix } = this.props;
     if (component) {
@@ -14,19 +14,28 @@ export class MetaArray extends Component {
         group: { name: 'meta-array-items', pull: false, put: false },
         handle: '.move',
         animation: 0,
-        onEnd: (e) => {
+        onEnd: e => {
           let srcInd = e.item.getAttribute('data-id');
           moveArrayItem(namePrefix, srcInd, e.newIndex);
-        }
+        },
       };
       Sortable.create(component, options);
     }
   }
 
   render() {
-    const { fieldKey, fieldValue, namePrefix, addField,
-      removeField, updateFieldKey, updateFieldValue, moveArrayItem,
-      convertField, key_prefix} = this.props;
+    const {
+      fieldKey,
+      fieldValue,
+      namePrefix,
+      addField,
+      removeField,
+      updateFieldKey,
+      updateFieldValue,
+      moveArrayItem,
+      convertField,
+      key_prefix,
+    } = this.props;
     const items = _.map(fieldValue, (item, i) => {
       let type = 'simple';
       if (_.isObject(item)) type = 'object';
@@ -46,20 +55,26 @@ export class MetaArray extends Component {
           moveArrayItem={moveArrayItem}
           convertField={convertField}
           nameAttr={`${namePrefix}[${i}]`}
-          namePrefix={namePrefix} />
+          namePrefix={namePrefix}
+        />
       );
     });
     return (
-      <div className="meta-value-array" ref={this.sortableGroupDecorator.bind(this)}>
+      <div
+        className="meta-value-array"
+        ref={this.sortableGroupDecorator.bind(this)}
+      >
         {items}
-        <a onClick={() => addField(namePrefix)}
-          className="add-field-array" title="Add new list item">
-            <i className="fa fa-plus" />
+        <a
+          onClick={() => addField(namePrefix)}
+          className="add-field-array"
+          title="Add new list item"
+        >
+          <i className="fa fa-plus" />
         </a>
       </div>
     );
   }
-
 }
 
 MetaArray.propTypes = {
@@ -73,7 +88,7 @@ MetaArray.propTypes = {
   updateFieldValue: PropTypes.func.isRequired,
   convertField: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
-  key_prefix: PropTypes.string.isRequired
+  key_prefix: PropTypes.string.isRequired,
 };
 
 export default MetaArray;

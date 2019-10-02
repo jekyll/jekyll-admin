@@ -1,27 +1,28 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class InputSearch extends Component {
-
-  handleKeyPress(event) {
+  handleKeyPress = event => {
     const { search } = this.props;
     if (event.charCode == 13) {
       search(event.target.value);
     }
-  }
+  };
 
   render() {
     const { searchBy } = this.props;
     return (
       <input
-        onKeyPress={(e) => this.handleKeyPress(e)}
+        onKeyPress={this.handleKeyPress}
         type="text"
         className="field"
-        placeholder={`Search by ${searchBy}`} />
+        placeholder={`Search by ${searchBy}`}
+      />
     );
   }
 }
 
 InputSearch.propTypes = {
   search: PropTypes.func.isRequired,
-  searchBy: PropTypes.string.isRequired
+  searchBy: PropTypes.string.isRequired,
 };

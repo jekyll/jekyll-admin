@@ -1,4 +1,5 @@
-import React, { PropTypes, Component } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
@@ -12,23 +13,15 @@ import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
-import { updateTitle, updateBody, updatePath } from '../../actions/metadata';
-import { createDocument } from '../../actions/collections';
-import { clearErrors } from '../../actions/utils';
-import { getLeaveMessage } from '../../constants/lang';
+import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
+import { createDocument } from '../../ducks/collections';
+import { clearErrors } from '../../ducks/utils';
+import { getLeaveMessage } from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
 import { capitalize, preventDefault } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.routerWillLeave = this.routerWillLeave.bind(this);
-    this.handleClickSave = this.handleClickSave.bind(this);
-  }
-
   componentDidMount() {
     const { router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave);
@@ -37,45 +30,49 @@ export class DocumentNew extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
       const path = nextProps.currentDocument.path;
-      const splat = path.substr(path.indexOf('/')+1, path.length);
+      const splat = path.substr(path.indexOf('/') + 1, path.length);
       browserHistory.push(
-        `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${splat}`
+        `${ADMIN_PREFIX}/collections/${nextProps.currentDocument
+          .collection}/${splat}`
       );
     }
   }
 
   componentWillUnmount() {
-    const { clearErrors, errors} = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    const { clearErrors, errors } = this.props;
+
+    errors.length && clearErrors();
   }
 
-  routerWillLeave(nextLocation) {
+  routerWillLeave = nextLocation => {
     if (this.props.fieldChanged) {
       return getLeaveMessage();
     }
-  }
+  };
 
-  handleClickSave(e) {
-    const { fieldChanged, createDocument, params } = this.props;
-
-    // Prevent the default event from bubbling
+  handleClickSave = e => {
     preventDefault(e);
-
+    const { fieldChanged, createDocument, params } = this.props;
     if (fieldChanged) {
       const { collection_name, splat } = params;
       createDocument(collection_name, splat);
     }
-  }
+  };
 
   render() {
-    const { errors, updated, updateTitle, updateBody, updatePath, fieldChanged,
-      params, config } = this.props;
+    const {
+      errors,
+      updated,
+      updateTitle,
+      updateBody,
+      updatePath,
+      fieldChanged,
+      params,
+      config,
+    } = this.props;
 
     const keyboardHandlers = {
-      'save': this.handleClickSave,
+      save: this.handleClickSave,
     };
 
     const collection = params.collection_name;
@@ -83,14 +80,13 @@ export class DocumentNew extends Component {
 
     const metafields = injectDefaultFields(config, params.splat, collection);
 
-    const document_title = params.splat ?
-      `New document - ${params.splat} - ${capitalize(collection)}` :
-      `New document - ${capitalize(collection)}`;
+    const document_title = params.splat
+      ? `New document - ${params.splat} - ${capitalize(collection)}`
+      : `New document - ${capitalize(collection)}`;
 
     return (
       <DocumentTitle title={document_title}>
         <HotKeys handlers={keyboardHandlers} className="single">
-
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
@@ -106,7 +102,8 @@ export class DocumentNew extends Component {
                 onSave={this.handleClickSave}
                 placeholder="Body"
                 initialValue=""
-                ref="editor" />
+                ref="editor"
+              />
               <Splitter />
               <Metadata fields={metafields} />
             </div>
@@ -118,10 +115,10 @@ export class DocumentNew extends Component {
                 active={fieldChanged}
                 triggered={updated}
                 icon="plus-square"
-                block />
+                block
+              />
             </div>
           </div>
-
         </HotKeys>
       </DocumentTitle>
     );
@@ -140,23 +137,29 @@ DocumentNew.propTypes = {
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired
+  config: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   currentDocument: state.collections.currentDocument,
   fieldChanged: state.metadata.fieldChanged,
   errors: state.utils.errors,
   updated: state.collections.updated,
-  config: state.config.config
+  config: state.config.config,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  updateTitle,
-  updateBody,
-  updatePath,
-  createDocument,
-  clearErrors
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      updateTitle,
+      updateBody,
+      updatePath,
+      createDocument,
+      clearErrors,
+    },
+    dispatch
+  );
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(DocumentNew));
+export default withRouter(
+  connect(mapStateToProps, mapDispatchToProps)(DocumentNew)
+);

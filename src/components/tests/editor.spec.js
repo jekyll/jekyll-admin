@@ -5,19 +5,17 @@ import { json } from './fixtures';
 
 const content = JSON.stringify(json);
 
-function setup(props = {content, editorChanged: false}) {
+function setup(props = { content, editorChanged: false }) {
   const actions = {
-    onEditorChange: jest.fn()
+    onEditorChange: jest.fn(),
   };
 
-  let component = shallow(
-    <Editor {...props} {...actions} />
-  );
+  let component = shallow(<Editor {...props} {...actions} />);
 
   return {
     component,
     editor: component.first(),
-    actions: actions
+    actions: actions,
   };
 }
 

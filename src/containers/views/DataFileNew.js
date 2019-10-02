@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
@@ -10,28 +11,18 @@ import Editor from '../../components/Editor';
 import Button from '../../components/Button';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
-import { putDataFile, onDataFileChanged } from '../../actions/datafiles';
-import { clearErrors } from '../../actions/utils';
+import { putDataFile, onDataFileChanged } from '../../ducks/datafiles';
+import { clearErrors } from '../../ducks/utils';
 import { preventDefault, getFilenameFromPath } from '../../utils/helpers';
-import { getLeaveMessage } from '../../constants/lang';
+import { getLeaveMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DataFileNew extends Component {
-
-  constructor(props) {
-    super(props);
-
-    this.routerWillLeave = this.routerWillLeave.bind(this);
-    this.handleClickSave = this.handleClickSave.bind(this);
-    this.toggleView = this.toggleView.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-
-    this.state = {
-      guiView: false,
-      guiPath: '',
-      extn: '.yml'
-    };
-  }
+  state = {
+    guiView: false,
+    guiPath: '',
+    extn: '.yml',
+  };
 
   componentDidMount() {
     const { router, route } = this.props;
@@ -40,29 +31,28 @@ export class DataFileNew extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
-      browserHistory.push(`${ADMIN_PREFIX}/datafiles/${nextProps.datafile.relative_path}`);
+      browserHistory.push(
+        `${ADMIN_PREFIX}/datafiles/${nextProps.datafile.relative_path}`
+      );
     }
   }
 
   componentWillUnmount() {
-    const { clearErrors, errors} = this.props;
-    // clear errors if any
-    if (errors.length) {
-      clearErrors();
-    }
+    const { clearErrors, errors } = this.props;
+    errors.length && clearErrors();
   }
 
-  routerWillLeave(nextLocation) {
+  routerWillLeave = nextLocation => {
     if (!this.state.guiView && this.props.datafileChanged) {
       return getLeaveMessage();
     }
-  }
+  };
 
-  toggleView() {
+  toggleView = () => {
     this.setState({ guiView: !this.state.guiView });
-  }
+  };
 
-  handleChange(e) {
+  handleChange = e => {
     const { onDataFileChanged } = this.props;
     let obj = {};
     const key = e.target.id;
@@ -71,14 +61,11 @@ export class DataFileNew extends Component {
 
     this.setState(obj);
     onDataFileChanged();
-  }
+  };
 
-  handleClickSave(e) {
-    const { datafileChanged, fieldChanged, putDataFile, params } = this.props;
-
-    // Prevent the default event from bubbling
+  handleClickSave = e => {
     preventDefault(e);
-
+    const { datafileChanged, fieldChanged, putDataFile, params } = this.props;
     let filename;
     if (datafileChanged || fieldChanged) {
       if (this.state.guiView) {
@@ -89,10 +76,10 @@ export class DataFileNew extends Component {
         putDataFile(params.splat, filename, this.refs.editor.getValue());
       }
     }
-  }
+  };
 
   renderGUInputs() {
-    return(
+    return (
       <form className="datafile-path">
         <fieldset className="filename">
           <legend>Path (without extension)</legend>
@@ -100,11 +87,16 @@ export class DataFileNew extends Component {
             type="text"
             id="guiPath"
             onChange={this.handleChange}
-            placeholder="filename" />
+            placeholder="filename"
+          />
         </fieldset>
         <fieldset className="file-type">
           <legend>File Type</legend>
-          <select id="extn" value={this.state.extn} onChange={this.handleChange}>
+          <select
+            id="extn"
+            value={this.state.extn}
+            onChange={this.handleChange}
+          >
             <option value=".yml">YAML</option>
             <option value=".json">JSON</option>
           </select>
@@ -115,12 +107,18 @@ export class DataFileNew extends Component {
 
   render() {
     const {
-      datafileChanged, fieldChanged, onDataFileChanged, datafile, updated, errors, params
+      datafileChanged,
+      fieldChanged,
+      onDataFileChanged,
+      datafile,
+      updated,
+      errors,
+      params,
     } = this.props;
     const { path, raw_content } = datafile;
 
     const keyboardHandlers = {
-      'save': this.handleClickSave,
+      save: this.handleClickSave,
     };
 
     // activate or deactivate `Create` button in GUI mode based on input state
@@ -131,14 +129,13 @@ export class DataFileNew extends Component {
       activator = datafileChanged;
     }
 
-    const document_title = params.splat ?
-      `New data file - ${params.splat} - Data Files` :
-      `New data file - Data Files`;
+    const document_title = params.splat
+      ? `New data file - ${params.splat} - Data Files`
+      : `New data file - Data Files`;
 
     return (
       <DocumentTitle title={document_title}>
         <HotKeys handlers={keyboardHandlers}>
-
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
@@ -147,24 +144,28 @@ export class DataFileNew extends Component {
 
           <div className="content-wrapper">
             <div className="content-body">
-              {
-                this.state.guiView && <div>
+              {this.state.guiView && (
+                <div>
                   {this.renderGUInputs()}
-                  <DataGUI fields={{'key': 'value'}} dataview /></div>
-              }
-              {
-                !this.state.guiView && <div>
+                  <DataGUI fields={{ key: 'value' }} dataview />
+                </div>
+              )}
+              {!this.state.guiView && (
+                <div>
                   <InputPath
                     onChange={onDataFileChanged}
                     type="data files"
                     path=""
-                    ref="inputpath" />
+                    ref="inputpath"
+                  />
                   <Editor
                     editorChanged={datafileChanged}
                     onEditorChange={onDataFileChanged}
                     content={''}
-                    ref="editor" /></div>
-              }
+                    ref="editor"
+                  />
+                </div>
+              )}
             </div>
 
             <div className="content-side">
@@ -174,16 +175,17 @@ export class DataFileNew extends Component {
                 active={activator}
                 triggered={updated}
                 icon="plus-square"
-                block />
+                block
+              />
               <Button
                 onClick={this.toggleView}
                 type="view-toggle"
                 active={true}
                 triggered={this.state.guiView}
-                block />
+                block
+              />
             </div>
           </div>
-
         </HotKeys>
       </DocumentTitle>
     );
@@ -201,22 +203,26 @@ DataFileNew.propTypes = {
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
-  fieldChanged: PropTypes.bool
+  fieldChanged: PropTypes.bool,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   datafile: state.datafiles.currentFile,
   updated: state.datafiles.updated,
   datafileChanged: state.datafiles.datafileChanged,
   fieldChanged: state.metadata.fieldChanged,
-  errors: state.utils.errors
+  errors: state.utils.errors,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  putDataFile,
-  onDataFileChanged,
-  clearErrors
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      putDataFile,
+      onDataFileChanged,
+      clearErrors,
+    },
+    dispatch
+  );
 
 export default withRouter(
   connect(mapStateToProps, mapDispatchToProps)(DataFileNew)

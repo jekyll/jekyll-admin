@@ -228,6 +228,70 @@ Container for creating a new document.
 }
 ```
 
+## Drafts
+
+Container for Drafts view. Lists all drafts and sub-directories at given path.
+
+### PropTypes
+
+```javascript
+{
+  drafts: Array,
+  fetchDrafts: Function,
+  deleteDraft: Function,
+  search: Function,
+  isFetching: Boolean,
+  params: Object
+}
+```
+
+## DraftNew
+
+Container for creating a new draft.
+
+```javascript
+{
+  putDraft: Function,
+  updateTitle: Function,
+  updateBody: Function,
+  updatePath: Function,
+  updateDraft: Function,
+  clearErrors: Function,
+  errors: Array,
+  fieldChanged: Boolean,
+  updated: Boolean,
+  router: Object,
+  route: Object,
+  params: Object,
+  config: Object
+}
+```
+
+## DraftEdit
+
+Container for editing a draft.
+
+```javascript
+{
+  draft: Object,
+  fetchDraft: Function,
+  deleteDraft: Function,
+  putDraft: Function,
+  updateTitle: Function,
+  updateBody: Function,
+  updatePath: Function,
+  clearErrors: Function,
+  isFetching: Boolean,
+  fieldChanged: Boolean,
+  updated: Boolean,
+  errors: Array,
+  params: Object,
+  router: Object,
+  route: Object,
+  config: Object
+}
+```
+
 ## DataFiles
 
 Container for DataFiles view. Lists data files.

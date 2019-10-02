@@ -1,13 +1,27 @@
+require: 'rubocop-jekyll'
 inherit_gem:
-  jekyll: .rubocop.yml
+  rubocop-jekyll: '.rubocop.yml'
 
 AllCops:
   Exclude:
     - lib/jekyll-admin/public/**/*
     - src/**/*
     - node_modules/**/*
-    - Gemfile
-    - jekyll-admin.gemspec
+    - vendor/**/*
 
 Metrics/BlockLength:
   Enabled: false
+
+Metrics/PerceivedComplexity:
+  Max: 9
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Naming/MemoizedInstanceVariableName:
+  Exclude:
+    - lib/jekyll-admin/page_without_a_file.rb
+
+Naming/UncommunicativeMethodParamName:
+  Exclude:
+    - lib/jekyll-admin/data_file.rb

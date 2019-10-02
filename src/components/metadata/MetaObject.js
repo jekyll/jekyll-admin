@@ -1,13 +1,22 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import _ from 'underscore';
 import MetaObjectItem from './MetaObjectItem';
 
 export class MetaObject extends Component {
-
   render() {
-    const { fieldKey, fieldValue, namePrefix, addField,
-      removeField, updateFieldKey, updateFieldValue, convertField, key_prefix,
-      moveArrayItem } = this.props;
+    const {
+      fieldKey,
+      fieldValue,
+      namePrefix,
+      addField,
+      removeField,
+      updateFieldKey,
+      updateFieldValue,
+      convertField,
+      key_prefix,
+      moveArrayItem,
+    } = this.props;
     const items = _.map(fieldValue, (value, key) => {
       let type = 'simple';
       if (_.isObject(value)) type = 'object';
@@ -26,20 +35,23 @@ export class MetaObject extends Component {
           moveArrayItem={moveArrayItem}
           convertField={convertField}
           nameAttr={`${namePrefix}['${key}']`}
-          namePrefix={namePrefix} />
+          namePrefix={namePrefix}
+        />
       );
     });
     return (
       <div className="meta-value-object">
         {items}
-        <a onClick={() => addField(namePrefix)}
-          className="add-field-object" title="Add new key/value pair">
-            New key/value pair under <strong>{fieldKey}</strong>
+        <a
+          onClick={() => addField(namePrefix)}
+          className="add-field-object"
+          title="Add new key/value pair"
+        >
+          New key/value pair under <strong>{fieldKey}</strong>
         </a>
       </div>
     );
   }
-
 }
 
 MetaObject.propTypes = {
@@ -53,7 +65,7 @@ MetaObject.propTypes = {
   updateFieldKey: PropTypes.func.isRequired,
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
-  key_prefix: PropTypes.string.isRequired
+  key_prefix: PropTypes.string.isRequired,
 };
 
 export default MetaObject;

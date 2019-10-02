@@ -31,19 +31,19 @@ describe JekyllAdmin::DataFile do
   end
 
   it "returns the hash" do
-    expect(subject.to_api).to eql({
+    expect(subject.to_api).to eql(
       "path"          => "/_data/data_file.yml",
       "relative_path" => "data_file.yml",
       "slug"          => "data_file",
       "ext"           => ".yml",
       "title"         => "Data File",
       "api_url"       => "http://localhost:4000/_api/data/data_file.yml",
-      "http_url"      => nil,
-    })
+      "http_url"      => nil
+    )
   end
 
   it "returns the hash with content" do
-    expect(subject.to_api(:include_content => true)).to eql({
+    expect(subject.to_api(:include_content => true)).to eql(
       "path"          => "/_data/data_file.yml",
       "relative_path" => "data_file.yml",
       "slug"          => "data_file",
@@ -54,7 +54,7 @@ describe JekyllAdmin::DataFile do
         "foo" => "bar",
       },
       "api_url"       => "http://localhost:4000/_api/data/data_file.yml",
-      "http_url"      => nil,
-    })
+      "http_url"      => nil
+    )
   end
 end
