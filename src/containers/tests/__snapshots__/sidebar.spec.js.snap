@@ -238,19 +238,6 @@ exports[`Containers::Sidebar renders with zero collections 1`] = `
   <ul
     className="routes"
   >
-    <div>
-      <li>
-        <a
-          onClick={[Function]}
-          style={Object {}}
-        >
-          <i
-            className="fa fa-book"
-          />
-          Posts
-        </a>
-      </li>
-    </div>
     <div
       className="splitter"
     />

@@ -31,7 +31,7 @@ export class Sidebar extends Component {
   renderCollections(hiddens = []) {
     const { collections } = this.props;
 
-    if (collections.length === 1 && collections[0].label === 'posts') {
+    if (!collections.length) {
       return null;
     }
 
@@ -51,14 +51,14 @@ export class Sidebar extends Component {
       }
     }).filter(Boolean);
 
-    const accordionClasses = classnames({
-      'accordion-label': true,
-      collapsed: this.state.collapsedPanel,
+    const { collapsedPanel } = this.state;
+    const accordionClasses = classnames('accordion-label', {
+      collapsed: collapsedPanel,
     });
 
     // Arbitrary manipulation based on visual cues from surrounding elements.
     // TODO: Compute values programmatically.
-    const panelHeight = this.state.collapsedPanel ? 50 : (collectionItems.length + 1) * 50;
+    const panelHeight = collapsedPanel ? 50 : (collectionItems.length + 1) * 50;
 
     return (
       <div>
@@ -122,8 +122,7 @@ export class Sidebar extends Component {
     let hiddenLinks;
 
     try {
-      hiddenLinks = config.jekyll_admin.hidden_links;
-      hiddenLinks = hiddenLinks || [];
+      hiddenLinks = config.jekyll_admin.hidden_links || [];
     } catch (e) {
       hiddenLinks = [];
     }
