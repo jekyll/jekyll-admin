@@ -36,7 +36,7 @@ export class Sidebar extends Component {
     }
 
     const collectionItems = _.map(collections, (col, i) => {
-      if (_.indexOf(hiddens, col.label) == -1 && col.label != 'posts') {
+      if (col.label != 'posts' && !hiddens.includes(col.label)) {
         return (
           <li key={i}>
             <Link
@@ -75,7 +75,7 @@ export class Sidebar extends Component {
             <ul>{collectionItems}</ul>
           </li>
         )}
-        {_.indexOf(hiddens, 'posts') == -1 && (
+        {!hiddens.includes('posts') && (
           <li>
             <Link
               activeClassName="active"
