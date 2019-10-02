@@ -14,8 +14,6 @@ import _ from 'underscore';
 export class Sidebar extends Component {
   constructor(props) {
     super(props);
-
-    this.handleClick = this.handleClick.bind(this);
     this.state = { collapsedPanel: true };
   }
 
@@ -24,11 +22,11 @@ export class Sidebar extends Component {
     fetchCollections();
   }
 
-  handleClick() {
+  handleClick = () => {
     this.setState({
       collapsedPanel: !this.state.collapsedPanel,
     });
-  }
+  };
 
   renderCollections(hiddens = []) {
     const { collections } = this.props;
