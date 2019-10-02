@@ -68,7 +68,7 @@ export class Sidebar extends Component {
           <li className={accordionClasses} style={{ maxHeight: panelHeight }}>
             <a onClick={this.handleClick}>
               <i className="fa fa-book" />
-              Collections
+              {SidebarTranslations.collections}
               <div className="counter">{collectionItems.length}</div>
               <div className="chevrons">
                 <i className="fa fa-chevron-up" />
