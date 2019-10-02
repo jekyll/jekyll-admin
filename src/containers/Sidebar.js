@@ -62,7 +62,7 @@ export class Sidebar extends Component {
 
     return (
       <div>
-        {collectionItems.length && (
+        {collectionItems.length > 0 && (
           <li className={accordionClasses} style={{ maxHeight: panelHeight }}>
             <a onClick={this.handleClick}>
               <i className="fa fa-book" />
