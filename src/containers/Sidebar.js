@@ -51,6 +51,10 @@ export class Sidebar extends Component {
       }
     }).filter(Boolean);
 
+    if (!collectionItems.length) {
+      return null;
+    }
+
     const { collapsedPanel } = this.state;
     const accordionClasses = classnames('accordion-label', {
       collapsed: collapsedPanel,
@@ -61,32 +65,17 @@ export class Sidebar extends Component {
     const panelHeight = collapsedPanel ? 50 : (collectionItems.length + 1) * 50;
 
     return (
-      <div>
-        {collectionItems.length > 0 && (
-          <li className={accordionClasses} style={{ maxHeight: panelHeight }}>
-            <a onClick={this.handleClick}>
-              <i className="fa fa-book" />
-              {SidebarTranslations.collections}
-              <div className="counter">{collectionItems.length}</div>
-              <div className="chevrons">
-                <i className="fa fa-chevron-up" />
-              </div>
-            </a>
-            <ul>{collectionItems}</ul>
-          </li>
-        )}
-        {!hiddens.includes('posts') && (
-          <li>
-            <Link
-              activeClassName="active"
-              to={`${ADMIN_PREFIX}/collections/posts`}
-            >
-              <i className="fa fa-book" />
-              Posts
-            </Link>
-          </li>
-        )}
-      </div>
+      <li className={accordionClasses} style={{ maxHeight: panelHeight }}>
+        <a onClick={this.handleClick}>
+          <i className="fa fa-book" />
+          {SidebarTranslations.collections}
+          <div className="counter">{collectionItems.length}</div>
+          <div className="chevrons">
+            <i className="fa fa-chevron-up" />
+          </div>
+        </a>
+        <ul>{collectionItems}</ul>
+      </li>
     );
   }
 
@@ -154,6 +143,17 @@ export class Sidebar extends Component {
         <Link className="logo" to={`${ADMIN_PREFIX}/pages`} />
         <ul className="routes">
           {collectionsPanel}
+          {postsPanel && (
+            <li>
+              <Link
+                activeClassName="active"
+                to={`${ADMIN_PREFIX}/collections/posts`}
+              >
+                <i className="fa fa-book" />
+                {SidebarTranslations.posts}
+              </Link>
+            </li>
+          )}
           {draftsPanel && (
             <li>
               <Link activeClassName="active" to={`${ADMIN_PREFIX}/drafts`}>

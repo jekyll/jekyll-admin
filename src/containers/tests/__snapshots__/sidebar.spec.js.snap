@@ -12,50 +12,48 @@ exports[`Containers::Sidebar does not render hidden links 1`] = `
   <ul
     className="routes"
   >
-    <div>
-      <li
-        className="accordion-label collapsed"
-        style={
-          Object {
-            "maxHeight": 50,
-          }
+    <li
+      className="accordion-label collapsed"
+      style={
+        Object {
+          "maxHeight": 50,
         }
+      }
+    >
+      <a
+        onClick={[Function]}
       >
-        <a
-          onClick={[Function]}
+        <i
+          className="fa fa-book"
+        />
+        Collections
+        <div
+          className="counter"
+        >
+          1
+        </div>
+        <div
+          className="chevrons"
         >
           <i
-            className="fa fa-book"
+            className="fa fa-chevron-up"
           />
-          Collections
-          <div
-            className="counter"
-          >
-            1
-          </div>
-          <div
-            className="chevrons"
+        </div>
+      </a>
+      <ul>
+        <li>
+          <a
+            onClick={[Function]}
+            style={Object {}}
           >
             <i
-              className="fa fa-chevron-up"
+              className="fa fa-book"
             />
-          </div>
-        </a>
-        <ul>
-          <li>
-            <a
-              onClick={[Function]}
-              style={Object {}}
-            >
-              <i
-                className="fa fa-book"
-              />
-              Movies
-            </a>
-          </li>
-        </ul>
-      </li>
-    </div>
+            Movies
+          </a>
+        </li>
+      </ul>
+    </li>
     <div
       className="splitter"
     />
@@ -114,61 +112,59 @@ exports[`Containers::Sidebar renders correctly 1`] = `
   <ul
     className="routes"
   >
-    <div>
-      <li
-        className="accordion-label collapsed"
-        style={
-          Object {
-            "maxHeight": 50,
-          }
+    <li
+      className="accordion-label collapsed"
+      style={
+        Object {
+          "maxHeight": 50,
         }
+      }
+    >
+      <a
+        onClick={[Function]}
       >
-        <a
-          onClick={[Function]}
+        <i
+          className="fa fa-book"
+        />
+        Collections
+        <div
+          className="counter"
+        >
+          1
+        </div>
+        <div
+          className="chevrons"
         >
           <i
-            className="fa fa-book"
+            className="fa fa-chevron-up"
           />
-          Collections
-          <div
-            className="counter"
-          >
-            1
-          </div>
-          <div
-            className="chevrons"
+        </div>
+      </a>
+      <ul>
+        <li>
+          <a
+            onClick={[Function]}
+            style={Object {}}
           >
             <i
-              className="fa fa-chevron-up"
+              className="fa fa-book"
             />
-          </div>
-        </a>
-        <ul>
-          <li>
-            <a
-              onClick={[Function]}
-              style={Object {}}
-            >
-              <i
-                className="fa fa-book"
-              />
-              Movies
-            </a>
-          </li>
-        </ul>
-      </li>
-      <li>
-        <a
-          onClick={[Function]}
-          style={Object {}}
-        >
-          <i
-            className="fa fa-book"
-          />
-          Posts
-        </a>
-      </li>
-    </div>
+            Movies
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-book"
+        />
+        Posts
+      </a>
+    </li>
     <div
       className="splitter"
     />
@@ -238,6 +234,17 @@ exports[`Containers::Sidebar renders with zero collections 1`] = `
   <ul
     className="routes"
   >
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-book"
+        />
+        Posts
+      </a>
+    </li>
     <div
       className="splitter"
     />
