@@ -19,7 +19,7 @@ describe JekyllAdmin::URLable do
   end
 
   context "pages" do
-    subject { JekyllAdmin.site.pages.select(&:html?).first }
+    subject { JekyllAdmin.site.pages.find(&:html?) }
     let(:http_url) { "#{url_base}/page.html" }
     let(:api_url) { "#{url_base}/#{prefix}/pages/page.md" }
 
