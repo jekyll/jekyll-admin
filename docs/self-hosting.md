@@ -6,14 +6,17 @@ description: Example configuration files for self-hosting jekyll-admin
 
 ## Self-hosting
 
-If you are self-hosting a jekyll site and you want to use jekyll-admin as your front-end
-then you can run it behind a nginx reverse proxy.
+If you are self-hosting a jekyll site and you want to use jekyll-admin as front-end
+which is accessible over the internet then you can run it behind a nginx reverse proxy.
 
 In this example 
 - we have a dedicated user `jekyll`. 
 - `GEM_HOME=/home/jekyll/gems`
-- jekyll site at `/home/jekyll/example`
+- jekyll install at `/home/jekyll/example`
 - generated content in `/home/jekyll/example/_site`
+- domain is www.example.com
+- jekyll-admin interface is available at http://www.example.com/admin
+- [HTTP basic authentication](https://docs.nginx.com/nginx/admin-guide/security-controls/configuring-http-basic-authentication/) is used to protect the admin interface
 
 This was tested on Ubuntu 19.04 using nginx 1.17.4 and systemd 237.
 
