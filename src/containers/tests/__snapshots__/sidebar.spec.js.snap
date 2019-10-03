@@ -1,0 +1,221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Containers::Sidebar does not render hidden links 1`] = `
+<div
+  className="sidebar"
+>
+  <a
+    className="logo"
+    onClick={[Function]}
+    style={Object {}}
+  />
+  <ul
+    className="routes"
+  >
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-book"
+        />
+        Movies
+      </a>
+    </li>
+    <div
+      className="splitter"
+    />
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-database"
+        />
+        Data Files
+      </a>
+    </li>
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-file"
+        />
+        Static Files
+      </a>
+    </li>
+    <div
+      className="splitter"
+    />
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-cog"
+        />
+        Configuration
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Containers::Sidebar renders correctly 1`] = `
+<div
+  className="sidebar"
+>
+  <a
+    className="logo"
+    onClick={[Function]}
+    style={Object {}}
+  />
+  <ul
+    className="routes"
+  >
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-book"
+        />
+        Posts
+      </a>
+    </li>
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-book"
+        />
+        Movies
+      </a>
+    </li>
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-file-text"
+        />
+        Pages
+      </a>
+    </li>
+    <div
+      className="splitter"
+    />
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-database"
+        />
+        Data Files
+      </a>
+    </li>
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-file"
+        />
+        Static Files
+      </a>
+    </li>
+    <div
+      className="splitter"
+    />
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-cog"
+        />
+        Configuration
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
+exports[`Containers::Sidebar renders with zero collections 1`] = `
+<div
+  className="sidebar"
+>
+  <a
+    className="logo"
+    onClick={[Function]}
+    style={Object {}}
+  />
+  <ul
+    className="routes"
+  >
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-file-text"
+        />
+        Pages
+      </a>
+    </li>
+    <div
+      className="splitter"
+    />
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-database"
+        />
+        Data Files
+      </a>
+    </li>
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-file"
+        />
+        Static Files
+      </a>
+    </li>
+    <div
+      className="splitter"
+    />
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-cog"
+        />
+        Configuration
+      </a>
+    </li>
+  </ul>
+</div>
+`;

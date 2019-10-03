@@ -16,7 +16,7 @@ module JekyllAdmin
 
         if renamed?
           ensure_requested_file
-          delete_file path
+          delete_file_without_process path
         end
 
         write_file write_path, page_body
@@ -36,6 +36,7 @@ module JekyllAdmin
 
       def ensure_html_content
         return if html_content?
+
         content_type :json
         halt 422, json("error_message" => "Invalid file extension for pages")
       end

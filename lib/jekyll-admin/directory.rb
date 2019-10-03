@@ -38,11 +38,15 @@ module JekyllAdmin
     end
 
     def relative_path
-      path.relative_path_from(base).to_s
+      if content_type == "drafts"
+        path.relative_path_from(base).to_s.sub("_drafts/", "")
+      else
+        path.relative_path_from(base).to_s
+      end
     end
 
     def resource_path
-      types = %w(pages data static_files)
+      types = %w(pages data drafts static_files)
       if types.include?(content_type)
         "/#{content_type}/#{splat}/#{name}"
       else
@@ -59,6 +63,7 @@ module JekyllAdmin
       path.entries.map do |entry|
         next if [".", ".."].include? entry.to_s
         next unless path.join(entry).directory?
+
         self.class.new(
           path.join(entry),
           :base => base, :content_type => content_type, :splat => splat

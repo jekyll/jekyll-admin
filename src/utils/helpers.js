@@ -6,22 +6,23 @@ import _ from 'underscore';
  * @param {Object} object
  * @return {String} yaml
  */
-export const toYAML = (obj) => (!_.isEmpty(obj)) ? yaml.safeDump(obj, {indent:2}) : '';
+export const toYAML = obj =>
+  !_.isEmpty(obj) ? yaml.safeDump(obj, { indent: 2 }) : '';
 
 /**
  * Converts the YAML string into JS object.
  * @param {String} string
  * @return {Object} obj
  */
-export const toJSON = (yamlString) => (yamlString ? yaml.load(yamlString) : {});
+export const toJSON = yamlString => (yamlString ? yaml.load(yamlString) : {});
 
 /**
  * Capitalize the given string.
  * @param {String} string
  * @return {String} string
  */
-export const capitalize = (string) => {
-  if(!string) return '';
+export const capitalize = string => {
+  if (!string) return '';
   return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
 };
 
@@ -30,9 +31,9 @@ export const capitalize = (string) => {
  * @param {String} string
  * @return {String} string
  */
-export const toTitleCase = (string) => {
-  if(!string) return '';
-  return string.replace(/\w\S*/g, (txt) => {
+export const toTitleCase = string => {
+  if (!string) return '';
+  return string.replace(/\w\S*/g, txt => {
     return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
   });
 };
@@ -42,29 +43,30 @@ export const toTitleCase = (string) => {
  * @param {String} string
  * @return {String} string
  */
- export const slugify = (string) => {
-   if (!string) return '';
-   const a = 'àáäâèéëêìíïîıòóöôùúüûñçşßÿœæŕśńṕẃǵğǹḿǘẍźḧ·/_,:;';
-   const b = 'aaaaeeeeiiiiioooouuuuncssyoarsnpwggnmuxzh------';
-   const p = new RegExp(a.split('').join('|'), 'g');
+export const slugify = string => {
+  if (!string) return '';
+  const a = 'àáäâèéëêìíïîıòóöôùúüûñçşßÿœæŕśńṕẃǵğǹḿǘẍźḧ·/_,:;';
+  const b = 'aaaaeeeeiiiiioooouuuuncssyoarsnpwggnmuxzh------';
+  const p = new RegExp(a.split('').join('|'), 'g');
 
-   return string.toString().toLowerCase()
-     .replace(/\s+/g, '-')           // Replace spaces with -
-     .replace(p, c =>
-         b.charAt(a.indexOf(c)))     // Replace special chars
-     .replace(/&/g, '-')             // Replace & with 'and'
-     .replace(/[^\w\-]+/g, '')       // Remove all non-word chars
-     .replace(/\-\-+/g, '-')         // Replace multiple - with single -
-     .replace(/^-+/, '')             // Trim - from start of text
-     .replace(/-+$/, '');             // Trim - from end of text
- };
+  return string
+    .toString()
+    .toLowerCase()
+    .replace(/\s+/g, '-') // Replace spaces with -
+    .replace(p, c => b.charAt(a.indexOf(c))) // Replace special chars
+    .replace(/&/g, '-') // Replace & with 'and'
+    .replace(/[^\w\-]+/g, '') // Remove all non-word chars
+    .replace(/\-\-+/g, '-') // Replace multiple - with single -
+    .replace(/^-+/, '') // Trim - from start of text
+    .replace(/-+$/, ''); // Trim - from end of text
+};
 
 /**
  * Returns filename from the given path
  * @param {String} path
  * @return {String} filename
  */
-export const getFilenameFromPath = (path) => {
+export const getFilenameFromPath = path => {
   if (!path) return '';
   return path.substring(path.lastIndexOf('/') + 1);
 };
@@ -74,7 +76,7 @@ export const getFilenameFromPath = (path) => {
  * @param {String} path or filename
  * @return {String} extension or nil
  */
-export const getExtensionFromPath = (path) => {
+export const getExtensionFromPath = path => {
   if (!path) return '';
   const filename = getFilenameFromPath(path);
   const index = filename.lastIndexOf('.');
@@ -93,10 +95,15 @@ export const getExtensionFromPath = (path) => {
  * @return {Array} filenames
  */
 export const existingUploadedFilenames = (uploadedFiles, currentFiles) => {
-  if ((uploadedFiles && !uploadedFiles.length) || (currentFiles && !currentFiles.length)){
+  if (
+    (uploadedFiles && !uploadedFiles.length) ||
+    (currentFiles && !currentFiles.length)
+  ) {
     return [];
   }
-  const currentFilenames = _.map(currentFiles, cf => getFilenameFromPath(cf.path));
+  const currentFilenames = _.map(currentFiles, cf =>
+    getFilenameFromPath(cf.path)
+  );
   return _.chain(uploadedFiles)
     .filter(file => currentFilenames.includes(file.name))
     .map(file => file.name)
@@ -108,7 +115,7 @@ export const existingUploadedFilenames = (uploadedFiles, currentFiles) => {
  * from bubbling, if possible.
  * @param {Event} event
  */
-export const preventDefault = (event) => {
+export const preventDefault = event => {
   if (event && event.preventDefault) {
     event.preventDefault();
   }
@@ -119,7 +126,7 @@ export const preventDefault = (event) => {
  * @param {Object} object
  * @return {Object} trimmedObject
  */
-export const trimObject = (object) => {
+export const trimObject = object => {
   if (!_.isObject(object)) return object;
   return _.keys(object).reduce((acc, key) => {
     if (typeof object[key] == 'string') {

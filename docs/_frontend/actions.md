@@ -77,6 +77,27 @@ The response includes the document body.
 
 Async action for deleting the document in a directory from disk. After deletion, collection documents are requested.
 
+## Drafts
+
+### `fetchDrafts(directory)`
+
+Async action for fetching an array of drafts in a sub-directory.
+
+### `fetchDraft(directory, filename)`
+
+Async action for fetching the requested draft in a sub-directory.
+
+### `putDraft(mode, directory, filename = '')`
+
+Async action for creating or updating the requested draft. The content comes
+from `state.metadata`.
+If the path is not provided when `mode` equals `'create'`, it is auto-generated from the `title` metadata.
+
+### `deleteDraft(directory, filename)`
+
+Async action for deleting the requested draft in a sub-directory.
+After deletion, draft list is requested.
+
 ## Metadata
 
 ### `storeContentFields(meta)`

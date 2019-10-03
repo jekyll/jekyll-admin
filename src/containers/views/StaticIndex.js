@@ -8,15 +8,13 @@ import FilePreview from '../../components/FilePreview';
 import Button from '../../components/Button';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputSearch from '../../components/form/InputSearch';
-import { search } from '../../actions/utils';
+import { search } from '../../ducks/utils';
 import { existingUploadedFilenames } from '../../utils/helpers';
-import { filterByFilename } from '../../reducers/staticfiles';
-import { getOverrideMessage } from '../../constants/lang';
-import { fetchStaticFiles } from '../../actions/staticfiles';
+import { getOverrideMessage } from '../../translations';
+import { fetchStaticFiles, filterByFilename } from '../../ducks/staticfiles';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class StaticIndex extends Component {
-
   componentDidMount() {
     const { fetchStaticFiles } = this.props;
     fetchStaticFiles('index');
@@ -35,17 +33,16 @@ export class StaticIndex extends Component {
     if (files.length) {
       node = (
         <div className="preview-container">
-          {
-            _.map(files, (file, i) => {
-              return (
-                <FilePreview
-                  key={i}
-                  onClick={onClickStaticFile}
-                  splat="index"
-                  file={file} />
-              );
-            })
-          }
+          {_.map(files, (file, i) => {
+            return (
+              <FilePreview
+                key={i}
+                onClick={onClickStaticFile}
+                splat="index"
+                file={file}
+              />
+            );
+          })}
         </div>
       );
     } else {
@@ -53,7 +50,9 @@ export class StaticIndex extends Component {
         <div className="preview-info">
           <i className="fa fa-exclamation-triangle" aria-hidden="true" />
           <h2>No files found!</h2>
-          <h4>Upload files at 'Directory Listing' to have them displayed here.</h4>
+          <h4>
+            Upload files at 'Directory Listing' to have them displayed here.
+          </h4>
         </div>
       );
     }
@@ -63,14 +62,16 @@ export class StaticIndex extends Component {
         <div>
           <div className="content-header">
             <Breadcrumbs type="static files" splat="" />
-            {
-              !modalView &&
-                <div className="page-buttons">
-                  <Link className="btn btn-view" to={`${ADMIN_PREFIX}/staticfiles`}>
-                    Directory Listing
-                  </Link>
-                </div>
-            }
+            {!modalView && (
+              <div className="page-buttons">
+                <Link
+                  className="btn btn-view"
+                  to={`${ADMIN_PREFIX}/staticfiles`}
+                >
+                  Directory Listing
+                </Link>
+              </div>
+            )}
             <div className="pull-right">
               <InputSearch searchBy="filename" search={search} />
             </div>
@@ -88,17 +89,21 @@ StaticIndex.propTypes = {
   fetchStaticFiles: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
   onClickStaticFile: PropTypes.func,
-  modalView: PropTypes.bool
+  modalView: PropTypes.bool,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   files: filterByFilename(state.staticfiles.files, state.utils.input),
-  isFetching: state.staticfiles.isFetching
+  isFetching: state.staticfiles.isFetching,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchStaticFiles,
-  search
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchStaticFiles,
+      search,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaticIndex);

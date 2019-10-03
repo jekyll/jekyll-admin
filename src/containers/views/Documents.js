@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -8,15 +9,17 @@ import DocumentTitle from 'react-document-title';
 import InputSearch from '../../components/form/InputSearch';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
-import { fetchCollection, deleteDocument } from '../../actions/collections';
-import { filterBySearchInput } from '../../reducers/collections';
-import { search } from '../../actions/utils';
+import {
+  fetchCollection,
+  deleteDocument,
+  filterBySearchInput,
+} from '../../ducks/collections';
+import { search } from '../../ducks/utils';
 import { capitalize } from '../../utils/helpers';
-import { getDeleteMessage, getNotFoundMessage } from '../../constants/lang';
+import { getDeleteMessage, getNotFoundMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class Documents extends Component {
-
   componentDidMount() {
     const { fetchCollection, params } = this.props;
     fetchCollection(params.collection_name, params.splat);
@@ -25,8 +28,10 @@ export class Documents extends Component {
   componentWillReceiveProps(nextProps) {
     const { fetchCollection, params } = nextProps;
     // refetch the collection when navigating between collections or when splat is changed
-    if (params.splat !== this.props.params.splat ||
-        params.collection_name !== this.props.params.collection_name) {
+    if (
+      params.splat !== this.props.params.splat ||
+      params.collection_name !== this.props.params.collection_name
+    ) {
       fetchCollection(params.collection_name, params.splat);
     }
   }
@@ -34,9 +39,7 @@ export class Documents extends Component {
   handleClickDelete(filename) {
     const { deleteDocument, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(filename));
-    if (confirm) {
-      deleteDocument(params.collection_name, params.splat, filename);
-    }
+    confirm && deleteDocument(params.collection_name, params.splat, filename);
   }
 
   renderTable() {
@@ -58,13 +61,14 @@ export class Documents extends Component {
 
   renderFileRow(doc) {
     const { id, name, title, http_url, collection, path } = doc;
-    const splat = path.substr(path.indexOf('/')+1, path.length);
+    const splat = path.substr(path.indexOf('/') + 1, path.length);
     const to = `${ADMIN_PREFIX}/collections/${collection}/${splat}`;
     // date w/o timezone
     let date = doc.date.substring(0, doc.date.lastIndexOf(' '));
-    date = moment(date).format('hh:mm:ss') == '12:00:00' ?
-      moment(date).format('ll') :
-      moment(date).format('lll');
+    date =
+      moment(date).format('hh:mm:ss') == '12:00:00'
+        ? moment(date).format('ll')
+        : moment(date).format('lll');
 
     return (
       <tr key={id}>
@@ -84,16 +88,11 @@ export class Documents extends Component {
               type="delete"
               icon="trash"
               active={true}
-              thin />
-            {
-              http_url &&
-              <Button
-                to={http_url}
-                type="view"
-                icon="eye"
-                active={true}
-                thin />
-            }
+              thin
+            />
+            {http_url && (
+              <Button to={http_url} type="view" icon="eye" active={true} thin />
+            )}
           </div>
         </td>
       </tr>
@@ -103,7 +102,7 @@ export class Documents extends Component {
   renderDirectoryRow(directory) {
     const { params: { collection_name } } = this.props;
     const { name, path, modified_time } = directory;
-    const splat = path.substr(path.indexOf('/')+1, path.length);
+    const splat = path.substr(path.indexOf('/') + 1, path.length);
     const to = `${ADMIN_PREFIX}/collections/${collection_name}/${splat}`;
     // date w/o timezone
     let date = modified_time.substring(0, modified_time.lastIndexOf(' '));
@@ -112,13 +111,14 @@ export class Documents extends Component {
       <tr key={name}>
         <td className="row-title">
           <strong>
-            <Link to={to}><i className="fa fa-folder" aria-hidden="true" />
+            <Link to={to}>
+              <i className="fa fa-folder" aria-hidden="true" />
               {name}
             </Link>
           </strong>
         </td>
         <td>{date}</td>
-        <td/>
+        <td />
       </tr>
     );
   }
@@ -143,13 +143,13 @@ export class Documents extends Component {
     }
 
     const splat = params.splat || '';
-    const to = params.splat ?
-      `${ADMIN_PREFIX}/collections/${collection_name}/${splat}/new` :
-      `${ADMIN_PREFIX}/collections/${collection_name}/new`;
+    const to = params.splat
+      ? `${ADMIN_PREFIX}/collections/${collection_name}/${splat}/new`
+      : `${ADMIN_PREFIX}/collections/${collection_name}/new`;
 
-    const document_title = params.splat ?
-      `${params.splat} | ${capitalize(collection_name)}` :
-      capitalize(collection_name);
+    const document_title = params.splat
+      ? `${params.splat} | ${capitalize(collection_name)}`
+      : capitalize(collection_name);
 
     return (
       <DocumentTitle title={document_title}>
@@ -165,12 +165,8 @@ export class Documents extends Component {
               <InputSearch searchBy="title" search={search} />
             </div>
           </div>
-          {
-            documents.length > 0 && this.renderTable()
-          }
-          {
-            !documents.length && <h1>{getNotFoundMessage('documents')}</h1>
-          }
+          {documents.length > 0 && this.renderTable()}
+          {!documents.length && <h1>{getNotFoundMessage('documents')}</h1>}
         </div>
       </DocumentTitle>
     );
@@ -183,21 +179,22 @@ Documents.propTypes = {
   fetchCollection: PropTypes.func.isRequired,
   deleteDocument: PropTypes.func.isRequired,
   search: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  documents: filterBySearchInput(
-    state.collections.entries,
-    state.utils.input
-  ),
-  isFetching: state.collections.isFetching
+const mapStateToProps = state => ({
+  documents: filterBySearchInput(state.collections.entries, state.utils.input),
+  isFetching: state.collections.isFetching,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchCollection,
-  deleteDocument,
-  search
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchCollection,
+      deleteDocument,
+      search,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(Documents);

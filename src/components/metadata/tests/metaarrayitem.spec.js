@@ -9,9 +9,9 @@ import MetaObjectItem from '../MetaObjectItem';
 import MetaSimple from '../MetaSimple';
 
 const FieldTypes = {
-  'array': MetaArray,
-  'object': MetaObject,
-  'simple': MetaSimple
+  array: MetaArray,
+  object: MetaObject,
+  simple: MetaSimple,
 };
 
 const defaultProps = {
@@ -22,7 +22,7 @@ const defaultProps = {
   nameAttr: 'metadata["mentors"][1]',
   namePrefix: 'metadata["mentors"]',
   key_prefix: '',
-  index: 0
+  index: 0,
 };
 
 function setup(props = defaultProps) {
@@ -32,19 +32,17 @@ function setup(props = defaultProps) {
     updateFieldKey: jest.fn(),
     updateFieldValue: jest.fn(),
     moveArrayItem: jest.fn(),
-    convertField: jest.fn()
+    convertField: jest.fn(),
   };
 
-  let component = mount(
-    <MetaArrayItem {...props} {...actions} />
-  );
+  let component = mount(<MetaArrayItem {...props} {...actions} />);
 
   return {
     component,
     index: component.find('.array-field-num'),
-    metabuttons: component.find(MetaButtons) ,
+    metabuttons: component.find(MetaButtons),
     actions,
-    props
+    props,
   };
 }
 
@@ -53,38 +51,41 @@ describe('Components::MetaArrayItem', () => {
     const { component, index } = setup();
     let CurrentComponent = FieldTypes[component.prop('type')];
     expect(CurrentComponent).toEqual(MetaSimple);
-    expect(index.text()).toBe(`${defaultProps.index+1}.`);
+    expect(index.text()).toBe(`${defaultProps.index + 1}.`);
   });
+
   it('should render MetaArrayItem with updated props correctly', () => {
-    const { component } = setup(
-      Object.assign({}, defaultProps, {
-        type: 'object',
-        fieldValue: {
-          name: "Ben Balter",
-          username: 'benbalter'
-        }
-      })
-    );
+    const { component } = setup({
+      ...defaultProps,
+      type: 'object',
+      fieldValue: {
+        name: 'Ben Balter',
+        username: 'benbalter',
+      },
+    });
     let CurrentComponent = FieldTypes[component.prop('type')];
     expect(CurrentComponent).toEqual(MetaObject);
     expect(component.find(MetaObjectItem).length).toBe(2);
   });
+
   it('should add `showing-dropdown` class when dropdown button is focused', () => {
     const { component, metabuttons } = setup();
     let dropdownButton = metabuttons.find('.meta-button');
     dropdownButton.simulate('focus');
-    expect(component.find('.array-item-wrap').hasClass('showing-dropdown')).toEqual(true);
-    dropdownButton.simulate('blur');
     expect(
-      component.find('.array-item-wrap').node.classList.length
-    ).toBe(1);
+      component.find('.array-item-wrap').hasClass('showing-dropdown')
+    ).toEqual(true);
+    dropdownButton.simulate('blur');
+    expect(component.find('.array-item-wrap').node.classList.length).toBe(1);
   });
+
   it('should call removeField when the button clicked', () => {
     const { metabuttons, actions } = setup();
     let removeFieldButton = metabuttons.find('.remove-field');
     removeFieldButton.simulate('mousedown');
     expect(actions.removeField).toHaveBeenCalled();
   });
+
   it('should call convertField when the button clicked', () => {
     const { metabuttons, actions } = setup();
     let convertButton = metabuttons.find('.dropdown-wrap span').first();

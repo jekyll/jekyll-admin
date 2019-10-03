@@ -14,7 +14,7 @@ export const validator = (values, validations, messages) => {
   let errorMessages = [];
   _.each(validations, (validationStr, field, list) => {
     const validationArr = validationStr.split('|');
-    _.each(validationArr, (single) => {
+    _.each(validationArr, single => {
       if (!validated(values[field], single)) {
         errorMessages.push(messages[`${field}.${single}`]);
       }

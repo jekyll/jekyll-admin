@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import SimpleMDE from 'simplemde';
 import hljs from 'highlight.js';
 
@@ -6,11 +7,10 @@ const classNames = [
   'editor-toolbar',
   'CodeMirror',
   'editor-preview-side',
-  'editor-statusbar'
+  'editor-statusbar',
 ];
 
 class MarkdownEditor extends Component {
-
   componentDidMount() {
     this.create();
     window.hljs = hljs; // TODO: fix this after the next release of SimpleMDE
@@ -21,7 +21,8 @@ class MarkdownEditor extends Component {
   }
 
   componentDidUpdate() {
-    this.destroy(); this.create();
+    this.destroy();
+    this.create();
   }
 
   componentWillUnmount() {
@@ -35,39 +36,57 @@ class MarkdownEditor extends Component {
     opts['autoDownloadFontAwesome'] = false;
     opts['spellChecker'] = false;
     opts['renderingConfig'] = {
-      codeSyntaxHighlighting: true
+      codeSyntaxHighlighting: true,
     };
     let toolbarIcons = [
-      'bold', 'italic', 'heading', '|',
-      'code', 'quote', 'unordered-list', 'ordered-list',
-      '|', 'link', 'image', '|', 'preview', 'side-by-side', 'fullscreen', '|'
+      'bold',
+      'italic',
+      'heading',
+      '|',
+      'code',
+      'quote',
+      'unordered-list',
+      'ordered-list',
+      '|',
+      'link',
+      'image',
+      '|',
+      'preview',
+      'side-by-side',
+      'fullscreen',
+      '|',
     ];
     if (onSave) {
       toolbarIcons.push({
         name: 'save',
-        action: () => {
-          onSave();
-        },
+        action: onSave,
         className: 'fa fa-floppy-o',
-        title: 'Save'
+        title: 'Save',
       });
     }
     opts['toolbar'] = toolbarIcons;
-    this.editor = new SimpleMDE(opts);
-    this.editor.codemirror.on('change', () => {
-      onChange(this.editor.value());
-    });
+    const editor = new SimpleMDE(opts);
+    if (editor.codemirror) {
+      editor.codemirror.on('change', () => {
+        onChange(editor.value());
+      });
+    }
+    this.editor = editor;
   }
 
   destroy() {
     for (let i in classNames) {
-      let elementToRemove = this.refs.container.querySelector('.' + classNames[i]);
+      let elementToRemove = this.refs.container.querySelector(
+        '.' + classNames[i]
+      );
       elementToRemove && elementToRemove.remove();
     }
   }
 
   render() {
-    return React.createElement('div', { ref: 'container' },
+    return React.createElement(
+      'div',
+      { ref: 'container' },
       React.createElement('textarea', { ref: 'text' })
     );
   }
@@ -76,7 +95,7 @@ class MarkdownEditor extends Component {
 MarkdownEditor.propTypes = {
   initialValue: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
-  onSave: PropTypes.func.isRequired
+  onSave: PropTypes.func.isRequired,
 };
 
 export default MarkdownEditor;

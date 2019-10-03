@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -8,17 +9,18 @@ import Dropzone from '../../components/Dropzone';
 import Button from '../../components/Button';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputSearch from '../../components/form/InputSearch';
-import { search } from '../../actions/utils';
+import { search } from '../../ducks/utils';
 import { existingUploadedFilenames } from '../../utils/helpers';
-import { filterByFilename } from '../../reducers/staticfiles';
-import { getOverrideMessage } from '../../constants/lang';
+import { getOverrideMessage } from '../../translations';
 import {
-  fetchStaticFiles, uploadStaticFiles, deleteStaticFile
-} from '../../actions/staticfiles';
+  fetchStaticFiles,
+  uploadStaticFiles,
+  deleteStaticFile,
+  filterByFilename,
+} from '../../ducks/staticfiles';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class StaticFiles extends Component {
-
   componentDidMount() {
     const { fetchStaticFiles, params } = this.props;
     fetchStaticFiles(params.splat);
@@ -31,11 +33,13 @@ export class StaticFiles extends Component {
     }
   }
 
-  onDrop (uploadedFiles) {
+  onDrop(uploadedFiles) {
     const { uploadStaticFiles, files, params } = this.props;
     const existingFiles = existingUploadedFilenames(uploadedFiles, files);
     if (existingFiles.length > 0) {
-      const confirm = window.confirm(getOverrideMessage(existingFiles.join(', ')));
+      const confirm = window.confirm(
+        getOverrideMessage(existingFiles.join(', '))
+      );
       if (!confirm) {
         return false;
       }
@@ -43,12 +47,19 @@ export class StaticFiles extends Component {
     uploadStaticFiles(params.splat, uploadedFiles);
   }
 
-  openDropzone() {
-    this.refs.dropzone.refs.ReactDropzone.open();
-  }
+  openDropzone = () => {
+    this.refs.dropzone.openDropzone();
+  };
 
   render() {
-    const { files, isFetching, deleteStaticFile, search, onClickStaticFile, params } = this.props;
+    const {
+      files,
+      isFetching,
+      deleteStaticFile,
+      search,
+      onClickStaticFile,
+      params,
+    } = this.props;
 
     if (isFetching) {
       return null;
@@ -62,22 +73,20 @@ export class StaticFiles extends Component {
       return !entity.type;
     });
 
-    const dir_rows = (
-      _.map(dirs, (dir, i) => {
-        return (
-          <tr key={i}>
-            <td className="row-title">
-              <strong>
-                <Link to={`${ADMIN_PREFIX}/staticfiles/${dir.path}`}>
-                  <i className="fa fa-folder" aria-hidden="true" />
-                  {dir.name}
-                </Link>
-              </strong>
-            </td>
-          </tr>
-        );
-      })
-    );
+    const dir_rows = _.map(dirs, (dir, i) => {
+      return (
+        <tr key={i}>
+          <td className="row-title">
+            <strong>
+              <Link to={`${ADMIN_PREFIX}/staticfiles/${dir.path}`}>
+                <i className="fa fa-folder" aria-hidden="true" />
+                {dir.name}
+              </Link>
+            </strong>
+          </td>
+        </tr>
+      );
+    });
 
     const dir_table = (
       <div className="content-table">
@@ -98,14 +107,18 @@ export class StaticFiles extends Component {
           <div className="content-header">
             <Breadcrumbs type="static files" splat={params.splat || ''} />
             <div className="page-buttons multiple">
-              <Link className="btn btn-view" to={`${ADMIN_PREFIX}/staticfiles/index`}>
+              <Link
+                className="btn btn-view"
+                to={`${ADMIN_PREFIX}/staticfiles/index`}
+              >
                 Index Listing
               </Link>
               <Button
                 onClick={() => this.openDropzone()}
                 type="upload"
                 icon="upload"
-                active={true} />
+                active={true}
+              />
             </div>
             <div className="pull-right">
               <InputSearch searchBy="filename" search={search} />
@@ -121,15 +134,18 @@ export class StaticFiles extends Component {
               </thead>
               <tbody>
                 {!_.isEmpty(dirs) && dir_rows}
-                <tr><td>
-                  <Dropzone
-                    ref="dropzone"
-                    splat={params.splat || ''}
-                    files={static_files}
-                    onClickItem={onClickStaticFile}
-                    onClickDelete={deleteStaticFile}
-                    onDrop={(static_files) => this.onDrop(static_files)} />
-                </td></tr>
+                <tr>
+                  <td>
+                    <Dropzone
+                      ref="dropzone"
+                      splat={params.splat || ''}
+                      files={static_files}
+                      onClickItem={onClickStaticFile}
+                      onClickDelete={deleteStaticFile}
+                      onDrop={static_files => this.onDrop(static_files)}
+                    />
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -147,19 +163,23 @@ StaticFiles.propTypes = {
   deleteStaticFile: PropTypes.func.isRequired,
   onClickStaticFile: PropTypes.func,
   search: PropTypes.func.isRequired,
-  params: PropTypes.object.isRequired
+  params: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   files: filterByFilename(state.staticfiles.files, state.utils.input),
-  isFetching: state.staticfiles.isFetching
+  isFetching: state.staticfiles.isFetching,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  fetchStaticFiles,
-  uploadStaticFiles,
-  deleteStaticFile,
-  search
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      fetchStaticFiles,
+      uploadStaticFiles,
+      deleteStaticFile,
+      search,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaticFiles);

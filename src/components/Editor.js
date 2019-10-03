@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import AceEditor from 'react-ace';
 import 'brace/mode/json';
 import 'brace/mode/yaml';
@@ -9,13 +10,10 @@ class Editor extends Component {
     return nextProps.content !== this.props.content;
   }
 
-  handleChange() {
-    // TODO better handling
+  handleChange = () => {
     const { onEditorChange, editorChanged } = this.props;
-    if (!editorChanged) {
-      onEditorChange();
-    }
-  }
+    !editorChanged && onEditorChange();
+  };
 
   getValue() {
     return this.refs.ace.editor.getValue();
@@ -23,7 +21,7 @@ class Editor extends Component {
 
   render() {
     const { content, type } = this.props;
-    const mode = (/json/i.test(type)) ? 'json' : 'yaml';
+    const mode = /json/i.test(type) ? 'json' : 'yaml';
     return (
       <AceEditor
         value={content}
@@ -38,7 +36,8 @@ class Editor extends Component {
         fontSize={14}
         scrollMargin={[15, 15, 15, 15]}
         ref="ace"
-        onChange={() => this.handleChange()} />
+        onChange={this.handleChange}
+      />
     );
   }
 }
@@ -47,7 +46,7 @@ Editor.propTypes = {
   content: PropTypes.any.isRequired,
   onEditorChange: PropTypes.func.isRequired,
   editorChanged: PropTypes.bool.isRequired,
-  type: PropTypes.string
+  type: PropTypes.string,
 };
 
 export default Editor;

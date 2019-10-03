@@ -5,7 +5,7 @@ import { render } from 'react-dom';
 import { Provider } from 'react-redux';
 import { Router, browserHistory, Redirect } from 'react-router';
 import routes from './routes';
-import configureStore from './store/configureStore';
+import configureStore from './store';
 import { ADMIN_PREFIX } from './constants';
 import './styles/main.scss';
 import './assets/favicon.ico';
@@ -18,5 +18,6 @@ render(
     <Router history={history} routes={routes}>
       <Redirect from={`${ADMIN_PREFIX}/`} to={`${ADMIN_PREFIX}/pages/`} />
     </Router>
-  </Provider>, document.getElementById('root')
+  </Provider>,
+  document.getElementById('root')
 );

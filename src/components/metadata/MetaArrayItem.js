@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import MetaArray from './MetaArray';
 import MetaObject from './MetaObject';
@@ -6,7 +7,6 @@ import MetaSimple from './MetaSimple';
 import MetaButtons from './MetaButtons';
 
 export class MetaArrayItem extends Component {
-
   handleConvertClick(type) {
     const { convertField, nameAttr } = this.props;
     convertField(nameAttr, type);
@@ -26,27 +26,39 @@ export class MetaArrayItem extends Component {
   }
 
   render() {
-    const { type, fieldKey, fieldValue, index, nameAttr,
-      addField, removeField, updateFieldKey, updateFieldValue, moveArrayItem,
-      convertField, key_prefix } = this.props;
+    const {
+      type,
+      fieldKey,
+      fieldValue,
+      index,
+      nameAttr,
+      addField,
+      removeField,
+      updateFieldKey,
+      updateFieldValue,
+      moveArrayItem,
+      convertField,
+      key_prefix,
+    } = this.props;
     const FieldTypes = {
-      'array': MetaArray,
-      'object': MetaObject,
-      'simple': MetaSimple
+      array: MetaArray,
+      object: MetaObject,
+      simple: MetaSimple,
     };
     const CurrentComponent = FieldTypes[type];
     return (
       <div ref="wrap" data-id={index} className="array-item-wrap">
         <div className="array">
           <div className="array-header">
-            <span className="array-field-num">{index+1}.</span>
+            <span className="array-field-num">{index + 1}.</span>
             <MetaButtons
               currentType={type}
               parentType="array"
-              onConvertClick={(type) => this.handleConvertClick(type)}
+              onConvertClick={type => this.handleConvertClick(type)}
               onRemoveClick={() => this.handleRemoveClick()}
               onDropdownFocus={() => this.handleDropdownFocus()}
-              onDropdownBlur={() => this.handleDropdownBlur()} />
+              onDropdownBlur={() => this.handleDropdownBlur()}
+            />
           </div>
           <CurrentComponent
             key_prefix={key_prefix}
@@ -60,7 +72,8 @@ export class MetaArrayItem extends Component {
             moveArrayItem={moveArrayItem}
             convertField={convertField}
             nameAttr={nameAttr}
-            namePrefix={nameAttr} />
+            namePrefix={nameAttr}
+          />
         </div>
       </div>
     );
@@ -80,7 +93,7 @@ MetaArrayItem.propTypes = {
   convertField: PropTypes.func.isRequired,
   nameAttr: PropTypes.string.isRequired,
   namePrefix: PropTypes.string.isRequired,
-  key_prefix: PropTypes.string.isRequired
+  key_prefix: PropTypes.string.isRequired,
 };
 
 export default MetaArrayItem;

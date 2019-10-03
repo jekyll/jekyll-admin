@@ -1,6 +1,6 @@
 module JekyllAdmin
   class Server < Sinatra::Base
-    ROUTES = %w(collections configuration data pages static_files).freeze
+    ROUTES = %w(collections configuration data drafts pages static_files).freeze
     include JekyllAdmin::PathHelper
     include JekyllAdmin::FileHelper
 
@@ -16,7 +16,7 @@ module JekyllAdmin
       register Sinatra::CrossOrigin
       enable  :cross_origin
       disable :allow_credentials
-      set :allow_methods, %i[delete get options post put]
+      set :allow_methods, [:delete, :get, :options, :post, :put]
     end
 
     get "/" do
@@ -30,6 +30,11 @@ module JekyllAdmin
     end
 
     private
+
+    def json(object, options = {})
+      content_type :json
+      JSON.pretty_generate(object, options)
+    end
 
     def site
       JekyllAdmin.site
@@ -67,9 +72,7 @@ module JekyllAdmin
       body << "\n---\n\n"
       body << request_payload["raw_content"].to_s
     end
-    alias page_body document_body
-
-    private
+    alias_method :page_body, :document_body
 
     def request_body
       @request_body ||= begin
@@ -96,5 +99,6 @@ end
 require "jekyll-admin/server/collection"
 require "jekyll-admin/server/configuration"
 require "jekyll-admin/server/data"
+require "jekyll-admin/server/draft"
 require "jekyll-admin/server/page"
 require "jekyll-admin/server/static_file"

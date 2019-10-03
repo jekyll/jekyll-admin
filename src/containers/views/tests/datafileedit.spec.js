@@ -13,9 +13,9 @@ const defaultProps = {
   fieldChanged: false,
   router: {},
   route: {},
-  params: { splat: ['movies', 'actors', 'yml']},
+  params: { splat: ['movies', 'actors', 'yml'] },
   errors: [],
-  isFetching: false
+  isFetching: false,
 };
 
 const setup = (props = defaultProps) => {
@@ -24,7 +24,7 @@ const setup = (props = defaultProps) => {
     putDataFile: jest.fn(),
     deleteDataFile: jest.fn(),
     onDataFileChanged: jest.fn(),
-    clearErrors: jest.fn()
+    clearErrors: jest.fn(),
   };
 
   const component = shallow(<DataFileEdit {...actions} {...props} />);
@@ -36,18 +36,14 @@ const setup = (props = defaultProps) => {
     toggleButton: component.find(Button).at(1),
     deleteButton: component.find(Button).last(),
     errors: component.find(Errors),
-    props
+    props,
   };
 };
 
 describe('Containers::DataFileEdit', () => {
   it('should render correctly', () => {
-    let { component } = setup(Object.assign(
-      {}, defaultProps, { isFetching: true }
-    ));
-    component = setup(Object.assign(
-      {}, defaultProps, { datafile: {} }
-    )).component;
+    let { component } = setup({ ...defaultProps, isFetching: true });
+    component = setup({ ...defaultProps, datafile: {} }).component;
     expect(component.find('h1').node).toBeTruthy();
   });
 
@@ -57,9 +53,10 @@ describe('Containers::DataFileEdit', () => {
   });
 
   it('should render error messages', () => {
-    const { errors } = setup(Object.assign({}, defaultProps, {
-      errors: ['The content is required!']
-    }));
+    const { errors } = setup({
+      ...defaultProps,
+      errors: ['The content is required!'],
+    });
     expect(errors.node).toBeTruthy();
   });
 
@@ -70,9 +67,10 @@ describe('Containers::DataFileEdit', () => {
   });
 
   it('should clear errors on unmount.', () => {
-    const { component, errors, actions } = setup(Object.assign({}, defaultProps, {
-      errors: ['The content is required!']
-    }));
+    const { component, errors, actions } = setup({
+      ...defaultProps,
+      errors: ['The content is required!'],
+    });
     component.unmount();
     expect(actions.clearErrors).toHaveBeenCalled();
   });
@@ -87,51 +85,66 @@ describe('Containers::DataFileEdit', () => {
   it('should update state on switch to GUI mode', () => {
     const { component, toggleButton, actions } = setup();
     expect(component.state()).toEqual({
-      'guiPath': '',
-      'extn': '',
-      'guiView': false
+      guiPath: '',
+      extn: '',
+      guiView: false,
     });
     toggleButton.simulate('click');
     expect(component.state()).toEqual({
-      'guiPath': 'authors',
-      'extn': '.yml',
-      'guiView': true
+      guiPath: 'authors',
+      extn: '.yml',
+      guiView: true,
     });
   });
 
   it('should call putDataFile after datafileChanged in GUI mode', () => {
-    const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
-      datafileChanged: true
-    }));
+    const { component, toggleButton, saveButton, actions } = setup({
+      ...defaultProps,
+      datafileChanged: true,
+    });
     toggleButton.simulate('click');
     saveButton.simulate('click');
     expect(actions.putDataFile).toHaveBeenCalledWith(
-      'movies', 'actors.yml', null, '_data/movies/authors.yml', 'gui'
+      'movies',
+      'actors.yml',
+      null,
+      '_data/movies/authors.yml',
+      'gui'
     );
   });
 
   it('should call putDataFile with different splats and datafileChanged in GUI mode', () => {
-    const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
-      params: { splat: ['', 'authors', 'yml']},
-      datafileChanged: true
-    }));
+    const { component, toggleButton, saveButton, actions } = setup({
+      ...defaultProps,
+      params: { splat: ['', 'authors', 'yml'] },
+      datafileChanged: true,
+    });
     toggleButton.simulate('click');
     saveButton.simulate('click');
     expect(actions.putDataFile).toHaveBeenCalledWith(
-      '', 'authors.yml', null, '_data/authors.yml', 'gui'
+      '',
+      'authors.yml',
+      null,
+      '_data/authors.yml',
+      'gui'
     );
   });
 
   it('should call putDataFile after fieldChanged in GUI mode', () => {
-    const { component, toggleButton, saveButton, actions } = setup(Object.assign({}, defaultProps, {
+    const { component, toggleButton, saveButton, actions } = setup({
+      ...defaultProps,
       datafile: datafile,
-      params: { splat: ['books', 'authors', 'yml']},
-      fieldChanged: true
-    }));
+      params: { splat: ['books', 'authors', 'yml'] },
+      fieldChanged: true,
+    });
     toggleButton.simulate('click');
     saveButton.simulate('click');
     expect(actions.putDataFile).toHaveBeenCalledWith(
-      'books', 'authors.yml', null, '', 'gui'
+      'books',
+      'authors.yml',
+      null,
+      '',
+      'gui'
     );
   });
 
@@ -144,9 +157,11 @@ describe('Containers::DataFileEdit', () => {
   it('should recieve updated props', () => {
     const { component, actions } = setup();
     component.setProps({
-      params: { splat: ['books', 'authors', 'yml']},
-      updated: true
+      params: { splat: ['books', 'authors', 'yml'] },
+      updated: true,
     });
-    expect(component.instance().props['datafile']['path']).toEqual('_data/books/authors.yml');
+    expect(component.instance().props['datafile']['path']).toEqual(
+      '_data/books/authors.yml'
+    );
   });
 });

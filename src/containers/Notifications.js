@@ -1,9 +1,9 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import NotificationSystem from 'react-notification-system';
 
 export class Notifications extends Component {
-
   componentDidMount() {
     this.notificationSystem = this.refs.notificationSystem;
   }
@@ -15,7 +15,7 @@ export class Notifications extends Component {
       message: notification.message,
       level: notification.level,
       position: 'br',
-      autoDismiss: 10
+      autoDismiss: 10,
     });
   }
 
@@ -25,11 +25,11 @@ export class Notifications extends Component {
 }
 
 Notifications.propTypes = {
-  notification: PropTypes.object.isRequired
+  notification: PropTypes.object.isRequired,
 };
 
-const mapStateToProps = (state) => ({
-  notification: state.notifications.notification
+const mapStateToProps = state => ({
+  notification: state.notifications.notification,
 });
 
 export default connect(mapStateToProps)(Notifications);
