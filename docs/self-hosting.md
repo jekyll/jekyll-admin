@@ -15,6 +15,8 @@ In this example
 - jekyll site at `/home/jekyll/example`
 - generated content in `/home/jekyll/example/_site`
 
+This was tested on Ubuntu 19.04 using nginx 1.17.4 and systemd 237.
+
 nginx config:
 
 ```nginx
@@ -38,7 +40,7 @@ server {
 }
 ```
 
-systemd unit file - tested on Ubuntu 18.04
+systemd service file:
 
 ```
 [Unit]
@@ -75,4 +77,3 @@ Environment=GEM_HOME=/home/jekyll/gems
 [Install]
 WantedBy=multi-user.target
 ```
-
