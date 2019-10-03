@@ -20,7 +20,59 @@ export class Notifications extends Component {
   }
 
   render() {
-    return <NotificationSystem ref="notificationSystem" />;
+    const style = {
+      Containers: {
+        DefaultStyle: {
+          padding: 15,
+          width: 360,
+          textAlign: 'center',
+        },
+      },
+      Title: {
+        DefaultStyle: {
+          fontSize: 21,
+          color: '#fff',
+        },
+      },
+      NotificationItem: {
+        DefaultStyle: {
+          margin: 0,
+          padding: '9px 15px 15px',
+          fontSize: 15,
+          borderRadius: 0,
+          transition: '0.5s ease-in-out',
+        },
+        success: {
+          color: '#fff',
+          backgroundColor: '#5ea400',
+        },
+        error: {
+          color: '#fff',
+          backgroundColor: '#ec3d3d',
+        },
+        warning: {
+          color: '#fff',
+          backgroundColor: '#ebad1a',
+        },
+        info: {
+          color: '#fff',
+          backgroundColor: '#369cc7',
+        },
+      },
+      Dismiss: {
+        DefaultStyle: {
+          top: 7,
+          right: 9,
+          width: 25,
+          height: 25,
+          padding: 4,
+          backgroundColor: 'transparent',
+          border: '2px solid',
+          opacity: '0.84',
+        },
+      },
+    };
+    return <NotificationSystem ref="notificationSystem" style={style} />;
   }
 }
 
