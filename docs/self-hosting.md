@@ -22,7 +22,7 @@ server {
     listen 80;
 
     server_name www.example.com;
-    root /hoem/jekyll/example/_site;
+    root /home/jekyll/example/_site;
 
     location ^~ /admin {
         auth_basic "Administration";
@@ -61,7 +61,7 @@ Type=simple
 User=jekyll
 Group=jekyll
 WorkingDirectory=/home/jekyll/example
-ExecStart=/home/jekyll/gems/bin/bundle exec /home/jekyll/gems/bin/jekyll serve -V --trace
+ExecStart=/home/jekyll/gems/bin/bundle exec /home/jekyll/gems/bin/jekyll serve --verbose --trace
 TimeoutSec=30
 RestartSec=15s
 Restart=always
