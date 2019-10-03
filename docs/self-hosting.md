@@ -24,29 +24,18 @@ server {
     server_name www.example.com;
     root /home/jekyll/example/_site;
 
-    location ^~ /admin {
+    location ~ ^/(admin|_api)(/.*)? {
         auth_basic "Administration";
         auth_basic_user_file /etc/nginx/htpasswd;
 
-        proxy_pass http://127.0.0.1:4000/admin;
+        proxy_pass http://127.0.0.1:4000/$1$2;
 
         proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
         proxy_set_header X-Forwarded-Proto $scheme;
         proxy_set_header X-Real-IP $remote_addr;
         proxy_set_header Host $http_host;
     }
-
-    location ^~ /_api {
-        auth_basic "Administration";
-        auth_basic_user_file /etc/nginx/htpasswd;
-
-        proxy_pass http://127.0.0.1:4000/_api;
-
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header X-Forwarded-Proto $scheme;
-        proxy_set_header X-Real-IP $remote_addr;
-        proxy_set_header Host $http_host;
-    }
+}
 ```
 
 systemd unit file - tested on Ubuntu 18.04
