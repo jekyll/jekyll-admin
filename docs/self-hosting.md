@@ -1,9 +1,10 @@
 ---
-title: Documentation
-permalink: /
-description: A Jekyll plugin that provides users with a traditional CMS-style graphical interface to author content and administer Jekyll sites. The project is divided into two parts. A Ruby-based HTTP API that handles Jekyll and filesystem operations, and a Javascript-based front end, built on that API.
+title: Self Hosting
+permalink: /self-hosting
+description: Example configuration files for self-hosting jekyll-admin
 ---
-## Running in production
+
+## Self-hosting
 
 If you are self-hosting a jekyll site and you want to use jekyll-admin as your front-end
 then you can run it behind a nginx reverse proxy.
@@ -50,7 +51,7 @@ server {
 
 systemd unit file - tested on Ubuntu 18.04
 
-```systemd
+```
 [Unit]
 Description=example.com
 Requires=network.target
