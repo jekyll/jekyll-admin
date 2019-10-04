@@ -1,7 +1,7 @@
 language: ruby
 rvm: 2.4
 before_install:
-  - nvm install 6
+  - nvm install 8
   - gem update --system --no-document
 install: script/bootstrap
 script: script/cibuild
