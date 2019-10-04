@@ -31,6 +31,11 @@ module JekyllAdmin
 
     private
 
+    def json(object, options = {})
+      content_type :json
+      JSON.pretty_generate(object, options)
+    end
+
     def site
       JekyllAdmin.site
     end
