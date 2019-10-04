@@ -8,13 +8,25 @@ import Splitter from '../components/Splitter';
 import { fetchCollections } from '../ducks/collections';
 import { capitalize } from '../utils/helpers';
 import { sidebar as SidebarTranslations } from '../translations';
+import classnames from 'classnames';
 import _ from 'underscore';
 
 export class Sidebar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { collapsedPanel: true };
+  }
+
   componentDidMount() {
     const { fetchCollections } = this.props;
     fetchCollections();
   }
+
+  handleClick = () => {
+    this.setState({
+      collapsedPanel: !this.state.collapsedPanel,
+    });
+  };
 
   renderCollections(hiddens = []) {
     const { collections } = this.props;
@@ -23,8 +35,8 @@ export class Sidebar extends Component {
       return null;
     }
 
-    return _.map(collections, (col, i) => {
-      if (_.indexOf(hiddens, col.label) == -1) {
+    const collectionItems = _.map(collections, (col, i) => {
+      if (col.label != 'posts' && !hiddens.includes(col.label)) {
         return (
           <li key={i}>
             <Link
@@ -37,7 +49,34 @@ export class Sidebar extends Component {
           </li>
         );
       }
+    }).filter(Boolean);
+
+    if (!collectionItems.length) {
+      return null;
+    }
+
+    const { collapsedPanel } = this.state;
+    const accordionClasses = classnames('accordion-label', {
+      collapsed: collapsedPanel,
     });
+
+    // Arbitrary manipulation based on visual cues from surrounding elements.
+    // TODO: Compute values programmatically.
+    const panelHeight = collapsedPanel ? 50 : (collectionItems.length + 1) * 50;
+
+    return (
+      <li className={accordionClasses} style={{ maxHeight: panelHeight }}>
+        <a onClick={this.handleClick}>
+          <i className="fa fa-book" />
+          {SidebarTranslations.collections}
+          <div className="counter">{collectionItems.length}</div>
+          <div className="chevrons">
+            <i className="fa fa-chevron-up" />
+          </div>
+        </a>
+        <ul>{collectionItems}</ul>
+      </li>
+    );
   }
 
   render() {
@@ -70,8 +109,9 @@ export class Sidebar extends Component {
 
     const defaultLinks = _.keys(defaults);
     let hiddenLinks;
+
     try {
-      hiddenLinks = config.jekyll_admin.hidden_links;
+      hiddenLinks = config.jekyll_admin.hidden_links || [];
     } catch (e) {
       hiddenLinks = [];
     }
@@ -94,21 +134,35 @@ export class Sidebar extends Component {
       );
     });
 
+    const collectionsPanel = this.renderCollections(hiddenLinks);
+    const postsPanel = !hiddenLinks.includes('posts');
+    const draftsPanel = config && config.show_drafts;
+
     return (
       <div className="sidebar">
         <Link className="logo" to={`${ADMIN_PREFIX}/pages`} />
         <ul className="routes">
-          {this.renderCollections(hiddenLinks)}
-          {config &&
-            config.show_drafts && (
-              <li>
-                <Link activeClassName="active" to={`${ADMIN_PREFIX}/drafts`}>
-                  <i className="fa fa-edit" />
-                  {SidebarTranslations.drafts}
-                </Link>
-                {!hiddenLinks.includes('posts') && <Splitter />}
-              </li>
-            )}
+          {collectionsPanel}
+          {postsPanel && (
+            <li>
+              <Link
+                activeClassName="active"
+                to={`${ADMIN_PREFIX}/collections/posts`}
+              >
+                <i className="fa fa-book" />
+                {SidebarTranslations.posts}
+              </Link>
+            </li>
+          )}
+          {draftsPanel && (
+            <li>
+              <Link activeClassName="active" to={`${ADMIN_PREFIX}/drafts`}>
+                <i className="fa fa-edit" />
+                {SidebarTranslations.drafts}
+              </Link>
+            </li>
+          )}
+          {(collectionsPanel || postsPanel || draftsPanel) && <Splitter />}
           {links}
         </ul>
       </div>

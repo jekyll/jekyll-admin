@@ -12,17 +12,51 @@ exports[`Containers::Sidebar does not render hidden links 1`] = `
   <ul
     className="routes"
   >
-    <li>
+    <li
+      className="accordion-label collapsed"
+      style={
+        Object {
+          "maxHeight": 50,
+        }
+      }
+    >
       <a
         onClick={[Function]}
-        style={Object {}}
       >
         <i
           className="fa fa-book"
         />
-        Movies
+        Collections
+        <div
+          className="counter"
+        >
+          1
+        </div>
+        <div
+          className="chevrons"
+        >
+          <i
+            className="fa fa-chevron-up"
+          />
+        </div>
       </a>
+      <ul>
+        <li>
+          <a
+            onClick={[Function]}
+            style={Object {}}
+          >
+            <i
+              className="fa fa-book"
+            />
+            Movies
+          </a>
+        </li>
+      </ul>
     </li>
+    <div
+      className="splitter"
+    />
     <div
       className="splitter"
     />
@@ -78,6 +112,48 @@ exports[`Containers::Sidebar renders correctly 1`] = `
   <ul
     className="routes"
   >
+    <li
+      className="accordion-label collapsed"
+      style={
+        Object {
+          "maxHeight": 50,
+        }
+      }
+    >
+      <a
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-book"
+        />
+        Collections
+        <div
+          className="counter"
+        >
+          1
+        </div>
+        <div
+          className="chevrons"
+        >
+          <i
+            className="fa fa-chevron-up"
+          />
+        </div>
+      </a>
+      <ul>
+        <li>
+          <a
+            onClick={[Function]}
+            style={Object {}}
+          >
+            <i
+              className="fa fa-book"
+            />
+            Movies
+          </a>
+        </li>
+      </ul>
+    </li>
     <li>
       <a
         onClick={[Function]}
@@ -89,17 +165,9 @@ exports[`Containers::Sidebar renders correctly 1`] = `
         Posts
       </a>
     </li>
-    <li>
-      <a
-        onClick={[Function]}
-        style={Object {}}
-      >
-        <i
-          className="fa fa-book"
-        />
-        Movies
-      </a>
-    </li>
+    <div
+      className="splitter"
+    />
     <li>
       <a
         onClick={[Function]}
@@ -166,6 +234,20 @@ exports[`Containers::Sidebar renders with zero collections 1`] = `
   <ul
     className="routes"
   >
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-book"
+        />
+        Posts
+      </a>
+    </li>
+    <div
+      className="splitter"
+    />
     <li>
       <a
         onClick={[Function]}
