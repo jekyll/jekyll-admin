@@ -84,11 +84,10 @@
     "coveralls": "^2.13.1",
     "css-loader": "2.1.1",
     "enzyme": "2.6.0",
-    "eslint": "3.19.0",
-    "eslint-plugin-babel": "4.1.2",
+    "eslint": "6.5.1",
     "eslint-plugin-import": "2.18.2",
-    "eslint-plugin-react": "6.8.0",
-    "eslint-watch": "2.1.14",
+    "eslint-plugin-react": "7.15.1",
+    "eslint-watch": "6.0.1",
     "file-loader": "1.1.11",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
@@ -160,7 +159,7 @@
       "plugin:import/errors",
       "plugin:import/warnings"
     ],
-    "plugins": ["babel", "react"],
+    "plugins": ["react"],
     "parser": "babel-eslint",
     "parserOptions": {
       "ecmaVersion": 6,
@@ -178,14 +177,12 @@
       "jest": true
     },
     "rules": {
-      "babel/semi": 1,
       "import/no-named-as-default": 0,
       "quotes": 0,
       "no-console": 1,
       "no-unused-vars": 0,
       "no-debugger": 1,
       "no-var": 1,
-      "no-invalid-this": 0,
       "semi": [1, "always"],
       "no-trailing-spaces": 0,
       "eol-last": 0,

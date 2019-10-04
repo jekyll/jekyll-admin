@@ -132,6 +132,7 @@ PageNew.propTypes = {
   route: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  page: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

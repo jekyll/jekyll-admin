@@ -32,8 +32,7 @@ export class DocumentNew extends Component {
       const path = nextProps.currentDocument.path;
       const splat = path.substr(path.indexOf('/') + 1, path.length);
       browserHistory.push(
-        `${ADMIN_PREFIX}/collections/${nextProps.currentDocument
-          .collection}/${splat}`
+        `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${splat}`
       );
     }
   }
@@ -138,6 +137,7 @@ DocumentNew.propTypes = {
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  currentDocument: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
