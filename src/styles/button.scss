@@ -8,7 +8,7 @@
   padding: 12px 20px;
   white-space: nowrap;
   text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.2);
-  @include border-radius($border-radius);
+  @include border-radius(4px);
   @include box-sizing(border-box);
   @include btn($btn-initial, $btn-initial-border);
   i {
@@ -24,7 +24,7 @@
 
 .btn-thin {
   padding: 8px;
-  margin: 5px;
+  margin: 0 5px;
 }
 
 .btn-active {
