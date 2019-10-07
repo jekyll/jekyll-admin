@@ -45,6 +45,7 @@ export const sidebar = {
   pages: 'Sider',
   posts: 'Indlæg',
   datafiles: 'Data filer',
+  collections: 'Samlinger',
   staticfiles: 'Statiske filer',
   configuration: 'Konfiguration',
 };

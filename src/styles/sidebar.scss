@@ -22,20 +22,64 @@
     padding: 10px 0;
     list-style: none;
     li {
+      overflow-y: hidden;
+      @include transition(max-height 0.5s);
       a {
         display: block;
         padding: 15px 20px;
         font-size: 17px;
         color: #ebdac1;
-        &.active {
+        &:hover, &.active {
           color: $dark-orange;
         }
       }
       &:hover {
         background-color: #3d3d3d;
+      }
+      &.accordion-label {
+        position: relative;
+        .counter {
+          position: absolute;
+          top: 16px;
+          right: 20px;
+          opacity: 0;
+          width: 30px;
+          padding: 3px;
+          font-size: 12px;
+          font-weight: bold;
+          text-align: center;
+          color: #333;
+          background: #ebdac1;
+          @include border-radius(10px);
+        }
+        .chevrons {
+          position: absolute;
+          top: 14px;
+          right: 20px;
+          @include transition(opacity 1s);
+          i { margin: 0; }
+        }
 
-        a {
-          color: #ffa114;
+        &.collapsed {
+          .counter {
+            opacity: 1;
+            @include transition(opacity 1s 0.25s);
+          }
+          .chevrons {
+            opacity: 0;
+          }
+        }
+        ul {
+          padding: 0;
+          list-style: none;
+
+          li {
+            background: #282828;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #181818;
+
+            a { padding-left: 40px; }
+          }
         }
       }
     }
