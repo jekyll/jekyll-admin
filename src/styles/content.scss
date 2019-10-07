@@ -4,35 +4,26 @@
   table {
     width: 100%;
     background-color: #f2f2f2;
-    margin: .5em 0;
-    font-size: 18px;
-    @include border-radius($border-radius);
-    @include box-shadow(0 1px 3px rgba(0,0,0,.3));
+    margin: 0.5em 0;
+    border: 1px solid $border-color;
+    border-radius: $border-radius;
   }
 
   thead {
-    @include border-top-left-radius($border-radius);
-    @include border-top-right-radius($border-radius);
     color: #fff;
-    background-color: #3a3a3a;
-    background-image: -webkit-gradient(linear, left top, left bottom, from(#3a3a3a), to(#1e1e1e));
-    background-image: -webkit-linear-gradient(top, #3a3a3a 0%, #1e1e1e 100%);
-    background-image: -moz-linear-gradient(top, #3a3a3a 0%, #1e1e1e 100%);
-    background-image: -o-linear-gradient(top, #3a3a3a 0%, #1e1e1e 100%);
-    background-image: linear-gradient(to bottom, #3a3a3a 0%,#1e1e1e 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3a3a3a', endColorstr='#1e1e1e',GradientType=0 );
+    background-color: #333;
+    border: 1px solid #333;
 
     th {
       text-align: left;
       position: relative;
-      @include box-shadow(inset 0 1px 0 rgba(255,255,255,.1));
 
       &:first-child {
-        @include border-top-left-radius($border-radius);
+        border-top-left-radius: $border-radius;
       }
 
       &:last-child {
-        @include border-top-right-radius($border-radius);
+        border-top-right-radius: $border-radius;
       }
     }
   }
@@ -44,9 +35,9 @@
   th {
     text-transform: uppercase;
     font-size: 16px;
-    padding: .5em .75em;
+    padding: 12px;
     text-shadow: 0 -1px 0 rgba(0,0,0,.9);
-    color: #888;
+    color: #ddd;
   }
 
   th.th-actions {
@@ -55,16 +46,10 @@
   }
 
   tbody td {
-    padding: 20px 12px;
+    height: 63px;
+    padding: 15px 0.75em;
     vertical-align: middle;
-    border-top: 1px solid rgba(0,0,0,.1);
-    @include box-shadow(inset 0 1px 0 rgba(255,255,255,.1));
-    background-image: -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.1)), to(rgba(255,255,255,0)));
-    background-image: -webkit-linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-    background-image: -moz-linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-    background-image: -o-linear-gradient(top, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-    background-image: linear-gradient(to bottom, rgba(255,255,255,0.1) 0%,rgba(255,255,255,0) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1affffff', endColorstr='#00ffffff',GradientType=0 );
+    border-top: 1px solid $border-color;
   }
 
   td.row-title {
@@ -79,8 +64,6 @@
 
   td .row-actions {
     float: right;
-    min-width: 96px;
-    font-size: 16px;
   }
 }
 
@@ -94,7 +77,7 @@
     h1 {
       margin: 0 40px 0 0;
       float: left;
-      text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.3);
+      text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.21);
     }
     .page-buttons {
       display: flex;
@@ -143,7 +126,7 @@
       }
       .side-link {
         text-align: center;
-        @include border-radius($border-radius);
+        border-radius: $border-radius;
         margin-bottom: 10px;
         width: 100%;
         display: inline-block;
@@ -175,7 +158,7 @@
 
   .splitter {
     margin: 15px 0;
-    background: #cfcfcf;
+    background: $border-color;
     border: 0;
   }
 
@@ -193,8 +176,8 @@
       color: $white;
       text-align: center;
       background: $dark-gray;
-      @include border-radius($border-radius);
-      @include box-shadow(0px 2px 8px 2px rgba(0, 0, 0, 0.08));
+      border-radius: $border-radius;
+      box-shadow: 0px 2px 8px 2px rgba(0, 0, 0, 0.08);
       &:after {
         content: "";
         position: absolute;
