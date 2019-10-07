@@ -14,7 +14,7 @@
         min-height: 42px;
         line-height: 1.5;
         border: 1px solid $border-color;
-        @include border-radius(2px);
+        border-radius: 2px;
         @include transition(color 250ms ease);
         &:focus {
           border-color: $dark-orange;
@@ -40,7 +40,7 @@
         border: 1px solid $border-color;
         font-size: 16px;
         padding: 8px 10px;
-        @include border-radius(2px);
+        border-radius: 2px;
         @include transition(color 250ms ease);
         &:focus {
           border-color: $dark-orange;
@@ -50,7 +50,7 @@
     .meta-value-array {
       padding: 10px 15px;
       border: 1px solid $border-color;
-      @include border-radius(3px);
+      border-radius: 3px;
       position: relative;
       .array-item-wrap {
         margin-bottom: 20px;
@@ -105,7 +105,7 @@
             font-size: 16px;
             min-height: 48px;
             line-height: 1.5;
-            @include border-radius(2px);
+            border-radius: 2px;
           }
           .meta-buttons {
             transform: translateY(-50%);
@@ -156,7 +156,7 @@
           display: inline-block;
           text-align: center;
           outline: none;
-          @include border-radius(50%);
+          border-radius: 50%;
           &:hover, &:focus {
             border-color: $dark-orange;
             background: $dark-orange;
@@ -238,7 +238,7 @@
   }
   .date-field {
     max-height: 42px;
-    @include border-radius(2px);
+    border-radius: 2px;
     border-color: $border-color;
     input {
       padding: 8px 10px;

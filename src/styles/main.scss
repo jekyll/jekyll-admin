@@ -14,7 +14,7 @@
 @import "button";
 @import "staticfiles";
 
-* {
+*, *:before, *:after {
   box-sizing: border-box;
 }
 

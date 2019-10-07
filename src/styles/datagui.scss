@@ -2,7 +2,7 @@
   margin-bottom: 40px;
   padding: 30px;
   background: #222;
-  @include border-radius($border-radius);
+  border-radius: $border-radius;
   .metafield {
     position: relative;
     margin-bottom: 5px;
@@ -20,7 +20,7 @@
         color: #eb2659;
         background: #2b2b2b;
         border: 1px solid transparent;
-        @include border-radius($border-radius);
+        border-radius: $border-radius;
         @include transition(color 250ms ease);
         &:focus {
           color: #eaeaea !important;
@@ -56,7 +56,7 @@
         resize: vertical;
         background: #2b2b2b;
         border: 1px solid transparent;
-        @include border-radius($border-radius);
+        border-radius: $border-radius;
         @include transition(color 250ms ease);
         &:focus {
           border-color: $dark-orange;
@@ -112,7 +112,7 @@
       padding: 8px 10px;
       pointer-events: auto;
       border: 1px solid #383838;
-      @include border-radius($border-radius);
+      border-radius: $border-radius;
       .array-item-wrap {
         margin-bottom: 5px;
         .array-header {
@@ -147,7 +147,7 @@
         text-align: center;
         color: white;
         background: $dark-orange;
-        @include border-radius(50%);
+        border-radius: 50%;
         i {
           margin: 0;
         }
@@ -171,7 +171,7 @@
             font-size: 16px;
             line-height: 1.5;
             pointer-events: auto;
-            @include border-radius($border-radius);
+            border-radius: $border-radius;
           }
           .meta-buttons {
             position: absolute;
@@ -247,7 +247,7 @@
           text-align: center;
           outline: none;
           border: 2px solid #575757;
-          @include border-radius(50%);
+          border-radius: 50%;
           &:hover, &:focus {
             color: white;
             background: $dark-orange;
@@ -273,7 +273,7 @@
           transform: translateX(-50%);
           z-index: 30;
           border: 1px solid #323232;
-          @include border-radius($border-radius);
+          border-radius: $border-radius;
           &:before {
             position: absolute;
             top: -10px;
@@ -412,14 +412,14 @@
     pointer-events: auto;
     background: #222;
     &.rw-widget {
-      @include border-radius($border-radius);
+      border-radius: $border-radius;
       border-color: transparent;
     }
     input {
       padding: 11px 13px;
       width: calc(100% - 3px);
       min-height: 40px;
-      @include border-radius($border-radius);
+      border-radius: $border-radius;
       color: white;
       background: #2b2b2b;
     }

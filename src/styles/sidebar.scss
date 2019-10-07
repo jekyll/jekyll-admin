@@ -49,7 +49,7 @@
           text-align: center;
           color: #333;
           background: #beb9b1;
-          @include border-radius(10px);
+          border-radius: 10px;
         }
         .chevrons {
           position: absolute;

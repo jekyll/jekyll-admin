@@ -4,7 +4,7 @@
   color: #9098A3;
   background-color: white;
   border: 1px solid $border-color;
-  @include border-radius($border-radius);
+  border-radius: $border-radius;
   position: relative;
   .preview-info {
     padding: 40px;
@@ -33,7 +33,7 @@
     background-color: #fcfcfc;
     margin: 10px 7px;
     position: relative;
-    @include border-radius($border-radius);
+    border-radius: $border-radius;
     &:hover .delete{
       opacity: 1;
     }
