@@ -2,7 +2,7 @@ environment:
   nodejs_version: "6"
   RACK_ENV: test
   JEKYLL_LOG_LEVEL: warn
-  RUBY_VERSION: 22
+  RUBY_VERSION: 24
   matrix:
     - TEST_SUITE: node
     - TEST_SUITE: ruby
