@@ -10,11 +10,11 @@
         max-width: 190px;
         font-size: 16px;
         font-weight: 700;
-        padding: 11px 10px;
-        min-height: 46px;
+        padding: 8px 10px;
+        min-height: 42px;
         line-height: 1.5;
         border: 1px solid $border-color;
-        @include border-radius(2px);
+        border-radius: 2px;
         @include transition(color 250ms ease);
         &:focus {
           border-color: $dark-orange;
@@ -32,15 +32,15 @@
         resize: vertical;
         height: auto;
         width: 100%;
-        min-height: 46px;
+        min-height: 42px;
         max-height: 500px;
         line-height: 1.5;
         margin-bottom: 0;
         vertical-align: bottom;
         border: 1px solid $border-color;
         font-size: 16px;
-        padding: 11px 13px;
-        @include border-radius(2px);
+        padding: 8px 10px;
+        border-radius: 2px;
         @include transition(color 250ms ease);
         &:focus {
           border-color: $dark-orange;
@@ -50,7 +50,7 @@
     .meta-value-array {
       padding: 10px 15px;
       border: 1px solid $border-color;
-      @include border-radius(3px);
+      border-radius: 3px;
       position: relative;
       .array-item-wrap {
         margin-bottom: 20px;
@@ -101,11 +101,11 @@
           margin-bottom: 5px;
           input {
             width: 100%;
-            padding: 11px 55px 10px 11px;
+            padding: 8px 55px 10px 11px;
             font-size: 16px;
             min-height: 48px;
             line-height: 1.5;
-            @include border-radius(2px);
+            border-radius: 2px;
           }
           .meta-buttons {
             transform: translateY(-50%);
@@ -156,7 +156,7 @@
           display: inline-block;
           text-align: center;
           outline: none;
-          @include border-radius(50%);
+          border-radius: 50%;
           &:hover, &:focus {
             border-color: $dark-orange;
             background: $dark-orange;
@@ -237,24 +237,25 @@
     z-index: 30;
   }
   .date-field {
-    @include border-radius(2px);
+    max-height: 42px;
+    border-radius: 2px;
     border-color: $border-color;
     input {
-      padding: 11px 13px;
-      min-height: 46px;
+      padding: 8px 10px;
+      min-height: 40px;
     }
   }
   .rw-datetimepicker {
     box-shadow: none !important;
     font-size: 16px !important;
     .rw-btn {
-      min-width: 37px;
+      min-width: 42px;
       i { margin: 0; }
     }
     &.rw-has-both {
-      padding-right: 74px;
+      padding-right: 84px;
       > .rw-select {
-        width: 75px;
+        width: 85px;
         &:hover {
           background: #fff;
         }
@@ -295,7 +296,7 @@
         color: #333;
         line-height: 2.286em;
         height: 100%;
-        min-width: 37px;
+        min-width: 38px;
         display: inline-block;
         margin: 0;
         text-align: center;
