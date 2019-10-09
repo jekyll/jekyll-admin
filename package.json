@@ -118,7 +118,11 @@
       "^.+\\.(gif|ttf|eot|svg|woff|woff2|ico)$": "<rootDir>/tools/fileMock.js"
     },
     "roots": ["src"],
-    "testMatch": ["**/*.spec.js"]
+    "testMatch": ["**/*.spec.js"],
+    "globals": {
+      "__DEV__": true,
+      "VERSION": "0.9.0"
+    }
   },
   "babel": {
     "env": {
