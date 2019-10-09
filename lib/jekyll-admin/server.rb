@@ -65,7 +65,7 @@ module JekyllAdmin
     end
 
     def document_body
-      body = String.new("")
+      body = +""
       body << if front_matter && !front_matter.empty?
                 YAML.dump(restored_front_matter).strip
                   .gsub(": 'null'", ": null") # restore null values
