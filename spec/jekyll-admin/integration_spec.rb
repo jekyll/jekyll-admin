@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe "integration" do
   let(:source) { fixture_path("site") }
   let(:dest) { File.join(source, "_site") }

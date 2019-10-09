@@ -15,9 +15,6 @@ Metrics/BlockLength:
 Metrics/PerceivedComplexity:
   Max: 9
 
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 Naming/MemoizedInstanceVariableName:
   Exclude:
     - lib/jekyll-admin/page_without_a_file.rb

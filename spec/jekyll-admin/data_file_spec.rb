@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe JekyllAdmin::DataFile do
   let(:data_dir) { "_data" }
   let(:relative_path) { "data_file.yml" }
