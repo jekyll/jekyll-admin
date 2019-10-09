@@ -227,6 +227,8 @@
       "react/self-closing-comp": 1,
       "react/sort-comp": 1
     },
-    "globals": {}
+    "globals": {
+      "VERSION": true
+    }
   }
 }
