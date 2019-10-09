@@ -50,6 +50,7 @@ class MarkdownEditor extends Component {
       '|',
       'link',
       'image',
+      'table',
       '|',
       'preview',
       'side-by-side',
