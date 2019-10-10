@@ -21,9 +21,17 @@ function setup(props = defaultProps) {
 
 describe('Components::Button', () => {
   it('should render correctly', () => {
-    const { link, icon } = setup();
+    let { link, icon } = setup();
     expect(link.text()).toBe('Save');
     expect(icon.node).toBeFalsy();
+
+    link = setup({
+      ...defaultProps,
+      type: 'create',
+      active: false,
+      block: true,
+    }).link;
+    expect(link.text()).toBe('Create');
   });
 
   it('should have correct class names', () => {
@@ -40,8 +48,15 @@ describe('Components::Button', () => {
   });
 
   it('should render triggered text', () => {
-    const { link } = setup({ ...defaultProps, triggered: true });
+    let { link } = setup({ ...defaultProps, triggered: true });
     expect(link.text()).toBe('Saved');
+
+    link = setup({
+      ...defaultProps,
+      type: 'view-toggle',
+      triggered: true,
+    }).link;
+    expect(link.text()).toBe('Switch View to Raw Editor');
   });
 
   it('should render icon', () => {

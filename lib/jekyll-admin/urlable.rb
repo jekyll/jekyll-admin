@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   # Abstract module to be included in Convertible and Document to provide
   # additional, URL-specific functionality without duplicating logic

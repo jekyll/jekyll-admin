@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   module PathHelper
     def sanitized_path(path)
