@@ -5,7 +5,8 @@ import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('development'),
-  __DEV__: true
+  __DEV__: true,
+  VERSION: JSON.stringify(require("./package.json").version)
 };
 
 export default {
