@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe JekyllAdmin::APIable do
   [:page, :post].each do |type|
     context type do

@@ -1,8 +1,10 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class StaticServer < Sinatra::Base
     set :public_dir, File.expand_path("./public", File.dirname(__FILE__))
 
-    MUST_BUILD_MESSAGE = "Front end not yet built. Run `script/build` to build.".freeze
+    MUST_BUILD_MESSAGE = "Front end not yet built. Run `script/build` to build."
 
     # Allow `/admin` and `/admin/`, and `/admin/*` to serve `/public/dist/index.html`
     get "/*" do

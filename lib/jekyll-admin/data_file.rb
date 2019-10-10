@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class DataFile
     METHODS_FOR_LIQUID = %w(path relative_path slug ext title).freeze

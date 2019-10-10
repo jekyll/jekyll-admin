@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   module FileHelper
     # The file the user requested in the URL

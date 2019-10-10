@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class Server < Sinatra::Base
     ROUTES = %w(collections configuration data drafts pages static_files).freeze
@@ -63,12 +65,13 @@ module JekyllAdmin
     end
 
     def document_body
-      body = if front_matter && !front_matter.empty?
-               YAML.dump(restored_front_matter).strip
-                 .gsub(": 'null'", ": null") # restore null values
-             else
-               "---"
-             end
+      body = +""
+      body << if front_matter && !front_matter.empty?
+                YAML.dump(restored_front_matter).strip
+                  .gsub(": 'null'", ": null") # restore null values
+              else
+                "---"
+              end
       body << "\n---\n\n"
       body << request_payload["raw_content"].to_s
     end

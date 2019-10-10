@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Default Sinatra to "production" mode (surpress errors) unless
 # otherwise specified by the `RACK_ENV` environmental variable.
 # Must be done prior to requiring Sinatra, or we'll get a LoadError
