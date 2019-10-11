@@ -96,7 +96,6 @@ module JekyllAdmin
     def basename_with_extension
       "#{basename}#{extension}"
     end
-    alias_method :filename, :basename_with_extension
     alias_method :name, :basename_with_extension
     public :name
 
