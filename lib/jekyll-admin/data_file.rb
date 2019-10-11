@@ -2,7 +2,7 @@
 
 module JekyllAdmin
   class DataFile
-    METHODS_FOR_LIQUID = %w(path relative_path slug ext title).freeze
+    METHODS_FOR_LIQUID = %w(name path relative_path slug ext title).freeze
     EXTENSIONS = %w(yaml yml json csv).freeze
 
     include APIable
@@ -94,9 +94,10 @@ module JekyllAdmin
     end
 
     def basename_with_extension
-      [basename, extension].join
+      "#{basename}#{extension}"
     end
-    alias_method :filename, :basename_with_extension
+    alias_method :name, :basename_with_extension
+    public :name
 
     def namespace
       "data"

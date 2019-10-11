@@ -5,6 +5,7 @@ describe "data" do
 
   let(:base_response) do
     {
+      "name"          => "data_file.yml",
       "path"          => "/_data/data_file.yml",
       "relative_path" => "data_file.yml",
       "slug"          => "data_file",
@@ -44,6 +45,7 @@ describe "data" do
     get "/data/movies"
 
     expected_response = {
+      "name"          => "actors.yml",
       "path"          => "/_data/movies/actors.yml",
       "relative_path" => "movies/actors.yml",
       "slug"          => "actors",
@@ -61,6 +63,7 @@ describe "data" do
     get "/data/movies/actors.yml"
 
     expected_response = {
+      "name"          => "actors.yml",
       "path"          => "/_data/movies/actors.yml",
       "relative_path" => "movies/actors.yml",
       "slug"          => "actors",
@@ -82,6 +85,7 @@ describe "data" do
     delete_file "_data/data-file-new.yml"
 
     expected_response = {
+      "name"          => "data-file-new.yml",
       "path"          => "/_data/data-file-new.yml",
       "relative_path" => "data-file-new.yml",
       "slug"          => "data-file-new",
@@ -109,6 +113,7 @@ describe "data" do
     delete_file "_data/test-dir/data-file-new.yml"
 
     expected_response = {
+      "name"          => "data-file-new.yml",
       "path"          => "/_data/test-dir/data-file-new.yml",
       "relative_path" => "test-dir/data-file-new.yml",
       "slug"          => "data-file-new",
@@ -136,6 +141,7 @@ describe "data" do
     delete_file "_data/data-file-new.yml"
 
     expected_response = {
+      "name"          => "data-file-new.yml",
       "path"          => "/_data/data-file-new.yml",
       "relative_path" => "data-file-new.yml",
       "slug"          => "data-file-new",
@@ -163,6 +169,7 @@ describe "data" do
     delete_file "_data/test-dir/data-file-new.yml"
 
     expected_response = {
+      "name"          => "data-file-new.yml",
       "path"          => "/_data/test-dir/data-file-new.yml",
       "relative_path" => "test-dir/data-file-new.yml",
       "slug"          => "data-file-new",
@@ -190,6 +197,7 @@ describe "data" do
     write_file "_data/data-file-update.yml", "foo2: bar2"
 
     expected_response = {
+      "name"          => "data-file-update.yml",
       "path"          => "/_data/data-file-update.yml",
       "relative_path" => "data-file-update.yml",
       "slug"          => "data-file-update",
@@ -217,6 +225,7 @@ describe "data" do
     write_file "_data/test-dir/data-file-update.yml", "foo2: bar2"
 
     expected_response = {
+      "name"          => "data-file-update.yml",
       "path"          => "/_data/test-dir/data-file-update.yml",
       "relative_path" => "test-dir/data-file-update.yml",
       "slug"          => "data-file-update",
@@ -245,6 +254,7 @@ describe "data" do
     delete_file "_data/data-file-renamed.yml"
 
     expected_response = {
+      "name"          => "data-file-renamed.yml",
       "path"          => "/_data/data-file-renamed.yml",
       "relative_path" => "data-file-renamed.yml",
       "slug"          => "data-file-renamed",

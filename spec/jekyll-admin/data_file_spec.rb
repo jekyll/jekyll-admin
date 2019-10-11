@@ -28,12 +28,17 @@ describe JekyllAdmin::DataFile do
     expect(subject.slug).to eql("data_file")
   end
 
+  it "exposes the basename_with_extension as 'name'" do
+    expect(subject.name).to eql("data_file.yml")
+  end
+
   it "exposes the title" do
     expect(subject.title).to eql("Data File")
   end
 
   it "returns the hash" do
     expect(subject.to_api).to eql(
+      "name"          => "data_file.yml",
       "path"          => "/_data/data_file.yml",
       "relative_path" => "data_file.yml",
       "slug"          => "data_file",
@@ -46,6 +51,7 @@ describe JekyllAdmin::DataFile do
 
   it "returns the hash with content" do
     expect(subject.to_api(:include_content => true)).to eql(
+      "name"          => "data_file.yml",
       "path"          => "/_data/data_file.yml",
       "relative_path" => "data_file.yml",
       "slug"          => "data_file",
