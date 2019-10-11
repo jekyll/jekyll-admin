@@ -51,6 +51,13 @@ describe "pages" do
       expect(first_page).to have_key("page_only")
     end
 
+    it "includes the pages' relative_path" do
+      get "/pages"
+      expect(last_response).to be_ok
+      expect(first_page).to have_key("relative_path")
+      expect(first_page["relative_path"]).to eq("page.md")
+    end
+
     it "doesn't include the raw front matter" do
       get "/pages"
       expect(last_response).to be_ok

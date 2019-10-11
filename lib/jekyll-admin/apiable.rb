@@ -22,6 +22,9 @@ module JekyllAdmin
     #
     #
     # Returns a hash (which can then be to_json'd)
+    #
+    # rubocop:disable Metrics/AbcSize
+    # rubocop:disable Metrics/CyclomaticComplexity
     def to_api(include_content: false)
       output = hash_for_api
       output = output.merge(url_fields)
@@ -36,6 +39,9 @@ module JekyllAdmin
       # Documents have duplicate output and content fields, Pages do not
       # Since it's an API, use `content` in both for consistency
       output.delete("output")
+
+      # Inject a `relative_path` field when available
+      output["relative_path"] ||= relative_path if respond_to?(:relative_path)
 
       # By default, calling to_liquid on a collection will return a docs
       # array with each rendered document, which we don't want.
@@ -53,6 +59,8 @@ module JekyllAdmin
 
       output
     end
+    # rubocop:enable Metrics/CyclomaticComplexity
+    # rubocop:enable Metrics/AbcSize
 
     private
 
