@@ -1,0 +1,32 @@
+{
+  "env": {
+    "development": {
+      "presets": ["env", "react", "react-hmre", "stage-1"]
+    },
+    "production": {
+      "presets": [
+        [
+          "env",
+          {
+            "es2015": {
+              "modules": false
+            },
+            "targets": {
+              "ie": 9,
+              "uglify": true
+            }
+          }
+        ],
+        "react",
+        "stage-1"
+      ],
+      "plugins": [
+        "transform-react-constant-elements",
+        "transform-react-remove-prop-types"
+      ]
+    },
+    "test": {
+      "presets": ["env", "react", "stage-1"]
+    }
+  }
+}
