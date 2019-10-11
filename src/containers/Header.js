@@ -1,9 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
-import { VERSION } from '../constants';
 
 export class Header extends Component {
   render() {
@@ -16,7 +13,7 @@ export class Header extends Component {
             <span>{config.title || 'You have no title!'}</span>
           </Link>
         </h3>
-        <span className="version">{VERSION}</span>
+        <span className="version">v{VERSION}</span>
       </div>
     );
   }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class Server < Sinatra::Base
     # supported extensions, in order of preference, for now, no .csv

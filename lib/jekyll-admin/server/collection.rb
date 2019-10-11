@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/collections" do

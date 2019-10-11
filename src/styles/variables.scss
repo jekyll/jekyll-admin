@@ -12,9 +12,11 @@ $inactive-gray: #9ea1a3;
 $new: #68BD6A;
 $new-hover: #80ce81;
 
-$border-color: #d4d7d9;
+$background-color: #f8f8f8;
+
+$border-color: darken($background-color, 15%);
 $border-color-focus: $orange;
-$border-radius: 4px;
+$border-radius: 2px;
 
 $btn-initial: #9ea1a3;
 $btn-initial-border: #828282;

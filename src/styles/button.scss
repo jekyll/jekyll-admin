@@ -8,8 +8,7 @@
   padding: 12px 20px;
   white-space: nowrap;
   text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.2);
-  @include border-radius($border-radius);
-  @include box-sizing(border-box);
+  border-radius: 4px;
   @include btn($btn-initial, $btn-initial-border);
   i {
     margin-right: 4px;
@@ -24,7 +23,7 @@
 
 .btn-thin {
   padding: 8px;
-  margin: 5px;
+  margin: 0 5px;
 }
 
 .btn-active {
@@ -39,7 +38,7 @@
   @include btn($btn-success, $btn-success-border, pointer);
   &:hover {
     background-color: lighten($btn-success, 5%) !important;
-    @include box-shadow(0 1px 0 $btn-success-border);
+    box-shadow: 0 1px 0 $btn-success-border;
   }
 }
 

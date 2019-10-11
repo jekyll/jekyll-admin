@@ -5,7 +5,8 @@ import { ADMIN_PREFIX } from './src/constants';
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'),
-  __DEV__: false
+  __DEV__: false,
+  VERSION: JSON.stringify(require("./package.json").version)
 };
 
 export default {
