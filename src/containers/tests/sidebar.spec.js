@@ -68,6 +68,24 @@ describe('Containers::Sidebar', () => {
     expect(tree).toMatchSnapshot();
   });
 
+  it('renders with custom collection labels', () => {
+    const props = {
+      ...defaultProps,
+      collections: [
+        {
+          label: 'walkthroughs',
+          sidebar_label: 'Tutorials',
+        },
+        {
+          label: 'docs',
+        },
+      ],
+    };
+
+    const tree = renderer.create(<Sidebar {...props} {...actions} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
   it('calls fetchCollections action after mounted', () => {
     expect(actions.fetchCollections).toHaveBeenCalled();
   });
