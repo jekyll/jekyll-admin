@@ -222,6 +222,139 @@ exports[`Containers::Sidebar renders correctly 1`] = `
 </div>
 `;
 
+exports[`Containers::Sidebar renders with custom collection labels 1`] = `
+<div
+  className="sidebar"
+>
+  <a
+    className="logo"
+    onClick={[Function]}
+    style={Object {}}
+  />
+  <ul
+    className="routes"
+  >
+    <li
+      className="accordion-label collapsed"
+      style={
+        Object {
+          "maxHeight": 50,
+        }
+      }
+    >
+      <a
+        onClick={[Function]}
+      >
+        <i
+          className="fa fa-book"
+        />
+        Collections
+        <div
+          className="counter"
+        >
+          2
+        </div>
+        <div
+          className="chevrons"
+        >
+          <i
+            className="fa fa-chevron-up"
+          />
+        </div>
+      </a>
+      <ul>
+        <li>
+          <a
+            onClick={[Function]}
+            style={Object {}}
+          >
+            <i
+              className="fa fa-book"
+            />
+            Tutorials
+          </a>
+        </li>
+        <li>
+          <a
+            onClick={[Function]}
+            style={Object {}}
+          >
+            <i
+              className="fa fa-book"
+            />
+            Docs
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-book"
+        />
+        Posts
+      </a>
+    </li>
+    <div
+      className="splitter"
+    />
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-file-text"
+        />
+        Pages
+      </a>
+    </li>
+    <div
+      className="splitter"
+    />
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-database"
+        />
+        Data Files
+      </a>
+    </li>
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-file"
+        />
+        Static Files
+      </a>
+    </li>
+    <div
+      className="splitter"
+    />
+    <li>
+      <a
+        onClick={[Function]}
+        style={Object {}}
+      >
+        <i
+          className="fa fa-cog"
+        />
+        Configuration
+      </a>
+    </li>
+  </ul>
+</div>
+`;
+
 exports[`Containers::Sidebar renders with zero collections 1`] = `
 <div
   className="sidebar"
