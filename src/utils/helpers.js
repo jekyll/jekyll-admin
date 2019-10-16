@@ -1,5 +1,6 @@
 import yaml from 'js-yaml';
 import _ from 'underscore';
+import path from 'path';
 
 /**
  * Converts the object into YAML string.
@@ -63,29 +64,22 @@ export const slugify = string => {
 
 /**
  * Returns filename from the given path
- * @param {String} path
+ * @param {String} inputPath
  * @return {String} filename
  */
-export const getFilenameFromPath = path => {
-  if (!path) return '';
-  return path.substring(path.lastIndexOf('/') + 1);
+export const getFilenameFromPath = inputPath => {
+  if (!inputPath) return '';
+  return path.basename(inputPath);
 };
 
 /**
  * Returns extension from the given path or filename
- * @param {String} path or filename
- * @return {String} extension or nil
+ * @param {String} pathOrFilename
+ * @return {String} extension or empty string
  */
-export const getExtensionFromPath = path => {
-  if (!path) return '';
-  const filename = getFilenameFromPath(path);
-  const index = filename.lastIndexOf('.');
-
-  if (index > 0) {
-    return filename.substring(index + 1);
-  } else {
-    return '';
-  }
+export const getExtensionFromPath = pathOrFilename => {
+  if (!pathOrFilename) return '';
+  return path.extname(pathOrFilename).replace(/^\./, '');
 };
 
 /**
