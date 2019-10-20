@@ -79,6 +79,7 @@ export default class Explorer extends Component {
 
   render() {
     const { items, type, newBtnLabel, search, params } = this.props;
+    const typeLabel = type === 'datafiles' ? 'data files' : type;
 
     const to = params.splat
       ? `${ADMIN_PREFIX}/${type}/${params.splat}/new`
@@ -97,13 +98,13 @@ export default class Explorer extends Component {
         </table>
       </div>
     ) : (
-      <h1>{getNotFoundMessage(type)}</h1>
+      <h1>{getNotFoundMessage(typeLabel)}</h1>
     );
 
     return (
       <div>
         <div className="content-header">
-          <Breadcrumbs type={type} splat={params.splat || ''} />
+          <Breadcrumbs type={typeLabel} splat={params.splat || ''} />
           <div className="page-buttons">
             <Link className="btn btn-active" to={to}>
               {newBtnLabel}
