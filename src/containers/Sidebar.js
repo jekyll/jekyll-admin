@@ -44,7 +44,7 @@ export class Sidebar extends Component {
               to={`${ADMIN_PREFIX}/collections/${col.label}`}
             >
               <i className="fa fa-book" />
-              {capitalize(col.label)}
+              {col.sidebar_label || capitalize(col.label)}
             </Link>
           </li>
         );

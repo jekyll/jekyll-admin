@@ -28,6 +28,10 @@ describe "pages" do
       get "/pages"
       expect(last_response).to be_ok
       expect(first_page["name"]).to eq("page.md")
+
+      redirect_page = JekyllAdmin.site.pages.find { |p| p.name == "redirect.html" }
+      expect(redirect_page.url).to eql("/webmaster.html")
+      expect(entries).to_not include(redirect_page.to_api)
     end
 
     it "lists directories" do

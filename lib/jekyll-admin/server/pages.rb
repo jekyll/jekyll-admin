@@ -55,7 +55,21 @@ module JekyllAdmin
       end
 
       def pages
-        site.pages.select(&:html?)
+        site.pages.select { |p| html_page_at_source?(p) }
+      end
+
+      # Test if a given page is *physically located* within the source directory and outputs
+      # to an HTML file.
+      # We don't want *virtual pages* that are generated via plugins.
+      def html_page_at_source?(page)
+        return false unless page.html?
+
+        # If page is not an instance of a `Jekyll::Page` subclass, then it needs additional
+        # inspection.
+        # Can't use `is_a?(Jekyll::Page)` here because it returns true for subclass instances
+        return true if page.class == Jekyll::Page
+
+        File.exist?(site.in_source_dir(page.relative_path))
       end
 
       def directory_pages
