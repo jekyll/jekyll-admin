@@ -10,7 +10,7 @@ describe JekyllAdmin do
 
   it "returns a regex of dirnames treated as special by Jekyll" do
     expect(described_class.special_dirnames_regex).to eql(
-      %r!\A(?:(?-mix:_drafts|_includes|_data|_layouts|_includes|_posts|_puppies))/!
+      %r!\A(?:(?-mix:_posts|_puppies|_drafts|_layouts|_includes|_data))/!
     )
   end
 end
