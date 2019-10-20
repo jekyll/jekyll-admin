@@ -23,15 +23,12 @@ module JekyllAdmin
     #
     # Returns a hash (which can then be to_json'd)
     #
-    # rubocop:disable Metrics/AbcSize
-    # rubocop:disable Metrics/CyclomaticComplexity
     def to_api(include_content: false)
       output = hash_for_api
-      output = output.merge(url_fields)
 
       # Include content, if requested, otherwise remove it
       if include_content
-        output = output.merge(content_fields)
+        output.merge!(content_fields)
       else
         CONTENT_FIELDS.each { |field| output.delete(field) }
       end
@@ -40,9 +37,6 @@ module JekyllAdmin
       # Since it's an API, use `content` in both for consistency
       output.delete("output")
 
-      # Inject a `relative_path` field when available
-      output["relative_path"] ||= relative_path if respond_to?(:relative_path)
-
       # By default, calling to_liquid on a collection will return a docs
       # array with each rendered document, which we don't want.
       if is_a?(Jekyll::Collection)
@@ -50,19 +44,25 @@ module JekyllAdmin
         output["entries_url"] = entries_url
       end
 
-      if is_a?(Jekyll::Document)
-        output["relative_path"] = relative_path.sub("_drafts/", "") if draft?
-        output["name"] = basename
-      end
+      inject_sanitized_relative_path!(output)
 
+      output["name"] = basename if is_a?(Jekyll::Document)
       output["from_theme"] = from_theme_gem? if is_a?(Jekyll::StaticFile)
 
+      output.merge!(url_fields)
       output
     end
-    # rubocop:enable Metrics/CyclomaticComplexity
-    # rubocop:enable Metrics/AbcSize
 
     private
+
+    def inject_sanitized_relative_path!(hsh)
+      return unless respond_to?(:relative_path)
+
+      rel_path = relative_path.dup
+      rel_path.sub!(%r!\A/!, "")
+      rel_path.sub!("_drafts/", "") if is_a?(Jekyll::Document) && draft?
+      hsh["relative_path"] = rel_path
+    end
 
     # Pages don't have a hash method, but Documents do
     def file_path
