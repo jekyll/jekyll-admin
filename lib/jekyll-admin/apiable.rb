@@ -37,6 +37,8 @@ module JekyllAdmin
       # Since it's an API, use `content` in both for consistency
       output.delete("output")
 
+      output["relative_path"] = relative_path_for_api if respond_to?(:relative_path)
+
       # By default, calling to_liquid on a collection will return a docs
       # array with each rendered document, which we don't want.
       if is_a?(Jekyll::Collection)
@@ -44,17 +46,32 @@ module JekyllAdmin
         output["entries_url"] = entries_url
       end
 
-      if is_a?(Jekyll::Document)
-        output["relative_path"] = relative_path.sub("_drafts/", "") if draft?
-        output["name"] = basename
-      end
-
+      output["name"] = basename if is_a?(Jekyll::Document)
       output["from_theme"] = from_theme_gem? if is_a?(Jekyll::StaticFile)
 
       output
     end
 
     private
+
+    # Relative path of files and directories with their *special directories*
+    # and any leading slashes stripped away.
+    #
+    # Examples:
+    #        `_drafts/foo/draft-post.md` => `foo/draft-post.md`
+    #   `_posts/foo/2019-10-18-hello.md` => `foo/2019-10-18-hello.md`
+    #          `_data/teams/members.yml` => `teams/members.yml`
+    #             `/assets/img/logo.png` => `assets/img/logo.png`
+    #            `_layouts/default.html` => `default.html`
+    #            `_includes/footer.html` => `footer.html`
+    #
+    def relative_path_for_api
+      @relative_path_for_api ||= begin
+        relative_path.sub(%r!\A/!, "").tap do |rel_path|
+          rel_path.sub!(JekyllAdmin.special_dirnames_regex, "")
+        end
+      end
+    end
 
     # Pages don't have a hash method, but Documents do
     def file_path

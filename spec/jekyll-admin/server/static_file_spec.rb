@@ -12,6 +12,7 @@ describe "static_files" do
       get "/static_files"
       expect(last_response).to be_ok
       expect(last_response_parsed.last["path"]).to eql("/static-file.txt")
+      expect(last_response_parsed.last["relative_path"]).to eql("static-file.txt")
     end
 
     it "doesn't include the encoded content" do
