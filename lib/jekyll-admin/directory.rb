@@ -16,21 +16,19 @@ module JekyllAdmin
 
     private_constant :RESOURCE_TYPES, :DOT_DIRECTORIES
 
-    # Arguments:
+    # Parameters:
+    #   path - The full path of the directory at which its entries will be listed.
     #
-    # path - full path of the directory which its entries will be listed
-    #
-    # base - passes site.source to generate `relative_path` needed for `to_api`
-    #
-    # content_type - type of the requested directory entries, this is used to generate
-    # API endpoint of the directory along with `splat`
-    #
-    # splat - the requested directory path relative to content namespace
-    def initialize(path, base: nil, content_type: nil, splat: nil)
-      @base = Pathname.new base
-      @content_type = content_type
+    # Named parameters:
+    #           base: - The full path to the directory from source.
+    #          splat: - The requested directory path relative to content namespace.
+    #   content_type: - The type of the requested directory entries. Corresponds to
+    #                   the resources' API namespace.
+    def initialize(path, base:, splat:, content_type:)
+      @path  = Pathname.new path
+      @base  = Pathname.new base
       @splat = Pathname.new splat
-      @path = Pathname.new path
+      @content_type = content_type
     end
 
     def to_liquid
