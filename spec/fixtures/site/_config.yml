@@ -11,6 +11,9 @@ exclude:
   - Gemfile.lock
   - README.md
 
+# Theme for this fixture site
+theme: test-theme
+
 foo: bar
 
 # show draft posts
@@ -26,12 +29,18 @@ defaults:
       path: ''
       type: pages
     values:
+      layout: page
       page_only: true
   - scope:
       path: ''
       type: puppies
     values:
       breed: ''
+  - scope:
+      path: ''
+      type: posts
+    values:
+      layout: post
   - scope:
       path: 'test'
       type: posts

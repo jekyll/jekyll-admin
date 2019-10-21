@@ -10,6 +10,7 @@ gem "jekyll", ENV["JEKYLL_VERSION"] if ENV["JEKYLL_VERSION"]
 
 # Fixture site dependencies
 gem "jekyll-redirect-from"
+gem "test-theme", path: "spec/fixtures/test-theme"
 
 # Site dependencies
 gem "jekyll-seo-tag"
