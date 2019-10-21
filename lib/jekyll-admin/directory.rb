@@ -32,10 +32,10 @@ module JekyllAdmin
 
     def to_liquid
       {
-        :name          => name,
-        :modified_time => modified_time,
-        :path          => relative_path,
-        :type          => TYPE,
+        "name"          => name,
+        "modified_time" => modified_time,
+        "path"          => relative_path,
+        "type"          => TYPE,
       }
     end
 
