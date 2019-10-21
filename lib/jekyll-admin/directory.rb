@@ -11,7 +11,10 @@ module JekyllAdmin
     include JekyllAdmin::URLable
     include JekyllAdmin::APIable
 
-    TYPE = :directory
+    RESOURCE_TYPES  = %w(pages data drafts).freeze
+    DOT_DIRECTORIES = [".", ".."].freeze
+
+    private_constant :RESOURCE_TYPES, :DOT_DIRECTORIES
 
     # Arguments:
     #
@@ -35,7 +38,7 @@ module JekyllAdmin
         "name"          => name,
         "modified_time" => modified_time,
         "path"          => relative_path,
-        "type"          => TYPE,
+        "type"          => "directory",
       }
     end
 
@@ -48,8 +51,7 @@ module JekyllAdmin
     end
 
     def resource_path
-      types = %w(pages data drafts)
-      if types.include?(content_type)
+      if RESOURCE_TYPES.include?(content_type)
         "/#{content_type}/#{splat}/#{name}"
       else
         "/collections/#{content_type}/entries/#{splat}/#{name}"
@@ -63,7 +65,7 @@ module JekyllAdmin
 
     def directories
       path.entries.map do |entry|
-        next if [".", ".."].include? entry.to_s
+        next if DOT_DIRECTORIES.include? entry.to_s
         next unless path.join(entry).directory?
 
         self.class.new(
