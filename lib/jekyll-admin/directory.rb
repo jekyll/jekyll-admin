@@ -41,7 +41,7 @@ module JekyllAdmin
     end
 
     def relative_path
-      path.relative_path_from(base).to_s
+      @relative_path ||= path.relative_path_from(base).to_s
     end
 
     def resource_path
