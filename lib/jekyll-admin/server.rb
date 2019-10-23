@@ -99,9 +99,5 @@ module JekyllAdmin
   end
 end
 
-require "jekyll-admin/server/collection"
-require "jekyll-admin/server/configuration"
-require "jekyll-admin/server/data"
-require "jekyll-admin/server/draft"
-require "jekyll-admin/server/page"
-require "jekyll-admin/server/static_file"
+# load individual route configurations
+JekyllAdmin::Server::ROUTES.each { |name| require_relative File.join("server", name) }
