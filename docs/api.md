@@ -1,15 +1,20 @@
 ---
 title: HTTP API
 permalink: /api/
+description: >-
+  NOTE: Prior to version 1.0.0, the HTTP API is to be considered a pre-release API, and is subject to breaking changes without
+  notice. You're welcome (and are encouraged) to build external tools or apps against this API, but as the API is refined and
+  finalized, it may not strictly follow <a href="http://semver.org/">Semantic Versioning</a> standards.
 ---
 
-The below are the documented endpoints of the shared HTTP API. All requests and responses are made in JSON, and should follow RESTful standards, including respecting HTTP verbs.
+The below are the documented endpoints of the shared HTTP API. All requests and responses are made in JSON, and should follow
+RESTful standards, including respecting HTTP verbs.
 
-For simplicity, whenever possible, the API mirrors Jekyll internal data structures, meaning, objects are generally the results of calling `.to_liquid.to_json` on an existing Jekyll model (and the resulting fields).
+For simplicity, whenever possible, the API mirrors Jekyll internal data structures, meaning, objects are generally the results
+of calling `.to_liquid.to_json` on an existing Jekyll model (and the resulting fields).
 
 The API is exposed as `http://localhost:4000/_api` (or whatever server/port your Jekyll installation is running on).
 
-**Note: Prior to version 1.0.0, the HTTP API is to be considered a pre-release API, and is subject to breaking changes without notice. You're welcome (and are encouraged) to build external tools or apps against this API, but as the API is refined and finalized, it may not strictly follow [Semantic Versioning](http://semver.org/) standards.**
 
 ### API Request and response payloads
 
@@ -30,17 +35,17 @@ A standard page may then look like this:
 
 ```json
 {
-   "some_front_matter":"default",
-   "foo":"bar",
-   "content":"<h1 id=\"test-page\">Test Page</h1>\n",
-   "dir":"/",
-   "name":"page.md",
-   "path":"page.md",
-   "url":"/page.html",
-   "raw_content":"# Test Page\n",
-   "front_matter":{
-      "foo":"bar"
-   }
+  "some_front_matter":"default",
+  "foo":"bar",
+  "content":"<h1 id=\"test-page\">Test Page</h1>\n",
+  "dir":"/",
+  "name":"page.md",
+  "path":"page.md",
+  "url":"/page.html",
+  "raw_content":"# Test Page\n",
+  "front_matter":{
+    "foo":"bar"
+  }
 }
 ```
 
@@ -52,11 +57,10 @@ When making a request, clients can set the following top-level fields:
 
 #### Pages & Documents in subdirectories
 
-In order to determine which pages and documents are in which subdirectories, API looks for
-the project's file structure and lists all files and directories at a given path together.
-Directories are represented as JSON objects resulting from calling
-`JekyllAdmin::Directory.new`. The resulting JSON objects then merged with
-pages/documents at the same level to be served in index endpoints.
+In order to determine which pages and documents are in which subdirectories, API looks for the project's file structure and
+lists all files and directories at a given path together. Directories are represented as JSON objects resulting from calling
+`JekyllAdmin::Directory.new`. The resulting JSON objects then merged with pages/documents at the same level to be served in
+index endpoints.
 
 A standard JSON object of a directory looks like this:
 
@@ -81,7 +85,8 @@ A JSON object from the config file has the data segregated into two representati
 
 #### Data files in subdirectories
 
-Like Pages and Documents, Data files in subdirectories too can be requested for. The resulting JSON object is very similar to the that derived from Pages and Documents.
+Like Pages and Documents, Data files in subdirectories too can be requested for. The resulting JSON object is very similar to
+that derived from Pages and Documents.
 
 A JSON object from a Data file subdirectory looks like this:
 
@@ -197,7 +202,8 @@ The end-points for drafts are modelled similar to `Pages` even though the resour
 * `raw_content` - the drafts's body (`String`)
 * `front_matter` - the drafts's YAML front matter (`Object`)
 
-While `path` for a sub-directory, is the same as the parameter `directory` itself, for a draft-file, it is the entire path relative to the site's root 
+While `path` for a sub-directory, is the same as the parameter `directory` itself, for a draft-file, it is the entire path
+relative to the site's root.
 
 #### `GET /drafts/:directory`
 

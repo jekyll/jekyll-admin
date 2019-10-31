@@ -1,7 +1,10 @@
 ---
 title: Documentation
 permalink: /
-description: A Jekyll plugin that provides users with a traditional CMS-style graphical interface to author content and administer Jekyll sites. The project is divided into two parts. A Ruby-based HTTP API that handles Jekyll and filesystem operations, and a Javascript-based front end, built on that API.
+description: >-
+  A Jekyll plugin that provides users with a traditional CMS-style graphical interface to author content and administer Jekyll sites. The
+  project is divided into two parts. A Ruby-based HTTP API that handles Jekyll and filesystem operations, and a Javascript-based front end,
+  built on that API.
 ---
 
 ## Installation
@@ -16,8 +19,3 @@ Refer to [Install Plugins](https://jekyllrb.com/docs/plugins/#installing-a-plugi
 ## Contributing
 
 Bug reports and pull requests are welcome on GitHub at <https://github.com/{{ site.github.repository_nwo }}/>.
-
-## Improve this page
-
-Found a mistake? See something that can be made better? These docs are open source.
-Please help: <https://github.com/{{ site.github.repository_nwo }}/edit/master/docs/{{ page.path }}>.
