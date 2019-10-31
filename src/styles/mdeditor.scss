@@ -39,6 +39,14 @@
     .cm-string    { color: #183691 }
     .cm-attribute { color: #795da3 }
 
+    .cm-comment {
+      font-family: Consolas, monospace;
+      font-size: 14px;
+    }
+    .cm-strikethrough {
+      text-decoration: line-through;
+    }
+
     .cm-header-1 {
       font-size: 200%;
       line-height: 200%;
@@ -54,13 +62,6 @@
     .cm-header-4 {
       font-size: 110%;
       line-height: 110%;
-    }
-    .cm-comment {
-      font-family: Consolas, monospace;
-      font-size: 14px;
-    }
-    .cm-strikethrough {
-      text-decoration: line-through;
     }
   }
 
