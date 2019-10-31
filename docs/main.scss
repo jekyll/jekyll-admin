@@ -1,8 +1,8 @@
 ---
 ---
+
 @import 'normalize';
 @import 'variables';
-@import 'mixins';
 @import 'sidebar';
 @import 'header';
 @import 'content';
@@ -76,13 +76,17 @@ a:hover {
 }
 
 code {
+  padding: 1px 5px;
   border-radius: 2px;
   color: #444;
   font-weight: bold;
+  background-color: $border-color-light;
+  border: 1px solid $border-color;
   word-wrap: break-word;
   &.hljs {
     padding: 1em;
     font-size: 14px;
     line-height: 1.75;
+    border: none;
   }
 }

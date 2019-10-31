@@ -1,5 +1,4 @@
 @import "vendors/font-awesome/font-awesome";
-@import "vendors/codemirror";
 @import "normalize";
 @import "variables";
 @import "mixins";
@@ -11,6 +10,7 @@
 @import "datagui";
 @import "breadcrumbs";
 @import "editor";
+@import "mdeditor";
 @import "button";
 @import "staticfiles";
 
