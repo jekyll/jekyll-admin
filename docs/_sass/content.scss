@@ -1,8 +1,6 @@
-@import 'variables';
-
 .content {
   padding: 40px;
-  line-height: 1.8;
+  line-height: 1.5;
   @media(max-width: 768px) {
     padding: 15px;
   }
@@ -16,13 +14,13 @@
   }
 
   .description {
-    margin: 0;
+    margin: 0 0 25px;
     padding: 15px;
     color: #545454;
     font-size: 16px;
     font-weight: 700;
     background-color: #fefefe;
-    border-left: 4px solid $dark-orange;
+    border-left: 10px solid $dark-orange;
   }
 
   .content-header {
@@ -43,5 +41,17 @@
     margin: 15px 0;
     background: #cfcfcf;
     border: 0;
+  }
+
+  .improve-me {
+    margin-top: 40px;
+    padding: 10px;
+    text-align: center;
+    background-color: #fff;
+    border: 1px solid $border-color-light;
+    small {
+      display: block;
+      padding: 2px;
+    }
   }
 }
