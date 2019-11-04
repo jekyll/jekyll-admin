@@ -11,7 +11,3 @@ AllCops:
 
 Metrics/BlockLength:
   Enabled: false
-
-Naming/MemoizedInstanceVariableName:
-  Exclude:
-    - lib/jekyll-admin/page_without_a_file.rb
