@@ -11,45 +11,41 @@ module JekyllAdmin
     include JekyllAdmin::URLable
     include JekyllAdmin::APIable
 
-    TYPE = :directory
+    RESOURCE_TYPES  = %w(pages data drafts).freeze
+    DOT_DIRECTORIES = [".", ".."].freeze
 
-    # Arguments:
+    private_constant :RESOURCE_TYPES, :DOT_DIRECTORIES
+
+    # Parameters:
+    #   path - The full path of the directory at which its entries will be listed.
     #
-    # path - full path of the directory which its entries will be listed
-    #
-    # base - passes site.source to generate `relative_path` needed for `to_api`
-    #
-    # content_type - type of the requested directory entries, this is used to generate
-    # API endpoint of the directory along with `splat`
-    #
-    # splat - the requested directory path relative to content namespace
-    def initialize(path, base: nil, content_type: nil, splat: nil)
-      @base = Pathname.new base
-      @content_type = content_type
+    # Named parameters:
+    #           base: - The full path to the directory from source.
+    #          splat: - The requested directory path relative to content namespace.
+    #   content_type: - The type of the requested directory entries. Corresponds to
+    #                   the resources' API namespace.
+    def initialize(path, base:, splat:, content_type:)
+      @path  = Pathname.new path
+      @base  = Pathname.new base
       @splat = Pathname.new splat
-      @path = Pathname.new path
+      @content_type = content_type
     end
 
     def to_liquid
       {
-        :name          => name,
-        :modified_time => modified_time,
-        :path          => relative_path,
-        :type          => TYPE,
+        "name"          => name,
+        "modified_time" => modified_time,
+        "path"          => relative_path,
+        "type"          => "directory",
       }
     end
 
     def relative_path
-      if content_type == "drafts"
-        path.relative_path_from(base).to_s.sub("_drafts/", "")
-      else
-        path.relative_path_from(base).to_s
-      end
+      @relative_path ||= path.relative_path_from(base).to_s
     end
 
     def resource_path
-      types = %w(pages data drafts)
-      if types.include?(content_type)
+      if RESOURCE_TYPES.include?(content_type)
         "/#{content_type}/#{splat}/#{name}"
       else
         "/collections/#{content_type}/entries/#{splat}/#{name}"
@@ -63,7 +59,7 @@ module JekyllAdmin
 
     def directories
       path.entries.map do |entry|
-        next if [".", ".."].include? entry.to_s
+        next if DOT_DIRECTORIES.include? entry.to_s
         next unless path.join(entry).directory?
 
         self.class.new(

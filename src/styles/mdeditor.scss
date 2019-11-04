@@ -401,16 +401,21 @@ span.CodeMirror-selectedtext { background: 0 0 }
 
 .CodeMirror-sided { width: 50% !important }
 
+.editor-wrapper input.title {
+  &:focus, &:hover {
+    opacity: .8;
+  }
+}
+
 .editor-toolbar {
   position: relative;
-  opacity: .6;
-  @include user-select(none);
   padding: 0 10px;
-  border-top: 1px solid #bbb;
-  border-left: 1px solid #bbb;
-  border-right: 1px solid #bbb;
+  border-top: 1px solid $border-color;
+  border-left: 1px solid $border-color;
+  border-right: 1px solid $border-color;
   border-top-left-radius: $border-radius;
   border-top-right-radius: $border-radius;
+  @include user-select(none);
 
   &:before, &:after {
     display: block;
@@ -421,16 +426,6 @@ span.CodeMirror-selectedtext { background: 0 0 }
   &:before { margin-bottom: 8px }
   &:after  { margin-top: 8px }
 
-  &:hover { opacity: .8 }
-}
-
-.editor-wrapper input.title {
-  &:focus, &:hover {
-    opacity: .8;
-  }
-}
-
-.editor-toolbar {
   &.fullscreen {
     position: fixed;
     top: 0;
@@ -469,14 +464,21 @@ span.CodeMirror-selectedtext { background: 0 0 }
     height: 30px;
     text-align: center;
     text-decoration: none !important;
-    color: #2c3e50 !important;
+    color: #2c3e50;
     cursor: pointer;
+    text-shadow: inherit;
     border: 1px solid transparent;
     border-radius: 3px;
+    opacity: .6;
 
     &.active, &:hover {
-      background: #fcfcfc;
+      background: #fff;
       border-color: #95a5a6;
+      opacity: 1;
+    }
+
+    &:focus {
+      outline: none;
     }
 
     &:before {
@@ -510,11 +512,14 @@ span.CodeMirror-selectedtext { background: 0 0 }
     &.fa-header-smaller:after { content: "▼" }
   }
 
-  &.disabled-for-preview a:not(.no-disable) {
-    text-shadow: inherit;
-    pointer-events: none;
-    background: #fff;
-    border-color: transparent;
+  &.disabled-for-preview {
+    opacity: 1;
+    a:not(.no-disable) {
+      color: #bbb;
+      text-shadow: inherit;
+      pointer-events: none;
+      border-color: transparent;
+    }
   }
 }
 
@@ -535,15 +540,23 @@ span.CodeMirror-selectedtext { background: 0 0 }
     min-width: 4em;
     margin-left: 1em;
   }
+
+  .lines:before      { content: 'lines: ' }
+  .words:before      { content: 'words: ' }
+  .characters:before { content: 'characters: ' }
 }
 
 .editor-preview,
 .editor-preview-side {
   display: none;
-  padding: 10px 15px;
+  padding: 10px 14px;
   overflow: auto;
-  background: #fafafa;
+  background: #fcfcfc;
   box-sizing: border-box;
+
+  > p {
+    margin-top: 4px;
+  }
 
   h1, h2, h3, h4, h5, h6 {
     margin: 0 !important;
@@ -570,8 +583,8 @@ span.CodeMirror-selectedtext { background: 0 0 }
     font-size: inherit;
   }
   pre, code {
-    background: #f2f2f2;
-    border: 1px solid lighten($border-color, 9%);
+    background: #f7f7f7;
+    border: 1px solid lighten($border-color, 11%);
   }
   pre {
     margin-bottom: 10px;
@@ -596,12 +609,6 @@ span.CodeMirror-selectedtext { background: 0 0 }
   }
 }
 
-.editor-statusbar {
-  .lines:before      { content: 'lines: ' }
-  .words:before      { content: 'words: ' }
-  .characters:before { content: 'characters: ' }
-}
-
 .editor-preview {
   position: absolute;
   width: 100%;
@@ -624,16 +631,6 @@ span.CodeMirror-selectedtext { background: 0 0 }
 .editor-preview-active,
 .editor-preview-active-side {
   display: block;
-}
-
-.editor-preview-side > p {
-  margin-top: 0;
-}
-
-.editor-preview {
-  > p {
-    margin-top: 0;
-  }
 }
 
 .CodeMirror-focused {

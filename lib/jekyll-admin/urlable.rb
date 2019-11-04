@@ -35,6 +35,7 @@ module JekyllAdmin
     # Note: we can't use a case statement here, because === doesn't like includes
     #
     # rubocop:disable Metrics/CyclomaticComplexity
+    # rubocop:disable Metrics/PerceivedComplexity
     def resource_path
       if is_a?(Jekyll::Document) && draft?
         "/#{relative_path.sub(%r!\A_!, "")}"
@@ -50,6 +51,7 @@ module JekyllAdmin
         "/pages/#{relative_path}"
       end
     end
+    # rubocop:enable Metrics/PerceivedComplexity
     # rubocop:enable Metrics/CyclomaticComplexity
 
     # URI.join doesn't like joining two relative paths, and File.join may join
