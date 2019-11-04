@@ -39,7 +39,7 @@ describe JekyllAdmin::DataFile do
   it "returns the hash" do
     expect(subject.to_api).to eql(
       "name"          => "data_file.yml",
-      "path"          => "/_data/data_file.yml",
+      "path"          => "_data/data_file.yml",
       "relative_path" => "data_file.yml",
       "slug"          => "data_file",
       "ext"           => ".yml",
@@ -52,7 +52,7 @@ describe JekyllAdmin::DataFile do
   it "returns the hash with content" do
     expect(subject.to_api(:include_content => true)).to eql(
       "name"          => "data_file.yml",
-      "path"          => "/_data/data_file.yml",
+      "path"          => "_data/data_file.yml",
       "relative_path" => "data_file.yml",
       "slug"          => "data_file",
       "ext"           => ".yml",

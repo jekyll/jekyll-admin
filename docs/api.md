@@ -114,7 +114,7 @@ A `GET` call to the `api_url` will return another JSON object for the constituen
     "api_url": "http://localhost:4000/_api/data/books/genres/"
   },
   {
-    "path": "/_data/books/authors.yml",
+    "path": "_data/books/authors.yml",
     "relative_path": "books/authors.yml",
     "slug": "authors",
     "ext": ".yml",

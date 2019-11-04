@@ -6,7 +6,7 @@ describe "data" do
   let(:base_response) do
     {
       "name"          => "data_file.yml",
-      "path"          => "/_data/data_file.yml",
+      "path"          => "_data/data_file.yml",
       "relative_path" => "data_file.yml",
       "slug"          => "data_file",
       "ext"           => ".yml",
@@ -46,7 +46,7 @@ describe "data" do
 
     expected_response = {
       "name"          => "actors.yml",
-      "path"          => "/_data/movies/actors.yml",
+      "path"          => "_data/movies/actors.yml",
       "relative_path" => "movies/actors.yml",
       "slug"          => "actors",
       "ext"           => ".yml",
@@ -64,7 +64,7 @@ describe "data" do
 
     expected_response = {
       "name"          => "actors.yml",
-      "path"          => "/_data/movies/actors.yml",
+      "path"          => "_data/movies/actors.yml",
       "relative_path" => "movies/actors.yml",
       "slug"          => "actors",
       "ext"           => ".yml",
@@ -86,7 +86,7 @@ describe "data" do
 
     expected_response = {
       "name"          => "data-file-new.yml",
-      "path"          => "/_data/data-file-new.yml",
+      "path"          => "_data/data-file-new.yml",
       "relative_path" => "data-file-new.yml",
       "slug"          => "data-file-new",
       "ext"           => ".yml",
@@ -114,7 +114,7 @@ describe "data" do
 
     expected_response = {
       "name"          => "data-file-new.yml",
-      "path"          => "/_data/test-dir/data-file-new.yml",
+      "path"          => "_data/test-dir/data-file-new.yml",
       "relative_path" => "test-dir/data-file-new.yml",
       "slug"          => "data-file-new",
       "ext"           => ".yml",
@@ -142,7 +142,7 @@ describe "data" do
 
     expected_response = {
       "name"          => "data-file-new.yml",
-      "path"          => "/_data/data-file-new.yml",
+      "path"          => "_data/data-file-new.yml",
       "relative_path" => "data-file-new.yml",
       "slug"          => "data-file-new",
       "ext"           => ".yml",
@@ -170,7 +170,7 @@ describe "data" do
 
     expected_response = {
       "name"          => "data-file-new.yml",
-      "path"          => "/_data/test-dir/data-file-new.yml",
+      "path"          => "_data/test-dir/data-file-new.yml",
       "relative_path" => "test-dir/data-file-new.yml",
       "slug"          => "data-file-new",
       "ext"           => ".yml",
@@ -198,7 +198,7 @@ describe "data" do
 
     expected_response = {
       "name"          => "data-file-update.yml",
-      "path"          => "/_data/data-file-update.yml",
+      "path"          => "_data/data-file-update.yml",
       "relative_path" => "data-file-update.yml",
       "slug"          => "data-file-update",
       "ext"           => ".yml",
@@ -226,7 +226,7 @@ describe "data" do
 
     expected_response = {
       "name"          => "data-file-update.yml",
-      "path"          => "/_data/test-dir/data-file-update.yml",
+      "path"          => "_data/test-dir/data-file-update.yml",
       "relative_path" => "test-dir/data-file-update.yml",
       "slug"          => "data-file-update",
       "ext"           => ".yml",
@@ -255,7 +255,7 @@ describe "data" do
 
     expected_response = {
       "name"          => "data-file-renamed.yml",
-      "path"          => "/_data/data-file-renamed.yml",
+      "path"          => "_data/data-file-renamed.yml",
       "relative_path" => "data-file-renamed.yml",
       "slug"          => "data-file-renamed",
       "ext"           => ".yml",
@@ -269,7 +269,7 @@ describe "data" do
     }
 
     request = {
-      "path"    => "/_data/data-file-renamed.yml",
+      "path"    => "_data/data-file-renamed.yml",
       "content" => { "foo" => "bar2" },
     }
     put "/data/data-file-rename.yml", request.to_json
