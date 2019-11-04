@@ -1,4 +1,4 @@
-require: 'rubocop-jekyll'
+require: rubocop-jekyll
 inherit_gem:
   rubocop-jekyll: '.rubocop.yml'
 
@@ -12,16 +12,6 @@ AllCops:
 Metrics/BlockLength:
   Enabled: false
 
-Metrics/PerceivedComplexity:
-  Max: 9
-
-Style/FrozenStringLiteralComment:
-  Enabled: false
-
 Naming/MemoizedInstanceVariableName:
   Exclude:
     - lib/jekyll-admin/page_without_a_file.rb
-
-Naming/UncommunicativeMethodParamName:
-  Exclude:
-    - lib/jekyll-admin/data_file.rb

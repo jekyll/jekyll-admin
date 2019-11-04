@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe "static_files" do
   include Rack::Test::Methods
 

@@ -109,13 +109,13 @@ export class DataFiles extends Component {
 
   renderRows() {
     const { files } = this.props;
-    return _.map(
-      files,
-      entry =>
-        entry.type && entry.type == 'directory'
-          ? this.renderDirectoryRow(entry)
-          : this.renderFileRow(entry)
-    );
+    return _.map(files, entry => {
+      if (entry.type && entry.type == 'directory') {
+        return this.renderDirectoryRow(entry);
+      } else {
+        return this.renderFileRow(entry);
+      }
+    });
   }
 
   render() {
@@ -125,24 +125,17 @@ export class DataFiles extends Component {
       return null;
     }
 
-    let to, dirSplat;
-    if (params.splat) {
-      to = `${ADMIN_PREFIX}/datafiles/${params.splat}/new`;
-      dirSplat = params.splat;
-    } else {
-      to = `${ADMIN_PREFIX}/datafiles/new`;
-      dirSplat = '';
-    }
+    const to = params.splat
+      ? `${ADMIN_PREFIX}/datafiles/${params.splat}/new`
+      : `${ADMIN_PREFIX}/datafiles/new`;
 
-    const document_title = params.splat
-      ? `${params.splat} - Data Files`
-      : 'Data Files';
+    const title = params.splat ? `${params.splat} | Data Files` : 'Data Files';
 
     return (
-      <DocumentTitle title={document_title}>
+      <DocumentTitle title={title}>
         <div>
           <div className="content-header">
-            <Breadcrumbs type="data files" splat={dirSplat} />
+            <Breadcrumbs type="data files" splat={params.splat || ''} />
             <div className="page-buttons">
               <Link className="btn btn-active" to={to}>
                 New data file

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe JekyllAdmin::URLable do
   subject { JekyllAdmin.site.pages.first }
   let(:scheme) { "http" }

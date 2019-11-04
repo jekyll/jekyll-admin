@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class Server < Sinatra::Base
     ROUTES = %w(collections configuration data drafts pages static_files).freeze
@@ -63,14 +65,17 @@ module JekyllAdmin
     end
 
     def document_body
-      body = if front_matter && !front_matter.empty?
-               YAML.dump(restored_front_matter).strip
-                 .gsub(": 'null'", ": null") # restore null values
-             else
-               "---"
-             end
+      body = +""
+      body << if front_matter && !front_matter.empty?
+                YAML.dump(restored_front_matter).strip
+                  .gsub(": 'null'", ": null") # restore null values
+              else
+                "---"
+              end
       body << "\n---\n\n"
       body << request_payload["raw_content"].to_s
+      body << "\n" unless body.end_with?("\n")
+      body
     end
     alias_method :page_body, :document_body
 
@@ -96,9 +101,5 @@ module JekyllAdmin
   end
 end
 
-require "jekyll-admin/server/collection"
-require "jekyll-admin/server/configuration"
-require "jekyll-admin/server/data"
-require "jekyll-admin/server/draft"
-require "jekyll-admin/server/page"
-require "jekyll-admin/server/static_file"
+# load individual route configurations
+JekyllAdmin::Server::ROUTES.each { |name| require_relative File.join("server", name) }

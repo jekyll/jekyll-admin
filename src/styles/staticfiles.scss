@@ -2,9 +2,9 @@
   text-align: center;
   padding: 20px;
   color: #9098A3;
-  background-color: white;
-  border: 2px dashed $border-color;
-  @include border-radius($border-radius);
+  background-color: #fafafa;
+  border: 2px dashed lighten($border-color, 9%);
+  border-radius: $border-radius;
   position: relative;
   .preview-info {
     padding: 40px;
@@ -25,8 +25,8 @@
 
 .static-list {
   padding: 25px;
-  background-color: #fafafa;
-  border: 1px solid $border-color;
+  background-color: #fcfcfc;
+  border: 1px solid lighten($border-color, 9%);
 }
 
 .preview-container {
@@ -35,14 +35,15 @@
   .file-preview {
     display: flex;
     flex-direction: column;
-    border: 1px solid transparent;
-    background-color: #fcfcfc;
-    margin: 10px;
+    border: 1px solid lighten($border-color, 12%);
+    background-color: #fff;
+    margin: 10px 7px;
     position: relative;
-    @include border-radius($border-radius);
+    border-radius: $border-radius;
     &:hover .delete{
       opacity: 1;
     }
+    a { height: 150px; }
     div {
       display: table;
       width: 150px;
@@ -71,6 +72,7 @@
       }
     }
     span.filename {
+      padding: 5px;
       font-size: 14px;
       line-height: 2;
       text-align: center;
@@ -78,6 +80,8 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      border-top: 1px solid lighten($border-color, 9%);
+      border-bottom: 1px solid lighten($border-color, 9%);
     }
     img {
       @include nodrag();

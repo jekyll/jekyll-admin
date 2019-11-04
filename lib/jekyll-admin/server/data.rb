@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class Server < Sinatra::Base
     # supported extensions, in order of preference, for now, no .csv
@@ -47,7 +49,7 @@ module JekyllAdmin
 
       def entries
         args = {
-          :base         => sanitized_path(DataFile.data_dir),
+          :base         => site.in_source_dir(DataFile.data_dir),
           :content_type => "data",
           :splat        => splats.first,
         }

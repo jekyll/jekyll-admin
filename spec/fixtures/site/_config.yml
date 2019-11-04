@@ -1,8 +1,9 @@
 title: Your awesome title
 
-# Load the admin interface.
+# Load the admin interface and some plugins for testing.
 plugins:
   - jekyll-admin
+  - jekyll-redirect-from
 
 # Exclude these files from being processed.
 exclude:

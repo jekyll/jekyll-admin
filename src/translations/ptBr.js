@@ -46,6 +46,7 @@ export const sidebar = {
   posts: 'Postagens',
   drafts: 'Rascunhos',
   datafiles: 'Arquivos de dados',
+  collections: 'Colecções',
   staticfiles: 'Arquivos estáticos',
   configuration: 'Configuração',
 };

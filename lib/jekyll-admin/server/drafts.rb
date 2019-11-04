@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/drafts" do
@@ -76,7 +78,7 @@ module JekyllAdmin
 
       def entries
         args = {
-          :base         => site.source,
+          :base         => site.in_source_dir("_drafts"),
           :content_type => "drafts",
           :splat        => params["splat"].first,
         }
