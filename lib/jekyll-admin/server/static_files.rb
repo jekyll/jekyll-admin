@@ -11,6 +11,7 @@ module JekyllAdmin
       # End-point to retrieve individual directories that contain static-files
       get "/?*" do
         render_404 unless File.exist?(path)
+
         if requested_file
           json requested_file.to_api(:include_content => true)
         else
@@ -39,43 +40,39 @@ module JekyllAdmin
       private
 
       # returns relative path of root level directories that contain static files
-      def directory_names
-        static_files.map do |f|
-          File.dirname(f.path.sub("#{site.source}/", "")).split("/")[0]
+      def dirs_at_root
+        static_files.map do |file|
+          File.dirname(file.path.sub("#{site.source}/", "")).split("/")[0]
         end.uniq
       end
 
       def directory_files
-        static_files.find_all do |p|
-          sanitized_path(File.dirname(p.path)) == directory_path
+        static_files.find_all do |file|
+          sanitized_path(File.dirname(file.path)) == directory_path
         end
       end
 
       def entries
+        splat = params["splat"].first
         args = {
           :base         => site.source,
           :content_type => "static_files",
-          :splat        => params["splat"].first,
+          :splat        => splat,
         }
         # get all directories inside the requested directory
         directory = JekyllAdmin::Directory.new(directory_path, args)
         directories = directory.directories
 
         # exclude root level directories which do not have static files
-        if params["splat"].first.empty?
-          directories = directories.select do |d|
-            directory_names.include? d.name.to_s
-          end
-        end
+        directories = directories.select { |d| dirs_at_root.include? d.name.to_s } if splat.empty?
         directories.concat(directory_files)
       end
 
       def static_file_body
-        if !request_payload["raw_content"].to_s.empty?
-          request_payload["raw_content"].to_s
-        else
-          Base64.decode64 request_payload["encoded_content"].to_s
-        end
+        raw_content = request_payload["raw_content"]
+        return raw_content if raw_content.is_a?(String) && raw_content != ""
+
+        Base64.decode64 request_payload["encoded_content"].to_s
       end
 
       def static_files
