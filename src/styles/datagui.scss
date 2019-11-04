@@ -5,26 +5,29 @@
   border-radius: $border-radius;
   .metafield {
     position: relative;
-    margin-bottom: 5px;
     zoom: 1;
+    .field {
+      font-size: 16px;
+      line-height: 1.5;
+      min-height: 42px;
+      background: #2b2b2b;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      @include transition(color 250ms ease);
+      &:focus {
+        border-color: $dark-orange;
+      }
+    }
     .meta-key {
       color: #eb2659;
       .key-field {
-        max-width: 190px;
-        min-height: 42px;
-        margin: 0 0 10px;
+        margin: 0 0 15px;
         padding: 8px 10px;
-        font-size: 16px;
+        max-width: 190px;
         font-weight: 700;
-        line-height: 1.5;
         color: #eb2659;
-        background: #2b2b2b;
-        border: 1px solid transparent;
-        border-radius: $border-radius;
-        @include transition(color 250ms ease);
         &:focus {
           color: #eaeaea !important;
-          border-color: $dark-orange;
         }
       }
     }
@@ -41,26 +44,16 @@
     }
     .meta-value {
       .value-field {
+        margin-bottom: 10px;
+        padding: 8px 10px;
         width: 100%;
-        min-height: 42px;
         height: auto;
         max-height: 500px;
         overflow: hidden;
-        margin-bottom: 10px;
-        padding: 8px 10px;
-        font-size: 16px;
-        line-height: 1.5;
         color: #eaeaea;
         vertical-align: bottom;
         word-wrap: break-word;
         resize: vertical;
-        background: #2b2b2b;
-        border: 1px solid transparent;
-        border-radius: $border-radius;
-        @include transition(color 250ms ease);
-        &:focus {
-          border-color: $dark-orange;
-        }
       }
       &:after {
         display: table;
@@ -107,9 +100,9 @@
     .meta-value-array {
       position: relative;
       margin-right: auto;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       margin-left: 36px;
-      padding: 8px 10px;
+      padding: 8px 20px 12px 15px;
       pointer-events: auto;
       border: 1px solid #383838;
       border-radius: $border-radius;
@@ -145,7 +138,7 @@
         font-size: 16px;
         line-height: 26px;
         text-align: center;
-        color: white;
+        color: #fff;
         background: $dark-orange;
         border-radius: 50%;
         i {
@@ -154,24 +147,20 @@
       }
     }
     .meta-value-object {
+      margin-bottom: 15px;
       margin-left: 36px;
       .object-item-wrap {
         position: relative;
         min-height: 50px;
-        margin-bottom: 5px;
         .object-key {
           position: relative;
           width: 190px;
           max-width: 200px;
-          margin-bottom: 10px;
+          margin-bottom: 15px;
+          pointer-events: auto;
           input {
             width: 100%;
-            min-height: 42px;
             padding: 8px 55px 8px 10px;
-            font-size: 16px;
-            line-height: 1.5;
-            pointer-events: auto;
-            border-radius: $border-radius;
           }
           .meta-buttons {
             position: absolute;
@@ -249,7 +238,7 @@
           border: 2px solid #575757;
           border-radius: 50%;
           &:hover, &:focus {
-            color: white;
+            color: #fff;
             background: $dark-orange;
             border-color: $dark-orange;
           }
@@ -295,7 +284,7 @@
               padding-right: 8px;
             }
             &:hover {
-              color: white;
+              color: #fff;
               background: $dark-orange;
               border-color: $dark-orange;
             }
@@ -305,7 +294,7 @@
             &:hover {
               background: $dark-red;
               i {
-                color: white;
+                color: #fff;
               }
             }
           }
@@ -315,11 +304,8 @@
     .object-key {
       .key-field {
         color: #eb2659;
-        background: #2b2b2b;
-        border-color: transparent;
         &:focus {
           color: #eaeaea !important;
-          border-color: $dark-orange;
         }
       }
     }
@@ -420,7 +406,7 @@
       width: calc(100% - 3px);
       min-height: 40px;
       border-radius: $border-radius;
-      color: white;
+      color: #fff;
       background: #2b2b2b;
     }
   }
@@ -434,7 +420,7 @@
     box-shadow: none !important;
     font-size: 16px !important;
     .rw-btn {
-      color: white;
+      color: #fff;
       min-width: 37px;
       &:hover {
         color: #222;

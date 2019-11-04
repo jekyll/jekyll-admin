@@ -45,6 +45,13 @@ describe "drafts" do
       expect(first_draft["relative_path"]).to eq("draft-dir/another-draft-post.md")
     end
 
+    it "lists directories in subdirectories" do
+      get "/drafts/draft-dir"
+      expect(last_response).to be_ok
+      expect(entries.first["type"]).to eq("directory")
+      expect(entries.first["path"]).to eq("draft-dir/WIP")
+    end
+
     it "includes front matter defaults" do
       get "/drafts"
       expect(last_response).to be_ok

@@ -68,10 +68,12 @@ module JekyllAdmin
       end
 
       def entries
+        collections_dir = site.config["collections_dir"]
+        collection_id, splats = params.values_at("collection_id", "splat")
         args = {
-          :base         => site.source,
-          :content_type => params["collection_id"],
-          :splat        => params["splat"].first,
+          :base         => site.in_source_dir(collections_dir, "_#{collection_id}"),
+          :content_type => collection_id,
+          :splat        => splats&.first,
         }
         # get the directories inside the requested directory
         directory = JekyllAdmin::Directory.new(directory_path, args)
