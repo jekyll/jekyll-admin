@@ -94,18 +94,25 @@ describe "collections" do
         expect(last_response).to be_ok
         expect(entries.first["type"]).to eq("directory")
         expect(entries.first["name"]).to eq("more posts")
+        expect(entries.first["path"]).to eq("more posts")
       end
 
       it "lists documents in subdirectories" do
         get "/collections/posts/entries/more%20posts/some%20more%20posts/"
         expect(last_response).to be_ok
-        expect(first_document["id"])
-          .to eq("/2016/05/02/another-test-post-within-subdirectory")
+        expect(first_document["id"]).to eq("/2016/05/02/another-test-post-within-subdirectory")
         expect(first_document["path"])
           .to eq(
-            "_posts/more posts/some more " \
-            "posts/2016-05-02-another-test-post-within-subdirectory.md"
+            "_posts/more posts/some more posts/2016-05-02-another-test-post-within-subdirectory.md"
           )
+      end
+
+      it "lists directories in subdirectories" do
+        get "/collections/posts/entries/more%20posts"
+        expect(last_response).to be_ok
+        expect(entries.first["type"]).to eq("directory")
+        expect(entries.first["name"]).to eq("some more posts")
+        expect(entries.first["path"]).to eq("more posts/some more posts")
       end
     end
   end
