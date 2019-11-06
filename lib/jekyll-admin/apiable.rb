@@ -61,9 +61,7 @@ module JekyllAdmin
     # Examples:
     #        `_drafts/foo/draft-post.md` => `foo/draft-post.md`
     #   `_posts/foo/2019-10-18-hello.md` => `foo/2019-10-18-hello.md`
-    #          `_data/teams/members.yml` => `teams/members.yml`
     #             `/assets/img/logo.png` => `assets/img/logo.png`
-    #
     def relative_path_for_api
       return unless respond_to?(:relative_path) && relative_path
 
