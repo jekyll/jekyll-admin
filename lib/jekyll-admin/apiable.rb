@@ -22,6 +22,8 @@ module JekyllAdmin
     #                   to support mapping on indexes where we only want metadata
     #
     # Returns a hash (which can then be to_json'd)
+    #
+    # rubocop:disable Metrics/AbcSize
     def to_api(include_content: false)
       output = API_SCAFFOLD.merge hash_for_api
 
@@ -55,6 +57,7 @@ module JekyllAdmin
       output.merge!(url_fields)
       output
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 
