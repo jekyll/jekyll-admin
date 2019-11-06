@@ -21,14 +21,13 @@ module JekyllAdmin
     # include_content - if true, includes the content in the respond, false by default
     #                   to support mapping on indexes where we only want metadata
     #
-    #
     # Returns a hash (which can then be to_json'd)
     def to_api(include_content: false)
       output = API_SCAFFOLD.merge hash_for_api
 
       # Include content, if requested, otherwise remove it
       if include_content
-        output = output.merge(content_fields)
+        output.merge!(content_fields)
       else
         CONTENT_FIELDS.each { |field| output.delete(field) }
       end
@@ -53,7 +52,7 @@ module JekyllAdmin
 
       output["from_theme"] = from_theme_gem? if is_a?(Jekyll::StaticFile)
 
-      output = output.merge(url_fields)
+      output.merge!(url_fields)
       output
     end
 
