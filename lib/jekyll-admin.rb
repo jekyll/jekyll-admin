@@ -37,16 +37,6 @@ module JekyllAdmin
       site
     end
   end
-
-  # Returns a regular expression that can be used to strip special dirnames from
-  # concerned resource's relative path.
-  def self.special_dirnames_regex
-    @special_dirnames_regex ||= begin
-      special_dirnames = site.collections.values.map(&:relative_directory).push("_drafts")
-        .concat(site.config.values_at("layouts_dir", "includes_dir", "data_dir"))
-      %r!\A(?:#{Regexp.union(special_dirnames)})/!
-    end
-  end
 end
 
 # Monkey Patches
