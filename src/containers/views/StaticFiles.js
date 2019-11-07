@@ -51,10 +51,10 @@ export class StaticFiles extends Component {
     this.refs.dropzone.openDropzone();
   };
 
-  renderFilePreviewRow(static_files) {
+  renderFilePreviewRow(static_files, key) {
     const { params, onClickStaticFile, deleteStaticFile } = this.props;
     return (
-      <tr>
+      <tr key={key}>
         <td>
           <Dropzone
             ref="dropzone"
@@ -69,11 +69,11 @@ export class StaticFiles extends Component {
     );
   }
 
-  renderDirectoryRow(directory) {
+  renderDirectoryRow(directory, index) {
     const { name, path } = directory;
     const to = `${ADMIN_PREFIX}/staticfiles/${path}`;
     return (
-      <tr key={name}>
+      <tr key={index}>
         <td className="row-title">
           <strong>
             <Link to={to}>
@@ -92,8 +92,8 @@ export class StaticFiles extends Component {
     const static_files = files.filter(entity => !entity.type);
 
     return dirs
-      .map(entry => this.renderDirectoryRow(entry))
-      .concat(this.renderFilePreviewRow(static_files));
+      .map((entry, index) => this.renderDirectoryRow(entry, index))
+      .concat(this.renderFilePreviewRow(static_files, dirs.length + 1));
   }
 
   renderTable() {
