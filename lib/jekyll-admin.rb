@@ -39,6 +39,17 @@ module JekyllAdmin
   end
 end
 
+require_relative "jekyll-admin/bundle_munger"
+
+# When not running in *development* mode, if a site's baseurl has been set to non-empty string,
+# copy the admin interface bundle into the site's destination directory and adjust the interface
+# references within.
+unless ENV["RACK_ENV"] == "development"
+  Jekyll::Hooks.register :site, :post_write do |site|
+    JekyllAdmin::BundleMunger.new(site).inject
+  end
+end
+
 [Jekyll::Page, Jekyll::Document, Jekyll::StaticFile, Jekyll::Collection].each do |klass|
   klass.include JekyllAdmin::APIable
   klass.include JekyllAdmin::URLable
