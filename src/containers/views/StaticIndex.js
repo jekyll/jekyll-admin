@@ -20,20 +20,25 @@ export class StaticIndex extends Component {
     fetchStaticFiles('index');
   }
 
-  render() {
-    const { isFetching } = this.props;
+  renderDirectoryListingBtn() {
+    const to = `${ADMIN_PREFIX}/staticfiles`;
 
-    if (isFetching) {
-      return null;
-    }
+    return (
+      <div className="page-buttons">
+        <Link className="btn btn-view" to={to}>
+          Directory Listing
+        </Link>
+      </div>
+    );
+  }
 
-    const { files, search, onClickStaticFile, modalView } = this.props;
+  renderPreviewNode() {
+    const { files, onClickStaticFile } = this.props;
 
-    let node;
     if (files.length) {
-      node = (
+      return (
         <div className="preview-container">
-          {_.map(files, (file, i) => {
+          {files.map((file, i) => {
             return (
               <FilePreview
                 key={i}
@@ -46,7 +51,7 @@ export class StaticIndex extends Component {
         </div>
       );
     } else {
-      node = (
+      return (
         <div className="preview-info">
           <i className="fa fa-exclamation-triangle" aria-hidden="true" />
           <h2>No files found!</h2>
@@ -56,27 +61,26 @@ export class StaticIndex extends Component {
         </div>
       );
     }
+  }
+
+  render() {
+    const { isFetching, search, modalView } = this.props;
+
+    if (isFetching) {
+      return null;
+    }
 
     return (
       <DocumentTitle title="Static File Listing">
         <div>
           <div className="content-header">
             <Breadcrumbs type="static files" splat="" />
-            {!modalView && (
-              <div className="page-buttons">
-                <Link
-                  className="btn btn-view"
-                  to={`${ADMIN_PREFIX}/staticfiles`}
-                >
-                  Directory Listing
-                </Link>
-              </div>
-            )}
+            {!modalView && this.renderDirectoryListingBtn()}
             <div className="pull-right">
               <InputSearch searchBy="filename" search={search} />
             </div>
           </div>
-          <div className="static-list">{node}</div>
+          <div className="static-list">{this.renderPreviewNode()}</div>
         </div>
       </DocumentTitle>
     );

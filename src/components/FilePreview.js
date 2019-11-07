@@ -7,7 +7,7 @@ export default class FilePreview extends Component {
   handleClickDelete(path) {
     const { splat, onClickDelete } = this.props;
     const filename = getFilenameFromPath(path);
-    const confirm = window.confirm(getDeleteMessage(filename));
+    const confirm = window.confirm(getDeleteMessage(path));
     confirm && onClickDelete(splat, filename);
   }
 
@@ -51,11 +51,13 @@ export default class FilePreview extends Component {
       </a>
     );
 
+    const filename = splat === 'index' ? file.path : file.name;
+
     return (
       <div className="file-preview">
         {this.renderFileOverlay(file, splat)}
         {nodeLink}
-        <span className="filename">{file.path}</span>
+        <span className="filename">{filename}</span>
       </div>
     );
   }

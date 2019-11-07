@@ -51,66 +51,85 @@ export class StaticFiles extends Component {
     this.refs.dropzone.openDropzone();
   };
 
+  renderFilePreviewRow(static_files) {
+    const { params, onClickStaticFile, deleteStaticFile } = this.props;
+    return (
+      <tr>
+        <td>
+          <Dropzone
+            ref="dropzone"
+            splat={params.splat || ''}
+            files={static_files}
+            onClickItem={onClickStaticFile}
+            onClickDelete={deleteStaticFile}
+            onDrop={static_files => this.onDrop(static_files)}
+          />
+        </td>
+      </tr>
+    );
+  }
+
+  renderDirectoryRow(directory) {
+    const { name, path } = directory;
+    const to = `${ADMIN_PREFIX}/staticfiles/${path}`;
+    return (
+      <tr key={name}>
+        <td className="row-title">
+          <strong>
+            <Link to={to}>
+              <i className="fa fa-folder" aria-hidden="true" />
+              {name}
+            </Link>
+          </strong>
+        </td>
+      </tr>
+    );
+  }
+
+  renderRows() {
+    const { files } = this.props;
+    const dirs = files.filter(entity => entity.type == 'directory');
+    const static_files = files.filter(entity => !entity.type);
+
+    return dirs
+      .map(entry => this.renderDirectoryRow(entry))
+      .concat(this.renderFilePreviewRow(static_files));
+  }
+
+  renderTable() {
+    return (
+      <div className="content-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Directory Contents</th>
+            </tr>
+          </thead>
+          <tbody>{this.renderRows()}</tbody>
+        </table>
+      </div>
+    );
+  }
+
   render() {
-    const {
-      files,
-      isFetching,
-      deleteStaticFile,
-      search,
-      onClickStaticFile,
-      params,
-    } = this.props;
+    const { isFetching, params, search } = this.props;
 
     if (isFetching) {
       return null;
     }
 
-    const dirs = _.filter(files, entity => {
-      return entity.type && entity.type == 'directory';
-    });
-
-    const static_files = _.filter(files, entity => {
-      return !entity.type;
-    });
-
-    const dir_rows = _.map(dirs, (dir, i) => {
-      return (
-        <tr key={i}>
-          <td className="row-title">
-            <strong>
-              <Link to={`${ADMIN_PREFIX}/staticfiles/${dir.path}`}>
-                <i className="fa fa-folder" aria-hidden="true" />
-                {dir.name}
-              </Link>
-            </strong>
-          </td>
-        </tr>
-      );
-    });
-
-    const dir_table = (
-      <div className="content-table">
-        <table>
-          <thead>
-            <tr>
-              <th>Sub Directories</th>
-            </tr>
-          </thead>
-          <tbody>{dir_rows}</tbody>
-        </table>
-      </div>
-    );
+    const to = `${ADMIN_PREFIX}/staticfiles/index`;
+    const title = params.splat
+      ? `${params.splat} | Static Files`
+      : 'Static Files';
 
     return (
-      <DocumentTitle title="Static Files">
+      <DocumentTitle title={title}>
         <div>
           <div className="content-header">
             <Breadcrumbs type="static files" splat={params.splat || ''} />
             <div className="page-buttons multiple">
-              <Link
-                className="btn btn-view"
-                to={`${ADMIN_PREFIX}/staticfiles/index`}
-              >
+              <Link className="btn btn-view" to={to}>
                 Index Listing
               </Link>
               <Button
@@ -124,31 +143,7 @@ export class StaticFiles extends Component {
               <InputSearch searchBy="filename" search={search} />
             </div>
           </div>
-
-          <div className="content-table">
-            <table>
-              <thead>
-                <tr>
-                  <th>Directory Contents</th>
-                </tr>
-              </thead>
-              <tbody>
-                {!_.isEmpty(dirs) && dir_rows}
-                <tr>
-                  <td>
-                    <Dropzone
-                      ref="dropzone"
-                      splat={params.splat || ''}
-                      files={static_files}
-                      onClickItem={onClickStaticFile}
-                      onClickDelete={deleteStaticFile}
-                      onDrop={static_files => this.onDrop(static_files)}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
+          {this.renderTable()}
         </div>
       </DocumentTitle>
     );
