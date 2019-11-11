@@ -5,7 +5,7 @@ module JekyllAdmin
   # additional, API-specific functionality without duplicating logic
   module APIable
     CONTENT_FIELDS = %w(next previous content excerpt).freeze
-    API_SCAFFOLD   = %w(name path).map { |i| [i, nil] }.to_h.freeze
+    API_SCAFFOLD   = %w(name path relative_path).map { |i| [i, nil] }.to_h.freeze
 
     # Returns a hash suitable for use as an API response.
     #
@@ -22,8 +22,6 @@ module JekyllAdmin
     #                   to support mapping on indexes where we only want metadata
     #
     # Returns a hash (which can then be to_json'd)
-    #
-    # rubocop:disable Metrics/AbcSize
     def to_api(include_content: false)
       output = API_SCAFFOLD.merge hash_for_api
 
@@ -38,6 +36,10 @@ module JekyllAdmin
       # Since it's an API, use `content` in both for consistency
       output.delete("output")
 
+      output["name"] = basename if is_a?(Jekyll::Document)
+      output["from_theme"] = from_theme_gem? if is_a?(Jekyll::StaticFile)
+      output["relative_path"] = relative_path_for_api
+
       # By default, calling to_liquid on a collection will return a docs
       # array with each rendered document, which we don't want.
       if is_a?(Jekyll::Collection)
@@ -47,19 +49,60 @@ module JekyllAdmin
         output["entries_url"] = entries_url
       end
 
-      if is_a?(Jekyll::Document)
-        output["relative_path"] = relative_path.sub("_drafts/", "") if draft?
-        output["name"] = basename
-      end
-
-      output["from_theme"] = from_theme_gem? if is_a?(Jekyll::StaticFile)
-
       output.merge!(url_fields)
       output
     end
-    # rubocop:enable Metrics/AbcSize
 
     private
+
+    # Relative path of files and directories with their *special directories*
+    # and any leading slashes stripped away.
+    #
+    # Examples:
+    #        `_drafts/foo/draft-post.md` => `foo/draft-post.md`
+    #   `_posts/foo/2019-10-18-hello.md` => `foo/2019-10-18-hello.md`
+    #             `/assets/img/logo.png` => `assets/img/logo.png`
+    def relative_path_for_api
+      return unless respond_to?(:relative_path) && relative_path
+
+      @relative_path_for_api ||= begin
+        rel_path = relative_path.dup
+        strip_leading_slash!(rel_path)
+        strip_leading_special_directory!(rel_path)
+        strip_leading_slash!(rel_path)
+
+        rel_path
+      end
+    end
+
+    # Prefer substituting substrings instead of using a regex in order to avoid multiple
+    # regex allocations. String literals are frozen and reused.
+
+    def strip_leading_slash!(path)
+      return unless path.start_with?("/")
+
+      path.sub!("/", "")
+    end
+
+    def strip_leading_special_directory!(path)
+      return unless special_directory && path.start_with?(special_directory)
+
+      path.sub!(special_directory, "")
+    end
+
+    def special_directory
+      return @special_directory if defined?(@special_directory)
+
+      @special_directory = begin
+        if is_a?(Jekyll::Document) && draft?
+          "_drafts"
+        elsif is_a?(Jekyll::Document)
+          collection.relative_directory
+        elsif is_a?(Jekyll::Collection)
+          relative_directory
+        end
+      end
+    end
 
     # Pages don't have a hash method, but Documents do
     def file_path

@@ -42,6 +42,7 @@ describe "drafts" do
       expect(last_response).to be_ok
       expect(first_draft["name"]).to eq("another-draft-post.md")
       expect(first_draft["path"]).to eq("_drafts/draft-dir/another-draft-post.md")
+      expect(first_draft["relative_path"]).to eq("draft-dir/another-draft-post.md")
     end
 
     it "lists directories in subdirectories" do
