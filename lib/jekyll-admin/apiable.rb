@@ -5,6 +5,7 @@ module JekyllAdmin
   # additional, API-specific functionality without duplicating logic
   module APIable
     CONTENT_FIELDS = %w(next previous content excerpt).freeze
+    API_SCAFFOLD   = %w(name path).map { |i| [i, nil] }.to_h.freeze
 
     # Returns a hash suitable for use as an API response.
     #
@@ -20,15 +21,15 @@ module JekyllAdmin
     # include_content - if true, includes the content in the respond, false by default
     #                   to support mapping on indexes where we only want metadata
     #
-    #
     # Returns a hash (which can then be to_json'd)
+    #
+    # rubocop:disable Metrics/AbcSize
     def to_api(include_content: false)
-      output = hash_for_api
-      output = output.merge(url_fields)
+      output = API_SCAFFOLD.merge hash_for_api
 
       # Include content, if requested, otherwise remove it
       if include_content
-        output = output.merge(content_fields)
+        output.merge!(content_fields)
       else
         CONTENT_FIELDS.each { |field| output.delete(field) }
       end
@@ -41,6 +42,8 @@ module JekyllAdmin
       # array with each rendered document, which we don't want.
       if is_a?(Jekyll::Collection)
         output.delete("docs")
+        output["name"] = label
+        output["path"] = relative_directory
         output["entries_url"] = entries_url
       end
 
@@ -51,8 +54,10 @@ module JekyllAdmin
 
       output["from_theme"] = from_theme_gem? if is_a?(Jekyll::StaticFile)
 
+      output.merge!(url_fields)
       output
     end
+    # rubocop:enable Metrics/AbcSize
 
     private
 
