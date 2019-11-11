@@ -21,7 +21,7 @@ export default class FilePreview extends Component {
     } else if (splat != 'index') {
       return (
         <button
-          onClick={() => this.handleClickDelete(file.path)}
+          onClick={() => this.handleClickDelete(file.relative_path)}
           className="delete"
           title="Delete file"
         >
@@ -51,7 +51,7 @@ export default class FilePreview extends Component {
       </a>
     );
 
-    const filename = splat === 'index' ? file.path : file.name;
+    const filename = splat === 'index' ? file.relative_path : file.name;
 
     return (
       <div className="file-preview">

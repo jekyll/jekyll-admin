@@ -28,6 +28,7 @@ describe "pages" do
       get "/pages"
       expect(last_response).to be_ok
       expect(first_page["name"]).to eq("page.md")
+      expect(first_page["relative_path"]).to eq("page.md")
 
       redirect_page = JekyllAdmin.site.pages.find { |p| p.name == "redirect.html" }
       expect(redirect_page.url).to eql("/webmaster.html")
@@ -46,6 +47,7 @@ describe "pages" do
       expect(last_response).to be_ok
       expect(first_page["name"]).to eq("page2.md")
       expect(first_page["path"]).to eq("page-dir/test/page2.md")
+      expect(first_page["relative_path"]).to eq("page-dir/test/page2.md")
     end
 
     it "includes front matter defaults" do
