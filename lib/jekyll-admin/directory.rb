@@ -11,7 +11,7 @@ module JekyllAdmin
     include JekyllAdmin::URLable
     include JekyllAdmin::APIable
 
-    RESOURCE_TYPES  = %w(pages data drafts).freeze
+    RESOURCE_TYPES  = %w(pages data drafts static_files).freeze
     DOT_DIRECTORIES = [".", ".."].freeze
 
     private_constant :RESOURCE_TYPES, :DOT_DIRECTORIES

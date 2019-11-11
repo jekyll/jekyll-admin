@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
 import Dropzone from '../../components/Dropzone';
 import Button from '../../components/Button';
+import Breadcrumbs from '../../components/Breadcrumbs';
 import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../ducks/utils';
 import { existingUploadedFilenames } from '../../utils/helpers';
@@ -15,15 +18,23 @@ import {
   deleteStaticFile,
   filterByFilename,
 } from '../../ducks/staticfiles';
+import { ADMIN_PREFIX } from '../../constants';
 
 export class StaticFiles extends Component {
   componentDidMount() {
-    const { fetchStaticFiles } = this.props;
-    fetchStaticFiles();
+    const { fetchStaticFiles, params } = this.props;
+    fetchStaticFiles(params.splat);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { fetchStaticFiles } = nextProps;
+    if (this.props.params.splat !== nextProps.params.splat) {
+      fetchStaticFiles(nextProps.params.splat);
+    }
   }
 
   onDrop(uploadedFiles) {
-    const { uploadStaticFiles, files } = this.props;
+    const { uploadStaticFiles, files, params } = this.props;
     const existingFiles = existingUploadedFilenames(uploadedFiles, files);
     if (existingFiles.length > 0) {
       const confirm = window.confirm(
@@ -33,48 +44,106 @@ export class StaticFiles extends Component {
         return false;
       }
     }
-    uploadStaticFiles(uploadedFiles);
+    uploadStaticFiles(params.splat, uploadedFiles);
   }
 
   openDropzone = () => {
     this.refs.dropzone.openDropzone();
   };
 
+  renderFilePreviewRow(static_files, key) {
+    const { params, onClickStaticFile, deleteStaticFile } = this.props;
+    return (
+      <tr key={key}>
+        <td>
+          <Dropzone
+            ref="dropzone"
+            splat={params.splat || ''}
+            files={static_files}
+            onClickItem={onClickStaticFile}
+            onClickDelete={deleteStaticFile}
+            onDrop={static_files => this.onDrop(static_files)}
+          />
+        </td>
+      </tr>
+    );
+  }
+
+  renderDirectoryRow(directory, index) {
+    const { name, path } = directory;
+    const to = `${ADMIN_PREFIX}/staticfiles/${path}`;
+    return (
+      <tr key={index}>
+        <td className="row-title">
+          <strong>
+            <Link to={to}>
+              <i className="fa fa-folder" aria-hidden="true" />
+              {name}
+            </Link>
+          </strong>
+        </td>
+      </tr>
+    );
+  }
+
+  renderRows() {
+    const { files } = this.props;
+    const dirs = files.filter(entity => entity.type == 'directory');
+    const static_files = files.filter(entity => !entity.type);
+
+    return dirs
+      .map((entry, index) => this.renderDirectoryRow(entry, index))
+      .concat(this.renderFilePreviewRow(static_files, dirs.length + 1));
+  }
+
+  renderTable() {
+    return (
+      <div className="content-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Directory Contents</th>
+            </tr>
+          </thead>
+          <tbody>{this.renderRows()}</tbody>
+        </table>
+      </div>
+    );
+  }
+
   render() {
-    const {
-      files,
-      isFetching,
-      deleteStaticFile,
-      search,
-      onClickStaticFile,
-    } = this.props;
+    const { isFetching, params, search } = this.props;
 
     if (isFetching) {
       return null;
     }
 
+    const to = `${ADMIN_PREFIX}/staticfiles/index`;
+    const title = params.splat
+      ? `${params.splat} | Static Files`
+      : 'Static Files';
+
     return (
-      <DocumentTitle title="Static Files">
+      <DocumentTitle title={title}>
         <div>
           <div className="content-header">
-            <h1>Static Files</h1>
-            <Button
-              onClick={this.openDropzone}
-              type="upload"
-              icon="upload"
-              active={true}
-            />
+            <Breadcrumbs type="static files" splat={params.splat || ''} />
+            <div className="page-buttons">
+              <Link className="btn btn-view" to={to}>
+                Index Listing
+              </Link>
+              <Button
+                onClick={() => this.openDropzone()}
+                type="upload"
+                icon="upload"
+                active={true}
+              />
+            </div>
             <div className="pull-right">
               <InputSearch searchBy="filename" search={search} />
             </div>
           </div>
-          <Dropzone
-            ref="dropzone"
-            files={files}
-            onClickItem={onClickStaticFile}
-            onClickDelete={deleteStaticFile}
-            onDrop={files => this.onDrop(files)}
-          />
+          {this.renderTable()}
         </div>
       </DocumentTitle>
     );
@@ -89,6 +158,7 @@ StaticFiles.propTypes = {
   deleteStaticFile: PropTypes.func.isRequired,
   onClickStaticFile: PropTypes.func,
   search: PropTypes.func.isRequired,
+  params: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

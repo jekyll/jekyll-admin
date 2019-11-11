@@ -11,8 +11,8 @@ describe "static_files" do
     it "returns the index" do
       get "/static_files"
       expect(last_response).to be_ok
-      expect(last_response_parsed.last["path"]).to eql("/static-file.txt")
-      expect(last_response_parsed.last["relative_path"]).to eql("static-file.txt")
+      expect(last_response_parsed.last["path"]).to eql("/index.html")
+      expect(last_response_parsed.last["relative_path"]).to eql("index.html")
     end
 
     it "doesn't include the encoded content" do
@@ -23,10 +23,10 @@ describe "static_files" do
   end
 
   it "returns a single static file" do
-    get "/static_files/static-file.txt"
+    get "/static_files/assets/static-file.txt"
     expect(last_response).to be_ok
     expect(last_response_parsed["extname"]).to eql(".txt")
-    expect(last_response_parsed["path"]).to eql("/static-file.txt")
+    expect(last_response_parsed["path"]).to eql("/assets/static-file.txt")
     expect(last_response_parsed["encoded_content"]).to eql("VEVTVAo=\n")
   end
 
@@ -36,37 +36,14 @@ describe "static_files" do
   end
 
   it "returns a deep directory listing" do
-    files = ["/static-dir/file.txt", "/static-dir/b/file2.txt"]
+    files = ["/static-dir/file.txt", "/static-dir/foo/file2.txt"]
     files.each { |f| write_file f, "test" }
 
     get "/static_files/static-dir"
     expect(last_response).to be_ok
 
-    files.each do |file|
-      response = last_response_parsed.find { |r| r["path"] == file }
-      expect(response).to_not be_nil, "Could not find #{file} in response"
-      expect(response["extname"]).to eql(File.extname(file))
-    end
-
-    delete_file(*files)
-  end
-
-  it "returns a directory listing starting only at the root" do
-    files = ["/static-dir/file.txt", "/static-dir/b/file2.txt"]
-    files.each { |f| write_file f, "test" }
-
-    get "/static_files/static-dir/b"
-    expect(last_response).to be_ok
-
-    file = files.last
-    response = last_response_parsed.find { |r| r["path"] == file }
-    expect(response).to_not be_nil, "Could not find #{file} in response"
-    expect(response["extname"]).to eql(File.extname(file))
-
-    file = files.first
-    response = last_response_parsed.find { |r| r["path"] == "/#{file}" }
-    expect(response).to be_nil, "#{file} included in response"
-
+    expect(last_response_parsed.first["name"]).to eql("foo")
+    expect(last_response_parsed.last["name"]).to eql("file.txt")
     delete_file(*files)
   end
 

@@ -24,17 +24,17 @@ export const DELETE_STATICFILE_SUCCESS = 'DELETE_STATICFILE_SUCCESS';
 export const DELETE_STATICFILE_FAILURE = 'DELETE_STATICFILE_FAILURE';
 
 // Actions
-export const fetchStaticFiles = () => dispatch => {
+export const fetchStaticFiles = (directory = '') => dispatch => {
   dispatch({ type: FETCH_STATICFILES_REQUEST });
   return get(
-    staticfilesAPIUrl(),
+    staticfilesAPIUrl(directory),
     { type: FETCH_STATICFILES_SUCCESS, name: 'files' },
     { type: FETCH_STATICFILES_FAILURE, name: 'error' },
     dispatch
   );
 };
 
-export const uploadStaticFiles = files => dispatch => {
+export const uploadStaticFiles = (directory, files) => dispatch => {
   _.each(files, file => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -43,14 +43,14 @@ export const uploadStaticFiles = files => dispatch => {
         encoded_content: reader.result.split('base64,')[1],
       });
       // send the put request
-      return fetch(staticfileAPIUrl(file.name), {
+      return fetch(staticfileAPIUrl(directory, file.name), {
         method: 'PUT',
         body: payload,
         credentials: 'same-origin',
       })
         .then(data => {
           dispatch({ type: PUT_STATICFILE_SUCCESS });
-          dispatch(fetchStaticFiles());
+          dispatch(fetchStaticFiles(directory));
           dispatch(
             addNotification(
               getSuccessMessage(),
@@ -72,14 +72,14 @@ export const uploadStaticFiles = files => dispatch => {
   });
 };
 
-export const deleteStaticFile = filename => dispatch => {
-  return fetch(staticfileAPIUrl(filename), {
+export const deleteStaticFile = (directory, filename) => dispatch => {
+  return fetch(staticfileAPIUrl(directory, filename), {
     method: 'DELETE',
     credentials: 'same-origin',
   })
     .then(data => {
       dispatch({ type: DELETE_STATICFILE_SUCCESS });
-      dispatch(fetchStaticFiles());
+      dispatch(fetchStaticFiles(directory));
     })
     .catch(error =>
       dispatch({
