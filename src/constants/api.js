@@ -34,5 +34,9 @@ export const datafileAPIUrl = (directory, filename) =>
     ? `${API}/data/${directory}/${filename}`
     : `${API}/data/${filename}`;
 
-export const staticfilesAPIUrl = () => `${API}/static_files`;
-export const staticfileAPIUrl = filename => `${API}/static_files/${filename}`;
+export const staticfilesAPIUrl = (directory = '') =>
+  `${API}/static_files/${directory}`;
+export const staticfileAPIUrl = (directory, filename) =>
+  directory
+    ? `${API}/static_files/${directory}/${filename}`
+    : `${API}/static_files/${filename}`;

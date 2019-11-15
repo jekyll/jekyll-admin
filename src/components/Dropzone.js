@@ -10,7 +10,7 @@ export class Dropzone extends Component {
   }
 
   render() {
-    const { files, onDrop, onClickDelete, onClickItem } = this.props;
+    const { files, splat, onDrop, onClickDelete, onClickItem } = this.props;
     return (
       <ReactDropzone
         onDrop={onDrop}
@@ -27,6 +27,7 @@ export class Dropzone extends Component {
                 key={i}
                 onClick={onClickItem}
                 onClickDelete={onClickDelete}
+                splat={splat}
                 file={file}
               />
             ))}
@@ -44,6 +45,7 @@ export class Dropzone extends Component {
 
 Dropzone.propTypes = {
   files: PropTypes.array.isRequired,
+  splat: PropTypes.string.isRequired,
   onDrop: PropTypes.func.isRequired,
   onClickDelete: PropTypes.func.isRequired,
   onClickItem: PropTypes.func,

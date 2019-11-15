@@ -5,14 +5,34 @@ import { getFilenameFromPath } from '../utils/helpers';
 
 export default class FilePreview extends Component {
   handleClickDelete(path) {
-    const { onClickDelete } = this.props;
+    const { splat, onClickDelete } = this.props;
     const filename = getFilenameFromPath(path);
-    const confirm = window.confirm(getDeleteMessage(filename));
-    confirm && onClickDelete(filename);
+    const confirm = window.confirm(getDeleteMessage(path));
+    confirm && onClickDelete(splat, filename);
+  }
+
+  renderFileOverlay(file, splat) {
+    if (file.from_theme) {
+      return (
+        <span className="theme-indicator">
+          <i className="fa fa-diamond" aria-hidden="true" title="Theme Asset" />
+        </span>
+      );
+    } else if (splat != 'index') {
+      return (
+        <button
+          onClick={() => this.handleClickDelete(file.relative_path)}
+          className="delete"
+          title="Delete file"
+        >
+          x
+        </button>
+      );
+    }
   }
 
   render() {
-    const { onClick, file } = this.props;
+    const { onClick, file, splat } = this.props;
     const extension = file.extname.substring(1);
     const image = /png|jpg|gif|jpeg|svg|ico/i.test(extension);
     const node = image ? (
@@ -31,25 +51,13 @@ export default class FilePreview extends Component {
       </a>
     );
 
-    const overlay = file.from_theme ? (
-      <span className="theme-indicator">
-        <i className="fa fa-diamond" aria-hidden="true" title="Theme Asset" />
-      </span>
-    ) : (
-      <button
-        onClick={() => this.handleClickDelete(file.path)}
-        className="delete"
-        title="Delete file"
-      >
-        x
-      </button>
-    );
+    const filename = splat === 'index' ? file.relative_path : file.name;
 
     return (
       <div className="file-preview">
-        {overlay}
+        {this.renderFileOverlay(file, splat)}
         {nodeLink}
-        <span className="filename">{file.path}</span>
+        <span className="filename">{filename}</span>
       </div>
     );
   }
@@ -57,6 +65,7 @@ export default class FilePreview extends Component {
 
 FilePreview.propTypes = {
   file: PropTypes.object.isRequired,
-  onClickDelete: PropTypes.func.isRequired,
+  splat: PropTypes.string.isRequired,
+  onClickDelete: PropTypes.func,
   onClick: PropTypes.func,
 };

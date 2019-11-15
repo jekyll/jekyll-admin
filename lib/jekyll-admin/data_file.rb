@@ -56,7 +56,7 @@ module JekyllAdmin
 
     # Returns path relative to site source
     def path
-      ensure_leading_slash(File.join(DataFile.data_dir, relative_path))
+      @path ||= File.join(DataFile.data_dir, relative_path)
     end
 
     def absolute_path

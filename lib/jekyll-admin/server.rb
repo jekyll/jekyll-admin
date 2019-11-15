@@ -74,6 +74,8 @@ module JekyllAdmin
               end
       body << "\n---\n\n"
       body << request_payload["raw_content"].to_s
+      body << "\n" unless body.end_with?("\n")
+      body
     end
     alias_method :page_body, :document_body
 

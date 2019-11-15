@@ -1,7 +1,7 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import { StaticFiles } from '../StaticFiles';
+import { StaticIndex } from '../StaticIndex';
 
 import { staticfile } from './fixtures';
 
@@ -14,10 +14,9 @@ function setup(files=[staticfile]) {
   };
 
   const component = mount(
-    <StaticFiles
+    <StaticIndex
       files={files}
       isFetching={false}
-      params={{ splat: '' }}
       {...actions} />
   );
 
@@ -29,7 +28,7 @@ function setup(files=[staticfile]) {
   };
 }
 
-describe('Containers::StaticFiles', () => {
+describe('Containers::StaticIndex', () => {
   it('should render correctly', () => {
     const { info, previewContainer } = setup();
     expect(info.node).toBeFalsy();
@@ -44,12 +43,6 @@ describe('Containers::StaticFiles', () => {
 
   it('should call fetchStaticFiles action after mounted', () => {
     const { actions } = setup();
-    expect(actions.fetchStaticFiles).toHaveBeenCalled();
-  });
-
-  it('should call fetchStaticFiles action again after props change', () => {
-    const { component, actions } = setup();
-    component.setProps({ params: { splat: 'assets' } });
     expect(actions.fetchStaticFiles).toHaveBeenCalled();
   });
 });

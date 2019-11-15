@@ -8,9 +8,10 @@ import { staticfile } from './fixtures';
 function setup(file = staticfile) {
   const actions = {
     onClickDelete: jest.fn(),
+    onClick: jest.fn(),
   };
 
-  let component = mount(<FilePreview file={file} {...actions} />);
+  let component = mount(<FilePreview file={file} splat="" {...actions} />);
 
   return {
     component,
