@@ -65,7 +65,7 @@ class Accordion extends Component {
 Accordion.propTypes = {
   itemHeight: PropTypes.number.isRequired,
   itemsCount: PropTypes.number.isRequired,
-  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+  children: PropTypes.element.isRequired,
   label: PropTypes.string.isRequired,
   type: PropTypes.string,
   icon: PropTypes.string,
