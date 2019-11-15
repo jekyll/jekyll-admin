@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import { ADMIN_PREFIX } from '../constants';
-import Accordion from '../components/Accordion';
+import CounterAccordion from '../components/CounterAccordion';
 import Splitter from '../components/Splitter';
 import { fetchCollections } from '../ducks/collections';
 import { capitalize } from '../utils/helpers';
@@ -47,15 +47,14 @@ export class Sidebar extends Component {
     }
 
     return (
-      <Accordion
-        type="list-item"
-        itemHeight={50}
-        itemsCount={itemsCount}
+      <CounterAccordion
+        minHeight={50}
+        count={itemsCount}
         icon="book"
         label={SidebarTranslations.collections}
       >
         <ul>{collectionItems}</ul>
-      </Accordion>
+      </CounterAccordion>
     );
   }
 
