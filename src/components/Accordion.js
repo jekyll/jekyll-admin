@@ -30,13 +30,6 @@ class Accordion extends Component {
       onClick: this.handleClick,
     };
 
-    const trigger = [
-      '<i className={`fa fa-${icon}`} />',
-      label,
-      '<div className="counter">{itemsCount}</div>',
-      '<div className="chevrons"><i className="fa fa-chevron-up" /></div>',
-    ];
-
     if (type === 'list-item') {
       return (
         <li {...elemProps}>
@@ -72,7 +65,7 @@ class Accordion extends Component {
 Accordion.propTypes = {
   itemHeight: PropTypes.number.isRequired,
   itemsCount: PropTypes.number.isRequired,
-  children: PropTypes.array.isRequired,
+  children: PropTypes.object.isRequired,
   type: PropTypes.string,
 };
 

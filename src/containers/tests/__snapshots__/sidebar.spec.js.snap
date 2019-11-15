@@ -14,15 +14,14 @@ exports[`Containers::Sidebar does not render hidden links 1`] = `
   >
     <li
       className="accordion-label collapsed"
+      onClick={[Function]}
       style={
         Object {
           "maxHeight": 50,
         }
       }
     >
-      <a
-        onClick={[Function]}
-      >
+      <a>
         <i
           className="fa fa-book"
         />
@@ -114,15 +113,14 @@ exports[`Containers::Sidebar renders correctly 1`] = `
   >
     <li
       className="accordion-label collapsed"
+      onClick={[Function]}
       style={
         Object {
           "maxHeight": 50,
         }
       }
     >
-      <a
-        onClick={[Function]}
-      >
+      <a>
         <i
           className="fa fa-book"
         />
@@ -236,15 +234,14 @@ exports[`Containers::Sidebar renders with custom collection labels 1`] = `
   >
     <li
       className="accordion-label collapsed"
+      onClick={[Function]}
       style={
         Object {
           "maxHeight": 50,
         }
       }
     >
-      <a
-        onClick={[Function]}
-      >
+      <a>
         <i
           className="fa fa-book"
         />
