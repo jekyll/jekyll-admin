@@ -34,7 +34,7 @@ class Accordion extends Component {
       return (
         <li {...elemProps}>
           <a>
-            <i className={`fa fa-${icon}`} />
+            {icon && <i className={`fa fa-${icon}`} />}
             {label}
             <div className="counter">{itemsCount}</div>
             <div className="chevrons">
@@ -48,7 +48,7 @@ class Accordion extends Component {
       return (
         <div {...elemProps}>
           <div>
-            <i className={`fa fa-${icon}`} />
+            {icon && <i className={`fa fa-${icon}`} />}
             {label}
             <div className="counter">{itemsCount}</div>
             <div className="chevrons">
@@ -65,8 +65,10 @@ class Accordion extends Component {
 Accordion.propTypes = {
   itemHeight: PropTypes.number.isRequired,
   itemsCount: PropTypes.number.isRequired,
-  children: PropTypes.object.isRequired,
+  children: PropTypes.oneOfType([PropTypes.array, PropTypes.object]).isRequired,
+  label: PropTypes.string.isRequired,
   type: PropTypes.string,
+  icon: PropTypes.string,
 };
 
 export default Accordion;
