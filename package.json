@@ -19,12 +19,12 @@
     "prebuild":
       "npm run clean-dist && npm run build:html && npm run lint && npm test",
     "build": "babel-node tools/build.js",
-    "bundlesize": "npm run build && bundlesize",
     "test": "jest",
     "test:CI": "babel-node tools/testCi.js",
     "test:cover": "npm run test -- --coverage ",
     "test:cover:CI":
       "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
+    "test:size": "bundlesize",
     "test:watch": "npm run test -- --watch",
     "open:cover":
       "npm run test:cover && open ./coverage/lcov-report/index.html",
