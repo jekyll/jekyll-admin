@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import { ADMIN_PREFIX } from '../constants';
+import Accordion from '../components/Accordion';
 import Splitter from '../components/Splitter';
 import { fetchCollections } from '../ducks/collections';
 import { capitalize } from '../utils/helpers';
@@ -12,21 +13,10 @@ import classnames from 'classnames';
 import _ from 'underscore';
 
 export class Sidebar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { collapsedPanel: true };
-  }
-
   componentDidMount() {
     const { fetchCollections } = this.props;
     fetchCollections();
   }
-
-  handleClick = () => {
-    this.setState({
-      collapsedPanel: !this.state.collapsedPanel,
-    });
-  };
 
   renderCollections(hiddens = []) {
     const { collections } = this.props;
@@ -51,31 +41,21 @@ export class Sidebar extends Component {
       }
     }).filter(Boolean);
 
-    if (!collectionItems.length) {
+    const itemsCount = collectionItems.length;
+    if (!itemsCount) {
       return null;
     }
 
-    const { collapsedPanel } = this.state;
-    const accordionClasses = classnames('accordion-label', {
-      collapsed: collapsedPanel,
-    });
-
-    // Arbitrary manipulation based on visual cues from surrounding elements.
-    // TODO: Compute values programmatically.
-    const panelHeight = collapsedPanel ? 50 : (collectionItems.length + 1) * 50;
-
     return (
-      <li className={accordionClasses} style={{ maxHeight: panelHeight }}>
-        <a onClick={this.handleClick}>
-          <i className="fa fa-book" />
-          {SidebarTranslations.collections}
-          <div className="counter">{collectionItems.length}</div>
-          <div className="chevrons">
-            <i className="fa fa-chevron-up" />
-          </div>
-        </a>
+      <Accordion
+        type="list-item"
+        itemHeight={50}
+        itemsCount={itemsCount}
+        icon="book"
+        label={SidebarTranslations.collections}
+      >
         <ul>{collectionItems}</ul>
-      </li>
+      </Accordion>
     );
   }
 
