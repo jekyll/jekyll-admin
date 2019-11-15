@@ -2,7 +2,7 @@
   "files": [
     {
       "path": "lib/jekyll-admin/public/bundle.js.map",
-      "maxSize": "11 MB",
+      "maxSize": "14 MB",
       "compression": "none"
     },
     {
@@ -12,7 +12,7 @@
     },
     {
       "path": "lib/jekyll-admin/public/styles.css.map",
-      "maxSize": "150 kB",
+      "maxSize": "200 kB",
       "compression": "none"
     },
     {
