@@ -135,7 +135,7 @@ export class DataFiles extends Component {
       <DocumentTitle title={title}>
         <div>
           <div className="content-header">
-            <Breadcrumbs type="data files" splat={params.splat || ''} />
+            <Breadcrumbs type="datafiles" splat={params.splat} />
             <div className="page-buttons">
               <Link className="btn btn-active" to={to}>
                 New data file

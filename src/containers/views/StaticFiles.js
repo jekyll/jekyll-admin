@@ -127,7 +127,7 @@ export class StaticFiles extends Component {
       <DocumentTitle title={title}>
         <div>
           <div className="content-header">
-            <Breadcrumbs type="static files" splat={params.splat || ''} />
+            <Breadcrumbs type="staticfiles" splat={params.splat} />
             <div className="page-buttons">
               <Link className="btn btn-view" to={to}>
                 Index Listing
