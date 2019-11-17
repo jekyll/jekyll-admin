@@ -138,6 +138,7 @@ DocumentNew.propTypes = {
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  currentDocument: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

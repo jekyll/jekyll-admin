@@ -8,6 +8,7 @@ import Button from '../../../components/Button';
 import { config, doc } from './fixtures';
 
 const defaultProps = {
+  currentDocument: {},
   errors: [],
   fieldChanged: false,
   updated: false,
