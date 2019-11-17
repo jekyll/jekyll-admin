@@ -60,9 +60,8 @@ export class Documents extends Component {
   }
 
   renderFileRow(doc) {
-    const { id, name, title, http_url, collection, path } = doc;
-    const splat = path.substr(path.indexOf('/') + 1, path.length);
-    const to = `${ADMIN_PREFIX}/collections/${collection}/${splat}`;
+    const { id, name, title, http_url, collection, relative_path } = doc;
+    const to = `${ADMIN_PREFIX}/collections/${collection}/${relative_path}`;
     // date w/o timezone
     let date = doc.date.substring(0, doc.date.lastIndexOf(' '));
     date =
@@ -101,9 +100,8 @@ export class Documents extends Component {
 
   renderDirectoryRow(directory) {
     const { params: { collection_name } } = this.props;
-    const { name, path, modified_time } = directory;
-    const splat = path.substr(path.indexOf('/') + 1, path.length);
-    const to = `${ADMIN_PREFIX}/collections/${collection_name}/${splat}`;
+    const { name, relative_path, modified_time } = directory;
+    const to = `${ADMIN_PREFIX}/collections/${collection_name}/${relative_path}`;
     // date w/o timezone
     let date = modified_time.substring(0, modified_time.lastIndexOf(' '));
     date = moment(date).format('ll');
