@@ -139,7 +139,7 @@ export class DataFileNew extends Component {
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
-            <Breadcrumbs splat={params.splat || ''} type="data files" />
+            <Breadcrumbs type="datafiles" splat={params.splat} />
           </div>
 
           <div className="content-wrapper">

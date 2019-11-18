@@ -104,7 +104,7 @@ export default class Explorer extends Component {
     return (
       <div>
         <div className="content-header">
-          <Breadcrumbs type={typeLabel} splat={params.splat || ''} />
+          <Breadcrumbs type={type} splat={params.splat} />
           <div className="page-buttons">
             <Link className="btn btn-active" to={to}>
               {newBtnLabel}
