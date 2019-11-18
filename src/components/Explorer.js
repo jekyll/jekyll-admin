@@ -19,19 +19,24 @@ export default class Explorer extends Component {
     }
   }
 
+  renderTitleCell(name, icon, type, path) {
+    return (
+      <td className="row-title">
+        <strong>
+          <Link to={`${ADMIN_PREFIX}/${type}/${path}`}>
+            <i className={`fa fa-${icon}`} aria-hidden="true" />
+            {name}
+          </Link>
+        </strong>
+      </td>
+    );
+  }
+
   renderDirectoryRow(directory, type, index) {
     const { name, relative_path } = directory;
-    const to = `${ADMIN_PREFIX}/${type}/${relative_path}`;
     return (
       <tr key={index}>
-        <td className="row-title">
-          <strong>
-            <Link to={to}>
-              <i className="fa fa-folder" aria-hidden="true" />
-              {name}
-            </Link>
-          </strong>
-        </td>
+        {this.renderTitleCell(name, 'folder', type, relative_path)}
         <td />
       </tr>
     );
@@ -39,17 +44,9 @@ export default class Explorer extends Component {
 
   renderFileRow(file, type, index) {
     const { name, relative_path, http_url } = file;
-    const to = `${ADMIN_PREFIX}/${type}/${relative_path}`;
     return (
       <tr key={index}>
-        <td className="row-title">
-          <strong>
-            <Link to={to}>
-              <i className="fa fa-file-text-o" aria-hidden="true" />
-              {name}
-            </Link>
-          </strong>
-        </td>
+        {this.renderTitleCell(name, 'file-text-o', type, relative_path)}
         <td>
           <div className="row-actions">
             <Button
