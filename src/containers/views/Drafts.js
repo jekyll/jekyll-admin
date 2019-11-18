@@ -126,7 +126,7 @@ export class Drafts extends Component {
       <DocumentTitle title={title}>
         <div>
           <div className="content-header">
-            <Breadcrumbs type="drafts" splat={params.splat || ''} />
+            <Breadcrumbs type="drafts" splat={params.splat} />
             <div className="draft-buttons">
               <Link className="btn btn-active" to={to}>
                 New draft

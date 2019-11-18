@@ -123,7 +123,7 @@ export class Pages extends Component {
       <DocumentTitle title={title}>
         <div>
           <div className="content-header">
-            <Breadcrumbs type="pages" splat={params.splat || ''} />
+            <Breadcrumbs type="pages" splat={params.splat} />
             <div className="page-buttons">
               <Link className="btn btn-active" to={to}>
                 New page

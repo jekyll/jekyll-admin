@@ -263,7 +263,7 @@ export class DataFileEdit extends Component {
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
-            <Breadcrumbs splat={directory || ''} type="data files" />
+            <Breadcrumbs type="datafiles" splat={directory} />
           </div>
 
           <div className="content-wrapper">
