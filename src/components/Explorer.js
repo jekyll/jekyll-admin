@@ -57,7 +57,7 @@ export default class Explorer extends Component {
               thin
             />
             {http_url && (
-              <Button to={http_url} type="view" icon="eye" active={true} thin />
+              <Button to={http_url} type="view" icon="eye" active thin />
             )}
           </div>
         </td>

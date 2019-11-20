@@ -180,8 +180,8 @@ export class DataFileNew extends Component {
               <Button
                 onClick={this.toggleView}
                 type="view-toggle"
-                active={true}
                 triggered={this.state.guiView}
+                active
                 block
               />
             </div>

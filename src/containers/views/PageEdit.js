@@ -151,19 +151,13 @@ export class PageEdit extends Component {
                 icon="save"
                 block
               />
-              <Button
-                to={http_url}
-                type="view"
-                icon="eye"
-                active={true}
-                block
-              />
+              <Button to={http_url} type="view" icon="eye" active block />
               <Splitter />
               <Button
                 onClick={() => this.handleClickDelete(name)}
                 type="delete"
-                active={true}
                 icon="trash"
+                active
                 block
               />
             </div>
