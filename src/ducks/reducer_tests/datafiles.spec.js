@@ -1,5 +1,5 @@
 import * as datafilesDuck from '../datafiles';
-import { datafile, data_files } from './fixtures';
+import { datafile } from './fixtures';
 
 const reducer = datafilesDuck.default;
 
@@ -131,10 +131,5 @@ describe('Reducers::DataFiles', () => {
       datafileChanged: true,
       updated: false,
     });
-  });
-
-  it('should filter data files and directories', () => {
-    expect(datafilesDuck.filterByFilename(data_files, '').length).toBe(2);
-    expect(datafilesDuck.filterByFilename(data_files, '.yml').length).toBe(1);
   });
 });

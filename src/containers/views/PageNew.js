@@ -83,7 +83,7 @@ export class PageNew extends Component {
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
-            <Breadcrumbs type="pages" splat={params.splat || ''} />
+            <Breadcrumbs type="pages" splat={params.splat} />
           </div>
 
           <div className="content-wrapper">

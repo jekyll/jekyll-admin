@@ -111,6 +111,7 @@
     opacity: 0.5
   }
   .preview-tip {
+    margin-bottom: -5px;
     width: calc(100% - 0px); // override flex-wrap css
   }
 }
