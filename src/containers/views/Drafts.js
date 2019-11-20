@@ -5,12 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DocumentTitle from 'react-document-title';
 import Explorer from '../../components/Explorer';
-import { search } from '../../ducks/utils';
-import {
-  fetchDrafts,
-  deleteDraft,
-  filterBySearchInput,
-} from '../../ducks/drafts';
+import { search, filterBySearchInput } from '../../ducks/utils';
+import { fetchDrafts, deleteDraft } from '../../ducks/drafts';
 
 export class Drafts extends Component {
   componentDidMount() {

@@ -5,8 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DocumentTitle from 'react-document-title';
 import Explorer from '../../components/Explorer';
-import { search } from '../../ducks/utils';
-import { fetchPages, deletePage, filterBySearchInput } from '../../ducks/pages';
+import { search, filterBySearchInput } from '../../ducks/utils';
+import { fetchPages, deletePage } from '../../ducks/pages';
 
 export class Pages extends Component {
   componentDidMount() {

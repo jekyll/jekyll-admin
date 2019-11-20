@@ -5,12 +5,8 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DocumentTitle from 'react-document-title';
 import Explorer from '../../components/Explorer';
-import { search } from '../../ducks/utils';
-import {
-  fetchDataFiles,
-  deleteDataFile,
-  filterByFilename,
-} from '../../ducks/datafiles';
+import { search, filterBySearchInput } from '../../ducks/utils';
+import { fetchDataFiles, deleteDataFile } from '../../ducks/datafiles';
 
 export class DataFiles extends Component {
   componentDidMount() {
@@ -59,7 +55,7 @@ DataFiles.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  files: filterByFilename(state.datafiles.files, state.utils.input),
+  files: filterBySearchInput(state.datafiles.files, state.utils.input),
   isFetching: state.datafiles.isFetching,
 });
 
