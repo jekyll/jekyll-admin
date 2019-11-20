@@ -8,8 +8,8 @@ import DocumentTitle from 'react-document-title';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
-import { fetchPages, deletePage, filterBySearchInput } from '../../ducks/pages';
-import { search } from '../../ducks/utils';
+import { fetchPages, deletePage } from '../../ducks/pages';
+import { search, filterBySearchInput } from '../../ducks/utils';
 import { getDeleteMessage, getNotFoundMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 

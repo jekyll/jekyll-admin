@@ -115,6 +115,7 @@ export const meta = {
 };
 
 export const datafile = {
+  name: "data_file.yml",
   path: "_data/data_file.yml",
   relative_path: "_data/data_file.yml",
   slug: "data_file",

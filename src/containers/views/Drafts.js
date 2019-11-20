@@ -8,14 +8,10 @@ import DocumentTitle from 'react-document-title';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
 import InputSearch from '../../components/form/InputSearch';
-import { search } from '../../ducks/utils';
+import { search, filterBySearchInput } from '../../ducks/utils';
 import { getDeleteMessage, getNotFoundMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
-import {
-  fetchDrafts,
-  deleteDraft,
-  filterBySearchInput,
-} from '../../ducks/drafts';
+import { fetchDrafts, deleteDraft } from '../../ducks/drafts';
 
 export class Drafts extends Component {
   componentDidMount() {
