@@ -9,12 +9,8 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import { getDeleteMessage, getNotFoundMessage } from '../../translations';
 import InputSearch from '../../components/form/InputSearch';
 import Button from '../../components/Button';
-import {
-  fetchDataFiles,
-  deleteDataFile,
-  filterByFilename,
-} from '../../ducks/datafiles';
-import { search } from '../../ducks/utils';
+import { fetchDataFiles, deleteDataFile } from '../../ducks/datafiles';
+import { search, filterBySearchInput } from '../../ducks/utils';
 import { getFilenameFromPath } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -163,7 +159,7 @@ DataFiles.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  files: filterByFilename(state.datafiles.files, state.utils.input),
+  files: filterBySearchInput(state.datafiles.files, state.utils.input),
   isFetching: state.datafiles.isFetching,
 });
 
