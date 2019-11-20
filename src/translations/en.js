@@ -31,6 +31,9 @@ export const getUpdateErrorMessage = filename =>
 export const getDeleteErrorMessage = filename =>
   `Could not delete the ${filename}`;
 
+export const getPublishDraftMessage = (draftPath, postPath) =>
+  `'${draftPath}' will be converted to '${postPath}'`;
+
 // validation messages
 export const getTitleRequiredMessage = () => 'The title is required.';
 
@@ -63,6 +66,9 @@ export const labels = {
   },
   delete: {
     label: 'Delete',
+  },
+  publish: {
+    label: 'Publish',
   },
   view: {
     label: 'View',
