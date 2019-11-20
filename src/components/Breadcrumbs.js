@@ -1,52 +1,39 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import _ from 'underscore';
 import { toTitleCase } from '../utils/helpers';
 import { ADMIN_PREFIX } from '../constants';
 
-export default function Breadcrumbs({ splat, type }) {
-  let base;
-  if (type == 'pages') {
-    base = `${ADMIN_PREFIX}/pages`;
-  } else if (type == 'data files') {
-    base = `${ADMIN_PREFIX}/datafiles`;
-  } else if (type == 'drafts') {
-    base = `${ADMIN_PREFIX}/drafts`;
-  } else if (type == 'static files') {
-    base = `${ADMIN_PREFIX}/staticfiles`;
-  } else {
-    base = `${ADMIN_PREFIX}/collections/${type}`;
+export default function Breadcrumbs({ type, splat = '' }) {
+  const nonCollectionTypes = ['pages', 'datafiles', 'drafts', 'staticfiles'];
+  const base = nonCollectionTypes.includes(type)
+    ? `${ADMIN_PREFIX}/${type}`
+    : `${ADMIN_PREFIX}/collections/${type}`;
+
+  let label = type;
+  if (type == 'datafiles') {
+    label = 'data files';
+  } else if (type == 'staticfiles') {
+    label = 'static files';
   }
 
-  let links;
+  let nodes = [];
   if (splat) {
     const paths = splat.split('/');
-    links = _.map(paths, (path, i) => {
+    nodes = paths.map((path, i) => {
       const before = i == 0 ? '' : paths.slice(0, i).join('/') + '/';
-      return {
-        href: `${base}/${before}${path}`,
-        label: path,
-      };
+      return (
+        <li key={i}>
+          <Link to={`${base}/${before}${path}`}>{path}</Link>
+        </li>
+      );
     });
   }
-
-  let nodes = _.map(
-    links,
-    (link, i) =>
-      link.href ? (
-        <li key={i}>
-          <Link to={link.href}>{link.label}</Link>
-        </li>
-      ) : (
-        <li key={i}>{toTitleCase(link.label)}</li>
-      )
-  );
 
   return (
     <ul className="breadcrumbs">
       <li>
-        <Link to={base}>{toTitleCase(type)}</Link>
+        <Link to={base}>{toTitleCase(label)}</Link>
       </li>
       {nodes}
     </ul>
@@ -54,6 +41,6 @@ export default function Breadcrumbs({ splat, type }) {
 }
 
 Breadcrumbs.propTypes = {
-  splat: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  splat: PropTypes.string,
 };

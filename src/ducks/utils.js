@@ -1,3 +1,11 @@
+// Selectors
+export const filterBySearchInput = (list, input) => {
+  if (input) {
+    return list.filter(p => p.name.toLowerCase().includes(input.toLowerCase()));
+  }
+  return list;
+};
+
 // Action Types
 export const SEARCH_CONTENT = 'SEARCH_CONTENT';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';

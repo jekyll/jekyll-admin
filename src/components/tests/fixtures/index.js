@@ -29,3 +29,21 @@ export const errors = [
   'The filename is invalid',
   'The title is required'
 ];
+export const resources = [
+  {
+    name: 'resource-dir',
+    modified_time: '2019-10-18 10:20:40 +0230',
+    path: 'resource-dir',
+    type: 'directory',
+    relative_path: 'resource-dir',
+  },
+  {
+    path: 'resource-post.md',
+    date: '2019-10-18 10:20:40 +0230',
+    url: '/2019/10/18/resource.html',
+    relative_path: 'resource.md',
+    foo: 'bar',
+    title: 'Test Resource',
+    name: 'resource.md',
+  },
+];

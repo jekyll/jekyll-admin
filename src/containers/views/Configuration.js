@@ -75,8 +75,8 @@ export class Configuration extends Component {
               <Button
                 onClick={this.toggleView}
                 type="view-toggle"
-                active={true}
                 triggered={this.state.guiView}
+                active
                 block
               />
               <Button

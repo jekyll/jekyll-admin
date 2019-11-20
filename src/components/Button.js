@@ -13,12 +13,11 @@ export default function Button({
   icon,
   to,
 }) {
-  const btnClass = classnames({
-    btn: true,
+  const btnClass = classnames('btn', {
     'btn-active': active,
     'btn-success': active && (type == 'save' || type == 'create'),
     'btn-delete': type == 'delete',
-    'btn-view': type == 'view',
+    'btn-view': type == 'view' || type == 'publish',
     'btn-inactive': !active,
     'btn-fat': block,
     'btn-thin': thin,
@@ -47,6 +46,9 @@ export default function Button({
     case 'view-toggle':
       label = labels.viewToggle.label;
       triggeredLabel = labels.viewToggle.triggeredLabel;
+      break;
+    case 'publish':
+      label = labels.publish.label;
       break;
     default:
   }

@@ -74,7 +74,7 @@ export class StaticIndex extends Component {
       <DocumentTitle title="Static File Listing">
         <div>
           <div className="content-header">
-            <Breadcrumbs type="static files" splat="" />
+            <Breadcrumbs type="staticfiles" />
             {!modalView && this.renderDirectoryListingBtn()}
             <div className="pull-right">
               <InputSearch searchBy="filename" search={search} />

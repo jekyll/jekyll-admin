@@ -13,7 +13,7 @@ const propsList = [
     splat: '1/2',
   },
   {
-    type: 'data files',
+    type: 'datafiles',
     splat: '1/2/3',
   },
   {
@@ -23,6 +23,9 @@ const propsList = [
   {
     type: 'collections',
     splat: '1/2/3/4/5',
+  },
+  {
+    type: 'staticfiles',
   },
 ];
 
