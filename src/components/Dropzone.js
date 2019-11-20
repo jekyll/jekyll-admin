@@ -18,8 +18,8 @@ export class Dropzone extends Component {
         ref="ReactDropzone"
         className="dropzone"
         activeClassName="dropzone-active"
-        multiple={true}
-        disableClick={true}
+        multiple
+        disableClick
       >
         {files.length ? (
           <div className="preview-container">

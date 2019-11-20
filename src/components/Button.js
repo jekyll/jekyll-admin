@@ -13,8 +13,7 @@ export default function Button({
   icon,
   to,
 }) {
-  const btnClass = classnames({
-    btn: true,
+  const btnClass = classnames('btn', {
     'btn-active': active,
     'btn-success': active && (type == 'save' || type == 'create'),
     'btn-delete': type == 'delete',

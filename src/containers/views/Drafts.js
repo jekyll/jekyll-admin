@@ -67,10 +67,10 @@ export class Drafts extends Component {
               onClick={() => this.handleClickDelete(name)}
               type="delete"
               icon="trash"
-              active={true}
+              active
               thin
             />
-            <Button to={http_url} type="view" icon="eye" active={true} thin />
+            <Button to={http_url} type="view" icon="eye" active thin />
           </div>
         </td>
       </tr>

@@ -76,7 +76,7 @@ export class DataFiles extends Component {
               onClick={() => this.handleClickDelete(relative_path)}
               type="delete"
               icon="trash"
-              active={true}
+              active
               thin
             />
           </div>
