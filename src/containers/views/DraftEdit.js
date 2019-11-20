@@ -193,7 +193,7 @@ export class DraftEdit extends Component {
                 onClick={() => this.handleClickPublish(path)}
                 type="publish"
                 icon="send-o"
-                active={true}
+                active
                 block
               />
               <Button

@@ -113,7 +113,7 @@ export const deleteDraft = (directory, filename) => dispatch => {
 
 export const publishDraft = (directory, filename) => (dispatch, getState) => {
   const metadata = getState().metadata.metadata;
-  let { raw_content, title } = metadata;
+  const { raw_content } = metadata;
 
   // omit raw_content, path and empty-value keys in metadata state from front_matter
   const front_matter = _.omit(metadata, (value, key, object) => {
