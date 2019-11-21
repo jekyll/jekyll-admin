@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
 import FilePreview from '../../components/FilePreview';
-import Button from '../../components/Button';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../ducks/utils';

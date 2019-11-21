@@ -174,7 +174,6 @@ export class DataFileNew extends Component {
                 type="create"
                 active={activator}
                 triggered={updated}
-                icon="plus-square"
                 block
               />
               <Button
