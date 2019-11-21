@@ -142,7 +142,7 @@ export class DocumentEdit extends Component {
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
-            <Breadcrumbs splat={directory || ''} type={collection} />
+            <Breadcrumbs type={collection} splat={directory} />
           </div>
 
           <div className="content-wrapper">

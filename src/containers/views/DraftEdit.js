@@ -158,7 +158,7 @@ export class DraftEdit extends Component {
         <HotKeys handlers={keyboardHandlers} className="single">
           {errors.length > 0 && <Errors errors={errors} />}
           <div className="content-header">
-            <Breadcrumbs splat={directory || ''} type="drafts" />
+            <Breadcrumbs type="drafts" splat={directory} />
           </div>
 
           <div className="content-wrapper">

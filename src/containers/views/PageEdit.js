@@ -122,7 +122,7 @@ export class PageEdit extends Component {
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
-            <Breadcrumbs splat={directory || ''} type="pages" />
+            <Breadcrumbs type="pages" splat={directory} />
           </div>
 
           <div className="content-wrapper">
