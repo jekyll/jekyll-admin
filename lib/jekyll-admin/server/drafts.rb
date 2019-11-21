@@ -78,7 +78,7 @@ module JekyllAdmin
 
       def entries
         args = {
-          :base         => site.source,
+          :base         => site.in_source_dir("_drafts"),
           :content_type => "drafts",
           :splat        => params["splat"].first,
         }

@@ -362,7 +362,8 @@ Simply input the file's basename, the filetype (`YAML` or `JSON`) and data. The 
 
 ## StaticFiles
 
-Container for StaticFiles view. Lists all of static files and let users upload/delete static files. It uses `react-dropzone` for drag & drop file uploading.
+Container for rendering static files per directory. In addition to rendering links to the static contents of the directory,
+there's also provision to let users upload/delete static files. It uses `react-dropzone` for drag & drop file uploading.
 Uploaded files are previewed via `FilePreview` component.
 
 ### PropTypes
@@ -375,6 +376,26 @@ Uploaded files are previewed via `FilePreview` component.
   deleteStaticFile: Function,
   search: Function,
   isFetching: Boolean,
+  params: Object,
+  onClickStaticFile: Function // optional
+}
+```
+
+## StaticIndex
+
+Container for listing *all* static files in the current site. It does not have provisions for adding new files or deleting existing ones.
+The view is simply a grid of previews of the files with links to view the raw content of the files.
+
+### PropTypes
+
+```javascript
+{
+  files: Array,
+  isFetching: Boolean,
+  fetchStaticFiles: Function,
+  search: Function,
+  onClickStaticFile: Function,
+  modalView: Boolean // optional
 }
 ```
 

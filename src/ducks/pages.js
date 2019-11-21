@@ -188,11 +188,3 @@ export default function pages(
       };
   }
 }
-
-// Selectors
-export const filterBySearchInput = (list, input) => {
-  if (input) {
-    return list.filter(p => p.name.toLowerCase().includes(input.toLowerCase()));
-  }
-  return list;
-};

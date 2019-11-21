@@ -1,5 +1,5 @@
 environment:
-  nodejs_version: "6"
+  nodejs_version: 8
   RACK_ENV: test
   JEKYLL_LOG_LEVEL: warn
   RUBY_VERSION: 24
@@ -32,7 +32,7 @@ test_script:
 
 cache:
   - vendor/bundle
-  - node_modules
+  - 'node_modules -> package.json' # invalidate cache if package.json changes
 
 init:
   - git config --global core.autocrlf true

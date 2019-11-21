@@ -83,7 +83,7 @@ export class DraftNew extends Component {
         <HotKeys handlers={keyboardHandlers} className="single">
           {errors.length > 0 && <Errors errors={errors} />}
           <div className="content-header">
-            <Breadcrumbs type="drafts" splat={params.splat || ''} />
+            <Breadcrumbs type="drafts" splat={params.splat} />
           </div>
 
           <div className="content-wrapper">
@@ -132,6 +132,7 @@ DraftNew.propTypes = {
   route: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  draft: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

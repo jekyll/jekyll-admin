@@ -172,20 +172,14 @@ export class DocumentEdit extends Component {
                 block
               />
               {http_url && (
-                <Button
-                  to={http_url}
-                  type="view"
-                  icon="eye"
-                  active={true}
-                  block
-                />
+                <Button to={http_url} type="view" icon="eye" active block />
               )}
               <Splitter />
               <Button
                 onClick={this.handleClickDelete}
                 type="delete"
-                active={true}
                 icon="trash"
+                active
                 block
               />
             </div>

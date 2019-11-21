@@ -1,5 +1,5 @@
 import * as draftsDuck from '../drafts';
-import { draft, draft_entries } from './fixtures';
+import { draft } from './fixtures';
 
 const reducer = draftsDuck.default;
 
@@ -102,12 +102,5 @@ describe('Reducers::Drafts', () => {
     expect(reducer({ updated: true }, {})).toEqual({
       updated: false,
     });
-  });
-
-  it('should filter drafts and directories', () => {
-    expect(draftsDuck.filterBySearchInput(draft_entries, '').length).toBe(2);
-    expect(draftsDuck.filterBySearchInput(draft_entries, 'post').length).toBe(
-      1
-    );
   });
 });

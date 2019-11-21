@@ -196,13 +196,3 @@ export default function datafiles(
       };
   }
 }
-
-// Selectors
-export const filterByFilename = (datafiles, input) => {
-  if (input) {
-    return _.filter(datafiles, file => {
-      return file.path.toLowerCase().includes(input.toLowerCase());
-    });
-  }
-  return datafiles;
-};

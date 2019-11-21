@@ -3,17 +3,19 @@
 module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/static_files" do
-      get do
-        json static_files.map(&:to_api)
+      # End-point to retrieve all static-files in site
+      get "/index" do
+        json site.static_files.map(&:to_api)
       end
 
-      get "/*" do
+      # End-point to retrieve individual directories that contain static-files
+      get "/?*" do
+        render_404 unless File.exist?(path)
+
         if requested_file
           json requested_file.to_api(:include_content => true)
-        elsif !static_files_for_path.empty?
-          json static_files_for_path.map(&:to_api)
         else
-          render_404
+          json entries.map(&:to_api)
         end
       end
 
@@ -37,26 +39,44 @@ module JekyllAdmin
 
       private
 
-      def static_file_body
-        if !request_payload["raw_content"].to_s.empty?
-          request_payload["raw_content"].to_s
-        else
-          Base64.decode64 request_payload["encoded_content"].to_s
+      # returns relative path of root level directories that contain static files
+      def dirs_at_root
+        static_files.map do |file|
+          File.dirname(file.path.sub("#{site.source}/", "")).split("/")[0]
+        end.uniq
+      end
+
+      def directory_files
+        static_files.find_all do |file|
+          sanitized_path(File.dirname(file.path)) == directory_path
         end
+      end
+
+      def entries
+        splat = params["splat"].first
+        args = {
+          :base         => site.source,
+          :content_type => "static_files",
+          :splat        => splat,
+        }
+        # get all directories inside the requested directory
+        directory = JekyllAdmin::Directory.new(directory_path, args)
+        directories = directory.directories
+
+        # exclude root level directories which do not have static files
+        directories = directories.select { |d| dirs_at_root.include? d.name.to_s } if splat.empty?
+        directories.concat(directory_files)
+      end
+
+      def static_file_body
+        raw_content = request_payload["raw_content"]
+        return raw_content if raw_content.is_a?(String) && raw_content != ""
+
+        Base64.decode64 request_payload["encoded_content"].to_s
       end
 
       def static_files
-        site.static_files
-      end
-
-      def file_list_dir(path) end
-
-      def static_files_for_path
-        # Joined with / to ensure user can't do partial paths
-        base_path = File.join(path, "/")
-        static_files.select do |f|
-          f.path.start_with? base_path
-        end
+        site.static_files.select { |f| f.path.start_with? site.source }
       end
     end
   end

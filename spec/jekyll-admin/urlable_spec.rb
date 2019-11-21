@@ -106,8 +106,8 @@ describe JekyllAdmin::URLable do
 
   context "static files" do
     subject { JekyllAdmin.site.static_files.first }
-    let(:http_url) { "#{url_base}/icon-github.svg" }
-    let(:api_url) { "#{url_base}/#{prefix}/static_files/icon-github.svg" }
+    let(:http_url) { "#{url_base}/assets/images/icon-github.svg" }
+    let(:api_url) { "#{url_base}/#{prefix}/static_files/assets/images/icon-github.svg" }
 
     it "knows the HTTP URL" do
       expect(subject.http_url).to eql(http_url)
