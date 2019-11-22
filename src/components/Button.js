@@ -28,7 +28,7 @@ export default function Button({
   switch (type) {
     case 'save':
     case 'create':
-      label = labels[type]['label'];
+      label = labels[type].label;
       triggeredLabel = labels[type]['triggeredLabel'];
       break;
     case 'view-toggle':
