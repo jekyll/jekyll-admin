@@ -29,7 +29,7 @@ export default function Button({
     case 'save':
     case 'create':
       label = labels[type].label;
-      triggeredLabel = labels[type]['triggeredLabel'];
+      triggeredLabel = labels[type].triggeredLabel;
       break;
     case 'view-toggle':
       label = labels.viewToggle.label;
