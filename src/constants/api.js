@@ -3,6 +3,8 @@ export const API =
     ? '/_api'
     : 'http://localhost:4000/_api';
 
+export const getSiteMetaUrl = () => `${API}/site_meta`;
+
 export const getConfigurationUrl = () => `${API}/configuration`;
 export const putConfigurationUrl = () => `${API}/configuration`;
 

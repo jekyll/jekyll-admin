@@ -9,6 +9,7 @@ import drafts from './drafts';
 import datafiles from './datafiles';
 import staticfiles from './staticfiles';
 import utils from './utils';
+import siteMeta from './siteMeta';
 import notifications from './notifications';
 
 export default combineReducers({
@@ -16,6 +17,7 @@ export default combineReducers({
   config,
   pages,
   collections,
+  meta: siteMeta,
   metadata,
   drafts,
   datafiles,

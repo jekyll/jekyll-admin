@@ -15,6 +15,7 @@ import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../MetaFields';
 import { fetchPage, deletePage, putPage } from '../../ducks/pages';
+import { fetchSiteMeta } from '../../ducks/siteMeta';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
@@ -24,9 +25,10 @@ import { ADMIN_PREFIX } from '../../constants';
 
 export class PageEdit extends Component {
   componentDidMount() {
-    const { fetchPage, params, router, route } = this.props;
+    const { fetchPage, fetchSiteMeta, params, router, route } = this.props;
     const [directory, ...rest] = params.splat;
     const filename = rest.join('.');
+    fetchSiteMeta();
     fetchPage(directory, filename);
 
     router.setRouteLeaveHook(route, this.routerWillLeave);
@@ -170,6 +172,7 @@ export class PageEdit extends Component {
 
 PageEdit.propTypes = {
   page: PropTypes.object.isRequired,
+  fetchSiteMeta: PropTypes.func.isRequired,
   fetchPage: PropTypes.func.isRequired,
   deletePage: PropTypes.func.isRequired,
   putPage: PropTypes.func.isRequired,
@@ -194,11 +197,13 @@ const mapStateToProps = state => ({
   updated: state.pages.updated,
   errors: state.utils.errors,
   config: state.config.config,
+  site: state.meta.site,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      fetchSiteMeta,
       fetchPage,
       deletePage,
       putPage,

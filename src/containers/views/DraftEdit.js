@@ -21,6 +21,7 @@ import {
   putDraft,
   publishDraft,
 } from '../../ducks/drafts';
+import { fetchSiteMeta } from '../../ducks/siteMeta';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
@@ -34,7 +35,7 @@ import { ADMIN_PREFIX } from '../../constants';
 
 export class DraftEdit extends Component {
   componentDidMount() {
-    const { fetchDraft, params, router, route } = this.props;
+    const { fetchDraft, fetchSiteMeta, params, router, route } = this.props;
     const [directory, ...rest] = params.splat;
     const filename = rest.join('.');
     fetchDraft(directory, filename);
@@ -213,6 +214,7 @@ export class DraftEdit extends Component {
 
 DraftEdit.propTypes = {
   draft: PropTypes.object.isRequired,
+  fetchSiteMeta: PropTypes.func.isRequired,
   fetchDraft: PropTypes.func.isRequired,
   deleteDraft: PropTypes.func.isRequired,
   putDraft: PropTypes.func.isRequired,
@@ -238,11 +240,13 @@ const mapStateToProps = state => ({
   updated: state.drafts.updated,
   errors: state.utils.errors,
   config: state.config.config,
+  site: state.meta.site,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      fetchSiteMeta,
       fetchDraft,
       deleteDraft,
       putDraft,

@@ -15,6 +15,7 @@ import MarkdownEditor from '../../components/MarkdownEditor';
 import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { createDocument } from '../../ducks/collections';
+import { fetchSiteMeta } from '../../ducks/siteMeta';
 import { clearErrors } from '../../ducks/utils';
 import { getLeaveMessage } from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
@@ -23,7 +24,7 @@ import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {
   componentDidMount() {
-    const { router, route } = this.props;
+    const { fetchSiteMeta, router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave);
   }
 
@@ -127,6 +128,7 @@ export class DocumentNew extends Component {
 
 DocumentNew.propTypes = {
   createDocument: PropTypes.func.isRequired,
+  fetchSiteMeta: PropTypes.func.isRequired,
   updateTitle: PropTypes.func.isRequired,
   updateBody: PropTypes.func.isRequired,
   updatePath: PropTypes.func.isRequired,
@@ -147,11 +149,13 @@ const mapStateToProps = state => ({
   errors: state.utils.errors,
   updated: state.collections.updated,
   config: state.config.config,
+  site: state.meta.site,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
+      fetchSiteMeta,
       updateTitle,
       updateBody,
       updatePath,
