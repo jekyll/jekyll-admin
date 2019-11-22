@@ -36,28 +36,19 @@ export default function Button({
   let triggeredLabel = '';
   switch (type) {
     case 'save':
-      label = labels.save.label;
-      triggeredLabel = labels.save.triggeredLabel;
-      break;
     case 'create':
-      label = labels.create.label;
-      triggeredLabel = labels.create.triggeredLabel;
-      break;
-    case 'delete':
-      label = labels.delete.label;
-      break;
-    case 'view':
-      label = labels.view.label;
-      break;
-    case 'upload':
-      label = labels.upload.label;
+      label = labels[type].label;
+      triggeredLabel = labels[type].triggeredLabel;
       break;
     case 'view-toggle':
       label = labels.viewToggle.label;
       triggeredLabel = labels.viewToggle.triggeredLabel;
       break;
+    case 'view':
+    case 'delete':
+    case 'upload':
     case 'publish':
-      label = labels.publish.label;
+      label = labels[type].label;
       break;
     default:
   }
