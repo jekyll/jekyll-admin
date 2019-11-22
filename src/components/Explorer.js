@@ -52,13 +52,10 @@ export default class Explorer extends Component {
             <Button
               onClick={() => this.handleClickDelete(name)}
               type="delete"
-              icon="trash"
-              active={true}
+              active
               thin
             />
-            {http_url && (
-              <Button to={http_url} type="view" icon="eye" active thin />
-            )}
+            {http_url && <Button to={http_url} type="view" active thin />}
           </div>
         </td>
       </tr>

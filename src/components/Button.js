@@ -3,6 +3,15 @@ import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { labels } from '../translations';
 
+const iconMap = {
+  create: 'plus-square',
+  delete: 'trash',
+  publish: 'send-o',
+  save: 'save',
+  upload: 'upload',
+  view: 'eye',
+};
+
 export default function Button({
   type,
   active,
@@ -53,6 +62,8 @@ export default function Button({
     default:
   }
 
+  const iconName = icon || iconMap[type];
+
   return (
     <a
       href={to}
@@ -60,7 +71,7 @@ export default function Button({
       onClick={to ? null : onClick}
       className={btnClass}
     >
-      {icon && <i className={`fa fa-${icon}`} aria-hidden="true" />}
+      {iconName && <i className={`fa fa-${iconName}`} aria-hidden="true" />}
       {triggered ? triggeredLabel : label}
     </a>
   );
