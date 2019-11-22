@@ -48,7 +48,7 @@ export default function Button({
     case 'delete':
     case 'upload':
     case 'publish':
-      label = labels[type]['label'];
+      label = labels[type].label;
       break;
     default:
   }
