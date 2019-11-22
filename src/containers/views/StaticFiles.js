@@ -135,7 +135,6 @@ export class StaticFiles extends Component {
               <Button
                 onClick={() => this.openDropzone()}
                 type="upload"
-                icon="upload"
                 active
               />
             </div>

@@ -193,7 +193,6 @@ export class DataFileEdit extends Component {
           type="save"
           active={activator}
           triggered={updated}
-          icon="save"
           block
         />
         {guiSupport && (
@@ -209,7 +208,6 @@ export class DataFileEdit extends Component {
         <Button
           onClick={() => this.handleClickDelete(filename)}
           type="delete"
-          icon="trash"
           active
           block
         />

@@ -168,17 +168,13 @@ export class DocumentEdit extends Component {
                 type="save"
                 active={fieldChanged}
                 triggered={updated}
-                icon="save"
                 block
               />
-              {http_url && (
-                <Button to={http_url} type="view" icon="eye" active block />
-              )}
+              {http_url && <Button to={http_url} type="view" active block />}
               <Splitter />
               <Button
                 onClick={this.handleClickDelete}
                 type="delete"
-                icon="trash"
                 active
                 block
               />
