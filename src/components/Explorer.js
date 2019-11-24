@@ -4,6 +4,7 @@ import { browserHistory, Link } from 'react-router';
 import DocumentTitle from 'react-document-title';
 import Breadcrumbs from './Breadcrumbs';
 import Button from './Button';
+import Icon from './Icon';
 import InputSearch from './form/InputSearch';
 import { ADMIN_PREFIX } from '../constants';
 import { getDeleteMessage, getNotFoundMessage } from '../translations';
@@ -24,7 +25,7 @@ export default class Explorer extends Component {
       <td className="row-title">
         <strong>
           <Link to={`${ADMIN_PREFIX}/${type}/${path}`}>
-            <i className={`fa fa-${icon}`} aria-hidden="true" />
+            <Icon name={icon} />
             {name}
           </Link>
         </strong>

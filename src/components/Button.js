@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import Icon from './Icon';
 import { labels } from '../translations';
 
 const iconMap = {
@@ -62,7 +63,7 @@ export default function Button({
       onClick={to ? null : onClick}
       className={btnClass}
     >
-      {iconName && <i className={`fa fa-${iconName}`} aria-hidden="true" />}
+      {iconName && <Icon name={iconName} />}
       {triggered ? triggeredLabel : label}
     </a>
   );
