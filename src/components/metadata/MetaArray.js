@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Sortable from 'sortablejs';
 import _ from 'underscore';
+import Icon from '../Icon';
 
 import MetaArrayItem from './MetaArrayItem';
 
@@ -70,7 +71,7 @@ export class MetaArray extends Component {
           className="add-field-array"
           title="Add new list item"
         >
-          <i className="fa fa-plus" />
+          <Icon name="plus" />
         </a>
       </div>
     );

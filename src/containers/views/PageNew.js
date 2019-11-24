@@ -83,7 +83,7 @@ export class PageNew extends Component {
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
-            <Breadcrumbs type="pages" splat={params.splat || ''} />
+            <Breadcrumbs type="pages" splat={params.splat} />
           </div>
 
           <div className="content-wrapper">
@@ -107,7 +107,6 @@ export class PageNew extends Component {
                 type="create"
                 active={fieldChanged}
                 triggered={updated}
-                icon="plus-square"
                 block
               />
             </div>
@@ -132,6 +131,7 @@ PageNew.propTypes = {
   route: PropTypes.object.isRequired,
   params: PropTypes.object.isRequired,
   config: PropTypes.object.isRequired,
+  page: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({

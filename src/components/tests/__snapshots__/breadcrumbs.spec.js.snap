@@ -194,3 +194,18 @@ exports[`Components::Breadcrumbs renders correctly 5`] = `
   </li>
 </ul>
 `;
+
+exports[`Components::Breadcrumbs renders correctly 6`] = `
+<ul
+  className="breadcrumbs"
+>
+  <li>
+    <a
+      onClick={[Function]}
+      style={Object {}}
+    >
+      Static Files
+    </a>
+  </li>
+</ul>
+`;

@@ -1,9 +1,14 @@
 import _ from 'underscore';
 import { CLEAR_ERRORS, validationError } from './utils';
+import {
+  PUT_DOCUMENT_REQUEST,
+  PUT_DOCUMENT_SUCCESS,
+  PUT_DOCUMENT_FAILURE,
+} from './collections';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify, trimObject } from '../utils/helpers';
-import { draftsAPIUrl, draftAPIUrl } from '../constants/api';
+import { draftsAPIUrl, draftAPIUrl, documentAPIUrl } from '../constants/api';
 import {
   getTitleRequiredMessage,
   getFilenameNotValidMessage,
@@ -106,6 +111,24 @@ export const deleteDraft = (directory, filename) => dispatch => {
     );
 };
 
+export const publishDraft = (directory, filename) => (dispatch, getState) => {
+  const metadata = getState().metadata.metadata;
+  const { raw_content } = metadata;
+
+  // omit raw_content, path and empty-value keys in metadata state from front_matter
+  const front_matter = _.omit(metadata, (value, key, object) => {
+    return key == 'raw_content' || key == 'path' || value == '';
+  });
+
+  return put(
+    documentAPIUrl('posts', directory, filename),
+    preparePayload({ raw_content, front_matter }),
+    { type: PUT_DOCUMENT_SUCCESS, name: 'doc' },
+    { type: PUT_DOCUMENT_FAILURE, name: 'error' },
+    dispatch
+  );
+};
+
 const validateDraft = metadata =>
   validator(
     metadata,
@@ -172,11 +195,3 @@ export default function drafts(
       };
   }
 }
-
-// Selectors
-export const filterBySearchInput = (list, input) => {
-  if (input) {
-    return list.filter(p => p.name.toLowerCase().includes(input.toLowerCase()));
-  }
-  return list;
-};

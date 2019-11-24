@@ -142,7 +142,7 @@ export class DocumentEdit extends Component {
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
-            <Breadcrumbs splat={directory || ''} type={collection} />
+            <Breadcrumbs type={collection} splat={directory} />
           </div>
 
           <div className="content-wrapper">
@@ -168,24 +168,14 @@ export class DocumentEdit extends Component {
                 type="save"
                 active={fieldChanged}
                 triggered={updated}
-                icon="save"
                 block
               />
-              {http_url && (
-                <Button
-                  to={http_url}
-                  type="view"
-                  icon="eye"
-                  active={true}
-                  block
-                />
-              )}
+              {http_url && <Button to={http_url} type="view" active block />}
               <Splitter />
               <Button
                 onClick={this.handleClickDelete}
                 type="delete"
-                active={true}
-                icon="trash"
+                active
                 block
               />
             </div>

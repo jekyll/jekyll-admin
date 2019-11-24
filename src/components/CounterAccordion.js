@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import Icon from './Icon';
 
 class CounterAccordion extends Component {
   constructor(props) {
@@ -30,11 +31,11 @@ class CounterAccordion extends Component {
         onClick={this.handleClick}
       >
         <a>
-          {icon && <i className={`fa fa-${icon}`} />}
+          {icon && <Icon name={icon} />}
           {label}
           <div className="counter">{count}</div>
           <div className="chevrons">
-            <i className="fa fa-chevron-up" />
+            <Icon name="chevron-up" />
           </div>
         </a>
         {children}

@@ -23,7 +23,7 @@ describe('Components::Button', () => {
   it('should render correctly', () => {
     let { link, icon } = setup();
     expect(link.text()).toBe('Save');
-    expect(icon.node).toBeFalsy();
+    expect(icon.node).toBeTruthy();
 
     link = setup({
       ...defaultProps,
@@ -59,8 +59,9 @@ describe('Components::Button', () => {
     expect(link.text()).toBe('Switch View to Raw Editor');
   });
 
-  it('should render icon', () => {
-    const { icon } = setup({ ...defaultProps, icon: 'eye' });
+  it('should render custom icon', () => {
+    const { link, icon } = setup({ ...defaultProps, icon: 'eye' });
+    expect(link.text()).toBe('Save');
     expect(icon.node).toBeTruthy();
   });
 

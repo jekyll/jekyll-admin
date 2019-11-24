@@ -5,7 +5,6 @@ import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
 import FilePreview from '../../components/FilePreview';
-import Button from '../../components/Button';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../ducks/utils';
@@ -74,7 +73,7 @@ export class StaticIndex extends Component {
       <DocumentTitle title="Static File Listing">
         <div>
           <div className="content-header">
-            <Breadcrumbs type="static files" splat="" />
+            <Breadcrumbs type="staticfiles" />
             {!modalView && this.renderDirectoryListingBtn()}
             <div className="pull-right">
               <InputSearch searchBy="filename" search={search} />

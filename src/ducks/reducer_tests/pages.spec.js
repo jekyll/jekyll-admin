@@ -103,8 +103,4 @@ describe('Reducers::Pages', () => {
       updated: false,
     });
   });
-
-  it('should filter pages and directories', () => {
-    expect(pagesDuck.filterBySearchInput(page_entries, 'gsoc').length).toBe(1);
-  });
 });

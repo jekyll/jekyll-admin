@@ -139,7 +139,7 @@ export class DataFileNew extends Component {
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
-            <Breadcrumbs splat={params.splat || ''} type="data files" />
+            <Breadcrumbs type="datafiles" splat={params.splat} />
           </div>
 
           <div className="content-wrapper">
@@ -174,14 +174,13 @@ export class DataFileNew extends Component {
                 type="create"
                 active={activator}
                 triggered={updated}
-                icon="plus-square"
                 block
               />
               <Button
                 onClick={this.toggleView}
                 type="view-toggle"
-                active={true}
                 triggered={this.state.guiView}
+                active
                 block
               />
             </div>

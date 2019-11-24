@@ -1,4 +1,5 @@
 import * as utilsDuck from '../utils';
+import { page_entries, draft_entries, data_files } from './fixtures';
 
 const reducer = utilsDuck.default;
 
@@ -49,5 +50,15 @@ describe('Reducers::Utils', () => {
     ).toEqual({
       errors: ['The title is required'],
     });
+  });
+
+  it('should filter files and directories by input', () => {
+    expect(utilsDuck.filterBySearchInput(page_entries, 'gsoc').length).toBe(1);
+
+    expect(utilsDuck.filterBySearchInput(draft_entries, '').length).toBe(2);
+    expect(utilsDuck.filterBySearchInput(draft_entries, 'post').length).toBe(1);
+
+    expect(utilsDuck.filterBySearchInput(data_files, '').length).toBe(2);
+    expect(utilsDuck.filterBySearchInput(data_files, '.yml').length).toBe(1);
   });
 });

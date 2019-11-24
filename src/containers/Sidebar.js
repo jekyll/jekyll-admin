@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { Link } from 'react-router';
 import { ADMIN_PREFIX } from '../constants';
-import CounterAccordion from '../components/CounterAccordion';
 import Splitter from '../components/Splitter';
+import Icon from '../components/Icon';
+import CounterAccordion from '../components/CounterAccordion';
 import { fetchCollections } from '../ducks/collections';
 import { capitalize } from '../utils/helpers';
 import { sidebar as SidebarTranslations } from '../translations';
@@ -33,7 +34,7 @@ export class Sidebar extends Component {
               activeClassName="active"
               to={`${ADMIN_PREFIX}/collections/${col.label}`}
             >
-              <i className="fa fa-book" />
+              <Icon name="book" />
               {col.sidebar_label || capitalize(col.label)}
             </Link>
           </li>
@@ -106,7 +107,7 @@ export class Sidebar extends Component {
       links.push(
         <li key={index}>
           <Link activeClassName="active" to={`${ADMIN_PREFIX}/${current.link}`}>
-            <i className={`fa fa-${current.icon}`} />
+            <Icon name={current.icon} />
             {SidebarTranslations[current.translation]}
           </Link>
         </li>
@@ -128,7 +129,7 @@ export class Sidebar extends Component {
                 activeClassName="active"
                 to={`${ADMIN_PREFIX}/collections/posts`}
               >
-                <i className="fa fa-book" />
+                <Icon name="book" />
                 {SidebarTranslations.posts}
               </Link>
             </li>
@@ -136,7 +137,7 @@ export class Sidebar extends Component {
           {draftsPanel && (
             <li>
               <Link activeClassName="active" to={`${ADMIN_PREFIX}/drafts`}>
-                <i className="fa fa-edit" />
+                <Icon name="edit" />
                 {SidebarTranslations.drafts}
               </Link>
             </li>
