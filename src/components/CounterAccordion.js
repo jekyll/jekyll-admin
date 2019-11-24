@@ -6,23 +6,20 @@ import Icon from './Icon';
 class CounterAccordion extends Component {
   constructor(props) {
     super(props);
-    this.state = { collapsedPanel: true };
+    this.state = { collapsed: true };
   }
 
   handleClick = () => {
     this.setState({
-      collapsedPanel: !this.state.collapsedPanel,
+      collapsed: !this.state.collapsed,
     });
   };
 
   render() {
     const { icon, label, minHeight, count, children } = this.props;
-    const { collapsedPanel } = this.state;
-    const accordionClasses = classnames('accordion-label', {
-      collapsed: collapsedPanel,
-    });
-
-    const panelHeight = collapsedPanel ? minHeight : (count + 1) * minHeight;
+    const { collapsed } = this.state;
+    const accordionClasses = classnames('accordion-label', { collapsed });
+    const panelHeight = collapsed ? minHeight : (count + 1) * minHeight;
 
     return (
       <li
