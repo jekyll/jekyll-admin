@@ -10,8 +10,10 @@ class CounterAccordion extends Component {
   }
 
   handleClick = () => {
-    this.setState({
-      collapsed: !this.state.collapsed,
+    this.setState(state => {
+      return {
+        collapsed: !state.collapsed,
+      };
     });
   };
 
