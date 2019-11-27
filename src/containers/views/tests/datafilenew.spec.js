@@ -45,8 +45,6 @@ describe('Containers::DataFileNew', () => {
     expect(saveButton.node.props['type']).toEqual('create');
     expect(editor.node.props['content']).toEqual('');
     expect(component.state()).toEqual({
-      guiPath: '',
-      extn: '.yml',
       guiView: false,
     });
   });
@@ -100,37 +98,5 @@ describe('Containers::DataFileNew', () => {
     const { saveButton, actions } = setup();
     saveButton.simulate('click');
     expect(actions.putDataFile).not.toHaveBeenCalled();
-  });
-
-  it('should call putDataFile if path input field in GUI mode is changed.', () => {
-    const { component, toggleButton, saveButton, actions } = setup({
-      ...defaultProps,
-      datafileChanged: true,
-    });
-    component.setState({ guiPath: 'foo', guiView: true });
-    saveButton.simulate('click');
-    expect(actions.putDataFile).toHaveBeenCalledWith(
-      'books',
-      'foo.yml',
-      null,
-      null,
-      'gui'
-    );
-  });
-
-  it('should call putDataFile if a GUI field is changed.', () => {
-    const { component, toggleButton, saveButton, actions } = setup({
-      ...defaultProps,
-      fieldChanged: true,
-    });
-    component.setState({ guiPath: 'foo', guiView: true });
-    saveButton.simulate('click');
-    expect(actions.putDataFile).toHaveBeenCalledWith(
-      'books',
-      'foo.yml',
-      null,
-      null,
-      'gui'
-    );
   });
 });
