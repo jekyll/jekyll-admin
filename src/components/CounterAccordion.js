@@ -4,10 +4,7 @@ import classnames from 'classnames';
 import Icon from './Icon';
 
 class CounterAccordion extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { collapsed: true };
-  }
+  state = { collapsed: true };
 
   handleClick = () => {
     this.setState(state => {
