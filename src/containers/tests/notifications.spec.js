@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
-import { Notifications } from '../Notifications';
+import { mount } from 'enzyme';
 
+import { Notifications } from '../Notifications';
 import { notification } from './fixtures';
 
 describe('Containers::Notification', () => {
@@ -16,5 +17,18 @@ describe('Containers::Notification', () => {
       .create(<Notifications notification={notification} />)
       .toJSON();
     expect(tree).toMatchSnapshot();
+  });
+
+  it('renders correctly after props change', () => {
+    const notif = mount(<Notifications notification={notification} />);
+    const newNotification = {
+      title: 'Test Again',
+      message: 'Testing notifications change',
+      level: 'success',
+    };
+    notif.setProps({ notification: newNotification });
+    expect(notif.find('.notification-message').text()).toBe(
+      'Testing notifications change'
+    );
   });
 });

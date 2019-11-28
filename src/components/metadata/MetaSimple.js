@@ -3,9 +3,10 @@ import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Modal from 'react-modal';
-import StaticIndex from '../../containers/views/StaticIndex';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
+import StaticIndex from '../../containers/views/StaticIndex';
+import Icon from '../Icon';
 import 'react-widgets/dist/css/react-widgets.css';
 
 momentLocalizer(moment);
@@ -84,7 +85,7 @@ export class MetaSimple extends Component {
         />
         <span className="images-wrapper">
           <button onClick={this.handleOpenModal}>
-            <i className="fa fa-picture-o" aria-hidden="true" />
+            <Icon name="picture-o" />
           </button>
           <Modal
             isOpen={this.state.showModal}

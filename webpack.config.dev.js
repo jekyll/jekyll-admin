@@ -1,7 +1,8 @@
 import webpack from 'webpack';
 import path from 'path';
-import { ADMIN_PREFIX } from './src/constants';
 import { BundleAnalyzerPlugin } from 'webpack-bundle-analyzer';
+import MomentLocalesPlugin from 'moment-locales-webpack-plugin';
+import { ADMIN_PREFIX } from './src/constants';
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('development'),
@@ -41,7 +42,10 @@ export default {
       analyzerMode: 'static',
       logLevel: 'silent',
       openAnalyzer: false
-    })
+    }),
+    // Strip all moment.js locales except "en" ("en" is built into Moment and can't be removed)
+    // Refer https://github.com/iamakulov/moment-locales-webpack-plugin for options that can be passed
+    new MomentLocalesPlugin(),
   ],
   module: {
     rules: [

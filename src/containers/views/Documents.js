@@ -9,6 +9,7 @@ import DocumentTitle from 'react-document-title';
 import InputSearch from '../../components/form/InputSearch';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
+import Icon from '../../components/Icon';
 import {
   fetchCollection,
   deleteDocument,
@@ -74,7 +75,7 @@ export class Documents extends Component {
         <td className="row-title">
           <strong>
             <Link to={to}>
-              <i className="fa fa-file-text-o" aria-hidden="true" />
+              <Icon name="file-text-o" />
               {title || name}
             </Link>
           </strong>
@@ -85,13 +86,10 @@ export class Documents extends Component {
             <Button
               onClick={() => this.handleClickDelete(name)}
               type="delete"
-              icon="trash"
               active
               thin
             />
-            {http_url && (
-              <Button to={http_url} type="view" icon="eye" active thin />
-            )}
+            {http_url && <Button to={http_url} type="view" active thin />}
           </div>
         </td>
       </tr>
@@ -110,7 +108,7 @@ export class Documents extends Component {
         <td className="row-title">
           <strong>
             <Link to={to}>
-              <i className="fa fa-folder" aria-hidden="true" />
+              <Icon name="folder" />
               {name}
             </Link>
           </strong>
