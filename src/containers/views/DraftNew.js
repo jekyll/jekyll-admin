@@ -107,7 +107,6 @@ export class DraftNew extends Component {
                 type="create"
                 active={fieldChanged}
                 triggered={updated}
-                icon="plus-square"
                 block
               />
             </div>

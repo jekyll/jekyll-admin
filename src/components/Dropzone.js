@@ -4,6 +4,7 @@ import _ from 'underscore';
 import ReactDropzone from 'react-dropzone';
 import FilePreview from './FilePreview';
 import Splitter from './Splitter';
+import Icon from './Icon';
 
 export class Dropzone extends Component {
   openDropzone() {
@@ -18,8 +19,8 @@ export class Dropzone extends Component {
         ref="ReactDropzone"
         className="dropzone"
         activeClassName="dropzone-active"
-        multiple={true}
-        disableClick={true}
+        multiple
+        disableClick
       >
         {files.length ? (
           <div className="preview-container">
@@ -39,7 +40,7 @@ export class Dropzone extends Component {
           </div>
         ) : (
           <div className="preview-info">
-            <i className="fa fa-upload" aria-hidden="true" />
+            <Icon name="upload" />
             <p>Drag and drop file(s) here to upload</p>
           </div>
         )}

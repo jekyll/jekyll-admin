@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { getDeleteMessage } from '../translations';
 import { getFilenameFromPath } from '../utils/helpers';
+import Icon from './Icon';
 
 export default class FilePreview extends Component {
   handleClickDelete(path) {
@@ -14,8 +15,8 @@ export default class FilePreview extends Component {
   renderFileOverlay(file, splat) {
     if (file.from_theme) {
       return (
-        <span className="theme-indicator">
-          <i className="fa fa-diamond" aria-hidden="true" title="Theme Asset" />
+        <span className="theme-indicator" title="Theme Asset">
+          <Icon name="diamond" />
         </span>
       );
     } else if (splat != 'index') {
@@ -39,7 +40,7 @@ export default class FilePreview extends Component {
       <img src={file.http_url} />
     ) : (
       <div>
-        <i className="fa fa-file-text-o" aria-hidden="true" />
+        <Icon name="file-text-o" />
       </div>
     );
 

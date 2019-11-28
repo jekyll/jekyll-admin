@@ -193,15 +193,14 @@ export class DataFileEdit extends Component {
           type="save"
           active={activator}
           triggered={updated}
-          icon="save"
           block
         />
         {guiSupport && (
           <Button
             onClick={this.toggleView}
             type="view-toggle"
-            active={true}
             triggered={this.state.guiView}
+            active
             block
           />
         )}
@@ -209,8 +208,7 @@ export class DataFileEdit extends Component {
         <Button
           onClick={() => this.handleClickDelete(filename)}
           type="delete"
-          active={true}
-          icon="trash"
+          active
           block
         />
       </div>
