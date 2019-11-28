@@ -1,12 +1,13 @@
 import webpack from 'webpack';
 import path from 'path';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import MomentLocalesPlugin from 'moment-locales-webpack-plugin';
 import { ADMIN_PREFIX } from './src/constants';
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'),
   __DEV__: false,
-  VERSION: JSON.stringify(require("./package.json").version)
+  VERSION: JSON.stringify(require('./package.json').version),
 };
 
 export default {
@@ -18,7 +19,7 @@ export default {
   output: {
     path: `${__dirname}/lib/jekyll-admin/public`,
     publicPath: `${ADMIN_PREFIX}/`,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   plugins: [
     new webpack.DefinePlugin(GLOBALS),
@@ -28,9 +29,12 @@ export default {
       debug: false,
       noInfo: true,
       options: {
-        context: '/'
-      }
-    })
+        context: '/',
+      },
+    }),
+    // Strip all moment.js locales except "en" ("en" is built into Moment and can't be removed)
+    // Refer https://github.com/iamakulov/moment-locales-webpack-plugin for options that can be passed
+    new MomentLocalesPlugin(),
   ],
   module: {
     rules: [
@@ -44,11 +48,11 @@ export default {
       {
         test: /(\.css|\.scss)$/,
         use: [
-          {loader: MiniCssExtractPlugin.loader},
+          { loader: MiniCssExtractPlugin.loader },
           'css-loader',
-          'sass-loader'
+          'sass-loader',
         ],
       },
-    ]
-  }
+    ],
+  },
 };

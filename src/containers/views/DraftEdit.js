@@ -158,7 +158,7 @@ export class DraftEdit extends Component {
         <HotKeys handlers={keyboardHandlers} className="single">
           {errors.length > 0 && <Errors errors={errors} />}
           <div className="content-header">
-            <Breadcrumbs splat={directory || ''} type="drafts" />
+            <Breadcrumbs type="drafts" splat={directory} />
           </div>
 
           <div className="content-wrapper">
@@ -184,22 +184,19 @@ export class DraftEdit extends Component {
                 type="save"
                 active={fieldChanged}
                 triggered={updated}
-                icon="save"
                 block
               />
-              <Button to={http_url} type="view" icon="eye" active block />
+              <Button to={http_url} type="view" active block />
               <Splitter />
               <Button
                 onClick={() => this.handleClickPublish(path)}
                 type="publish"
-                icon="send-o"
                 active
                 block
               />
               <Button
                 onClick={() => this.handleClickDelete(name)}
                 type="delete"
-                icon="trash"
                 active
                 block
               />

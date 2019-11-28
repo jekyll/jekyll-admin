@@ -122,7 +122,7 @@ export class PageEdit extends Component {
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
-            <Breadcrumbs splat={directory || ''} type="pages" />
+            <Breadcrumbs type="pages" splat={directory} />
           </div>
 
           <div className="content-wrapper">
@@ -148,15 +148,13 @@ export class PageEdit extends Component {
                 type="save"
                 active={fieldChanged}
                 triggered={updated}
-                icon="save"
                 block
               />
-              <Button to={http_url} type="view" icon="eye" active block />
+              <Button to={http_url} type="view" active block />
               <Splitter />
               <Button
                 onClick={() => this.handleClickDelete(name)}
                 type="delete"
-                icon="trash"
                 active
                 block
               />

@@ -13,6 +13,7 @@ exports[`Containers::Header renders correctly 1`] = `
       target="_blank"
     >
       <i
+        aria-hidden="true"
         className="fa fa-home"
       />
       <span>
@@ -42,6 +43,7 @@ exports[`Containers::Header renders placeholder title 1`] = `
       target="_blank"
     >
       <i
+        aria-hidden="true"
         className="fa fa-home"
       />
       <span>

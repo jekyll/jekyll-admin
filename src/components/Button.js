@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
+import Icon from './Icon';
 import { labels } from '../translations';
+
+const iconMap = {
+  create: 'plus-square',
+  delete: 'trash',
+  publish: 'send-o',
+  save: 'save',
+  upload: 'upload',
+  view: 'eye',
+};
 
 export default function Button({
   type,
@@ -27,31 +37,24 @@ export default function Button({
   let triggeredLabel = '';
   switch (type) {
     case 'save':
-      label = labels.save.label;
-      triggeredLabel = labels.save.triggeredLabel;
-      break;
     case 'create':
-      label = labels.create.label;
-      triggeredLabel = labels.create.triggeredLabel;
-      break;
-    case 'delete':
-      label = labels.delete.label;
-      break;
-    case 'view':
-      label = labels.view.label;
-      break;
-    case 'upload':
-      label = labels.upload.label;
+      label = labels[type].label;
+      triggeredLabel = labels[type].triggeredLabel;
       break;
     case 'view-toggle':
       label = labels.viewToggle.label;
       triggeredLabel = labels.viewToggle.triggeredLabel;
       break;
+    case 'view':
+    case 'delete':
+    case 'upload':
     case 'publish':
-      label = labels.publish.label;
+      label = labels[type].label;
       break;
     default:
   }
+
+  const iconName = icon || iconMap[type];
 
   return (
     <a
@@ -60,7 +63,7 @@ export default function Button({
       onClick={to ? null : onClick}
       className={btnClass}
     >
-      {icon && <i className={`fa fa-${icon}`} aria-hidden="true" />}
+      {iconName && <Icon name={iconName} />}
       {triggered ? triggeredLabel : label}
     </a>
   );

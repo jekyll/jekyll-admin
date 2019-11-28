@@ -113,7 +113,6 @@ export class DocumentNew extends Component {
                 type="create"
                 active={fieldChanged}
                 triggered={updated}
-                icon="plus-square"
                 block
               />
             </div>
