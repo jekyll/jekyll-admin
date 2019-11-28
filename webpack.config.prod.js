@@ -1,39 +1,36 @@
 import webpack from 'webpack';
 import path from 'path';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
+import MiniCssExtractPlugin from 'mini-css-extract-plugin';
 import MomentLocalesPlugin from 'moment-locales-webpack-plugin';
 import { ADMIN_PREFIX } from './src/constants';
 
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('production'),
   __DEV__: false,
-  VERSION: JSON.stringify(require("./package.json").version)
+  VERSION: JSON.stringify(require('./package.json').version),
 };
 
 export default {
+  mode: 'production',
   node: { fs: 'empty' },
   devtool: 'source-map',
-  entry: './src/index',
+  entry: './src/index', // Default entry with Webpack v4. Keeping it for explicitness.
   target: 'web',
   output: {
     path: `${__dirname}/lib/jekyll-admin/public`,
     publicPath: `${ADMIN_PREFIX}/`,
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   plugins: [
     new webpack.DefinePlugin(GLOBALS),
-    new ExtractTextPlugin('styles.css'),
-    new webpack.optimize.UglifyJsPlugin({ sourceMap: true }),
+    new MiniCssExtractPlugin({ filename: 'styles.css' }),
     new webpack.LoaderOptionsPlugin({
       minimize: true,
       debug: false,
       noInfo: true,
       options: {
-        sassLoader: {
-          includePaths: [path.resolve(__dirname, 'src', 'scss')]
-        },
-        context: '/'
-      }
+        context: '/',
+      },
     }),
     // Strip all moment.js locales except "en" ("en" is built into Moment and can't be removed)
     // Refer https://github.com/iamakulov/moment-locales-webpack-plugin for options that can be passed
@@ -50,8 +47,12 @@ export default {
       {test: /\.ico$/, loader: 'file-loader?name=[name].[ext]'},
       {
         test: /(\.css|\.scss)$/,
-        loader: ExtractTextPlugin.extract('css-loader?sourceMap!sass-loader?sourceMap')
-      }
-    ]
-  }
+        use: [
+          { loader: MiniCssExtractPlugin.loader },
+          'css-loader',
+          'sass-loader',
+        ],
+      },
+    ],
+  },
 };

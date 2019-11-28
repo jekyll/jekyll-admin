@@ -7,12 +7,13 @@ import { ADMIN_PREFIX } from './src/constants';
 const GLOBALS = {
   'process.env.NODE_ENV': JSON.stringify('development'),
   __DEV__: true,
-  VERSION: JSON.stringify(require("./package.json").version)
+  VERSION: JSON.stringify(require('./package.json').version),
 };
 
 export default {
+  mode: 'development',
   node: { fs: 'empty' },
-  devtool: 'cheap-module-eval-source-map', // more info:https://webpack.github.io/docs/build-performance.html#sourcemaps and https://webpack.github.io/docs/configuration.html#devtool
+  devtool: 'cheap-module-eval-source-map', // more info: https://webpack.js.org/configuration/devtool/#devtool
   entry: [
     'webpack-hot-middleware/client?reload=true',
     './src/index'
@@ -21,7 +22,7 @@ export default {
   output: {
     path: `${__dirname}/lib/jekyll-admin/public`, // Note: Physical files are only output by the production build task `npm run build`.
     publicPath: `http://localhost:3000${ADMIN_PREFIX}/`, // Use absolute paths to avoid the way that URLs are resolved by Chrome when they're parsed from a dynamically loaded CSS blob. Note: Only necessary in Dev.
-    filename: 'bundle.js'
+    filename: 'bundle.js',
   },
   plugins: [
     new webpack.DefinePlugin(GLOBALS), // Tells React to build in prod mode. https://facebook.github.io/react/downloads.htmlnew webpack.HotModuleReplacementPlugin());
@@ -32,16 +33,13 @@ export default {
       debug: true,
       noInfo: true, // set to false to see a list of every file being bundled.
       options: {
-        sassLoader: {
-          includePaths: [path.resolve(__dirname, 'src', 'scss')]
-        },
-        context: '/'
-      }
+        context: '/',
+      },
     }),
     new BundleAnalyzerPlugin({
       analyzerMode: 'static',
       logLevel: 'silent',
-      openAnalyzer: false
+      openAnalyzer: false,
     }),
     // Strip all moment.js locales except "en" ("en" is built into Moment and can't be removed)
     // Refer https://github.com/iamakulov/moment-locales-webpack-plugin for options that can be passed
