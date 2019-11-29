@@ -61,16 +61,16 @@ export class Configuration extends Component {
       return (
         <DataGUI source={{ content }} onChange={onEditorChange} restricted />
       );
-    } else {
-      return (
-        <Editor
-          editorChanged={editorChanged}
-          onEditorChange={onEditorChange}
-          content={raw_content}
-          ref="editor"
-        />
-      );
     }
+
+    return (
+      <Editor
+        editorChanged={editorChanged}
+        onEditorChange={onEditorChange}
+        content={raw_content}
+        ref="editor"
+      />
+    );
   }
 
   render() {
