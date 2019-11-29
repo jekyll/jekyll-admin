@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
+import Icon from '../../components/Icon';
 import FilePreview from '../../components/FilePreview';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputSearch from '../../components/form/InputSearch';
@@ -52,7 +53,7 @@ export class StaticIndex extends Component {
     } else {
       return (
         <div className="preview-info">
-          <i className="fa fa-exclamation-triangle" aria-hidden="true" />
+          <Icon name="exclamation-triangle" />
           <h2>No files found!</h2>
           <h4>
             Upload files at 'Directory Listing' to have them displayed here.

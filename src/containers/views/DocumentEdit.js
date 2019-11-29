@@ -13,6 +13,7 @@ import Button from '../../components/Button';
 import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
+import StaticMetaData from '../../components/metadata/StaticMetaFields';
 import Metadata from '../../containers/MetaFields';
 import {
   fetchDocument,
@@ -120,13 +121,7 @@ export class DocumentEdit extends Component {
       name,
     } = currentDocument;
     const [directory, ...rest] = params.splat;
-
-    const metafields = injectDefaultFields(
-      config,
-      directory,
-      collection,
-      front_matter
-    );
+    const defaultMetadata = injectDefaultFields(config, directory, collection);
 
     const keyboardHandlers = {
       save: this.handleClickSave,
@@ -157,8 +152,9 @@ export class DocumentEdit extends Component {
                 ref="editor"
               />
               <Splitter />
+              <StaticMetaData fields={defaultMetadata} />
               <Metadata
-                fields={{ title, path: name, raw_content, ...metafields }}
+                fields={{ title, path: name, raw_content, ...front_matter }}
               />
             </div>
 

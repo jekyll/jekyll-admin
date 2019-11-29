@@ -2,29 +2,28 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import { StaticIndex } from '../StaticIndex';
-
 import { staticfile } from './fixtures';
 
-function setup(files=[staticfile]) {
+function setup(files = [staticfile]) {
   const actions = {
     fetchStaticFiles: jest.fn(),
     uploadStaticFiles: jest.fn(),
     deleteStaticFile: jest.fn(),
-    search: jest.fn()
+    search: jest.fn(),
   };
 
-  const component = mount(
-    <StaticIndex
-      files={files}
-      isFetching={false}
-      {...actions} />
-  );
+  const props = {
+    files,
+    isFetching: false,
+  };
+
+  const component = mount(<StaticIndex {...props} {...actions} />);
 
   return {
     component: component,
     actions: actions,
     info: component.find('.preview-info'),
-    previewContainer: component.find('.preview-container')
+    previewContainer: component.find('.preview-container'),
   };
 }
 
@@ -39,6 +38,12 @@ describe('Containers::StaticIndex', () => {
     const { info, previewContainer } = setup([]);
     expect(info.node).toBeTruthy();
     expect(previewContainer.node).toBeFalsy();
+  });
+
+  it('should not render elements when isFetching', () => {
+    const { component } = setup();
+    component.setProps({ files: [], isFetching: true });
+    expect(component.find('.content-header').node).toBeFalsy();
   });
 
   it('should call fetchStaticFiles action after mounted', () => {
