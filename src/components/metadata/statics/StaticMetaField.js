@@ -4,38 +4,32 @@ import StaticMetaArray from './StaticMetaArray';
 import StaticMetaObject from './StaticMetaObject';
 import StaticMetaSimple from './StaticMetaSimple';
 
-export class StaticMetaField extends Component {
-  render() {
-    const { type, fieldKey, fieldValue } = this.props;
+const FieldTypes = {
+  array: StaticMetaArray,
+  object: StaticMetaObject,
+  simple: StaticMetaSimple,
+};
 
-    const FieldTypes = {
-      array: StaticMetaArray,
-      object: StaticMetaObject,
-      simple: StaticMetaSimple,
-    };
+export default function StaticMetaField({ type, fieldKey, fieldValue }) {
+  const CurrentComponent = FieldTypes[type];
 
-    const CurrentComponent = FieldTypes[type];
-
-    return (
-      <div ref="wrap" className="metafield">
-        <div className={`meta-key ${type}`}>
-          <input
-            value={fieldKey}
-            className="field key-field"
-            type="text"
-            disabled
-          />
-        </div>
-        <CurrentComponent fieldValue={fieldValue} />
+  return (
+    <div className="metafield">
+      <div className={`meta-key ${type}`}>
+        <input
+          value={fieldKey}
+          className="field key-field"
+          type="text"
+          disabled
+        />
       </div>
-    );
-  }
+      <CurrentComponent fieldValue={fieldValue} />
+    </div>
+  );
 }
 
 StaticMetaField.propTypes = {
-  type: PropTypes.string,
-  fieldKey: PropTypes.string,
-  fieldValue: PropTypes.any,
+  type: PropTypes.string.isRequired,
+  fieldKey: PropTypes.string.isRequired,
+  fieldValue: PropTypes.any.isRequired,
 };
-
-export default StaticMetaField;
