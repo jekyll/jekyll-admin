@@ -12,7 +12,7 @@ fs.readFile('src/index.html', 'utf8', (readError, markup) => {
 
   const $ = cheerio.load(markup);
 
-  // since a separate spreadsheet is only utilized for the production build, need to dynamically add this here.
+  // since a separate stylesheet is only utilized for the production build, need to dynamically add this here.
   $('head').append('<link rel="stylesheet" href="/admin/styles.css">');
 
   fs.writeFile('lib/jekyll-admin/public/index.html', $.html(), 'utf8', (writeError) => {

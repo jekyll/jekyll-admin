@@ -7,6 +7,7 @@ import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
 import Dropzone from '../../components/Dropzone';
 import Button from '../../components/Button';
+import Icon from '../../components/Icon';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../ducks/utils';
@@ -77,7 +78,7 @@ export class StaticFiles extends Component {
         <td className="row-title">
           <strong>
             <Link to={to}>
-              <i className="fa fa-folder" aria-hidden="true" />
+              <Icon name="folder" />
               {name}
             </Link>
           </strong>
