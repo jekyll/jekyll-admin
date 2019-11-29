@@ -12,6 +12,7 @@ import Button from '../../components/Button';
 import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
+import StaticMetaData from '../../components/metadata/StaticMetaFields';
 import Metadata from '../../containers/MetaFields';
 import {
   updateTitle,
@@ -71,7 +72,7 @@ export class PageNew extends Component {
       save: this.handleClickSave,
     };
 
-    const metafields = injectDefaultFields(config, params.splat, 'pages');
+    const defaultMetadata = injectDefaultFields(config, params.splat, 'pages');
 
     const document_title = params.splat
       ? `New page - ${params.splat} - Pages`
@@ -98,7 +99,8 @@ export class PageNew extends Component {
                 ref="editor"
               />
               <Splitter />
-              <Metadata fields={metafields} />
+              <StaticMetaData fields={defaultMetadata} />
+              <Metadata fields={{}} />
             </div>
 
             <div className="content-side">
