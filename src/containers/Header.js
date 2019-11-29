@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router';
+import Icon from '../components/Icon';
 
 export class Header extends Component {
   render() {
@@ -9,7 +10,7 @@ export class Header extends Component {
       <div className="header">
         <h3 className="title">
           <Link target="_blank" to={config.url || '/'}>
-            <i className="fa fa-home" />
+            <Icon name="home" />
             <span>{config.title || 'You have no title!'}</span>
           </Link>
         </h3>

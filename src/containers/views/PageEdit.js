@@ -13,6 +13,7 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
+import StaticMetaData from '../../components/metadata/StaticMetaFields';
 import Metadata from '../MetaFields';
 import { fetchPage, deletePage, putPage } from '../../ducks/pages';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
@@ -105,12 +106,7 @@ export class PageEdit extends Component {
     const [directory, ...rest] = params.splat;
 
     const title = front_matter && front_matter.title ? front_matter.title : '';
-    const metafields = injectDefaultFields(
-      config,
-      directory,
-      'pages',
-      front_matter
-    );
+    const defaultMetadata = injectDefaultFields(config, directory, 'pages');
 
     const document_title = directory
       ? `${title || name} - ${directory} - Pages`
@@ -122,7 +118,7 @@ export class PageEdit extends Component {
           {errors.length > 0 && <Errors errors={errors} />}
 
           <div className="content-header">
-            <Breadcrumbs splat={directory || ''} type="pages" />
+            <Breadcrumbs type="pages" splat={directory} />
           </div>
 
           <div className="content-wrapper">
@@ -137,8 +133,9 @@ export class PageEdit extends Component {
                 ref="editor"
               />
               <Splitter />
+              <StaticMetaData fields={defaultMetadata} />
               <Metadata
-                fields={{ title, raw_content, path: name, ...metafields }}
+                fields={{ title, raw_content, path: name, ...front_matter }}
               />
             </div>
 
@@ -148,22 +145,14 @@ export class PageEdit extends Component {
                 type="save"
                 active={fieldChanged}
                 triggered={updated}
-                icon="save"
                 block
               />
-              <Button
-                to={http_url}
-                type="view"
-                icon="eye"
-                active={true}
-                block
-              />
+              <Button to={http_url} type="view" active block />
               <Splitter />
               <Button
                 onClick={() => this.handleClickDelete(name)}
                 type="delete"
-                active={true}
-                icon="trash"
+                active
                 block
               />
             </div>

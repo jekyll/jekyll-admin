@@ -18,14 +18,15 @@ module JekyllAdmin
       private
 
       def overrides
-        {
+        @overrides ||= {
           "source" => sanitized_path("/"),
         }
       end
 
       # Computed configuration, with updates and defaults
+      # Returns an instance of Jekyll::Configuration
       def configuration
-        @configuration ||= Jekyll.configuration(overrides)
+        @configuration ||= site.config.merge(overrides)
       end
 
       # Configuration data, as read by Jekyll

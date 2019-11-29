@@ -174,14 +174,13 @@ export class DataFileNew extends Component {
                 type="create"
                 active={activator}
                 triggered={updated}
-                icon="plus-square"
                 block
               />
               <Button
                 onClick={this.toggleView}
                 type="view-toggle"
-                active={true}
                 triggered={this.state.guiView}
+                active
                 block
               />
             </div>

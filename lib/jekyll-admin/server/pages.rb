@@ -44,7 +44,7 @@ module JekyllAdmin
       end
 
       def html_content?
-        page = JekyllAdmin::PageWithoutAFile.new(
+        page = Jekyll::PageWithoutAFile.new(
           site,
           site.source,
           "",

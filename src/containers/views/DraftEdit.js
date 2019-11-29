@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import _ from 'underscore';
+import moment from 'moment';
 import DocumentTitle from 'react-document-title';
 import { HotKeys } from 'react-hotkeys';
 import Button from '../../components/Button';
@@ -13,13 +14,23 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
+import StaticMetaData from '../../components/metadata/StaticMetaFields';
 import Metadata from '../MetaFields';
-import { fetchDraft, deleteDraft, putDraft } from '../../ducks/drafts';
+import {
+  fetchDraft,
+  deleteDraft,
+  putDraft,
+  publishDraft,
+} from '../../ducks/drafts';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault } from '../../utils/helpers';
-import { getLeaveMessage, getDeleteMessage } from '../../translations';
+import {
+  getLeaveMessage,
+  getDeleteMessage,
+  getPublishDraftMessage,
+} from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DraftEdit extends Component {
@@ -66,14 +77,35 @@ export class DraftEdit extends Component {
     }
   };
 
+  handleClickPublish(path) {
+    const { deleteDraft, publishDraft, params } = this.props;
+
+    const [directory, ...rest] = params.splat;
+    const filename = rest.join('.');
+    const today = moment().format('YYYY-MM-DD');
+    const datedfilename = `${today}-${filename}`;
+    const postPath = directory
+      ? `_posts/${directory}/${datedfilename}`
+      : `_posts/${datedfilename}`;
+
+    const confirm = window.confirm(getPublishDraftMessage(path, postPath));
+    if (confirm) {
+      const goTo = directory ? `/${directory}` : '';
+      deleteDraft(directory, filename);
+      publishDraft(directory, datedfilename);
+      browserHistory.push(`${ADMIN_PREFIX}/drafts${goTo}`);
+    }
+  }
+
   handleClickDelete(name) {
     const { deleteDraft, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(name));
     if (confirm) {
+      const goTo = directory ? `/${directory}` : '';
       const [directory, ...rest] = params.splat;
       const filename = rest.join('.');
       deleteDraft(directory, filename);
-      browserHistory.push(`${ADMIN_PREFIX}/drafts/${directory || ''}`);
+      browserHistory.push(`${ADMIN_PREFIX}/drafts${goTo}`);
     }
   }
 
@@ -101,16 +133,19 @@ export class DraftEdit extends Component {
       save: this.handleClickSave,
     };
 
-    const { name, raw_content, collection, http_url, front_matter } = draft;
+    const {
+      name,
+      path,
+      raw_content,
+      collection,
+      http_url,
+      front_matter,
+    } = draft;
     const [directory, ...rest] = params.splat;
 
     const title = front_matter && front_matter.title ? front_matter.title : '';
-    const metafields = injectDefaultFields(
-      config,
-      directory,
-      collection,
-      front_matter
-    );
+    const defaultMetadata = injectDefaultFields(config, directory, collection);
+
     const document_title = directory
       ? `${title || name} - ${directory} - Drafts`
       : `${title || name} - Drafts`;
@@ -120,7 +155,7 @@ export class DraftEdit extends Component {
         <HotKeys handlers={keyboardHandlers} className="single">
           {errors.length > 0 && <Errors errors={errors} />}
           <div className="content-header">
-            <Breadcrumbs splat={directory || ''} type="drafts" />
+            <Breadcrumbs type="drafts" splat={directory} />
           </div>
 
           <div className="content-wrapper">
@@ -135,8 +170,9 @@ export class DraftEdit extends Component {
                 ref="editor"
               />
               <Splitter />
+              <StaticMetaData fields={defaultMetadata} />
               <Metadata
-                fields={{ title, raw_content, path: name, ...metafields }}
+                fields={{ title, raw_content, path: name, ...front_matter }}
               />
             </div>
 
@@ -146,22 +182,20 @@ export class DraftEdit extends Component {
                 type="save"
                 active={fieldChanged}
                 triggered={updated}
-                icon="save"
                 block
               />
-              <Button
-                to={http_url}
-                type="view"
-                icon="eye"
-                active={true}
-                block
-              />
+              <Button to={http_url} type="view" active block />
               <Splitter />
+              <Button
+                onClick={() => this.handleClickPublish(path)}
+                type="publish"
+                active
+                block
+              />
               <Button
                 onClick={() => this.handleClickDelete(name)}
                 type="delete"
-                active={true}
-                icon="trash"
+                active
                 block
               />
             </div>
@@ -181,6 +215,7 @@ DraftEdit.propTypes = {
   updateBody: PropTypes.func.isRequired,
   updatePath: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
+  publishDraft: PropTypes.func.isRequired,
   isFetching: PropTypes.bool.isRequired,
   errors: PropTypes.array.isRequired,
   fieldChanged: PropTypes.bool.isRequired,
@@ -206,6 +241,7 @@ const mapDispatchToProps = dispatch =>
       fetchDraft,
       deleteDraft,
       putDraft,
+      publishDraft,
       updateTitle,
       updateBody,
       updatePath,

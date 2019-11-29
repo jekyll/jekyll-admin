@@ -12,6 +12,7 @@ import Button from '../../components/Button';
 import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
+import StaticMetaData from '../../components/metadata/StaticMetaFields';
 import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { createDocument } from '../../ducks/collections';
@@ -32,8 +33,7 @@ export class DocumentNew extends Component {
       const path = nextProps.currentDocument.path;
       const splat = path.substr(path.indexOf('/') + 1, path.length);
       browserHistory.push(
-        `${ADMIN_PREFIX}/collections/${nextProps.currentDocument
-          .collection}/${splat}`
+        `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${splat}`
       );
     }
   }
@@ -78,7 +78,7 @@ export class DocumentNew extends Component {
     const collection = params.collection_name;
     const link = `${ADMIN_PREFIX}/collections/${collection}`;
 
-    const metafields = injectDefaultFields(config, params.splat, collection);
+    const defaultMetadata = injectDefaultFields(config, params.splat, collection);
 
     const document_title = params.splat
       ? `New document - ${params.splat} - ${capitalize(collection)}`
@@ -105,7 +105,8 @@ export class DocumentNew extends Component {
                 ref="editor"
               />
               <Splitter />
-              <Metadata fields={metafields} />
+              <StaticMetaData fields={defaultMetadata} />
+              <Metadata fields={{}} />
             </div>
 
             <div className="content-side">
@@ -114,7 +115,6 @@ export class DocumentNew extends Component {
                 type="create"
                 active={fieldChanged}
                 triggered={updated}
-                icon="plus-square"
                 block
               />
             </div>
