@@ -1,10 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
-import _ from 'underscore';
 import classnames from 'classnames';
 import { getDeleteMessage } from '../../translations';
 
-export class MetaTags extends Component {
+export default class MetaTags extends Component {
   constructor(props) {
     super(props);
 
@@ -16,7 +15,8 @@ export class MetaTags extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    this.setState({ pageTags: nextProps.fieldValue });
+    const { fieldValue } = nextProps;
+    this.setState({ pageTags: fieldValue || [] });
   }
 
   componentDidUpdate() {
@@ -26,7 +26,7 @@ export class MetaTags extends Component {
 
   createTag(value) {
     const { pageTags } = this.state;
-    const clone = pageTags.slice();
+    const clone = [...pageTags];
 
     // create tags only if they do not exist already
     if (!clone.includes(value)) {
@@ -42,7 +42,7 @@ export class MetaTags extends Component {
 
   deleteTag(index) {
     const { pageTags } = this.state;
-    const clone = pageTags.slice();
+    const clone = [...pageTags];
 
     const tagName = index === -1 ? clone.slice(-1).pop() : clone[index];
     const confirm = window.confirm(getDeleteMessage(`tag: ${tagName}`));
@@ -54,41 +54,39 @@ export class MetaTags extends Component {
     }
   }
 
-  handleKeyDown(e) {
+  // keys that when pressed and released creates a new tag from the input value.
+  creators = [',', ' ', 'Enter'];
+
+  handleKeyUp(e) {
     const { pageTags } = this.state;
     const input = e.target.value;
 
-    // define tags with either the 'comma' key or the 'Enter' key, or the 'Spacebar' key
-    if (
-      input.length > 0 &&
-      (e.keyCode === 188 || e.keyCode === 13 || e.keyCode === 32)
-    ) {
+    if (input.length && this.creators.includes(e.key)) {
       this.createTag(input);
-    } else if (pageTags.length > 0 && input.length === 0 && e.keyCode === 8) {
+    } else if (pageTags.length && input.length === 0 && e.key === 'Backspace') {
       this.deleteTag(-1);
     }
   }
 
-  rectifyTags(str) {
-    const rectified = str.split(' ');
-    this.setState({ pageTags: rectified });
-  }
-
   render() {
     const { pageTags } = this.state;
+    const tagInput = `${this.state.tagInput}`;
 
-    let suggestions = this.props.suggestions || [];
-    suggestions = _.filter(suggestions, entry => {
-      return entry.startsWith(this.state.tagInput);
+    let suggestions = this.props.suggestions;
+    suggestions = suggestions.filter(entry => {
+      return entry.startsWith(tagInput);
     });
 
-    if (pageTags.length > 0 && !(pageTags instanceof Array)) {
+    if (pageTags.length && !(pageTags instanceof Array)) {
+      const value = `${pageTags}`;
+      const rectified = value.split(' ');
       return (
         <span className="meta-error">
-          Invalid array of tags! Found string: <strong>{`${pageTags}`}</strong>
+          Invalid array of tags! Found: <strong>{value}</strong>
           <br />
-          Click
-          <span onClick={() => this.rectifyTags(pageTags)}>here</span>
+          <span onClick={() => this.setState({ pageTags: rectified })}>
+            Click here
+          </span>
           to correct.
         </span>
       );
@@ -96,19 +94,19 @@ export class MetaTags extends Component {
 
     const tagPool = pageTags.filter(Boolean); // fiter out nil or empty elements
 
-    const tags = _.map(tagPool, (tag, i) => {
+    const tags = tagPool.map((tag, i) => {
       return (
         <span key={i} className="tag">
           {tag}
-          <span className="delete-tag" onClick={e => this.deleteTag(i)} />
+          <span className="delete-tag" onClick={() => this.deleteTag(i)} />
         </span>
       );
     });
 
-    const suggests = _.map(suggestions, (item, i) => {
+    const suggests = suggestions.map((item, i) => {
       if (!pageTags.includes(item)) {
         return (
-          <li key={i} onClick={e => this.createTag(item)}>
+          <li key={i} onClick={() => this.createTag(item)}>
             {item}
           </li>
         );
@@ -126,11 +124,11 @@ export class MetaTags extends Component {
         <div className="tags-input">
           <input
             type="text"
+            onChange={e => this.setState({ tagInput: e.target.value })}
             onFocus={() => this.setState({ autoSuggest: true })}
             onBlur={() => this.setState({ autoSuggest: false })}
-            onChange={e => this.setState({ tagInput: e.target.value })}
-            onKeyDown={e => this.handleKeyDown(e)}
-            value={this.state.tagInput.replace(/,|\s+/, '')}
+            onKeyUp={e => this.handleKeyUp(e)}
+            value={tagInput.replace(/,|\s+/, '')}
             ref="taginput"
           />
 
@@ -150,11 +148,14 @@ export class MetaTags extends Component {
   }
 }
 
+MetaTags.defaultProps = {
+  fieldValue: [],
+  suggestions: [],
+};
+
 MetaTags.propTypes = {
-  fieldValue: PropTypes.any,
   updateFieldValue: PropTypes.func.isRequired,
   nameAttr: PropTypes.any.isRequired,
   suggestions: PropTypes.array,
+  fieldValue: PropTypes.any,
 };
-
-export default MetaTags;

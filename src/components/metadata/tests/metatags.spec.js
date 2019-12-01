@@ -42,10 +42,17 @@ describe('Components::MetaTags', () => {
       ...defaultProps,
       fieldValue: 'foo',
     });
-    const error =
-      'Invalid array of tags! Found string: fooClickhereto correct.';
-    expect(component.find('.meta-error').text()).toEqual(error);
+    const error = 'Invalid array of tags! Found: fooClick hereto correct.';
+    const error_element = component.find('.meta-error');
+    const rectifier = error_element.find('span').last();
+
+    expect(component.state('pageTags')).toEqual('foo');
+    expect(error_element.text()).toEqual(error);
     expect(editable.node).toBeFalsy();
+
+    expect(rectifier.text()).toEqual('Click here');
+    rectifier.simulate('click');
+    expect(component.state('pageTags')).toEqual(['foo']);
   });
 
   it('should create tags on certain keypresses', () => {
@@ -53,17 +60,17 @@ describe('Components::MetaTags', () => {
     editable.node.value = 'foo';
     editable.simulate('change', editable);
     expect(component.state('tagInput')).toEqual('foo');
-    editable.simulate('keyDown', { key: 'Enter', keyCode: 13 });
+    editable.simulate('keyUp', { key: 'Enter', keyCode: 13 });
     expect(component.state('pageTags')).toEqual(['foo']);
 
     editable.node.value = 'bar';
     editable.simulate('change', editable);
-    editable.simulate('keyDown', { key: 'Comma', keyCode: 188 });
+    editable.simulate('keyUp', { key: ',', keyCode: 188 });
     expect(component.state('pageTags')).toEqual(['foo', 'bar']);
 
     editable.node.value = 'ignored';
     editable.simulate('change', editable);
-    editable.simulate('keyDown', { key: 'Tab', keyCode: 9 });
+    editable.simulate('keyUp', { key: 'Tab', keyCode: 9 });
     expect(component.state('pageTags')).not.toEqual(['foo', 'bar', 'ignored']);
   });
 
@@ -74,7 +81,7 @@ describe('Components::MetaTags', () => {
     });
     editable.node.value = 'foo';
     editable.simulate('change', editable);
-    editable.simulate('keyDown', { key: 'Space', keyCode: 32 });
+    editable.simulate('keyUp', { key: ' ', keyCode: 32 });
     expect(component.state('pageTags')).not.toEqual(['foo', 'bar', 'foo']);
   });
 
@@ -82,7 +89,7 @@ describe('Components::MetaTags', () => {
     const { component, editable } = setup();
     editable.node.value = 'foo';
     editable.simulate('change', editable);
-    editable.simulate('keyDown', { key: 'Space', keyCode: 32 });
+    editable.simulate('keyUp', { key: ' ', keyCode: 32 });
 
     component.find('.delete-tag').simulate('click');
     expect(component.state('pageTags')).toEqual(['foo']); // TODO: pass prompt
@@ -92,8 +99,8 @@ describe('Components::MetaTags', () => {
     const { component, editable } = setup();
     editable.node.value = 'foo';
     editable.simulate('change', editable);
-    editable.simulate('keyDown', { key: 'Space', keyCode: 32 });
-    editable.simulate('keyDown', { key: 'Backspace', keyCode: 8 });
+    editable.simulate('keyUp', { key: ' ', keyCode: 32 });
+    editable.simulate('keyUp', { key: 'Backspace', keyCode: 8 });
     expect(component.state('pageTags')).toEqual(['foo']); // TODO: pass prompt
   });
 
@@ -108,13 +115,14 @@ describe('Components::MetaTags', () => {
       ...defaultProps,
       suggestions: ['foo', 'bar', 'baz'],
     });
-    component.setState({ autoSuggest: true });
+    editable.simulate('focus');
     const suggestedTags = component.find('.tag-suggestions li');
     expect(suggestedTags.map(item => item.text())).toEqual([
       'foo',
       'bar',
       'baz',
     ]);
+    editable.simulate('blur');
   });
 
   it('should render a dropdown list of tags not already used in current document', () => {
@@ -146,7 +154,11 @@ describe('Components::MetaTags', () => {
       fieldValue: ['foo'],
     });
     expect(component.state('pageTags')).toEqual(['foo']);
+
     component.setProps({ fieldValue: ['lorem', 'ipsum'] });
     expect(component.state('pageTags')).toEqual(['lorem', 'ipsum']);
+
+    component.setProps({ fieldValue: '' });
+    expect(component.state('pageTags')).toEqual([]);
   });
 });
