@@ -1,33 +1,25 @@
 import React from 'react';
-import { mount } from 'enzyme';
+import ReactDOM from 'react-dom';
+import renderer from 'react-test-renderer';
 import { Header } from '../Header';
 import { config } from './fixtures';
 
 const defaultProps = { config: config.content };
 
-function setup(props = defaultProps) {
-  const component = mount(
-    <Header {...props} />
-  );
-
-  return {
-    component: component,
-    title: component.find('h3 span')
-  };
-}
-
 describe('Containers::Header', () => {
-  it('should render correctly', () => {
-    const { component, title } = setup();
-    const { config } = component.props();
-    expect(title.text()).toEqual(config.title);
+  it('renders without crashing', () => {
+    const div = document.createElement('div');
+    ReactDOM.render(<Header {...defaultProps} />, div);
   });
 
-  it('should render placeholder title', () => {
-    const { component, title } = setup(Object.assign({}, defaultProps, {
-      config: {}
-    }));
-    const { config } = component.props();
-    expect(title.text()).toEqual('You have no title!');
+  it('renders correctly', () => {
+    const tree = renderer.create(<Header {...defaultProps} />).toJSON();
+    expect(tree).toMatchSnapshot();
+  });
+
+  it('renders placeholder title', () => {
+    const props = { ...defaultProps, config: {} };
+    const tree = renderer.create(<Header {...props} />).toJSON();
+    expect(tree).toMatchSnapshot();
   });
 });

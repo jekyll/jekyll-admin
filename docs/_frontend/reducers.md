@@ -43,6 +43,19 @@ description: Specifies how the application’s state changes in response to acti
 }
 ```
 
+## Drafts
+
+### State
+
+```javascript
+{
+  drafts: Array,
+  draft: Object, // currently visited draft
+  isFetching: Boolean, // set to true when the draft is being fetched
+  updated: Boolean // set to true when the draft is updated
+}
+```
+
 ## Metadata
 
 ### State

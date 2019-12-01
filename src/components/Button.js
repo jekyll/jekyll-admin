@@ -1,65 +1,72 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
-import { labels } from '../constants/lang';
+import Icon from './Icon';
+import { labels } from '../translations';
 
-export default class Button extends Component {
+const iconMap = {
+  create: 'plus-square',
+  delete: 'trash',
+  publish: 'send-o',
+  save: 'save',
+  upload: 'upload',
+  view: 'eye',
+};
 
-  render() {
-    const { type, active, triggered, onClick, block, thin, icon, to } = this.props;
+export default function Button({
+  type,
+  active,
+  triggered,
+  onClick,
+  block,
+  thin,
+  icon,
+  to,
+}) {
+  const btnClass = classnames('btn', {
+    'btn-active': active,
+    'btn-success': active && (type == 'save' || type == 'create'),
+    'btn-delete': type == 'delete',
+    'btn-view': type == 'view' || type == 'publish',
+    'btn-inactive': !active,
+    'btn-fat': block,
+    'btn-thin': thin,
+  });
 
-    const btnClass = classnames({
-      'btn': true,
-      'btn-active': active,
-      'btn-success': active && (type == 'save' || type == 'create'),
-      'btn-delete': type == 'delete',
-      'btn-view': type == 'view',
-      'btn-inactive': !active,
-      'btn-fat': block,
-      'btn-thin': thin
-    });
-
-    let label = '';
-    let triggeredLabel = '';
-    switch (type) {
-      case 'save':
-        label = labels.save.label;
-        triggeredLabel = labels.save.triggeredLabel;
-        break;
-      case 'create':
-        label = labels.create.label;
-        triggeredLabel = labels.create.triggeredLabel;
-        break;
-      case 'delete':
-        label = labels.delete.label;
-        break;
-      case 'view':
-        label = labels.view.label;
-        break;
-      case 'upload':
-        label = labels.upload.label;
-        break;
-      case 'view-toggle':
-        label = labels.viewToggle.label;
-        triggeredLabel = labels.viewToggle.triggeredLabel;
-        break;
-      default:
-    }
-
-    const iconNode = icon ?
-      <i className={`fa fa-${icon}`} aria-hidden="true" /> : null;
-    const clickEvent = !to ? onClick : null;
-
-    return (
-      <a href={to}
-        target="_blank"
-        onClick={clickEvent}
-        className={btnClass}>
-          {iconNode}
-          {triggered ? triggeredLabel : label}
-      </a>
-    );
+  let label = '';
+  let triggeredLabel = '';
+  switch (type) {
+    case 'save':
+    case 'create':
+      label = labels[type].label;
+      triggeredLabel = labels[type].triggeredLabel;
+      break;
+    case 'view-toggle':
+      label = labels.viewToggle.label;
+      triggeredLabel = labels.viewToggle.triggeredLabel;
+      break;
+    case 'view':
+    case 'delete':
+    case 'upload':
+    case 'publish':
+      label = labels[type].label;
+      break;
+    default:
   }
 
+  const iconName = icon || iconMap[type];
+
+  return (
+    <a
+      href={to}
+      target="_blank"
+      onClick={to ? null : onClick}
+      className={btnClass}
+    >
+      {iconName && <Icon name={iconName} />}
+      {triggered ? triggeredLabel : label}
+    </a>
+  );
 }
 
 Button.propTypes = {
@@ -70,5 +77,5 @@ Button.propTypes = {
   block: PropTypes.bool,
   thin: PropTypes.bool,
   icon: PropTypes.string,
-  to: PropTypes.string
+  to: PropTypes.string,
 };

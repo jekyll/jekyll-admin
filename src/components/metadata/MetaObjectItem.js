@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import MetaArray from './MetaArray';
 import MetaObject from './MetaObject';
@@ -6,7 +7,6 @@ import MetaSimple from './MetaSimple';
 import MetaButtons from './MetaButtons';
 
 export class MetaObjectItem extends Component {
-
   handleConvertClick(type) {
     const { convertField, nameAttr } = this.props;
     convertField(nameAttr, type);
@@ -34,31 +34,44 @@ export class MetaObjectItem extends Component {
   }
 
   render() {
-    const { type, fieldKey, fieldValue, nameAttr, addField,
-      removeField, updateFieldKey, updateFieldValue, convertField, key_prefix,
-      moveArrayItem } = this.props;
+    const {
+      type,
+      fieldKey,
+      fieldValue,
+      nameAttr,
+      addField,
+      removeField,
+      updateFieldKey,
+      updateFieldValue,
+      convertField,
+      key_prefix,
+      moveArrayItem,
+    } = this.props;
     const FieldTypes = {
-      'array': MetaArray,
-      'object': MetaObject,
-      'simple': MetaSimple
+      array: MetaArray,
+      object: MetaObject,
+      simple: MetaSimple,
     };
     const CurrentComponent = FieldTypes[type];
     return (
       <div ref="wrap" className="object-item-wrap">
         <div className={`object-key ${type}`}>
-          <input ref="field_key"
-            onBlur={(e) => this.handleKeyBlur(e)}
+          <input
+            ref="field_key"
+            onBlur={e => this.handleKeyBlur(e)}
             defaultValue={fieldKey}
             className="field key-field"
             type="text"
-            placeholder="Key" />
+            placeholder="Key"
+          />
           <MetaButtons
             currentType={type}
             parentType="object"
-            onConvertClick={(type) => this.handleConvertClick(type)}
+            onConvertClick={type => this.handleConvertClick(type)}
             onRemoveClick={() => this.handleRemoveClick()}
             onDropdownFocus={() => this.handleDropdownFocus()}
-            onDropdownBlur={() => this.handleDropdownBlur()} />
+            onDropdownBlur={() => this.handleDropdownBlur()}
+          />
         </div>
         <div className="object-value">
           <CurrentComponent
@@ -73,12 +86,12 @@ export class MetaObjectItem extends Component {
             moveArrayItem={moveArrayItem}
             convertField={convertField}
             nameAttr={nameAttr}
-            namePrefix={nameAttr} />
+            namePrefix={nameAttr}
+          />
         </div>
       </div>
     );
   }
-
 }
 
 MetaObjectItem.propTypes = {
@@ -93,6 +106,6 @@ MetaObjectItem.propTypes = {
   updateFieldKey: PropTypes.func.isRequired,
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
-  key_prefix: PropTypes.string.isRequired
+  key_prefix: PropTypes.string.isRequired,
 };
 export default MetaObjectItem;

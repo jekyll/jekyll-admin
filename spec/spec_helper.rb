@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 ENV["RACK_ENV"] = "test"
 
 require "rspec"
@@ -30,6 +32,7 @@ end
 
 def with_index_stubbed
   return yield if File.exist?(index_path)
+
   stub_index
   yield
   FileUtils.rm_f(index_path)

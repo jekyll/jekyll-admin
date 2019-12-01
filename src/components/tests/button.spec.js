@@ -2,11 +2,11 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import Button from '../Button';
-const defaultProps = {type: 'save', active: true};
+const defaultProps = { type: 'save', active: true };
 
-function setup(props=defaultProps) {
+function setup(props = defaultProps) {
   const actions = {
-    onClick: jest.fn()
+    onClick: jest.fn(),
   };
 
   const component = mount(<Button {...props} {...actions} />);
@@ -15,40 +15,53 @@ function setup(props=defaultProps) {
     component,
     link: component.find('a'),
     icon: component.find('i'),
-    actions
+    actions,
   };
 }
 
 describe('Components::Button', () => {
   it('should render correctly', () => {
-    const { link, icon } = setup();
+    let { link, icon } = setup();
     expect(link.text()).toBe('Save');
-    expect(icon.node).toBeFalsy();
+    expect(icon.node).toBeTruthy();
+
+    link = setup({
+      ...defaultProps,
+      type: 'create',
+      active: false,
+      block: true,
+    }).link;
+    expect(link.text()).toBe('Create');
   });
 
   it('should have correct class names', () => {
     let { link } = setup();
     expect(link.prop('className')).toBe('btn btn-active btn-success');
 
-    link = setup(Object.assign({}, defaultProps, {
+    link = setup({
+      ...defaultProps,
       type: 'delete',
       active: false,
-      block: true
-    })).link;
+      block: true,
+    }).link;
     expect(link.prop('className')).toBe('btn btn-delete btn-inactive btn-fat');
   });
 
   it('should render triggered text', () => {
-    const { link } = setup(Object.assign({}, defaultProps, {
-      triggered: true
-    }));
+    let { link } = setup({ ...defaultProps, triggered: true });
     expect(link.text()).toBe('Saved');
+
+    link = setup({
+      ...defaultProps,
+      type: 'view-toggle',
+      triggered: true,
+    }).link;
+    expect(link.text()).toBe('Switch View to Raw Editor');
   });
 
-  it('should render icon', () => {
-    const { icon } = setup(Object.assign({}, defaultProps, {
-      icon: 'eye'
-    }));
+  it('should render custom icon', () => {
+    const { link, icon } = setup({ ...defaultProps, icon: 'eye' });
+    expect(link.text()).toBe('Save');
     expect(icon.node).toBeTruthy();
   });
 
@@ -59,9 +72,7 @@ describe('Components::Button', () => {
   });
 
   it('should not call onClick if it is a link', () => {
-    const { link, actions } = setup(Object.assign({}, defaultProps, {
-      to: 'some_link'
-    }));
+    const { link, actions } = setup({ ...defaultProps, to: 'some_link' });
     link.simulate('click');
     expect(actions.onClick).not.toHaveBeenCalled();
   });

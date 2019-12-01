@@ -2,9 +2,9 @@
   text-align: center;
   padding: 20px;
   color: #9098A3;
-  background-color: white;
-  border: 1px solid $border-color;
-  @include border-radius($border-radius);
+  background-color: #fafafa;
+  border: 2px dashed lighten($border-color, 9%);
+  border-radius: $border-radius;
   position: relative;
   .preview-info {
     padding: 40px;
@@ -23,32 +23,56 @@
   color: white;
 }
 
+.static-list {
+  padding: 25px;
+  background-color: #fcfcfc;
+  border: 1px solid lighten($border-color, 9%);
+}
+
 .preview-container {
   display: flex;
   flex-wrap: wrap;
   .file-preview {
     display: flex;
     flex-direction: column;
-    border: 1px solid transparent;
-    background-color: #fcfcfc;
-    margin: 10px;
+    border: 1px solid lighten($border-color, 12%);
+    background-color: #fff;
+    margin: 10px 7px;
     position: relative;
-    @include border-radius($border-radius);
+    border-radius: $border-radius;
     &:hover .delete{
       opacity: 1;
     }
+    a { height: 150px; }
     div {
+      display: table;
       width: 150px;
       height: 150px;
       text-align: center;
       i {
+        display: table-cell;
         color: #ccc;
-        padding-top: 50px;
         font-size: 64px;
-        display: inline-table;
+        vertical-align: middle;
+      }
+    }
+    span.theme-indicator {
+      position: absolute;
+      bottom: 40px;
+      left: 0;
+      width: 32px;
+      height: 32px;
+      text-align: left;
+      background: $dark-red;
+      i {
+        margin: 0;
+        padding: 8px 7px 7px;
+        color: white;
+        font-size: 16px;
       }
     }
     span.filename {
+      padding: 5px;
       font-size: 14px;
       line-height: 2;
       text-align: center;
@@ -56,6 +80,8 @@
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
+      border-top: 1px solid lighten($border-color, 9%);
+      border-bottom: 1px solid lighten($border-color, 9%);
     }
     img {
       @include nodrag();
@@ -79,6 +105,29 @@
       background: #cf3f3f;
       border: none;
     }
+  }
+  .splitter {
+    margin-top: 25px;
+    opacity: 0.5
+  }
+  .preview-tip {
+    margin-bottom: -5px;
+    width: calc(100% - 0px); // override flex-wrap css
+  }
+}
+
+.preview-info {
+  padding: 20px;
+  text-align: center;
+  color: #454545;
+  i {
+    display: inline;
+    font-size: 96px;
+    margin: 0;
+  }
+  h2, h4 {
+    margin: 0;
+    line-height: 1.5;
   }
 }
 

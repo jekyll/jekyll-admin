@@ -8,13 +8,14 @@ import Button from '../../../components/Button';
 import { config, doc } from './fixtures';
 
 const defaultProps = {
+  currentDocument: {},
   errors: [],
   fieldChanged: false,
   updated: false,
   router: {},
   route: {},
   config: config,
-  params: { collection_name: doc.collection }
+  params: { collection_name: doc.collection },
 };
 
 const setup = (props = defaultProps) => {
@@ -23,7 +24,7 @@ const setup = (props = defaultProps) => {
     updateTitle: jest.fn(),
     updateBody: jest.fn(),
     updatePath: jest.fn(),
-    clearErrors: jest.fn()
+    clearErrors: jest.fn(),
   };
 
   const component = shallow(<DocumentNew {...actions} {...props} />);
@@ -33,7 +34,7 @@ const setup = (props = defaultProps) => {
     actions,
     saveButton: component.find(Button),
     errors: component.find(Errors),
-    props
+    props,
   };
 };
 
@@ -44,9 +45,10 @@ describe('Containers::DocumentNew', () => {
   });
 
   it('should render error messages', () => {
-    const { errors } = setup(Object.assign({}, defaultProps, {
-      errors: ['The title field is required!']
-    }));
+    const { errors } = setup({
+      ...defaultProps,
+      errors: ['The title field is required!'],
+    });
     expect(errors.node).toBeTruthy();
   });
 
@@ -57,9 +59,10 @@ describe('Containers::DocumentNew', () => {
   });
 
   it('should call createDocument if a field is changed.', () => {
-    const { saveButton, actions } = setup(Object.assign({}, defaultProps, {
-      fieldChanged: true
-    }));
+    const { saveButton, actions } = setup({
+      ...defaultProps,
+      fieldChanged: true,
+    });
     saveButton.simulate('click');
     expect(actions.createDocument).toHaveBeenCalled();
   });

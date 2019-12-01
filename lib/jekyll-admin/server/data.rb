@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class Server < Sinatra::Base
     # supported extensions, in order of preference, for now, no .csv
@@ -17,7 +19,7 @@ module JekyllAdmin
       put "/*?/?:path.:ext" do
         if renamed?
           ensure_requested_file
-          delete_file path
+          delete_file_without_process path
         end
 
         write_file write_path, data_file_body
@@ -47,7 +49,7 @@ module JekyllAdmin
 
       def entries
         args = {
-          :base         => sanitized_path(DataFile.data_dir),
+          :base         => site.in_source_dir(DataFile.data_dir),
           :content_type => "data",
           :splat        => splats.first,
         }

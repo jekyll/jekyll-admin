@@ -2,10 +2,10 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: 75px;
+  height: 60px;
   background-color: white;
   padding: 0 40px;
-  @include box-shadow(0 2px 4px 0 rgba(204, 204, 204, 0.4));
+  border-bottom: 1px solid lighten($border-color, 9%);
   .title {
     font-weight: normal;
     a {

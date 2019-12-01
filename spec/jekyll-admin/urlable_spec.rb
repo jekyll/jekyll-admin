@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe JekyllAdmin::URLable do
   subject { JekyllAdmin.site.pages.first }
   let(:scheme) { "http" }
@@ -19,7 +21,7 @@ describe JekyllAdmin::URLable do
   end
 
   context "pages" do
-    subject { JekyllAdmin.site.pages.select(&:html?).first }
+    subject { JekyllAdmin.site.pages.find(&:html?) }
     let(:http_url) { "#{url_base}/page.html" }
     let(:api_url) { "#{url_base}/#{prefix}/pages/page.md" }
 
@@ -33,13 +35,22 @@ describe JekyllAdmin::URLable do
   end
 
   context "posts" do
-    subject { JekyllAdmin.site.posts.docs.first }
+    subject { JekyllAdmin.site.posts.docs[4] }
     let(:http_url) { "#{url_base}/2016/01/01/test-post.html" }
     let(:api_url) { "#{url_base}/#{prefix}/collections/posts/2016-01-01-test-post.md" }
 
     it "knows the HTTP URL" do
       expect(subject.http_url).to eql(http_url)
     end
+
+    it "knows the API URL" do
+      expect(subject.api_url).to eql(api_url)
+    end
+  end
+
+  context "drafts" do
+    subject { JekyllAdmin.site.posts.docs.find_all(&:draft?)[1] }
+    let(:api_url) { "#{url_base}/#{prefix}/drafts/draft-dir/another-draft-post.md" }
 
     it "knows the API URL" do
       expect(subject.api_url).to eql(api_url)
@@ -80,7 +91,7 @@ describe JekyllAdmin::URLable do
   end
 
   context "data files" do
-    subject { JekyllAdmin::DataFile.all[1] }
+    subject { JekyllAdmin::DataFile.all.find { |file| file.id == "data_file.yml" } }
     let(:http_url) { nil }
     let(:api_url) { "#{url_base}/#{prefix}/data/data_file.yml" }
 
@@ -95,8 +106,8 @@ describe JekyllAdmin::URLable do
 
   context "static files" do
     subject { JekyllAdmin.site.static_files.first }
-    let(:http_url) { "#{url_base}/icon-github.svg" }
-    let(:api_url) { "#{url_base}/#{prefix}/static_files/icon-github.svg" }
+    let(:http_url) { "#{url_base}/assets/images/icon-github.svg" }
+    let(:api_url) { "#{url_base}/#{prefix}/static_files/assets/images/icon-github.svg" }
 
     it "knows the HTTP URL" do
       expect(subject.http_url).to eql(http_url)

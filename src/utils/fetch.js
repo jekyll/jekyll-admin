@@ -1,12 +1,12 @@
 import fetch from 'isomorphic-fetch';
-import { addNotification } from '../actions/notifications';
+import { addNotification } from '../ducks/notifications';
+import { BadInputError } from './apiErrors';
 import {
   getErrorMessage,
   getFetchErrorMessage,
   getUpdateErrorMessage,
-  getDeleteMessage
-} from '../constants/lang';
-import { BadInputError } from './api_errors';
+  getDeleteMessage,
+} from '../translations';
 
 /**
  * Fetch wrapper for GET request that dispatches actions according to the
@@ -17,22 +17,26 @@ import { BadInputError } from './api_errors';
  * @return {Function} dispatch
  */
 export const get = (url, action_success, action_failure, dispatch) => {
-  return fetch(url)
+  return fetch(url, { credentials: 'same-origin' })
     .then(res => res.json())
-    .then(data => dispatch({
-      type: action_success.type,
-      [action_success.name]: data
-    }))
+    .then(data =>
+      dispatch({
+        type: action_success.type,
+        [action_success.name]: data,
+      })
+    )
     .catch(error => {
       dispatch({
         type: action_failure.type,
-        [action_failure.name]: error
+        [action_failure.name]: error,
       });
-      dispatch(addNotification(
-        getErrorMessage(),
-        getFetchErrorMessage(action_success.name),
-        'error'
-      ));
+      dispatch(
+        addNotification(
+          getErrorMessage(),
+          getFetchErrorMessage(action_success.name),
+          'error'
+        )
+      );
     });
 };
 
@@ -48,30 +52,30 @@ export const get = (url, action_success, action_failure, dispatch) => {
 export const put = (url, body, action_success, action_failure, dispatch) => {
   return fetch(url, {
     method: 'PUT',
-    body
+    credentials: 'same-origin',
+    body,
   })
-  .then(res => res.json())
-  .then(data => {
-    if (data.error_message){
-      throw new BadInputError(data.error_message);
-    }
-    dispatch({
-      type: action_success.type,
-      [action_success.name]: data
+    .then(res => res.json())
+    .then(data => {
+      if (data.error_message) {
+        throw new BadInputError(data.error_message);
+      }
+      dispatch({
+        type: action_success.type,
+        [action_success.name]: data,
+      });
+    })
+    .catch(error => {
+      dispatch({
+        type: action_failure.type,
+        [action_failure.name]: error,
+      });
+      let error_message =
+        error.name === 'BadInputError'
+          ? error.message
+          : getUpdateErrorMessage(action_success.name);
+      dispatch(addNotification(getErrorMessage(), error_message, 'error'));
     });
-  })
-  .catch(error => {
-    dispatch({
-      type: action_failure.type,
-      [action_failure.name]: error
-    });
-    let error_message = error.name ==='BadInputError' ? error.message : getUpdateErrorMessage(action_success.name);
-    dispatch(addNotification(
-      getErrorMessage(),
-      error_message,
-      'error'
-    ));
-  });
 };
 
 /**
@@ -84,21 +88,26 @@ export const put = (url, body, action_success, action_failure, dispatch) => {
  */
 export const del = (url, action_success, action_failure, dispatch) => {
   return fetch(url, {
-    method: 'DELETE'
+    method: 'DELETE',
+    credentials: 'same-origin',
   })
-  .then(data => dispatch({
-    type: action_success.type,
-    id: action_success.id
-  }))
-  .catch(error => {
-    dispatch({
-      type: action_failure.type,
-      [action_failure.name]: error
+    .then(data =>
+      dispatch({
+        type: action_success.type,
+        id: action_success.id,
+      })
+    )
+    .catch(error => {
+      dispatch({
+        type: action_failure.type,
+        [action_failure.name]: error,
+      });
+      dispatch(
+        addNotification(
+          getErrorMessage(),
+          getDeleteMessage(action_success.name),
+          'error'
+        )
+      );
     });
-    dispatch(addNotification(
-      getErrorMessage(),
-      getDeleteMessage(action_success.name),
-      'error'
-    ));
-  });
 };

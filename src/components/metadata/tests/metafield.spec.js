@@ -9,9 +9,9 @@ import MetaArrayItem from '../MetaArrayItem';
 import MetaSimple from '../MetaSimple';
 
 const FieldTypes = {
-  'array': MetaArray,
-  'object': MetaObject,
-  'simple': MetaSimple
+  array: MetaArray,
+  object: MetaObject,
+  simple: MetaSimple,
 };
 
 const defaultProps = {
@@ -21,7 +21,7 @@ const defaultProps = {
   fieldValue: 'page',
   nameAttr: 'metadata["layout"]',
   namePrefix: 'metadata',
-  key_prefix: ''
+  key_prefix: '',
 };
 
 function setup(props = defaultProps) {
@@ -31,19 +31,17 @@ function setup(props = defaultProps) {
     updateFieldKey: jest.fn(),
     updateFieldValue: jest.fn(),
     moveArrayItem: jest.fn(),
-    convertField: jest.fn()
+    convertField: jest.fn(),
   };
 
-  let component = mount(
-    <MetaField {...props} {...actions} />
-  );
+  let component = mount(<MetaField {...props} {...actions} />);
 
   return {
     component,
     keyInput: component.find('.key-field'),
     metabuttons: component.find(MetaButtons),
     actions,
-    props
+    props,
   };
 }
 
@@ -54,20 +52,21 @@ describe('Components::MetaField', () => {
     expect(CurrentComponent).toEqual(MetaSimple);
     expect(keyInput.prop('defaultValue')).toBe(component.prop('fieldKey'));
   });
+
   it('should render MetaField with updated props correctly', () => {
-    const { component, keyInput } = setup(
-      Object.assign({}, defaultProps, {
-        type: 'array',
-        fieldKey: 'students',
-        fieldValue: ['Mert', 'Ankur'],
-        nameAttr: 'metadata["students"]'
-      })
-    );
+    const { component, keyInput } = setup({
+      ...defaultProps,
+      type: 'array',
+      fieldKey: 'students',
+      fieldValue: ['Mert', 'Ankur'],
+      nameAttr: 'metadata["students"]',
+    });
     let CurrentComponent = FieldTypes[component.prop('type')];
     expect(CurrentComponent).toEqual(MetaArray);
     expect(keyInput.prop('defaultValue')).toBe(component.prop('fieldKey'));
     expect(component.find(MetaArrayItem).length).toBe(2);
   });
+
   it('should call updateFieldKey when the input lose focus', () => {
     const { keyInput, actions } = setup();
     keyInput.simulate('blur');
@@ -76,16 +75,18 @@ describe('Components::MetaField', () => {
     keyInput.simulate('blur');
     expect(actions.updateFieldKey).toHaveBeenCalled();
   });
+
   it('should add `showing-dropdown` class when dropdown button is focused', () => {
     const { component, metabuttons } = setup();
     let dropdownButton = metabuttons.find('.meta-button');
     dropdownButton.simulate('focus');
-    expect(component.find('.metafield').hasClass('showing-dropdown')).toEqual(true);
+    expect(component.find('.metafield').hasClass('showing-dropdown')).toEqual(
+      true
+    );
     dropdownButton.simulate('blur');
-    expect(
-      component.find('.metafield').node.classList.length
-    ).toBe(1);
+    expect(component.find('.metafield').node.classList.length).toBe(1);
   });
+
   it('should call removeField when the button clicked', () => {
     const { metabuttons, actions } = setup();
     let removeFieldButton = metabuttons.find('.remove-field');

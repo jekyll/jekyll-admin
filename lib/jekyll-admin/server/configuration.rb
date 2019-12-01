@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class Server < Sinatra::Base
     namespace "/configuration" do
       get do
-        json({
+        json(
           :content     => parsed_configuration,
-          :raw_content => raw_configuration,
-        })
+          :raw_content => raw_configuration
+        )
       end
 
       put do
@@ -16,14 +18,15 @@ module JekyllAdmin
       private
 
       def overrides
-        {
+        @overrides ||= {
           "source" => sanitized_path("/"),
         }
       end
 
       # Computed configuration, with updates and defaults
+      # Returns an instance of Jekyll::Configuration
       def configuration
-        @configuration ||= Jekyll.configuration(overrides)
+        @configuration ||= site.config.merge(overrides)
       end
 
       # Configuration data, as read by Jekyll

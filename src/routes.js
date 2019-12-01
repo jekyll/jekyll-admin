@@ -13,12 +13,16 @@ import DocumentNew from './containers/views/DocumentNew';
 import DataFiles from './containers/views/DataFiles';
 import DataFileEdit from './containers/views/DataFileEdit';
 import DataFileNew from './containers/views/DataFileNew';
+import Drafts from './containers/views/Drafts';
+import DraftEdit from './containers/views/DraftEdit';
+import DraftNew from './containers/views/DraftNew';
 import StaticFiles from './containers/views/StaticFiles';
+import StaticIndex from './containers/views/StaticIndex';
 import NotFound from './containers/views/NotFound';
 
 export default (
   <Route path={`${ADMIN_PREFIX}`} component={App}>
-    <IndexRoute component={Pages}/>
+    <IndexRoute component={Pages} />
     <Route path="configuration" component={Configuration} />
     <Route path="pages">
       <IndexRoute component={Pages} />
@@ -34,13 +38,23 @@ export default (
         <Route path="**" component={Documents} />
       </Route>
     </Route>
+    <Route path="drafts">
+      <IndexRoute component={Drafts} />
+      <Route path="(**/)new" component={DraftNew} />
+      <Route path="(**/)*.*" component={DraftEdit} />
+      <Route path="**" component={Drafts} />
+    </Route>
     <Route path="datafiles">
       <IndexRoute component={DataFiles} />
       <Route path="(**/)new" component={DataFileNew} />
       <Route path="(**/)*.*" component={DataFileEdit} />
       <Route path="**" component={DataFiles} />
     </Route>
-    <Route path="staticfiles" component={StaticFiles} />
+    <Route path="staticfiles">
+      <IndexRoute component={StaticFiles} />
+      <Route path="index" component={StaticIndex} />
+      <Route path="**" component={StaticFiles} />
+    </Route>
     <Route path={`${ADMIN_PREFIX}/*`} component={NotFound} />
   </Route>
 );

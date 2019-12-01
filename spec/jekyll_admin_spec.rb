@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe JekyllAdmin do
   include Rack::Test::Methods
 

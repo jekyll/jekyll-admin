@@ -7,17 +7,15 @@ const defaultProps = {
   parentType: 'top',
   fieldKey: 'layout',
   fieldValue: 'page',
-  nameAttr: 'metadata["layout"]'
+  nameAttr: 'metadata["layout"]',
 };
 
 function setup(props = defaultProps) {
   const actions = {
-    updateFieldValue: jest.fn()
+    updateFieldValue: jest.fn(),
   };
 
-  let component = mount(
-    <MetaSimple {...props} {...actions} />
-  );
+  let component = mount(<MetaSimple {...props} {...actions} />);
 
   return {
     component,
@@ -25,7 +23,7 @@ function setup(props = defaultProps) {
     datepicker: component.find('.date-field'),
     tagsinput: component.find('.tags-input'),
     actions,
-    props
+    props,
   };
 }
 
@@ -37,18 +35,20 @@ describe('Components::MetaSimple', () => {
   });
 
   it('should render datepicker if field key is called date', () => {
-    const { editable, datepicker } = setup(Object.assign({}, defaultProps, {
-      fieldKey: 'date'
-    }));
+    const { editable, datepicker } = setup({
+      ...defaultProps,
+      fieldKey: 'date',
+    });
     expect(datepicker.node).toBeTruthy();
     expect(editable.node).toBeFalsy();
   });
 
   it('should render tagsinput if field key is called "tags"', () => {
-    const { editable, tagsinput } = setup(Object.assign({}, defaultProps, {
+    const { editable, tagsinput } = setup({
+      ...defaultProps,
       fieldKey: 'tags',
-      fieldValue: ['page']
-    }));
+      fieldValue: ['page'],
+    });
     expect(tagsinput.node).toBeTruthy();
     expect(editable.node).toBeTruthy();
   });

@@ -1,15 +1,20 @@
 ---
 title: HTTP API
 permalink: /api/
+description: >-
+  NOTE: Prior to version 1.0.0, the HTTP API is to be considered a pre-release API, and is subject to breaking changes without
+  notice. You're welcome (and are encouraged) to build external tools or apps against this API, but as the API is refined and
+  finalized, it may not strictly follow <a href="http://semver.org/">Semantic Versioning</a> standards.
 ---
 
-The below are the documented endpoints of the shared HTTP API. All requests and responses are made in JSON, and should follow RESTful standards, including respecting HTTP verbs.
+The below are the documented endpoints of the shared HTTP API. All requests and responses are made in JSON, and should follow
+RESTful standards, including respecting HTTP verbs.
 
-For simplicity, whenever possible, the API mirrors Jekyll internal data structures, meaning, objects are generally the results of calling `.to_liquid.to_json` on an existing Jekyll model (and the resulting fields).
+For simplicity, whenever possible, the API mirrors Jekyll internal data structures, meaning, objects are generally the results
+of calling `.to_liquid.to_json` on an existing Jekyll model (and the resulting fields).
 
 The API is exposed as `http://localhost:4000/_api` (or whatever server/port your Jekyll installation is running on).
 
-**Note: Prior to version 1.0.0, the HTTP API is to be considered a pre-release API, and is subject to breaking changes without notice. You're welcome (and are encouraged) to build external tools or apps against this API, but as the API is refined and finalized, it may not strictly follow [Semantic Versioning](http://semver.org/) standards.**
 
 ### API Request and response payloads
 
@@ -30,17 +35,17 @@ A standard page may then look like this:
 
 ```json
 {
-   "some_front_matter":"default",
-   "foo":"bar",
-   "content":"<h1 id=\"test-page\">Test Page</h1>\n",
-   "dir":"/",
-   "name":"page.md",
-   "path":"page.md",
-   "url":"/page.html",
-   "raw_content":"# Test Page\n",
-   "front_matter":{
-      "foo":"bar"
-   }
+  "some_front_matter":"default",
+  "foo":"bar",
+  "content":"<h1 id=\"test-page\">Test Page</h1>\n",
+  "dir":"/",
+  "name":"page.md",
+  "path":"page.md",
+  "url":"/page.html",
+  "raw_content":"# Test Page\n",
+  "front_matter":{
+    "foo":"bar"
+  }
 }
 ```
 
@@ -52,11 +57,10 @@ When making a request, clients can set the following top-level fields:
 
 #### Pages & Documents in subdirectories
 
-In order to determine which pages and documents are in which subdirectories, API looks for
-the project's file structure and lists all files and directories at a given path together.
-Directories are represented as JSON objects resulting from calling
-`JekyllAdmin::Directory.new`. The resulting JSON objects then merged with
-pages/documents at the same level to be served in index endpoints.
+In order to determine which pages and documents are in which subdirectories, API looks for the project's file structure and
+lists all files and directories at a given path together. Directories are represented as JSON objects resulting from calling
+`JekyllAdmin::Directory.new`. The resulting JSON objects then merged with pages/documents at the same level to be served in
+index endpoints.
 
 A standard JSON object of a directory looks like this:
 
@@ -81,7 +85,8 @@ A JSON object from the config file has the data segregated into two representati
 
 #### Data files in subdirectories
 
-Like Pages and Documents, Data files in subdirectories too can be requested for. The resulting JSON object is very similar to the that derived from Pages and Documents.
+Like Pages and Documents, Data files in subdirectories too can be requested for. The resulting JSON object is very similar to
+that derived from Pages and Documents.
 
 A JSON object from a Data file subdirectory looks like this:
 
@@ -109,7 +114,7 @@ A `GET` call to the `api_url` will return another JSON object for the constituen
     "api_url": "http://localhost:4000/_api/data/books/genres/"
   },
   {
-    "path": "/_data/books/authors.yml",
+    "path": "_data/books/authors.yml",
     "relative_path": "books/authors.yml",
     "slug": "authors",
     "ext": ".yml",
@@ -183,6 +188,152 @@ Returns the requested page. The response includes the page body. `path` is optio
 Create or update the requested page, writing its contents to disk.
 
 #### `DELETE /pages/:path`
+
+Delete the requested page from disk.
+
+### Drafts
+
+The end-points for drafts are modelled similar to `Pages` even though the resource inherently belongs to a `Posts` collection.
+
+#### Parameters
+
+* `directory` - the *optional* sub-directory for a draft, relative to `_drafts` at the site root (e.g., `draft-dir`) (`String`).
+* `filename` - the draft's filename.
+* `raw_content` - the drafts's body (`String`)
+* `front_matter` - the drafts's YAML front matter (`Object`)
+
+While `path` for a sub-directory, is the same as the parameter `directory` itself, for a draft-file, it is the entire path
+relative to the site's root.
+
+#### `GET /drafts/:directory`
+
+Returns an array of drafts and directories for the requested directory path. If `directory`
+is not provided, entries at the root level (`./_drafts/*`) are returned.
+
+The response does not include drafts' body.
+
+##### Example response
+
+```
+GET /drafts
+```
+
+```json
+[
+  {
+    "name": "draft-dir",
+    "modified_time": "2017-09-24 19:08:41 -0400",
+    "path": "draft-dir",
+    "type": "directory",
+    "http_url": null,
+    "api_url": "http://localhost:4000/_api/drafts/draft-dir"
+  },
+  {
+    "path": "_drafts/draft-post.md",
+    "id": "/2017/09/24/draft-post",
+    "url": "/2017/09/24/draft-post.html",
+    "relative_path": "draft-post.md",
+    "collection": "posts",
+    "draft": true,
+    "categories": [
+
+    ],
+    "all": true,
+    "foo": "bar",
+    "title": "Draft Post",
+    "slug": "draft-post",
+    "ext": ".md",
+    "tags": [
+
+    ],
+    "date": "2017-09-24 18:03:49 -0400",
+    "http_url": "http://localhost:4000/2017/09/24/draft-post.html",
+    "api_url": "http://localhost:4000/_api/drafts/draft-post.md",
+    "name": "draft-post.md"
+  }
+]
+```
+
+#### `GET /drafts/:directory/:filename`
+
+Returns the requested draft. The response includes the draft body.
+
+##### Example response
+
+```
+GET /drafts/draft-dir/another-draft-post.md
+```
+
+```json
+{
+  "next": {
+    "path": "_drafts/draft-post.md",
+    "id": "/2017/09/24/draft-post",
+    "url": "/2017/09/24/draft-post.html",
+    "relative_path": "draft-post.md",
+    "collection": "posts",
+    "draft": true,
+    "categories": [],
+    "all": true,
+    "foo": "bar",
+    "title": "Draft Post",
+    "slug": "draft-post",
+    "ext": ".md",
+    "tags": [],
+    "date": "2017-09-24 18:03:49 -0400",
+    "http_url": "http://localhost:4000/2017/09/24/draft-post.html",
+    "api_url": "http://localhost:4000/_api/drafts/draft-post.md",
+    "name": "draft-post.md"
+  },
+  "path": "_drafts/draft-dir/another-draft-post.md",
+  "previous": {
+    "path": "_drafts/draft-dir/WIP/yet-another-draft-post.md",
+    "id": "/2017/09/24/yet-another-draft-post",
+    "url": "/2017/09/24/yet-another-draft-post.html",
+    "relative_path": "draft-dir/WIP/yet-another-draft-post.md",
+    "collection": "posts",
+    "draft": true,
+    "categories": [],
+    "all": true,
+    "foo": "bar",
+    "title": "Yet Another Draft Post",
+    "slug": "yet-another-draft-post",
+    "ext": ".md",
+    "tags": [],
+    "date": "2017-09-24 18:03:49 -0400",
+    "http_url": "http://localhost:4000/2017/09/24/yet-another-draft-post.html",
+    "api_url": "http://localhost:4000/_api/drafts/draft-dir/WIP/yet-another-draft-post.md",
+    "name": "yet-another-draft-post.md"
+  },
+  "content": "<h1 id=\"another-draft-post\">Another Draft Post</h1>\n",
+  "id": "/2017/09/24/another-draft-post",
+  "url": "/2017/09/24/another-draft-post.html",
+  "relative_path": "draft-dir/another-draft-post.md",
+  "collection": "posts",
+  "excerpt": "<h1 id=\"another-draft-post\">Another Draft Post</h1>\n",
+  "draft": true,
+  "categories": [],
+  "all": true,
+  "foo": "bar",
+  "title": "Another Draft Post",
+  "slug": "another-draft-post",
+  "ext": ".md",
+  "tags": [],
+  "date": "2017-09-24 18:03:49 -0400",
+  "http_url": "http://localhost:4000/2017/09/24/another-draft-post.html",
+  "api_url": "http://localhost:4000/_api/drafts/draft-dir/another-draft-post.md",
+  "raw_content": "# Another Draft Post\n",
+  "front_matter": {
+    "foo": "bar"
+  },
+  "name": "another-draft-post.md"
+}
+```
+#### `PUT /drafts/:directory/:filename`
+
+Create or update the requested page, writing its contents to disk.
+
+#### `DELETE /drafts/:directory/:filename`
 
 Delete the requested page from disk.
 

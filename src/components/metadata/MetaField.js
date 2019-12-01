@@ -1,4 +1,5 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { findDOMNode } from 'react-dom';
 import MetaArray from './MetaArray';
 import MetaObject from './MetaObject';
@@ -6,6 +7,10 @@ import MetaSimple from './MetaSimple';
 import MetaButtons from './MetaButtons';
 
 export class MetaField extends Component {
+  componentDidMount() {
+    const isNewField = /New field/.test(this.props.fieldKey);
+    isNewField && this.refs.field_key.select();
+  }
 
   handleConvertClick(type) {
     const { convertField, nameAttr } = this.props;
@@ -34,33 +39,47 @@ export class MetaField extends Component {
   }
 
   render() {
-    const { type, parentType, fieldKey, fieldValue, namePrefix, addField,
-      removeField, updateFieldKey, updateFieldValue, moveArrayItem,
-      convertField, key_prefix } = this.props;
+    const {
+      type,
+      parentType,
+      fieldKey,
+      fieldValue,
+      namePrefix,
+      addField,
+      removeField,
+      updateFieldKey,
+      updateFieldValue,
+      moveArrayItem,
+      convertField,
+      key_prefix,
+    } = this.props;
 
     const FieldTypes = {
-      'array': MetaArray,
-      'object': MetaObject,
-      'simple': MetaSimple
+      array: MetaArray,
+      object: MetaObject,
+      simple: MetaSimple,
     };
     const CurrentComponent = FieldTypes[type];
     return (
       <div ref="wrap" className="metafield">
         <div className={`meta-key ${type}`}>
-          <input ref="field_key"
+          <input
+            ref="field_key"
             onBlur={() => this.handleKeyBlur()}
             defaultValue={fieldKey}
             className="field key-field"
             type="text"
-            placeholder="Key" />
+            placeholder="Key"
+          />
           <MetaButtons
             currentType={type}
             parentType="top"
             parentKey={fieldKey}
-            onConvertClick={(type) => this.handleConvertClick(type)}
+            onConvertClick={type => this.handleConvertClick(type)}
             onRemoveClick={() => this.handleRemoveClick()}
             onDropdownFocus={() => this.handleDropdownFocus()}
-            onDropdownBlur={() => this.handleDropdownBlur()} />
+            onDropdownBlur={() => this.handleDropdownBlur()}
+          />
         </div>
         <CurrentComponent
           key_prefix={key_prefix}
@@ -74,7 +93,8 @@ export class MetaField extends Component {
           moveArrayItem={moveArrayItem}
           convertField={convertField}
           nameAttr={`${namePrefix}['${fieldKey}']`}
-          namePrefix={`${namePrefix}['${fieldKey}']`} />
+          namePrefix={`${namePrefix}['${fieldKey}']`}
+        />
       </div>
     );
   }
@@ -93,7 +113,7 @@ MetaField.propTypes = {
   fieldValue: PropTypes.any,
   nameAttr: PropTypes.string.isRequired,
   namePrefix: PropTypes.string.isRequired,
-  key_prefix: PropTypes.string.isRequired
+  key_prefix: PropTypes.string.isRequired,
 };
 
 export default MetaField;

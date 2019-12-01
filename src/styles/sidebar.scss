@@ -9,10 +9,9 @@
   background-color: #333;
   .logo {
     display: block;
-    height: 75px;
+    height: 60px;
     background: #222222 url(../assets/images/logo.png) no-repeat center;
-    background-size: 110px 46px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.4);
+    background-size: 90px 40px;
     &:hover {
       -webkit-filter: brightness(1.2);
       filter: brightness(1.2);
@@ -22,20 +21,64 @@
     padding: 10px 0;
     list-style: none;
     li {
+      overflow-y: hidden;
+      @include transition(max-height 0.5s);
       a {
         display: block;
         padding: 15px 20px;
         font-size: 17px;
-        color: #ebdac1;
-        &.active {
+        color: #beb9b1;
+        &:hover, &.active {
           color: $dark-orange;
         }
       }
       &:hover {
         background-color: #3d3d3d;
+      }
+      &.accordion-label {
+        position: relative;
+        .counter {
+          position: absolute;
+          top: 15px;
+          right: 20px;
+          opacity: 0;
+          min-width: 20px;
+          padding: 3px;
+          font-size: 12px;
+          font-weight: bold;
+          text-align: center;
+          color: #333;
+          background: #beb9b1;
+          border-radius: 10px;
+        }
+        .chevrons {
+          position: absolute;
+          top: 14px;
+          right: 20px;
+          @include transition(opacity 1s);
+          i { margin: 0; }
+        }
 
-        a {
-          color: #ffa114;
+        &.collapsed {
+          .counter {
+            opacity: 1;
+            @include transition(opacity 1s 0.25s);
+          }
+          .chevrons {
+            opacity: 0;
+          }
+        }
+        ul {
+          padding: 0;
+          list-style: none;
+
+          li {
+            background: #282828;
+            border-top: 1px solid #333;
+            border-bottom: 1px solid #181818;
+
+            a { padding-left: 40px; }
+          }
         }
       }
     }

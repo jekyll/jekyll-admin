@@ -1,52 +1,46 @@
-import React, { Component, PropTypes } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
-import _ from 'underscore';
 import { toTitleCase } from '../utils/helpers';
 import { ADMIN_PREFIX } from '../constants';
 
-export default class Breadcrumbs extends Component {
+export default function Breadcrumbs({ type, splat = '' }) {
+  const nonCollectionTypes = ['pages', 'datafiles', 'drafts', 'staticfiles'];
+  const base = nonCollectionTypes.includes(type)
+    ? `${ADMIN_PREFIX}/${type}`
+    : `${ADMIN_PREFIX}/collections/${type}`;
 
-  render() {
-    const { splat, type } = this.props;
-    // generate links from `splat`
-    let base;
-    if (type == 'pages') {
-      base = `${ADMIN_PREFIX}/pages`;
-    } else if (type == 'data files') {
-      base = `${ADMIN_PREFIX}/datafiles`;
-    } else {
-      base = `${ADMIN_PREFIX}/collections/${type}`;
-    }
-    let links;
-    if (splat) {
-      const paths = splat.split('/');
-      links = _.map(paths, (path, i) => {
-        const before = (i == 0) ? '' : paths.slice(0, i).join('/') + '/';
-        return {
-          href: `${base}/${before}${path}`,
-          label: path
-        };
-      });
-    }
-
-    let nodes = _.map(links, (link, i) => {
-      if (link.href) {
-        return <li key={i}><Link to={link.href}>{link.label}</Link></li>;
-      } else {
-        return <li key={i}>{toTitleCase(link.label)}</li>;
-      }
-    });
-
-    return (
-      <ul className="breadcrumbs">
-        <li><Link to={base}>{toTitleCase(type)}</Link></li>
-        {nodes}
-      </ul>
-    );
+  let label = type;
+  if (type == 'datafiles') {
+    label = 'data files';
+  } else if (type == 'staticfiles') {
+    label = 'static files';
   }
+
+  let nodes = [];
+  if (splat) {
+    const paths = splat.split('/');
+    nodes = paths.map((path, i) => {
+      const before = i == 0 ? '' : paths.slice(0, i).join('/') + '/';
+      return (
+        <li key={i}>
+          <Link to={`${base}/${before}${path}`}>{path}</Link>
+        </li>
+      );
+    });
+  }
+
+  return (
+    <ul className="breadcrumbs">
+      <li>
+        <Link to={base}>{toTitleCase(label)}</Link>
+      </li>
+      {nodes}
+    </ul>
+  );
 }
 
 Breadcrumbs.propTypes = {
-  splat: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired
+  type: PropTypes.string.isRequired,
+  splat: PropTypes.string,
 };

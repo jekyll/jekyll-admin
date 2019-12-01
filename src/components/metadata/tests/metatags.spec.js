@@ -5,23 +5,21 @@ import MetaTags from '../MetaTags';
 
 const defaultProps = {
   fieldValue: [],
-  nameAttr: 'metadata["tags"]'
+  nameAttr: 'metadata["tags"]',
 };
 
 function setup(props = defaultProps) {
   const actions = {
-    updateFieldValue: jest.fn()
+    updateFieldValue: jest.fn(),
   };
 
-  let component = mount(
-    <MetaTags {...props} {...actions} />
-  );
+  let component = mount(<MetaTags {...props} {...actions} />);
 
   return {
     component,
     editable: component.find('.value-field input'),
     actions,
-    props
+    props,
   };
 }
 
@@ -32,17 +30,20 @@ describe('Components::MetaTags', () => {
   });
 
   it('should render an editable with "null" fieldValue prop', () => {
-    const { component, editable } = setup(Object.assign({}, defaultProps, {
-      fieldValue: null
-    }));
+    const { component, editable } = setup({
+      ...defaultProps,
+      fieldValue: null,
+    });
     expect(editable.node).toBeTruthy();
   });
 
   it('should render an error if fieldValue prop is a String', () => {
-    const { component, editable } = setup(Object.assign({}, defaultProps, {
-      fieldValue: 'foo'
-    }));
-    const error = 'Invalid array of tags! Found string: "foo"Click here to correct.';
+    const { component, editable } = setup({
+      ...defaultProps,
+      fieldValue: 'foo',
+    });
+    const error =
+      'Invalid array of tags! Found string: fooClickhereto correct.';
     expect(component.find('.meta-error').text()).toEqual(error);
     expect(editable.node).toBeFalsy();
   });
@@ -52,27 +53,28 @@ describe('Components::MetaTags', () => {
     editable.node.value = 'foo';
     editable.simulate('change', editable);
     expect(component.state('tagInput')).toEqual('foo');
-    editable.simulate('keyDown', {key: 'Enter', keyCode: 13} );
+    editable.simulate('keyDown', { key: 'Enter', keyCode: 13 });
     expect(component.state('pageTags')).toEqual(['foo']);
 
     editable.node.value = 'bar';
     editable.simulate('change', editable);
-    editable.simulate('keyDown', {key: 'Comma', keyCode: 188} );
+    editable.simulate('keyDown', { key: 'Comma', keyCode: 188 });
     expect(component.state('pageTags')).toEqual(['foo', 'bar']);
 
     editable.node.value = 'ignored';
     editable.simulate('change', editable);
-    editable.simulate('keyDown', {key: 'Tab', keyCode: 9} );
+    editable.simulate('keyDown', { key: 'Tab', keyCode: 9 });
     expect(component.state('pageTags')).not.toEqual(['foo', 'bar', 'ignored']);
   });
 
   it('should not create duplicate tags', () => {
-    const { component, editable } = setup(Object.assign({}, defaultProps, {
-      fieldValue: ['foo', 'bar']
-    }));
+    const { component, editable } = setup({
+      ...defaultProps,
+      fieldValue: ['foo', 'bar'],
+    });
     editable.node.value = 'foo';
     editable.simulate('change', editable);
-    editable.simulate('keyDown', {key: 'Space', keyCode: 32} );
+    editable.simulate('keyDown', { key: 'Space', keyCode: 32 });
     expect(component.state('pageTags')).not.toEqual(['foo', 'bar', 'foo']);
   });
 
@@ -80,7 +82,7 @@ describe('Components::MetaTags', () => {
     const { component, editable } = setup();
     editable.node.value = 'foo';
     editable.simulate('change', editable);
-    editable.simulate('keyDown', {key: 'Space', keyCode: 32} );
+    editable.simulate('keyDown', { key: 'Space', keyCode: 32 });
 
     component.find('.delete-tag').simulate('click');
     expect(component.state('pageTags')).toEqual(['foo']); // TODO: pass prompt
@@ -90,8 +92,8 @@ describe('Components::MetaTags', () => {
     const { component, editable } = setup();
     editable.node.value = 'foo';
     editable.simulate('change', editable);
-    editable.simulate('keyDown', {key: 'Space', keyCode: 32} );
-    editable.simulate('keyDown', {key: 'Backspace', keyCode: 8} );
+    editable.simulate('keyDown', { key: 'Space', keyCode: 32 });
+    editable.simulate('keyDown', { key: 'Backspace', keyCode: 8 });
     expect(component.state('pageTags')).toEqual(['foo']); // TODO: pass prompt
   });
 
@@ -102,29 +104,36 @@ describe('Components::MetaTags', () => {
   });
 
   it('should render a dropdown list of all tags in site payload', () => {
-    const { component, editable } = setup(Object.assign({}, defaultProps, {
-      suggestions: ['foo', 'bar', 'baz']
-    }));
+    const { component, editable } = setup({
+      ...defaultProps,
+      suggestions: ['foo', 'bar', 'baz'],
+    });
     component.setState({ autoSuggest: true });
     const suggestedTags = component.find('.tag-suggestions li');
-    expect(suggestedTags.map((item) => item.text())).toEqual(['foo', 'bar', 'baz']);
+    expect(suggestedTags.map(item => item.text())).toEqual([
+      'foo',
+      'bar',
+      'baz',
+    ]);
   });
 
   it('should render a dropdown list of tags not already used in current document', () => {
-    const { component, editable } = setup(Object.assign({}, defaultProps, {
+    const { component, editable } = setup({
+      ...defaultProps,
       fieldValue: ['foo'],
-      suggestions: ['foo', 'bar', 'baz']
-    }));
+      suggestions: ['foo', 'bar', 'baz'],
+    });
     component.setState({ autoSuggest: true });
     const suggestedTags = component.find('.tag-suggestions li');
-    expect(suggestedTags.map((item) => item.text())).toEqual(['bar', 'baz']);
+    expect(suggestedTags.map(item => item.text())).toEqual(['bar', 'baz']);
   });
 
   it('should create a tag from the dropdown list of suggested tags', () => {
-    const { component, editable } = setup(Object.assign({}, defaultProps, {
+    const { component, editable } = setup({
+      ...defaultProps,
       fieldValue: ['foo'],
-      suggestions: ['foo', 'bar', 'baz']
-    }));
+      suggestions: ['foo', 'bar', 'baz'],
+    });
     component.setState({ autoSuggest: true });
     const suggestedTags = component.find('.tag-suggestions li');
     suggestedTags.first().simulate('click');
@@ -132,9 +141,10 @@ describe('Components::MetaTags', () => {
   });
 
   it('should update with new props', () => {
-    const { component } = setup(Object.assign({}, defaultProps, {
-      fieldValue: ['foo']
-    }));
+    const { component } = setup({
+      ...defaultProps,
+      fieldValue: ['foo'],
+    });
     expect(component.state('pageTags')).toEqual(['foo']);
     component.setProps({ fieldValue: ['lorem', 'ipsum'] });
     expect(component.state('pageTags')).toEqual(['lorem', 'ipsum']);

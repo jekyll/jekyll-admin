@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class DataFile
-    METHODS_FOR_LIQUID = %w(path relative_path slug ext title).freeze
+    METHODS_FOR_LIQUID = %w(name path relative_path slug ext title).freeze
     EXTENSIONS = %w(yaml yml json csv).freeze
 
     include APIable
@@ -8,15 +10,25 @@ module JekyllAdmin
     include PathHelper
     extend PathHelper
 
-    attr_reader :id
+    attr_reader :id, :ext
 
     # Initialize a new DataFile object
     #
     # id - the file ID as passed from the API. This may or may not have an extension
     def initialize(id)
-      @id ||= File.extname(id).empty? ? "#{id}.yml" : id
+      extname = File.extname(id)
+      if extname.empty?
+        @id  = "#{id}.yml"
+        @ext = ".yml"
+      else
+        @id  = id
+        @ext = extname
+      end
     end
-    alias_method :path, :id
+    alias_method :relative_path, :id
+
+    # Returns the file's extension with preceeding `.`
+    alias_method :extension, :ext
 
     def exists?
       @exists ||= File.exist?(absolute_path)
@@ -32,16 +44,6 @@ module JekyllAdmin
       @content ||= data_reader.read_data_file(absolute_path)
     end
 
-    # Returns the file's extension with preceeding `.`
-    def ext
-      @ext ||= if File.extname(id).to_s.empty?
-                 ".yml"
-               else
-                 File.extname(id)
-               end
-    end
-    alias_method :extension, :ext
-
     # Returns the file's sanitized slug (as used in `site.data[slug]`)
     def slug
       @slug ||= data_reader.sanitize_filename(basename)
@@ -52,15 +54,15 @@ module JekyllAdmin
       @title ||= Jekyll::Utils.titleize_slug(slug.tr("_", "-"))
     end
 
-    # Return path relative to configured `data_dir`
-    def relative_path
-      id.sub("/#{DataFile.data_dir}/", "")
+    # Returns path relative to site source
+    def path
+      @path ||= File.join(DataFile.data_dir, relative_path)
     end
 
-    # Return the absolute path to given data file
     def absolute_path
-      sanitized_path id
+      sanitized_path(path)
     end
+    alias_method :file_path, :absolute_path
 
     # Mimics Jekyll's native to_liquid functionality by returning a hash
     # of data file metadata
@@ -69,13 +71,10 @@ module JekyllAdmin
     end
 
     def self.all
-      data_dir = sanitized_path DataFile.data_dir
-      files = Dir["#{data_dir}/**/*.{#{EXTENSIONS.join(",")}}"].reject do |d|
-        File.directory?(d)
-      end
-
-      files.map do |path|
-        new path_without_site_source(path)
+      data_dir = Jekyll.sanitized_path(JekyllAdmin.site.source, DataFile.data_dir)
+      data_dir = Pathname.new(data_dir)
+      Dir["#{data_dir}/**/*.{#{EXTENSIONS.join(",")}}"].map do |path|
+        new(Pathname.new(path).relative_path_from(data_dir).to_s)
       end
     end
 
@@ -95,9 +94,10 @@ module JekyllAdmin
     end
 
     def basename_with_extension
-      [basename, extension].join
+      "#{basename}#{extension}"
     end
-    alias_method :filename, :basename_with_extension
+    alias_method :name, :basename_with_extension
+    public :name
 
     def namespace
       "data"

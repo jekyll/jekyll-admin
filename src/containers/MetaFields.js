@@ -1,16 +1,22 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import MetaField from '../components/metadata/MetaField';
+import Icon from '../components/Icon';
 import {
-  storeContentFields, addField, removeField, updateFieldKey, updateFieldValue,
-  moveArrayItem, convertField
-} from '../actions/metadata';
+  storeContentFields,
+  addField,
+  removeField,
+  updateFieldKey,
+  updateFieldValue,
+  moveArrayItem,
+  convertField,
+} from '../ducks/metadata';
 
 export class MetaFields extends Component {
-
   componentDidMount() {
     const { storeContentFields, fields } = this.props;
     storeContentFields(fields);
@@ -22,8 +28,15 @@ export class MetaFields extends Component {
 
   render() {
     const {
-      metadata, addField, removeField, updateFieldKey, updateFieldValue, moveArrayItem,
-      convertField, key_prefix, dataview
+      metadata,
+      addField,
+      removeField,
+      updateFieldKey,
+      updateFieldValue,
+      moveArrayItem,
+      convertField,
+      key_prefix,
+      dataview,
     } = this.props;
 
     let visibleKeys = metadata;
@@ -33,8 +46,8 @@ export class MetaFields extends Component {
     }
 
     const metafieldsClass = classnames({
-      'datafields': dataview,
-      'metafields': !dataview
+      datafields: dataview,
+      metafields: !dataview,
     });
 
     const metafields = _.map(visibleKeys, (field, key) => {
@@ -57,28 +70,31 @@ export class MetaFields extends Component {
           moveArrayItem={moveArrayItem}
           convertField={convertField}
           nameAttr={`metadata['${key}']`}
-          namePrefix={`metadata`} />
+          namePrefix={`metadata`}
+        />
       );
     });
 
     const newWrapper = dataview ? (
       <div className="data-new">
         <a onClick={() => addField('metadata')}>
-          <i className="fa fa-plus-circle" /> New data field
+          <Icon name="plus-circle" /> New data field
         </a>
       </div>
     ) : (
       <div className="meta-new">
         <a onClick={() => addField('metadata')} className="tooltip">
-          <i className="fa fa-plus-circle" /> New metadata field
+          <Icon name="plus-circle" /> New metadata field
           <span className="tooltip-text">
-            Metadata will be stored as the <b>YAML front matter</b> within the document.
+            Metadata will be stored as the <b>YAML front matter</b> within the
+            document.
           </span>
         </a>
         <small className="tooltip pull-right">
-          <i className="fa fa-info-circle" />Special Keys
+          <Icon name="info-circle" />Special Keys
           <span className="tooltip-text">
-            You can use special keys like <b>date</b>, <b>file</b>, <b>image</b>, <b>tags</b> for user-friendly functionalities.
+            You can use special keys like <b>date</b>, <b>file</b>, <b>image</b>,
+            <b>tags</b> for user-friendly functionalities.
           </span>
         </small>
       </div>
@@ -104,22 +120,26 @@ MetaFields.propTypes = {
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
   convertField: PropTypes.func.isRequired,
-  dataview: PropTypes.bool
+  dataview: PropTypes.bool,
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = state => ({
   metadata: state.metadata.metadata,
-  key_prefix: state.metadata.key_prefix
+  key_prefix: state.metadata.key_prefix,
 });
 
-const mapDispatchToProps = (dispatch) => bindActionCreators({
-  storeContentFields,
-  addField,
-  removeField,
-  updateFieldKey,
-  updateFieldValue,
-  moveArrayItem,
-  convertField
-}, dispatch);
+const mapDispatchToProps = dispatch =>
+  bindActionCreators(
+    {
+      storeContentFields,
+      addField,
+      removeField,
+      updateFieldKey,
+      updateFieldValue,
+      moveArrayItem,
+      convertField,
+    },
+    dispatch
+  );
 
 export default connect(mapStateToProps, mapDispatchToProps)(MetaFields);

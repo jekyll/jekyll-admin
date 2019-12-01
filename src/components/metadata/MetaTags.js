@@ -2,17 +2,16 @@ import React, { Component, PropTypes } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import _ from 'underscore';
 import classnames from 'classnames';
-import { getDeleteMessage } from '../../constants/lang';
+import { getDeleteMessage } from '../../translations';
 
 export class MetaTags extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
       tagInput: '',
-      pageTags: props.fieldValue || [''],
-      autoSuggest: false
+      pageTags: props.fieldValue || [],
+      autoSuggest: false,
     };
   }
 
@@ -36,7 +35,7 @@ export class MetaTags extends Component {
       this.setState({
         pageTags: clone,
         tagInput: '',
-        autoSuggest: false
+        autoSuggest: false,
       });
     }
   }
@@ -45,7 +44,7 @@ export class MetaTags extends Component {
     const { pageTags } = this.state;
     const clone = pageTags.slice();
 
-    const tagName = (index === -1) ? clone.slice(-1).pop() : clone[index];
+    const tagName = index === -1 ? clone.slice(-1).pop() : clone[index];
     const confirm = window.confirm(getDeleteMessage(`tag: ${tagName}`));
 
     if (confirm) {
@@ -60,8 +59,10 @@ export class MetaTags extends Component {
     const input = e.target.value;
 
     // define tags with either the 'comma' key or the 'Enter' key, or the 'Spacebar' key
-    if (input.length > 0 &&
-      (e.keyCode === 188 || e.keyCode === 13 || e.keyCode === 32)) {
+    if (
+      input.length > 0 &&
+      (e.keyCode === 188 || e.keyCode === 13 || e.keyCode === 32)
+    ) {
       this.createTag(input);
     } else if (pageTags.length > 0 && input.length === 0 && e.keyCode === 8) {
       this.deleteTag(-1);
@@ -81,12 +82,13 @@ export class MetaTags extends Component {
       return entry.startsWith(this.state.tagInput);
     });
 
-    if (pageTags.length > 0 && !(pageTags instanceof(Array))) {
+    if (pageTags.length > 0 && !(pageTags instanceof Array)) {
       return (
         <span className="meta-error">
-          Invalid array of tags! Found string: <b>"{pageTags}"</b><br/>
+          Invalid array of tags! Found string: <strong>{`${pageTags}`}</strong>
+          <br />
           Click
-            <span onClick={() => this.rectifyTags(pageTags)}> here </span>
+          <span onClick={() => this.rectifyTags(pageTags)}>here</span>
           to correct.
         </span>
       );
@@ -98,7 +100,7 @@ export class MetaTags extends Component {
       return (
         <span key={i} className="tag">
           {tag}
-          <span className="delete-tag" onClick={(e) => this.deleteTag(i)} />
+          <span className="delete-tag" onClick={e => this.deleteTag(i)} />
         </span>
       );
     });
@@ -106,49 +108,43 @@ export class MetaTags extends Component {
     const suggests = _.map(suggestions, (item, i) => {
       if (!pageTags.includes(item)) {
         return (
-          <li key={i} onClick={(e) => this.createTag(item)}>
+          <li key={i} onClick={e => this.createTag(item)}>
             {item}
           </li>
         );
       }
     }).filter(Boolean);
 
-    const suggestionClasses = classnames({
-      'field': true,
-      'tag-suggestions': true,
-      'visible': this.state.autoSuggest
+    const suggestionClasses = classnames('field', 'tag-suggestions', {
+      visible: this.state.autoSuggest,
     });
 
     return (
-      <div className="tags-wrap">
-        <div className="field value-field">
-          {
-            tags.length > 0 &&
-            <div className="tags-list">{tags}</div>
-          }
+      <div className="tags-wrap field value-field">
+        {tags.length > 0 && <div className="tags-list">{tags}</div>}
 
-          <div className="tags-input">
-            <input
-              type="text"
-              onFocus={() => this.setState({ autoSuggest: true })}
-              onBlur={() => this.setState({ autoSuggest: false })}
-              onChange={(e) => this.setState({ tagInput: e.target.value })}
-              onKeyDown={(e) => this.handleKeyDown(e)}
-              value = {this.state.tagInput.replace(/,|\s+/, '')}
-              ref="taginput"/>
+        <div className="tags-input">
+          <input
+            type="text"
+            onFocus={() => this.setState({ autoSuggest: true })}
+            onBlur={() => this.setState({ autoSuggest: false })}
+            onChange={e => this.setState({ tagInput: e.target.value })}
+            onKeyDown={e => this.handleKeyDown(e)}
+            value={this.state.tagInput.replace(/,|\s+/, '')}
+            ref="taginput"
+          />
 
-            <TextareaAutosize
-              className="field value-field"
-              value={this.state.pageTags.toString()}
-              hidden />
-          </div>
+          <TextareaAutosize
+            className="field value-field"
+            value={this.state.pageTags.toString()}
+            hidden
+          />
         </div>
-          {
-            suggests.length > 0 &&
-              <div className={suggestionClasses}>
-                <ul>{suggests}</ul>
-              </div>
-          }
+        {suggests.length > 0 && (
+          <div className={suggestionClasses}>
+            <ul>{suggests}</ul>
+          </div>
+        )}
       </div>
     );
   }
@@ -158,7 +154,7 @@ MetaTags.propTypes = {
   fieldValue: PropTypes.any,
   updateFieldValue: PropTypes.func.isRequired,
   nameAttr: PropTypes.any.isRequired,
-  suggestions: PropTypes.array
+  suggestions: PropTypes.array,
 };
 
 export default MetaTags;

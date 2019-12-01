@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 module JekyllAdmin
   class Server < Sinatra::Base
-    ROUTES = %w(collections configuration data pages static_files).freeze
+    ROUTES = %w(collections configuration data drafts pages static_files).freeze
     include JekyllAdmin::PathHelper
     include JekyllAdmin::FileHelper
 
@@ -16,7 +18,7 @@ module JekyllAdmin
       register Sinatra::CrossOrigin
       enable  :cross_origin
       disable :allow_credentials
-      set :allow_methods, %i[delete get options post put]
+      set :allow_methods, [:delete, :get, :options, :post, :put]
     end
 
     get "/" do
@@ -30,6 +32,11 @@ module JekyllAdmin
     end
 
     private
+
+    def json(object, options = {})
+      content_type :json
+      JSON.pretty_generate(object, options)
+    end
 
     def site
       JekyllAdmin.site
@@ -58,18 +65,19 @@ module JekyllAdmin
     end
 
     def document_body
-      body = if front_matter && !front_matter.empty?
-               YAML.dump(restored_front_matter).strip
-                 .gsub(": 'null'", ": null") # restore null values
-             else
-               "---"
-             end
+      body = +""
+      body << if front_matter && !front_matter.empty?
+                YAML.dump(restored_front_matter).strip
+                  .gsub(": 'null'", ": null") # restore null values
+              else
+                "---"
+              end
       body << "\n---\n\n"
       body << request_payload["raw_content"].to_s
+      body << "\n" unless body.end_with?("\n")
+      body
     end
-    alias page_body document_body
-
-    private
+    alias_method :page_body, :document_body
 
     def request_body
       @request_body ||= begin
@@ -93,8 +101,5 @@ module JekyllAdmin
   end
 end
 
-require "jekyll-admin/server/collection"
-require "jekyll-admin/server/configuration"
-require "jekyll-admin/server/data"
-require "jekyll-admin/server/page"
-require "jekyll-admin/server/static_file"
+# load individual route configurations
+JekyllAdmin::Server::ROUTES.each { |name| require_relative File.join("server", name) }

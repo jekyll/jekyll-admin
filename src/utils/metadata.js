@@ -8,7 +8,7 @@ import cloneDeep from 'lodash/cloneDeep';
  * @param {String} namePrefix
  * @return {Object} metadata
  */
-export const addField = (state, namePrefix) => {
+export const addFieldToMetadata = (state, namePrefix) => {
   let tmpState = cloneDeep(state);
   let field = eval(`tmpState.${namePrefix}`);
   if (field === undefined) return tmpState.metadata;
@@ -25,7 +25,7 @@ export const addField = (state, namePrefix) => {
  * @param {String} key
  * @return {Object} metadata
  */
-export const removeField = (state, namePrefix, key) => {
+export const removeFieldFromMetadata = (state, namePrefix, key) => {
   let tmpState = cloneDeep(state);
   let field = eval(`tmpState.${namePrefix}`);
   if (field === undefined) return tmpState.metadata;
@@ -34,8 +34,7 @@ export const removeField = (state, namePrefix, key) => {
       return tmpState.metadata;
     }
     field.splice(key, 1);
-  }
-  else {
+  } else {
     if (!_.has(field, key)) {
       return tmpState.metadata;
     }
@@ -54,17 +53,16 @@ export const removeField = (state, namePrefix, key) => {
  * @param {String} newKey
  * @return {Object} metadata
  */
-export const updateFieldKey = (state, namePrefix, fieldKey, newKey) => {
+export const updateMetadataFieldKey = (state, namePrefix, fieldKey, newKey) => {
   let tmpState = cloneDeep(state);
   let field = eval(`tmpState.${namePrefix}`);
   if (field === undefined) return tmpState.metadata;
   if (_.has(field, newKey)) return tmpState.metadata;
-  field = Object.keys(field)
-    .reduce((result, current) => {
-      if (current == fieldKey) result[newKey] = field[current];
-      else result[current] = field[current];
-      return result;
-    }, {});
+  field = Object.keys(field).reduce((result, current) => {
+    if (current == fieldKey) result[newKey] = field[current];
+    else result[current] = field[current];
+    return result;
+  }, {});
   eval(`tmpState.${namePrefix} = field`);
   return tmpState.metadata;
 };
@@ -77,7 +75,7 @@ export const updateFieldKey = (state, namePrefix, fieldKey, newKey) => {
  * @param {String} value
  * @return {Object} metadata
  */
-export const updateFieldValue = (state, nameAttr, value) => {
+export const updateMetadataFieldValue = (state, nameAttr, value) => {
   let tmpState = cloneDeep(state);
   eval(`tmpState.${nameAttr} = value`);
   return tmpState.metadata;
@@ -92,7 +90,7 @@ export const updateFieldValue = (state, nameAttr, value) => {
  * @param {String} convertType
  * @return {Object} metadata
  */
-export const convertField = (state, nameAttr, convertType) => {
+export const convertMetadataField = (state, nameAttr, convertType) => {
   let tmpState = cloneDeep(state);
   let field = eval(`tmpState.${nameAttr}`);
   if (field === undefined) return tmpState.metadata;
@@ -100,8 +98,7 @@ export const convertField = (state, nameAttr, convertType) => {
   else if (convertType == 'object') {
     let key = `New field ${state.new_field_count}`;
     field = { [key]: '' };
-  }
-  else field = '';
+  } else field = '';
   eval(`tmpState.${nameAttr} = field`);
   return tmpState.metadata;
 };
@@ -116,7 +113,7 @@ export const convertField = (state, nameAttr, convertType) => {
  * @param {Number} targetInd
  * @return {Object} metadata
  */
-export const moveArrayItem = (state, namePrefix, srcInd, targetInd) => {
+export const moveMetadataArrayItem = (state, namePrefix, srcInd, targetInd) => {
   let tmpState = cloneDeep(state);
   let arr = eval(`tmpState.${namePrefix}`);
   if (!_.isArray(arr)) return tmpState.metadata;
@@ -133,7 +130,7 @@ export const moveArrayItem = (state, namePrefix, srcInd, targetInd) => {
  * @param {Object} front_matter
  * @return {Object} metadata
  */
-export const injectDefaultFields = (config, path, type, front_matter={}) => {
+export const injectDefaultFields = (config, path, type, front_matter = {}) => {
   let defaults;
   try {
     defaults = config.content.defaults;
@@ -143,7 +140,10 @@ export const injectDefaultFields = (config, path, type, front_matter={}) => {
   let metafields = {};
   _.each(defaults, field => {
     const scope = field.scope;
-    if ((!scope.type || scope.type == type) && (!scope.path || scope.path == path)) {
+    if (
+      (!scope.type || scope.type == type) &&
+      (!scope.path || scope.path == path)
+    ) {
       _.extend(metafields, field.values);
     }
   });

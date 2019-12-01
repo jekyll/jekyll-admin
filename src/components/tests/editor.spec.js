@@ -5,19 +5,17 @@ import { json } from './fixtures';
 
 const content = JSON.stringify(json);
 
-function setup(props = {content, editorChanged: false}) {
+function setup(props = { content, editorChanged: false }) {
   const actions = {
-    onEditorChange: jest.fn()
+    onEditorChange: jest.fn(),
   };
 
-  let component = shallow(
-    <Editor {...props} {...actions} />
-  );
+  let component = shallow(<Editor {...props} {...actions} />);
 
   return {
     component,
-    editor: component.first(),
-    actions: actions
+    editor: component.find('.config-editor'),
+    actions: actions,
   };
 }
 
@@ -26,11 +24,13 @@ describe('Components::Editor', () => {
     const { editor } = setup();
     expect(editor.prop('value')).toEqual(content);
   });
+
   it('should call onEditorChange if editor is not changed', () => {
     const { actions, editor } = setup();
     editor.simulate('change');
     expect(actions.onEditorChange).toHaveBeenCalled();
   });
+
   it('should not call onEditorChange again if editor is already changed', () => {
     const { actions, editor } = setup({ content, editorChanged: true });
     editor.simulate('change');

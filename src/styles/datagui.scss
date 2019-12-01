@@ -2,28 +2,32 @@
   margin-bottom: 40px;
   padding: 30px;
   background: #222;
+  border-radius: $border-radius;
   .metafield {
     position: relative;
-    margin-bottom: 5px;
     zoom: 1;
+    .field {
+      font-size: 16px;
+      line-height: 1.5;
+      min-height: 42px;
+      background: #2b2b2b;
+      border: 1px solid transparent;
+      border-radius: 2px;
+      @include transition(color 250ms ease);
+      &:focus {
+        border-color: $dark-orange;
+      }
+    }
     .meta-key {
       color: #eb2659;
       .key-field {
+        margin: 0 0 15px;
+        padding: 8px 10px;
         max-width: 190px;
-        min-height: 46px;
-        margin: 0 0 10px;
-        padding: 11px 10px;
-        font-size: 16px;
         font-weight: 700;
-        line-height: 1.5;
         color: #eb2659;
-        background: #2b2b2b;
-        border: 1px solid transparent;
-        @include border-radius(2px);
-        @include transition(color 250ms ease);
         &:focus {
           color: #eaeaea !important;
-          border-color: $dark-orange;
         }
       }
     }
@@ -40,26 +44,16 @@
     }
     .meta-value {
       .value-field {
+        margin-bottom: 10px;
+        padding: 8px 10px;
         width: 100%;
-        min-height: 46px;
         height: auto;
         max-height: 500px;
         overflow: hidden;
-        margin-bottom: 10px;
-        padding: 11px 13px;
-        font-size: 16px;
-        line-height: 1.5;
         color: #eaeaea;
         vertical-align: bottom;
         word-wrap: break-word;
         resize: vertical;
-        background: #2b2b2b;
-        border: 1px solid transparent;
-        @include border-radius(2px);
-        @include transition(color 250ms ease);
-        &:focus {
-          border-color: $dark-orange;
-        }
       }
       &:after {
         display: table;
@@ -75,14 +69,14 @@
           position: absolute;
           top: 0;
           right: 0;
-          height: 48px;
+          height: 42px;
           pointer-events: auto;
           button {
             display: inline-block;
-            min-width: 48px;
+            min-width: 42px;
             height: 100%;
             margin: 0;
-            padding: 0;
+            padding: 0 3px 0 0;
             color: #818181;
             line-height: 2.286em;
             text-align: center;
@@ -106,12 +100,12 @@
     .meta-value-array {
       position: relative;
       margin-right: auto;
-      margin-bottom: 20px;
+      margin-bottom: 15px;
       margin-left: 36px;
-      padding: 10px 15px;
+      padding: 8px 20px 12px 15px;
       pointer-events: auto;
       border: 1px solid #383838;
-      @include border-radius(2px);
+      border-radius: $border-radius;
       .array-item-wrap {
         margin-bottom: 5px;
         .array-header {
@@ -144,33 +138,29 @@
         font-size: 16px;
         line-height: 26px;
         text-align: center;
-        color: white;
+        color: #fff;
         background: $dark-orange;
-        @include border-radius(50%);
+        border-radius: 50%;
         i {
           margin: 0;
         }
       }
     }
     .meta-value-object {
+      margin-bottom: 15px;
       margin-left: 36px;
       .object-item-wrap {
         position: relative;
         min-height: 50px;
-        margin-bottom: 5px;
         .object-key {
           position: relative;
           width: 190px;
           max-width: 200px;
-          margin-bottom: 10px;
+          margin-bottom: 15px;
+          pointer-events: auto;
           input {
             width: 100%;
-            min-height: 48px;
-            padding: 11px 55px 10px 11px;
-            font-size: 16px;
-            line-height: 1.5;
-            pointer-events: auto;
-            @include border-radius(2px);
+            padding: 8px 55px 8px 10px;
           }
           .meta-buttons {
             position: absolute;
@@ -223,7 +213,7 @@
     }
     .meta-buttons {
       position: absolute;
-      top: 4px;
+      top: 12px;
       right: 0;
       z-index: 8;
       span.move {
@@ -246,9 +236,9 @@
           text-align: center;
           outline: none;
           border: 2px solid #575757;
-          @include border-radius(50%);
+          border-radius: 50%;
           &:hover, &:focus {
-            color: white;
+            color: #fff;
             background: $dark-orange;
             border-color: $dark-orange;
           }
@@ -272,7 +262,7 @@
           transform: translateX(-50%);
           z-index: 30;
           border: 1px solid #323232;
-          @include border-radius(2px);
+          border-radius: $border-radius;
           &:before {
             position: absolute;
             top: -10px;
@@ -294,7 +284,7 @@
               padding-right: 8px;
             }
             &:hover {
-              color: white;
+              color: #fff;
               background: $dark-orange;
               border-color: $dark-orange;
             }
@@ -304,7 +294,7 @@
             &:hover {
               background: $dark-red;
               i {
-                color: white;
+                color: #fff;
               }
             }
           }
@@ -314,11 +304,8 @@
     .object-key {
       .key-field {
         color: #eb2659;
-        background: #2b2b2b;
-        border-color: transparent;
         &:focus {
           color: #eaeaea !important;
-          border-color: $dark-orange;
         }
       }
     }
@@ -331,7 +318,7 @@
               right: 0;
               pointer-events: auto;
               .value-field {
-                width: calc(100% - 50px);
+                width: calc(100% - 44px);
               }
             }
             >.date-field {
@@ -349,7 +336,7 @@
         right: 36px;
         width: calc(100% - 227px);
         .value-field {
-          width: calc(100% - 65px);
+          width: calc(100% - 59px);
           margin-left: 15px;
         }
       }
@@ -361,7 +348,7 @@
           right: 0;
           width: 100%;
           .value-field {
-            width: calc(100% - 50px);
+            width: calc(100% - 44px);
           }
         }
         .date-field {
@@ -378,7 +365,7 @@
           width: calc(100% - 190px);
           pointer-events: auto;
           .value-field {
-            width: calc(100% - 65px);
+            width: calc(100% - 59px);
             margin-left: 15px;
           }
         }
@@ -411,15 +398,15 @@
     pointer-events: auto;
     background: #222;
     &.rw-widget {
-      @include border-radius(2px);
+      border-radius: $border-radius;
       border-color: transparent;
     }
     input {
       padding: 11px 13px;
       width: calc(100% - 3px);
-      min-height: 46px;
-      @include border-radius(2px);
-      color: white;
+      min-height: 40px;
+      border-radius: $border-radius;
+      color: #fff;
       background: #2b2b2b;
     }
   }
@@ -433,7 +420,7 @@
     box-shadow: none !important;
     font-size: 16px !important;
     .rw-btn {
-      color: white;
+      color: #fff;
       min-width: 37px;
       &:hover {
         color: #222;
@@ -540,13 +527,7 @@
       border-color: transparent;
     }
   }
-  .tags-wrap {
-    position: relative;
-    float: right;
-    right: 34px;
-    width: calc(100% - 240px);
-    pointer-events: auto;
-  }
+
   .tags-list {
     border-bottom-color: #121212;
     + .tags-input { border-top-color: #424242; }
@@ -567,12 +548,6 @@
         background-color: #454545;
       }
     }
-  }
-  .meta-error {
-    display: inline-block;
-    height: 48px;
-    margin-left: 15px;
-    padding: 14px 0;
   }
   .data-new {
     margin-top: 25px;
