@@ -6,7 +6,7 @@ import { Link } from 'react-router';
 import { ADMIN_PREFIX } from '../constants';
 import Splitter from '../components/Splitter';
 import Icon from '../components/Icon';
-import CounterAccordion from '../components/CounterAccordion';
+import Accordion from '../components/Accordion';
 import { fetchCollections } from '../ducks/collections';
 import { capitalize } from '../utils/helpers';
 import { sidebar as SidebarTranslations } from '../translations';
@@ -48,14 +48,15 @@ export class Sidebar extends Component {
     }
 
     return (
-      <CounterAccordion
+      <Accordion
         minHeight={50}
         count={itemsCount}
         icon="book"
         label={SidebarTranslations.collections}
+        counter
       >
         <ul>{collectionItems}</ul>
-      </CounterAccordion>
+      </Accordion>
     );
   }
 

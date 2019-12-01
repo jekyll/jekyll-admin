@@ -30,8 +30,8 @@ describe('Containers::Sidebar', () => {
 
   it('renders an accordion for collections other than posts and drafts', () => {
     const container = mount(<Sidebar {...defaultProps} {...actions} />);
-    const accordion = container.find('ul li.accordion-label');
-    const trigger = accordion.find('a').first();
+    const accordion = container.find('.accordion');
+    const trigger = accordion.find('.accordion-label').first();
 
     expect(accordion.prop('className')).toMatch('collapsed');
     expect(trigger.text()).toMatch('Collections');
