@@ -51,7 +51,7 @@ export class Sidebar extends Component {
       <Accordion
         minHeight={50}
         count={itemsCount}
-        icon="book"
+        icon="briefcase"
         label={SidebarTranslations.collections}
         counter
       >
