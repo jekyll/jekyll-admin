@@ -39,9 +39,7 @@ class Editor extends Component {
           ref="ace"
           onChange={this.handleChange}
         />
-        <div className="statusbar">
-          <span>mode: {mode.toUpperCase()}</span>
-        </div>
+        <div className="statusbar">mode: {mode.toUpperCase()}</div>
       </div>
     );
   }
