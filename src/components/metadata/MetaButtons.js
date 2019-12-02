@@ -1,62 +1,81 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import classnames from 'classnames';
 import Icon from '../Icon';
 
-export class MetaButtons extends Component {
-  handleTypeChange(type) {
-    const { onConvertClick } = this.props;
-    onConvertClick(type);
-  }
+export default class MetaButtons extends Component {
+  state = {
+    dropdown: false,
+  };
 
-  handleRemoveClick() {
-    const { onRemoveClick } = this.props;
-    onRemoveClick();
+  fieldTypes = {
+    simple: {
+      icon: 'pencil',
+      label: 'Simple',
+    },
+    array: {
+      icon: 'list-ol',
+      label: 'List',
+    },
+    object: {
+      icon: 'th-large',
+      label: 'Object',
+    },
+  };
+
+  fieldTypeKeys = Object.keys(this.fieldTypes);
+
+  toggleDropdownState = () => {
+    this.setState(state => {
+      return { dropdown: !state.dropdown };
+    });
+  };
+
+  renderDropdownItems(type) {
+    const { onConvertClick } = this.props;
+
+    return this.fieldTypeKeys.map((ftype, i) => {
+      if (type !== ftype) {
+        const { icon, label } = this.fieldTypes[ftype];
+        return (
+          <span key={i} onMouseDown={() => onConvertClick(ftype)}>
+            <Icon name={icon} />
+            Convert to {label}
+          </span>
+        );
+      }
+    }).filter(Boolean);
   }
 
   render() {
-    const {
-      currentType,
-      parentType,
-      onDropdownFocus,
-      onDropdownBlur,
-    } = this.props;
+    const { currentType, parentType, onRemoveClick } = this.props;
+    const sortableHandle = (
+      <span className="move">
+        <Icon name="arrows" />
+      </span>
+    );
+
+    const dropdownClasses = classnames('dropdown', {
+      'showing-dropdown': this.state.dropdown,
+    });
+
     return (
       <div className="meta-buttons">
-        {parentType == 'array' && (
-          <span className="move">
-            <Icon name="arrows" />
-          </span>
-        )}
-        <span className="dropdown">
+        {parentType == 'array' && sortableHandle}
+        <span className={dropdownClasses}>
           <a
-            onFocus={() => onDropdownFocus()}
-            onBlur={() => onDropdownBlur()}
             className="meta-button"
             tabIndex="1"
+            onClick={this.toggleDropdownState}
+            onBlur={() => this.setState({ dropdown: false })}
           >
             <Icon name="chevron-down" />
           </a>
           <div className="dropdown-wrap">
-            {currentType != 'simple' && (
-              <span onMouseDown={() => this.handleTypeChange('simple')}>
-                <Icon name="pencil" />Convert to Simple
-              </span>
-            )}
-            {currentType != 'array' && (
-              <span onMouseDown={() => this.handleTypeChange('array')}>
-                <Icon name="list-ol" />Convert to List
-              </span>
-            )}
-            {currentType != 'object' && (
-              <span onMouseDown={() => this.handleTypeChange('object')}>
-                <Icon name="th-large" />Convert to Object
-              </span>
-            )}
-            <span
-              onMouseDown={() => this.handleRemoveClick()}
-              className="remove-field"
-            >
-              <Icon name="trash-o" />Remove field
+            {this.renderDropdownItems(currentType)}
+            <span onMouseDown={() => onRemoveClick()} className="remove-field">
+              <Icon name="trash-o" />
+              Remove field
             </span>
           </div>
         </span>
@@ -70,8 +89,4 @@ MetaButtons.propTypes = {
   parentType: PropTypes.string.isRequired,
   onConvertClick: PropTypes.func.isRequired,
   onRemoveClick: PropTypes.func.isRequired,
-  onDropdownFocus: PropTypes.func.isRequired,
-  onDropdownBlur: PropTypes.func.isRequired,
 };
-
-export default MetaButtons;
