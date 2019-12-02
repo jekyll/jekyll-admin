@@ -18,17 +18,12 @@ class Accordion extends Component {
     const { counter, count } = this.props;
     const { collapsed } = this.state;
 
-    if (collapsed) {
-      if (counter) return <div className="counter">{count}</div>;
-      return (
-        <div className="chevrons">
-          <Icon name="chevron-down" />
-        </div>
-      );
+    if (collapsed && counter) {
+      return <div className="counter">{count}</div>;
     }
     return (
       <div className="chevrons">
-        <Icon name="chevron-up" />
+        <Icon name={`chevron-${collapsed ? 'down' : 'up'}`} />
       </div>
     );
   }
