@@ -18,7 +18,7 @@ class Accordion extends Component {
     const { counter, count } = this.props;
     const { collapsed } = this.state;
 
-    if (collapsed && counter) {
+    if (collapsed && counter && count) {
       return <div className="counter">{count}</div>;
     }
     return (
@@ -29,10 +29,14 @@ class Accordion extends Component {
   }
 
   render() {
-    const { icon, label, minHeight, count, counter, children } = this.props;
+    const { icon, label, minHeight, count, children } = this.props;
     const { collapsed } = this.state;
     const accordionClasses = classnames('accordion', { collapsed });
-    const panelHeight = collapsed ? minHeight : (count + 1) * minHeight;
+
+    let panelHeight = minHeight;
+    if (!collapsed) {
+      panelHeight = minHeight && count ? (count + 1) * minHeight : 'none';
+    }
 
     return (
       <div
@@ -51,11 +55,15 @@ class Accordion extends Component {
   }
 }
 
+Accordion.defaultProps = {
+  minHeight: 50,
+};
+
 Accordion.propTypes = {
-  minHeight: PropTypes.number.isRequired,
-  count: PropTypes.number.isRequired,
   children: PropTypes.element.isRequired,
   label: PropTypes.string.isRequired,
+  minHeight: PropTypes.number,
+  count: PropTypes.number,
   counter: PropTypes.bool,
   icon: PropTypes.string,
 };

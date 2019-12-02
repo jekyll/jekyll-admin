@@ -49,7 +49,6 @@ export class Sidebar extends Component {
 
     return (
       <Accordion
-        minHeight={50}
         count={itemsCount}
         icon="briefcase"
         label={SidebarTranslations.collections}
