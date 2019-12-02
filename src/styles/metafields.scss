@@ -141,7 +141,6 @@
       }
     }
     .meta-value-object {
-      margin-bottom: 15px;
       margin-left: 36px;
       .object-item-wrap {
         position: relative;
@@ -198,6 +197,7 @@
       }
       .add-field-object {
         display: inline-block;
+        margin-bottom: 15px;
         padding: 5px 0;
         pointer-events: auto;
         &:hover {
@@ -522,5 +522,43 @@
   }
   .data-new {
     margin-top: 25px;
+  }
+}
+
+// $sky-blue: #ecf3f4;
+
+$disabled-input-bgcolor: darken($background-color, 2%);
+
+#defaults {
+  margin: 40px 0 5px;
+
+  input:disabled,
+  textarea:disabled {
+    color: darken($disabled-input-bgcolor, 45%);
+    border-color: darken($disabled-input-bgcolor, 8%) !important;
+    background-color: $disabled-input-bgcolor;
+    &:hover {
+      color: darken($disabled-input-bgcolor, 45%) !important;
+    }
+  }
+
+  .array-header { margin: 8px 15px }
+  .array-field-num { color: darken($disabled-input-bgcolor, 45%) }
+  .meta-value-array {
+    margin: 0;
+    padding: 0;
+    border: none;
+  }
+  .array {
+    display: flex;
+    .meta-value,
+    .meta-value-object,
+    .meta-value-array {
+      flex-grow: 1;
+      margin: 0
+    }
+  }
+  .meta-key.simple + .meta-value > .value-field {
+    width: calc(100% - 205px);
   }
 }

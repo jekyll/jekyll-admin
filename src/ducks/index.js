@@ -14,10 +14,10 @@ import notifications from './notifications';
 
 export default combineReducers({
   routing: routerReducer,
+  meta: siteMeta,
   config,
   pages,
   collections,
-  meta: siteMeta,
   metadata,
   drafts,
   datafiles,

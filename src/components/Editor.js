@@ -23,21 +23,24 @@ class Editor extends Component {
     const { content, type } = this.props;
     const mode = /json/i.test(type) ? 'json' : 'yaml';
     return (
-      <AceEditor
-        value={content}
-        mode={mode}
-        theme="monokai"
-        width="100%"
-        height="400px"
-        showGutter={false}
-        showPrintMargin={false}
-        highlightActiveLine={false}
-        className="config-editor"
-        fontSize={14}
-        scrollMargin={[15, 15, 15, 15]}
-        ref="ace"
-        onChange={this.handleChange}
-      />
+      <div>
+        <AceEditor
+          value={content}
+          mode={mode}
+          theme="monokai"
+          width="100%"
+          height="400px"
+          showGutter={false}
+          showPrintMargin={false}
+          highlightActiveLine={false}
+          className="config-editor"
+          fontSize={14}
+          scrollMargin={[15, 15, 15, 15]}
+          ref="ace"
+          onChange={this.handleChange}
+        />
+        <div className="statusbar">mode: {mode.toUpperCase()}</div>
+      </div>
     );
   }
 }

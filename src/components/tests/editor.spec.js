@@ -14,7 +14,7 @@ function setup(props = { content, editorChanged: false }) {
 
   return {
     component,
-    editor: component.first(),
+    editor: component.find('.config-editor'),
     actions: actions,
   };
 }
@@ -24,11 +24,13 @@ describe('Components::Editor', () => {
     const { editor } = setup();
     expect(editor.prop('value')).toEqual(content);
   });
+
   it('should call onEditorChange if editor is not changed', () => {
     const { actions, editor } = setup();
     editor.simulate('change');
     expect(actions.onEditorChange).toHaveBeenCalled();
   });
+
   it('should not call onEditorChange again if editor is already changed', () => {
     const { actions, editor } = setup({ content, editorChanged: true });
     editor.simulate('change');

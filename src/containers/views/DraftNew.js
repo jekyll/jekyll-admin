@@ -12,6 +12,7 @@ import Button from '../../components/Button';
 import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
+import StaticMetaData from '../../components/metadata/StaticMetaFields';
 import Metadata from '../../containers/MetaFields';
 import { fetchSiteMeta } from '../../ducks/siteMeta';
 import { putDraft } from '../../ducks/drafts';
@@ -69,7 +70,7 @@ export class DraftNew extends Component {
       params,
       config,
     } = this.props;
-    const metafields = injectDefaultFields(config, params.splat, 'posts');
+    const defaultMetadata = injectDefaultFields(config, params.splat, 'posts');
 
     const keyboardHandlers = {
       save: this.handleClickSave,
@@ -99,7 +100,8 @@ export class DraftNew extends Component {
                 ref="editor"
               />
               <Splitter />
-              <Metadata fields={metafields} />
+              <StaticMetaData fields={defaultMetadata} />
+              <Metadata fields={{}} />
             </div>
 
             <div className="content-side">
@@ -108,7 +110,6 @@ export class DraftNew extends Component {
                 type="create"
                 active={fieldChanged}
                 triggered={updated}
-                icon="plus-square"
                 block
               />
             </div>

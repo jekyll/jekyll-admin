@@ -14,6 +14,7 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
+import StaticMetaData from '../../components/metadata/StaticMetaFields';
 import Metadata from '../MetaFields';
 import {
   fetchDraft,
@@ -144,12 +145,8 @@ export class DraftEdit extends Component {
     const [directory, ...rest] = params.splat;
 
     const title = front_matter && front_matter.title ? front_matter.title : '';
-    const metafields = injectDefaultFields(
-      config,
-      directory,
-      collection,
-      front_matter
-    );
+    const defaultMetadata = injectDefaultFields(config, directory, collection);
+
     const document_title = directory
       ? `${title || name} - ${directory} - Drafts`
       : `${title || name} - Drafts`;
@@ -174,8 +171,9 @@ export class DraftEdit extends Component {
                 ref="editor"
               />
               <Splitter />
+              <StaticMetaData fields={defaultMetadata} />
               <Metadata
-                fields={{ title, raw_content, path: name, ...metafields }}
+                fields={{ title, raw_content, path: name, ...front_matter }}
               />
             </div>
 
@@ -185,22 +183,19 @@ export class DraftEdit extends Component {
                 type="save"
                 active={fieldChanged}
                 triggered={updated}
-                icon="save"
                 block
               />
-              <Button to={http_url} type="view" icon="eye" active block />
+              <Button to={http_url} type="view" active block />
               <Splitter />
               <Button
                 onClick={() => this.handleClickPublish(path)}
                 type="publish"
-                icon="send-o"
                 active
                 block
               />
               <Button
                 onClick={() => this.handleClickDelete(name)}
                 type="delete"
-                icon="trash"
                 active
                 block
               />

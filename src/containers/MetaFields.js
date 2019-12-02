@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
 import MetaField from '../components/metadata/MetaField';
+import Icon from '../components/Icon';
 import {
   storeContentFields,
   addField,
@@ -76,20 +77,20 @@ export class MetaFields extends Component {
     const newWrapper = dataview ? (
       <div className="data-new">
         <a onClick={() => addField('metadata')}>
-          <i className="fa fa-plus-circle" /> New data field
+          <Icon name="plus-circle" /> New data field
         </a>
       </div>
     ) : (
       <div className="meta-new">
         <a onClick={() => addField('metadata')} className="tooltip">
-          <i className="fa fa-plus-circle" /> New metadata field
+          <Icon name="plus-circle" /> New metadata field
           <span className="tooltip-text">
             Metadata will be stored as the <b>YAML front matter</b> within the
             document.
           </span>
         </a>
         <small className="tooltip pull-right">
-          <i className="fa fa-info-circle" />Special Keys
+          <Icon name="info-circle" />Special Keys
           <span className="tooltip-text">
             You can use special keys like <b>date</b>, <b>file</b>, <b>image</b>{' '}
             for user-friendly functionalities.
