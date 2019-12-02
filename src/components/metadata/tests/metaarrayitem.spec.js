@@ -68,15 +68,26 @@ describe('Components::MetaArrayItem', () => {
     expect(component.find(MetaObjectItem).length).toBe(2);
   });
 
-  it('should add `showing-dropdown` class when dropdown button is focused', () => {
+  it('should toggle `showing-dropdown` class when dropdown button is clicked', () => {
     const { component, metabuttons } = setup();
     let dropdownButton = metabuttons.find('.meta-button');
-    dropdownButton.simulate('focus');
-    expect(
-      component.find('.array-item-wrap').hasClass('showing-dropdown')
-    ).toEqual(true);
+    dropdownButton.simulate('click');
+    expect(component.find('.dropdown').hasClass('showing-dropdown')).toEqual(
+      true
+    );
+    dropdownButton.simulate('click');
+    expect(component.find('.dropdown').node.classList.length).toBe(1);
+  });
+
+  it('should remove `showing-dropdown` class when dropdown button loses focus', () => {
+    const { component, metabuttons } = setup();
+    let dropdownButton = metabuttons.find('.meta-button');
+    dropdownButton.simulate('click');
+    expect(component.find('.dropdown').hasClass('showing-dropdown')).toEqual(
+      true
+    );
     dropdownButton.simulate('blur');
-    expect(component.find('.array-item-wrap').node.classList.length).toBe(1);
+    expect(component.find('.dropdown').node.classList.length).toBe(1);
   });
 
   it('should call removeField when the button clicked', () => {

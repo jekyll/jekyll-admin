@@ -220,6 +220,11 @@
       .dropdown {
         position: relative;
         cursor: pointer;
+        &.showing-dropdown {
+          .dropdown-wrap {
+            display: block;
+          }
+        }
         .meta-button {
           display: inline-block;
           width: 23px;
@@ -235,11 +240,6 @@
             color: #fff;
             background: $dark-orange;
             border-color: $dark-orange;
-          }
-          &:focus {
-            +.dropdown-wrap {
-              display: block;
-            }
           }
           i {
             margin: 0;
@@ -380,9 +380,6 @@
     div {
       opacity: 0;
     }
-  }
-  .showing-dropdown {
-    z-index: 30;
   }
   .date-field {
     float: right;
