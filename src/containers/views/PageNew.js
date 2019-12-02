@@ -20,7 +20,6 @@ import {
   updatePath,
   updateDraft,
 } from '../../ducks/metadata';
-import { fetchSiteMeta } from '../../ducks/siteMeta';
 import { createPage } from '../../ducks/pages';
 import { clearErrors } from '../../ducks/utils';
 import { getLeaveMessage } from '../../translations';
@@ -30,7 +29,7 @@ import { ADMIN_PREFIX } from '../../constants';
 
 export class PageNew extends Component {
   componentDidMount() {
-    const { fetchSiteMeta, router, route } = this.props;
+    const { router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave);
   }
 
@@ -121,7 +120,6 @@ export class PageNew extends Component {
 }
 
 PageNew.propTypes = {
-  fetchSiteMeta: PropTypes.func.isRequired,
   createPage: PropTypes.func.isRequired,
   updateTitle: PropTypes.func.isRequired,
   updateBody: PropTypes.func.isRequired,
@@ -144,13 +142,11 @@ const mapStateToProps = state => ({
   errors: state.utils.errors,
   updated: state.pages.updated,
   config: state.config.config,
-  site: state.meta.site,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchSiteMeta,
       updateTitle,
       updateBody,
       updatePath,

@@ -14,7 +14,6 @@ import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import StaticMetaData from '../../components/metadata/StaticMetaFields';
 import Metadata from '../../containers/MetaFields';
-import { fetchSiteMeta } from '../../ducks/siteMeta';
 import { putDraft } from '../../ducks/drafts';
 import { clearErrors } from '../../ducks/utils';
 import { getLeaveMessage } from '../../translations';
@@ -30,7 +29,7 @@ import {
 
 export class DraftNew extends Component {
   componentDidMount() {
-    const { fetchSiteMeta, router, route } = this.props;
+    const { router, route } = this.props;
     router.setRouteLeaveHook(route, this.routerWillLeave);
   }
 
@@ -121,7 +120,6 @@ export class DraftNew extends Component {
 }
 
 DraftNew.propTypes = {
-  fetchSiteMeta: PropTypes.func.isRequired,
   putDraft: PropTypes.func.isRequired,
   updateTitle: PropTypes.func.isRequired,
   updateBody: PropTypes.func.isRequired,
@@ -144,13 +142,11 @@ const mapStateToProps = state => ({
   errors: state.utils.errors,
   updated: state.drafts.updated,
   config: state.config.config,
-  site: state.meta.site,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchSiteMeta,
       updateTitle,
       updateBody,
       updatePath,

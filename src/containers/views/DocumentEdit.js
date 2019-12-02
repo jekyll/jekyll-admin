@@ -20,7 +20,6 @@ import {
   deleteDocument,
   putDocument,
 } from '../../ducks/collections';
-import { fetchSiteMeta } from '../../ducks/siteMeta';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
@@ -34,7 +33,7 @@ import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentEdit extends Component {
   componentDidMount() {
-    const { fetchDocument, fetchSiteMeta, params, router, route } = this.props;
+    const { fetchDocument, params, router, route } = this.props;
     const [directory, ...rest] = params.splat;
     const filename = rest.join('.');
     fetchDocument(params.collection_name, directory, filename);
@@ -185,7 +184,6 @@ export class DocumentEdit extends Component {
 
 DocumentEdit.propTypes = {
   currentDocument: PropTypes.object.isRequired,
-  fetchSiteMeta: PropTypes.func.isRequired,
   fetchDocument: PropTypes.func.isRequired,
   deleteDocument: PropTypes.func.isRequired,
   putDocument: PropTypes.func.isRequired,
@@ -210,13 +208,11 @@ const mapStateToProps = state => ({
   updated: state.collections.updated,
   errors: state.utils.errors,
   config: state.config.config,
-  site: state.meta.site,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
-      fetchSiteMeta,
       fetchDocument,
       deleteDocument,
       putDocument,

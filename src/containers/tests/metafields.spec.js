@@ -13,6 +13,7 @@ const defaultProps = {
 
 const actions = {
   storeContentFields: jest.fn(),
+  fetchSiteMeta: jest.fn(),
   addField: jest.fn(),
   removeField: jest.fn(),
   updateFieldKey: jest.fn(),
@@ -34,6 +35,21 @@ function setup(props = defaultProps) {
 }
 
 describe('Containers::MetaFields', () => {
+  it('does not call fetchSiteMeta before mount in dataview', () => {
+    const { actions } = setup({ ...defaultProps, dataview: true });
+    expect(actions.fetchSiteMeta).not.toHaveBeenCalled();
+  });
+
+  it('calls fetchSiteMeta before mount', () => {
+    const { actions } = setup();
+    expect(actions.fetchSiteMeta).toHaveBeenCalled();
+  });
+
+  it('calls storeContentFields before mount', () => {
+    const { actions } = setup();
+    expect(actions.storeContentFields).toHaveBeenCalled();
+  });
+
   it('renders MetaFields correctly', () => {
     let { component, addFieldButton, addDataFieldButton } = setup();
 
@@ -61,11 +77,6 @@ describe('Containers::MetaFields', () => {
 
     expect(component.prop('key_prefix')).toBe('');
     expect(component.prop('metadata')).toEqual(content);
-  });
-
-  it('calls storeContentFields before mount', () => {
-    const { actions } = setup();
-    expect(actions.storeContentFields).toHaveBeenCalled();
   });
 
   it('calls addField when the button is clicked', () => {
