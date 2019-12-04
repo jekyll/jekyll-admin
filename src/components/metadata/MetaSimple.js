@@ -4,7 +4,7 @@ import TextareaAutosize from 'react-textarea-autosize';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import Modal from 'react-modal';
 import moment from 'moment';
-import momentLocalizer from 'react-widgets/lib/localizers/moment';
+import momentLocalizer from 'react-widgets-moment';
 import StaticIndex from '../../containers/views/StaticIndex';
 import Icon from '../Icon';
 import 'react-widgets/dist/css/react-widgets.css';
