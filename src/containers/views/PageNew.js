@@ -22,10 +22,12 @@ import {
 } from '../../ducks/metadata';
 import { createPage } from '../../ducks/pages';
 import { clearErrors } from '../../ducks/utils';
-import { getLeaveMessage } from '../../translations';
+import translations from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
+
+const { getLeaveMessage } = translations;
 
 export class PageNew extends Component {
   componentDidMount() {

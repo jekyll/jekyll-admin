@@ -14,8 +14,10 @@ import InputPath from '../../components/form/InputPath';
 import { putDataFile, onDataFileChanged } from '../../ducks/datafiles';
 import { clearErrors } from '../../ducks/utils';
 import { preventDefault, getFilenameFromPath } from '../../utils/helpers';
-import { getLeaveMessage } from '../../translations';
+import translations from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
+
+const { getLeaveMessage } = translations;
 
 export class DataFileNew extends Component {
   state = {

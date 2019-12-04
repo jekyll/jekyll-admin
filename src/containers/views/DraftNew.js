@@ -16,7 +16,7 @@ import StaticMetaData from '../../components/metadata/StaticMetaFields';
 import Metadata from '../../containers/MetaFields';
 import { putDraft } from '../../ducks/drafts';
 import { clearErrors } from '../../ducks/utils';
-import { getLeaveMessage } from '../../translations';
+import translations from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
@@ -26,6 +26,8 @@ import {
   updatePath,
   updateDraft,
 } from '../../ducks/metadata';
+
+const { getLeaveMessage } = translations;
 
 export class DraftNew extends Component {
   componentDidMount() {

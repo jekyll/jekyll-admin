@@ -24,12 +24,10 @@ import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
 import { capitalize, preventDefault } from '../../utils/helpers';
-import {
-  getLeaveMessage,
-  getDeleteMessage,
-  getNotFoundMessage,
-} from '../../translations';
+import translations from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
+
+const { getLeaveMessage, getDeleteMessage, getNotFoundMessage } = translations;
 
 export class DocumentEdit extends Component {
   componentDidMount() {

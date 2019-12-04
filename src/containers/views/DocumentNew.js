@@ -17,10 +17,12 @@ import Metadata from '../../containers/MetaFields';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { createDocument } from '../../ducks/collections';
 import { clearErrors } from '../../ducks/utils';
-import { getLeaveMessage } from '../../translations';
+import translations from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
 import { capitalize, preventDefault } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
+
+const { getLeaveMessage } = translations;
 
 export class DocumentNew extends Component {
   componentDidMount() {

@@ -4,16 +4,18 @@ import { CLEAR_ERRORS, validationError } from './utils';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify, trimObject } from '../utils/helpers';
-import {
-  getTitleRequiredMessage,
-  getFilenameRequiredMessage,
-  getFilenameNotValidMessage,
-} from '../translations';
+import translations from '../translations';
 import {
   collectionsAPIUrl,
   collectionAPIUrl,
   documentAPIUrl,
 } from '../constants/api';
+
+const {
+  getTitleRequiredMessage,
+  getFilenameRequiredMessage,
+  getFilenameNotValidMessage,
+} = translations;
 
 // Action Types
 export const FETCH_COLLECTIONS_REQUEST = 'FETCH_COLLECTIONS_REQUEST';

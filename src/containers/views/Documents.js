@@ -17,8 +17,10 @@ import {
 } from '../../ducks/collections';
 import { search } from '../../ducks/utils';
 import { capitalize } from '../../utils/helpers';
-import { getDeleteMessage, getNotFoundMessage } from '../../translations';
+import translations from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
+
+const { getDeleteMessage, getNotFoundMessage } = translations;
 
 export class Documents extends Component {
   componentDidMount() {

@@ -1,1 +1,2 @@
-export * from './en'; // TODO: select language
+import * as translations from './en'; // TODO: select language
+export default translations;

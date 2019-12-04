@@ -11,8 +11,10 @@ import Errors from '../../components/Errors';
 import Button from '../../components/Button';
 import { putConfig, onEditorChange } from '../../ducks/config';
 import { clearErrors } from '../../ducks/utils';
-import { getLeaveMessage } from '../../translations';
+import translations from '../../translations';
 import { preventDefault } from '../../utils/helpers';
+
+const { getLeaveMessage } = translations;
 
 export class Configuration extends Component {
   state = {

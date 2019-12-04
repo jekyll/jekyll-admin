@@ -25,12 +25,10 @@ import {
   deleteDataFile,
   onDataFileChanged,
 } from '../../ducks/datafiles';
-import {
-  getLeaveMessage,
-  getDeleteMessage,
-  getNotFoundMessage,
-} from '../../translations';
+import translations from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
+
+const { getLeaveMessage, getDeleteMessage, getNotFoundMessage } = translations;
 
 export class DataFileEdit extends Component {
   state = {
