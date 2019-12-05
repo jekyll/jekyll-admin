@@ -32,6 +32,10 @@ browserSync({
           hash: false,
           timings: false,
           chunks: false,
+          builtAt: false,
+          modules: false,
+          children: false,
+          entrypoints: false,
           chunkModules: false
         }
       }),
