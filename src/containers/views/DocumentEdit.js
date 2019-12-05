@@ -120,6 +120,7 @@ export class DocumentEdit extends Component {
       front_matter,
       name,
     } = currentDocument;
+
     const [directory, ...rest] = params.splat;
     const defaultMetadata = injectDefaultFields(config, directory, collection);
 
@@ -130,6 +131,10 @@ export class DocumentEdit extends Component {
     const document_title = directory
       ? `${title} - ${directory} - ${capitalize(collection)}`
       : `${title} - ${capitalize(collection)}`;
+
+    let confcon = config.content;
+    let config_field = Object.keys(confcon).indexOf("default_content") != -1 ? confcon.default_content[collection] : undefined;
+    let initial_value = raw_content != '' ? raw_content : config_field != undefined ? config_field : '';
 
     return (
       <DocumentTitle title={document_title}>
@@ -148,7 +153,7 @@ export class DocumentEdit extends Component {
                 onChange={updateBody}
                 onSave={this.handleClickSave}
                 placeholder="Body"
-                initialValue={raw_content}
+                initialValue={initial_value}
                 ref="editor"
               />
               <Splitter />
