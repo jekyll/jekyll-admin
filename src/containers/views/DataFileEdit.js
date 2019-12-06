@@ -165,14 +165,19 @@ export class DataFileEdit extends Component {
 
   renderContentBody(filename) {
     const { datafile, datafileChanged, onDataFileChanged } = this.props;
-    const { raw_content, content, path } = datafile;
-    const ext = getExtensionFromPath(path);
+    const { raw_content, content, path, slug, ext } = datafile;
     const { guiView } = this.state;
 
     if (guiView && content) {
       return (
         <div className="content-body">
-          <DataGUI source={datafile} onChange={onDataFileChanged} ref="gui" />
+          <DataGUI
+            fields={content}
+            slug={slug}
+            ext={ext}
+            onChange={onDataFileChanged}
+            ref="gui"
+          />
         </div>
       );
     } else if (!guiView && raw_content) {

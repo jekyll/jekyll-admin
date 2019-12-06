@@ -36,10 +36,7 @@ class DataGUI extends Component {
   }
 
   render() {
-    const {
-      source: { content, slug, ext },
-      restricted,
-    } = this.props;
+    const { fields, slug, ext, restricted } = this.props;
     return (
       <div>
         <div className="warning">
@@ -47,15 +44,24 @@ class DataGUI extends Component {
           view. Switch to the <strong>Raw Editor</strong> to preserve them.
         </div>
         {!restricted && this.renderPathFields(slug, ext)}
-        <MetaFields fields={content} dataview />
+        <MetaFields fields={fields} dataview />
       </div>
     );
   }
 }
 
+DataGUI.defaultProps = {
+  fields: {},
+  slug: '',
+  ext: '',
+  restricted: false,
+};
+
 DataGUI.propTypes = {
-  source: PropTypes.object.isRequired,
   onChange: PropTypes.func.isRequired,
+  fields: PropTypes.object,
+  slug: PropTypes.string,
+  ext: PropTypes.string,
   restricted: PropTypes.bool,
 };
 

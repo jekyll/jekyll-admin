@@ -2,10 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import DataGUI from '../DataGUI';
 
-const defaultProps = {
-  source: { content: {} },
-};
-
+const { defaultProps } = DataGUI;
 const actions = {
   onChange: jest.fn(),
 };

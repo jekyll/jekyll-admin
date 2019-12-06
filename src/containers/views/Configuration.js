@@ -58,9 +58,7 @@ export class Configuration extends Component {
     const { raw_content, content } = config;
 
     if (this.state.guiView && content) {
-      return (
-        <DataGUI source={{ content }} onChange={onEditorChange} restricted />
-      );
+      return <DataGUI fields={content} onChange={onEditorChange} restricted />;
     }
 
     return (

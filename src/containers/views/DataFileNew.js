@@ -98,11 +98,7 @@ export class DataFileNew extends Component {
     if (this.state.guiView) {
       return (
         <div className="content-body">
-          <DataGUI
-            source={{ content: {} }}
-            onChange={onDataFileChanged}
-            ref="gui"
-          />
+          <DataGUI onChange={onDataFileChanged} ref="gui" />
         </div>
       );
     } else {
