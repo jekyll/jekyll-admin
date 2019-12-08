@@ -59,7 +59,7 @@ export default function Button({
     return (
       <a href={to} target="_blank" className={btnClass}>
         {iconName && <Icon name={iconName} />}
-        {triggered ? triggeredLabel : label}
+        {label}
       </a>
     );
   } else if (onClick) {
