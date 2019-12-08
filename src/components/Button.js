@@ -51,7 +51,6 @@ export default function Button({
     case 'publish':
       label = labels[type].label;
       break;
-    default:
   }
 
   const iconName = icon || iconMap[type];
