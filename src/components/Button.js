@@ -69,9 +69,9 @@ export default function Button({
         {triggered ? triggeredLabel : label}
       </button>
     );
-  } else {
-    return null;
   }
+
+  return null;
 }
 
 Button.propTypes = {
