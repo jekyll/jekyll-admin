@@ -11,7 +11,10 @@ import Icon from '../../components/Icon';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../ducks/utils';
-import { existingUploadedFilenames } from '../../utils/helpers';
+import {
+  existingUploadedFilenames,
+  getDocumentTitle,
+} from '../../utils/helpers';
 import { getOverrideMessage } from '../../translations';
 import {
   fetchStaticFiles,
@@ -120,9 +123,7 @@ export class StaticFiles extends Component {
     }
 
     const to = `${ADMIN_PREFIX}/staticfiles/index`;
-    const title = params.splat
-      ? `${params.splat} | Static Files`
-      : 'Static Files';
+    const title = getDocumentTitle('static files', params.splat);
 
     return (
       <DocumentTitle title={title}>

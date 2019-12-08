@@ -24,7 +24,7 @@ import { createPage } from '../../ducks/pages';
 import { clearErrors } from '../../ducks/utils';
 import { getLeaveMessage } from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault } from '../../utils/helpers';
+import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class PageNew extends Component {
@@ -74,12 +74,10 @@ export class PageNew extends Component {
 
     const defaultMetadata = injectDefaultFields(config, params.splat, 'pages');
 
-    const document_title = params.splat
-      ? `New page - ${params.splat} - Pages`
-      : `New page - Pages`;
+    const title = getDocumentTitle('pages', params.splat, 'New page');
 
     return (
-      <DocumentTitle title={document_title}>
+      <DocumentTitle title={title}>
         <HotKeys handlers={keyboardHandlers} className="single">
           {errors.length > 0 && <Errors errors={errors} />}
 

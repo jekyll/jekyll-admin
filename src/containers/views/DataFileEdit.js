@@ -18,6 +18,7 @@ import {
   getFilenameFromPath,
   getExtensionFromPath,
   preventDefault,
+  getDocumentTitle,
 } from '../../utils/helpers';
 import {
   fetchDataFile,
@@ -251,9 +252,7 @@ export class DataFileEdit extends Component {
       save: this.handleClickSave,
     };
 
-    const document_title = directory
-      ? `${filename} - ${directory} - Data Files`
-      : `${filename} - Data Files`;
+    const document_title = getDocumentTitle('data files', directory, filename);
 
     return (
       <DocumentTitle title={document_title}>

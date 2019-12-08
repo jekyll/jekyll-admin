@@ -13,7 +13,11 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
 import { putDataFile, onDataFileChanged } from '../../ducks/datafiles';
 import { clearErrors } from '../../ducks/utils';
-import { preventDefault, getFilenameFromPath } from '../../utils/helpers';
+import {
+  preventDefault,
+  getFilenameFromPath,
+  getDocumentTitle,
+} from '../../utils/helpers';
 import { getLeaveMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -129,12 +133,10 @@ export class DataFileNew extends Component {
       activator = datafileChanged;
     }
 
-    const document_title = params.splat
-      ? `New data file - ${params.splat} - Data Files`
-      : `New data file - Data Files`;
+    const title = getDocumentTitle('data files', params.splat, 'New data file');
 
     return (
-      <DocumentTitle title={document_title}>
+      <DocumentTitle title={title}>
         <HotKeys handlers={keyboardHandlers}>
           {errors.length > 0 && <Errors errors={errors} />}
 

@@ -19,7 +19,7 @@ import { fetchPage, deletePage, putPage } from '../../ducks/pages';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault } from '../../utils/helpers';
+import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { getLeaveMessage, getDeleteMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -108,9 +108,7 @@ export class PageEdit extends Component {
     const title = front_matter && front_matter.title ? front_matter.title : '';
     const defaultMetadata = injectDefaultFields(config, directory, 'pages');
 
-    const document_title = directory
-      ? `${title || name} - ${directory} - Pages`
-      : `${title || name} - Pages`;
+    const document_title = getDocumentTitle('pages', directory, title || name);
 
     return (
       <DocumentTitle title={document_title}>
