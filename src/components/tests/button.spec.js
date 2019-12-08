@@ -34,6 +34,11 @@ describe('Components::Button', () => {
     expect(btn.text()).toBe('Create');
   });
 
+  it('should not render if both props `to` and `onClick` are falsy', () => {
+    const component = mount(<Button type="create" active />);
+    expect(component.find('.btn').node).toBeFalsy();
+  });
+
   it('should have correct class names', () => {
     let { btn } = setup();
     expect(btn.prop('className')).toBe('btn btn-active btn-success');
