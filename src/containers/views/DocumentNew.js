@@ -19,7 +19,7 @@ import { createDocument } from '../../ducks/collections';
 import { clearErrors } from '../../ducks/utils';
 import { getLeaveMessage } from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
-import { capitalize, preventDefault, getDocumentTitle } from '../../utils/helpers';
+import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class DocumentNew extends Component {

@@ -23,11 +23,7 @@ import {
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
-import {
-  capitalize,
-  preventDefault,
-  getDocumentTitle,
-} from '../../utils/helpers';
+import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import {
   getLeaveMessage,
   getDeleteMessage,

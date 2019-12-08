@@ -16,7 +16,7 @@ import {
   filterBySearchInput,
 } from '../../ducks/collections';
 import { search } from '../../ducks/utils';
-import { capitalize, getDocumentTitle } from '../../utils/helpers';
+import { getDocumentTitle } from '../../utils/helpers';
 import { getDeleteMessage, getNotFoundMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
