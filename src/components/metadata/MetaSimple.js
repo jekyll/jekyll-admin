@@ -117,8 +117,33 @@ export class MetaSimple extends Component {
     );
   }
 
+  renderLayoutPicker() {
+    const { fieldValue, siteMeta } = this.props;
+
+    if (!siteMeta) return this.renderEditable();
+    const { layouts } = siteMeta;
+
+    return (
+      <select
+        className="field value-field"
+        value={fieldValue}
+        onChange={this.handleEditableChange}
+      >
+        <option value="none">none</option>
+        {layouts.map((layout, i) => {
+          return (
+            <option key={i + 1} value={layout}>
+              {layout}
+            </option>
+          );
+        })}
+      </select>
+    );
+  }
+
   render() {
-    const { fieldKey } = this.props;
+    const { fieldKey, nameAttr } = this.props;
+
     let node;
     switch (fieldKey) {
       case 'date':
@@ -131,6 +156,11 @@ export class MetaSimple extends Component {
       default:
         node = this.renderEditable();
     }
+
+    if (nameAttr == "metadata['layout']") {
+      node = this.renderLayoutPicker();
+    }
+
     return <div className="meta-value">{node}</div>;
   }
 }
@@ -141,6 +171,7 @@ MetaSimple.propTypes = {
   fieldValue: PropTypes.any,
   updateFieldValue: PropTypes.func.isRequired,
   nameAttr: PropTypes.any.isRequired,
+  siteMeta: PropTypes.object,
 };
 
 export default MetaSimple;

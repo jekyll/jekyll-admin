@@ -39,6 +39,7 @@ export class MetaFields extends Component {
       convertField,
       key_prefix,
       dataview,
+      site,
     } = this.props;
 
     let visibleKeys = metadata;
@@ -72,6 +73,7 @@ export class MetaFields extends Component {
           convertField={convertField}
           nameAttr={`metadata['${key}']`}
           namePrefix={`metadata`}
+          siteMeta={dataview ? null : site}
         />
       );
     });
@@ -123,6 +125,7 @@ MetaFields.propTypes = {
   convertField: PropTypes.func.isRequired,
   fetchSiteMeta: PropTypes.func.isRequired,
   dataview: PropTypes.bool,
+  site: PropTypes.object,
 };
 
 const mapStateToProps = state => ({

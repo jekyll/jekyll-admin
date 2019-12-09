@@ -44,6 +44,7 @@ export class MetaField extends Component {
       moveArrayItem,
       convertField,
       key_prefix,
+      siteMeta,
     } = this.props;
 
     const FieldTypes = {
@@ -83,6 +84,7 @@ export class MetaField extends Component {
           convertField={convertField}
           nameAttr={`${namePrefix}['${fieldKey}']`}
           namePrefix={`${namePrefix}['${fieldKey}']`}
+          siteMeta={siteMeta}
         />
       </div>
     );
@@ -103,6 +105,7 @@ MetaField.propTypes = {
   nameAttr: PropTypes.string.isRequired,
   namePrefix: PropTypes.string.isRequired,
   key_prefix: PropTypes.string.isRequired,
+  siteMeta: PropTypes.object,
 };
 
 export default MetaField;
