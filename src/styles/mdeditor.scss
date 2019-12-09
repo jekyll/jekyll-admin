@@ -636,3 +636,12 @@ span.CodeMirror-selectedtext { background: 0 0 }
 .CodeMirror-focused {
   border-color: $dark-orange;
 }
+
+.cm-formatting-code {
+  &+.cm-comment {
+    color: #e91e63
+  }
+  &+.cm-formatting-code.cm-comment {
+    color: inherit
+  }
+}
