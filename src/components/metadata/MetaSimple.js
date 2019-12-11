@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import DropdownList from 'react-widgets/lib/DropdownList';
 import Modal from 'react-modal';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
@@ -121,23 +122,14 @@ export class MetaSimple extends Component {
     const { fieldValue, siteMeta } = this.props;
 
     if (!siteMeta) return this.renderEditable();
-    const { layouts } = siteMeta;
+    const layouts = siteMeta.layouts || [];
 
     return (
-      <select
-        className="field value-field"
-        value={fieldValue}
-        onChange={this.handleEditableChange}
-      >
-        <option value="none">none</option>
-        {layouts.map((layout, i) => {
-          return (
-            <option key={i + 1} value={layout}>
-              {layout}
-            </option>
-          );
-        })}
-      </select>
+      <DropdownList
+        className="layout-field"
+        data={['none', ...layouts]}
+        defaultValue={fieldValue}
+      />
     );
   }
 

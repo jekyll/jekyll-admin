@@ -385,30 +385,49 @@
       opacity: 0;
     }
   }
-  .date-field {
+  .widget-field {
     float: right;
     right: 34px;
     width: calc(100% - 240px);
     pointer-events: auto;
-    background: $border-color;
-    &.rw-widget {
-      border-radius: $border-radius;
-      border-color: transparent;
-    }
-    input {
-      padding: 11px 13px;
-      width: calc(100% - 2px);
+    border-radius: $border-radius;
+    .rw-input {
+      padding: 2px 10px;
       min-height: 40px;
-      background: #fff;
-      border-radius: $border-radius 0 0 $border-radius;
       box-shadow: none;
     }
   }
+  .layout-field {
+    @extend .widget-field;
+    box-shadow: none;
+    &:hover {
+      background-color: #fff;
+      border-color: $border-color;
+    }
+    &.rw-state-focus {
+      background-color: #fff;
+      &:hover, &:active { box-shadow: none }
+    }
+    .rw-dropdownlist-picker.rw-btn { line-height: 2.85 }
+  }
+  .date-field {
+    @extend .widget-field;
+    background: $border-color;
+    &.rw-widget {
+      border-color: transparent;
+    }
+    input {
+      width: calc(100% - 2px);
+      background: #fff;
+      border-radius: $border-radius 0 0 $border-radius;
+    }
+  }
   .rw-popup {
-    padding: 10px;
-    color: #818181;
+    padding: 0;
+    color: #555;
     background: #fff;
     border-color: $border-color;
+    ul { padding: 0 }
   }
   .rw-datetimepicker {
     box-shadow: none !important;
@@ -456,7 +475,7 @@
     .rw-header {
       padding-bottom: 15px;
       .rw-btn-view {
-        width: 188px;
+        width: calc(100% - 74px);
         background: transparent;
         border-radius: 0;
         &:hover {
@@ -504,11 +523,11 @@
   .rw-list {
     max-height: 329px;
     .rw-list-option {
-      padding: 8px 5px;
+      padding: 12px 10px;
       border-radius: 0;
       &:hover {
-        color: #cdcdcd;
-        background: #454545;
+        color: #333;
+        background: #eaeaea;
         border-color: transparent;
       }
       &:focus {
@@ -516,7 +535,7 @@
       }
     }
     .rw-list-option.rw-state-focus {
-      color: #222;
+      color: #111;
       background-color: $dark-orange;
       border-color: transparent;
     }
