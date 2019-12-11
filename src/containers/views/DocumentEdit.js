@@ -23,7 +23,7 @@ import {
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
-import { capitalize, preventDefault } from '../../utils/helpers';
+import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import {
   getLeaveMessage,
   getDeleteMessage,
@@ -127,9 +127,7 @@ export class DocumentEdit extends Component {
       save: this.handleClickSave,
     };
 
-    const document_title = directory
-      ? `${title} - ${directory} - ${capitalize(collection)}`
-      : `${title} - ${capitalize(collection)}`;
+    const document_title = getDocumentTitle(collection, directory, title);
 
     return (
       <DocumentTitle title={document_title}>

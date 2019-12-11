@@ -5,6 +5,7 @@ import {
   toTitleCase,
   slugify,
   existingUploadedFilenames,
+  getDocumentTitle,
   getFilenameFromPath,
   getExtensionFromPath,
   trimObject,
@@ -193,5 +194,54 @@ describe('Helper functions', () => {
       bar: 10,
     };
     expect(trimObject(obj)).toEqual(expected);
+  });
+
+  it('should trim whitespaces in object keys and values', () => {
+    const testData = [
+      {
+        args: {
+          type: undefined,
+          splat: undefined,
+          prefix: undefined,
+        },
+        expected: '',
+      },
+      {
+        args: {
+          type: 'data files',
+          splat: undefined,
+          prefix: undefined,
+        },
+        expected: 'Data Files',
+      },
+      {
+        args: {
+          type: 'pages',
+          splat: '',
+          prefix: undefined,
+        },
+        expected: 'Pages',
+      },
+      {
+        args: {
+          type: 'pages',
+          splat: 'foodir',
+          prefix: undefined,
+        },
+        expected: 'foodir | Pages',
+      },
+      {
+        args: {
+          type: 'pages',
+          splat: 'foo/bar',
+          prefix: 'New Page',
+        },
+        expected: 'New Page | foo/bar | Pages',
+      },
+    ];
+    testData.forEach(entry => {
+      const { args, expected } = entry;
+      expect(getDocumentTitle(...Object.values(args))).toEqual(expected);
+    });
   });
 });

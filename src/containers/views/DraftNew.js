@@ -18,7 +18,7 @@ import { putDraft } from '../../ducks/drafts';
 import { clearErrors } from '../../ducks/utils';
 import { getLeaveMessage } from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault } from '../../utils/helpers';
+import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 import {
   updateTitle,
@@ -75,12 +75,10 @@ export class DraftNew extends Component {
       save: this.handleClickSave,
     };
 
-    const document_title = params.splat
-      ? `New draft - ${params.splat} - Drafts`
-      : `New draft - Drafts`;
+    const title = getDocumentTitle('drafts', params.splat, 'New draft');
 
     return (
-      <DocumentTitle title={document_title}>
+      <DocumentTitle title={title}>
         <HotKeys handlers={keyboardHandlers} className="single">
           {errors.length > 0 && <Errors errors={errors} />}
           <div className="content-header">
