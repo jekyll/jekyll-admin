@@ -12,14 +12,6 @@ export class MetaArrayItem extends Component {
     convertField(nameAttr, type);
   }
 
-  handleDropdownFocus() {
-    findDOMNode(this.refs.wrap).classList.add('showing-dropdown');
-  }
-
-  handleDropdownBlur() {
-    findDOMNode(this.refs.wrap).classList.remove('showing-dropdown');
-  }
-
   handleRemoveClick() {
     const { removeField, namePrefix, index } = this.props;
     removeField(namePrefix, index);
@@ -56,8 +48,6 @@ export class MetaArrayItem extends Component {
               parentType="array"
               onConvertClick={type => this.handleConvertClick(type)}
               onRemoveClick={() => this.handleRemoveClick()}
-              onDropdownFocus={() => this.handleDropdownFocus()}
-              onDropdownBlur={() => this.handleDropdownBlur()}
             />
           </div>
           <CurrentComponent

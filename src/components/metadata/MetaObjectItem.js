@@ -12,14 +12,6 @@ export class MetaObjectItem extends Component {
     convertField(nameAttr, type);
   }
 
-  handleDropdownFocus() {
-    findDOMNode(this.refs.wrap).classList.add('showing-dropdown');
-  }
-
-  handleDropdownBlur() {
-    findDOMNode(this.refs.wrap).classList.remove('showing-dropdown');
-  }
-
   handleKeyBlur() {
     const { namePrefix, fieldKey, updateFieldKey } = this.props;
     let currentValue = findDOMNode(this.refs.field_key).value;
@@ -69,8 +61,6 @@ export class MetaObjectItem extends Component {
             parentType="object"
             onConvertClick={type => this.handleConvertClick(type)}
             onRemoveClick={() => this.handleRemoveClick()}
-            onDropdownFocus={() => this.handleDropdownFocus()}
-            onDropdownBlur={() => this.handleDropdownBlur()}
           />
         </div>
         <div className="object-value">
