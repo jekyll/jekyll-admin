@@ -14,12 +14,7 @@ import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import StaticMetaData from '../../components/metadata/StaticMetaFields';
 import Metadata from '../../containers/MetaFields';
-import {
-  updateTitle,
-  updateBody,
-  updatePath,
-  updateDraft,
-} from '../../ducks/metadata';
+import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { createPage } from '../../ducks/pages';
 import { clearErrors } from '../../ducks/utils';
 import { getLeaveMessage } from '../../translations';
@@ -122,7 +117,6 @@ PageNew.propTypes = {
   updateTitle: PropTypes.func.isRequired,
   updateBody: PropTypes.func.isRequired,
   updatePath: PropTypes.func.isRequired,
-  updateDraft: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.array.isRequired,
   fieldChanged: PropTypes.bool.isRequired,
@@ -148,7 +142,6 @@ const mapDispatchToProps = dispatch =>
       updateTitle,
       updateBody,
       updatePath,
-      updateDraft,
       createPage,
       clearErrors,
     },

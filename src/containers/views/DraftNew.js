@@ -20,12 +20,7 @@ import { getLeaveMessage } from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
-import {
-  updateTitle,
-  updateBody,
-  updatePath,
-  updateDraft,
-} from '../../ducks/metadata';
+import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 
 export class DraftNew extends Component {
   componentDidMount() {
@@ -122,7 +117,6 @@ DraftNew.propTypes = {
   updateTitle: PropTypes.func.isRequired,
   updateBody: PropTypes.func.isRequired,
   updatePath: PropTypes.func.isRequired,
-  updateDraft: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.array.isRequired,
   fieldChanged: PropTypes.bool.isRequired,
@@ -148,7 +142,6 @@ const mapDispatchToProps = dispatch =>
       updateTitle,
       updateBody,
       updatePath,
-      updateDraft,
       putDraft,
       clearErrors,
     },

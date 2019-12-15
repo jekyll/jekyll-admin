@@ -105,24 +105,24 @@ export class DataFileNew extends Component {
           <DataGUI onChange={onDataFileChanged} ref="gui" />
         </div>
       );
-    } else {
-      return (
-        <div className="content-body">
-          <InputPath
-            onChange={onDataFileChanged}
-            type="data files"
-            path=""
-            ref="inputpath"
-          />
-          <Editor
-            editorChanged={datafileChanged}
-            onEditorChange={onDataFileChanged}
-            content=""
-            ref="editor"
-          />
-        </div>
-      );
     }
+
+    return (
+      <div className="content-body">
+        <InputPath
+          onChange={onDataFileChanged}
+          type="data files"
+          path=""
+          ref="inputpath"
+        />
+        <Editor
+          editorChanged={datafileChanged}
+          onEditorChange={onDataFileChanged}
+          content=""
+          ref="editor"
+        />
+      </div>
+    );
   }
 
   render() {
