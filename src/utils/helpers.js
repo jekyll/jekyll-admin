@@ -141,3 +141,9 @@ export const trimObject = object => {
     return acc;
   }, Array.isArray(object) ? [] : {});
 };
+
+export const getDocumentTitle = (type, splat, prefix = '') => {
+  if (!type) return '';
+  const label = toTitleCase(type.toString());
+  return [prefix, splat, label].filter(Boolean).join(' | ');
+};

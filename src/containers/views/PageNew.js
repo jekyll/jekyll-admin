@@ -14,17 +14,12 @@ import InputTitle from '../../components/form/InputTitle';
 import MarkdownEditor from '../../components/MarkdownEditor';
 import StaticMetaData from '../../components/metadata/StaticMetaFields';
 import Metadata from '../../containers/MetaFields';
-import {
-  updateTitle,
-  updateBody,
-  updatePath,
-  updateDraft,
-} from '../../ducks/metadata';
+import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { createPage } from '../../ducks/pages';
 import { clearErrors } from '../../ducks/utils';
 import { getLeaveMessage } from '../../translations';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault } from '../../utils/helpers';
+import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 export class PageNew extends Component {
@@ -74,12 +69,10 @@ export class PageNew extends Component {
 
     const defaultMetadata = injectDefaultFields(config, params.splat, 'pages');
 
-    const document_title = params.splat
-      ? `New page - ${params.splat} - Pages`
-      : `New page - Pages`;
+    const title = getDocumentTitle('pages', params.splat, 'New page');
 
     return (
-      <DocumentTitle title={document_title}>
+      <DocumentTitle title={title}>
         <HotKeys handlers={keyboardHandlers} className="single">
           {errors.length > 0 && <Errors errors={errors} />}
 
@@ -124,7 +117,6 @@ PageNew.propTypes = {
   updateTitle: PropTypes.func.isRequired,
   updateBody: PropTypes.func.isRequired,
   updatePath: PropTypes.func.isRequired,
-  updateDraft: PropTypes.func.isRequired,
   clearErrors: PropTypes.func.isRequired,
   errors: PropTypes.array.isRequired,
   fieldChanged: PropTypes.bool.isRequired,
@@ -150,7 +142,6 @@ const mapDispatchToProps = dispatch =>
       updateTitle,
       updateBody,
       updatePath,
-      updateDraft,
       createPage,
       clearErrors,
     },
