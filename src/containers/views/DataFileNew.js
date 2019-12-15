@@ -5,7 +5,7 @@ import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
 import { HotKeys } from 'react-hotkeys';
 import DocumentTitle from 'react-document-title';
-import DataGUI from '../MetaFields';
+import DataGUI from '../../components/DataGUI';
 import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
@@ -24,8 +24,6 @@ import { ADMIN_PREFIX } from '../../constants';
 export class DataFileNew extends Component {
   state = {
     guiView: false,
-    guiPath: '',
-    extn: '.yml',
   };
 
   componentDidMount() {
@@ -53,27 +51,20 @@ export class DataFileNew extends Component {
   };
 
   toggleView = () => {
-    this.setState({ guiView: !this.state.guiView });
-  };
-
-  handleChange = e => {
-    const { onDataFileChanged } = this.props;
-    let obj = {};
-    const key = e.target.id;
-    const value = e.target.value;
-    obj[key] = value;
-
-    this.setState(obj);
-    onDataFileChanged();
+    this.setState(state => {
+      return { guiView: !state.guiView };
+    });
   };
 
   handleClickSave = e => {
     preventDefault(e);
     const { datafileChanged, fieldChanged, putDataFile, params } = this.props;
     let filename;
+
     if (datafileChanged || fieldChanged) {
       if (this.state.guiView) {
-        filename = this.state.guiPath + this.state.extn;
+        const { filepath, extname } = this.refs.gui.refs;
+        filename = filepath.value + extname.value;
         putDataFile(params.splat, filename, null, null, 'gui');
       } else {
         filename = this.refs.inputpath.refs.input.value;
@@ -82,56 +73,64 @@ export class DataFileNew extends Component {
     }
   };
 
-  renderGUInputs() {
+  renderAside() {
+    const { datafileChanged, fieldChanged, updated } = this.props;
+
     return (
-      <form className="datafile-path">
-        <fieldset className="filename">
-          <legend>Path (without extension)</legend>
-          <input
-            type="text"
-            id="guiPath"
-            onChange={this.handleChange}
-            placeholder="filename"
-          />
-        </fieldset>
-        <fieldset className="file-type">
-          <legend>File Type</legend>
-          <select
-            id="extn"
-            value={this.state.extn}
-            onChange={this.handleChange}
-          >
-            <option value=".yml">YAML</option>
-            <option value=".json">JSON</option>
-          </select>
-        </fieldset>
-      </form>
+      <div className="content-side">
+        <Button
+          onClick={this.handleClickSave}
+          type="create"
+          active={datafileChanged || fieldChanged}
+          triggered={updated}
+          block
+        />
+        <Button
+          onClick={this.toggleView}
+          type="view-toggle"
+          triggered={this.state.guiView}
+          active
+          block
+        />
+      </div>
+    );
+  }
+
+  renderContentBody() {
+    const { datafileChanged, onDataFileChanged } = this.props;
+
+    if (this.state.guiView) {
+      return (
+        <div className="content-body">
+          <DataGUI onChange={onDataFileChanged} ref="gui" />
+        </div>
+      );
+    }
+
+    return (
+      <div className="content-body">
+        <InputPath
+          onChange={onDataFileChanged}
+          type="data files"
+          path=""
+          ref="inputpath"
+        />
+        <Editor
+          editorChanged={datafileChanged}
+          onEditorChange={onDataFileChanged}
+          content=""
+          ref="editor"
+        />
+      </div>
     );
   }
 
   render() {
-    const {
-      datafileChanged,
-      fieldChanged,
-      onDataFileChanged,
-      datafile,
-      updated,
-      errors,
-      params,
-    } = this.props;
-    const { path, raw_content } = datafile;
+    const { errors, params } = this.props;
 
     const keyboardHandlers = {
       save: this.handleClickSave,
     };
-
-    // activate or deactivate `Create` button in GUI mode based on input state
-    let activator = false;
-    if (this.state.guiView && this.state.guiPath) {
-      activator = datafileChanged || fieldChanged;
-    } else if (!this.state.guiView) {
-      activator = datafileChanged;
-    }
 
     const title = getDocumentTitle('data files', params.splat, 'New data file');
 
@@ -145,47 +144,8 @@ export class DataFileNew extends Component {
           </div>
 
           <div className="content-wrapper">
-            <div className="content-body">
-              {this.state.guiView && (
-                <div>
-                  {this.renderGUInputs()}
-                  <DataGUI fields={{ key: 'value' }} dataview />
-                </div>
-              )}
-              {!this.state.guiView && (
-                <div>
-                  <InputPath
-                    onChange={onDataFileChanged}
-                    type="data files"
-                    path=""
-                    ref="inputpath"
-                  />
-                  <Editor
-                    editorChanged={datafileChanged}
-                    onEditorChange={onDataFileChanged}
-                    content={''}
-                    ref="editor"
-                  />
-                </div>
-              )}
-            </div>
-
-            <div className="content-side">
-              <Button
-                onClick={this.handleClickSave}
-                type="create"
-                active={activator}
-                triggered={updated}
-                block
-              />
-              <Button
-                onClick={this.toggleView}
-                type="view-toggle"
-                triggered={this.state.guiView}
-                active
-                block
-              />
-            </div>
+            {this.renderContentBody()}
+            {this.renderAside()}
           </div>
         </HotKeys>
       </DocumentTitle>
