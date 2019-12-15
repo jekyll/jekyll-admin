@@ -27,7 +27,6 @@ const setup = (props = defaultProps) => {
     updateTitle: jest.fn(),
     updateBody: jest.fn(),
     updatePath: jest.fn(),
-    updateDraft: jest.fn(),
     clearErrors: jest.fn(),
   };
 
