@@ -93,7 +93,7 @@
     "file-loader": "1.1.11",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "^19.0.2",
+    "jest": "23.6.0",
     "lint-staged": "^4.3.0",
     "mini-css-extract-plugin": "0.8.0",
     "mkdirp": "^0.5.1",
