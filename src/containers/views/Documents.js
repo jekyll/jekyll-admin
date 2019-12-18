@@ -16,7 +16,7 @@ import {
   filterBySearchInput,
 } from '../../ducks/collections';
 import { search } from '../../ducks/utils';
-import { capitalize } from '../../utils/helpers';
+import { getDocumentTitle } from '../../utils/helpers';
 import { getDeleteMessage, getNotFoundMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -143,9 +143,7 @@ export class Documents extends Component {
       ? `${ADMIN_PREFIX}/collections/${collection_name}/${splat}/new`
       : `${ADMIN_PREFIX}/collections/${collection_name}/new`;
 
-    const document_title = params.splat
-      ? `${params.splat} | ${capitalize(collection_name)}`
-      : capitalize(collection_name);
+    const document_title = getDocumentTitle(collection_name, params.splat);
 
     return (
       <DocumentTitle title={document_title}>
