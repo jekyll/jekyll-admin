@@ -3,24 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
-import { HotKeys } from 'react-hotkeys';
 import DocumentTitle from 'react-document-title';
-import Splitter from '../../components/Splitter';
-import Errors from '../../components/Errors';
-import Breadcrumbs from '../../components/Breadcrumbs';
-import Button from '../../components/Button';
-import InputPath from '../../components/form/InputPath';
-import InputTitle from '../../components/form/InputTitle';
-import MarkdownEditor from '../../components/MarkdownEditor';
-import StaticMetaData from '../../components/metadata/StaticMetaFields';
-import Metadata from '../../containers/MetaFields';
+import CreateMarkdownPage from '../../components/CreateMarkdownPage';
+import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { putDraft } from '../../ducks/drafts';
 import { clearErrors } from '../../ducks/utils';
 import { getLeaveMessage } from '../../translations';
-import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
-import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 
 export class DraftNew extends Component {
   componentDidMount() {
@@ -55,58 +45,32 @@ export class DraftNew extends Component {
 
   render() {
     const {
-      errors,
-      updated,
-      updateTitle,
-      updateBody,
-      updatePath,
-      fieldChanged,
       params,
       config,
+      errors,
+      updated,
+      updateBody,
+      updatePath,
+      updateTitle,
+      fieldChanged,
     } = this.props;
-    const defaultMetadata = injectDefaultFields(config, params.splat, 'posts');
-
-    const keyboardHandlers = {
-      save: this.handleClickSave,
-    };
 
     const title = getDocumentTitle('drafts', params.splat, 'New draft');
 
     return (
       <DocumentTitle title={title}>
-        <HotKeys handlers={keyboardHandlers} className="single">
-          {errors.length > 0 && <Errors errors={errors} />}
-          <div className="content-header">
-            <Breadcrumbs type="drafts" splat={params.splat} />
-          </div>
-
-          <div className="content-wrapper">
-            <div className="content-body">
-              <InputPath onChange={updatePath} type="drafts" path="" />
-              <InputTitle onChange={updateTitle} title="" ref="title" />
-              <MarkdownEditor
-                onChange={updateBody}
-                onSave={this.handleClickSave}
-                placeholder="Body"
-                initialValue=""
-                ref="editor"
-              />
-              <Splitter />
-              <StaticMetaData fields={defaultMetadata} />
-              <Metadata fields={{}} />
-            </div>
-
-            <div className="content-side">
-              <Button
-                onClick={this.handleClickSave}
-                type="create"
-                active={fieldChanged}
-                triggered={updated}
-                block
-              />
-            </div>
-          </div>
-        </HotKeys>
+        <CreateMarkdownPage
+          type="drafts"
+          params={params}
+          config={config}
+          errors={errors}
+          updated={updated}
+          updateBody={updateBody}
+          updatePath={updatePath}
+          updateTitle={updateTitle}
+          fieldChanged={fieldChanged}
+          onClickSave={this.handleClickSave}
+        />
       </DocumentTitle>
     );
   }
