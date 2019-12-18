@@ -51,22 +51,28 @@ export default function Button({
     case 'publish':
       label = labels[type].label;
       break;
-    default:
   }
 
   const iconName = icon || iconMap[type];
+  const iconNode = iconName && <Icon name={iconName} />;
 
-  return (
-    <a
-      href={to}
-      target="_blank"
-      onClick={to ? null : onClick}
-      className={btnClass}
-    >
-      {iconName && <Icon name={iconName} />}
-      {triggered ? triggeredLabel : label}
-    </a>
-  );
+  if (to) {
+    return (
+      <a href={to} target="_blank" className={btnClass}>
+        {iconNode}
+        {label}
+      </a>
+    );
+  } else if (onClick) {
+    return (
+      <button onClick={onClick} className={btnClass}>
+        {iconNode}
+        {triggered ? triggeredLabel : label}
+      </button>
+    );
+  }
+
+  return null;
 }
 
 Button.propTypes = {
