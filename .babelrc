@@ -38,12 +38,10 @@
         [
           "@babel/preset-env",
           {
-            "es2015": {
-              "modules": false
-            },
+            "modules": false,
+            "forceAllTransforms": true,
             "targets": {
-              "ie": 9,
-              "uglify": true
+              "ie": 9
             }
           }
         ],
