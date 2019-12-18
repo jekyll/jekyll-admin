@@ -54,18 +54,19 @@ export default function Button({
   }
 
   const iconName = icon || iconMap[type];
+  const iconNode = iconName && <Icon name={iconName} />;
 
   if (to) {
     return (
       <a href={to} target="_blank" className={btnClass}>
-        {iconName && <Icon name={iconName} />}
+        {iconNode}
         {label}
       </a>
     );
   } else if (onClick) {
     return (
       <button onClick={onClick} className={btnClass}>
-        {iconName && <Icon name={iconName} />}
+        {iconNode}
         {triggered ? triggeredLabel : label}
       </button>
     );
