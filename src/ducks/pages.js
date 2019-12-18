@@ -4,8 +4,8 @@ import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify, trimObject } from '../utils/helpers';
 import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
-import translations from '../translations';
 
+import translations from '../translations';
 const { getTitleRequiredMessage, getFilenameNotValidMessage } = translations;
 
 // Action Types

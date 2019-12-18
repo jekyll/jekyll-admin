@@ -9,8 +9,8 @@ import {
   trimObject,
 } from '../utils/helpers';
 import { validator } from '../utils/validation';
-import translations from '../translations';
 
+import translations from '../translations';
 const { getContentRequiredMessage, getFilenameRequiredMessage } = translations;
 
 // Action Types

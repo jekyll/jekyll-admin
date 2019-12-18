@@ -2,8 +2,8 @@ import _ from 'underscore';
 import { get } from '../utils/fetch';
 import { addNotification } from './notifications';
 import { staticfilesAPIUrl, staticfileAPIUrl } from '../constants/api';
-import translations from '../translations';
 
+import translations from '../translations';
 const {
   getSuccessMessage,
   getErrorMessage,

@@ -1,10 +1,10 @@
 import { getConfigurationUrl, putConfigurationUrl } from '../constants/api';
-import translations from '../translations';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { CLEAR_ERRORS, validationError } from './utils';
 import { toYAML } from '../utils/helpers';
 
+import translations from '../translations';
 const { getContentRequiredMessage } = translations;
 
 // Action Types

@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-fetch';
 import { addNotification } from '../ducks/notifications';
 import { BadInputError } from './apiErrors';
-import translations from '../translations';
 
+import translations from '../translations';
 const {
   getErrorMessage,
   getFetchErrorMessage,

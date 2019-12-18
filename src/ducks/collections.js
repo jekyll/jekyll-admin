@@ -4,13 +4,13 @@ import { CLEAR_ERRORS, validationError } from './utils';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify, trimObject } from '../utils/helpers';
-import translations from '../translations';
 import {
   collectionsAPIUrl,
   collectionAPIUrl,
   documentAPIUrl,
 } from '../constants/api';
 
+import translations from '../translations';
 const {
   getTitleRequiredMessage,
   getFilenameRequiredMessage,
