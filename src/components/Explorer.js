@@ -7,8 +7,8 @@ import Button from './Button';
 import Icon from './Icon';
 import InputSearch from './form/InputSearch';
 import { ADMIN_PREFIX } from '../constants';
-import translations from '../translations';
 
+import translations from '../translations';
 const { getDeleteMessage, getNotFoundMessage } = translations;
 
 export default class Explorer extends Component {

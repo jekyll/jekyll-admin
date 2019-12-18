@@ -18,9 +18,9 @@ import {
   getFilenameFromPath,
   getDocumentTitle,
 } from '../../utils/helpers';
-import translations from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
+import translations from '../../translations';
 const { getLeaveMessage } = translations;
 
 export class DataFileNew extends Component {

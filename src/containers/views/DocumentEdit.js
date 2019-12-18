@@ -24,9 +24,9 @@ import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
-import translations from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
+import translations from '../../translations';
 const { getLeaveMessage, getDeleteMessage, getNotFoundMessage } = translations;
 
 export class DocumentEdit extends Component {

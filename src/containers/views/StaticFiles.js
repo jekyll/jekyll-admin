@@ -21,9 +21,9 @@ import {
   deleteStaticFile,
   filterByFilename,
 } from '../../ducks/staticfiles';
-import translations from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
+import translations from '../../translations';
 const { getOverrideMessage } = translations;
 
 export class StaticFiles extends Component {

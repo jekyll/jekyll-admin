@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Icon from './Icon';
-import translations from '../translations';
 
+import translations from '../translations';
 const { labels } = translations;
 
 const iconMap = {

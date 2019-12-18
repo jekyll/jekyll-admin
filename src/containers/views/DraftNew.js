@@ -9,9 +9,9 @@ import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { putDraft } from '../../ducks/drafts';
 import { clearErrors } from '../../ducks/utils';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
-import translations from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
+import translations from '../../translations';
 const { getLeaveMessage } = translations;
 
 export class DraftNew extends Component {

@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import translations from '../translations';
 import { getFilenameFromPath } from '../utils/helpers';
 import Icon from './Icon';
 
+import translations from '../translations';
 const { getDeleteMessage } = translations;
 
 export default class FilePreview extends Component {
