@@ -25,7 +25,7 @@ import {
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault } from '../../utils/helpers';
+import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import translations from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -148,9 +148,7 @@ export class DraftEdit extends Component {
     const title = front_matter && front_matter.title ? front_matter.title : '';
     const defaultMetadata = injectDefaultFields(config, directory, collection);
 
-    const document_title = directory
-      ? `${title || name} - ${directory} - Drafts`
-      : `${title || name} - Drafts`;
+    const document_title = getDocumentTitle('drafts', directory, title || name);
 
     return (
       <DocumentTitle title={document_title}>

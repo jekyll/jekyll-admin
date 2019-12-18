@@ -11,7 +11,6 @@ import {
 export const UPDATE_TITLE = 'UPDATE_TITLE';
 export const UPDATE_BODY = 'UPDATE_BODY';
 export const UPDATE_PATH = 'UPDATE_PATH';
-export const UPDATE_DRAFT = 'UPDATE_DRAFT';
 export const STORE_CONTENT_FIELDS = 'STORE_CONTENT_FIELDS';
 export const ADD_METAFIELD = 'ADD_METAFIELD';
 export const REMOVE_METAFIELD = 'REMOVE_METAFIELD';
@@ -73,11 +72,6 @@ export const updateBody = body => ({
   body,
 });
 
-export const updateDraft = draft => ({
-  type: UPDATE_DRAFT,
-  draft,
-});
-
 export const updatePath = path => ({
   type: UPDATE_PATH,
   path,
@@ -118,15 +112,6 @@ export default function metadata( // TODO normalize the metadata
         metadata: {
           ...state.metadata,
           path: action.path,
-        },
-        fieldChanged: true,
-      };
-    case UPDATE_DRAFT:
-      return {
-        ...state,
-        draft: {
-          ...state.metadata,
-          draft: action.draft,
         },
         fieldChanged: true,
       };

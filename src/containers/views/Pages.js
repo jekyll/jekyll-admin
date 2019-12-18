@@ -7,6 +7,7 @@ import DocumentTitle from 'react-document-title';
 import Explorer from '../../components/Explorer';
 import { search, filterBySearchInput } from '../../ducks/utils';
 import { fetchPages, deletePage } from '../../ducks/pages';
+import { getDocumentTitle } from '../../utils/helpers';
 
 export class Pages extends Component {
   componentDidMount() {
@@ -28,7 +29,7 @@ export class Pages extends Component {
       return null;
     }
 
-    const title = params.splat ? `${params.splat} | Pages` : 'Pages';
+    const title = getDocumentTitle('pages', params.splat);
 
     return (
       <DocumentTitle title={title}>
