@@ -83,6 +83,6 @@ describe('Containers::Documents', () => {
   it('should call deleteDocument', () => {
     const { component, actions } = setup();
     component.find('.btn-delete').simulate('click');
-    expect(actions.deleteDocument).not.toHaveBeenCalled(); // TODO pass prompt
+    expect(actions.deleteDocument.mock.calls.length).toBe(1);
   });
 });

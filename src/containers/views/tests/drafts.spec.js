@@ -71,6 +71,6 @@ describe('Containers::Drafts', () => {
   it('should call deleteDraft', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');
-    expect(actions.deleteDraft).not.toHaveBeenCalled(); // TODO pass prompt
+    expect(actions.deleteDraft.mock.calls.length).toBe(1);
   });
 });

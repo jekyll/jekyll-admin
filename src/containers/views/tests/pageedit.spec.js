@@ -80,6 +80,6 @@ describe('Containers::PageEdit', () => {
   it('should call deletePage', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');
-    expect(actions.deletePage).not.toHaveBeenCalled(); // TODO pass prompt
+    expect(actions.deletePage.mock.calls.length).toBe(1);
   });
 });
