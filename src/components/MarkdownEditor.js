@@ -96,7 +96,7 @@ class MarkdownEditor extends Component {
   }
 
   // Adapted from an internal helper function within SimpleMDE package.
-  _replaceSelection = (cm, headNTail, url) => {
+  _replaceSelectedText = (cm, headNTail, url) => {
     const startPoint = cm.getCursor('start');
     const endPoint = cm.getCursor('end');
     const text = cm.getSelection();
@@ -124,7 +124,7 @@ class MarkdownEditor extends Component {
     const ext = getExtensionFromPath(path);
 
     const type = /png|jpg|gif|jpeg|svg|ico/i.test(ext) ? image : link;
-    this._replaceSelection(codemirror, type, url);
+    this._replaceSelectedText(codemirror, type, url);
   };
 
   render() {
