@@ -70,7 +70,6 @@ describe('Containers::DataFiles', () => {
 
   it('should call deleteDataFile', () => {
     const { deleteButton, actions } = setup();
-    window.confirm = jest.fn(() => true);
     deleteButton.simulate('click');
     expect(actions.deleteDataFile.mock.calls.length).toBe(1);
   });

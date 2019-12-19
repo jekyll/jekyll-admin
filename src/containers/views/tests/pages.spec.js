@@ -70,7 +70,6 @@ describe('Containers::Pages', () => {
 
   it('should call deletePage', () => {
     const { deleteButton, actions } = setup();
-    window.confirm = jest.fn(() => true);
     deleteButton.simulate('click');
     expect(actions.deletePage.mock.calls.length).toBe(1);
   });
