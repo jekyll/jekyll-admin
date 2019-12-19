@@ -82,7 +82,6 @@ describe('Containers::DocumentEdit', () => {
 
   it('should call deleteDocument', () => {
     const { deleteButton, actions } = setup();
-    window.confirm = jest.fn(() => true);
     deleteButton.simulate('click');
     expect(actions.deleteDocument.mock.calls.length).toBe(1);
   });

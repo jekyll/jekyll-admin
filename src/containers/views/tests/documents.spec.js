@@ -82,7 +82,6 @@ describe('Containers::Documents', () => {
 
   it('should call deleteDocument', () => {
     const { component, actions } = setup();
-    window.confirm = jest.fn(() => true);
     component.find('.btn-delete').simulate('click');
     expect(actions.deleteDocument.mock.calls.length).toBe(1);
   });
