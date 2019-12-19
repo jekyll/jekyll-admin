@@ -85,7 +85,7 @@ describe('Containers::DataFileEdit', () => {
   it('should call deleteDataFile', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');
-    expect(actions.deleteDataFile).not.toHaveBeenCalled(); // TODO pass prompt
+    expect(actions.deleteDataFile.mock.calls.length).toBe(1);
   });
 
   it('should recieve updated props', () => {
