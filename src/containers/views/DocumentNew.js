@@ -13,11 +13,8 @@ import { ADMIN_PREFIX } from '../../constants';
 export class DocumentNew extends Component {
   componentWillReceiveProps(nextProps) {
     if (this.props.updated !== nextProps.updated) {
-      const path = nextProps.currentDocument.path;
-      const splat = path.substr(path.indexOf('/') + 1, path.length);
-      browserHistory.push(
-        `${ADMIN_PREFIX}/collections/${nextProps.currentDocument.collection}/${splat}`
-      );
+      const { collection, relative_path: path } = nextProps.currentDocument;
+      browserHistory.push(`${ADMIN_PREFIX}/collections/${collection}/${path}`);
     }
   }
 
