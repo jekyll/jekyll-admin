@@ -2,15 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { browserHistory, withRouter } from 'react-router';
-import DocumentTitle from 'react-document-title';
-import CreateMarkdownPage from '../../components/CreateMarkdownPage';
+import { withRouter } from 'react-router';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
-import { createPage } from '../../ducks/pages';
 import { clearErrors } from '../../ducks/utils';
 import { getLeaveMessage } from '../../translations';
-import { preventDefault, getDocumentTitle } from '../../utils/helpers';
-import { ADMIN_PREFIX } from '../../constants';
 
 export const compose_creator = WrappedComponent => {
   class ComposeCreator extends Component {
