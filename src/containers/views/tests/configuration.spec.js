@@ -25,9 +25,9 @@ const setup = (props = defaultProps) => {
 
   const component = shallow(<Configuration {...props} {...actions} />);
   return {
-    component,
     props,
     actions,
+    component,
     editor: component.find(Editor),
     errors: component.find(Errors),
     toggleButton: component.find(Button).first(),
