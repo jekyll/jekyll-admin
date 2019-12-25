@@ -25,11 +25,11 @@ function setup(props = defaultProps) {
   const component = mount(<MetaFields {...props} {...actions} />);
 
   return {
+    actions,
     component,
     addFieldButton: component.find('.meta-new a'),
     addDataFieldButton: component.find('.data-new a'),
     metafields: component.find(MetaField),
-    actions: actions,
   };
 }
 

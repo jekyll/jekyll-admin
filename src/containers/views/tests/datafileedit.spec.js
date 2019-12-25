@@ -7,7 +7,7 @@ import Button from '../../../components/Button';
 import { datafile } from './fixtures';
 
 const defaultProps = {
-  datafile: datafile,
+  datafile,
   updated: false,
   datafileChanged: false,
   fieldChanged: false,
@@ -30,13 +30,13 @@ const setup = (props = defaultProps) => {
   const component = shallow(<DataFileEdit {...actions} {...props} />);
 
   return {
-    component,
+    props,
     actions,
+    component,
     saveButton: component.find(Button).first(),
     toggleButton: component.find(Button).at(1),
     deleteButton: component.find(Button).last(),
     errors: component.find(Errors),
-    props,
   };
 };
 

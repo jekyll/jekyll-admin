@@ -27,14 +27,14 @@ const setup = (props = defaultProps) => {
   const component = shallow(<DataFileNew {...actions} {...props} />);
 
   return {
-    component,
+    props,
     actions,
+    component,
     saveButton: component.find(Button).first(),
     toggleButton: component.find(Button).last(),
     editor: component.find(Editor).first(),
     gui: component.find(DataGUI).first(),
     errors: component.find(Errors),
-    props,
   };
 };
 
