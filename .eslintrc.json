@@ -30,6 +30,7 @@
     "no-debugger": 1,
     "no-var": 1,
     "object-shorthand": [1, "properties"],
+    "linebreak-style": [1, "unix"],
     "semi": [1, "always"],
     "no-trailing-spaces": 0,
     "eol-last": 0,
