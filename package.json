@@ -32,7 +32,7 @@
   },
   "lint-staged": {
     "*.js": [
-      "prettier --single-quote --trailing-comma --print-width 80 es5 --write"
+      "prettier --single-quote --trailing-comma --end-of-line lf --print-width 80 es5 --write"
     ]
   },
   "author": "Mert Kahyaoğlu",
