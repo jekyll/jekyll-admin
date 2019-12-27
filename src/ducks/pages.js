@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import { CLEAR_ERRORS, validationError } from './utils';
-import { get, put } from '../utils/fetch';
+import { get, put, del } from '../utils/fetch';
 import { validateMetadata } from '../utils/validation';
 import { preparePayload, getFrontMatterFromMetdata } from '../utils/helpers';
 import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
@@ -90,20 +90,12 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
 };
 
 export const deletePage = (directory, filename) => dispatch => {
-  return fetch(pageAPIUrl(directory, filename), {
-    method: 'DELETE',
-    credentials: 'same-origin',
-  })
-    .then(data => {
-      dispatch({ type: DELETE_PAGE_SUCCESS });
-      dispatch(fetchPages(directory));
-    })
-    .catch(error =>
-      dispatch({
-        type: DELETE_PAGE_FAILURE,
-        error,
-      })
-    );
+  return del(
+    pageAPIUrl(directory, filename),
+    { type: DELETE_PAGE_SUCCESS, name: 'page', update: fetchPages(directory) },
+    { type: DELETE_PAGE_FAILURE, name: 'error' },
+    dispatch
+  );
 };
 
 // Reducer

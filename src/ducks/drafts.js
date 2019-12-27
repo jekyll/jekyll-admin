@@ -5,7 +5,7 @@ import {
   PUT_DOCUMENT_SUCCESS,
   PUT_DOCUMENT_FAILURE,
 } from './collections';
-import { get, put } from '../utils/fetch';
+import { get, put, del } from '../utils/fetch';
 import { validateMetadata } from '../utils/validation';
 import { preparePayload, getFrontMatterFromMetdata } from '../utils/helpers';
 import { draftsAPIUrl, draftAPIUrl, documentAPIUrl } from '../constants/api';
@@ -103,20 +103,16 @@ export const putDraft = (directory, filename) => (dispatch, getState) => {
 };
 
 export const deleteDraft = (directory, filename) => dispatch => {
-  return fetch(draftAPIUrl(directory, filename), {
-    method: 'DELETE',
-    credentials: 'same-origin',
-  })
-    .then(data => {
-      dispatch({ type: DELETE_DRAFT_SUCCESS });
-      dispatch(fetchDrafts(directory));
-    })
-    .catch(error =>
-      dispatch({
-        type: DELETE_DRAFT_FAILURE,
-        error,
-      })
-    );
+  return del(
+    draftAPIUrl(directory, filename),
+    {
+      type: DELETE_DRAFT_SUCCESS,
+      name: 'draft',
+      update: fetchDrafts(directory),
+    },
+    { type: DELETE_DRAFT_FAILURE, name: 'error' },
+    dispatch
+  );
 };
 
 export const publishDraft = (directory, filename) => (dispatch, getState) => {
