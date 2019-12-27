@@ -1,11 +1,13 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
+import moment from 'moment';
 import * as draftsDuck from '../drafts';
+import * as collectionsDuck from '../collections';
 import * as utilsDuck from '../utils';
 import { API } from '../../constants/api';
 import nock from 'nock';
 
-import { draft, new_draft } from './fixtures';
+import { draft, new_draft, publishedDraft } from './fixtures';
 
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
@@ -159,6 +161,32 @@ describe('Actions::Drafts', () => {
     });
   });
 
+  it('publishes the draft as a post successfully', () => {
+    const today = moment().format('YYYY-MM-DD');
+    const datedfilename = `${today}-draft-post.md`;
+    const doc = {
+      ...publishedDraft,
+      date: `${today} 00:00:00 +0200`,
+    };
+
+    nock(API)
+      .put(`/collections/posts/${datedfilename}`)
+      .reply(200, doc);
+
+    const expectedActions = [
+      { type: utilsDuck.CLEAR_ERRORS },
+      { type: collectionsDuck.PUT_DOCUMENT_SUCCESS, doc },
+    ];
+
+    const store = mockStore({ metadata: { metadata: publishedDraft } });
+
+    return store
+      .dispatch(draftsDuck.publishDraft(null, datedfilename))
+      .then(() => {
+        expect(store.getActions()).toEqual(expectedActions);
+      });
+  });
+
   it('creates VALIDATION_ERROR if required fields are not provided.', () => {
     const expectedActions = [
       {
@@ -171,7 +199,15 @@ describe('Actions::Drafts', () => {
       metadata: { metadata: { path: '', title: '' } },
     });
 
-    store.dispatch(draftsDuck.putDraft(''));
+    store.dispatch(draftsDuck.createDraft(''));
     expect(store.getActions()).toEqual(expectedActions);
+
+    store.dispatch(draftsDuck.putDraft(null, 'draft-post.md'));
+    expect(store.getActions()).toEqual(expectedActions.concat(expectedActions));
+
+    store.dispatch(draftsDuck.publishDraft(null, 'draft-post.md'));
+    expect(store.getActions()).toEqual(
+      expectedActions.concat(expectedActions).concat(expectedActions)
+    );
   });
 });

@@ -126,6 +126,19 @@ export const draft = {
   }
 };
 
+export const publishedDraft = {
+  raw_content: "# Test Draft\n",
+  name: "draft-post.md",
+  relative_path: "draft-post.md",
+  title: "Draft Post",
+  slug: "draft-post",
+  collection: "posts",
+  draft: true,
+  front_matter: {
+    title: "Draft Post"
+  }
+};
+
 export const new_draft = {
   raw_content: "# Test Draft\n",
   name: "draft-post.md",
