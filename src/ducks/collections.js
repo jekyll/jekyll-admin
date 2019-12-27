@@ -3,7 +3,11 @@ import moment from 'moment';
 import { CLEAR_ERRORS, validationError } from './utils';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify, trimObject } from '../utils/helpers';
+import {
+  slugify,
+  preparePayload,
+  getFrontMatterFromMetdata,
+} from '../utils/helpers';
 import {
   collectionsAPIUrl,
   collectionAPIUrl,
@@ -78,23 +82,17 @@ export const createDocument = (collection, directory) => (
 ) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
-  let { path, raw_content, title } = metadata;
-  // if path is not given or equals to directory, generate filename from the title
-  if ((!path || `${path}/` == directory) && title) {
-    path = generateFilenameFromTitle(metadata, collection); // override empty path
-  } else {
-    // validate otherwise
-    const errors = validateDocument(metadata, collection);
-    if (errors.length) {
-      return dispatch(validationError(errors));
-    }
-  }
+
+  // get path or return if metadata doesn't validate
+  const { path, errors } = validateMetadata(metadata, collection, directory);
+  if (errors.length) return dispatch(validationError(errors));
+
   // clear errors
   dispatch({ type: CLEAR_ERRORS });
-  // omit raw_content, path and empty-value keys in metadata state from front_matter
-  const front_matter = _.omit(metadata, (value, key, object) => {
-    return key == 'raw_content' || key == 'path' || value == '';
-  });
+
+  const front_matter = getFrontMatterFromMetdata(metadata);
+  const raw_content = metadata.raw_content;
+
   // send the put request
   return put(
     // create or update document according to filename existence
@@ -112,27 +110,22 @@ export const putDocument = (collection, directory, filename) => (
 ) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
-  let { path, raw_content, title } = metadata;
-  // if path is not given or equals to directory, generate filename from the title
-  if ((!path || `${path}/` == directory) && title) {
-    path = generateFilenameFromTitle(metadata, collection); // override empty path
-  } else {
-    // validate otherwise
-    const errors = validateDocument(metadata, collection);
-    if (errors.length) {
-      return dispatch(validationError(errors));
-    }
-  }
+
+  // get path or abort if metadata doesn't validate
+  const { path, errors } = validateMetadata(metadata, collection, directory);
+  if (errors.length) return dispatch(validationError(errors));
+
   // clear errors
   dispatch({ type: CLEAR_ERRORS });
-  // omit raw_content, path and empty-value keys in metadata state from front_matter
-  const front_matter = _.omit(metadata, (value, key, object) => {
-    return key == 'raw_content' || key == 'path' || value == '';
-  });
+
+  const raw_content = metadata.raw_content;
+  const front_matter = getFrontMatterFromMetdata(metadata);
+
   // add collection type prefix to relative path
   const relative_path = directory
     ? `_${collection}/${directory}/${path}`
     : `_${collection}/${path}`;
+
   // send the put request
   return put(
     // create or update document according to filename existence
@@ -161,18 +154,28 @@ export const deleteDocument = (collection, directory, filename) => dispatch => {
     );
 };
 
-const generateFilenameFromTitle = (metadata, collection) => {
+const getFilenameFromTitle = (title, collection, date) => {
+  const slugifiedTitle = slugify(title);
   if (collection == 'posts') {
     // if date is provided, use it, otherwise generate it with today's date
-    let date;
-    if (metadata.date) {
-      date = metadata.date.split(' ')[0];
-    } else {
-      date = moment().format('YYYY-MM-DD');
-    }
-    return `${date}-${slugify(metadata.title)}.md`;
+    const docDate = date ? date.split(' ')[0] : moment().format('YYYY-MM-DD');
+    return `${docDate}-${slugifiedTitle}.md`;
   }
-  return `${slugify(metadata.title)}.md`;
+  return `${slugifiedTitle}.md`;
+};
+
+const validateMetadata = (metadata, collection, directory) => {
+  let { path, title, date } = metadata;
+  let errors = [];
+
+  // if path is not given or equals to directory, generate filename from the title
+  if ((!path || `${path}/` == directory) && title) {
+    path = getFilenameFromTitle(title, collection, date); // override empty path
+  } else {
+    // validate otherwise
+    errors = validateDocument(metadata, collection);
+  }
+  return { path, errors };
 };
 
 const validateDocument = (metadata, collection) => {
@@ -192,8 +195,6 @@ const validateDocument = (metadata, collection) => {
   }
   return validator(metadata, validations, messages);
 };
-
-const preparePayload = obj => JSON.stringify(trimObject(obj));
 
 // Reducer
 export default function collections(
@@ -266,17 +267,14 @@ export default function collections(
 
 // Selectors
 export const filterBySearchInput = (list, input) => {
-  if (!list) {
-    return [];
-  }
   if (input) {
-    return _.filter(list, item => {
-      if (item.type) {
+    return list.filter(item => {
+      if (item.name) {
         return item.name.toLowerCase().includes(input.toLowerCase());
       } else {
         return item.title.toLowerCase().includes(input.toLowerCase());
       }
     });
   }
-  return list;
+  return list || [];
 };

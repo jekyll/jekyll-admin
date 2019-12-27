@@ -75,7 +75,7 @@ export class DraftEdit extends Component {
     if (fieldChanged) {
       const [directory, ...rest] = params.splat;
       const filename = rest.join('.');
-      putDraft('edit', directory, filename);
+      putDraft(directory, filename);
     }
   };
 

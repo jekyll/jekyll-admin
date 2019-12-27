@@ -155,3 +155,13 @@ export const getDocumentTitle = (type, splat, prefix = '') => {
   const label = toTitleCase(type.toString());
   return [prefix, splat, label].filter(Boolean).join(' | ');
 };
+
+// omit raw_content, path and empty-value keys in metadata state from front_matter
+export const getFrontMatterFromMetdata = metadata => {
+  return _.omit(metadata, (value, key, object) => {
+    return key == 'raw_content' || key == 'path' || value == '';
+  });
+};
+
+export const preparePayload = obj => JSON.stringify(trimObject(obj));
+export const getFilenameFromTitle = title => `${slugify(title)}.md`;

@@ -1,7 +1,34 @@
 import _ from 'underscore';
+import { getFilenameFromTitle } from '../utils/helpers';
+
+import translations from '../translations';
+const { getTitleRequiredMessage, getFilenameNotValidMessage } = translations;
 
 const DATE_FILENAME_MATCHER = /^(?:.+\/)*(\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]))-(.*)(\.[^.]+)$/;
 const FILENAME_MATCHER = /^(.*)(\.[^.]+)$/;
+
+const validated = (field, single) => {
+  switch (single) {
+    case 'required':
+      return !!field;
+    case 'date':
+      return DATE_FILENAME_MATCHER.test(field);
+    case 'filename':
+      return FILENAME_MATCHER.test(field);
+    default:
+      return false;
+  }
+};
+
+const validatePage = metadata =>
+  validator(
+    metadata,
+    { path: 'required|filename' },
+    {
+      'path.required': getTitleRequiredMessage(),
+      'path.filename': getFilenameNotValidMessage(),
+    }
+  );
 
 /**
  * Returns error messages if the given values does not pass the provided validations.
@@ -23,15 +50,16 @@ export const validator = (values, validations, messages) => {
   return errorMessages;
 };
 
-const validated = (field, single) => {
-  switch (single) {
-    case 'required':
-      return !!field;
-    case 'date':
-      return DATE_FILENAME_MATCHER.test(field);
-    case 'filename':
-      return FILENAME_MATCHER.test(field);
-    default:
-      return false;
+export const validateMetadata = (metadata, directory) => {
+  let { path, title } = metadata;
+  let errors = [];
+
+  // if path is not given or equals to directory, generate filename from the title
+  if ((!path || `${path}/` == directory) && title) {
+    path = getFilenameFromTitle(title); // override empty path
+  } else {
+    // validate otherwise
+    errors = validatePage(metadata);
   }
+  return { path, errors };
 };

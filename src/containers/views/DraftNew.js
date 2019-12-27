@@ -42,7 +42,7 @@ export class DraftNew extends Component {
   handleClickSave = e => {
     preventDefault(e);
     const { fieldChanged, putDraft, params } = this.props;
-    fieldChanged && putDraft('create', params.splat);
+    fieldChanged && putDraft(params.splat);
   };
 
   render() {
