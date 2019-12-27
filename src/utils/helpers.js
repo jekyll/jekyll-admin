@@ -142,6 +142,14 @@ export const trimObject = object => {
   }, Array.isArray(object) ? [] : {});
 };
 
+/**
+ * Given a resource type and splat, returns a formatted title string.
+ * Falsy values are discarded.
+ * @param {String} type - Resource type.
+ * @param {String} splat - Directory splat for current resource.
+ * @param {String} [prefix=''] - Optional string text to be placed in front.
+ * @return {String} Empty string or formatted title.
+ */
 export const getDocumentTitle = (type, splat, prefix = '') => {
   if (!type) return '';
   const label = toTitleCase(type.toString());

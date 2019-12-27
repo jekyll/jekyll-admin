@@ -23,8 +23,8 @@ function setup(overrides = {}) {
   );
 
   return {
-    component: component,
-    actions: actions,
+    component,
+    actions,
     header: component.find('.content-header'),
   };
 }
