@@ -5,15 +5,17 @@ import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify, trimObject } from '../utils/helpers';
 import {
-  getTitleRequiredMessage,
-  getFilenameRequiredMessage,
-  getFilenameNotValidMessage,
-} from '../translations';
-import {
   collectionsAPIUrl,
   collectionAPIUrl,
   documentAPIUrl,
 } from '../constants/api';
+
+import translations from '../translations';
+const {
+  getTitleRequiredMessage,
+  getFilenameRequiredMessage,
+  getFilenameNotValidMessage,
+} = translations;
 
 // Action Types
 export const FETCH_COLLECTIONS_REQUEST = 'FETCH_COLLECTIONS_REQUEST';

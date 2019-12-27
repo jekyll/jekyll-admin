@@ -10,9 +10,11 @@ import Breadcrumbs from '../../components/Breadcrumbs';
 import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../ducks/utils';
 import { existingUploadedFilenames } from '../../utils/helpers';
-import { getOverrideMessage } from '../../translations';
 import { fetchStaticFiles, filterByFilename } from '../../ducks/staticfiles';
 import { ADMIN_PREFIX } from '../../constants';
+
+import translations from '../../translations';
+const { getOverrideMessage } = translations;
 
 export class StaticIndex extends Component {
   componentDidMount() {

@@ -26,12 +26,14 @@ import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
-import {
+import { ADMIN_PREFIX } from '../../constants';
+
+import translations from '../../translations';
+const {
   getLeaveMessage,
   getDeleteMessage,
   getPublishDraftMessage,
-} from '../../translations';
-import { ADMIN_PREFIX } from '../../constants';
+} = translations;
 
 export class DraftEdit extends Component {
   componentDidMount() {

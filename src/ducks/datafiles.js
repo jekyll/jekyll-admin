@@ -9,10 +9,9 @@ import {
   trimObject,
 } from '../utils/helpers';
 import { validator } from '../utils/validation';
-import {
-  getContentRequiredMessage,
-  getFilenameRequiredMessage,
-} from '../translations';
+
+import translations from '../translations';
+const { getContentRequiredMessage, getFilenameRequiredMessage } = translations;
 
 // Action Types
 export const FETCH_DATAFILES_REQUEST = 'FETCH_DATAFILES_REQUEST';

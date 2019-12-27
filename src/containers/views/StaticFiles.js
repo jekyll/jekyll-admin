@@ -15,7 +15,6 @@ import {
   existingUploadedFilenames,
   getDocumentTitle,
 } from '../../utils/helpers';
-import { getOverrideMessage } from '../../translations';
 import {
   fetchStaticFiles,
   uploadStaticFiles,
@@ -23,6 +22,9 @@ import {
   filterByFilename,
 } from '../../ducks/staticfiles';
 import { ADMIN_PREFIX } from '../../constants';
+
+import translations from '../../translations';
+const { getOverrideMessage } = translations;
 
 export class StaticFiles extends Component {
   componentDidMount() {

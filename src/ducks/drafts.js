@@ -9,10 +9,9 @@ import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify, trimObject } from '../utils/helpers';
 import { draftsAPIUrl, draftAPIUrl, documentAPIUrl } from '../constants/api';
-import {
-  getTitleRequiredMessage,
-  getFilenameNotValidMessage,
-} from '../translations';
+
+import translations from '../translations';
+const { getTitleRequiredMessage, getFilenameNotValidMessage } = translations;
 
 export const FETCH_DRAFTS_REQUEST = 'FETCH_DRAFTS_REQUEST';
 export const FETCH_DRAFTS_SUCCESS = 'FETCH_DRAFTS_SUCCESS';

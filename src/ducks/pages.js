@@ -4,10 +4,9 @@ import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify, trimObject } from '../utils/helpers';
 import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
-import {
-  getTitleRequiredMessage,
-  getFilenameNotValidMessage,
-} from '../translations';
+
+import translations from '../translations';
+const { getTitleRequiredMessage, getFilenameNotValidMessage } = translations;
 
 // Action Types
 export const FETCH_PAGES_REQUEST = 'FETCH_PAGES_REQUEST';

@@ -20,8 +20,10 @@ import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
-import { getLeaveMessage, getDeleteMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
+
+import translations from '../../translations';
+const { getLeaveMessage, getDeleteMessage } = translations;
 
 export class PageEdit extends Component {
   componentDidMount() {
