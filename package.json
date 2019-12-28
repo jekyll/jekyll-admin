@@ -5,12 +5,13 @@
   "private": true,
   "scripts": {
     "start-api": "sh script/test-server",
-    "test:size": "bundlesize",
-    "precommit": "lint-staged",
-    "start": "REACT_APP_VERSION=$(node -p 'require(\"./package.json\").version') react-scripts start",
+    "start-client": "REACT_APP_VERSION=$(node -p 'require(\"./package.json\").version') react-scripts start",
+    "start": "npm-run-all --parallel start-api start-client",
     "build": "react-scripts build",
     "postbuild": "mv build lib/jekyll-admin/public",
-    "test": "react-scripts test"
+    "precommit": "lint-staged",
+    "test": "react-scripts test",
+    "test:size": "bundlesize"
   },
   "lint-staged": {
     "*.js": [
