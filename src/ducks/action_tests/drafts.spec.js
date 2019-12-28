@@ -53,6 +53,11 @@ describe('Actions::Drafts', () => {
 
   it('deletes the draft successfully', () => {
     nock(API)
+      .intercept('/drafts/draft-dir/test.md', 'OPTIONS')
+      .reply(200, null, {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application:json',
+      })
       .delete('/drafts/draft-dir/test.md')
       .reply(200);
 
@@ -71,7 +76,12 @@ describe('Actions::Drafts', () => {
 
   it('creates DELETE_DRAFT_FAILURE when deleting a draft failed', () => {
     nock(API)
-      .delete('drafts/draft.md')
+      .intercept('/drafts/draft.md', 'OPTIONS')
+      .reply(200, null, {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application:json',
+      })
+      .delete('/drafts/draft.md')
       .replyWithError('something awful happened');
 
     const expectedAction = {
