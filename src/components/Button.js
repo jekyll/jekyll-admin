@@ -35,8 +35,7 @@ export default function Button({
     'btn-thin': thin,
   });
 
-  let label = '';
-  let triggeredLabel = '';
+  let label, triggeredLabel;
   switch (type) {
     case 'save':
     case 'create':
@@ -53,6 +52,9 @@ export default function Button({
     case 'publish':
       label = labels[type].label;
       break;
+    default:
+      label = '<LABEL>';
+      triggeredLabel = '<NEXT LABEL>';
   }
 
   const iconName = icon || iconMap[type];
