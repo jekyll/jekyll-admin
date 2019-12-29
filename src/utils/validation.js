@@ -50,15 +50,24 @@ export const validator = (values, validations, messages) => {
   return errorMessages;
 };
 
+/**
+ * if `path` is a falsy value or if appending a slash to it equals to
+ * `directory`, generate filename from `title` available in the `metadata`.
+ *
+ * Set up `errors` otherwise.
+ * Returns an object with two keys -- `path` and `errors`.
+ *
+ * @param {Object} metadata
+ * @param {String} directory
+ * @return {Object} with keys 'path' and 'errors'
+ */
 export const validateMetadata = (metadata, directory) => {
   let { path, title } = metadata;
   let errors = [];
 
-  // if path is not given or equals to directory, generate filename from the title
   if ((!path || `${path}/` === directory) && title) {
-    path = getFilenameFromTitle(title); // override empty path
+    path = getFilenameFromTitle(title);
   } else {
-    // validate otherwise
     errors = validatePage(metadata);
   }
   return { path, errors };
