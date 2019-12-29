@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
 import Explorer from '../Explorer';
@@ -31,7 +30,6 @@ function setup(overrides = {}) {
 
 describe('Components::Explorer', () => {
   it('renders correctly', () => {
-    const { component, table } = setup();
     const tree = renderer
       .create(<Explorer {...defaultProps} {...actions} />)
       .toJSON();

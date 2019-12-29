@@ -11,13 +11,9 @@ import Editor from '../../components/Editor';
 import Button from '../../components/Button';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
-import { putDataFile, onDataFileChanged } from '../../ducks/datafiles';
 import { clearErrors } from '../../ducks/utils';
-import {
-  preventDefault,
-  getFilenameFromPath,
-  getDocumentTitle,
-} from '../../utils/helpers';
+import { putDataFile, onDataFileChanged } from '../../ducks/datafiles';
+import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 import translations from '../../translations';

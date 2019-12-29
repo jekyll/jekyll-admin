@@ -61,13 +61,13 @@ describe('Containers::DataFileEdit', () => {
   });
 
   it('should not call clearErrors on unmount if there are no errors.', () => {
-    const { component, errors, actions } = setup();
+    const { component, actions } = setup();
     component.unmount();
     expect(actions.clearErrors).not.toHaveBeenCalled();
   });
 
   it('should clear errors on unmount.', () => {
-    const { component, errors, actions } = setup({
+    const { component, actions } = setup({
       ...defaultProps,
       errors: ['The content is required!'],
     });
@@ -89,7 +89,7 @@ describe('Containers::DataFileEdit', () => {
   });
 
   it('should recieve updated props', () => {
-    const { component, actions } = setup();
+    const { component } = setup();
     component.setProps({
       params: { splat: ['books', 'authors', 'yml'] },
       updated: true,

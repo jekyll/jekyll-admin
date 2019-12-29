@@ -26,7 +26,7 @@
     "import/no-named-as-default": 0,
     "quotes": 0,
     "no-console": 1,
-    "no-unused-vars": 0,
+    "no-unused-vars": [1, { "args": "none" }],
     "no-debugger": 1,
     "no-var": 1,
     "object-shorthand": [1, "properties"],

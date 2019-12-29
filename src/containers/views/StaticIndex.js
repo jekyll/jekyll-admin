@@ -1,20 +1,16 @@
-import React, { Component, PropTypes } from 'react';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
 import Icon from '../../components/Icon';
 import FilePreview from '../../components/FilePreview';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputSearch from '../../components/form/InputSearch';
 import { search } from '../../ducks/utils';
-import { existingUploadedFilenames } from '../../utils/helpers';
 import { fetchStaticFiles, filterByFilename } from '../../ducks/staticfiles';
 import { ADMIN_PREFIX } from '../../constants';
-
-import translations from '../../translations';
-const { getOverrideMessage } = translations;
 
 export class StaticIndex extends Component {
   componentDidMount() {
