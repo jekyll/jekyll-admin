@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import { CLEAR_ERRORS, validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { validateMetadata } from '../utils/validation';

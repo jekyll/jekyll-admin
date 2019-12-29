@@ -33,7 +33,7 @@ export const putConfig = (config, source = 'editor') => (
 ) => {
   let payload;
 
-  if (source == 'gui') {
+  if (source === 'gui') {
     config = getState().metadata.metadata;
     payload = { raw_content: toYAML(config) };
   } else {

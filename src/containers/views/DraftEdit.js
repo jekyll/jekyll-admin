@@ -50,7 +50,7 @@ export class DraftEdit extends Component {
       const new_path = nextProps.draft.path;
       const path = this.props.draft.path;
       // redirect if the path is changed
-      if (new_path != path) {
+      if (new_path !== path) {
         browserHistory.push(
           `${ADMIN_PREFIX}/drafts/${nextProps.draft.relative_path}`
         );
@@ -103,9 +103,9 @@ export class DraftEdit extends Component {
     const { deleteDraft, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(name));
     if (confirm) {
-      const goTo = directory ? `/${directory}` : '';
       const [directory, ...rest] = params.splat;
       const filename = rest.join('.');
+      const goTo = directory ? `/${directory}` : '';
       deleteDraft(directory, filename);
       browserHistory.push(`${ADMIN_PREFIX}/drafts${goTo}`);
     }
@@ -143,11 +143,9 @@ export class DraftEdit extends Component {
       http_url,
       front_matter,
     } = draft;
-    const [directory, ...rest] = params.splat;
-
+    const directory = params.splat[0];
     const title = front_matter && front_matter.title ? front_matter.title : '';
     const defaultMetadata = injectDefaultFields(config, directory, collection);
-
     const document_title = getDocumentTitle('drafts', directory, title || name);
 
     return (

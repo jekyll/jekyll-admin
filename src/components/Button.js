@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Icon from './Icon';
@@ -27,16 +27,15 @@ export default function Button({
 }) {
   const btnClass = classnames('btn', {
     'btn-active': active,
-    'btn-success': active && (type == 'save' || type == 'create'),
-    'btn-delete': type == 'delete',
-    'btn-view': type == 'view' || type == 'publish',
+    'btn-success': active && (type === 'save' || type === 'create'),
+    'btn-delete': type === 'delete',
+    'btn-view': type === 'view' || type === 'publish',
     'btn-inactive': !active,
     'btn-fat': block,
     'btn-thin': thin,
   });
 
-  let label = '';
-  let triggeredLabel = '';
+  let label, triggeredLabel;
   switch (type) {
     case 'save':
     case 'create':
@@ -53,6 +52,9 @@ export default function Button({
     case 'publish':
       label = labels[type].label;
       break;
+    default:
+      label = '<LABEL>';
+      triggeredLabel = '<NEXT LABEL>';
   }
 
   const iconName = icon || iconMap[type];

@@ -1,13 +1,7 @@
-import _ from 'underscore';
 import { CLEAR_ERRORS, validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { datafilesAPIUrl, datafileAPIUrl } from '../constants/api';
-import {
-  toYAML,
-  toJSON,
-  getExtensionFromPath,
-  trimObject,
-} from '../utils/helpers';
+import { toYAML, getExtensionFromPath, trimObject } from '../utils/helpers';
 import { validator } from '../utils/validation';
 
 import translations from '../translations';
@@ -67,7 +61,7 @@ export const putDataFile = (
 ) => (dispatch, getState) => {
   const ext = getExtensionFromPath(new_path || filename);
 
-  if (source == 'gui') {
+  if (source === 'gui') {
     const json = /json/i.test(ext);
     let metadata = getState().metadata.metadata;
     metadata = trimObject(metadata);

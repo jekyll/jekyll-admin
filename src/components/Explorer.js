@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { browserHistory, Link } from 'react-router';
-import DocumentTitle from 'react-document-title';
 import Breadcrumbs from './Breadcrumbs';
 import Button from './Button';
 import Icon from './Icon';
@@ -68,7 +67,7 @@ export default class Explorer extends Component {
   renderRows() {
     const { items, type } = this.props;
     return items.map((entry, index) =>
-      entry.type == 'directory'
+      entry.type === 'directory'
         ? this.renderDirectoryRow(entry, type, index)
         : this.renderFileRow(entry, type, index)
     );

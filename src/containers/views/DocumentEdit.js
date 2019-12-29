@@ -44,7 +44,7 @@ export class DocumentEdit extends Component {
       const new_path = nextProps.currentDocument.path;
       const path = currentDocument.path;
       // redirect if the path is changed
-      if (new_path != path) {
+      if (new_path !== path) {
         browserHistory.push(
           `${ADMIN_PREFIX}/collections/${new_path.substring(1)}` // remove `_`
         );
@@ -118,7 +118,7 @@ export class DocumentEdit extends Component {
       front_matter,
       name,
     } = currentDocument;
-    const [directory, ...rest] = params.splat;
+    const directory = params.splat[0];
     const defaultMetadata = injectDefaultFields(config, directory, collection);
 
     const keyboardHandlers = {

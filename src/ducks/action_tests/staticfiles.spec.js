@@ -1,7 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as staticfilesDuck from '../staticfiles';
-import * as utilsDuck from '../utils';
 import { API } from '../../constants/api';
 import nock from 'nock';
 

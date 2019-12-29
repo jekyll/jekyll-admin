@@ -1,17 +1,9 @@
-import _ from 'underscore';
 import { CLEAR_ERRORS, validationError } from './utils';
-import {
-  PUT_DOCUMENT_REQUEST,
-  PUT_DOCUMENT_SUCCESS,
-  PUT_DOCUMENT_FAILURE,
-} from './collections';
+import { PUT_DOCUMENT_SUCCESS, PUT_DOCUMENT_FAILURE } from './collections';
 import { get, put, del } from '../utils/fetch';
 import { validateMetadata } from '../utils/validation';
 import { preparePayload, getFrontMatterFromMetdata } from '../utils/helpers';
 import { draftsAPIUrl, draftAPIUrl, documentAPIUrl } from '../constants/api';
-
-import translations from '../translations';
-const { getTitleRequiredMessage, getFilenameNotValidMessage } = translations;
 
 // Action Types
 export const FETCH_DRAFTS_REQUEST = 'FETCH_DRAFTS_REQUEST';

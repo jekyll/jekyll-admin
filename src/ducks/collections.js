@@ -1,4 +1,3 @@
-import _ from 'underscore';
 import moment from 'moment';
 import { CLEAR_ERRORS, validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
@@ -152,7 +151,7 @@ export const deleteDocument = (collection, directory, filename) => dispatch => {
 
 const getFilenameFromTitle = (title, collection, date) => {
   const slugifiedTitle = slugify(title);
-  if (collection == 'posts') {
+  if (collection === 'posts') {
     // if date is provided, use it, otherwise generate it with today's date
     const docDate = date ? date.split(' ')[0] : moment().format('YYYY-MM-DD');
     return `${docDate}-${slugifiedTitle}.md`;
@@ -165,7 +164,7 @@ const validateMetadata = (metadata, collection, directory) => {
   let errors = [];
 
   // if path is not given or equals to directory, generate filename from the title
-  if ((!path || `${path}/` == directory) && title) {
+  if ((!path || `${path}/` === directory) && title) {
     path = getFilenameFromTitle(title, collection, date); // override empty path
   } else {
     // validate otherwise
@@ -182,7 +181,7 @@ const validateDocument = (metadata, collection) => {
     'path.required': getFilenameRequiredMessage(),
   };
 
-  if (collection == 'posts') {
+  if (collection === 'posts') {
     validations['path'] = 'required|date';
     messages['path.date'] = getFilenameNotValidMessage();
   } else {

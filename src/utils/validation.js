@@ -55,7 +55,7 @@ export const validateMetadata = (metadata, directory) => {
   let errors = [];
 
   // if path is not given or equals to directory, generate filename from the title
-  if ((!path || `${path}/` == directory) && title) {
+  if ((!path || `${path}/` === directory) && title) {
     path = getFilenameFromTitle(title); // override empty path
   } else {
     // validate otherwise

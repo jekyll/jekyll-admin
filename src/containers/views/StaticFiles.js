@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
 import Dropzone from '../../components/Dropzone';
 import Button from '../../components/Button';
@@ -94,7 +93,7 @@ export class StaticFiles extends Component {
 
   renderRows() {
     const { files } = this.props;
-    const dirs = files.filter(entity => entity.type == 'directory');
+    const dirs = files.filter(entity => entity.type === 'directory');
     const static_files = files.filter(entity => !entity.type);
 
     return dirs
