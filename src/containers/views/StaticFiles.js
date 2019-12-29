@@ -93,7 +93,7 @@ export class StaticFiles extends Component {
 
   renderRows() {
     const { files } = this.props;
-    const dirs = files.filter(entity => entity.type == 'directory');
+    const dirs = files.filter(entity => entity.type === 'directory');
     const static_files = files.filter(entity => !entity.type);
 
     return dirs

@@ -68,7 +68,7 @@ export class Documents extends Component {
     // date w/o timezone
     let date = doc.date.substring(0, doc.date.lastIndexOf(' '));
     date =
-      moment(date).format('hh:mm:ss') == '12:00:00'
+      moment(date).format('hh:mm:ss') === '12:00:00'
         ? moment(date).format('ll')
         : moment(date).format('lll');
 
@@ -124,7 +124,7 @@ export class Documents extends Component {
   renderRows() {
     const { documents } = this.props;
     return _.map(documents, entry => {
-      if (entry.type && entry.type == 'directory') {
+      if (entry.type && entry.type === 'directory') {
         return this.renderDirectoryRow(entry);
       } else {
         return this.renderFileRow(entry);
@@ -154,7 +154,7 @@ export class Documents extends Component {
             <Breadcrumbs type={collection_name} splat={splat} />
             <div className="page-buttons">
               <Link className="btn btn-active" to={to}>
-                {collection_name == 'posts' ? 'New post' : 'New document'}
+                {collection_name === 'posts' ? 'New post' : 'New document'}
               </Link>
             </div>
             <div className="pull-right">

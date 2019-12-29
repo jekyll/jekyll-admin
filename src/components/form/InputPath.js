@@ -21,15 +21,15 @@ export default class InputFilename extends Component {
     const { path, type } = this.props;
 
     let placeholder = 'example.md';
-    if (type == 'posts') {
+    if (type === 'posts') {
       const date = moment().format('YYYY-MM-DD');
       placeholder = `${date}-your-title.md`;
-    } else if (type == 'data files') {
+    } else if (type === 'data files') {
       placeholder = 'your-filename.yml';
     }
 
     let tooltip = null;
-    if (type != 'data files') {
+    if (type !== 'data files') {
       tooltip = (
         <span className="tooltip">
           <Icon name="info-circle" />

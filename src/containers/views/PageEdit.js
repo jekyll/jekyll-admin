@@ -40,7 +40,7 @@ export class PageEdit extends Component {
       const new_path = nextProps.page.path;
       const path = this.props.page.path;
       // redirect if the path is changed
-      if (new_path != path) {
+      if (new_path !== path) {
         browserHistory.push(`${ADMIN_PREFIX}/pages/${new_path}`);
       }
     }

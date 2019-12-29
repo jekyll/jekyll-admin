@@ -50,7 +50,7 @@ export class DataFileEdit extends Component {
       const path = this.props.datafile.path;
 
       // redirect if the path is changed
-      if (new_path != path) {
+      if (new_path !== path) {
         browserHistory.push(
           `${ADMIN_PREFIX}/datafiles/${nextProps.datafile.relative_path}`
         );
@@ -108,7 +108,7 @@ export class DataFileEdit extends Component {
         ? data_dir + `${directory}/` + name
         : data_dir + name;
 
-      const new_path = data_path != path ? data_path : '';
+      const new_path = data_path !== path ? data_path : '';
       putDataFile(directory, filename, data, new_path, mode);
     }
   };

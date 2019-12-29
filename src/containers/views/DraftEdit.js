@@ -50,7 +50,7 @@ export class DraftEdit extends Component {
       const new_path = nextProps.draft.path;
       const path = this.props.draft.path;
       // redirect if the path is changed
-      if (new_path != path) {
+      if (new_path !== path) {
         browserHistory.push(
           `${ADMIN_PREFIX}/drafts/${nextProps.draft.relative_path}`
         );

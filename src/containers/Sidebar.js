@@ -28,7 +28,7 @@ export class Sidebar extends Component {
     }
 
     const collectionItems = _.map(collections, (col, i) => {
-      if (col.label != 'posts' && !hiddens.includes(col.label)) {
+      if (col.label !== 'posts' && !hiddens.includes(col.label)) {
         return (
           <li key={i}>
             <Link

@@ -67,7 +67,7 @@ export default class Explorer extends Component {
   renderRows() {
     const { items, type } = this.props;
     return items.map((entry, index) =>
-      entry.type == 'directory'
+      entry.type === 'directory'
         ? this.renderDirectoryRow(entry, type, index)
         : this.renderFileRow(entry, type, index)
     );
