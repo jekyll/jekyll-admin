@@ -25,6 +25,7 @@
   "rules": {
     "import/no-named-as-default": 0,
     "quotes": 0,
+    "eqeqeq": 1,
     "no-console": 1,
     "no-unused-vars": [1, { "args": "none" }],
     "no-debugger": 1,

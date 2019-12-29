@@ -21,7 +21,7 @@ export default class FilePreview extends Component {
           <Icon name="diamond" />
         </span>
       );
-    } else if (splat != 'index') {
+    } else if (splat !== 'index') {
       return (
         <button
           onClick={() => this.handleClickDelete(file.relative_path)}

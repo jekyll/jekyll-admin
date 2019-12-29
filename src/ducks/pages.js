@@ -60,7 +60,7 @@ export const createPage = directory => (dispatch, getState) => {
   dispatch({ type: CLEAR_ERRORS });
   // omit raw_content, path and empty-value keys in metadata state from front_matter
   const front_matter = _.omit(metadata, (value, key, object) => {
-    return key == 'raw_content' || key == 'path' || value === '';
+    return key === 'raw_content' || key === 'path' || value === '';
   });
   //send the put request
   return put(
@@ -89,7 +89,7 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
   dispatch({ type: CLEAR_ERRORS });
   // omit raw_content, path and empty-value keys in metadata state from front_matter
   const front_matter = _.omit(metadata, (value, key, object) => {
-    return key == 'raw_content' || key == 'path' || value === '';
+    return key === 'raw_content' || key === 'path' || value === '';
   });
   const relative_path = directory ? `${directory}/${path}` : `${path}`;
   //send the put request

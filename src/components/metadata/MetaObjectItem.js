@@ -15,7 +15,7 @@ export class MetaObjectItem extends Component {
   handleKeyBlur() {
     const { namePrefix, fieldKey, updateFieldKey } = this.props;
     let currentValue = findDOMNode(this.refs.field_key).value;
-    if (fieldKey != currentValue && currentValue != '') {
+    if (fieldKey !== currentValue && currentValue !== '') {
       updateFieldKey(namePrefix, fieldKey, currentValue);
     }
   }

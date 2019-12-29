@@ -61,7 +61,7 @@ export const putDataFile = (
 ) => (dispatch, getState) => {
   const ext = getExtensionFromPath(new_path || filename);
 
-  if (source == 'gui') {
+  if (source === 'gui') {
     const json = /json/i.test(ext);
     let metadata = getState().metadata.metadata;
     metadata = trimObject(metadata);

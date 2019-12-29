@@ -129,7 +129,7 @@ export const preventDefault = event => {
 export const trimObject = object => {
   if (!_.isObject(object)) return object;
   return _.keys(object).reduce((acc, key) => {
-    if (typeof object[key] == 'string') {
+    if (typeof object[key] === 'string') {
       try {
         acc[key.trim()] = JSON.parse(object[key].trim());
       } catch (e) {

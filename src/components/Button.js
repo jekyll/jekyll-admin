@@ -27,9 +27,9 @@ export default function Button({
 }) {
   const btnClass = classnames('btn', {
     'btn-active': active,
-    'btn-success': active && (type == 'save' || type == 'create'),
-    'btn-delete': type == 'delete',
-    'btn-view': type == 'view' || type == 'publish',
+    'btn-success': active && (type === 'save' || type === 'create'),
+    'btn-delete': type === 'delete',
+    'btn-view': type === 'view' || type === 'publish',
     'btn-inactive': !active,
     'btn-fat': block,
     'btn-thin': thin,
