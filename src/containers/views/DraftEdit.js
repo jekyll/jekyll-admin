@@ -103,9 +103,9 @@ export class DraftEdit extends Component {
     const { deleteDraft, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(name));
     if (confirm) {
-      const goTo = directory ? `/${directory}` : '';
       const [directory, ...rest] = params.splat;
       const filename = rest.join('.');
+      const goTo = directory ? `/${directory}` : '';
       deleteDraft(directory, filename);
       browserHistory.push(`${ADMIN_PREFIX}/drafts${goTo}`);
     }
