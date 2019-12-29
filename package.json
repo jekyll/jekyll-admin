@@ -5,7 +5,7 @@
   "private": true,
   "scripts": {
     "start-api": "sh script/test-server",
-    "start-client": "REACT_APP_VERSION=$(node -p 'require(\"./package.json\").version') react-scripts start",
+    "start-client": "react-scripts start",
     "start": "npm-run-all --parallel start-api start-client",
     "build": "react-scripts build",
     "analyze": "node script/analyze.js",
