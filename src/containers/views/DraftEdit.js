@@ -143,11 +143,9 @@ export class DraftEdit extends Component {
       http_url,
       front_matter,
     } = draft;
-    const [directory, ...rest] = params.splat;
-
+    const directory = params.splat[0];
     const title = front_matter && front_matter.title ? front_matter.title : '';
     const defaultMetadata = injectDefaultFields(config, directory, collection);
-
     const document_title = getDocumentTitle('drafts', directory, title || name);
 
     return (

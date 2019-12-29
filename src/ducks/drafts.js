@@ -1,10 +1,6 @@
 import _ from 'underscore';
 import { CLEAR_ERRORS, validationError } from './utils';
-import {
-  PUT_DOCUMENT_REQUEST,
-  PUT_DOCUMENT_SUCCESS,
-  PUT_DOCUMENT_FAILURE,
-} from './collections';
+import { PUT_DOCUMENT_SUCCESS, PUT_DOCUMENT_FAILURE } from './collections';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify, trimObject } from '../utils/helpers';

@@ -118,7 +118,7 @@ export class DocumentEdit extends Component {
       front_matter,
       name,
     } = currentDocument;
-    const [directory, ...rest] = params.splat;
+    const directory = params.splat[0];
     const defaultMetadata = injectDefaultFields(config, directory, collection);
 
     const keyboardHandlers = {

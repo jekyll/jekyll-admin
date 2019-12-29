@@ -105,7 +105,7 @@ export class PageEdit extends Component {
     };
 
     const { name, raw_content, http_url, front_matter } = page;
-    const [directory, ...rest] = params.splat;
+    const directory = params.splat[0];
 
     const title = front_matter && front_matter.title ? front_matter.title : '';
     const defaultMetadata = injectDefaultFields(config, directory, 'pages');

@@ -118,7 +118,7 @@ export class DataFileEdit extends Component {
     const confirm = window.confirm(getDeleteMessage(path));
 
     if (confirm) {
-      const [directory, ...rest] = params.splat;
+      const directory = params.splat[0];
       const filename = getFilenameFromPath(path);
       deleteDataFile(directory, filename);
       const dir = directory ? `/${directory}` : '';
@@ -164,7 +164,7 @@ export class DataFileEdit extends Component {
 
   renderContentBody(filename) {
     const { datafile, datafileChanged, onDataFileChanged } = this.props;
-    const { raw_content, content, path, slug, ext } = datafile;
+    const { raw_content, content, slug, ext } = datafile;
     const { guiView } = this.state;
 
     if (guiView && content) {
@@ -211,7 +211,7 @@ export class DataFileEdit extends Component {
       return <h1>{getNotFoundMessage('content')}</h1>;
     }
 
-    const [directory, ...rest] = params.splat;
+    const directory = params.splat[0];
     const filename = getFilenameFromPath(datafile.path);
 
     const keyboardHandlers = {

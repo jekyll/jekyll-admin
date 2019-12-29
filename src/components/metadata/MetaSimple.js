@@ -2,11 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
-import Modal from 'react-modal';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets/lib/localizers/moment';
-import StaticIndex from '../../containers/views/StaticIndex';
-import Icon from '../Icon';
 import FilePicker from '../FilePicker';
 import 'react-widgets/dist/css/react-widgets.css';
 
