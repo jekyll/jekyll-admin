@@ -59,7 +59,7 @@ export const updateMetadataFieldKey = (state, namePrefix, fieldKey, newKey) => {
   if (field === undefined) return tmpState.metadata;
   if (_.has(field, newKey)) return tmpState.metadata;
   field = Object.keys(field).reduce((result, current) => {
-    if (current == fieldKey) result[newKey] = field[current];
+    if (current === fieldKey) result[newKey] = field[current];
     else result[current] = field[current];
     return result;
   }, {});
@@ -94,8 +94,8 @@ export const convertMetadataField = (state, nameAttr, convertType) => {
   let tmpState = cloneDeep(state);
   let field = eval(`tmpState.${nameAttr}`);
   if (field === undefined) return tmpState.metadata;
-  if (convertType == 'array') field = [''];
-  else if (convertType == 'object') {
+  if (convertType === 'array') field = [''];
+  else if (convertType === 'object') {
     let key = `New field ${state.new_field_count}`;
     field = { [key]: '' };
   } else field = '';
@@ -141,8 +141,8 @@ export const injectDefaultFields = (config, path, type, front_matter = {}) => {
   _.each(defaults, field => {
     const scope = field.scope;
     if (
-      (!scope.type || scope.type == type) &&
-      (!scope.path || scope.path == path)
+      (!scope.type || scope.type === type) &&
+      (!scope.path || scope.path === path)
     ) {
       _.extend(metafields, field.values);
     }

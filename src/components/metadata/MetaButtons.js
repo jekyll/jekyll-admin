@@ -61,7 +61,7 @@ export default class MetaButtons extends Component {
 
     return (
       <div className="meta-buttons">
-        {parentType == 'array' && sortableHandle}
+        {parentType === 'array' && sortableHandle}
         <span className={dropdownClasses}>
           <a
             className="meta-button"

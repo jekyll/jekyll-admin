@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import renderer from 'react-test-renderer';
 import { mount } from 'enzyme';
-import { Sidebar } from '../Sidebar';
 
+import { Sidebar } from '../Sidebar';
 import { collections, config } from './fixtures';
 
 const defaultProps = {

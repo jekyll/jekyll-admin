@@ -20,8 +20,8 @@ function setup(pages = [directory, page]) {
   const component = mount(<Pages {...props} {...actions} />);
 
   return {
-    component: component,
-    actions: actions,
+    actions,
+    component,
     h1: component.find('h1').last(),
     breadcrumbs: component.find('.breadcrumbs'),
     table: component.find('.content-table'),

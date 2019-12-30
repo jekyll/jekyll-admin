@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { getDeleteMessage } from '../translations';
 import { getFilenameFromPath } from '../utils/helpers';
 import Icon from './Icon';
+
+import translations from '../translations';
+const { getDeleteMessage } = translations;
 
 export default class FilePreview extends Component {
   handleClickDelete(path) {
@@ -19,7 +21,7 @@ export default class FilePreview extends Component {
           <Icon name="diamond" />
         </span>
       );
-    } else if (splat != 'index') {
+    } else if (splat !== 'index') {
       return (
         <button
           onClick={() => this.handleClickDelete(file.relative_path)}

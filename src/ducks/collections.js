@@ -5,15 +5,17 @@ import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify, trimObject } from '../utils/helpers';
 import {
-  getTitleRequiredMessage,
-  getFilenameRequiredMessage,
-  getFilenameNotValidMessage,
-} from '../translations';
-import {
   collectionsAPIUrl,
   collectionAPIUrl,
   documentAPIUrl,
 } from '../constants/api';
+
+import translations from '../translations';
+const {
+  getTitleRequiredMessage,
+  getFilenameRequiredMessage,
+  getFilenameNotValidMessage,
+} = translations;
 
 // Action Types
 export const FETCH_COLLECTIONS_REQUEST = 'FETCH_COLLECTIONS_REQUEST';
@@ -78,7 +80,7 @@ export const createDocument = (collection, directory) => (
   const metadata = getState().metadata.metadata;
   let { path, raw_content, title } = metadata;
   // if path is not given or equals to directory, generate filename from the title
-  if ((!path || `${path}/` == directory) && title) {
+  if ((!path || `${path}/` === directory) && title) {
     path = generateFilenameFromTitle(metadata, collection); // override empty path
   } else {
     // validate otherwise
@@ -91,7 +93,7 @@ export const createDocument = (collection, directory) => (
   dispatch({ type: CLEAR_ERRORS });
   // omit raw_content, path and empty-value keys in metadata state from front_matter
   const front_matter = _.omit(metadata, (value, key, object) => {
-    return key == 'raw_content' || key == 'path' || value == '';
+    return key === 'raw_content' || key === 'path' || value === '';
   });
   // send the put request
   return put(
@@ -112,7 +114,7 @@ export const putDocument = (collection, directory, filename) => (
   const metadata = getState().metadata.metadata;
   let { path, raw_content, title } = metadata;
   // if path is not given or equals to directory, generate filename from the title
-  if ((!path || `${path}/` == directory) && title) {
+  if ((!path || `${path}/` === directory) && title) {
     path = generateFilenameFromTitle(metadata, collection); // override empty path
   } else {
     // validate otherwise
@@ -125,7 +127,7 @@ export const putDocument = (collection, directory, filename) => (
   dispatch({ type: CLEAR_ERRORS });
   // omit raw_content, path and empty-value keys in metadata state from front_matter
   const front_matter = _.omit(metadata, (value, key, object) => {
-    return key == 'raw_content' || key == 'path' || value == '';
+    return key === 'raw_content' || key === 'path' || value === '';
   });
   // add collection type prefix to relative path
   const relative_path = directory
@@ -160,7 +162,7 @@ export const deleteDocument = (collection, directory, filename) => dispatch => {
 };
 
 const generateFilenameFromTitle = (metadata, collection) => {
-  if (collection == 'posts') {
+  if (collection === 'posts') {
     // if date is provided, use it, otherwise generate it with today's date
     let date;
     if (metadata.date) {
@@ -181,7 +183,7 @@ const validateDocument = (metadata, collection) => {
     'path.required': getFilenameRequiredMessage(),
   };
 
-  if (collection == 'posts') {
+  if (collection === 'posts') {
     validations['path'] = 'required|date';
     messages['path.date'] = getFilenameNotValidMessage();
   } else {

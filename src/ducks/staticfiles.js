@@ -2,12 +2,14 @@ import _ from 'underscore';
 import { get } from '../utils/fetch';
 import { addNotification } from './notifications';
 import { staticfilesAPIUrl, staticfileAPIUrl } from '../constants/api';
-import {
+
+import translations from '../translations';
+const {
   getSuccessMessage,
   getErrorMessage,
   getUploadSuccessMessage,
   getUploadErrorMessage,
-} from '../translations';
+} = translations;
 
 // Action Types
 export const FETCH_STATICFILES_REQUEST = 'FETCH_STATICFILES_REQUEST';
