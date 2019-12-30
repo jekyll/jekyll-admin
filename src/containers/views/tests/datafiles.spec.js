@@ -20,8 +20,8 @@ function setup(datafiles = [directory, datafile]) {
   const component = mount(<DataFiles {...props} {...actions} />);
 
   return {
+    actions,
     component,
-    actions: actions,
     h1: component.find('h1').last(),
     breadcrumbs: component.find('.breadcrumbs'),
     table: component.find('.content-table'),

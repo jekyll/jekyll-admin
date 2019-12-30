@@ -8,9 +8,11 @@ import CreateMarkdownPage from '../../components/CreateMarkdownPage';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { createDocument } from '../../ducks/collections';
 import { clearErrors } from '../../ducks/utils';
-import { getLeaveMessage } from '../../translations';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
+
+import translations from '../../translations';
+const { getLeaveMessage } = translations;
 
 export class DocumentNew extends Component {
   componentDidMount() {

@@ -17,9 +17,9 @@ function setup(defaultProps = props) {
   let component = mount(<InputPath {...defaultProps} {...actions} />);
 
   return {
-    component: component,
-    input: component.find('textarea'),
     actions,
+    component,
+    input: component.find('textarea'),
   };
 }
 
