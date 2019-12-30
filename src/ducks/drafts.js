@@ -57,7 +57,7 @@ export const createDraft = directory => (dispatch, getState) => {
   // strip '_drafts/' from path when provided
   const filename = path.replace('_drafts/', '');
 
-  //send the put request
+  // send the put request
   return put(
     draftAPIUrl(directory, filename),
     preparePayload({ front_matter, raw_content }),
@@ -84,7 +84,7 @@ export const putDraft = (directory, filename) => (dispatch, getState) => {
     ? `_drafts/${directory}/${path}`
     : `_drafts/${path}`;
 
-  //send the put request
+  // send the put request
   return put(
     draftAPIUrl(directory, filename),
     preparePayload({ path: relative_path, front_matter, raw_content }),

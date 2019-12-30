@@ -94,7 +94,6 @@ export const createDocument = (collection, directory) => (
 
   // send the put request
   return put(
-    // create or update document according to filename existence
     documentAPIUrl(collection, directory, path),
     preparePayload({ raw_content, front_matter }),
     { type: PUT_DOCUMENT_SUCCESS, name: 'doc' },
@@ -127,7 +126,6 @@ export const putDocument = (collection, directory, filename) => (
 
   // send the put request
   return put(
-    // create or update document according to filename existence
     documentAPIUrl(collection, directory, filename),
     preparePayload({ path: relative_path, raw_content, front_matter }),
     { type: PUT_DOCUMENT_SUCCESS, name: 'doc' },

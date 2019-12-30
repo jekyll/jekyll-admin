@@ -53,7 +53,7 @@ export const createPage = directory => (dispatch, getState) => {
   const raw_content = metadata.raw_content;
   const front_matter = getFrontMatterFromMetdata(metadata);
 
-  //send the put request
+  // send the put request
   return put(
     pageAPIUrl(directory, path),
     preparePayload({ front_matter, raw_content }),
@@ -78,7 +78,7 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
   const front_matter = getFrontMatterFromMetdata(metadata);
   const relative_path = directory ? `${directory}/${path}` : `${path}`;
 
-  //send the put request
+  // send the put request
   return put(
     pageAPIUrl(directory, filename),
     preparePayload({ path: relative_path, front_matter, raw_content }),
