@@ -1,4 +1,4 @@
-import { CLEAR_ERRORS, validationError } from './utils';
+import { clearErrors, validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { validateMetadata } from '../utils/validation';
 import { preparePayload, getFrontMatterFromMetdata } from '../utils/helpers';
@@ -48,7 +48,7 @@ export const createPage = directory => (dispatch, getState) => {
   if (errors.length) return dispatch(validationError(errors));
 
   // clear errors
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
   const front_matter = getFrontMatterFromMetdata(metadata);
@@ -72,7 +72,7 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
   if (errors.length) return dispatch(validationError(errors));
 
   // clear errors
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
   const front_matter = getFrontMatterFromMetdata(metadata);

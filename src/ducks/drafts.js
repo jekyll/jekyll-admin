@@ -1,4 +1,4 @@
-import { CLEAR_ERRORS, validationError } from './utils';
+import { clearErrors, validationError } from './utils';
 import { PUT_DOCUMENT_SUCCESS, PUT_DOCUMENT_FAILURE } from './collections';
 import { get, put, del } from '../utils/fetch';
 import { validateMetadata } from '../utils/validation';
@@ -49,7 +49,7 @@ export const createDraft = directory => (dispatch, getState) => {
   if (errors.length) return dispatch(validationError(errors));
 
   // clear errors
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
   const front_matter = getFrontMatterFromMetdata(metadata);
@@ -76,7 +76,7 @@ export const putDraft = (directory, filename) => (dispatch, getState) => {
   if (errors.length) return dispatch(validationError(errors));
 
   // clear errors
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
   const front_matter = getFrontMatterFromMetdata(metadata);
@@ -115,7 +115,7 @@ export const publishDraft = (directory, filename) => (dispatch, getState) => {
   if (errors.length) return dispatch(validationError(errors));
 
   // clear errors
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
   const front_matter = getFrontMatterFromMetdata(metadata);

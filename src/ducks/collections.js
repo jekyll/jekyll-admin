@@ -1,5 +1,5 @@
 import moment from 'moment';
-import { CLEAR_ERRORS, validationError } from './utils';
+import { clearErrors, validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import {
@@ -87,7 +87,7 @@ export const createDocument = (collection, directory) => (
   if (errors.length) return dispatch(validationError(errors));
 
   // clear errors
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch(clearErrors());
 
   const front_matter = getFrontMatterFromMetdata(metadata);
   const raw_content = metadata.raw_content;
@@ -114,7 +114,7 @@ export const putDocument = (collection, directory, filename) => (
   if (errors.length) return dispatch(validationError(errors));
 
   // clear errors
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
   const front_matter = getFrontMatterFromMetdata(metadata);
