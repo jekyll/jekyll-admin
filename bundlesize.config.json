@@ -17,7 +17,7 @@
     },
     {
       "path": "lib/jekyll-admin/public/static/css/*.css.map",
-      "maxSize": "200 kB",
+      "maxSize": "400 kB",
       "compression": "none"
     }
   ]
