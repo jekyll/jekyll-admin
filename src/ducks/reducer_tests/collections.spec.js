@@ -108,5 +108,8 @@ describe('Reducers::Collections', () => {
     expect(
       collectionsDuck.filterBySearchInput(collection_entries, 'dir').length
     ).toBe(1);
+    expect(
+      collectionsDuck.filterBySearchInput(collection_entries, null).length
+    ).toBe(2);
   });
 });
