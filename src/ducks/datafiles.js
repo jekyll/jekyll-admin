@@ -74,9 +74,7 @@ export const putDataFile = (
 
   // handle errors
   const errors = validateDatafile(filename, data);
-  if (errors.length) {
-    return dispatch(validationError(errors));
-  }
+  if (errors.length) return dispatch(validationError(errors));
   dispatch(clearErrors());
 
   return put(

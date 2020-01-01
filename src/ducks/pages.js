@@ -1,7 +1,7 @@
 import { clearErrors, validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { validateMetadata } from '../utils/validation';
-import { preparePayload, getFrontMatterFromMetdata } from '../utils/helpers';
+import { preparePayload, sanitizeFrontMatter } from '../utils/helpers';
 import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
 
 // Action Types
@@ -51,7 +51,7 @@ export const createPage = directory => (dispatch, getState) => {
   dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
-  const front_matter = getFrontMatterFromMetdata(metadata);
+  const front_matter = sanitizeFrontMatter(metadata);
 
   // send the put request
   return put(
@@ -75,8 +75,8 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
   dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
-  const front_matter = getFrontMatterFromMetdata(metadata);
-  const relative_path = directory ? `${directory}/${path}` : `${path}`;
+  const front_matter = sanitizeFrontMatter(metadata);
+  const relative_path = directory ? `${directory}/${path}` : path;
 
   // send the put request
   return put(

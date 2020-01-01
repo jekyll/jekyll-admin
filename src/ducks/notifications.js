@@ -4,11 +4,7 @@ export const ADD_NOTIFICATION = 'ADD_NOTIFICATION';
 // Actions
 export const addNotification = (title, message, level) => ({
   type: ADD_NOTIFICATION,
-  notification: {
-    title,
-    message,
-    level,
-  },
+  notification: { title, message, level },
 });
 
 // Reducer

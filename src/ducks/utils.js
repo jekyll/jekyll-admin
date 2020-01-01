@@ -1,9 +1,7 @@
 // Selectors
 export const filterBySearchInput = (list, input) => {
-  if (input) {
-    return list.filter(p => p.name.toLowerCase().includes(input.toLowerCase()));
-  }
-  return list;
+  if (!input) return list;
+  return list.filter(p => p.name.toLowerCase().includes(input.toLowerCase()));
 };
 
 // Action Types
@@ -12,19 +10,9 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const VALIDATION_ERROR = 'VALIDATION_ERROR';
 
 // Actions
-export const search = input => ({
-  type: SEARCH_CONTENT,
-  input,
-});
-
-export const clearErrors = () => ({
-  type: CLEAR_ERRORS,
-});
-
-export const validationError = errors => ({
-  type: VALIDATION_ERROR,
-  errors,
-});
+export const search = input => ({ type: SEARCH_CONTENT, input });
+export const clearErrors = () => ({ type: CLEAR_ERRORS });
+export const validationError = errors => ({ type: VALIDATION_ERROR, errors });
 
 // Reducer
 export default function utils(

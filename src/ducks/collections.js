@@ -2,11 +2,7 @@ import moment from 'moment';
 import { clearErrors, validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import {
-  slugify,
-  preparePayload,
-  getFrontMatterFromMetdata,
-} from '../utils/helpers';
+import { slugify, preparePayload, sanitizeFrontMatter } from '../utils/helpers';
 import {
   collectionsAPIUrl,
   collectionAPIUrl,
@@ -48,27 +44,20 @@ export const fetchCollections = () => dispatch => {
   );
 };
 
-export const fetchCollection = (
-  collection_name,
-  directory = ''
-) => dispatch => {
+export const fetchCollection = (collection, directory = '') => dispatch => {
   dispatch({ type: FETCH_COLLECTION_REQUEST });
   return get(
-    collectionAPIUrl(collection_name, directory),
+    collectionAPIUrl(collection, directory),
     { type: FETCH_COLLECTION_SUCCESS, name: 'entries' },
     { type: FETCH_COLLECTION_FAILURE, name: 'error' },
     dispatch
   );
 };
 
-export const fetchDocument = (
-  collection_name,
-  directory,
-  filename
-) => dispatch => {
+export const fetchDocument = (collection, directory, filename) => dispatch => {
   dispatch({ type: FETCH_DOCUMENT_REQUEST });
   return get(
-    documentAPIUrl(collection_name, directory, filename),
+    documentAPIUrl(collection, directory, filename),
     { type: FETCH_DOCUMENT_SUCCESS, name: 'doc' },
     { type: FETCH_DOCUMENT_FAILURE, name: 'error' },
     dispatch
@@ -89,7 +78,7 @@ export const createDocument = (collection, directory) => (
   // clear errors
   dispatch(clearErrors());
 
-  const front_matter = getFrontMatterFromMetdata(metadata);
+  const front_matter = sanitizeFrontMatter(metadata);
   const raw_content = metadata.raw_content;
 
   // send the put request
@@ -117,7 +106,7 @@ export const putDocument = (collection, directory, filename) => (
   dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
-  const front_matter = getFrontMatterFromMetdata(metadata);
+  const front_matter = sanitizeFrontMatter(metadata);
 
   // add collection type prefix to relative path
   const relative_path = directory
@@ -260,14 +249,8 @@ export default function collections(
 
 // Selectors
 export const filterBySearchInput = (list, input) => {
-  if (input) {
-    return list.filter(item => {
-      if (item.name) {
-        return item.name.toLowerCase().includes(input.toLowerCase());
-      } else {
-        return item.title.toLowerCase().includes(input.toLowerCase());
-      }
-    });
-  }
-  return list || [];
+  if (!input) return list;
+  return list.filter(f =>
+    (f.title || f.name).toLowerCase().includes(input.toLowerCase())
+  );
 };

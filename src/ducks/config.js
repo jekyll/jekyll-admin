@@ -42,9 +42,7 @@ export const putConfig = (config, source = 'editor') => (
 
   // handle errors
   const errors = validateConfig(config);
-  if (errors.length) {
-    return dispatch(validationError(errors));
-  }
+  if (errors.length) return dispatch(validationError(errors));
   dispatch(clearErrors());
 
   return put(
@@ -65,9 +63,7 @@ const validateConfig = config =>
     }
   );
 
-export const onEditorChange = () => ({
-  type: CONFIG_EDITOR_CHANGED,
-});
+export const onEditorChange = () => ({ type: CONFIG_EDITOR_CHANGED });
 
 // Reducer
 export default function config(

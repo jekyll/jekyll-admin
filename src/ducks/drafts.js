@@ -2,7 +2,7 @@ import { clearErrors, validationError } from './utils';
 import { PUT_DOCUMENT_SUCCESS, PUT_DOCUMENT_FAILURE } from './collections';
 import { get, put, del } from '../utils/fetch';
 import { validateMetadata } from '../utils/validation';
-import { preparePayload, getFrontMatterFromMetdata } from '../utils/helpers';
+import { preparePayload, sanitizeFrontMatter } from '../utils/helpers';
 import { draftsAPIUrl, draftAPIUrl, documentAPIUrl } from '../constants/api';
 
 // Action Types
@@ -52,7 +52,7 @@ export const createDraft = directory => (dispatch, getState) => {
   dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
-  const front_matter = getFrontMatterFromMetdata(metadata);
+  const front_matter = sanitizeFrontMatter(metadata);
 
   // strip '_drafts/' from path when provided
   const filename = path.replace('_drafts/', '');
@@ -79,7 +79,7 @@ export const putDraft = (directory, filename) => (dispatch, getState) => {
   dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
-  const front_matter = getFrontMatterFromMetdata(metadata);
+  const front_matter = sanitizeFrontMatter(metadata);
   const relative_path = directory
     ? `_drafts/${directory}/${path}`
     : `_drafts/${path}`;
@@ -118,7 +118,7 @@ export const publishDraft = (directory, filename) => (dispatch, getState) => {
   dispatch(clearErrors());
 
   const raw_content = metadata.raw_content;
-  const front_matter = getFrontMatterFromMetdata(metadata);
+  const front_matter = sanitizeFrontMatter(metadata);
 
   return put(
     documentAPIUrl('posts', directory, filename),

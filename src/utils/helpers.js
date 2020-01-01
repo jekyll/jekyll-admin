@@ -157,7 +157,7 @@ export const getDocumentTitle = (type, splat, prefix = '') => {
 };
 
 // omit raw_content, path and empty-value keys in metadata state from front_matter
-export const getFrontMatterFromMetdata = metadata => {
+export const sanitizeFrontMatter = metadata => {
   return _.omit(metadata, (value, key, object) => {
     return key === 'raw_content' || key === 'path' || value === '';
   });

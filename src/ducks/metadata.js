@@ -24,12 +24,7 @@ export const storeContentFields = content => ({
   type: STORE_CONTENT_FIELDS,
   content,
 });
-
-export const addField = namePrefix => ({
-  type: ADD_METAFIELD,
-  namePrefix,
-});
-
+export const addField = namePrefix => ({ type: ADD_METAFIELD, namePrefix });
 export const removeField = (namePrefix, key) => ({
   type: REMOVE_METAFIELD,
   namePrefix,
@@ -62,20 +57,9 @@ export const convertField = (nameAttr, convertType) => ({
   convertType,
 });
 
-export const updateTitle = title => ({
-  type: UPDATE_TITLE,
-  title,
-});
-
-export const updateBody = body => ({
-  type: UPDATE_BODY,
-  body,
-});
-
-export const updatePath = path => ({
-  type: UPDATE_PATH,
-  path,
-});
+export const updateTitle = title => ({ type: UPDATE_TITLE, title });
+export const updateBody = body => ({ type: UPDATE_BODY, body });
+export const updatePath = path => ({ type: UPDATE_PATH, path });
 
 // Reducer
 export default function metadata( // TODO normalize the metadata
