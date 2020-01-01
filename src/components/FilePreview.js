@@ -39,7 +39,7 @@ export default class FilePreview extends Component {
     const extension = file.extname.substring(1);
     const image = /png|jpg|gif|jpeg|svg|ico/i.test(extension);
     const node = image ? (
-      <img src={file.http_url} alt="Jekyll Admin" />
+      <img src={file.http_url} alt={file.relative_path} />
     ) : (
       <div>
         <Icon name="file-text-o" />
