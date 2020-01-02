@@ -132,6 +132,8 @@ export default function staticfiles(
 
 // Selectors
 export const filterByFilename = (files, input) => {
-  if (!input) return files;
+  if (!input) {
+    return files;
+  }
   return files.filter(f => f.path.toLowerCase().includes(input.toLowerCase()));
 };

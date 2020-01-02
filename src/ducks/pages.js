@@ -45,8 +45,9 @@ export const createPage = directory => (dispatch, getState) => {
 
   // get path or return if metadata doesn't validate
   const { path, errors } = validateMetadata(metadata, directory);
-  if (errors.length) return dispatch(validationError(errors));
-
+  if (errors.length) {
+    return dispatch(validationError(errors));
+  }
   // clear errors
   dispatch(clearErrors());
 
@@ -69,8 +70,9 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
 
   // get path or abort if metadata doesn't validate
   const { path, errors } = validateMetadata(metadata, directory);
-  if (errors.length) return dispatch(validationError(errors));
-
+  if (errors.length) {
+    return dispatch(validationError(errors));
+  }
   // clear errors
   dispatch(clearErrors());
 

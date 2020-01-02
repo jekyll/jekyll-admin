@@ -46,8 +46,9 @@ export const createDraft = directory => (dispatch, getState) => {
 
   // get path or return if metadata doesn't validate
   const { path, errors } = validateMetadata(metadata, directory);
-  if (errors.length) return dispatch(validationError(errors));
-
+  if (errors.length) {
+    return dispatch(validationError(errors));
+  }
   // clear errors
   dispatch(clearErrors());
 
@@ -73,8 +74,9 @@ export const putDraft = (directory, filename) => (dispatch, getState) => {
 
   // get path or return if metadata doesn't validate
   const { path, errors } = validateMetadata(metadata, directory);
-  if (errors.length) return dispatch(validationError(errors));
-
+  if (errors.length) {
+    return dispatch(validationError(errors));
+  }
   // clear errors
   dispatch(clearErrors());
 
@@ -112,8 +114,9 @@ export const publishDraft = (directory, filename) => (dispatch, getState) => {
 
   // return if metadata doesn't validate
   const { errors } = validateMetadata(metadata, directory);
-  if (errors.length) return dispatch(validationError(errors));
-
+  if (errors.length) {
+    return dispatch(validationError(errors));
+  }
   // clear errors
   dispatch(clearErrors());
 

@@ -73,8 +73,9 @@ export const createDocument = (collection, directory) => (
 
   // get path or return if metadata doesn't validate
   const { path, errors } = validateMetadata(metadata, collection, directory);
-  if (errors.length) return dispatch(validationError(errors));
-
+  if (errors.length) {
+    return dispatch(validationError(errors));
+  }
   // clear errors
   dispatch(clearErrors());
 
@@ -100,8 +101,9 @@ export const putDocument = (collection, directory, filename) => (
 
   // get path or abort if metadata doesn't validate
   const { path, errors } = validateMetadata(metadata, collection, directory);
-  if (errors.length) return dispatch(validationError(errors));
-
+  if (errors.length) {
+    return dispatch(validationError(errors));
+  }
   // clear errors
   dispatch(clearErrors());
 
@@ -249,7 +251,9 @@ export default function collections(
 
 // Selectors
 export const filterBySearchInput = (list, input) => {
-  if (!input) return list;
+  if (!input) {
+    return list;
+  }
   return list.filter(f =>
     (f.title || f.name).toLowerCase().includes(input.toLowerCase())
   );

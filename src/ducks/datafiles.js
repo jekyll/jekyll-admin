@@ -74,7 +74,9 @@ export const putDataFile = (
 
   // handle errors
   const errors = validateDatafile(filename, data);
-  if (errors.length) return dispatch(validationError(errors));
+  if (errors.length) {
+    return dispatch(validationError(errors));
+  }
   dispatch(clearErrors());
 
   return put(
@@ -99,7 +101,9 @@ export const deleteDataFile = (directory, filename) => dispatch => {
   );
 };
 
-export const onDataFileChanged = () => ({ type: DATAFILE_CHANGED });
+export const onDataFileChanged = () => ({
+  type: DATAFILE_CHANGED,
+});
 
 const validateDatafile = (filename, data) =>
   validator(
