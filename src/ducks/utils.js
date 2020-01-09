@@ -12,9 +12,19 @@ export const CLEAR_ERRORS = 'CLEAR_ERRORS';
 export const VALIDATION_ERROR = 'VALIDATION_ERROR';
 
 // Actions
-export const search = input => ({ type: SEARCH_CONTENT, input });
-export const clearErrors = () => ({ type: CLEAR_ERRORS });
-export const validationError = errors => ({ type: VALIDATION_ERROR, errors });
+export const search = input => ({
+  type: SEARCH_CONTENT,
+  input,
+});
+
+export const clearErrors = () => ({
+  type: CLEAR_ERRORS,
+});
+
+export const validationError = errors => ({
+  type: VALIDATION_ERROR,
+  errors,
+});
 
 // Reducer
 export default function utils(
