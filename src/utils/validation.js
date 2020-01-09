@@ -20,16 +20,6 @@ const validated = (field, single) => {
   }
 };
 
-const validatePage = metadata =>
-  validator(
-    metadata,
-    { path: 'required|filename' },
-    {
-      'path.required': getTitleRequiredMessage(),
-      'path.filename': getFilenameNotValidMessage(),
-    }
-  );
-
 /**
  * Returns error messages if the given values does not pass the provided validations.
  * @param {Object} values
@@ -50,25 +40,13 @@ export const validator = (values, validations, messages) => {
   return errorMessages;
 };
 
-/**
- * if `path` is a falsy value or if appending a slash to it equals to
- * `directory`, generate filename from `title` available in the `metadata`.
- *
- * Set up `errors` otherwise.
- * Returns an object with two keys -- `path` and `errors`.
- *
- * @param {Object} metadata
- * @param {String} directory
- * @return {Object} with keys 'path' and 'errors'
- */
-export const validateMetadata = (metadata, directory) => {
-  let { path, title } = metadata;
-  let errors = [];
-
-  if ((!path || `${path}/` === directory) && title) {
-    path = getFilenameFromTitle(title);
-  } else {
-    errors = validatePage(metadata);
-  }
-  return { path, errors };
+export const validatePage = metadata => {
+  return validator(
+    metadata,
+    { path: 'required|filename' },
+    {
+      'path.required': getTitleRequiredMessage(),
+      'path.filename': getFilenameNotValidMessage(),
+    }
+  );
 };

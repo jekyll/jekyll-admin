@@ -1,8 +1,8 @@
 import { clearErrors, validationError } from './utils';
 import { PUT_DOCUMENT_SUCCESS, PUT_DOCUMENT_FAILURE } from './collections';
 import { get, put, del } from '../utils/fetch';
-import { validateMetadata } from '../utils/validation';
-import { preparePayload, sanitizeFrontMatter } from '../utils/helpers';
+import { validatePage } from '../utils/validation';
+import { slugify, preparePayload, sanitizeFrontMatter } from '../utils/helpers';
 import { draftsAPIUrl, draftAPIUrl, documentAPIUrl } from '../constants/api';
 
 // Action Types
@@ -43,16 +43,20 @@ export const fetchDraft = (directory, filename) => dispatch => {
 export const createDraft = directory => (dispatch, getState) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
-
-  // get path or return if metadata doesn't validate
-  const { path, errors } = validateMetadata(metadata, directory);
-  if (errors.length) {
-    return dispatch(validationError(errors));
+  let { path, raw_content, title } = metadata;
+  // if `path` is a falsy value or if appending a slash to it equals to
+  // `directory`, generate filename from `title`.
+  if ((!path || `${path}/` === directory) && title) {
+    path = `${slugify(title)}.md`;
+  } else {
+    const errors = validatePage(metadata);
+    if (errors.length) {
+      return dispatch(validationError(errors));
+    }
   }
   // clear errors
   dispatch(clearErrors());
 
-  const raw_content = metadata.raw_content;
   const front_matter = sanitizeFrontMatter(metadata);
 
   // strip '_drafts/' from path when provided
@@ -71,16 +75,20 @@ export const createDraft = directory => (dispatch, getState) => {
 export const putDraft = (directory, filename) => (dispatch, getState) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
-
-  // get path or return if metadata doesn't validate
-  const { path, errors } = validateMetadata(metadata, directory);
-  if (errors.length) {
-    return dispatch(validationError(errors));
+  let { path, raw_content, title } = metadata;
+  // if `path` is a falsy value or if appending a slash to it equals to
+  // `directory`, generate filename from `title`.
+  if ((!path || `${path}/` === directory) && title) {
+    path = `${slugify(title)}.md`;
+  } else {
+    const errors = validatePage(metadata);
+    if (errors.length) {
+      return dispatch(validationError(errors));
+    }
   }
   // clear errors
   dispatch(clearErrors());
 
-  const raw_content = metadata.raw_content;
   const front_matter = sanitizeFrontMatter(metadata);
   const relative_path = directory
     ? `_drafts/${directory}/${path}`
@@ -111,16 +119,19 @@ export const deleteDraft = (directory, filename) => dispatch => {
 
 export const publishDraft = (directory, filename) => (dispatch, getState) => {
   const metadata = getState().metadata.metadata;
-
-  // return if metadata doesn't validate
-  const { errors } = validateMetadata(metadata, directory);
-  if (errors.length) {
-    return dispatch(validationError(errors));
+  let { path, raw_content, title } = metadata;
+  // if path is not given or equals to directory, generate filename from the title
+  if (!path && title) {
+    path = `${slugify(title)}.md`;
+  } else {
+    const errors = validatePage(metadata);
+    if (errors.length) {
+      return dispatch(validationError(errors));
+    }
   }
   // clear errors
   dispatch(clearErrors());
 
-  const raw_content = metadata.raw_content;
   const front_matter = sanitizeFrontMatter(metadata);
 
   return put(

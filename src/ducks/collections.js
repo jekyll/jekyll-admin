@@ -70,17 +70,22 @@ export const createDocument = (collection, directory) => (
 ) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
-
-  // get path or return if metadata doesn't validate
-  const { path, errors } = validateMetadata(metadata, collection, directory);
-  if (errors.length) {
-    return dispatch(validationError(errors));
+  let { path, raw_content, title, date } = metadata;
+  // if `path` is a falsy value or if appending a slash to it equals to
+  // `directory`, generate filename from `title`.
+  if ((!path || `${path}/` === directory) && title) {
+    path = getFilenameFromTitle(title, collection, date); // override empty path
+  } else {
+    // validate otherwise
+    const errors = validateDocument(metadata, collection);
+    if (errors.length) {
+      return dispatch(validationError(errors));
+    }
   }
   // clear errors
   dispatch(clearErrors());
 
   const front_matter = sanitizeFrontMatter(metadata);
-  const raw_content = metadata.raw_content;
 
   // send the put request
   return put(
@@ -98,16 +103,21 @@ export const putDocument = (collection, directory, filename) => (
 ) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
-
-  // get path or abort if metadata doesn't validate
-  const { path, errors } = validateMetadata(metadata, collection, directory);
-  if (errors.length) {
-    return dispatch(validationError(errors));
+  let { path, raw_content, title, date } = metadata;
+  // if `path` is a falsy value or if appending a slash to it equals to
+  // `directory`, generate filename from `title`.
+  if ((!path || `${path}/` === directory) && title) {
+    path = getFilenameFromTitle(title, collection, date); // override empty path
+  } else {
+    // validate otherwise
+    const errors = validateDocument(metadata, collection);
+    if (errors.length) {
+      return dispatch(validationError(errors));
+    }
   }
   // clear errors
   dispatch(clearErrors());
 
-  const raw_content = metadata.raw_content;
   const front_matter = sanitizeFrontMatter(metadata);
 
   // add collection type prefix to relative path
@@ -146,20 +156,6 @@ const getFilenameFromTitle = (title, collection, date) => {
     return `${docDate}-${slugifiedTitle}.md`;
   }
   return `${slugifiedTitle}.md`;
-};
-
-const validateMetadata = (metadata, collection, directory) => {
-  let { path, title, date } = metadata;
-  let errors = [];
-
-  // if path is not given or equals to directory, generate filename from the title
-  if ((!path || `${path}/` === directory) && title) {
-    path = getFilenameFromTitle(title, collection, date); // override empty path
-  } else {
-    // validate otherwise
-    errors = validateDocument(metadata, collection);
-  }
-  return { path, errors };
 };
 
 const validateDocument = (metadata, collection) => {

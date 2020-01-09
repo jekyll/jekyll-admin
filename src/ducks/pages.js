@@ -1,7 +1,7 @@
 import { clearErrors, validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
-import { validateMetadata } from '../utils/validation';
-import { preparePayload, sanitizeFrontMatter } from '../utils/helpers';
+import { validatePage } from '../utils/validation';
+import { slugify, preparePayload, sanitizeFrontMatter } from '../utils/helpers';
 import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
 
 // Action Types
@@ -42,16 +42,20 @@ export const fetchPage = (directory, filename) => dispatch => {
 export const createPage = directory => (dispatch, getState) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
-
-  // get path or return if metadata doesn't validate
-  const { path, errors } = validateMetadata(metadata, directory);
-  if (errors.length) {
-    return dispatch(validationError(errors));
+  let { path, raw_content, title } = metadata;
+  // if `path` is a falsy value or if appending a slash to it equals to
+  // `directory`, generate filename from `title`.
+  if ((!path || `${path}/` === directory) && title) {
+    path = `${slugify(title)}.md`;
+  } else {
+    const errors = validatePage(metadata);
+    if (errors.length) {
+      return dispatch(validationError(errors));
+    }
   }
   // clear errors
   dispatch(clearErrors());
 
-  const raw_content = metadata.raw_content;
   const front_matter = sanitizeFrontMatter(metadata);
 
   // send the put request
@@ -67,16 +71,20 @@ export const createPage = directory => (dispatch, getState) => {
 export const putPage = (directory, filename) => (dispatch, getState) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
-
-  // get path or abort if metadata doesn't validate
-  const { path, errors } = validateMetadata(metadata, directory);
-  if (errors.length) {
-    return dispatch(validationError(errors));
+  let { path, raw_content, title } = metadata;
+  // if `path` is a falsy value or if appending a slash to it equals to
+  // `directory`, generate filename from `title`.
+  if ((!path || `${path}/` === directory) && title) {
+    path = `${slugify(title)}.md`;
+  } else {
+    const errors = validatePage(metadata);
+    if (errors.length) {
+      return dispatch(validationError(errors));
+    }
   }
   // clear errors
   dispatch(clearErrors());
 
-  const raw_content = metadata.raw_content;
   const front_matter = sanitizeFrontMatter(metadata);
   const relative_path = directory ? `${directory}/${path}` : path;
 
