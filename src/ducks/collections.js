@@ -74,7 +74,7 @@ export const createDocument = (collection, directory) => (
   // if `path` is a falsy value or if appending a slash to it equals to
   // `directory`, generate filename from `title`.
   if ((!path || `${path}/` === directory) && title) {
-    path = getFilenameFromTitle(title, collection, date); // override empty path
+    path = generateFilenameFromTitle(title, collection, date);
   } else {
     // validate otherwise
     const errors = validateDocument(metadata, collection);
@@ -107,7 +107,7 @@ export const putDocument = (collection, directory, filename) => (
   // if `path` is a falsy value or if appending a slash to it equals to
   // `directory`, generate filename from `title`.
   if ((!path || `${path}/` === directory) && title) {
-    path = getFilenameFromTitle(title, collection, date); // override empty path
+    path = generateFilenameFromTitle(title, collection, date);
   } else {
     // validate otherwise
     const errors = validateDocument(metadata, collection);
@@ -148,7 +148,7 @@ export const deleteDocument = (collection, directory, filename) => dispatch => {
   );
 };
 
-const getFilenameFromTitle = (title, collection, date) => {
+const generateFilenameFromTitle = (title, collection, date) => {
   const slugifiedTitle = slugify(title);
   if (collection === 'posts') {
     // if date is provided, use it, otherwise generate it with today's date
