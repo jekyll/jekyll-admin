@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import { get } from '../utils/fetch';
+import { get, del } from '../utils/fetch';
 import { addNotification } from './notifications';
 import { staticfilesAPIUrl, staticfileAPIUrl } from '../constants/api';
 
@@ -75,20 +75,16 @@ export const uploadStaticFiles = (directory, files) => dispatch => {
 };
 
 export const deleteStaticFile = (directory, filename) => dispatch => {
-  return fetch(staticfileAPIUrl(directory, filename), {
-    method: 'DELETE',
-    credentials: 'same-origin',
-  })
-    .then(data => {
-      dispatch({ type: DELETE_STATICFILE_SUCCESS });
-      dispatch(fetchStaticFiles(directory));
-    })
-    .catch(error =>
-      dispatch({
-        type: DELETE_STATICFILE_FAILURE,
-        error,
-      })
-    );
+  return del(
+    staticfileAPIUrl(directory, filename),
+    {
+      type: DELETE_STATICFILE_SUCCESS,
+      name: 'file',
+      update: fetchStaticFiles(directory),
+    },
+    { type: DELETE_STATICFILE_FAILURE, name: 'error' },
+    dispatch
+  );
 };
 
 // Reducer

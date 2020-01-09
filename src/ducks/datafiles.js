@@ -1,5 +1,5 @@
 import { CLEAR_ERRORS, validationError } from './utils';
-import { get, put } from '../utils/fetch';
+import { get, put, del } from '../utils/fetch';
 import { datafilesAPIUrl, datafileAPIUrl } from '../constants/api';
 import { toYAML, getExtensionFromPath, trimObject } from '../utils/helpers';
 import { validator } from '../utils/validation';
@@ -89,20 +89,16 @@ export const putDataFile = (
 };
 
 export const deleteDataFile = (directory, filename) => dispatch => {
-  return fetch(datafileAPIUrl(directory, filename), {
-    method: 'DELETE',
-    credentials: 'same-origin',
-  })
-    .then(data => {
-      dispatch({ type: DELETE_DATAFILE_SUCCESS });
-      dispatch(fetchDataFiles(directory));
-    })
-    .catch(error =>
-      dispatch({
-        type: DELETE_DATAFILE_FAILURE,
-        error,
-      })
-    );
+  return del(
+    datafileAPIUrl(directory, filename),
+    {
+      type: DELETE_DATAFILE_SUCCESS,
+      name: 'file',
+      update: fetchDataFiles(directory),
+    },
+    { type: DELETE_DATAFILE_FAILURE, name: 'error' },
+    dispatch
+  );
 };
 
 export const onDataFileChanged = () => ({

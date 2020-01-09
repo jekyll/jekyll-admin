@@ -7,7 +7,7 @@ const {
   getErrorMessage,
   getFetchErrorMessage,
   getUpdateErrorMessage,
-  getDeleteMessage,
+  getDeleteErrorMessage,
 } = translations;
 
 /**
@@ -93,12 +93,10 @@ export const del = (url, action_success, action_failure, dispatch) => {
     method: 'DELETE',
     credentials: 'same-origin',
   })
-    .then(data =>
-      dispatch({
-        type: action_success.type,
-        id: action_success.id,
-      })
-    )
+    .then(data => {
+      dispatch({ type: action_success.type });
+      dispatch(action_success.update);
+    })
     .catch(error => {
       dispatch({
         type: action_failure.type,
@@ -107,7 +105,7 @@ export const del = (url, action_success, action_failure, dispatch) => {
       dispatch(
         addNotification(
           getErrorMessage(),
-          getDeleteMessage(action_success.name),
+          getDeleteErrorMessage(action_success.name),
           'error'
         )
       );
