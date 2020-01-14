@@ -148,6 +148,14 @@ export class DraftEdit extends Component {
     const defaultMetadata = injectDefaultFields(config, directory, collection);
     const document_title = getDocumentTitle('drafts', directory, title || name);
 
+    let plainTextArea = false;
+    try {
+      plainTextArea =
+        config.content.jekyll_admin.markdown_editor === 'textarea';
+    } catch (e) {
+      plainTextArea = false;
+    }
+
     return (
       <DocumentTitle title={document_title}>
         <HotKeys handlers={keyboardHandlers} className="single">
@@ -165,6 +173,7 @@ export class DraftEdit extends Component {
                 onSave={this.handleClickSave}
                 placeholder="Body"
                 initialValue={raw_content}
+                plainTextArea={plainTextArea}
                 ref="editor"
               />
               <Splitter />

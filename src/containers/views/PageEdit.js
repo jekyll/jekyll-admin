@@ -112,6 +112,14 @@ export class PageEdit extends Component {
 
     const document_title = getDocumentTitle('pages', directory, title || name);
 
+    let plainTextArea = false;
+    try {
+      plainTextArea =
+        config.content.jekyll_admin.markdown_editor === 'textarea';
+    } catch (e) {
+      plainTextArea = false;
+    }
+
     return (
       <DocumentTitle title={document_title}>
         <HotKeys handlers={keyboardHandlers} className="single">
@@ -131,6 +139,7 @@ export class PageEdit extends Component {
                 placeholder="Body"
                 initialValue={raw_content}
                 ref="editor"
+                plainTextArea={plainTextArea}
               />
               <Splitter />
               <StaticMetaData fields={defaultMetadata} />

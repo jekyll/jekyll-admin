@@ -96,3 +96,7 @@ collections:
   puppies:
     foo: bar
     output: false
+
+# jekyll_admin:
+#   markdown_editor: default
+#   markdown_editor: textarea

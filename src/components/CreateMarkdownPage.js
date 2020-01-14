@@ -26,6 +26,13 @@ export default function CreateMarkdownPage({
 }) {
   const metaType = type === 'drafts' ? 'posts' : type;
 
+  let plainTextArea = false;
+  try {
+    plainTextArea = config.content.jekyll_admin.markdown_editor === 'textarea';
+  } catch (e) {
+    plainTextArea = false;
+  }
+
   return (
     <HotKeys handlers={{ save: onClickSave }}>
       {errors.length > 0 && <Errors errors={errors} />}
@@ -43,6 +50,7 @@ export default function CreateMarkdownPage({
             onSave={onClickSave}
             placeholder="Body"
             initialValue=""
+            plainTextArea={plainTextArea}
           />
           <Splitter />
           <StaticMetaData fields={defaultFields(config, splat, metaType)} />
