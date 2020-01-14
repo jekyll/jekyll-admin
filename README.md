@@ -27,9 +27,13 @@ Refer to the [installing plugins](https://jekyllrb.com/docs/plugins/installation
 
 ## Options
 
-Jekyll Admin related options can be specified in `_config.yml`
-under a key called `jekyll_admin`. Currently it has only one option `hidden_links`
-which is for hiding unwanted links on the sidebar. The following keys under `hidden_links` can be used in order to hide default links;
+Jekyll Admin related options can be specified in `_config.yml` under a key
+called `jekyll_admin`. Currently it has only two optional options:
+
+* `hidden_links` which is for hiding unwanted links on the sidebar. The keys in
+  the following example can be used to hide default links.
+* `markdown_editor` which can be set to `default` (use the SimpleMDE component)
+  or `textarea` (use plain HTML `<textarea>` elements).
 
 ```yaml
 jekyll_admin:
@@ -39,6 +43,7 @@ jekyll_admin:
     - staticfiles
     - datafiles
     - configuration
+  markdown_editor: default
 ```
 
 ## Contributing
