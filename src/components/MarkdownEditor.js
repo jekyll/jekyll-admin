@@ -97,7 +97,7 @@ MarkdownEditor.propTypes = {
   initialValue: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
-  plainTextArea: PropTypes.bool.isRequired,
+  plainTextEditor: PropTypes.bool.isRequired,
 };
 
 export default MarkdownEditor;

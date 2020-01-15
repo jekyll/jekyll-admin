@@ -23,7 +23,11 @@ import {
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault, getDocumentTitle } from '../../utils/helpers';
+import {
+  preventDefault,
+  getDocumentTitle,
+  getOptionPlainTextEditor,
+} from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 import translations from '../../translations';
@@ -127,14 +131,6 @@ export class DocumentEdit extends Component {
 
     const document_title = getDocumentTitle(collection, directory, title);
 
-    let plainTextArea = false;
-    try {
-      plainTextArea =
-        config.content.jekyll_admin.markdown_editor === 'textarea';
-    } catch (e) {
-      plainTextArea = false;
-    }
-
     return (
       <DocumentTitle title={document_title}>
         <HotKeys handlers={keyboardHandlers} className="single">
@@ -154,7 +150,7 @@ export class DocumentEdit extends Component {
                 placeholder="Body"
                 initialValue={raw_content}
                 ref="editor"
-                plainTextArea={plainTextArea}
+                plainTextEditor={getOptionPlainTextEditor(config.content)}
               />
               <Splitter />
               <StaticMetaData fields={defaultMetadata} />
