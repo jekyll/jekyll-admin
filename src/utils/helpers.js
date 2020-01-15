@@ -158,18 +158,6 @@ export const getDocumentTitle = (type, splat, prefix = '') => {
 
 /**
  * @param {Object} config - Jekyll Admin configuration object (from _config.yml)
- * @return {Array}
- */
-export const getOptionHiddenLinks = config => {
-  try {
-    return config.jekyll_admin.hidden_links || [];
-  } catch (_) {
-    return [];
-  }
-};
-
-/**
- * @param {Object} config - Jekyll Admin configuration object (from _config.yml)
  * @return {Boolean}
  */
 export const getOptionPlainTextEditor = config => {

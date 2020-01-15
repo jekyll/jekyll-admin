@@ -8,7 +8,7 @@ import Splitter from '../components/Splitter';
 import Icon from '../components/Icon';
 import Accordion from '../components/Accordion';
 import { fetchCollections } from '../ducks/collections';
-import { capitalize, getOptionHiddenLinks } from '../utils/helpers';
+import { capitalize } from '../utils/helpers';
 import _ from 'underscore';
 
 import translations from '../translations';
@@ -89,7 +89,13 @@ export class Sidebar extends Component {
     };
 
     const defaultLinks = _.keys(defaults);
-    const hiddenLinks = getOptionHiddenLinks(config);
+    let hiddenLinks;
+
+    try {
+      hiddenLinks = config.jekyll_admin.hidden_links || [];
+    } catch (e) {
+      hiddenLinks = [];
+    }
 
     const visibleLinks = _.difference(defaultLinks, hiddenLinks);
 
