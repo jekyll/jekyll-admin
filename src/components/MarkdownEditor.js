@@ -96,8 +96,11 @@ class MarkdownEditor extends Component {
 
   render() {
     const { plainTextEditor } = this.props;
-    if (plainTextEditor) { return this.renderPlainTextEditor(); }
-    else { return this.renderDefaultEditor(); }
+    if (plainTextEditor) {
+      return this.renderPlainTextEditor();
+    } else {
+      return this.renderDefaultEditor();
+    }
   }
 
   renderDefaultEditor() {
