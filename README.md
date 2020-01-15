@@ -32,8 +32,8 @@ called `jekyll_admin`. Currently it has only two optional options:
 
 * `hidden_links` which is for hiding unwanted links on the sidebar. The keys in
   the following example can be used to hide default links.
-* `markdown_editor` which can be set to `default` (use the SimpleMDE component)
-  or `textarea` (use plain HTML `<textarea>` elements).
+* `plain_text_editor` which can be set to `false` (use the default SimpleMDE
+  component) or `true` (use a plain HTML `<textarea>` element).
 
 ```yaml
 jekyll_admin:
@@ -43,7 +43,7 @@ jekyll_admin:
     - staticfiles
     - datafiles
     - configuration
-  markdown_editor: default
+  plain_text_editor: true
 ```
 
 ## Contributing

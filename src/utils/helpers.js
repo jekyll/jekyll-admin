@@ -162,7 +162,7 @@ export const getDocumentTitle = (type, splat, prefix = '') => {
  */
 export const getOptionPlainTextEditor = config => {
   try {
-    return config.jekyll_admin.markdown_editor === 'textarea';
+    return !!config.jekyll_admin.plain_text_editor;
   } catch (_) {
     return false;
   }

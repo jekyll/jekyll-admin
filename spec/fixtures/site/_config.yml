@@ -98,5 +98,5 @@ collections:
     output: false
 
 # jekyll_admin:
-#   markdown_editor: default
-#   markdown_editor: textarea
+#   plain_text_editor: false
+#   plain_text_editor: true
