@@ -96,3 +96,7 @@ collections:
   puppies:
     foo: bar
     output: false
+
+# jekyll_admin:
+#   plain_text_editor: false
+#   plain_text_editor: true

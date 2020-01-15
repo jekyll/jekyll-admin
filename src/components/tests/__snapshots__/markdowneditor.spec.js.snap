@@ -1,7 +1,9 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`Components::MarkdownEditor renders correctly 1`] = `
-<div>
+<div
+  className="default-editor"
+>
   <textarea />
 </div>
 `;

@@ -8,6 +8,7 @@ const props = {
   onSave: f => f,
   placeholder: 'Test',
   initialValue: '',
+  plainTextEditor: false,
 };
 
 describe('Components::MarkdownEditor', () => {

@@ -155,3 +155,15 @@ export const getDocumentTitle = (type, splat, prefix = '') => {
   const label = toTitleCase(type.toString());
   return [prefix, splat, label].filter(Boolean).join(' | ');
 };
+
+/**
+ * @param {Object} config - Jekyll Admin configuration object (from _config.yml)
+ * @return {Boolean}
+ */
+export const getOptionPlainTextEditor = config => {
+  try {
+    return !!config.jekyll_admin.plain_text_editor;
+  } catch (_) {
+    return false;
+  }
+};

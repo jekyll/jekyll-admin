@@ -1,3 +1,7 @@
+// ----------------------------------------------------------------------------
+// Styles for the SimpleMDE component
+// ----------------------------------------------------------------------------
+
 .CodeMirror {
   position: relative;
   color: #454545;
@@ -665,5 +669,33 @@ span.CodeMirror-selectedtext { background: 0 0 }
   }
   &+.cm-formatting-code.cm-comment {
     color: inherit
+  }
+}
+
+// ----------------------------------------------------------------------------
+// Styles for the Plain Text Editor element
+// ----------------------------------------------------------------------------
+
+textarea.plain-text-editor {
+  display: block;
+  margin: 0;
+  padding: 16px;
+  width: 100%;
+  color: #757575;
+  word-wrap: break-word;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  resize: vertical;
+  background: none;
+  outline: none;
+  border: 2px solid $border-color;
+  box-shadow: none;
+  font-size: 16px;
+  font-family: monospace;
+  &:focus {
+    border-color:$border-color-focus;
+  }
+  &:hover {
+    color: #444;
   }
 }

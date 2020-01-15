@@ -23,7 +23,11 @@ import {
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault, getDocumentTitle } from '../../utils/helpers';
+import {
+  preventDefault,
+  getDocumentTitle,
+  getOptionPlainTextEditor,
+} from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 import translations from '../../translations';
@@ -146,6 +150,7 @@ export class DocumentEdit extends Component {
                 placeholder="Body"
                 initialValue={raw_content}
                 ref="editor"
+                plainTextEditor={getOptionPlainTextEditor(config.content)}
               />
               <Splitter />
               <StaticMetaData fields={defaultMetadata} />
