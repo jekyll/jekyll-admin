@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import SimpleMDE from 'simplemde';
 import hljs from '../utils/highlighter';
+import TextareaAutosize from 'react-textarea-autosize';
 
 const classNames = [
   'editor-toolbar',
@@ -12,8 +13,11 @@ const classNames = [
 
 class MarkdownEditor extends Component {
   componentDidMount() {
-    this.create();
-    window.hljs = hljs; // TODO: fix this after the next release of SimpleMDE
+    const { plainTextEditor } = this.props;
+    if (!plainTextEditor) {
+      this.createDefaultEditor();
+      window.hljs = hljs; // TODO: fix this after the next release of SimpleMDE
+    }
   }
 
   shouldComponentUpdate(nextProps) {
@@ -21,15 +25,21 @@ class MarkdownEditor extends Component {
   }
 
   componentDidUpdate() {
-    this.destroy();
-    this.create();
+    const { plainTextEditor } = this.props;
+    if (!plainTextEditor) {
+      this.destroyDefaultEditor();
+      this.createDefaultEditor();
+    }
   }
 
   componentWillUnmount() {
-    this.destroy();
+    const { plainTextEditor } = this.props;
+    if (!plainTextEditor) {
+      this.destroyDefaultEditor();
+    }
   }
 
-  create() {
+  createDefaultEditor() {
     const { onChange, onSave } = this.props;
     let opts = Object.create(this.props);
     opts['element'] = this.refs.text;
@@ -75,7 +85,7 @@ class MarkdownEditor extends Component {
     this.editor = editor;
   }
 
-  destroy() {
+  destroyDefaultEditor() {
     for (let i in classNames) {
       let elementToRemove = this.refs.container.querySelector(
         '.' + classNames[i]
@@ -85,10 +95,27 @@ class MarkdownEditor extends Component {
   }
 
   render() {
-    return React.createElement(
-      'div',
-      { ref: 'container' },
-      React.createElement('textarea', { ref: 'text' })
+    const { plainTextEditor } = this.props;
+    if (plainTextEditor) { return this.renderPlainTextEditor(); }
+    else { return this.renderDefaultEditor(); }
+  }
+
+  renderDefaultEditor() {
+    return (
+      <div className="default-editor" ref="container">
+        <textarea ref="text"></textarea>
+      </div>
+    );
+  }
+
+  renderPlainTextEditor() {
+    const { onChange, initialValue } = this.props;
+    return (
+      <TextareaAutosize
+        className="plain-text-editor"
+        onChange={e => onChange(e.target.value)}
+        defaultValue={initialValue}
+      />
     );
   }
 }
