@@ -20,6 +20,17 @@ const validated = (field, single) => {
   }
 };
 
+export const validatePage = metadata => {
+  return validator(
+    metadata,
+    { path: 'required|filename' },
+    {
+      'path.required': getTitleRequiredMessage(),
+      'path.filename': getFilenameNotValidMessage(),
+    }
+  );
+};
+
 /**
  * Returns error messages if the given values does not pass the provided validations.
  * @param {Object} values
@@ -38,15 +49,4 @@ export const validator = (values, validations, messages) => {
     });
   });
   return errorMessages;
-};
-
-export const validatePage = metadata => {
-  return validator(
-    metadata,
-    { path: 'required|filename' },
-    {
-      'path.required': getTitleRequiredMessage(),
-      'path.filename': getFilenameNotValidMessage(),
-    }
-  );
 };

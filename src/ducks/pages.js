@@ -1,7 +1,12 @@
-import { clearErrors, validationError } from './utils';
+import { clearErrors, validationError, filterDeleted } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { validatePage } from '../utils/validation';
-import { slugify, preparePayload, sanitizeFrontMatter } from '../utils/helpers';
+import {
+  slugify,
+  preparePayload,
+  sanitizeFrontMatter,
+  computeRelativePath,
+} from '../utils/helpers';
 import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
 
 // Action Types
@@ -99,9 +104,10 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
 };
 
 export const deletePage = (directory, filename) => dispatch => {
+  const relative_path = computeRelativePath(directory, filename);
   return del(
     pageAPIUrl(directory, filename),
-    { type: DELETE_PAGE_SUCCESS, name: 'page', update: fetchPages(directory) },
+    { type: DELETE_PAGE_SUCCESS, name: 'page', id: relative_path },
     { type: DELETE_PAGE_FAILURE, name: 'error' },
     dispatch
   );
@@ -154,6 +160,11 @@ export default function pages(
         ...state,
         page: action.page,
         updated: true,
+      };
+    case DELETE_PAGE_SUCCESS:
+      return {
+        ...state,
+        pages: filterDeleted(state.pages, action.id),
       };
     default:
       return {

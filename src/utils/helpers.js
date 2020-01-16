@@ -156,6 +156,15 @@ export const getDocumentTitle = (type, splat, prefix = '') => {
   return [prefix, splat, label].filter(Boolean).join(' | ');
 };
 
+/**
+ * @param {String} directory - Directory splat for current resource.
+ * @param {String} filename - Basename of current resource.
+ * @return {String} Filename or directory splat joined to the filename.
+ */
+export const computeRelativePath = (directory, filename) => {
+  return directory ? `${directory}/${filename}` : `${filename}`;
+};
+
 // omit raw_content, path and empty-value keys in metadata state from front_matter
 export const sanitizeFrontMatter = metadata => {
   return _.omit(metadata, (value, key, object) => {

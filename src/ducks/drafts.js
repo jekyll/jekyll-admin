@@ -1,8 +1,13 @@
-import { clearErrors, validationError } from './utils';
+import { clearErrors, validationError, filterDeleted } from './utils';
 import { PUT_DOCUMENT_SUCCESS, PUT_DOCUMENT_FAILURE } from './collections';
 import { get, put, del } from '../utils/fetch';
 import { validatePage } from '../utils/validation';
-import { slugify, preparePayload, sanitizeFrontMatter } from '../utils/helpers';
+import {
+  slugify,
+  preparePayload,
+  sanitizeFrontMatter,
+  computeRelativePath,
+} from '../utils/helpers';
 import { draftsAPIUrl, draftAPIUrl, documentAPIUrl } from '../constants/api';
 
 // Action Types
@@ -105,13 +110,10 @@ export const putDraft = (directory, filename) => (dispatch, getState) => {
 };
 
 export const deleteDraft = (directory, filename) => dispatch => {
+  const relative_path = computeRelativePath(directory, filename);
   return del(
     draftAPIUrl(directory, filename),
-    {
-      type: DELETE_DRAFT_SUCCESS,
-      name: 'draft',
-      update: fetchDrafts(directory),
-    },
+    { type: DELETE_DRAFT_SUCCESS, name: 'draft', id: relative_path },
     { type: DELETE_DRAFT_FAILURE, name: 'error' },
     dispatch
   );
@@ -190,6 +192,11 @@ export default function drafts(
         ...state,
         draft: action.draft,
         updated: true,
+      };
+    case DELETE_DRAFT_SUCCESS:
+      return {
+        ...state,
+        drafts: filterDeleted(state.drafts, action.id),
       };
     default:
       return {

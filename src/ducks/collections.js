@@ -1,8 +1,13 @@
 import moment from 'moment';
-import { clearErrors, validationError } from './utils';
+import { clearErrors, validationError, filterDeleted } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify, preparePayload, sanitizeFrontMatter } from '../utils/helpers';
+import {
+  slugify,
+  preparePayload,
+  sanitizeFrontMatter,
+  computeRelativePath,
+} from '../utils/helpers';
 import {
   collectionsAPIUrl,
   collectionAPIUrl,
@@ -136,13 +141,10 @@ export const putDocument = (collection, directory, filename) => (
 };
 
 export const deleteDocument = (collection, directory, filename) => dispatch => {
+  const relative_path = computeRelativePath(directory, filename);
   return del(
     documentAPIUrl(collection, directory, filename),
-    {
-      type: DELETE_DOCUMENT_SUCCESS,
-      name: 'doc',
-      update: fetchCollection(collection, directory),
-    },
+    { type: DELETE_DOCUMENT_SUCCESS, name: 'doc', id: relative_path },
     { type: DELETE_DOCUMENT_FAILURE, name: 'error' },
     dispatch
   );
@@ -236,6 +238,11 @@ export default function collections(
         ...state,
         currentDocument: action.doc,
         updated: true,
+      };
+    case DELETE_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        entries: filterDeleted(state.entries, action.id),
       };
     default:
       return {

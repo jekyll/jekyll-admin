@@ -1,5 +1,7 @@
 import _ from 'underscore';
+import { filterDeleted } from './utils';
 import { get, del } from '../utils/fetch';
+import { computeRelativePath } from '../utils/helpers';
 import { addNotification } from './notifications';
 import { staticfilesAPIUrl, staticfileAPIUrl } from '../constants/api';
 
@@ -72,13 +74,10 @@ export const uploadStaticFiles = (directory, files) => dispatch => {
 };
 
 export const deleteStaticFile = (directory, filename) => dispatch => {
+  const relative_path = computeRelativePath(directory, filename);
   return del(
     staticfileAPIUrl(directory, filename),
-    {
-      type: DELETE_STATICFILE_SUCCESS,
-      name: 'file',
-      update: fetchStaticFiles(directory),
-    },
+    { type: DELETE_STATICFILE_SUCCESS, name: 'file', id: relative_path },
     { type: DELETE_STATICFILE_FAILURE, name: 'error' },
     dispatch
   );
@@ -124,6 +123,11 @@ export default function staticfiles(
       return {
         ...state,
         uploading: false,
+      };
+    case DELETE_STATICFILE_SUCCESS:
+      return {
+        ...state,
+        files: filterDeleted(state.files, action.id),
       };
     default:
       return state;
