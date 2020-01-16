@@ -1,4 +1,5 @@
 import _ from 'underscore';
+import { filterDeleted } from './utils';
 import { get, del } from '../utils/fetch';
 import { computeRelativePath } from '../utils/helpers';
 import { addNotification } from './notifications';
@@ -125,6 +126,11 @@ export default function staticfiles(
       return {
         ...state,
         uploading: false,
+      };
+    case DELETE_STATICFILE_SUCCESS:
+      return {
+        ...state,
+        files: filterDeleted(state.files, action.id),
       };
     default:
       return state;

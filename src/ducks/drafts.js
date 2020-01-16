@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import { CLEAR_ERRORS, validationError } from './utils';
+import { CLEAR_ERRORS, validationError, filterDeleted } from './utils';
 import { PUT_DOCUMENT_SUCCESS, PUT_DOCUMENT_FAILURE } from './collections';
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
@@ -179,7 +179,7 @@ export default function drafts(
     case DELETE_DRAFT_SUCCESS:
       return {
         ...state,
-        drafts: state.drafts.filter(d => d.relative_path !== action.id),
+        drafts: filterDeleted(state.drafts, action.id),
       };
     default:
       return {

@@ -1,4 +1,4 @@
-import { CLEAR_ERRORS, validationError } from './utils';
+import { CLEAR_ERRORS, validationError, filterDeleted } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { datafilesAPIUrl, datafileAPIUrl } from '../constants/api';
 import {
@@ -176,7 +176,7 @@ export default function datafiles(
     case DELETE_DATAFILE_SUCCESS:
       return {
         ...state,
-        files: state.files.filter(f => f.relative_path !== action.id),
+        files: filterDeleted(state.files, action.id),
       };
     case DATAFILE_CHANGED:
       return {

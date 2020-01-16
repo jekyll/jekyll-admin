@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import moment from 'moment';
-import { CLEAR_ERRORS, validationError } from './utils';
+import { CLEAR_ERRORS, validationError, filterDeleted } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify, trimObject, computeRelativePath } from '../utils/helpers';
@@ -252,7 +252,7 @@ export default function collections(
     case DELETE_DOCUMENT_SUCCESS:
       return {
         ...state,
-        entries: state.entries.filter(doc => doc.relative_path !== action.id),
+        entries: filterDeleted(state.entries, action.id),
       };
     default:
       return {

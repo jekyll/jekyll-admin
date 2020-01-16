@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import { CLEAR_ERRORS, validationError } from './utils';
+import { CLEAR_ERRORS, validationError, filterDeleted } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
 import { slugify, trimObject, computeRelativePath } from '../utils/helpers';
@@ -176,7 +176,7 @@ export default function pages(
     case DELETE_PAGE_SUCCESS:
       return {
         ...state,
-        pages: state.pages.filter(p => p.relative_path !== action.id),
+        pages: filterDeleted(state.pages, action.id),
       };
     default:
       return {
