@@ -3,7 +3,7 @@ import { CLEAR_ERRORS, validationError } from './utils';
 import { PUT_DOCUMENT_SUCCESS, PUT_DOCUMENT_FAILURE } from './collections';
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify, trimObject } from '../utils/helpers';
+import { slugify, trimObject, computeRelativePath } from '../utils/helpers';
 import { draftsAPIUrl, draftAPIUrl, documentAPIUrl } from '../constants/api';
 
 import translations from '../translations';
@@ -90,13 +90,10 @@ export const putDraft = (mode, directory, filename = '') => (
 };
 
 export const deleteDraft = (directory, filename) => dispatch => {
+  const relative_path = computeRelativePath(directory, filename);
   return del(
     draftAPIUrl(directory, filename),
-    {
-      type: DELETE_DRAFT_SUCCESS,
-      name: 'draft',
-      update: fetchDrafts(directory),
-    },
+    { type: DELETE_DRAFT_SUCCESS, name: 'draft', id: relative_path },
     { type: DELETE_DRAFT_FAILURE, name: 'error' },
     dispatch
   );
@@ -178,6 +175,11 @@ export default function drafts(
         ...state,
         draft: action.draft,
         updated: true,
+      };
+    case DELETE_DRAFT_SUCCESS:
+      return {
+        ...state,
+        drafts: state.drafts.filter(d => d.relative_path !== action.id),
       };
     default:
       return {

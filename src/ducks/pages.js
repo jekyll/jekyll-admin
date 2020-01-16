@@ -2,7 +2,7 @@ import _ from 'underscore';
 import { CLEAR_ERRORS, validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify, trimObject } from '../utils/helpers';
+import { slugify, trimObject, computeRelativePath } from '../utils/helpers';
 import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
 
 import translations from '../translations';
@@ -104,9 +104,10 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
 };
 
 export const deletePage = (directory, filename) => dispatch => {
+  const relative_path = computeRelativePath(directory, filename);
   return del(
     pageAPIUrl(directory, filename),
-    { type: DELETE_PAGE_SUCCESS, name: 'page', update: fetchPages(directory) },
+    { type: DELETE_PAGE_SUCCESS, name: 'page', id: relative_path },
     { type: DELETE_PAGE_FAILURE, name: 'error' },
     dispatch
   );
@@ -171,6 +172,11 @@ export default function pages(
         ...state,
         page: action.page,
         updated: true,
+      };
+    case DELETE_PAGE_SUCCESS:
+      return {
+        ...state,
+        pages: state.pages.filter(p => p.relative_path !== action.id),
       };
     default:
       return {

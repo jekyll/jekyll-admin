@@ -94,8 +94,10 @@ export const del = (url, action_success, action_failure, dispatch) => {
     credentials: 'same-origin',
   })
     .then(data => {
-      dispatch({ type: action_success.type });
-      dispatch(action_success.update);
+      dispatch({
+        type: action_success.type,
+        id: action_success.id,
+      });
     })
     .catch(error => {
       dispatch({

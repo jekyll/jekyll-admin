@@ -1,7 +1,12 @@
 import { CLEAR_ERRORS, validationError } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { datafilesAPIUrl, datafileAPIUrl } from '../constants/api';
-import { toYAML, getExtensionFromPath, trimObject } from '../utils/helpers';
+import {
+  toYAML,
+  trimObject,
+  computeRelativePath,
+  getExtensionFromPath,
+} from '../utils/helpers';
 import { validator } from '../utils/validation';
 
 import translations from '../translations';
@@ -89,13 +94,10 @@ export const putDataFile = (
 };
 
 export const deleteDataFile = (directory, filename) => dispatch => {
+  const relative_path = computeRelativePath(directory, filename);
   return del(
     datafileAPIUrl(directory, filename),
-    {
-      type: DELETE_DATAFILE_SUCCESS,
-      name: 'file',
-      update: fetchDataFiles(directory),
-    },
+    { type: DELETE_DATAFILE_SUCCESS, name: 'file', id: relative_path },
     { type: DELETE_DATAFILE_FAILURE, name: 'error' },
     dispatch
   );
@@ -170,6 +172,11 @@ export default function datafiles(
       return {
         ...state,
         datafileChanged: false,
+      };
+    case DELETE_DATAFILE_SUCCESS:
+      return {
+        ...state,
+        files: state.files.filter(f => f.relative_path !== action.id),
       };
     case DATAFILE_CHANGED:
       return {
