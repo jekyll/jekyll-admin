@@ -3,9 +3,9 @@ import { get, put, del } from '../utils/fetch';
 import { datafilesAPIUrl, datafileAPIUrl } from '../constants/api';
 import {
   toYAML,
-  getExtensionFromPath,
   trimObject,
   computeRelativePath,
+  getExtensionFromPath,
 } from '../utils/helpers';
 import { validator } from '../utils/validation';
 
