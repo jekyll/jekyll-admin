@@ -1,5 +1,4 @@
 import _ from 'underscore';
-import { getFilenameFromTitle } from '../utils/helpers';
 
 import translations from '../translations';
 const { getTitleRequiredMessage, getFilenameNotValidMessage } = translations;
