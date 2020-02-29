@@ -5,16 +5,11 @@
   "private": true,
   "scripts": {
     "start-api": "sh script/test-server",
-    "start-client": "react-scripts start",
+    "start-client": "react-app-rewired start",
     "start": "npm-run-all --parallel start-api start-client",
-    "build": "react-scripts build",
-    "analyze": "node script/analyze.js",
-    "clear-build": "rimraf lib/jekyll-admin/public",
-    "move-build": "mv build lib/jekyll-admin/public",
-    "build:stats": "npm-run-all clear-build analyze",
-    "postbuild": "npm-run-all clear-build move-build",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
     "precommit": "lint-staged",
-    "test": "react-scripts test",
     "test:size": "bundlesize"
   },
   "lint-staged": {
@@ -68,11 +63,12 @@
     "npm-run-all": "4.1.5",
     "prettier": "^1.19.1",
     "react-addons-test-utils": "15.4.1",
+    "react-app-rewire-webpack-bundle-analyzer": "^1.1.0",
+    "react-app-rewired": "^2.1.5",
     "react-scripts": "^3.3.0",
     "react-test-renderer": "15.4.1",
     "redux-immutable-state-invariant": "1.2.4",
     "redux-mock-store": "^1.0.4",
-    "rimraf": "^3.0.0",
     "webpack-bundle-analyzer": "^3.6.0"
   },
   "browserslist": {
