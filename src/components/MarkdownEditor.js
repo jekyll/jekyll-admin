@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import SimpleMDE from 'simplemde';
 import hljs from '../utils/highlighter';
+import FilePicker from './FilePicker';
+import { getExtensionFromPath } from '../utils/helpers';
 
 const classNames = [
   'editor-toolbar',
@@ -38,6 +40,9 @@ class MarkdownEditor extends Component {
     opts['renderingConfig'] = {
       codeSyntaxHighlighting: true,
     };
+    opts['insertTexts'] = {
+      image: ['![', '](#url#)'],
+    };
     let toolbarIcons = [
       'bold',
       'italic',
@@ -51,6 +56,12 @@ class MarkdownEditor extends Component {
       'link',
       'image',
       'table',
+      {
+        name: 'filepicker',
+        action: () => this.refs.filepicker.refs.trigger.click(),
+        className: 'fa fa-paperclip',
+        title: 'Insert Static File',
+      },
       '|',
       'preview',
       'side-by-side',
@@ -84,11 +95,48 @@ class MarkdownEditor extends Component {
     }
   }
 
+  // Adapted from an internal helper function within SimpleMDE package.
+  _replaceSelectedText = (cm, headNTail, url) => {
+    const startPoint = cm.getCursor('start');
+    const endPoint = cm.getCursor('end');
+    const text = cm.getSelection();
+
+    let [head, tail] = headNTail;
+    if (url) {
+      tail = tail.replace('#url#', url);
+    }
+
+    cm.replaceSelection(`${head}${text}${tail}`);
+    startPoint.ch += head.length;
+
+    if (startPoint !== endPoint) {
+      endPoint.ch += head.length;
+    }
+
+    cm.setSelection(startPoint, endPoint);
+    cm.focus();
+  };
+
+  handleFilePick = path => {
+    const { codemirror, getState, options } = this.editor;
+    const { image, link } = options.insertTexts;
+    const url = `{{ '${path}' | relative_url }}`;
+    const ext = getExtensionFromPath(path);
+
+    const type = /png|jpg|gif|jpeg|svg|ico/i.test(ext) ? image : link;
+    this._replaceSelectedText(codemirror, type, url);
+  };
+
   render() {
-    return React.createElement(
-      'div',
-      { ref: 'container' },
-      React.createElement('textarea', { ref: 'text' })
+    return (
+      <div>
+        <div style={{ display: 'none' }}>
+          <FilePicker ref="filepicker" onPick={this.handleFilePick} />
+        </div>
+        <div ref="container">
+          <textarea ref="text" />
+        </div>
+      </div>
     );
   }
 }
