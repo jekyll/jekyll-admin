@@ -76,7 +76,7 @@ export class MetaSimple extends Component {
   handleLayoutChange = value => {
     const { nameAttr, updateFieldValue } = this.props;
     updateFieldValue(nameAttr, value);
-  }
+  };
 
   renderLayoutPicker() {
     const { fieldValue, siteMeta } = this.props;
