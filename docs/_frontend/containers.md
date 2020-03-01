@@ -161,7 +161,6 @@ Container for creating a new page.
   updateTitle: Function,
   updateBody: Function,
   updatePath: Function,
-  updateDraft: Function,
   clearErrors: Function,
   errors: Array,
   fieldChanged: Boolean
@@ -221,7 +220,6 @@ Container for creating a new document.
   updateTitle: Function,
   updateBody: Function,
   updatePath: Function,
-  updateDraft: Function,
   clearErrors: Function,
   errors: Array,
   fieldChanged: Boolean
@@ -255,7 +253,6 @@ Container for creating a new draft.
   updateTitle: Function,
   updateBody: Function,
   updatePath: Function,
-  updateDraft: Function,
   clearErrors: Function,
   errors: Array,
   fieldChanged: Boolean,

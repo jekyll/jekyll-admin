@@ -1,7 +1,6 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 import * as staticfilesDuck from '../staticfiles';
-import * as utilsDuck from '../utils';
 import { API } from '../../constants/api';
 import nock from 'nock';
 
@@ -96,8 +95,7 @@ describe('Actions::StaticFiles', () => {
       .reply(200);
 
     const expectedActions = [
-      { type: staticfilesDuck.DELETE_STATICFILE_SUCCESS },
-      { type: staticfilesDuck.FETCH_STATICFILES_REQUEST },
+      { type: staticfilesDuck.DELETE_STATICFILE_SUCCESS, id: 'index.html' },
     ];
 
     const store = mockStore({ files: [] });

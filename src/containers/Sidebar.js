@@ -9,9 +9,10 @@ import Icon from '../components/Icon';
 import Accordion from '../components/Accordion';
 import { fetchCollections } from '../ducks/collections';
 import { capitalize } from '../utils/helpers';
-import { sidebar as SidebarTranslations } from '../translations';
-import classnames from 'classnames';
 import _ from 'underscore';
+
+import translations from '../translations';
+const SidebarTranslations = translations.sidebar;
 
 export class Sidebar extends Component {
   componentDidMount() {
@@ -27,7 +28,7 @@ export class Sidebar extends Component {
     }
 
     const collectionItems = _.map(collections, (col, i) => {
-      if (col.label != 'posts' && !hiddens.includes(col.label)) {
+      if (col.label !== 'posts' && !hiddens.includes(col.label)) {
         return (
           <li key={i}>
             <Link

@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DocumentTitle from 'react-document-title';
 import Explorer from '../../components/Explorer';
 import { search, filterBySearchInput } from '../../ducks/utils';
 import { fetchPages, deletePage } from '../../ducks/pages';
+import { getDocumentTitle } from '../../utils/helpers';
 
 export class Pages extends Component {
   componentDidMount() {
@@ -28,7 +28,7 @@ export class Pages extends Component {
       return null;
     }
 
-    const title = params.splat ? `${params.splat} | Pages` : 'Pages';
+    const title = getDocumentTitle('pages', params.splat);
 
     return (
       <DocumentTitle title={title}>

@@ -1,5 +1,5 @@
 import * as pagesDuck from '../pages';
-import { page, page_entries } from './fixtures';
+import { page } from './fixtures';
 
 const reducer = pagesDuck.default;
 

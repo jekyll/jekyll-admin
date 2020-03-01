@@ -27,14 +27,14 @@ const setup = (props = defaultProps) => {
   const component = shallow(<DataFileNew {...actions} {...props} />);
 
   return {
-    component,
+    props,
     actions,
+    component,
     saveButton: component.find(Button).first(),
     toggleButton: component.find(Button).last(),
     editor: component.find(Editor).first(),
     gui: component.find(DataGUI).first(),
     errors: component.find(Errors),
-    props,
   };
 };
 
@@ -45,8 +45,6 @@ describe('Containers::DataFileNew', () => {
     expect(saveButton.node.props['type']).toEqual('create');
     expect(editor.node.props['content']).toEqual('');
     expect(component.state()).toEqual({
-      guiPath: '',
-      extn: '.yml',
       guiView: false,
     });
   });
@@ -65,13 +63,13 @@ describe('Containers::DataFileNew', () => {
   });
 
   it('should not call clearErrors on unmount if there are no errors.', () => {
-    const { component, errors, actions } = setup();
+    const { component, actions } = setup();
     component.unmount();
     expect(actions.clearErrors).not.toHaveBeenCalled();
   });
 
   it('should clear errors on unmount.', () => {
-    const { component, errors, actions } = setup({
+    const { component, actions } = setup({
       ...defaultProps,
       errors: ['The content is required!'],
     });
@@ -100,37 +98,5 @@ describe('Containers::DataFileNew', () => {
     const { saveButton, actions } = setup();
     saveButton.simulate('click');
     expect(actions.putDataFile).not.toHaveBeenCalled();
-  });
-
-  it('should call putDataFile if path input field in GUI mode is changed.', () => {
-    const { component, toggleButton, saveButton, actions } = setup({
-      ...defaultProps,
-      datafileChanged: true,
-    });
-    component.setState({ guiPath: 'foo', guiView: true });
-    saveButton.simulate('click');
-    expect(actions.putDataFile).toHaveBeenCalledWith(
-      'books',
-      'foo.yml',
-      null,
-      null,
-      'gui'
-    );
-  });
-
-  it('should call putDataFile if a GUI field is changed.', () => {
-    const { component, toggleButton, saveButton, actions } = setup({
-      ...defaultProps,
-      fieldChanged: true,
-    });
-    component.setState({ guiPath: 'foo', guiView: true });
-    saveButton.simulate('click');
-    expect(actions.putDataFile).toHaveBeenCalledWith(
-      'books',
-      'foo.yml',
-      null,
-      null,
-      'gui'
-    );
   });
 });

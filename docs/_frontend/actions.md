@@ -142,10 +142,6 @@ Updates the content body when the markdown editor changes.
 
 Updates the content path when the input changes.
 
-### `updateDraft(isDraft)`
-
-Updates the content visibility when the checkbox changes.
-
 ## Static Files
 
 ### `fetchStaticFiles`
