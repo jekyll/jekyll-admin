@@ -25,10 +25,12 @@
   "rules": {
     "import/no-named-as-default": 0,
     "quotes": 0,
+    "eqeqeq": 1,
     "no-console": 1,
-    "no-unused-vars": 0,
+    "no-unused-vars": [1, { "args": "none" }],
     "no-debugger": 1,
     "no-var": 1,
+    "object-shorthand": [1, "properties"],
     "semi": [1, "always"],
     "no-trailing-spaces": 0,
     "eol-last": 0,

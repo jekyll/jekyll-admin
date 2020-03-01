@@ -36,7 +36,6 @@ export class MetaArray extends Component {
       moveArrayItem,
       convertField,
       key_prefix,
-      siteMeta,
     } = this.props;
     const items = _.map(fieldValue, (item, i) => {
       let type = 'simple';
@@ -91,7 +90,6 @@ MetaArray.propTypes = {
   convertField: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
   key_prefix: PropTypes.string.isRequired,
-  siteMeta: PropTypes.object,
 };
 
 export default MetaArray;

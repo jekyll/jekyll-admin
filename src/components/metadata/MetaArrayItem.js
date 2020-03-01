@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { findDOMNode } from 'react-dom';
 import MetaArray from './MetaArray';
 import MetaObject from './MetaObject';
 import MetaSimple from './MetaSimple';

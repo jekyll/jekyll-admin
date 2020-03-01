@@ -57,8 +57,7 @@ describe('Actions::Drafts', () => {
       .reply(200);
 
     const expectedActions = [
-      { type: draftsDuck.DELETE_DRAFT_SUCCESS },
-      { type: draftsDuck.FETCH_DRAFTS_REQUEST },
+      { type: draftsDuck.DELETE_DRAFT_SUCCESS, id: 'draft-dir/test.md' },
     ];
 
     const store = mockStore({});

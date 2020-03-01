@@ -4,4 +4,4 @@ set -e
 
 script/branding
 bundle install
-npm install
+yarn install

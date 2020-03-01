@@ -20,8 +20,8 @@ function setup(datafiles = [directory, datafile]) {
   const component = mount(<DataFiles {...props} {...actions} />);
 
   return {
+    actions,
     component,
-    actions: actions,
     h1: component.find('h1').last(),
     breadcrumbs: component.find('.breadcrumbs'),
     table: component.find('.content-table'),
@@ -71,6 +71,6 @@ describe('Containers::DataFiles', () => {
   it('should call deleteDataFile', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');
-    expect(actions.deleteDataFile).not.toHaveBeenCalled(); // TODO pass prompt
+    expect(actions.deleteDataFile.mock.calls.length).toBe(1);
   });
 });

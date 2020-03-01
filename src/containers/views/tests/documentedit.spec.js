@@ -8,6 +8,7 @@ import Button from '../../../components/Button';
 import { config, doc } from './fixtures';
 
 const defaultProps = {
+  config,
   currentDocument: doc,
   errors: [],
   fieldChanged: false,
@@ -15,7 +16,6 @@ const defaultProps = {
   isFetching: false,
   router: {},
   route: {},
-  config: config,
   params: { collection_name: 'movies', splat: [null, 'inception', 'md'] },
 };
 
@@ -33,12 +33,12 @@ const setup = (props = defaultProps) => {
   const component = shallow(<DocumentEdit {...actions} {...props} />);
 
   return {
-    component,
+    props,
     actions,
+    component,
     saveButton: component.find(Button).first(),
     deleteButton: component.find(Button).last(),
     errors: component.find(Errors),
-    props,
   };
 };
 
@@ -83,6 +83,6 @@ describe('Containers::DocumentEdit', () => {
   it('should call deleteDocument', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');
-    expect(actions.deleteDocument).not.toHaveBeenCalled(); // TODO pass prompt
+    expect(actions.deleteDocument.mock.calls.length).toBe(1);
   });
 });

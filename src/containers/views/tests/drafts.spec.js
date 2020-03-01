@@ -20,8 +20,8 @@ function setup(drafts = [directory, draft]) {
   const component = mount(<Drafts {...props} {...actions} />);
 
   return {
-    component: component,
-    actions: actions,
+    actions,
+    component,
     h1: component.find('h1').last(),
     breadcrumbs: component.find('.breadcrumbs'),
     table: component.find('.content-table'),
@@ -71,6 +71,6 @@ describe('Containers::Drafts', () => {
   it('should call deleteDraft', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');
-    expect(actions.deleteDraft).not.toHaveBeenCalled(); // TODO pass prompt
+    expect(actions.deleteDraft.mock.calls.length).toBe(1);
   });
 });

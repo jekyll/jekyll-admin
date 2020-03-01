@@ -20,8 +20,8 @@ function setup(pages = [directory, page]) {
   const component = mount(<Pages {...props} {...actions} />);
 
   return {
-    component: component,
-    actions: actions,
+    actions,
+    component,
     h1: component.find('h1').last(),
     breadcrumbs: component.find('.breadcrumbs'),
     table: component.find('.content-table'),
@@ -71,6 +71,6 @@ describe('Containers::Pages', () => {
   it('should call deletePage', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');
-    expect(actions.deletePage).not.toHaveBeenCalled(); // TODO pass prompt
+    expect(actions.deletePage.mock.calls.length).toBe(1);
   });
 });
