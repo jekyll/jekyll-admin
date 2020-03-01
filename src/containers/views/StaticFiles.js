@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
 import Dropzone from '../../components/Dropzone';
 import Button from '../../components/Button';
@@ -15,7 +14,6 @@ import {
   existingUploadedFilenames,
   getDocumentTitle,
 } from '../../utils/helpers';
-import { getOverrideMessage } from '../../translations';
 import {
   fetchStaticFiles,
   uploadStaticFiles,
@@ -23,6 +21,9 @@ import {
   filterByFilename,
 } from '../../ducks/staticfiles';
 import { ADMIN_PREFIX } from '../../constants';
+
+import translations from '../../translations';
+const { getOverrideMessage } = translations;
 
 export class StaticFiles extends Component {
   componentDidMount() {
@@ -92,7 +93,7 @@ export class StaticFiles extends Component {
 
   renderRows() {
     const { files } = this.props;
-    const dirs = files.filter(entity => entity.type == 'directory');
+    const dirs = files.filter(entity => entity.type === 'directory');
     const static_files = files.filter(entity => !entity.type);
 
     return dirs

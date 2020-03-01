@@ -8,14 +8,14 @@ import Button from '../../../components/Button';
 import { config, page } from './fixtures';
 
 const defaultProps = {
-  page: page,
+  page,
+  config,
   errors: [],
   fieldChanged: false,
   updated: false,
   isFetching: false,
   router: {},
   route: {},
-  config: config,
   params: { splat: [null, 'page', 'md'] },
 };
 
@@ -33,12 +33,12 @@ const setup = (props = defaultProps) => {
   const component = shallow(<PageEdit {...actions} {...props} />);
 
   return {
-    component,
+    props,
     actions,
+    component,
     saveButton: component.find(Button).first(),
     deleteButton: component.find(Button).last(),
     errors: component.find(Errors),
-    props,
   };
 };
 

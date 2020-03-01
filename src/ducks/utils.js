@@ -6,6 +6,10 @@ export const filterBySearchInput = (list, input) => {
   return list;
 };
 
+export const filterDeleted = (list, id) => {
+  return list.filter(item => item.relative_path !== id);
+};
+
 // Action Types
 export const SEARCH_CONTENT = 'SEARCH_CONTENT';
 export const CLEAR_ERRORS = 'CLEAR_ERRORS';

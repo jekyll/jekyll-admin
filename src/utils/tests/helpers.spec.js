@@ -196,7 +196,7 @@ describe('Helper functions', () => {
     expect(trimObject(obj)).toEqual(expected);
   });
 
-  it('should trim whitespaces in object keys and values', () => {
+  it('should return a formatted document title string', () => {
     const testData = [
       {
         args: {

@@ -103,3 +103,6 @@ end
 
 # load individual route configurations
 JekyllAdmin::Server::ROUTES.each { |name| require_relative File.join("server", name) }
+
+# load namespaces outside route configurations
+require_relative "server/site_meta"

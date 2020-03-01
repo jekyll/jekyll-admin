@@ -129,7 +129,7 @@ export const preventDefault = event => {
 export const trimObject = object => {
   if (!_.isObject(object)) return object;
   return _.keys(object).reduce((acc, key) => {
-    if (typeof object[key] == 'string') {
+    if (typeof object[key] === 'string') {
       try {
         acc[key.trim()] = JSON.parse(object[key].trim());
       } catch (e) {
@@ -142,8 +142,25 @@ export const trimObject = object => {
   }, Array.isArray(object) ? [] : {});
 };
 
+/**
+ * Given a resource type and splat, returns a formatted title string.
+ * Falsy values are discarded.
+ * @param {String} type - Resource type.
+ * @param {String} splat - Directory splat for current resource.
+ * @param {String} [prefix=''] - Optional string text to be placed in front.
+ * @return {String} Empty string or formatted title.
+ */
 export const getDocumentTitle = (type, splat, prefix = '') => {
   if (!type) return '';
   const label = toTitleCase(type.toString());
   return [prefix, splat, label].filter(Boolean).join(' | ');
+};
+
+/**
+ * @param {String} directory - Directory splat for current resource.
+ * @param {String} filename - Basename of current resource.
+ * @return {String} Filename or directory splat joined to the filename.
+ */
+export const computeRelativePath = (directory, filename) => {
+  return directory ? `${directory}/${filename}` : `${filename}`;
 };

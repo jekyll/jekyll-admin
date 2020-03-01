@@ -4,16 +4,9 @@
   background: #222;
   border-radius: $border-radius;
   .metafield {
-    position: relative;
-    zoom: 1;
     .field {
-      font-size: 16px;
-      line-height: 1.5;
-      min-height: 42px;
       background: #2b2b2b;
       border: 1px solid transparent;
-      border-radius: 2px;
-      @include transition(color 250ms ease);
       &:focus {
         border-color: $dark-orange;
       }
@@ -21,173 +14,36 @@
     .meta-key {
       color: #eb2659;
       .key-field {
-        margin: 0 0 15px;
-        padding: 8px 10px;
-        max-width: 190px;
-        font-weight: 700;
         color: #eb2659;
         &:focus {
           color: #eaeaea !important;
         }
       }
     }
-    .meta-key.simple {
-      float: left;
-      + {
-        .meta-value {
-          >.value-field {
-            margin-left: 15px;
-            width: calc(100% - 240px);
-          }
-        }
-      }
-    }
     .meta-value {
       .value-field {
-        margin-bottom: 10px;
-        padding: 8px 10px;
-        width: 100%;
-        height: auto;
-        max-height: 500px;
-        overflow: hidden;
         color: #eaeaea;
-        vertical-align: bottom;
-        word-wrap: break-word;
-        resize: vertical;
-      }
-      &:after {
-        display: table;
-        clear: both;
-        content: "";
       }
       >.imagepicker {
-        float: right;
-        position: relative;
-        right: 36px;
-        width: calc(100% - 227px);
         .images-wrapper {
-          position: absolute;
-          top: 0;
-          right: 0;
-          height: 42px;
-          pointer-events: auto;
           button {
-            display: inline-block;
-            min-width: 42px;
-            height: 100%;
-            margin: 0;
-            padding: 0 3px 0 0;
-            color: #818181;
-            line-height: 2.286em;
-            text-align: center;
-            vertical-align: middle;
-            white-space: nowrap;
             background: #2b2b2b;
-            background-image: none;
             border: none;
-            outline: none;
-            &:hover {
+            &:focus, &:hover {
               color: #2b2b2b;
-              background: $dark-orange;
-            }
-            i {
-              margin: 0;
+              background: $dark-orange
             }
           }
         }
       }
     }
     .meta-value-array {
-      position: relative;
-      margin-right: auto;
-      margin-bottom: 15px;
-      margin-left: 36px;
-      padding: 8px 20px 12px 15px;
-      pointer-events: auto;
       border: 1px solid #383838;
-      border-radius: $border-radius;
-      .array-item-wrap {
-        margin-bottom: 5px;
-        .array-header {
-          margin-bottom: 5px;
-          .array-field-num {
-            display: inline-block;
-            color: $orange;
-            line-height: 27px;
-            margin-right: 5px;
-          }
-          .meta-buttons {
-            display: inline-block;
-            position: static;
-          }
-        }
-        .meta-value-object {
-          >.object-item-wrap {
-            margin-left: 0;
-            padding: 0;
-          }
-        }
-      }
-      .add-field-array {
-        position: absolute;
-        bottom: -13px;
-        left: 50%;
-        margin-left: -13px;
-        width: 26px;
-        height: 26px;
-        font-size: 16px;
-        line-height: 26px;
-        text-align: center;
-        color: #fff;
-        background: $dark-orange;
-        border-radius: 50%;
-        i {
-          margin: 0;
-        }
-      }
     }
     .meta-value-object {
       margin-bottom: 15px;
-      margin-left: 36px;
       .object-item-wrap {
-        position: relative;
-        min-height: 50px;
-        .object-key {
-          position: relative;
-          width: 190px;
-          max-width: 200px;
-          margin-bottom: 15px;
-          pointer-events: auto;
-          input {
-            width: 100%;
-            padding: 8px 55px 8px 10px;
-          }
-          .meta-buttons {
-            position: absolute;
-            top: 50%;
-            right: 5px;
-            transform: translateY(-50%);
-          }
-        }
-        .object-key.simple {
-          float: left;
-          pointer-events: auto;
-          + {
-            .object-value {
-              .meta-value {
-                >.value-field {
-                  width: calc(100% - 205px);
-                  margin-left: 15px;
-                  pointer-events: auto;
-                }
-              }
-            }
-          }
-        }
         .object-value {
-          position: relative;
-          pointer-events: none;
-          @include transition(padding 250ms ease);
           >.object-item-wrap {
             margin-left: 50px;
             padding: 0;
@@ -202,100 +58,36 @@
           }
         }
       }
-      .add-field-object {
-        display: inline-block;
-        padding: 5px 0;
-        pointer-events: auto;
-        &:hover {
-          text-decoration: underline;
-        }
-      }
     }
     .meta-buttons {
-      position: absolute;
-      top: 12px;
-      right: 0;
-      z-index: 8;
-      span.move {
-        color: $inactive-gray;
-        cursor: move;
-        &:hover, &:focus {
-          color: $dark-orange;
-        }
-      }
       .dropdown {
-        position: relative;
-        cursor: pointer;
         .meta-button {
-          display: inline-block;
-          width: 23px;
-          height: 23px;
-          padding: 2px 0;
-          font-size: 13px;
           color: #575757;
-          text-align: center;
-          outline: none;
-          border: 2px solid #575757;
-          border-radius: 50%;
+          border-color: #575757;
           &:hover, &:focus {
-            color: #fff;
-            background: $dark-orange;
+            color: #333;
             border-color: $dark-orange;
-          }
-          &:focus {
-            +.dropdown-wrap {
-              display: block;
-            }
-          }
-          i {
-            margin: 0;
           }
         }
         .dropdown-wrap {
-          display: none;
-          position: absolute;
-          top: 35px;
-          left: 50%;
-          width: 185px;
           color: #ddd;
           background: #353535;
-          transform: translateX(-50%);
-          z-index: 30;
           border: 1px solid #323232;
-          border-radius: $border-radius;
           &:before {
-            position: absolute;
-            top: -10px;
-            left: 50%;
-            width: 0;
-            height: 0;
-            margin-left: -10px;
-            content: "";
-            border-style: solid;
-            border-width: 0 10px 10px;
             border-color: transparent transparent #353535;
           }
           span {
-            display: block;
-            padding: 15px 0 15px 15px;
             border-bottom: 1px solid #272727;
-            outline: 0;
-            i {
-              padding-right: 8px;
-            }
             &:hover {
               color: #fff;
               background: $dark-orange;
               border-color: $dark-orange;
             }
           }
-          .remove-field {
-            color: $dark-red;
-            &:hover {
-              background: $dark-red;
-              i {
-                color: #fff;
-              }
+          .remove-field:hover {
+            background: $dark-red;
+            i {
+              color: #fff;
             }
           }
         }
@@ -309,122 +101,31 @@
         }
       }
     }
-    >.meta-value-object {
-      >.object-item-wrap {
-        >.object-value {
-          >.meta-value {
-            >.imagepicker {
-              width: calc(100% - 206px);
-              right: 0;
-              pointer-events: auto;
-              .value-field {
-                width: calc(100% - 44px);
-              }
-            }
-            >.date-field {
-              width: calc(100% - 206px);
-              right: 0;
-            }
-          }
-        }
-      }
-    }
-    >.meta-value {
-      >.imagepicker {
-        float: right;
-        position: relative;
-        right: 36px;
-        width: calc(100% - 227px);
-        .value-field {
-          width: calc(100% - 59px);
-          margin-left: 15px;
-        }
-      }
-    }
-    .array {
-      >.meta-value {
-        margin-left: 15px;
-        .imagepicker {
-          right: 0;
-          width: 100%;
-          .value-field {
-            width: calc(100% - 44px);
-          }
-        }
-        .date-field {
-          right: 0;
-          width: 100%;
-        }
-      }
-      >.meta-value-object {
-        margin-left: 15px;
-      }
-      .object-value {
-        .imagepicker {
-          right: 0;
-          width: calc(100% - 190px);
-          pointer-events: auto;
-          .value-field {
-            width: calc(100% - 59px);
-            margin-left: 15px;
-          }
-        }
-        .date-field {
-          right: 0;
-          width: calc(100% - 204px);
-        }
-      }
-    }
-  }
-  .meta-new {
-    font-size: 20px;
-    i {
-      padding-right: 8px;
-    }
-  }
-  .sortable-chosen, .sortable-chosen.sortable-ghost {
-    border: 2px dashed $dark-orange !important;
-    div {
-      opacity: 0;
-    }
   }
   .date-field {
-    float: right;
-    right: 34px;
-    width: calc(100% - 240px);
-    pointer-events: auto;
     background: #222;
+    outline: none;
     &.rw-widget {
-      border-radius: $border-radius;
       border-color: transparent;
+      background: inherit;
+      .rw-input { border-radius: 0 }
     }
     input {
-      padding: 11px 13px;
-      width: calc(100% - 3px);
-      min-height: 40px;
-      border-radius: $border-radius;
+      width: calc(100% - 3px) !important;
       color: #fff;
       background: #2b2b2b;
     }
   }
   .rw-popup {
-    padding: 10px;
-    color: #818181;
     background: #2b2b2b;
     border-color: #222;
   }
   .rw-datetimepicker {
-    box-shadow: none !important;
-    font-size: 16px !important;
     .rw-btn {
       color: #fff;
-      min-width: 37px;
       &:hover {
         color: #222;
         background: $dark-orange;
-      }
-      i {
-        margin: 0;
       }
     }
   }
@@ -432,11 +133,8 @@
     padding-right: 93px;
     >.rw-select {
       width: 95px;
-      border: none;
       .rw-btn {
         margin: 0 1px;
-        min-width: 46px;
-        color: #818181;
         background: #2b2b2b;
         &:last-child {
           margin-right: 0;
@@ -448,81 +146,14 @@
       }
     }
   }
-  .rw-calendar-popup {
-    left: auto !important;
-    right: -10px !important;
-    width: 19em;
-  }
   .rw-calendar {
     color: #999;
     background: #2b2b2b;
-    .rw-header {
-      padding-bottom: 15px;
-      .rw-btn-view {
-        width: 188px;
-        background: transparent;
-        border-radius: 0;
-        &:hover {
-          color: #222;
-          background: $dark-orange;
-        }
-        &:focus {
-          outline: none;
-        }
-      }
-    }
-    thead {
-      >tr {
-        border-bottom: 1px solid #454545;
-      }
-    }
-    .rw-footer {
-      border-top: 1px solid #454545;
-    }
-  }
-  .rw-calendar-grid.rw-nav-view {
-    .rw-btn {
-      padding: 0;
-    }
-  }
-  .rw-calendar-grid {
-    th {
-      padding-bottom: 10px;
-      text-align: center;
-    }
-    td {
-      .rw-btn {
-        border-radius: 0;
-      }
-      .rw-btn.rw-off-range {
-        color: #727272;
-      }
-    }
   }
   .rw-state-focus {
     color: #2b2b2b !important;
-    background: $dark-orange;
+    background: $dark-orange !important;
     border: 1px solid $dark-orange;
-  }
-  .rw-list {
-    max-height: 329px;
-    .rw-list-option {
-      padding: 8px 5px;
-      border-radius: 0;
-      &:hover {
-        color: #cdcdcd;
-        background: #454545;
-        border-color: transparent;
-      }
-      &:focus {
-        outline: none;
-      }
-    }
-    .rw-list-option.rw-state-focus {
-      color: #222;
-      background-color: $dark-orange;
-      border-color: transparent;
-    }
   }
   .data-new {
     margin-top: 25px;

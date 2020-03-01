@@ -1,18 +1,16 @@
-import _ from 'underscore';
-import { CLEAR_ERRORS, validationError } from './utils';
-import { get, put } from '../utils/fetch';
+import { CLEAR_ERRORS, validationError, filterDeleted } from './utils';
+import { get, put, del } from '../utils/fetch';
 import { datafilesAPIUrl, datafileAPIUrl } from '../constants/api';
 import {
   toYAML,
-  toJSON,
-  getExtensionFromPath,
   trimObject,
+  computeRelativePath,
+  getExtensionFromPath,
 } from '../utils/helpers';
 import { validator } from '../utils/validation';
-import {
-  getContentRequiredMessage,
-  getFilenameRequiredMessage,
-} from '../translations';
+
+import translations from '../translations';
+const { getContentRequiredMessage, getFilenameRequiredMessage } = translations;
 
 // Action Types
 export const FETCH_DATAFILES_REQUEST = 'FETCH_DATAFILES_REQUEST';
@@ -68,7 +66,7 @@ export const putDataFile = (
 ) => (dispatch, getState) => {
   const ext = getExtensionFromPath(new_path || filename);
 
-  if (source == 'gui') {
+  if (source === 'gui') {
     const json = /json/i.test(ext);
     let metadata = getState().metadata.metadata;
     metadata = trimObject(metadata);
@@ -96,20 +94,13 @@ export const putDataFile = (
 };
 
 export const deleteDataFile = (directory, filename) => dispatch => {
-  return fetch(datafileAPIUrl(directory, filename), {
-    method: 'DELETE',
-    credentials: 'same-origin',
-  })
-    .then(data => {
-      dispatch({ type: DELETE_DATAFILE_SUCCESS });
-      dispatch(fetchDataFiles(directory));
-    })
-    .catch(error =>
-      dispatch({
-        type: DELETE_DATAFILE_FAILURE,
-        error,
-      })
-    );
+  const relative_path = computeRelativePath(directory, filename);
+  return del(
+    datafileAPIUrl(directory, filename),
+    { type: DELETE_DATAFILE_SUCCESS, name: 'file', id: relative_path },
+    { type: DELETE_DATAFILE_FAILURE, name: 'error' },
+    dispatch
+  );
 };
 
 export const onDataFileChanged = () => ({
@@ -181,6 +172,11 @@ export default function datafiles(
       return {
         ...state,
         datafileChanged: false,
+      };
+    case DELETE_DATAFILE_SUCCESS:
+      return {
+        ...state,
+        files: filterDeleted(state.files, action.id),
       };
     case DATAFILE_CHANGED:
       return {

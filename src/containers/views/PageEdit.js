@@ -20,8 +20,10 @@ import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
-import { getLeaveMessage, getDeleteMessage } from '../../translations';
 import { ADMIN_PREFIX } from '../../constants';
+
+import translations from '../../translations';
+const { getLeaveMessage, getDeleteMessage } = translations;
 
 export class PageEdit extends Component {
   componentDidMount() {
@@ -38,7 +40,7 @@ export class PageEdit extends Component {
       const new_path = nextProps.page.path;
       const path = this.props.page.path;
       // redirect if the path is changed
-      if (new_path != path) {
+      if (new_path !== path) {
         browserHistory.push(`${ADMIN_PREFIX}/pages/${new_path}`);
       }
     }
@@ -103,7 +105,7 @@ export class PageEdit extends Component {
     };
 
     const { name, raw_content, http_url, front_matter } = page;
-    const [directory, ...rest] = params.splat;
+    const directory = params.splat[0];
 
     const title = front_matter && front_matter.title ? front_matter.title : '';
     const defaultMetadata = injectDefaultFields(config, directory, 'pages');

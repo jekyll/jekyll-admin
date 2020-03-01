@@ -1,13 +1,12 @@
 import _ from 'underscore';
-import { CLEAR_ERRORS, validationError } from './utils';
-import { get, put } from '../utils/fetch';
+import { CLEAR_ERRORS, validationError, filterDeleted } from './utils';
+import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify, trimObject } from '../utils/helpers';
+import { slugify, trimObject, computeRelativePath } from '../utils/helpers';
 import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
-import {
-  getTitleRequiredMessage,
-  getFilenameNotValidMessage,
-} from '../translations';
+
+import translations from '../translations';
+const { getTitleRequiredMessage, getFilenameNotValidMessage } = translations;
 
 // Action Types
 export const FETCH_PAGES_REQUEST = 'FETCH_PAGES_REQUEST';
@@ -61,7 +60,7 @@ export const createPage = directory => (dispatch, getState) => {
   dispatch({ type: CLEAR_ERRORS });
   // omit raw_content, path and empty-value keys in metadata state from front_matter
   const front_matter = _.omit(metadata, (value, key, object) => {
-    return key == 'raw_content' || key == 'path' || value === '';
+    return key === 'raw_content' || key === 'path' || value === '';
   });
   //send the put request
   return put(
@@ -90,7 +89,7 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
   dispatch({ type: CLEAR_ERRORS });
   // omit raw_content, path and empty-value keys in metadata state from front_matter
   const front_matter = _.omit(metadata, (value, key, object) => {
-    return key == 'raw_content' || key == 'path' || value === '';
+    return key === 'raw_content' || key === 'path' || value === '';
   });
   const relative_path = directory ? `${directory}/${path}` : `${path}`;
   //send the put request
@@ -105,20 +104,13 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
 };
 
 export const deletePage = (directory, filename) => dispatch => {
-  return fetch(pageAPIUrl(directory, filename), {
-    method: 'DELETE',
-    credentials: 'same-origin',
-  })
-    .then(data => {
-      dispatch({ type: DELETE_PAGE_SUCCESS });
-      dispatch(fetchPages(directory));
-    })
-    .catch(error =>
-      dispatch({
-        type: DELETE_PAGE_FAILURE,
-        error,
-      })
-    );
+  const relative_path = computeRelativePath(directory, filename);
+  return del(
+    pageAPIUrl(directory, filename),
+    { type: DELETE_PAGE_SUCCESS, name: 'page', id: relative_path },
+    { type: DELETE_PAGE_FAILURE, name: 'error' },
+    dispatch
+  );
 };
 
 const validatePage = metadata =>
@@ -180,6 +172,11 @@ export default function pages(
         ...state,
         page: action.page,
         updated: true,
+      };
+    case DELETE_PAGE_SUCCESS:
+      return {
+        ...state,
+        pages: filterDeleted(state.pages, action.id),
       };
     default:
       return {

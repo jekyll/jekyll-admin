@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import SimpleMDE from 'simplemde';
-import hljs from 'highlight.js';
+import hljs from '../utils/highlighter';
 import FilePicker from './FilePicker';
 import { getExtensionFromPath } from '../utils/helpers';
 
