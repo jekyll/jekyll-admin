@@ -5,14 +5,16 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 import { HotKeys } from 'react-hotkeys';
 import DocumentTitle from 'react-document-title';
-import DataGUI from '../MetaFields';
+import DataGUI from '../../components/DataGUI';
 import Editor from '../../components/Editor';
 import Errors from '../../components/Errors';
 import Button from '../../components/Button';
 import { putConfig, onEditorChange } from '../../ducks/config';
 import { clearErrors } from '../../ducks/utils';
-import { getLeaveMessage } from '../../translations';
 import { preventDefault } from '../../utils/helpers';
+
+import translations from '../../translations';
+const { getLeaveMessage } = translations;
 
 export class Configuration extends Component {
   state = {
@@ -37,7 +39,9 @@ export class Configuration extends Component {
   };
 
   toggleView = () => {
-    this.setState({ guiView: !this.state.guiView });
+    this.setState(state => {
+      return { guiView: !state.guiView };
+    });
   };
 
   handleClickSave = e => {
@@ -51,16 +55,27 @@ export class Configuration extends Component {
     }
   };
 
-  render() {
-    const {
-      editorChanged,
-      fieldChanged,
-      onEditorChange,
-      config,
-      updated,
-      errors,
-    } = this.props;
+  renderContentBody() {
+    const { config, editorChanged, onEditorChange } = this.props;
     const { raw_content, content } = config;
+
+    if (this.state.guiView && content) {
+      return <DataGUI fields={content} onChange={onEditorChange} restricted />;
+    }
+
+    return (
+      <Editor
+        editorChanged={editorChanged}
+        onEditorChange={onEditorChange}
+        content={raw_content}
+        ref="editor"
+      />
+    );
+  }
+
+  render() {
+    const { editorChanged, fieldChanged, updated, errors } = this.props;
+
     const keyboardHandlers = {
       save: this.handleClickSave,
     };
@@ -88,27 +103,7 @@ export class Configuration extends Component {
               />
             </div>
           </div>
-          {this.state.guiView &&
-            content && (
-              <div className="content-body">
-                <div className="warning">
-                  CAUTION! Any existing comments and formatting will be lost
-                  when editing via this view. Switch to the{' '}
-                  <strong>Raw Editor</strong> to preserve comments and
-                  formatting.
-                </div>
-                <DataGUI fields={content} dataview />
-              </div>
-            )}
-          {!this.state.guiView &&
-            raw_content && (
-              <Editor
-                editorChanged={editorChanged}
-                onEditorChange={onEditorChange}
-                content={raw_content}
-                ref="editor"
-              />
-            )}
+          <div className="content-body">{this.renderContentBody()}</div>
         </HotKeys>
       </DocumentTitle>
     );

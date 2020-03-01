@@ -1,12 +1,14 @@
 import fetch from 'isomorphic-fetch';
 import { addNotification } from '../ducks/notifications';
 import { BadInputError } from './apiErrors';
-import {
+
+import translations from '../translations';
+const {
   getErrorMessage,
   getFetchErrorMessage,
   getUpdateErrorMessage,
-  getDeleteMessage,
-} from '../translations';
+  getDeleteErrorMessage,
+} = translations;
 
 /**
  * Fetch wrapper for GET request that dispatches actions according to the
@@ -105,7 +107,7 @@ export const del = (url, action_success, action_failure, dispatch) => {
       dispatch(
         addNotification(
           getErrorMessage(),
-          getDeleteMessage(action_success.name),
+          getDeleteErrorMessage(action_success.name),
           'error'
         )
       );

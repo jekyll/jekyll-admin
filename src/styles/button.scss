@@ -8,7 +8,10 @@
   padding: 12px 20px;
   white-space: nowrap;
   text-shadow: 1px 1px 1px rgba(68, 68, 68, 0.2);
+  outline: none;
+  border: none;
   border-radius: 4px;
+  -webkit-appearance: none;
   @include btn($btn-initial, $btn-initial-border);
   i {
     margin-right: 4px;

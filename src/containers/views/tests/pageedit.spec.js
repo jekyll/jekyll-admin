@@ -8,14 +8,14 @@ import Button from '../../../components/Button';
 import { config, page } from './fixtures';
 
 const defaultProps = {
-  page: page,
+  page,
+  config,
   errors: [],
   fieldChanged: false,
   updated: false,
   isFetching: false,
   router: {},
   route: {},
-  config: config,
   params: { splat: [null, 'page', 'md'] },
 };
 
@@ -27,19 +27,18 @@ const setup = (props = defaultProps) => {
     updateTitle: jest.fn(),
     updateBody: jest.fn(),
     updatePath: jest.fn(),
-    updateDraft: jest.fn(),
     clearErrors: jest.fn(),
   };
 
   const component = shallow(<PageEdit {...actions} {...props} />);
 
   return {
-    component,
+    props,
     actions,
+    component,
     saveButton: component.find(Button).first(),
     deleteButton: component.find(Button).last(),
     errors: component.find(Errors),
-    props,
   };
 };
 
@@ -81,6 +80,6 @@ describe('Containers::PageEdit', () => {
   it('should call deletePage', () => {
     const { deleteButton, actions } = setup();
     deleteButton.simulate('click');
-    expect(actions.deletePage).not.toHaveBeenCalled(); // TODO pass prompt
+    expect(actions.deletePage.mock.calls.length).toBe(1);
   });
 });

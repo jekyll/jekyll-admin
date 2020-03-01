@@ -2,29 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
-import Modal from 'react-modal';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
-import StaticIndex from '../../containers/views/StaticIndex';
-import Icon from '../Icon';
+import FilePicker from '../FilePicker';
 import 'react-widgets/dist/css/react-widgets.css';
 
 momentLocalizer(moment);
 
 export class MetaSimple extends Component {
-  state = {
-    staticfiles: [],
-    showModal: false,
-  };
-
-  handleOpenModal = () => {
-    this.setState({ showModal: true });
-  };
-
-  handleCloseModal = () => {
-    this.setState({ showModal: false });
-  };
-
   handleEditableChange = e => {
     const { nameAttr, updateFieldValue } = this.props;
     updateFieldValue(nameAttr, e.target.value);
@@ -55,8 +40,8 @@ export class MetaSimple extends Component {
 
   renderDatepicker() {
     const { fieldValue } = this.props;
-    let dateValue =
-      new Date(fieldValue) == 'Invalid Date' ? null : new Date(fieldValue);
+    let dateValue = new Date(fieldValue);
+    if (`${dateValue}` === 'Invalid Date') dateValue = null;
     return (
       <DateTimePicker
         onChange={this.handleDatepickerChange}
@@ -66,11 +51,10 @@ export class MetaSimple extends Component {
     );
   }
 
-  onClickPickerItem = url => {
+  onPickItem = path => {
     const { nameAttr, updateFieldValue } = this.props;
-    this.refs.imagepicker.value = url;
-    updateFieldValue(nameAttr, url);
-    this.handleCloseModal();
+    this.refs.imagepicker.value = path;
+    updateFieldValue(nameAttr, path);
   };
 
   renderStaticFilePicker() {
@@ -83,36 +67,7 @@ export class MetaSimple extends Component {
           value={fieldValue}
           ref="imagepicker"
         />
-        <span className="images-wrapper">
-          <button onClick={this.handleOpenModal}>
-            <Icon name="picture-o" />
-          </button>
-          <Modal
-            isOpen={this.state.showModal}
-            onAfterOpen={this.fetchStaticFiles}
-            contentLabel="onRequestClose Example"
-            onRequestClose={this.handleCloseModal}
-            style={{
-              overlay: {
-                backgroundColor: 'rgba(0,0,0,0.6)',
-                zIndex: 10,
-              },
-              content: {
-                margin: 20,
-                paddingTop: 0,
-                paddingRight: 10,
-                paddingLeft: 15,
-              },
-            }}
-          >
-            <div className="content">
-              <StaticIndex
-                onClickStaticFile={url => this.onClickPickerItem(url)}
-                modalView={true}
-              />
-            </div>
-          </Modal>
-        </span>
+        <FilePicker onPick={this.onPickItem} />
       </div>
     );
   }

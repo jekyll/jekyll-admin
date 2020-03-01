@@ -23,13 +23,11 @@ import {
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
-import { capitalize, preventDefault } from '../../utils/helpers';
-import {
-  getLeaveMessage,
-  getDeleteMessage,
-  getNotFoundMessage,
-} from '../../translations';
+import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
+
+import translations from '../../translations';
+const { getLeaveMessage, getDeleteMessage, getNotFoundMessage } = translations;
 
 export class DocumentEdit extends Component {
   componentDidMount() {
@@ -46,7 +44,7 @@ export class DocumentEdit extends Component {
       const new_path = nextProps.currentDocument.path;
       const path = currentDocument.path;
       // redirect if the path is changed
-      if (new_path != path) {
+      if (new_path !== path) {
         browserHistory.push(
           `${ADMIN_PREFIX}/collections/${new_path.substring(1)}` // remove `_`
         );
@@ -120,16 +118,14 @@ export class DocumentEdit extends Component {
       front_matter,
       name,
     } = currentDocument;
-    const [directory, ...rest] = params.splat;
+    const directory = params.splat[0];
     const defaultMetadata = injectDefaultFields(config, directory, collection);
 
     const keyboardHandlers = {
       save: this.handleClickSave,
     };
 
-    const document_title = directory
-      ? `${title} - ${directory} - ${capitalize(collection)}`
-      : `${title} - ${capitalize(collection)}`;
+    const document_title = getDocumentTitle(collection, directory, title);
 
     return (
       <DocumentTitle title={document_title}>

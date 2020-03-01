@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import DocumentTitle from 'react-document-title';
 import Explorer from '../../components/Explorer';
 import { search, filterBySearchInput } from '../../ducks/utils';
 import { fetchDataFiles, deleteDataFile } from '../../ducks/datafiles';
+import { getDocumentTitle } from '../../utils/helpers';
 
 export class DataFiles extends Component {
   componentDidMount() {
@@ -28,7 +28,7 @@ export class DataFiles extends Component {
       return null;
     }
 
-    const title = params.splat ? `${params.splat} | Data Files` : 'Data Files';
+    const title = getDocumentTitle('data files', params.splat);
 
     return (
       <DocumentTitle title={title}>

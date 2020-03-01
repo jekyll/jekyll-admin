@@ -95,14 +95,6 @@ describe('Actions::Metadata', () => {
     expect(metadataDuck.updateBody('Test Body')).toEqual(expectedAction);
   });
 
-  it('creates UPDATE_DRAFT', () => {
-    const expectedAction = {
-      type: metadataDuck.UPDATE_DRAFT,
-      draft: false,
-    };
-    expect(metadataDuck.updateDraft(false)).toEqual(expectedAction);
-  });
-
   it('creates UPDATE_PATH', () => {
     const expectedAction = {
       type: metadataDuck.UPDATE_PATH,

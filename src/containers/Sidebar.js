@@ -6,28 +6,19 @@ import { Link } from 'react-router';
 import { ADMIN_PREFIX } from '../constants';
 import Splitter from '../components/Splitter';
 import Icon from '../components/Icon';
+import Accordion from '../components/Accordion';
 import { fetchCollections } from '../ducks/collections';
 import { capitalize } from '../utils/helpers';
-import { sidebar as SidebarTranslations } from '../translations';
-import classnames from 'classnames';
 import _ from 'underscore';
 
-export class Sidebar extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { collapsedPanel: true };
-  }
+import translations from '../translations';
+const SidebarTranslations = translations.sidebar;
 
+export class Sidebar extends Component {
   componentDidMount() {
     const { fetchCollections } = this.props;
     fetchCollections();
   }
-
-  handleClick = () => {
-    this.setState({
-      collapsedPanel: !this.state.collapsedPanel,
-    });
-  };
 
   renderCollections(hiddens = []) {
     const { collections } = this.props;
@@ -37,7 +28,7 @@ export class Sidebar extends Component {
     }
 
     const collectionItems = _.map(collections, (col, i) => {
-      if (col.label != 'posts' && !hiddens.includes(col.label)) {
+      if (col.label !== 'posts' && !hiddens.includes(col.label)) {
         return (
           <li key={i}>
             <Link
@@ -52,31 +43,20 @@ export class Sidebar extends Component {
       }
     }).filter(Boolean);
 
-    if (!collectionItems.length) {
+    const itemsCount = collectionItems.length;
+    if (!itemsCount) {
       return null;
     }
 
-    const { collapsedPanel } = this.state;
-    const accordionClasses = classnames('accordion-label', {
-      collapsed: collapsedPanel,
-    });
-
-    // Arbitrary manipulation based on visual cues from surrounding elements.
-    // TODO: Compute values programmatically.
-    const panelHeight = collapsedPanel ? 50 : (collectionItems.length + 1) * 50;
-
     return (
-      <li className={accordionClasses} style={{ maxHeight: panelHeight }}>
-        <a onClick={this.handleClick}>
-          <Icon name="book" />
-          {SidebarTranslations.collections}
-          <div className="counter">{collectionItems.length}</div>
-          <div className="chevrons">
-            <Icon name="chevron-up" />
-          </div>
-        </a>
+      <Accordion
+        count={itemsCount}
+        icon="briefcase"
+        label={SidebarTranslations.collections}
+        counter
+      >
         <ul>{collectionItems}</ul>
-      </li>
+      </Accordion>
     );
   }
 

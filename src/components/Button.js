@@ -1,8 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import classnames from 'classnames';
 import Icon from './Icon';
-import { labels } from '../translations';
+
+import translations from '../translations';
+const { labels } = translations;
 
 const iconMap = {
   create: 'plus-square',
@@ -25,16 +27,15 @@ export default function Button({
 }) {
   const btnClass = classnames('btn', {
     'btn-active': active,
-    'btn-success': active && (type == 'save' || type == 'create'),
-    'btn-delete': type == 'delete',
-    'btn-view': type == 'view' || type == 'publish',
+    'btn-success': active && (type === 'save' || type === 'create'),
+    'btn-delete': type === 'delete',
+    'btn-view': type === 'view' || type === 'publish',
     'btn-inactive': !active,
     'btn-fat': block,
     'btn-thin': thin,
   });
 
-  let label = '';
-  let triggeredLabel = '';
+  let label, triggeredLabel;
   switch (type) {
     case 'save':
     case 'create':
@@ -52,21 +53,30 @@ export default function Button({
       label = labels[type].label;
       break;
     default:
+      label = '<LABEL>';
+      triggeredLabel = '<NEXT LABEL>';
   }
 
   const iconName = icon || iconMap[type];
+  const iconNode = iconName && <Icon name={iconName} />;
 
-  return (
-    <a
-      href={to}
-      target="_blank"
-      onClick={to ? null : onClick}
-      className={btnClass}
-    >
-      {iconName && <Icon name={iconName} />}
-      {triggered ? triggeredLabel : label}
-    </a>
-  );
+  if (to) {
+    return (
+      <a href={to} target="_blank" className={btnClass}>
+        {iconNode}
+        {label}
+      </a>
+    );
+  } else if (onClick) {
+    return (
+      <button onClick={onClick} className={btnClass}>
+        {iconNode}
+        {triggered ? triggeredLabel : label}
+      </button>
+    );
+  }
+
+  return null;
 }
 
 Button.propTypes = {

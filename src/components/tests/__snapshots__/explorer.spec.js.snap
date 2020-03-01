@@ -96,18 +96,16 @@ exports[`Components::Explorer renders correctly 1`] = `
             <div
               className="row-actions"
             >
-              <a
+              <button
                 className="btn btn-active btn-delete btn-thin"
-                href={undefined}
                 onClick={[Function]}
-                target="_blank"
               >
                 <i
                   aria-hidden="true"
                   className="fa fa-trash"
                 />
                 Delete
-              </a>
+              </button>
             </div>
           </td>
         </tr>
