@@ -118,7 +118,7 @@ class MarkdownEditor extends Component {
   };
 
   handleFilePick = path => {
-    const { codemirror, getState, options } = this.editor;
+    const { codemirror, options } = this.editor;
     const { image, link } = options.insertTexts;
     const url = `{{ '${path}' | relative_url }}`;
     const ext = getExtensionFromPath(path);
