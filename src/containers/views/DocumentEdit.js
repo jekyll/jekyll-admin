@@ -3,18 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
-import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
+import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
-import Splitter from '../../components/Splitter';
-import Errors from '../../components/Errors';
-import Breadcrumbs from '../../components/Breadcrumbs';
 import Button from '../../components/Button';
-import InputPath from '../../components/form/InputPath';
-import InputTitle from '../../components/form/InputTitle';
-import MarkdownEditor from '../../components/MarkdownEditor';
-import StaticMetaData from '../../components/metadata/StaticMetaFields';
-import Metadata from '../../containers/MetaFields';
+import Errors from '../../components/Errors';
+import Splitter from '../../components/Splitter';
+import Breadcrumbs from '../../components/Breadcrumbs';
+import MarkdownPageBody from '../../components/MarkdownPageBody';
 import {
   fetchDocument,
   deleteDocument,
@@ -137,23 +133,18 @@ export class DocumentEdit extends Component {
           </div>
 
           <div className="content-wrapper">
-            <div className="content-body">
-              <InputPath onChange={updatePath} type={collection} path={name} />
-              <InputTitle onChange={updateTitle} title={title} ref="title" />
-              <MarkdownEditor
-                onChange={updateBody}
-                onSave={this.handleClickSave}
-                placeholder="Body"
-                initialValue={raw_content}
-                ref="editor"
-              />
-              <Splitter />
-              <StaticMetaData fields={defaultMetadata} />
-              <Metadata
-                fields={{ title, path: name, raw_content, ...front_matter }}
-              />
-            </div>
-
+            <MarkdownPageBody
+              type={collection}
+              path={name}
+              title={title}
+              body={raw_content}
+              updatePath={updatePath}
+              updateTitle={updateTitle}
+              updateBody={updateBody}
+              onSave={this.handleClickSave}
+              metafields={{ title, path: name, raw_content, ...front_matter }}
+              staticmetafields={defaultMetadata}
+            />
             <div className="content-side">
               <Button
                 onClick={this.handleClickSave}
@@ -162,7 +153,7 @@ export class DocumentEdit extends Component {
                 triggered={updated}
                 block
               />
-              {http_url && <Button to={http_url} type="view" active block />}
+              <Button to={http_url} type="view" active block />
               <Splitter />
               <Button
                 onClick={this.handleClickDelete}

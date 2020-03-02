@@ -1,15 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { HotKeys } from 'react-hotkeys';
-import Splitter from './Splitter';
+import Button from './Button';
 import Errors from './Errors';
 import Breadcrumbs from './Breadcrumbs';
-import Button from './Button';
-import InputPath from './form/InputPath';
-import InputTitle from './form/InputTitle';
-import MarkdownEditor from './MarkdownEditor';
-import StaticMetaData from './metadata/StaticMetaFields';
-import Metadata from '../containers/MetaFields';
+import MarkdownPageBody from './MarkdownPageBody';
 import { injectDefaultFields as defaultFields } from '../utils/metadata';
 
 export default function CreateMarkdownPage({
@@ -35,20 +30,14 @@ export default function CreateMarkdownPage({
       </div>
 
       <div className="content-wrapper">
-        <div className="content-body">
-          <InputPath onChange={updatePath} type={type} path="" />
-          <InputTitle onChange={updateTitle} title="" />
-          <MarkdownEditor
-            onChange={updateBody}
-            onSave={onClickSave}
-            placeholder="Body"
-            initialValue=""
-          />
-          <Splitter />
-          <StaticMetaData fields={defaultFields(config, splat, metaType)} />
-          <Metadata fields={{}} />
-        </div>
-
+        <MarkdownPageBody
+          type={type}
+          updatePath={updatePath}
+          updateTitle={updateTitle}
+          updateBody={updateBody}
+          onSave={onClickSave}
+          staticmetafields={defaultFields(config, splat, metaType)}
+        />
         <div className="content-side">
           <Button
             onClick={onClickSave}
