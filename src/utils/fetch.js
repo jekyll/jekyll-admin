@@ -7,7 +7,7 @@ const {
   getErrorMessage,
   getFetchErrorMessage,
   getUpdateErrorMessage,
-  getDeleteMessage,
+  getDeleteErrorMessage,
 } = translations;
 
 /**
@@ -107,7 +107,7 @@ export const del = (url, action_success, action_failure, dispatch) => {
       dispatch(
         addNotification(
           getErrorMessage(),
-          getDeleteMessage(action_success.name),
+          getDeleteErrorMessage(action_success.name),
           'error'
         )
       );

@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
 import moment from 'moment';
-import momentLocalizer from 'react-widgets/lib/localizers/moment';
+import momentLocalizer from 'react-widgets-moment';
 import FilePicker from '../FilePicker';
 import 'react-widgets/dist/css/react-widgets.css';
 
@@ -40,8 +40,8 @@ export class MetaSimple extends Component {
 
   renderDatepicker() {
     const { fieldValue } = this.props;
-    let dateValue =
-      new Date(fieldValue) === 'Invalid Date' ? null : new Date(fieldValue);
+    let dateValue = new Date(fieldValue);
+    if (`${dateValue}` === 'Invalid Date') dateValue = null;
     return (
       <DateTimePicker
         onChange={this.handleDatepickerChange}

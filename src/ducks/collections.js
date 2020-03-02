@@ -1,9 +1,9 @@
 import _ from 'underscore';
 import moment from 'moment';
-import { CLEAR_ERRORS, validationError } from './utils';
-import { get, put } from '../utils/fetch';
+import { CLEAR_ERRORS, validationError, filterDeleted } from './utils';
+import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify, trimObject } from '../utils/helpers';
+import { slugify, trimObject, computeRelativePath } from '../utils/helpers';
 import {
   collectionsAPIUrl,
   collectionAPIUrl,
@@ -145,20 +145,13 @@ export const putDocument = (collection, directory, filename) => (
 };
 
 export const deleteDocument = (collection, directory, filename) => dispatch => {
-  return fetch(documentAPIUrl(collection, directory, filename), {
-    method: 'DELETE',
-    credentials: 'same-origin',
-  })
-    .then(data => {
-      dispatch({ type: DELETE_DOCUMENT_SUCCESS });
-      dispatch(fetchCollection(collection, directory));
-    })
-    .catch(error =>
-      dispatch({
-        type: DELETE_DOCUMENT_FAILURE,
-        error,
-      })
-    );
+  const relative_path = computeRelativePath(directory, filename);
+  return del(
+    documentAPIUrl(collection, directory, filename),
+    { type: DELETE_DOCUMENT_SUCCESS, name: 'doc', id: relative_path },
+    { type: DELETE_DOCUMENT_FAILURE, name: 'error' },
+    dispatch
+  );
 };
 
 const generateFilenameFromTitle = (metadata, collection) => {
@@ -255,6 +248,11 @@ export default function collections(
         ...state,
         currentDocument: action.doc,
         updated: true,
+      };
+    case DELETE_DOCUMENT_SUCCESS:
+      return {
+        ...state,
+        entries: filterDeleted(state.entries, action.id),
       };
     default:
       return {

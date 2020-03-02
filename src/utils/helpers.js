@@ -155,3 +155,12 @@ export const getDocumentTitle = (type, splat, prefix = '') => {
   const label = toTitleCase(type.toString());
   return [prefix, splat, label].filter(Boolean).join(' | ');
 };
+
+/**
+ * @param {String} directory - Directory splat for current resource.
+ * @param {String} filename - Basename of current resource.
+ * @return {String} Filename or directory splat joined to the filename.
+ */
+export const computeRelativePath = (directory, filename) => {
+  return directory ? `${directory}/${filename}` : `${filename}`;
+};
