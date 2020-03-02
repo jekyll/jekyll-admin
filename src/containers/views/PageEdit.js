@@ -3,18 +3,14 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
-import _ from 'underscore';
 import { HotKeys } from 'react-hotkeys';
+import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
 import Button from '../../components/Button';
-import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
+import Splitter from '../../components/Splitter';
 import Breadcrumbs from '../../components/Breadcrumbs';
-import InputPath from '../../components/form/InputPath';
-import InputTitle from '../../components/form/InputTitle';
-import MarkdownEditor from '../../components/MarkdownEditor';
-import StaticMetaData from '../../components/metadata/StaticMetaFields';
-import Metadata from '../MetaFields';
+import MarkdownPageBody from '../../components/MarkdownPageBody';
 import { fetchPage, deletePage, putPage } from '../../ducks/pages';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
@@ -122,23 +118,18 @@ export class PageEdit extends Component {
           </div>
 
           <div className="content-wrapper">
-            <div className="content-body">
-              <InputPath onChange={updatePath} type="pages" path={name} />
-              <InputTitle onChange={updateTitle} title={title} ref="title" />
-              <MarkdownEditor
-                onChange={updateBody}
-                onSave={this.handleClickSave}
-                placeholder="Body"
-                initialValue={raw_content}
-                ref="editor"
-              />
-              <Splitter />
-              <StaticMetaData fields={defaultMetadata} />
-              <Metadata
-                fields={{ title, raw_content, path: name, ...front_matter }}
-              />
-            </div>
-
+            <MarkdownPageBody
+              type="pages"
+              updateTitle={updateTitle}
+              updatePath={updatePath}
+              updateBody={updateBody}
+              onSave={this.handleClickSave}
+              path={name}
+              title={title}
+              body={raw_content}
+              metafields={{ title, raw_content, path: name, ...front_matter }}
+              staticmetafields={defaultMetadata}
+            />
             <div className="content-side">
               <Button
                 onClick={this.handleClickSave}
