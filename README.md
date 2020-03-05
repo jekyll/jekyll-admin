@@ -50,7 +50,7 @@ Interested in contributing to Jekyll Admin? We’d love your help. Jekyll Admin 
 
 ### Code Contributors
 
-This project exists thanks to all the people who contribute. [[Contribute](CONTRIBUTING.md)].
+This project exists thanks to all the people who contribute. [[Contribute](.github/CONTRIBUTING.md)].
 <a href="https://github.com/jekyll/jekyll-admin/graphs/contributors"><img src="https://opencollective.com/jekyll-admin/contributors.svg?width=890&button=false" /></a>
 
 ### Financial Contributors
