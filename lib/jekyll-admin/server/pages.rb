@@ -16,6 +16,8 @@ module JekyllAdmin
       put "/*?/?:path.:ext" do
         ensure_html_content
 
+        ensure_not_written_file if new? || renamed?
+
         if renamed?
           ensure_requested_file
           delete_file_without_process path

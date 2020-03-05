@@ -25,6 +25,8 @@ module JekyllAdmin
       put "/:collection_id/*?/?:path.:ext" do
         ensure_collection
 
+        ensure_not_written_file if new? || renamed?
+
         if renamed?
           ensure_requested_file
           delete_file_without_process path

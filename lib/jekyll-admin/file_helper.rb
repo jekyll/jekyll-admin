@@ -52,6 +52,10 @@ module JekyllAdmin
       ensure_file(written_file)
     end
 
+    def ensure_not_written_file
+      ensure_not_file(written_file)
+    end
+
     def find_by_path(path)
       files = case namespace
               when "collections"
@@ -70,6 +74,10 @@ module JekyllAdmin
 
     def ensure_file(file)
       render_404 if file.nil?
+    end
+
+    def ensure_not_file(file)
+      render_404 unless file.nil?
     end
 
     def ensure_directory

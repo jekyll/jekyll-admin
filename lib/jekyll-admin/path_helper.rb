@@ -51,6 +51,13 @@ module JekyllAdmin
       ensure_leading_slash(request_payload["path"]) != relative_path
     end
 
+    # Is this request creating a new file?
+    def new?
+      return false if request_payload["path"]
+
+      ensure_leading_slash(request_payload["path"]) != relative_path
+    end
+
     private
 
     # Returns the path to the requested file's containing directory
