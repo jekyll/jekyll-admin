@@ -1,7 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import TextareaAutosize from 'react-textarea-autosize';
 import classnames from 'classnames';
-import { getDeleteMessage } from '../../translations';
+
+import translations from '../../translations';
+const { getDeleteMessage } = translations;
 
 export default class MetaTags extends Component {
   constructor(props) {

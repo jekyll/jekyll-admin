@@ -21,8 +21,8 @@ function setup(files = [directory, staticfile]) {
   const component = mount(<StaticFiles {...props} {...actions} />);
 
   return {
-    component: component,
-    actions: actions,
+    actions,
+    component,
     info: component.find('.preview-info'),
     previewContainer: component.find('.preview-container'),
   };

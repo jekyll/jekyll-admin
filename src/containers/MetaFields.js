@@ -15,10 +15,12 @@ import {
   moveArrayItem,
   convertField,
 } from '../ducks/metadata';
+import { fetchSiteMeta } from '../ducks/siteMeta';
 
 export class MetaFields extends Component {
   componentDidMount() {
-    const { storeContentFields, fields } = this.props;
+    const { storeContentFields, fields, fetchSiteMeta, dataview } = this.props;
+    if (!dataview) fetchSiteMeta();
     storeContentFields(fields);
   }
 
@@ -54,7 +56,7 @@ export class MetaFields extends Component {
       let type = 'simple';
       if (_.isObject(field)) type = 'object';
       if (_.isArray(field)) type = 'array';
-      if (_.isArray(field) && key == 'tags') type = 'simple';
+      if (_.isArray(field) && key === 'tags') type = 'simple';
       return (
         <MetaField
           key={key}
@@ -120,18 +122,21 @@ MetaFields.propTypes = {
   updateFieldValue: PropTypes.func.isRequired,
   moveArrayItem: PropTypes.func.isRequired,
   convertField: PropTypes.func.isRequired,
+  fetchSiteMeta: PropTypes.func.isRequired,
   dataview: PropTypes.bool,
 };
 
 const mapStateToProps = state => ({
   metadata: state.metadata.metadata,
   key_prefix: state.metadata.key_prefix,
+  site: state.meta.site,
 });
 
 const mapDispatchToProps = dispatch =>
   bindActionCreators(
     {
       storeContentFields,
+      fetchSiteMeta,
       addField,
       removeField,
       updateFieldKey,

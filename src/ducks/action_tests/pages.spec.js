@@ -51,12 +51,11 @@ describe('Actions::Pages', () => {
 
   it('deletes the page successfully', () => {
     nock(API)
-      .delete(`/pages/page-dir/test/test.md`)
+      .delete('/pages/page-dir/test/test.md')
       .reply(200);
 
     const expectedActions = [
-      { type: pagesDuck.DELETE_PAGE_SUCCESS },
-      { type: pagesDuck.FETCH_PAGES_REQUEST },
+      { type: pagesDuck.DELETE_PAGE_SUCCESS, id: 'page-dir/test/test.md' },
     ];
 
     const store = mockStore({});
@@ -70,7 +69,7 @@ describe('Actions::Pages', () => {
 
   it('creates DELETE_PAGE_FAILURE when deleting a page failed', () => {
     nock(API)
-      .delete(`/pages/page.md`)
+      .delete('/pages/page.md')
       .replyWithError('something awful happened');
 
     const expectedAction = {

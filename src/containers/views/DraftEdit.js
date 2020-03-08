@@ -3,19 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { browserHistory, withRouter } from 'react-router';
+import { HotKeys } from 'react-hotkeys';
 import _ from 'underscore';
 import moment from 'moment';
 import DocumentTitle from 'react-document-title';
-import { HotKeys } from 'react-hotkeys';
 import Button from '../../components/Button';
-import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
+import Splitter from '../../components/Splitter';
 import Breadcrumbs from '../../components/Breadcrumbs';
-import InputPath from '../../components/form/InputPath';
-import InputTitle from '../../components/form/InputTitle';
-import MarkdownEditor from '../../components/MarkdownEditor';
-import StaticMetaData from '../../components/metadata/StaticMetaFields';
-import Metadata from '../MetaFields';
+import MarkdownPageBody from '../../components/MarkdownPageBody';
 import {
   fetchDraft,
   deleteDraft,
@@ -25,13 +21,15 @@ import {
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
 import { injectDefaultFields } from '../../utils/metadata';
-import { preventDefault } from '../../utils/helpers';
-import {
+import { preventDefault, getDocumentTitle } from '../../utils/helpers';
+import { ADMIN_PREFIX } from '../../constants';
+
+import translations from '../../translations';
+const {
   getLeaveMessage,
   getDeleteMessage,
   getPublishDraftMessage,
-} from '../../translations';
-import { ADMIN_PREFIX } from '../../constants';
+} = translations;
 
 export class DraftEdit extends Component {
   componentDidMount() {
@@ -48,7 +46,7 @@ export class DraftEdit extends Component {
       const new_path = nextProps.draft.path;
       const path = this.props.draft.path;
       // redirect if the path is changed
-      if (new_path != path) {
+      if (new_path !== path) {
         browserHistory.push(
           `${ADMIN_PREFIX}/drafts/${nextProps.draft.relative_path}`
         );
@@ -101,9 +99,9 @@ export class DraftEdit extends Component {
     const { deleteDraft, params } = this.props;
     const confirm = window.confirm(getDeleteMessage(name));
     if (confirm) {
-      const goTo = directory ? `/${directory}` : '';
       const [directory, ...rest] = params.splat;
       const filename = rest.join('.');
+      const goTo = directory ? `/${directory}` : '';
       deleteDraft(directory, filename);
       browserHistory.push(`${ADMIN_PREFIX}/drafts${goTo}`);
     }
@@ -141,14 +139,10 @@ export class DraftEdit extends Component {
       http_url,
       front_matter,
     } = draft;
-    const [directory, ...rest] = params.splat;
-
+    const directory = params.splat[0];
     const title = front_matter && front_matter.title ? front_matter.title : '';
     const defaultMetadata = injectDefaultFields(config, directory, collection);
-
-    const document_title = directory
-      ? `${title || name} - ${directory} - Drafts`
-      : `${title || name} - Drafts`;
+    const document_title = getDocumentTitle('drafts', directory, title || name);
 
     return (
       <DocumentTitle title={document_title}>
@@ -159,23 +153,18 @@ export class DraftEdit extends Component {
           </div>
 
           <div className="content-wrapper">
-            <div className="content-body">
-              <InputPath onChange={updatePath} type="drafts" path={name} />
-              <InputTitle onChange={updateTitle} title={title} ref="title" />
-              <MarkdownEditor
-                onChange={updateBody}
-                onSave={this.handleClickSave}
-                placeholder="Body"
-                initialValue={raw_content}
-                ref="editor"
-              />
-              <Splitter />
-              <StaticMetaData fields={defaultMetadata} />
-              <Metadata
-                fields={{ title, raw_content, path: name, ...front_matter }}
-              />
-            </div>
-
+            <MarkdownPageBody
+              type="drafts"
+              path={name}
+              title={title}
+              body={raw_content}
+              updatePath={updatePath}
+              updateBody={updateBody}
+              updateTitle={updateTitle}
+              onSave={this.handleClickSave}
+              metafields={{ title, raw_content, path: name, ...front_matter }}
+              staticmetafields={defaultMetadata}
+            />
             <div className="content-side">
               <Button
                 onClick={this.handleClickSave}

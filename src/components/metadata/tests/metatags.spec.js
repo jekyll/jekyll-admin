@@ -25,12 +25,12 @@ function setup(props = defaultProps) {
 
 describe('Components::MetaTags', () => {
   it('should render an editable', () => {
-    const { component, editable } = setup();
+    const { editable } = setup();
     expect(editable.node).toBeTruthy();
   });
 
   it('should render an editable with "null" fieldValue prop', () => {
-    const { component, editable } = setup({
+    const { editable } = setup({
       ...defaultProps,
       fieldValue: null,
     });
@@ -92,7 +92,7 @@ describe('Components::MetaTags', () => {
     editable.simulate('keyUp', { key: ' ', keyCode: 32 });
 
     component.find('.delete-tag').simulate('click');
-    expect(component.state('pageTags')).toEqual(['foo']); // TODO: pass prompt
+    expect(component.state('pageTags')).toEqual([]);
   });
 
   it('should delete tags on pressing "backspace"', () => {
@@ -101,7 +101,7 @@ describe('Components::MetaTags', () => {
     editable.simulate('change', editable);
     editable.simulate('keyUp', { key: ' ', keyCode: 32 });
     editable.simulate('keyUp', { key: 'Backspace', keyCode: 8 });
-    expect(component.state('pageTags')).toEqual(['foo']); // TODO: pass prompt
+    expect(component.state('pageTags')).toEqual([]);
   });
 
   it('should call updateFieldValue when the input is changed', () => {
@@ -126,7 +126,7 @@ describe('Components::MetaTags', () => {
   });
 
   it('should render a dropdown list of tags not already used in current document', () => {
-    const { component, editable } = setup({
+    const { component } = setup({
       ...defaultProps,
       fieldValue: ['foo'],
       suggestions: ['foo', 'bar', 'baz'],
@@ -137,7 +137,7 @@ describe('Components::MetaTags', () => {
   });
 
   it('should create a tag from the dropdown list of suggested tags', () => {
-    const { component, editable } = setup({
+    const { component } = setup({
       ...defaultProps,
       fieldValue: ['foo'],
       suggestions: ['foo', 'bar', 'baz'],

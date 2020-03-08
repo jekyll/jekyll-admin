@@ -50,7 +50,7 @@ export default class MetaButtons extends Component {
   }
 
   render() {
-    const { currentType, parentType, parentKey, onRemoveClick } = this.props;
+    const { currentType, parentType, onRemoveClick } = this.props;
     const sortableHandle = (
       <span className="move">
         <Icon name="arrows" />
@@ -63,7 +63,7 @@ export default class MetaButtons extends Component {
 
     return (
       <div className="meta-buttons">
-        {parentType == 'array' && sortableHandle}
+        {parentType === 'array' && sortableHandle}
         <span className={dropdownClasses}>
           <a
             className="meta-button"

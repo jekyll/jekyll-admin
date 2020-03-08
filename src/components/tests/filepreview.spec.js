@@ -2,7 +2,6 @@ import React from 'react';
 import { mount } from 'enzyme';
 
 import FilePreview from '../FilePreview';
-
 import { staticfile } from './fixtures';
 
 function setup(file = staticfile) {
@@ -14,13 +13,13 @@ function setup(file = staticfile) {
   let component = mount(<FilePreview file={file} splat="" {...actions} />);
 
   return {
+    actions,
     component,
     filename: component.find('.filename'),
     image: component.find('img'),
     div: component.find('.file-preview a div'),
     indicator: component.find('.file-preview .theme-indicator'),
     delete_btn: component.find('.file-preview .delete'),
-    actions: actions,
   };
 }
 

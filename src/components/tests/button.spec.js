@@ -13,7 +13,7 @@ function setup(props = defaultProps) {
 
   return {
     component,
-    link: component.find('a'),
+    btn: component.find('.btn'),
     icon: component.find('i'),
     actions,
   };
@@ -21,59 +21,64 @@ function setup(props = defaultProps) {
 
 describe('Components::Button', () => {
   it('should render correctly', () => {
-    let { link, icon } = setup();
-    expect(link.text()).toBe('Save');
+    let { btn, icon } = setup();
+    expect(btn.text()).toBe('Save');
     expect(icon.node).toBeTruthy();
 
-    link = setup({
+    btn = setup({
       ...defaultProps,
       type: 'create',
       active: false,
       block: true,
-    }).link;
-    expect(link.text()).toBe('Create');
+    }).btn;
+    expect(btn.text()).toBe('Create');
+  });
+
+  it('should not render if both props `to` and `onClick` are falsy', () => {
+    const component = mount(<Button type="create" active />);
+    expect(component.find('.btn').node).toBeFalsy();
   });
 
   it('should have correct class names', () => {
-    let { link } = setup();
-    expect(link.prop('className')).toBe('btn btn-active btn-success');
+    let { btn } = setup();
+    expect(btn.prop('className')).toBe('btn btn-active btn-success');
 
-    link = setup({
+    btn = setup({
       ...defaultProps,
       type: 'delete',
       active: false,
       block: true,
-    }).link;
-    expect(link.prop('className')).toBe('btn btn-delete btn-inactive btn-fat');
+    }).btn;
+    expect(btn.prop('className')).toBe('btn btn-delete btn-inactive btn-fat');
   });
 
   it('should render triggered text', () => {
-    let { link } = setup({ ...defaultProps, triggered: true });
-    expect(link.text()).toBe('Saved');
+    let { btn } = setup({ ...defaultProps, triggered: true });
+    expect(btn.text()).toBe('Saved');
 
-    link = setup({
+    btn = setup({
       ...defaultProps,
       type: 'view-toggle',
       triggered: true,
-    }).link;
-    expect(link.text()).toBe('Switch View to Raw Editor');
+    }).btn;
+    expect(btn.text()).toBe('Switch View to Raw Editor');
   });
 
   it('should render custom icon', () => {
-    const { link, icon } = setup({ ...defaultProps, icon: 'eye' });
-    expect(link.text()).toBe('Save');
+    const { btn, icon } = setup({ ...defaultProps, icon: 'eye' });
+    expect(btn.text()).toBe('Save');
     expect(icon.node).toBeTruthy();
   });
 
   it('should call onClick', () => {
-    const { link, actions } = setup();
-    link.simulate('click');
+    const { btn, actions } = setup();
+    btn.simulate('click');
     expect(actions.onClick).toHaveBeenCalled();
   });
 
   it('should not call onClick if it is a link', () => {
-    const { link, actions } = setup({ ...defaultProps, to: 'some_link' });
-    link.simulate('click');
+    const { btn, actions } = setup({ ...defaultProps, to: 'some_link' });
+    btn.simulate('click');
     expect(actions.onClick).not.toHaveBeenCalled();
   });
 });

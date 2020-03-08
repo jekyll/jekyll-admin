@@ -13,9 +13,9 @@ function setup(props = { content, editorChanged: false }) {
   let component = shallow(<Editor {...props} {...actions} />);
 
   return {
+    actions,
     component,
     editor: component.find('.config-editor'),
-    actions: actions,
   };
 }
 

@@ -1,18 +1,13 @@
 import _ from 'underscore';
-import { CLEAR_ERRORS, validationError } from './utils';
-import {
-  PUT_DOCUMENT_REQUEST,
-  PUT_DOCUMENT_SUCCESS,
-  PUT_DOCUMENT_FAILURE,
-} from './collections';
-import { get, put } from '../utils/fetch';
+import { CLEAR_ERRORS, validationError, filterDeleted } from './utils';
+import { PUT_DOCUMENT_SUCCESS, PUT_DOCUMENT_FAILURE } from './collections';
+import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify, trimObject } from '../utils/helpers';
+import { slugify, trimObject, computeRelativePath } from '../utils/helpers';
 import { draftsAPIUrl, draftAPIUrl, documentAPIUrl } from '../constants/api';
-import {
-  getTitleRequiredMessage,
-  getFilenameNotValidMessage,
-} from '../translations';
+
+import translations from '../translations';
+const { getTitleRequiredMessage, getFilenameNotValidMessage } = translations;
 
 export const FETCH_DRAFTS_REQUEST = 'FETCH_DRAFTS_REQUEST';
 export const FETCH_DRAFTS_SUCCESS = 'FETCH_DRAFTS_SUCCESS';
@@ -69,11 +64,11 @@ export const putDraft = (mode, directory, filename = '') => (
 
   // omit raw_content, path and empty-value keys in metadata state from front_matter
   const front_matter = _.omit(metadata, (value, key, object) => {
-    return key == 'raw_content' || key == 'path' || value === '';
+    return key === 'raw_content' || key === 'path' || value === '';
   });
 
   let payload;
-  if (mode == 'create') {
+  if (mode === 'create') {
     // strip '_drafts/' from path when provided
     filename = path.replace('_drafts/', '');
     payload = { front_matter, raw_content };
@@ -95,20 +90,13 @@ export const putDraft = (mode, directory, filename = '') => (
 };
 
 export const deleteDraft = (directory, filename) => dispatch => {
-  return fetch(draftAPIUrl(directory, filename), {
-    method: 'DELETE',
-    credentials: 'same-origin',
-  })
-    .then(data => {
-      dispatch({ type: DELETE_DRAFT_SUCCESS });
-      dispatch(fetchDrafts(directory));
-    })
-    .catch(error =>
-      dispatch({
-        type: DELETE_DRAFT_FAILURE,
-        error,
-      })
-    );
+  const relative_path = computeRelativePath(directory, filename);
+  return del(
+    draftAPIUrl(directory, filename),
+    { type: DELETE_DRAFT_SUCCESS, name: 'draft', id: relative_path },
+    { type: DELETE_DRAFT_FAILURE, name: 'error' },
+    dispatch
+  );
 };
 
 export const publishDraft = (directory, filename) => (dispatch, getState) => {
@@ -117,7 +105,7 @@ export const publishDraft = (directory, filename) => (dispatch, getState) => {
 
   // omit raw_content, path and empty-value keys in metadata state from front_matter
   const front_matter = _.omit(metadata, (value, key, object) => {
-    return key == 'raw_content' || key == 'path' || value == '';
+    return key === 'raw_content' || key === 'path' || value === '';
   });
 
   return put(
@@ -187,6 +175,11 @@ export default function drafts(
         ...state,
         draft: action.draft,
         updated: true,
+      };
+    case DELETE_DRAFT_SUCCESS:
+      return {
+        ...state,
+        drafts: filterDeleted(state.drafts, action.id),
       };
     default:
       return {
