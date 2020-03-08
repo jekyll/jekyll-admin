@@ -97,7 +97,7 @@ export class MetaFields extends Component {
           <Icon name="info-circle" />Special Keys
           <span className="tooltip-text">
             You can use special keys like <b>date</b>, <b>file</b>, <b>image</b>{' '}
-            for user-friendly functionalities.
+            or <b>layout</b> for user-friendly functionalities.
           </span>
         </small>
       </div>
