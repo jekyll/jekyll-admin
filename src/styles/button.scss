@@ -60,3 +60,7 @@
     @include btn($btn-active, $btn-active-border);
   }
 }
+
+.multiple .btn {
+  margin: 0 5px;
+}
