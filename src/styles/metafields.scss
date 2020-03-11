@@ -601,32 +601,43 @@
   }
 }
 .tag-suggestions {
-  display: table;
-  position: absolute;
-  width: 100%;
-  margin-top: -1px;
+  display: none;
+  margin: 8px 0 4px;
   padding: 0;
   border-radius: 0;
-  opacity: 0;
-  visibility: collapse;
   z-index: 3;
   @include transition(0.5s);
   ul {
+    display: table;
     padding: 0;
     li {
-      padding: 0.429em 0.875em;
+      float: left;
+      margin: 5px 2px;
+      padding: 5px 8px;
       list-style: none;
       font-weight: 700;
+      cursor: pointer;
+      border-radius: 4px;
+      border: 1px solid lighten($border-color, 5%);
       &:hover {
         color: white;
         background-color: $dark-orange;
+        border-color: $dark-orange;
       }
     }
   }
   &.visible {
-    opacity: 1;
-    visibility: visible;
+    display: block
   }
+}
+.close-suggestions {
+  float: right;
+  padding: 3px 6px;
+  font-size: 0.875em;
+  border-radius: 4px;
+  border: 1px solid lighten($border-color, 5%);
+  cursor: pointer;
+  &:hover { background-color: $background-color }
 }
 .meta-error {
   display: inline-block;

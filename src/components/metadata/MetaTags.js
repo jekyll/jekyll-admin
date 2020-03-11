@@ -115,7 +115,7 @@ export default class MetaTags extends Component {
       }
     }).filter(Boolean);
 
-    const suggestionClasses = classnames('field', 'tag-suggestions', {
+    const suggestionClasses = classnames('tag-suggestions', {
       visible: this.state.autoSuggest,
     });
 
@@ -143,6 +143,9 @@ export default class MetaTags extends Component {
         {suggests.length > 0 && (
           <div className={suggestionClasses}>
             <ul>{suggests}</ul>
+            <div className="close-suggestions" onClick={this.closeSuggestions}>
+              Close suggestions
+            </div>
           </div>
         )}
       </div>

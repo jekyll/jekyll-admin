@@ -96,13 +96,15 @@ export class MetaSimple extends Component {
   }
 
   renderTagsInput() {
-    const { fieldValue, nameAttr, updateFieldValue } = this.props;
+    const { fieldValue, nameAttr, updateFieldValue, siteMeta } = this.props;
+    const siteTags = siteMeta.tags || [];
 
     return (
       <MetaTags
         fieldValue={fieldValue}
         nameAttr={nameAttr}
         updateFieldValue={updateFieldValue}
+        suggestions={siteTags}
       />
     );
   }
