@@ -5,10 +5,9 @@ import { DocumentEdit } from '../DocumentEdit';
 import Errors from '../../../components/Errors';
 import Button from '../../../components/Button';
 
-import { config, doc } from './fixtures';
+import { doc } from './fixtures';
 
 const defaultProps = {
-  config,
   currentDocument: doc,
   errors: [],
   fieldChanged: false,

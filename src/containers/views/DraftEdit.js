@@ -20,7 +20,6 @@ import {
 } from '../../ducks/drafts';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
-import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -118,7 +117,6 @@ export class DraftEdit extends Component {
       updated,
       fieldChanged,
       params,
-      config,
     } = this.props;
 
     if (isFetching) {
@@ -135,13 +133,12 @@ export class DraftEdit extends Component {
       name,
       path,
       raw_content,
-      collection,
       http_url,
       front_matter,
+      front_matter_defaults,
     } = draft;
     const directory = params.splat[0];
     const title = front_matter && front_matter.title ? front_matter.title : '';
-    const defaultMetadata = injectDefaultFields(config, directory, collection);
     const document_title = getDocumentTitle('drafts', directory, title || name);
 
     return (
@@ -163,7 +160,7 @@ export class DraftEdit extends Component {
               updateTitle={updateTitle}
               onSave={this.handleClickSave}
               metafields={{ title, raw_content, path: name, ...front_matter }}
-              staticmetafields={defaultMetadata}
+              staticmetafields={front_matter_defaults}
             />
             <div className="content-side">
               <Button
@@ -212,7 +209,6 @@ DraftEdit.propTypes = {
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -221,7 +217,6 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   updated: state.drafts.updated,
   errors: state.utils.errors,
-  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>
