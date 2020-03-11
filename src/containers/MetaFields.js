@@ -16,6 +16,7 @@ import {
   convertField,
 } from '../ducks/metadata';
 import { fetchSiteMeta } from '../ducks/siteMeta';
+import { computeFieldType } from '../utils/metadata';
 
 export class MetaFields extends Component {
   componentDidMount() {
@@ -54,10 +55,7 @@ export class MetaFields extends Component {
     });
 
     const metafields = _.map(visibleKeys, (field, key) => {
-      let type = 'simple';
-      if (_.isObject(field)) type = 'object';
-      if (_.isArray(field)) type = 'array';
-      if (_.isArray(field) && key === 'tags') type = 'simple';
+      const type = computeFieldType(field, key);
       return (
         <MetaField
           key={key}
