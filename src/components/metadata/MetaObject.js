@@ -21,6 +21,7 @@ export class MetaObject extends Component {
       let type = 'simple';
       if (_.isObject(value)) type = 'object';
       if (_.isArray(value)) type = 'array';
+      if (_.isArray(value) && key === 'tags') type = 'simple';
       return (
         <MetaObjectItem
           key={key}

@@ -67,6 +67,7 @@ export class MetaField extends Component {
           <MetaButtons
             currentType={type}
             parentType="top"
+            parentKey={fieldKey}
             onConvertClick={type => this.handleConvertClick(type)}
             onRemoveClick={() => this.handleRemoveClick()}
           />

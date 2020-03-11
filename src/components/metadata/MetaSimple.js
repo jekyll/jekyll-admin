@@ -6,6 +6,7 @@ import DropdownList from 'react-widgets/lib/DropdownList';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
 import FilePicker from '../FilePicker';
+import MetaTags from './MetaTags';
 import 'react-widgets/dist/css/react-widgets.css';
 
 momentLocalizer(moment);
@@ -94,6 +95,20 @@ export class MetaSimple extends Component {
     );
   }
 
+  renderTagsInput() {
+    const { fieldValue, nameAttr, updateFieldValue, siteMeta } = this.props;
+    const siteTags = (siteMeta && siteMeta.tags) || [];
+
+    return (
+      <MetaTags
+        fieldValue={fieldValue}
+        nameAttr={nameAttr}
+        updateFieldValue={updateFieldValue}
+        suggestions={siteTags}
+      />
+    );
+  }
+
   render() {
     const { fieldKey, nameAttr } = this.props;
 
@@ -105,6 +120,9 @@ export class MetaSimple extends Component {
       case 'image':
       case 'file':
         node = this.renderStaticFilePicker();
+        break;
+      case 'tags':
+        node = this.renderTagsInput();
         break;
       default:
         node = this.renderEditable();

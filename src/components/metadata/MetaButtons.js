@@ -32,7 +32,9 @@ export default class MetaButtons extends Component {
   };
 
   renderDropdownItems(type) {
-    const { onConvertClick } = this.props;
+    const { onConvertClick, parentKey } = this.props;
+
+    if (parentKey === 'tags') return null;
 
     return this.fieldTypeKeys.map((ftype, i) => {
       if (type !== ftype) {
@@ -89,4 +91,5 @@ MetaButtons.propTypes = {
   parentType: PropTypes.string.isRequired,
   onConvertClick: PropTypes.func.isRequired,
   onRemoveClick: PropTypes.func.isRequired,
+  parentKey: PropTypes.string,
 };
