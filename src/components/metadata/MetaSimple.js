@@ -6,8 +6,8 @@ import DropdownList from 'react-widgets/lib/DropdownList';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
 import FilePicker from '../FilePicker';
-import 'react-widgets/dist/css/react-widgets.css';
 import MetaTags from './MetaTags';
+import 'react-widgets/dist/css/react-widgets.css';
 
 momentLocalizer(moment);
 
@@ -97,7 +97,7 @@ export class MetaSimple extends Component {
 
   renderTagsInput() {
     const { fieldValue, nameAttr, updateFieldValue, siteMeta } = this.props;
-    const siteTags = siteMeta.tags || [];
+    const siteTags = (siteMeta && siteMeta.tags) || [];
 
     return (
       <MetaTags

@@ -34,10 +34,12 @@ export default class MetaTags extends Component {
     if (!clone.includes(value)) {
       clone.push(value);
 
-      this.setState({
-        pageTags: clone,
-        tagInput: '',
-        autoSuggest: false,
+      this.setState(state => {
+        return {
+          pageTags: clone,
+          tagInput: '',
+          autoSuggest: false,
+        };
       });
     }
   }
@@ -59,7 +61,7 @@ export default class MetaTags extends Component {
   // keys that when pressed and released creates a new tag from the input value.
   creators = [',', ' ', 'Enter'];
 
-  handleKeyUp(e) {
+  handleKeyUp = e => {
     const { pageTags } = this.state;
     const input = e.target.value;
 
@@ -68,34 +70,54 @@ export default class MetaTags extends Component {
     } else if (pageTags.length && input.length === 0 && e.key === 'Backspace') {
       this.deleteTag(-1);
     }
-  }
+  };
+
+  handleOnChange = e => {
+    const value = e.target.value;
+    this.setState(state => {
+      return { tagInput: value };
+    });
+  };
+
+  showSuggestions = () => {
+    this.setState(state => {
+      return { autoSuggest: true };
+    });
+  };
+
+  closeSuggestions = () => {
+    this.setState(state => {
+      return { autoSuggest: false };
+    });
+  };
+
+  rectifyTag = tag => {
+    const rectified = tag.toString().split(' ');
+    this.setState(state => {
+      return { pageTags: rectified };
+    });
+  };
 
   render() {
     const { pageTags } = this.state;
     const tagInput = `${this.state.tagInput}`;
 
-    let suggestions = this.props.suggestions;
-    suggestions = suggestions.filter(entry => {
+    const suggestions = this.props.suggestions.filter(entry => {
       return entry.startsWith(tagInput);
     });
 
-    if (pageTags.length && !(pageTags instanceof Array)) {
-      const value = `${pageTags}`;
-      const rectified = value.split(' ');
+    if (!(pageTags instanceof Array)) {
       return (
         <span className="meta-error">
-          Invalid array of tags! Found: <strong>{value}</strong>
+          Invalid array of tags! Found: <strong>{pageTags}</strong>
           <br />
-          <span onClick={() => this.setState({ pageTags: rectified })}>
-            Click here
-          </span>
+          <span onClick={() => this.rectifyTag(pageTags)}>Click here</span>
           to correct.
         </span>
       );
     }
 
-    const tagPool = pageTags.filter(Boolean); // fiter out nil or empty elements
-
+    const tagPool = pageTags.filter(Boolean); // filter out nil or empty elements
     const tags = tagPool.map((tag, i) => {
       return (
         <span key={i} className="tag">
@@ -126,10 +148,9 @@ export default class MetaTags extends Component {
         <div className="tags-input">
           <input
             type="text"
-            onChange={e => this.setState({ tagInput: e.target.value })}
-            onFocus={() => this.setState({ autoSuggest: true })}
-            onBlur={() => this.setState({ autoSuggest: false })}
-            onKeyUp={e => this.handleKeyUp(e)}
+            onChange={this.handleOnChange}
+            onFocus={this.showSuggestions}
+            onKeyUp={this.handleKeyUp}
             value={tagInput.replace(/,|\s+/, '')}
             ref="taginput"
           />
