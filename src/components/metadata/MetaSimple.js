@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import TextareaAutosize from 'react-textarea-autosize';
 import DateTimePicker from 'react-widgets/lib/DateTimePicker';
+import DropdownList from 'react-widgets/lib/DropdownList';
 import moment from 'moment';
 import momentLocalizer from 'react-widgets-moment';
 import FilePicker from '../FilePicker';
@@ -73,6 +74,27 @@ export class MetaSimple extends Component {
     );
   }
 
+  handleLayoutChange = value => {
+    const { nameAttr, updateFieldValue } = this.props;
+    updateFieldValue(nameAttr, value);
+  };
+
+  renderLayoutPicker() {
+    const { fieldValue, siteMeta } = this.props;
+
+    if (!siteMeta) return this.renderEditable();
+    const layouts = siteMeta.layouts || [];
+
+    return (
+      <DropdownList
+        className="layout-field"
+        data={['none', ...layouts]}
+        defaultValue={fieldValue}
+        onChange={this.handleLayoutChange}
+      />
+    );
+  }
+
   renderTagsInput() {
     const { fieldValue, nameAttr, updateFieldValue } = this.props;
 
@@ -86,7 +108,8 @@ export class MetaSimple extends Component {
   }
 
   render() {
-    const { fieldKey } = this.props;
+    const { fieldKey, nameAttr } = this.props;
+
     let node;
     switch (fieldKey) {
       case 'date':
@@ -102,6 +125,11 @@ export class MetaSimple extends Component {
       default:
         node = this.renderEditable();
     }
+
+    if (nameAttr === "metadata['layout']") {
+      node = this.renderLayoutPicker();
+    }
+
     return <div className="meta-value">{node}</div>;
   }
 }
@@ -112,6 +140,7 @@ MetaSimple.propTypes = {
   fieldValue: PropTypes.any,
   updateFieldValue: PropTypes.func.isRequired,
   nameAttr: PropTypes.any.isRequired,
+  siteMeta: PropTypes.object,
 };
 
 export default MetaSimple;
