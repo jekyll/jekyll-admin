@@ -127,7 +127,7 @@
     "testMatch": ["**/*.spec.js"],
     "globals": {
       "__DEV__": true,
-      "VERSION": "0.10.0"
+      "VERSION": "0.9.0"
     }
   }
 }
