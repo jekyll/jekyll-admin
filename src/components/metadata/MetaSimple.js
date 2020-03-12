@@ -95,15 +95,9 @@ export class MetaSimple extends Component {
     );
   }
 
-  renderTagsInput() {
-    const {
-      fieldKey,
-      fieldValue,
-      nameAttr,
-      updateFieldValue,
-      siteMeta,
-    } = this.props;
-    const suggestions = (siteMeta && siteMeta[fieldKey]) || [];
+  renderTagsInput(key) {
+    const { fieldValue, nameAttr, updateFieldValue, siteMeta } = this.props;
+    const suggestions = (siteMeta && siteMeta[key]) || [];
 
     return (
       <MetaTags
@@ -129,7 +123,7 @@ export class MetaSimple extends Component {
         break;
       case 'tags':
       case 'categories':
-        node = this.renderTagsInput();
+        node = this.renderTagsInput(fieldKey);
         break;
       default:
         node = this.renderEditable();
