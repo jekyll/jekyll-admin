@@ -1,13 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import _ from 'underscore';
 import StaticMetaArrayItem from './StaticMetaArrayItem';
+import { computeFieldType } from '../../../utils/metadata';
 
 export default function StaticMetaArray({ fieldValue }) {
-  const items = _.map(fieldValue, (item, i) => {
-    let type = 'simple';
-    if (_.isObject(item)) type = 'object';
-    if (_.isArray(item)) type = 'array';
+  const items = fieldValue.map((item, i) => {
+    const type = computeFieldType(item);
     return (
       <StaticMetaArrayItem key={i} index={i} fieldValue={item} type={type} />
     );

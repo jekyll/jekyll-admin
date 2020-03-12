@@ -16,6 +16,7 @@ import {
   convertField,
 } from '../ducks/metadata';
 import { fetchSiteMeta } from '../ducks/siteMeta';
+import { computeFieldType } from '../utils/metadata';
 
 export class MetaFields extends Component {
   componentDidMount() {
@@ -54,9 +55,7 @@ export class MetaFields extends Component {
     });
 
     const metafields = _.map(visibleKeys, (field, key) => {
-      let type = 'simple';
-      if (_.isObject(field)) type = 'object';
-      if (_.isArray(field)) type = 'array';
+      const type = computeFieldType(field, key);
       return (
         <MetaField
           key={key}
@@ -94,10 +93,11 @@ export class MetaFields extends Component {
           </span>
         </a>
         <small className="tooltip pull-right">
-          <Icon name="info-circle" />Special Keys
+          <Icon name="info-circle" />
+          Special Keys
           <span className="tooltip-text">
-            You can use special keys like <b>date</b>, <b>file</b>, <b>image</b>{' '}
-            or <b>layout</b> for user-friendly functionalities.
+            You can use special keys like <b>date</b>, <b>file</b>, <b>image</b>
+            , <b>layout</b> or <b>tags</b> for user-friendly functionalities.
           </span>
         </small>
       </div>

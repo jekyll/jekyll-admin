@@ -149,3 +149,20 @@ export const injectDefaultFields = (config, path, type, front_matter = {}) => {
   });
   return _.extend(metafields, front_matter);
 };
+
+/**
+ * Given a field-value and corresponding key, this utility returns
+ * metadata type for the pair.
+ * @param {*} value
+ * @param {String} key
+ * @return {String} type
+ */
+export const computeFieldType = (value, key = null) => {
+  let type = 'simple';
+  const specialKeys = ['tags'];
+  if (specialKeys.includes(key) && _.isArray(value)) return type;
+
+  if (_.isObject(value)) type = 'object';
+  if (_.isArray(value)) type = 'array';
+  return type;
+};
