@@ -96,15 +96,21 @@ export class MetaSimple extends Component {
   }
 
   renderTagsInput() {
-    const { fieldValue, nameAttr, updateFieldValue, siteMeta } = this.props;
-    const siteTags = (siteMeta && siteMeta.tags) || [];
+    const {
+      fieldKey,
+      fieldValue,
+      nameAttr,
+      updateFieldValue,
+      siteMeta,
+    } = this.props;
+    const suggestions = (siteMeta && siteMeta[fieldKey]) || [];
 
     return (
       <MetaTags
         fieldValue={fieldValue}
         nameAttr={nameAttr}
         updateFieldValue={updateFieldValue}
-        suggestions={siteTags}
+        suggestions={suggestions}
       />
     );
   }
@@ -122,6 +128,7 @@ export class MetaSimple extends Component {
         node = this.renderStaticFilePicker();
         break;
       case 'tags':
+      case 'categories':
         node = this.renderTagsInput();
         break;
       default:
