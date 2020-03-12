@@ -159,7 +159,8 @@ export const injectDefaultFields = (config, path, type, front_matter = {}) => {
  */
 export const computeFieldType = (value, key = null) => {
   let type = 'simple';
-  if (key === 'tags' && _.isArray(value)) return type;
+  const specialKeys = ['tags'];
+  if (specialKeys.includes(key) && _.isArray(value)) return type;
 
   if (_.isObject(value)) type = 'object';
   if (_.isArray(value)) type = 'array';
