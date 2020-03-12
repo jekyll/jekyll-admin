@@ -42,7 +42,7 @@ describe('Components::MetaTags', () => {
       ...defaultProps,
       fieldValue: 'foo',
     });
-    const error = 'Invalid array of tags! Found: fooClick hereto correct.';
+    const error = 'Expected an array of items. Found: fooClick hereto correct.';
     const error_element = component.find('.meta-error');
     const rectifier = error_element.find('span').last();
 
