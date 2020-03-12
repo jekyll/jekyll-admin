@@ -6,6 +6,7 @@ import {
   convertMetadataField,
   moveMetadataArrayItem,
   injectDefaultFields,
+  computeFieldType,
 } from '../metadata';
 
 import { state, emptyState, config } from './fixtures';
@@ -276,5 +277,19 @@ describe('Metadata functions:', () => {
       };
       expect(actual).toEqual(expected);
     });
+  });
+
+  describe('computeFieldType', () => {
+    expect(computeFieldType({ name: 'John Doe' })).toEqual('object');
+    expect(computeFieldType({ name: 'John Doe' }, 'tags')).toEqual('object');
+
+    expect(computeFieldType(['package.json'])).toEqual('array');
+    expect(computeFieldType(['package.json'], 'tags')).toEqual('simple');
+
+    expect(computeFieldType('Hello World')).toEqual('simple');
+    expect(computeFieldType(12345)).toEqual('simple');
+    expect(computeFieldType(null)).toEqual('simple');
+    expect(computeFieldType(true)).toEqual('simple');
+    expect(computeFieldType(false)).toEqual('simple');
   });
 });
