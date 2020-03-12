@@ -18,7 +18,6 @@ import {
 } from '../../ducks/collections';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
 import { clearErrors } from '../../ducks/utils';
-import { injectDefaultFields } from '../../utils/metadata';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
@@ -95,7 +94,6 @@ export class DocumentEdit extends Component {
       updated,
       fieldChanged,
       params,
-      config,
     } = this.props;
 
     if (isFetching) {
@@ -112,10 +110,10 @@ export class DocumentEdit extends Component {
       http_url,
       collection,
       front_matter,
+      front_matter_defaults,
       name,
     } = currentDocument;
     const directory = params.splat[0];
-    const defaultMetadata = injectDefaultFields(config, directory, collection);
 
     const keyboardHandlers = {
       save: this.handleClickSave,
@@ -143,7 +141,7 @@ export class DocumentEdit extends Component {
               updateBody={updateBody}
               onSave={this.handleClickSave}
               metafields={{ title, path: name, raw_content, ...front_matter }}
-              staticmetafields={defaultMetadata}
+              staticmetafields={front_matter_defaults}
             />
             <div className="content-side">
               <Button
@@ -185,7 +183,6 @@ DocumentEdit.propTypes = {
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
-  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -194,7 +191,6 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   updated: state.collections.updated,
   errors: state.utils.errors,
-  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>
