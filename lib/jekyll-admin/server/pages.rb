@@ -16,13 +16,15 @@ module JekyllAdmin
       put "/*?/?:path.:ext" do
         ensure_html_content
 
-        if renamed?
+        if new?
+          ensure_not_overwriting_existing_file
+        elsif renamed?
           ensure_requested_file
+          ensure_not_overwriting_existing_file
           delete_file_without_process path
         end
 
         write_file write_path, page_body
-
         json written_file.to_api(:include_content => true)
       end
 
