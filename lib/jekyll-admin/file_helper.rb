@@ -77,7 +77,11 @@ module JekyllAdmin
     end
 
     def ensure_not_file(file)
-      render_404 unless file.nil?
+      return if file.nil?
+
+      Jekyll.logger.warn "Jekyll Admin:", "Could not create file."
+      Jekyll.logger.warn "", "Path #{file.relative_path.inspect} already exists!"
+      render_404
     end
 
     def ensure_directory
