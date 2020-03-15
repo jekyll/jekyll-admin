@@ -109,7 +109,7 @@ export default class MetaTags extends Component {
     if (!(pageTags instanceof Array)) {
       return (
         <span className="meta-error">
-          Invalid array of tags! Found: <strong>{pageTags}</strong>
+          Expected an array of items. Found: <strong>{pageTags}</strong>
           <br />
           <span onClick={() => this.rectifyTag(pageTags)}>Click here</span>
           to correct.

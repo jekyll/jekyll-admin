@@ -134,6 +134,16 @@ module JekyllAdmin
       Jekyll::Utils.merged_file_read_opts(site, {})
     end
 
+    def front_matter_defaults
+      return unless file_exists?
+
+      @front_matter_defaults ||= begin
+        return {} unless respond_to?(:relative_path) && respond_to?(:type)
+
+        site.frontmatter_defaults.all(relative_path, type)
+      end
+    end
+
     def front_matter
       return unless file_exists?
 
@@ -187,6 +197,7 @@ module JekyllAdmin
       else
         output["raw_content"] = raw_content
         output["front_matter"] = front_matter
+        output["front_matter_defaults"] = front_matter_defaults
       end
 
       # Include next and previous documents non-recursively

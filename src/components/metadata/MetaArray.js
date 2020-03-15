@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Sortable from 'sortablejs';
-import _ from 'underscore';
 import Icon from '../Icon';
-
 import MetaArrayItem from './MetaArrayItem';
+import { computeFieldType } from '../../utils/metadata';
 
 export class MetaArray extends Component {
   sortableGroupDecorator(component) {
@@ -37,10 +36,8 @@ export class MetaArray extends Component {
       convertField,
       key_prefix,
     } = this.props;
-    const items = _.map(fieldValue, (item, i) => {
-      let type = 'simple';
-      if (_.isObject(item)) type = 'object';
-      if (_.isArray(item)) type = 'array';
+    const items = fieldValue.map((item, i) => {
+      const type = computeFieldType(item);
       return (
         <MetaArrayItem
           key={`${key_prefix}-${i}`}
