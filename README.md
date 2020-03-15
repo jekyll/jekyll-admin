@@ -42,6 +42,19 @@ jekyll_admin:
     - configuration
 ```
 
+### Customizing collection label in Sidebar
+
+The plugin allows you to customize the name of a collection that is displayed in the sidebar by defining it in the collection's
+metadata in the config file. For example, if your source's *posts* are actually *news-items* on the deployed site, then it can
+be distracting to see the label `Posts` in the admin's sidebar. This situation can be resolved with the following configuration:
+
+```yaml
+collections:
+  posts:
+    output: true
+    sidebar_label: News
+```
+
 ## Contributing
 
 Interested in contributing to Jekyll Admin? We’d love your help. Jekyll Admin is an open source project, built one contribution at a time by users like you. See [the contributing instructions](.github/CONTRIBUTING.md), and [the development docs](https://jekyll.github.io/jekyll-admin/development/) for more information.
