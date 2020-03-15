@@ -52,7 +52,7 @@ module JekyllAdmin
       ensure_file(written_file)
     end
 
-    def ensure_not_written_file
+    def ensure_not_overwriting_existing_file
       ensure_not_file(written_file)
     end
 
