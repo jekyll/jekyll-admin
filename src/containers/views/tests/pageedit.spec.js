@@ -5,11 +5,10 @@ import { PageEdit } from '../PageEdit';
 import Errors from '../../../components/Errors';
 import Button from '../../../components/Button';
 
-import { config, page } from './fixtures';
+import { page } from './fixtures';
 
 const defaultProps = {
   page,
-  config,
   errors: [],
   fieldChanged: false,
   updated: false,

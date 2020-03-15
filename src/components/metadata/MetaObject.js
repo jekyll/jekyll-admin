@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import _ from 'underscore';
 import MetaObjectItem from './MetaObjectItem';
+import { computeFieldType } from '../../utils/metadata';
 
 export class MetaObject extends Component {
   render() {
@@ -18,10 +19,7 @@ export class MetaObject extends Component {
       moveArrayItem,
     } = this.props;
     const items = _.map(fieldValue, (value, key) => {
-      let type = 'simple';
-      if (_.isObject(value)) type = 'object';
-      if (_.isArray(value)) type = 'array';
-      if (_.isArray(value) && key === 'tags') type = 'simple';
+      const type = computeFieldType(value, key);
       return (
         <MetaObjectItem
           key={key}

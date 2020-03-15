@@ -267,6 +267,7 @@ describe "collections" do
     write_file "_posts/2016-01-01-test2.md"
 
     request = {
+      :path         => "_posts/2016-01-01-test2.md",
       :front_matter => { :foo => "bar2" },
       :raw_content  => "test",
     }
@@ -283,6 +284,7 @@ describe "collections" do
     write_file "_posts/more posts/2016-01-01-test2.md"
 
     request = {
+      :path         => "_posts/more posts/2016-01-01-test2.md",
       :front_matter => { :foo => "bar2" },
       :raw_content  => "test",
     }

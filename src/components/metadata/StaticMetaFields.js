@@ -2,14 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import _ from 'underscore';
 import StaticMetaField from './statics/StaticMetaField';
+import { computeFieldType } from '../../utils/metadata';
 
 export default function StaticMetaFields({ fields }) {
   const filteredData = _.omit(fields, ['raw_content']);
   const metafields = _.map(filteredData, (value, key) => {
-    let type = 'simple';
-    if (_.isObject(value)) type = 'object';
-    if (_.isArray(value)) type = 'array';
-
+    const type = computeFieldType(value);
     return (
       <StaticMetaField
         key={key}
