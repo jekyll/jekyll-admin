@@ -3,7 +3,7 @@ const rewireWebpackBundleAnalyzer = require('react-app-rewire-webpack-bundle-ana
 module.exports = function override(config, env) {
   if (env === 'production') {
     config = rewireWebpackBundleAnalyzer(config, env, {
-      analyzerMode: 'static',
+      analyzerMode: 'disabled',
       reportFilename: 'report.html',
     });
   }
