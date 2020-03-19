@@ -8,6 +8,7 @@
     "start-client": "react-app-rewired start",
     "start": "npm-run-all --parallel start-api start-client",
     "build": "react-app-rewired build",
+    "postbuild": "mv build lib/jekyll-admin/public",
     "test": "react-app-rewired test",
     "precommit": "lint-staged",
     "test:size": "bundlesize"
