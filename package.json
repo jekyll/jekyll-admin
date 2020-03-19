@@ -7,6 +7,7 @@
     "start-api": "sh script/test-server",
     "start-client": "react-app-rewired start",
     "start": "npm-run-all --parallel start-api start-client",
+    "prebuild": "rimraf lib/jekyll-admin/public",
     "build": "react-app-rewired build",
     "postbuild": "mv build lib/jekyll-admin/public",
     "test": "react-app-rewired test",
@@ -47,6 +48,7 @@
     "redux": "3.6.0",
     "redux-logger": "2.6.1",
     "redux-thunk": "2.1.0",
+    "rimraf": "^3.0.2",
     "simplemde": "1.11.2",
     "sortablejs": "1.8.4",
     "underscore": "1.9.1"
