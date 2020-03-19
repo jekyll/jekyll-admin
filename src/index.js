@@ -8,7 +8,6 @@ import routes from './routes';
 import configureStore from './store';
 import { ADMIN_PREFIX } from './constants';
 import './styles/main.scss';
-import './assets/favicon.ico';
 
 const store = configureStore();
 const history = syncHistoryWithStore(browserHistory, store);

@@ -135,6 +135,7 @@ export default class MetaTags extends Component {
           </li>
         );
       }
+      return null;
     }).filter(Boolean);
 
     const suggestionClasses = classnames('tag-suggestions', {

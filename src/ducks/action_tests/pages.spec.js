@@ -51,6 +51,11 @@ describe('Actions::Pages', () => {
 
   it('deletes the page successfully', () => {
     nock(API)
+      .intercept('/pages/page-dir/test/test.md', 'OPTIONS')
+      .reply(200, null, {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application:json',
+      })
       .delete('/pages/page-dir/test/test.md')
       .reply(200);
 
@@ -69,6 +74,11 @@ describe('Actions::Pages', () => {
 
   it('creates DELETE_PAGE_FAILURE when deleting a page failed', () => {
     nock(API)
+      .intercept('/pages/page.md', 'OPTIONS')
+      .reply(200, null, {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application:json',
+      })
       .delete('/pages/page.md')
       .replyWithError('something awful happened');
 

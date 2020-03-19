@@ -39,7 +39,7 @@ export default class FilePreview extends Component {
     const extension = file.extname.substring(1);
     const image = /png|jpg|gif|jpeg|svg|ico/i.test(extension);
     const node = image ? (
-      <img src={file.http_url} />
+      <img src={file.http_url} alt={file.relative_path} />
     ) : (
       <div>
         <Icon name="file-text-o" />
@@ -49,7 +49,7 @@ export default class FilePreview extends Component {
     const nodeLink = onClick ? (
       <a onClick={() => onClick(file.relative_path)}>{node}</a>
     ) : (
-      <a href={file.http_url} target="_blank">
+      <a href={file.http_url} target="_blank" rel="noopener noreferrer">
         {node}
       </a>
     );

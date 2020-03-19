@@ -4,31 +4,16 @@
   "description": "Admin Panel for Jekyll",
   "private": true,
   "scripts": {
-    "start-message": "babel-node tools/startMessage.js",
-    "prestart": "npm-run-all --parallel start-message remove-dist",
-    "start": "npm-run-all --parallel start-api open:src lint:watch",
-    "start:tested": "npm-run-all --parallel start-api test:watch open:src lint:watch",
     "start-api": "sh script/test-server",
-    "open:src": "babel-node tools/srcServer.js",
-    "lint": "esw webpack.config.* src tools",
-    "lint:watch": "npm run lint -- --watch",
-    "clean-dist": "npm run remove-dist  && npm run add-dist",
-    "add-dist": "mkdirp ./lib/jekyll-admin/public",
-    "remove-dist": "rimraf ./lib/jekyll-admin/public",
-    "build:html": "babel-node tools/buildHtml.js",
-    "prebuild":
-      "npm run clean-dist && npm run build:html && npm run lint && npm test",
-    "build": "babel-node tools/build.js",
-    "test": "jest",
-    "test:CI": "babel-node tools/testCi.js",
-    "test:cover": "npm run test -- --coverage ",
-    "test:cover:CI":
-      "npm run test:CI -- --coverage && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
-    "test:size": "bundlesize",
-    "test:watch": "npm run test -- --watch",
-    "open:cover":
-      "npm run test:cover && open ./coverage/lcov-report/index.html",
-    "precommit": "lint-staged"
+    "start-client": "react-app-rewired start",
+    "start": "npm-run-all --parallel start-api start-client",
+    "prebuild": "rimraf lib/jekyll-admin/public",
+    "build": "react-app-rewired build",
+    "postbuild": "mv build lib/jekyll-admin/public",
+    "test": "react-app-rewired test",
+    "test:CI": "react-app-rewired test --watchAll=false",
+    "precommit": "lint-staged",
+    "test:size": "bundlesize"
   },
   "lint-staged": {
     "*.js": [
@@ -63,71 +48,49 @@
     "redux": "3.6.0",
     "redux-logger": "2.6.1",
     "redux-thunk": "2.1.0",
+    "rimraf": "^3.0.2",
     "simplemde": "1.11.2",
     "sortablejs": "1.8.4",
     "underscore": "1.9.1"
   },
   "devDependencies": {
-    "babel-cli": "6.26.0",
-    "babel-core": "6.26.3",
-    "babel-eslint": "7.2.3",
-    "babel-jest": "20.0.3",
-    "babel-loader": "7.1.5",
-    "babel-plugin-transform-react-constant-elements": "6.23.0",
-    "babel-plugin-transform-react-remove-prop-types": "0.4.24",
-    "babel-polyfill": "6.26.0",
-    "babel-preset-env": "1.7.0",
-    "babel-preset-react": "6.24.1",
-    "babel-preset-react-hmre": "1.1.1",
-    "babel-preset-stage-1": "6.24.1",
-    "browser-sync": "2.26.7",
     "bundlesize": "^0.18.0",
-    "chalk": "1.1.3",
-    "cheerio": "0.20.0",
     "coveralls": "^3.0.9",
-    "css-loader": "2.1.1",
     "enzyme": "^2.6.0",
-    "eslint": "^6.5.1",
-    "eslint-plugin-import": "^2.18.2",
-    "eslint-plugin-react": "^7.15.1",
-    "eslint-watch": "6.0.1",
-    "file-loader": "1.1.11",
     "husky": "^0.14.3",
     "identity-obj-proxy": "^3.0.0",
-    "jest": "23.6.0",
     "lint-staged": "^4.3.0",
-    "mini-css-extract-plugin": "0.8.0",
-    "mkdirp": "^0.5.1",
     "moment-locales-webpack-plugin": "^1.1.2",
     "nock": "10.0.6",
     "node-sass": "4.13.1",
     "npm-run-all": "4.1.5",
     "prettier": "^1.19.1",
     "react-addons-test-utils": "15.4.1",
+    "react-app-rewire-webpack-bundle-analyzer": "^1.1.0",
+    "react-app-rewired": "^2.1.5",
+    "react-scripts": "3.4.0",
     "react-test-renderer": "15.4.1",
     "redux-immutable-state-invariant": "1.2.4",
     "redux-mock-store": "^1.0.4",
-    "rimraf": "2.5.4",
-    "sass-loader": "6.0.7",
-    "style-loader": "0.13.1",
-    "webpack": "^4.41.2",
-    "webpack-bundle-analyzer": "^3.5.2",
-    "webpack-dev-middleware": "3.7.2",
-    "webpack-hot-middleware": "2.25.0"
+    "webpack-bundle-analyzer": "^3.6.0"
   },
-  "jest": {
-    "setupFiles": [
-      "<rootDir>/tools/jestMocks.js"
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
     ],
-    "moduleNameMapper": {
-      "\\.(css|scss)$": "identity-obj-proxy",
-      "^.+\\.(gif|ttf|eot|svg|woff|woff2|ico)$": "<rootDir>/tools/jestMocks.js"
-    },
-    "roots": ["src"],
-    "testMatch": ["**/*.spec.js"],
-    "globals": {
-      "__DEV__": true,
-      "VERSION": "0.9.0"
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app",
+    "rules": {
+      "jsx-a11y/anchor-is-valid": "off",
+      "no-eval": "off"
     }
   }
 }

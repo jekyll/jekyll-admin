@@ -91,6 +91,11 @@ describe('Actions::StaticFiles', () => {
 
   it('deletes static files successfully', () => {
     nock(API)
+      .intercept('/static_files/index.html', 'OPTIONS')
+      .reply(200, null, {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application:json',
+      })
       .delete('/static_files/index.html')
       .reply(200);
 

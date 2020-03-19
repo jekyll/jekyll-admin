@@ -245,6 +245,11 @@ describe('Actions::Datafiles', () => {
 
   it('deletes a data file successfully', () => {
     nock(API)
+      .intercept('/data/data_file.yml', 'OPTIONS')
+      .reply(200, null, {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application:json',
+      })
       .delete('/data/data_file.yml')
       .reply(200);
 

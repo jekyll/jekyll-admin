@@ -62,7 +62,7 @@ export default function Button({
 
   if (to) {
     return (
-      <a href={to} target="_blank" className={btnClass}>
+      <a href={to} target="_blank" rel="noopener noreferrer" className={btnClass}>
         {iconNode}
         {label}
       </a>

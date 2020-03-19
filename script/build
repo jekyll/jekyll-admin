@@ -3,7 +3,6 @@
 set -e
 
 echo "Building frontend server..."
-npm run clean-dist
 npm run build
 
 # Test the size of production bundle
