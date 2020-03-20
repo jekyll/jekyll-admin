@@ -4,9 +4,7 @@ import PropTypes from 'prop-types';
 export default class InputSearch extends Component {
   handleKeyPress = event => {
     const { search } = this.props;
-    if (event.charCode === 13) {
-      search(event.target.value);
-    }
+    search(event.target.value);
   };
 
   render() {
