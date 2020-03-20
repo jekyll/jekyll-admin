@@ -12,7 +12,7 @@
     "postbuild": "mv build lib/jekyll-admin/public",
     "test": "react-app-rewired test",
     "test:CI": "react-app-rewired test --watchAll=false",
-    "test:cover": "npm run test:CI --coverage",
+    "test:cover": "npm run test:CI -- --coverage",
     "test:cover:CI":
       "npm run test:cover && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "precommit": "lint-staged",
