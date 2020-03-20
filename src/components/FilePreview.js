@@ -34,11 +34,20 @@ export default class FilePreview extends Component {
     }
   }
 
+  get isImageFile() {
+    const {
+      file: { type, extname },
+    } = this.props;
+    if (type === 'directory') {
+      return false;
+    }
+
+    return /png|jpg|gif|jpeg|svg|ico/i.test(extname.substring(1));
+  }
+
   render() {
     const { onClick, file, splat } = this.props;
-    const extension = file.extname.substring(1);
-    const image = /png|jpg|gif|jpeg|svg|ico/i.test(extension);
-    const node = image ? (
+    const node = this.isImageFile ? (
       <img src={file.http_url} alt={file.relative_path} />
     ) : (
       <div>
