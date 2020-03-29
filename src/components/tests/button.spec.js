@@ -61,7 +61,7 @@ describe('Components::Button', () => {
       type: 'view-toggle',
       triggered: true,
     }).btn;
-    expect(btn.text()).toBe('Switch View to Raw Editor');
+    expect(btn.text()).toBe('Switch to Raw Editor');
   });
 
   it('should render custom icon', () => {

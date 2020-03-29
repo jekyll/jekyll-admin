@@ -77,7 +77,7 @@ export const labels = {
     label: 'Upload files',
   },
   viewToggle: {
-    label: 'Switch View to GUI Editor',
-    triggeredLabel: 'Switch View to Raw Editor',
+    label: 'Switch to GUI Editor',
+    triggeredLabel: 'Switch to Raw Editor',
   },
 };
