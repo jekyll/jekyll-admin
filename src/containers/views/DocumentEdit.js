@@ -8,7 +8,6 @@ import _ from 'underscore';
 import DocumentTitle from 'react-document-title';
 import Button from '../../components/Button';
 import Errors from '../../components/Errors';
-import Splitter from '../../components/Splitter';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import MarkdownPageBody from '../../components/MarkdownPageBody';
 import {
@@ -152,7 +151,6 @@ export class DocumentEdit extends Component {
                 block
               />
               <Button to={http_url} type="view" active block />
-              <Splitter />
               <Button
                 onClick={this.handleClickDelete}
                 type="delete"

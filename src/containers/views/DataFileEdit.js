@@ -9,7 +9,6 @@ import DocumentTitle from 'react-document-title';
 import DataGUI from '../../components/DataGUI';
 import Breadcrumbs from '../../components/Breadcrumbs';
 import InputPath from '../../components/form/InputPath';
-import Splitter from '../../components/Splitter';
 import Errors from '../../components/Errors';
 import Editor from '../../components/Editor';
 import Button from '../../components/Button';
@@ -151,7 +150,6 @@ export class DataFileEdit extends Component {
             block
           />
         )}
-        <Splitter />
         <Button
           onClick={() => this.handleClickDelete(filename)}
           type="delete"
