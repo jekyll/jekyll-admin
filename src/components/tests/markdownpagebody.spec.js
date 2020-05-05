@@ -5,7 +5,6 @@ import Splitter from '../Splitter';
 import InputPath from '../form/InputPath';
 import InputTitle from '../form/InputTitle';
 import MarkdownEditor from '../MarkdownEditor';
-import StaticMetaData from '../metadata/StaticMetaFields';
 import Metadata from '../../containers/MetaFields';
 
 function setup(props = { type: 'test' }) {
@@ -32,6 +31,5 @@ describe('Components::MarkdownPageBody', () => {
     expect(component.find(InputTitle).node).toBeTruthy();
     expect(component.find(MarkdownEditor).node).toBeTruthy();
     expect(component.find(Metadata).node).toBeTruthy();
-    expect(component.find(StaticMetaData).node).toBeTruthy();
   });
 });
