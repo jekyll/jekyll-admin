@@ -70,7 +70,6 @@ export class MetaField extends Component {
           <MetaButtons
             currentType={type}
             isADefaultField={isADefaultField}
-            isInDefaultState={isInDefaultState}
             parentType="top"
             parentKey={fieldKey}
             onConvertClick={type => this.handleConvertClick(type)}

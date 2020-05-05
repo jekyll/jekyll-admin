@@ -11,7 +11,12 @@ const FieldTypes = {
   simple: StaticMetaSimple,
 };
 
-export default function StaticMetaField({ type, fieldKey, fieldValue, enableField }) {
+export default function StaticMetaField({
+  type,
+  fieldKey,
+  fieldValue,
+  enableField,
+}) {
   const CurrentComponent = FieldTypes[type];
 
   return (
@@ -24,7 +29,9 @@ export default function StaticMetaField({ type, fieldKey, fieldValue, enableFiel
           disabled
         />
         <StaticMetaButton
-          onEnableField={() => { enableField(`metadata['${fieldKey}']`, fieldValue) }}
+          onEnableField={() => {
+            enableField(`metadata['${fieldKey}']`, fieldValue);
+          }}
         />
       </div>
       <CurrentComponent fieldValue={fieldValue} />

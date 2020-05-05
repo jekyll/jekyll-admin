@@ -58,7 +58,10 @@ export class MetaFields extends Component {
       metafields: !dataview,
     });
 
-    const defaultFieldsNotOverwritten = _.omit(staticFields, Object.keys(metadata));
+    const defaultFieldsNotOverwritten = _.omit(
+      staticFields,
+      Object.keys(metadata)
+    );
 
     const metafields = _.map(visibleKeys, (field, key) => {
       const type = computeFieldType(field, key);
@@ -71,7 +74,7 @@ export class MetaFields extends Component {
             fieldValue={field}
             enableField={enableField}
           />
-        )
+        );
       }
 
       return (
