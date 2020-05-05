@@ -294,4 +294,24 @@ describe('Reducers::Metadata', () => {
       fieldChanged: true,
     });
   });
+
+  it('should handle enableField', () => {
+    expect(
+      reducer(
+        { metadata: meta, new_field_count: 0 },
+        {
+          type: metadataDuck.ENABLE_FIELD,
+          nameAttr: 'metadata["layout"]',
+          value: 'post2',
+        }
+      )
+    ).toEqual({
+      metadata: {
+        ...meta,
+        layout: 'post2',
+      },
+      new_field_count: 0,
+      fieldChanged: true,
+    });
+  });
 });
