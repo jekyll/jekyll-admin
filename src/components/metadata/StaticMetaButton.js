@@ -9,9 +9,7 @@ export default class StaticMetaButton extends Component {
   };
 
   toggleDropdownState = () => {
-    this.setState(state => {
-      return { dropdown: !state.dropdown };
-    });
+    this.setState(state => ({ dropdown: !state.dropdown });
   };
 
   render() {
