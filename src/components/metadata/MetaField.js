@@ -46,7 +46,7 @@ export class MetaField extends Component {
       key_prefix,
       siteMeta,
       isInDefaultState,
-      isADefaultField,
+      isDefaultField,
     } = this.props;
 
     const FieldTypes = {
@@ -69,7 +69,7 @@ export class MetaField extends Component {
           />
           <MetaButtons
             currentType={type}
-            isADefaultField={isADefaultField}
+            isDefaultField={isDefaultField}
             parentType="top"
             parentKey={fieldKey}
             onConvertClick={type => this.handleConvertClick(type)}
@@ -113,7 +113,7 @@ MetaField.propTypes = {
   key_prefix: PropTypes.string.isRequired,
   siteMeta: PropTypes.object,
   isInDefaultState: PropTypes.bool.isRequired,
-  isADefaultField: PropTypes.bool.isRequired,
+  isDefaultField: PropTypes.bool.isRequired,
 };
 
 export default MetaField;

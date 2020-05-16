@@ -95,7 +95,7 @@ export class MetaFields extends Component {
           namePrefix={`metadata`}
           siteMeta={dataview ? null : site}
           isInDefaultState={defaultFieldsNotOverwritten.hasOwnProperty(key)}
-          isADefaultField={staticFields && staticFields.hasOwnProperty(key)}
+          isDefaultField={staticFields && staticFields.hasOwnProperty(key)}
         />
       );
     });

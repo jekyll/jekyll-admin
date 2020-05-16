@@ -58,7 +58,7 @@ export default class MetaButtons extends Component {
       currentType,
       parentType,
       onRemoveClick,
-      isADefaultField,
+      isDefaultField,
     } = this.props;
     const sortableHandle = (
       <span className="move">
@@ -85,8 +85,8 @@ export default class MetaButtons extends Component {
           <div className="dropdown-wrap">
             {this.renderDropdownItems(currentType)}
             <span onMouseDown={() => onRemoveClick()} className="remove-field">
-              <Icon name={isADefaultField ? 'undo' : 'trash-o'} />
-              {isADefaultField ? 'Revert to default' : 'Remove field'}
+              <Icon name={isDefaultField ? 'undo' : 'trash-o'} />
+              {isDefaultField ? 'Revert to default' : 'Remove field'}
             </span>
           </div>
         </span>
@@ -101,5 +101,5 @@ MetaButtons.propTypes = {
   onConvertClick: PropTypes.func.isRequired,
   onRemoveClick: PropTypes.func.isRequired,
   parentKey: PropTypes.string,
-  isADefaultField: PropTypes.bool.isRequired,
+  isDefaultField: PropTypes.bool.isRequired,
 };
