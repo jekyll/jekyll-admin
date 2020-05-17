@@ -101,5 +101,5 @@ MetaButtons.propTypes = {
   onConvertClick: PropTypes.func.isRequired,
   onRemoveClick: PropTypes.func.isRequired,
   parentKey: PropTypes.string,
-  isDefaultField: PropTypes.bool.isRequired,
+  isDefaultField: PropTypes.bool,
 };

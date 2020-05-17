@@ -5,7 +5,6 @@ import MetaButtons from '../MetaButtons';
 const defaultProps = {
   currentType: 'simple',
   parentType: 'array',
-  isDefaultField: false,
 };
 
 function setup(props = defaultProps) {
@@ -37,7 +36,6 @@ describe('Components::MetaButtons', () => {
     const { sortHandle } = setup({
       currentType: 'simple',
       parentType: 'object',
-      isDefaultField: false,
     });
     expect(sortHandle.node).toBeFalsy();
   });

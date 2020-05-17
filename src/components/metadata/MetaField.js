@@ -112,8 +112,8 @@ MetaField.propTypes = {
   namePrefix: PropTypes.string.isRequired,
   key_prefix: PropTypes.string.isRequired,
   siteMeta: PropTypes.object,
-  isInDefaultState: PropTypes.bool.isRequired,
-  isDefaultField: PropTypes.bool.isRequired,
+  isInDefaultState: PropTypes.bool,
+  isDefaultField: PropTypes.bool,
 };
 
 export default MetaField;

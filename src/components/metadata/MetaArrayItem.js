@@ -47,7 +47,6 @@ export class MetaArrayItem extends Component {
               parentType="array"
               onConvertClick={type => this.handleConvertClick(type)}
               onRemoveClick={() => this.handleRemoveClick()}
-              isDefaultField={false}
             />
           </div>
           <CurrentComponent

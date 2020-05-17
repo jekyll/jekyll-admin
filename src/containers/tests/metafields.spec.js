@@ -9,7 +9,6 @@ const defaultProps = {
   fields: content,
   metadata: content,
   key_prefix: '',
-  isDefaultField: false,
   staticFields: {},
 };
 
