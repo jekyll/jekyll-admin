@@ -61,6 +61,7 @@ export class MetaObjectItem extends Component {
             parentType="object"
             onConvertClick={type => this.handleConvertClick(type)}
             onRemoveClick={() => this.handleRemoveClick()}
+            isDefaultField={false}
           />
         </div>
         <div className="object-value">

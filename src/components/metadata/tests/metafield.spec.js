@@ -22,6 +22,8 @@ const defaultProps = {
   nameAttr: 'metadata["layout"]',
   namePrefix: 'metadata',
   key_prefix: '',
+  isInDefaultState: false,
+  isDefaultField: false,
 };
 
 function setup(props = defaultProps) {

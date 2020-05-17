@@ -9,6 +9,8 @@ const defaultProps = {
   fields: content,
   metadata: content,
   key_prefix: '',
+  isDefaultField: false,
+  staticFields: {},
 };
 
 const actions = {
@@ -20,6 +22,7 @@ const actions = {
   updateFieldValue: jest.fn(),
   moveArrayItem: jest.fn(),
   convertField: jest.fn(),
+  enableField: jest.fn(),
 };
 
 function setup(props = defaultProps) {
