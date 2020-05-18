@@ -36,23 +36,30 @@ export default class MetaButtons extends Component {
 
     if (parentKey === 'tags') return null;
 
-    return this.fieldTypeKeys.map((ftype, i) => {
-      if (type !== ftype) {
-        const { icon, label } = this.fieldTypes[ftype];
-        return (
-          <span key={i} onMouseDown={() => onConvertClick(ftype)}>
-            <Icon name={icon} />
-            Convert to {label}
-          </span>
-        );
-      }
+    return this.fieldTypeKeys
+      .map((ftype, i) => {
+        if (type !== ftype) {
+          const { icon, label } = this.fieldTypes[ftype];
+          return (
+            <span key={i} onMouseDown={() => onConvertClick(ftype)}>
+              <Icon name={icon} />
+              Convert to {label}
+            </span>
+          );
+        }
 
-      return null;
-    }).filter(Boolean);
+        return null;
+      })
+      .filter(Boolean);
   }
 
   render() {
-    const { currentType, parentType, onRemoveClick } = this.props;
+    const {
+      currentType,
+      parentType,
+      onRemoveClick,
+      isDefaultField,
+    } = this.props;
     const sortableHandle = (
       <span className="move">
         <Icon name="arrows" />
@@ -78,8 +85,8 @@ export default class MetaButtons extends Component {
           <div className="dropdown-wrap">
             {this.renderDropdownItems(currentType)}
             <span onMouseDown={() => onRemoveClick()} className="remove-field">
-              <Icon name="trash-o" />
-              Remove field
+              <Icon name={isDefaultField ? 'undo' : 'trash-o'} />
+              {isDefaultField ? 'Revert to default' : 'Remove field'}
             </span>
           </div>
         </span>
@@ -94,4 +101,5 @@ MetaButtons.propTypes = {
   onConvertClick: PropTypes.func.isRequired,
   onRemoveClick: PropTypes.func.isRequired,
   parentKey: PropTypes.string,
+  isDefaultField: PropTypes.bool,
 };

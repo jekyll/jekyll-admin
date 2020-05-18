@@ -663,8 +663,7 @@
 
 $disabled-input-bgcolor: darken($background-color, 2%);
 
-#defaults {
-  margin: 40px 0 5px;
+.default-field {
 
   input:disabled,
   textarea:disabled {
@@ -693,6 +692,6 @@ $disabled-input-bgcolor: darken($background-color, 2%);
     }
   }
   .meta-key.simple + .meta-value > .value-field {
-    width: calc(100% - 205px);
+    width: calc(100% - 240px);
   }
 }

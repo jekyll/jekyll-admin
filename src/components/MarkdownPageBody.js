@@ -4,7 +4,6 @@ import Splitter from './Splitter';
 import InputPath from './form/InputPath';
 import InputTitle from './form/InputTitle';
 import MarkdownEditor from './MarkdownEditor';
-import StaticMetaData from './metadata/StaticMetaFields';
 import Metadata from '../containers/MetaFields';
 
 export default function MarkdownPageBody({
@@ -30,8 +29,7 @@ export default function MarkdownPageBody({
         initialValue={body}
       />
       <Splitter />
-      <StaticMetaData fields={staticmetafields} />
-      <Metadata fields={metafields} />
+      <Metadata fields={metafields} staticFields={staticmetafields} />
     </div>
   );
 }

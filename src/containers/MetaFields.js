@@ -4,6 +4,7 @@ import classnames from 'classnames';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import _ from 'underscore';
+import StaticMetaField from '../components/metadata/statics/StaticMetaField';
 import MetaField from '../components/metadata/MetaField';
 import Icon from '../components/Icon';
 import {
@@ -14,6 +15,7 @@ import {
   updateFieldValue,
   moveArrayItem,
   convertField,
+  enableField,
 } from '../ducks/metadata';
 import { fetchSiteMeta } from '../ducks/siteMeta';
 import { computeFieldType } from '../utils/metadata';
@@ -33,6 +35,7 @@ export class MetaFields extends Component {
     const {
       metadata,
       addField,
+      enableField,
       removeField,
       updateFieldKey,
       updateFieldValue,
@@ -41,9 +44,10 @@ export class MetaFields extends Component {
       key_prefix,
       dataview,
       site,
+      staticFields,
     } = this.props;
 
-    let visibleKeys = metadata;
+    let visibleKeys = { ...staticFields, ...metadata };
 
     if (!dataview) {
       visibleKeys = _.omit(visibleKeys, ['title', 'path', 'raw_content']);
@@ -54,8 +58,25 @@ export class MetaFields extends Component {
       metafields: !dataview,
     });
 
+    const defaultFieldsNotOverwritten = _.omit(
+      staticFields,
+      Object.keys(metadata)
+    );
+
     const metafields = _.map(visibleKeys, (field, key) => {
       const type = computeFieldType(field, key);
+      if (defaultFieldsNotOverwritten.hasOwnProperty(key)) {
+        return (
+          <StaticMetaField
+            key={key}
+            type={type}
+            fieldKey={key}
+            fieldValue={field}
+            enableField={enableField}
+          />
+        );
+      }
+
       return (
         <MetaField
           key={key}
@@ -73,6 +94,8 @@ export class MetaFields extends Component {
           nameAttr={`metadata['${key}']`}
           namePrefix={`metadata`}
           siteMeta={dataview ? null : site}
+          isInDefaultState={defaultFieldsNotOverwritten.hasOwnProperty(key)}
+          isDefaultField={staticFields && staticFields.hasOwnProperty(key)}
         />
       );
     });
@@ -126,6 +149,8 @@ MetaFields.propTypes = {
   fetchSiteMeta: PropTypes.func.isRequired,
   dataview: PropTypes.bool,
   site: PropTypes.object,
+  staticFields: PropTypes.object.isRequired,
+  enableField: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -140,6 +165,7 @@ const mapDispatchToProps = dispatch =>
       storeContentFields,
       fetchSiteMeta,
       addField,
+      enableField,
       removeField,
       updateFieldKey,
       updateFieldValue,

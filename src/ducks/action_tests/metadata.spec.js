@@ -79,6 +79,17 @@ describe('Actions::Metadata', () => {
     );
   });
 
+  it('creates ENABLE_FIELD', () => {
+    const expectedAction = {
+      type: metadataDuck.ENABLE_FIELD,
+      nameAttr: 'metadata["mentors"]',
+      value: 'layout',
+    };
+    expect(metadataDuck.enableField('metadata["mentors"]', 'layout')).toEqual(
+      expectedAction
+    );
+  });
+
   it('creates UPDATE_TITLE', () => {
     const expectedAction = {
       type: metadataDuck.UPDATE_TITLE,
