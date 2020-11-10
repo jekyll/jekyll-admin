@@ -86,7 +86,7 @@ module JekyllAdmin
           :splat        => params["splat"].first,
         }
         # get the directories inside the requested directory
-        directory = JekyllAdmin::Directory.new(directory_path, args)
+        directory = JekyllAdmin::Directory.new(directory_path, **args)
         directories = directory.directories
 
         # exclude root level directories which do not have drafts
