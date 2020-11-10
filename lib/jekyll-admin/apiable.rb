@@ -127,7 +127,7 @@ module JekyllAdmin
     end
 
     def file_contents
-      @file_contents ||= File.read(file_path, file_read_options) if file_exists?
+      @file_contents ||= File.read(file_path, **file_read_options) if file_exists?
     end
 
     def file_read_options
