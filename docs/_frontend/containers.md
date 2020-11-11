@@ -284,8 +284,7 @@ Container for editing a draft.
   errors: Array,
   params: Object,
   router: Object,
-  route: Object,
-  config: Object
+  route: Object
 }
 ```
 

@@ -44,6 +44,9 @@ export class MetaField extends Component {
       moveArrayItem,
       convertField,
       key_prefix,
+      siteMeta,
+      isInDefaultState,
+      isDefaultField,
     } = this.props;
 
     const FieldTypes = {
@@ -62,10 +65,13 @@ export class MetaField extends Component {
             className="field key-field"
             type="text"
             placeholder="Key"
+            disabled={isInDefaultState}
           />
           <MetaButtons
             currentType={type}
+            isDefaultField={isDefaultField}
             parentType="top"
+            parentKey={fieldKey}
             onConvertClick={type => this.handleConvertClick(type)}
             onRemoveClick={() => this.handleRemoveClick()}
           />
@@ -83,6 +89,8 @@ export class MetaField extends Component {
           convertField={convertField}
           nameAttr={`${namePrefix}['${fieldKey}']`}
           namePrefix={`${namePrefix}['${fieldKey}']`}
+          siteMeta={siteMeta}
+          isInDefaultState={isInDefaultState}
         />
       </div>
     );
@@ -103,6 +111,9 @@ MetaField.propTypes = {
   nameAttr: PropTypes.string.isRequired,
   namePrefix: PropTypes.string.isRequired,
   key_prefix: PropTypes.string.isRequired,
+  siteMeta: PropTypes.object,
+  isInDefaultState: PropTypes.bool,
+  isDefaultField: PropTypes.bool,
 };
 
 export default MetaField;

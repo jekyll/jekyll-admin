@@ -18,6 +18,7 @@ export const UPDATE_FIELD_KEY = 'UPDATE_FIELD_KEY';
 export const UPDATE_FIELD_VALUE = 'UPDATE_FIELD_VALUE';
 export const MOVE_ARRAY_ITEM = 'MOVE_ARRAY_ITEM';
 export const CONVERT_FIELD = 'CONVERT_FIELD';
+export const ENABLE_FIELD = 'ENABLE_FIELD';
 
 // Actions
 export const storeContentFields = content => ({
@@ -34,6 +35,12 @@ export const removeField = (namePrefix, key) => ({
   type: REMOVE_METAFIELD,
   namePrefix,
   key,
+});
+
+export const enableField = (nameAttr, value) => ({
+  type: ENABLE_FIELD,
+  nameAttr,
+  value,
 });
 
 export const updateFieldKey = (namePrefix, fieldKey, newKey) => ({
@@ -175,6 +182,16 @@ export default function metadata( // TODO normalize the metadata
           action.convertType
         ),
         new_field_count: state.new_field_count + 1,
+        fieldChanged: true,
+      };
+    case ENABLE_FIELD:
+      return {
+        ...state,
+        metadata: updateMetadataFieldValue(
+          state,
+          action.nameAttr,
+          action.value
+        ),
         fieldChanged: true,
       };
     default:

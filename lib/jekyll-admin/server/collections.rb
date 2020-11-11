@@ -25,8 +25,11 @@ module JekyllAdmin
       put "/:collection_id/*?/?:path.:ext" do
         ensure_collection
 
-        if renamed?
+        if new?
+          ensure_not_overwriting_existing_file
+        elsif renamed?
           ensure_requested_file
+          ensure_not_overwriting_existing_file
           delete_file_without_process path
         end
 
@@ -76,7 +79,7 @@ module JekyllAdmin
           :splat        => splats&.first,
         }
         # get the directories inside the requested directory
-        directory = JekyllAdmin::Directory.new(directory_path, args)
+        directory = JekyllAdmin::Directory.new(directory_path, **args)
         directories = directory.directories
         # merge directories with the documents at the same level
         directories.concat(directory_docs.sort_by(&:date).reverse)

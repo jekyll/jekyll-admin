@@ -83,6 +83,11 @@ describe('Actions::Collections', () => {
 
   it('deletes the document successfully', () => {
     nock(API)
+      .intercept(`/collections/${doc.collection}/${filename}`, 'OPTIONS')
+      .reply(200, null, {
+        'Access-Control-Allow-Origin': '*',
+        'Content-Type': 'application:json',
+      })
       .delete(`/collections/${doc.collection}/${filename}`)
       .reply(200);
 

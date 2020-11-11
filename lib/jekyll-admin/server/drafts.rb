@@ -16,8 +16,11 @@ module JekyllAdmin
       put "/*?/?:path.:ext" do
         ensure_html_content
 
-        if renamed?
+        if new?
+          ensure_not_overwriting_existing_file
+        elsif renamed?
           ensure_requested_file
+          ensure_not_overwriting_existing_file
           delete_file_without_process path
         end
 
@@ -83,7 +86,7 @@ module JekyllAdmin
           :splat        => params["splat"].first,
         }
         # get the directories inside the requested directory
-        directory = JekyllAdmin::Directory.new(directory_path, args)
+        directory = JekyllAdmin::Directory.new(directory_path, **args)
         directories = directory.directories
 
         # exclude root level directories which do not have drafts

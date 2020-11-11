@@ -14,7 +14,7 @@ export class Header extends Component {
             <span>{config.title || 'You have no title!'}</span>
           </Link>
         </h3>
-        <span className="version">v{VERSION}</span>
+        <span className="version">v{process.env.REACT_APP_VERSION}</span>
       </div>
     );
   }
