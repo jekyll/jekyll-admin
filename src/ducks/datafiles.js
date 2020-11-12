@@ -1,4 +1,4 @@
-import { CLEAR_ERRORS, validationError, filterDeleted } from './utils';
+import { clearErrors, validationError, filterDeleted } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { datafilesAPIUrl, datafileAPIUrl } from '../constants/api';
 import {
@@ -82,7 +82,7 @@ export const putDataFile = (
   if (errors.length) {
     return dispatch(validationError(errors));
   }
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch(clearErrors());
 
   return put(
     datafileAPIUrl(directory, filename),

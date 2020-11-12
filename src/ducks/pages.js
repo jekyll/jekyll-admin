@@ -1,12 +1,13 @@
-import _ from 'underscore';
-import { CLEAR_ERRORS, validationError, filterDeleted } from './utils';
+import { clearErrors, validationError, filterDeleted } from './utils';
 import { get, put, del } from '../utils/fetch';
-import { validator } from '../utils/validation';
-import { slugify, trimObject, computeRelativePath } from '../utils/helpers';
+import { validatePage } from '../utils/validation';
+import {
+  slugify,
+  preparePayload,
+  sanitizeFrontMatter,
+  computeRelativePath,
+} from '../utils/helpers';
 import { pagesAPIUrl, pageAPIUrl } from '../constants/api';
-
-import translations from '../translations';
-const { getTitleRequiredMessage, getFilenameNotValidMessage } = translations;
 
 // Action Types
 export const FETCH_PAGES_REQUEST = 'FETCH_PAGES_REQUEST';
@@ -47,8 +48,9 @@ export const createPage = directory => (dispatch, getState) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
   let { path, raw_content, title } = metadata;
-  // if path is not given or equals to directory, generate filename from the title
-  if (!path && title) {
+  // if `path` is a falsy value or if appending a slash to it equals to
+  // `directory`, generate filename from `title`.
+  if ((!path || `${path}/` === directory) && title) {
     path = `${slugify(title)}.md`;
   } else {
     const errors = validatePage(metadata);
@@ -57,12 +59,11 @@ export const createPage = directory => (dispatch, getState) => {
     }
   }
   // clear errors
-  dispatch({ type: CLEAR_ERRORS });
-  // omit raw_content, path and empty-value keys in metadata state from front_matter
-  const front_matter = _.omit(metadata, (value, key, object) => {
-    return key === 'raw_content' || key === 'path' || value === '';
-  });
-  //send the put request
+  dispatch(clearErrors());
+
+  const front_matter = sanitizeFrontMatter(metadata);
+
+  // send the put request
   return put(
     pageAPIUrl(directory, path),
     preparePayload({ front_matter, raw_content }),
@@ -76,8 +77,9 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
   let { path, raw_content, title } = metadata;
-  // if path is not given or equals to directory, generate filename from the title
-  if (!path && title) {
+  // if `path` is a falsy value or if appending a slash to it equals to
+  // `directory`, generate filename from `title`.
+  if ((!path || `${path}/` === directory) && title) {
     path = `${slugify(title)}.md`;
   } else {
     const errors = validatePage(metadata);
@@ -86,15 +88,13 @@ export const putPage = (directory, filename) => (dispatch, getState) => {
     }
   }
   // clear errors
-  dispatch({ type: CLEAR_ERRORS });
-  // omit raw_content, path and empty-value keys in metadata state from front_matter
-  const front_matter = _.omit(metadata, (value, key, object) => {
-    return key === 'raw_content' || key === 'path' || value === '';
-  });
-  const relative_path = directory ? `${directory}/${path}` : `${path}`;
-  //send the put request
+  dispatch(clearErrors());
+
+  const front_matter = sanitizeFrontMatter(metadata);
+  const relative_path = directory ? `${directory}/${path}` : path;
+
+  // send the put request
   return put(
-    // create or update page according to filename existence
     pageAPIUrl(directory, filename),
     preparePayload({ path: relative_path, front_matter, raw_content }),
     { type: PUT_PAGE_SUCCESS, name: 'page' },
@@ -112,18 +112,6 @@ export const deletePage = (directory, filename) => dispatch => {
     dispatch
   );
 };
-
-const validatePage = metadata =>
-  validator(
-    metadata,
-    { path: 'required|filename' },
-    {
-      'path.required': getTitleRequiredMessage(),
-      'path.filename': getFilenameNotValidMessage(),
-    }
-  );
-
-const preparePayload = obj => JSON.stringify(trimObject(obj));
 
 // Reducer
 export default function pages(

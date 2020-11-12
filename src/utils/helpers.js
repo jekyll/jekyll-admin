@@ -164,3 +164,13 @@ export const getDocumentTitle = (type, splat, prefix = '') => {
 export const computeRelativePath = (directory, filename) => {
   return directory ? `${directory}/${filename}` : `${filename}`;
 };
+
+// omit raw_content, path and empty-value keys in metadata state from front_matter
+export const sanitizeFrontMatter = metadata => {
+  return _.omit(metadata, (value, key, object) => {
+    return key === 'raw_content' || key === 'path' || value === '';
+  });
+};
+
+export const preparePayload = obj => JSON.stringify(trimObject(obj));
+export const getFilenameFromTitle = title => `${slugify(title)}.md`;

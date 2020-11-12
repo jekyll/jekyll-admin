@@ -64,10 +64,7 @@ export const uploadStaticFiles = (directory, files) => dispatch => {
           );
         })
         .catch(error => {
-          dispatch({
-            type: PUT_STATICFILE_FAILURE,
-            error,
-          });
+          dispatch({ type: PUT_STATICFILE_FAILURE, error });
           dispatch(
             addNotification(getErrorMessage(), getUploadErrorMessage(), 'error')
           );
@@ -138,11 +135,9 @@ export default function staticfiles(
 }
 
 // Selectors
-export const filterByFilename = (staticfiles, input) => {
-  if (input) {
-    return staticfiles.filter(sf =>
-      sf.path.toLowerCase().includes(input.toLowerCase())
-    );
+export const filterByFilename = (files, input) => {
+  if (!input) {
+    return files;
   }
-  return staticfiles;
+  return files.filter(f => f.path.toLowerCase().includes(input.toLowerCase()));
 };

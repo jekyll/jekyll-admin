@@ -1,5 +1,5 @@
 import * as staticfilesDuck from '../staticfiles';
-import { staticfile } from './fixtures';
+import { staticfile, staticfile_entries } from './fixtures';
 
 const reducer = staticfilesDuck.default;
 
@@ -79,5 +79,14 @@ describe('Reducers::StaticFiles', () => {
     ).toEqual({
       uploading: false,
     });
+  });
+
+  it('should filter static files and directories', () => {
+    expect(
+      staticfilesDuck.filterByFilename(staticfile_entries, 'dir').length
+    ).toBe(1);
+    expect(
+      staticfilesDuck.filterByFilename(staticfile_entries, null).length
+    ).toBe(2);
   });
 });

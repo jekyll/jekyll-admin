@@ -6,7 +6,7 @@ import { browserHistory, withRouter } from 'react-router';
 import DocumentTitle from 'react-document-title';
 import CreateMarkdownPage from '../../components/CreateMarkdownPage';
 import { updateTitle, updateBody, updatePath } from '../../ducks/metadata';
-import { putDraft } from '../../ducks/drafts';
+import { createDraft } from '../../ducks/drafts';
 import { clearErrors } from '../../ducks/utils';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
@@ -41,8 +41,8 @@ export class DraftNew extends Component {
 
   handleClickSave = e => {
     preventDefault(e);
-    const { fieldChanged, putDraft, params } = this.props;
-    fieldChanged && putDraft('create', params.splat);
+    const { fieldChanged, createDraft, params } = this.props;
+    fieldChanged && createDraft(params.splat);
   };
 
   render() {
@@ -79,7 +79,7 @@ export class DraftNew extends Component {
 }
 
 DraftNew.propTypes = {
-  putDraft: PropTypes.func.isRequired,
+  createDraft: PropTypes.func.isRequired,
   updateTitle: PropTypes.func.isRequired,
   updateBody: PropTypes.func.isRequired,
   updatePath: PropTypes.func.isRequired,
@@ -108,7 +108,7 @@ const mapDispatchToProps = dispatch =>
       updateTitle,
       updateBody,
       updatePath,
-      putDraft,
+      createDraft,
       clearErrors,
     },
     dispatch

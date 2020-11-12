@@ -136,6 +136,8 @@ export const staticfile = {
   encoded_content: "PGh0bWw+CiAgPGJvZHk+CiAgICBZb3UncmUgcHJvYmFibHkgbG9va2luZyBm"
 };
 
+export const staticfile_entries = [staticfile, directory];
+
 export const notification = {
   title: 'Test',
   message: 'Testing notifications',

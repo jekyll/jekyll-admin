@@ -1,9 +1,9 @@
 // Selectors
 export const filterBySearchInput = (list, input) => {
-  if (input) {
-    return list.filter(p => p.name.toLowerCase().includes(input.toLowerCase()));
+  if (!input) {
+    return list;
   }
-  return list;
+  return list.filter(p => p.name.toLowerCase().includes(input.toLowerCase()));
 };
 
 export const filterDeleted = (list, id) => {

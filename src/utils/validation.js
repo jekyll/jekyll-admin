@@ -1,5 +1,8 @@
 import _ from 'underscore';
 
+import translations from '../translations';
+const { getTitleRequiredMessage, getFilenameNotValidMessage } = translations;
+
 const DATE_FILENAME_MATCHER = /^(?:.+\/)*(\d{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]))-(.*)(\.[^.]+)$/;
 const FILENAME_MATCHER = /^(.*)(\.[^.]+)$/;
 
@@ -14,6 +17,17 @@ const validated = (field, single) => {
     default:
       return false;
   }
+};
+
+export const validatePage = metadata => {
+  return validator(
+    metadata,
+    { path: 'required|filename' },
+    {
+      'path.required': getTitleRequiredMessage(),
+      'path.filename': getFilenameNotValidMessage(),
+    }
+  );
 };
 
 /**

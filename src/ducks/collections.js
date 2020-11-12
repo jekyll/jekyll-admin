@@ -1,9 +1,13 @@
-import _ from 'underscore';
 import moment from 'moment';
-import { CLEAR_ERRORS, validationError, filterDeleted } from './utils';
+import { clearErrors, validationError, filterDeleted } from './utils';
 import { get, put, del } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { slugify, trimObject, computeRelativePath } from '../utils/helpers';
+import {
+  slugify,
+  preparePayload,
+  sanitizeFrontMatter,
+  computeRelativePath,
+} from '../utils/helpers';
 import {
   collectionsAPIUrl,
   collectionAPIUrl,
@@ -45,27 +49,20 @@ export const fetchCollections = () => dispatch => {
   );
 };
 
-export const fetchCollection = (
-  collection_name,
-  directory = ''
-) => dispatch => {
+export const fetchCollection = (collection, directory = '') => dispatch => {
   dispatch({ type: FETCH_COLLECTION_REQUEST });
   return get(
-    collectionAPIUrl(collection_name, directory),
+    collectionAPIUrl(collection, directory),
     { type: FETCH_COLLECTION_SUCCESS, name: 'entries' },
     { type: FETCH_COLLECTION_FAILURE, name: 'error' },
     dispatch
   );
 };
 
-export const fetchDocument = (
-  collection_name,
-  directory,
-  filename
-) => dispatch => {
+export const fetchDocument = (collection, directory, filename) => dispatch => {
   dispatch({ type: FETCH_DOCUMENT_REQUEST });
   return get(
-    documentAPIUrl(collection_name, directory, filename),
+    documentAPIUrl(collection, directory, filename),
     { type: FETCH_DOCUMENT_SUCCESS, name: 'doc' },
     { type: FETCH_DOCUMENT_FAILURE, name: 'error' },
     dispatch
@@ -78,10 +75,11 @@ export const createDocument = (collection, directory) => (
 ) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
-  let { path, raw_content, title } = metadata;
-  // if path is not given or equals to directory, generate filename from the title
+  let { path, raw_content, title, date } = metadata;
+  // if `path` is a falsy value or if appending a slash to it equals to
+  // `directory`, generate filename from `title`.
   if ((!path || `${path}/` === directory) && title) {
-    path = generateFilenameFromTitle(metadata, collection); // override empty path
+    path = generateFilenameFromTitle(title, collection, date);
   } else {
     // validate otherwise
     const errors = validateDocument(metadata, collection);
@@ -90,14 +88,12 @@ export const createDocument = (collection, directory) => (
     }
   }
   // clear errors
-  dispatch({ type: CLEAR_ERRORS });
-  // omit raw_content, path and empty-value keys in metadata state from front_matter
-  const front_matter = _.omit(metadata, (value, key, object) => {
-    return key === 'raw_content' || key === 'path' || value === '';
-  });
+  dispatch(clearErrors());
+
+  const front_matter = sanitizeFrontMatter(metadata);
+
   // send the put request
   return put(
-    // create or update document according to filename existence
     documentAPIUrl(collection, directory, path),
     preparePayload({ raw_content, front_matter }),
     { type: PUT_DOCUMENT_SUCCESS, name: 'doc' },
@@ -112,10 +108,11 @@ export const putDocument = (collection, directory, filename) => (
 ) => {
   // get edited fields from metadata state
   const metadata = getState().metadata.metadata;
-  let { path, raw_content, title } = metadata;
-  // if path is not given or equals to directory, generate filename from the title
+  let { path, raw_content, title, date } = metadata;
+  // if `path` is a falsy value or if appending a slash to it equals to
+  // `directory`, generate filename from `title`.
   if ((!path || `${path}/` === directory) && title) {
-    path = generateFilenameFromTitle(metadata, collection); // override empty path
+    path = generateFilenameFromTitle(title, collection, date);
   } else {
     // validate otherwise
     const errors = validateDocument(metadata, collection);
@@ -124,18 +121,17 @@ export const putDocument = (collection, directory, filename) => (
     }
   }
   // clear errors
-  dispatch({ type: CLEAR_ERRORS });
-  // omit raw_content, path and empty-value keys in metadata state from front_matter
-  const front_matter = _.omit(metadata, (value, key, object) => {
-    return key === 'raw_content' || key === 'path' || value === '';
-  });
+  dispatch(clearErrors());
+
+  const front_matter = sanitizeFrontMatter(metadata);
+
   // add collection type prefix to relative path
   const relative_path = directory
     ? `_${collection}/${directory}/${path}`
     : `_${collection}/${path}`;
+
   // send the put request
   return put(
-    // create or update document according to filename existence
     documentAPIUrl(collection, directory, filename),
     preparePayload({ path: relative_path, raw_content, front_matter }),
     { type: PUT_DOCUMENT_SUCCESS, name: 'doc' },
@@ -154,18 +150,14 @@ export const deleteDocument = (collection, directory, filename) => dispatch => {
   );
 };
 
-const generateFilenameFromTitle = (metadata, collection) => {
+const generateFilenameFromTitle = (title, collection, date) => {
+  const slugifiedTitle = slugify(title);
   if (collection === 'posts') {
     // if date is provided, use it, otherwise generate it with today's date
-    let date;
-    if (metadata.date) {
-      date = metadata.date.split(' ')[0];
-    } else {
-      date = moment().format('YYYY-MM-DD');
-    }
-    return `${date}-${slugify(metadata.title)}.md`;
+    const docDate = date ? date.split(' ')[0] : moment().format('YYYY-MM-DD');
+    return `${docDate}-${slugifiedTitle}.md`;
   }
-  return `${slugify(metadata.title)}.md`;
+  return `${slugifiedTitle}.md`;
 };
 
 const validateDocument = (metadata, collection) => {
@@ -185,8 +177,6 @@ const validateDocument = (metadata, collection) => {
   }
   return validator(metadata, validations, messages);
 };
-
-const preparePayload = obj => JSON.stringify(trimObject(obj));
 
 // Reducer
 export default function collections(
@@ -264,17 +254,10 @@ export default function collections(
 
 // Selectors
 export const filterBySearchInput = (list, input) => {
-  if (!list) {
-    return [];
+  if (!input) {
+    return list;
   }
-  if (input) {
-    return _.filter(list, item => {
-      if (item.type) {
-        return item.name.toLowerCase().includes(input.toLowerCase());
-      } else {
-        return item.title.toLowerCase().includes(input.toLowerCase());
-      }
-    });
-  }
-  return list;
+  return list.filter(f =>
+    (f.title || f.name).toLowerCase().includes(input.toLowerCase())
+  );
 };

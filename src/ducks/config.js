@@ -1,7 +1,7 @@
 import { getConfigurationUrl, putConfigurationUrl } from '../constants/api';
 import { get, put } from '../utils/fetch';
 import { validator } from '../utils/validation';
-import { CLEAR_ERRORS, validationError } from './utils';
+import { clearErrors, validationError } from './utils';
 import { toYAML } from '../utils/helpers';
 
 import translations from '../translations';
@@ -45,7 +45,7 @@ export const putConfig = (config, source = 'editor') => (
   if (errors.length) {
     return dispatch(validationError(errors));
   }
-  dispatch({ type: CLEAR_ERRORS });
+  dispatch(clearErrors());
 
   return put(
     putConfigurationUrl(),
