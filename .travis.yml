@@ -13,13 +13,16 @@ cache:
 matrix:
   include:
     - rvm: 2.7
-      env: TEST_SUITE=ruby JEKYLL_VERSION="~> 3.8"
+      env: TEST_SUITE=ruby JEKYLL_VERSION="~> 3.8.6"
+    - rvm: 2.7
+      env: TEST_SUITE=ruby JEKYLL_VERSION="~> 3.9"
     - rvm: 2.7
       env: TEST_SUITE=ruby JEKYLL_VERSION="~> 4.0"
 env:
   matrix:
     - TEST_SUITE=node
-    - TEST_SUITE=ruby JEKYLL_VERSION="~> 3.8"
+    - TEST_SUITE=ruby JEKYLL_VERSION="~> 3.8.6"
+    - TEST_SUITE=ruby JEKYLL_VERSION="~> 3.9"
     - TEST_SUITE=ruby JEKYLL_VERSION="~> 4.0"
 # Temporarily disable gathering test coverage stats
 # after_success:
