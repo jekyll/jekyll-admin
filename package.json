@@ -13,8 +13,7 @@
     "test": "react-app-rewired test",
     "test:CI": "react-app-rewired test --watchAll=false",
     "test:cover": "npm run test:CI -- --coverage",
-    "test:cover:CI":
-      "npm run test:cover && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
+    "test:cover:CI": "npm run test:cover && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "precommit": "lint-staged",
     "test:size": "bundlesize"
   },
@@ -31,7 +30,7 @@
     "highlight.js": "^9.17.1",
     "isomorphic-fetch": "2.2.1",
     "js-yaml": "3.13.1",
-    "lodash": "4.17.15",
+    "lodash": "^4.17.20",
     "moment": "2.24.0",
     "prop-types": "^15.7.2",
     "react": "15.4.1",
