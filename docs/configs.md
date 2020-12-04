@@ -23,3 +23,14 @@ jekyll_admin:
     - datafiles
     - configuration
 ```
+
+#### `homepage`
+
+Web page set as the default or start-up page for Jekyll Admin.
+
+Valid values for `homepage` options: default "pages", "posts" and "<collection_name>" (e.g. "puppies")
+
+```yaml
+jekyll_admin:
+  homepage: "posts"
+```

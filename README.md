@@ -28,9 +28,7 @@ Refer to the [installing plugins](https://jekyllrb.com/docs/plugins/installation
 
 ## Options
 
-Jekyll Admin related options can be specified in `_config.yml`
-under a key called `jekyll_admin`. Currently it has only one option `hidden_links`
-which is for hiding unwanted links on the sidebar. The following keys under `hidden_links` can be used in order to hide default links;
+Jekyll Admin related options can be specified in `_config.yml` under a key called `jekyll_admin`.
 
 ```yaml
 jekyll_admin:
@@ -40,6 +38,7 @@ jekyll_admin:
     - staticfiles
     - datafiles
     - configuration
+  homepage: "pages"
 ```
 
 ### Customizing collection label in Sidebar
