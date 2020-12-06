@@ -96,3 +96,6 @@ collections:
   puppies:
     foo: bar
     output: false
+
+jekyll_admin:
+  homepage: "posts"

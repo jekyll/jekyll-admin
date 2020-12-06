@@ -7,6 +7,7 @@ import DocumentTitle from 'react-document-title';
 
 import { fetchConfig } from '../ducks/config';
 import keyboardShortcuts from '../constants/keyboardShortcuts';
+import { ADMIN_PREFIX } from '../constants';
 
 // Components
 import Sidebar from './Sidebar';
@@ -23,6 +24,41 @@ class App extends Component {
     if (this.props.updated !== nextProps.updated) {
       const { fetchConfig } = this.props;
       fetchConfig();
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.isFetching && !this.props.isFetching) {
+      const {
+        config: {
+          content: {
+            jekyll_admin: { homepage },
+            collections,
+          },
+        },
+        router,
+      } = this.props;
+
+      const currentPathname = router.getCurrentLocation().pathname;
+
+      if (homepage && currentPathname === ADMIN_PREFIX) {
+        let url = `${ADMIN_PREFIX}/pages`;
+
+        const collectionNames = Object.keys(collections).concat('posts');
+        if (collectionNames.includes(homepage)) {
+          url = `${ADMIN_PREFIX}/collections/${homepage}`;
+        }
+
+        if (
+          ['drafts', 'datafiles', 'staticfiles', 'configuration'].includes(
+            homepage
+          )
+        ) {
+          url = `${ADMIN_PREFIX}/${homepage}`;
+        }
+
+        router.replace(url);
+      }
     }
   }
 
