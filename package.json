@@ -1,6 +1,6 @@
 {
   "name": "jekyll-admin",
-  "version": "0.10.2",
+  "version": "0.11.0",
   "description": "Admin Panel for Jekyll",
   "private": true,
   "scripts": {
@@ -15,7 +15,8 @@
     "test:cover": "npm run test:CI -- --coverage",
     "test:cover:CI": "npm run test:cover && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "precommit": "lint-staged",
-    "test:size": "bundlesize"
+    "test:size": "bundlesize",
+    "release": "sh script/release"
   },
   "lint-staged": {
     "*.js": [
