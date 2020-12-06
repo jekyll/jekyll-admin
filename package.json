@@ -15,7 +15,8 @@
     "test:cover": "npm run test:CI -- --coverage",
     "test:cover:CI": "npm run test:cover && cat ./coverage/lcov.info | node_modules/coveralls/bin/coveralls.js",
     "precommit": "lint-staged",
-    "test:size": "bundlesize"
+    "test:size": "bundlesize",
+    "release": "sh script/release"
   },
   "lint-staged": {
     "*.js": [
