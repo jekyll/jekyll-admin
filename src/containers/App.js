@@ -49,6 +49,14 @@ class App extends Component {
           url = `${ADMIN_PREFIX}/collections/${homepage}`;
         }
 
+        if (
+          ['drafts', 'datafiles', 'staticfiles', 'configuration'].includes(
+            homepage
+          )
+        ) {
+          url = `${ADMIN_PREFIX}/${homepage}`;
+        }
+
         router.replace(url);
       }
     }

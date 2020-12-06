@@ -28,7 +28,8 @@ jekyll_admin:
 
 Web page set as the default or start-up page for Jekyll Admin.
 
-Valid values for `homepage`: default "pages", "posts" and "<collection_name>" (e.g. "puppies")
+Valid values for `homepage`: `pages` (default), `posts`, `<collection_name>`,
+`datafiles`, `staticfiles` ,`drafts` and `configuration`
 
 ```yaml
 jekyll_admin:
