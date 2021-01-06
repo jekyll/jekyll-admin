@@ -11,6 +11,7 @@ gem "kramdown-parser-gfm" if ENV["JEKYLL_VERSION"] == "~> 3.9"
 
 # Fixture site dependencies
 gem "jekyll-redirect-from"
+gem "test-theme", :path => "spec/fixtures/test-theme"
 
 # Site dependencies
 gem "jekyll-seo-tag"
