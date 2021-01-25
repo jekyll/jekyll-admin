@@ -20,8 +20,11 @@ module Jekyll
         end
 
         def jekyll_admin_monkey_patch
-          @server.mount "/admin", Rack::Handler::WEBrick, JekyllAdmin::StaticServer
-          @server.mount "/_api",  Rack::Handler::WEBrick, JekyllAdmin::Server
+          site = JekyllAdmin.site
+          unless site.baseurl.nil? || site.baseurl == ""
+            @server.mount "/admin", Rack::Handler::WEBrick, JekyllAdmin::StaticServer
+          end
+          @server.mount "/_api", Rack::Handler::WEBrick, JekyllAdmin::Server
           Jekyll.logger.info "JekyllAdmin mode:", ENV["RACK_ENV"] || "production"
         end
       end
