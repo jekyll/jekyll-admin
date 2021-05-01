@@ -22,12 +22,7 @@ module JekyllAdmin
       File.open(path, "wb") do |file|
         file.write(content)
       end
-      # we should fully process in dev mode for tests to pass
-      if ENV["RACK_ENV"] == "production"
-        site.read
-      else
-        site.process
-      end
+      site.process
     end
 
     # Delete the file at the given path
