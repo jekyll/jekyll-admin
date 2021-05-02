@@ -14,6 +14,8 @@ describe JekyllAdmin::APIable do
 
       [false, true].each do |with_content|
         context "#{with_content ? "with" : "without"} content" do
+          let(:as_liquid) { subject.to_liquid }
+          let(:as_liquid_content) { as_liquid["content"] }
           let(:as_api) { subject.to_api(:include_content => with_content) }
           let(:content)  { as_api["content"] }
           let(:raw_content)  { as_api["raw_content"] }
@@ -29,7 +31,7 @@ describe JekyllAdmin::APIable do
             end
 
             it "includes the rendered content" do
-              expected = "<h1 id=\"test-#{type}\">Test #{type.capitalize}</h1>\n"
+              expected = as_liquid_content
               expect(content).to eql(expected)
             end
 
