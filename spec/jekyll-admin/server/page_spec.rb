@@ -95,8 +95,7 @@ describe "pages" do
     it "returns the rendered output" do
       get "/pages/page.md"
       expect(last_response).to be_ok
-      expected = "<h1 id=\"test-page\">Test Page</h1>\n"
-      expect(last_response_parsed["content"]).to eq(expected)
+      expect(last_response_parsed["content"]).to include("Test Page")
     end
 
     it "returns the raw content" do
