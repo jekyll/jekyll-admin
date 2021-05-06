@@ -54,7 +54,7 @@
     "rimraf": "^3.0.2",
     "simplemde": "1.11.2",
     "sortablejs": "1.8.4",
-    "underscore": "1.9.1"
+    "underscore": "1.12.1"
   },
   "devDependencies": {
     "bundlesize": "^0.18.0",
