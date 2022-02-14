@@ -8,7 +8,7 @@ on:
 
 jobs:
   ruby:
-    name: "Run Tests (Ruby ${{ matrix.ruby_version }})"
+    name: "Run Tests (Jekyll ${{ matrix.jekyll_version }}, Ruby ${{ matrix.ruby_version }})"
     runs-on: "ubuntu-latest"
     env:
       JEKYLL_VERSION: ${{ matrix.jekyll_version }}
