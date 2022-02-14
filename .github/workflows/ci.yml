@@ -30,7 +30,7 @@ jobs:
           ruby-version: ${{ matrix.ruby_version }}
           bundler-cache: true
       - name: Unit Tests
-        run: bundle exec rspec
+        run: bundle exec rspec --format documentation --force-color --backtrace
 
   node:
     name: "Run Tests (Node ${{ matrix.node_version }})"
