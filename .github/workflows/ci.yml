@@ -8,7 +8,7 @@ on:
 
 jobs:
   ruby:
-    name: "Run Tests (Jekyll ${{ matrix.jekyll_version }}, Ruby ${{ matrix.ruby_version }})"
+    name: "Test Backend (Jekyll ${{ matrix.jekyll_version }}, Ruby ${{ matrix.ruby_version }})"
     runs-on: "ubuntu-latest"
     env:
       JEKYLL_VERSION: ${{ matrix.jekyll_version }}
@@ -33,7 +33,7 @@ jobs:
         run: bundle exec rspec --format documentation --force-color --backtrace
 
   node:
-    name: "Run Tests (Node ${{ matrix.node_version }})"
+    name: "Test Frontend (Node ${{ matrix.node_version }})"
     runs-on: "ubuntu-latest"
     strategy:
       fail-fast: false
