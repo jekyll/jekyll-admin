@@ -1,18 +1,17 @@
 environment:
-  nodejs_version: 8
+  nodejs_version: 12
   RACK_ENV: test
   JEKYLL_LOG_LEVEL: warn
-  RUBY_VERSION: 24
+  RUBY_VERSION: 26
   matrix:
     - TEST_SUITE: node
     - TEST_SUITE: ruby
 
 install:
-  - set PATH=C:\Ruby%RUBY_VERSION%\bin;%PATH%
-  - ps: Install-Product node $env:nodejs_version
-  - gem update --system --no-document
-  - bundle config --local path vendor/bundle
-  - sh script/bootstrap
+  - set PATH=C:\Ruby%RUBY_VERSION%-x64\bin;%PATH%
+  - bundle install --retry 5 --jobs=%NUMBER_OF_PROCESSORS% --clean --path vendor\bundle
+  - ps: Install-Product node $env:nodejs_version x64
+  - yarn install
 
 build: off
 
