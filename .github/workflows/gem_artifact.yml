@@ -1,0 +1,38 @@
+name: Build Gem Artifact
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build_gem:
+    name: Build Gem Artifact
+    runs-on: "ubuntu-latest"
+    strategy:
+      fail-fast: true
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+      - name: "Set up Ruby 2.7"
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "2.7"
+          bundler-cache: true
+      - name: "Set up Node 12"
+        uses: actions/setup-node@v2
+        with:
+          node-version: "12"
+          cache: yarn
+      - name: Install Frontend Dependencies
+        run: yarn install
+      - name: Test Backend
+        run: bundle exec rspec
+      - name: Test and Build Frontend
+        run: bash script/build
+      - name: Build Gem
+        run: gem build jekyll-admin.gemspec
+      - name: Stash Gem as Temporary Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: "jekyll-admin.gem"
+          path: "${{ github.workspace }}/*.gem"
+          retention-days: 15
