@@ -10,6 +10,7 @@ environment:
 install:
   - set PATH=C:\Ruby%RUBY_VERSION%-x64\bin;%PATH%
   - bundle install --retry 5 --jobs=%NUMBER_OF_PROCESSORS% --clean --path vendor\bundle
+  - yarn install
 
 build: off
 
@@ -30,3 +31,6 @@ test_script:
 cache:
   - vendor/bundle
   - 'node_modules -> package.json' # invalidate cache if package.json changes
+
+init:
+  - git config --global core.autocrlf true
