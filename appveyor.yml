@@ -10,6 +10,7 @@ environment:
 install:
   - set PATH=C:\Ruby%RUBY_VERSION%-x64\bin;%PATH%
   - bundle install --retry 5 --jobs=%NUMBER_OF_PROCESSORS% --clean --path vendor\bundle
+  - ps: Install-Product node $env:nodejs_version x64
   - yarn install
 
 build: off
