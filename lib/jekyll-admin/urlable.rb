@@ -61,15 +61,19 @@ module JekyllAdmin
     end
 
     def scheme
-      JekyllAdmin.site.config["scheme"] || "http"
+      JekyllAdmin.site.config["jekyll_admin"]["scheme"] ||
+        JekyllAdmin.site.config["scheme"] ||
+        "http"
     end
 
     def host
-      JekyllAdmin.site.config["host"].sub("127.0.0.1", "localhost")
+      JekyllAdmin.site.config["jekyll_admin"]["host"] ||
+        JekyllAdmin.site.config["host"].sub("127.0.0.1", "localhost")
     end
 
     def port
-      JekyllAdmin.site.config["port"]
+      JekyllAdmin.site.config["jekyll_admin"]["port"] ||
+        JekyllAdmin.site.config["port"]
     end
   end
 end
