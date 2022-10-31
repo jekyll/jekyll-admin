@@ -1,19 +1,24 @@
 .header {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   height: 60px;
   background-color: white;
   padding: 0 40px;
   border-bottom: 1px solid lighten($border-color, 9%);
   .title {
     font-weight: normal;
+    justify-self: flex-start;
+    flex: 1;
     a {
       color: #444444;
       &:hover {
         color: black;
       }
     }
+  }
+  .header_buttons {
+    margin: 0 5px;
   }
   .version {
     color: $inactive-gray;

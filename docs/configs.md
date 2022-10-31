@@ -35,3 +35,19 @@ Valid values for `homepage`: `pages` (default), `posts`, `<collection_name>`,
 jekyll_admin:
   homepage: "posts"
 ```
+
+
+#### `header_buttons`
+
+Add buttons in the header to open custom links. You may provide for each link:
+- `title`: the button label
+- `url`: the URL to be opened
+- `icon`: the fontawesome icon to be used (if none, the view icon will be used)
+
+```yaml
+jekyll_admin:
+  header_buttons:
+   - title: Google
+     url: 'https://www.google.com'
+     icon: search
+```

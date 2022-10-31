@@ -99,3 +99,9 @@ collections:
 
 jekyll_admin:
   homepage: "posts"
+  header_buttons:
+    - title: Google
+      url: 'https://www.google.fr'
+      icon: search
+    - title: Bing
+      url: 'https://www.bing.com'

@@ -24,6 +24,7 @@ export default function Button({
   thin,
   icon,
   to,
+  label,
 }) {
   const btnClass = classnames('btn', {
     'btn-active': active,
@@ -35,25 +36,25 @@ export default function Button({
     'btn-thin': thin,
   });
 
-  let label, triggeredLabel;
+  let typeLabel, triggeredLabel;
   switch (type) {
     case 'save':
     case 'create':
-      label = labels[type].label;
+      typeLabel = labels[type].label;
       triggeredLabel = labels[type].triggeredLabel;
       break;
     case 'view-toggle':
-      label = labels.viewToggle.label;
+      typeLabel = labels.viewToggle.label;
       triggeredLabel = labels.viewToggle.triggeredLabel;
       break;
     case 'view':
     case 'delete':
     case 'upload':
     case 'publish':
-      label = labels[type].label;
+      typeLabel = labels[type].label;
       break;
     default:
-      label = '<LABEL>';
+      typeLabel = '<LABEL>';
       triggeredLabel = '<NEXT LABEL>';
   }
 
@@ -62,16 +63,21 @@ export default function Button({
 
   if (to) {
     return (
-      <a href={to} target="_blank" rel="noopener noreferrer" className={btnClass}>
+      <a
+        href={to}
+        target="_blank"
+        rel="noopener noreferrer"
+        className={btnClass}
+      >
         {iconNode}
-        {label}
+        {label ?? typeLabel}
       </a>
     );
   } else if (onClick) {
     return (
       <button onClick={onClick} className={btnClass}>
         {iconNode}
-        {triggered ? triggeredLabel : label}
+        {label ?? (triggered ? triggeredLabel : typeLabel)}
       </button>
     );
   }

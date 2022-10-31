@@ -22,6 +22,23 @@ exports[`Containers::Header renders correctly 1`] = `
     </a>
   </h3>
   <span
+    className="header_buttons"
+  >
+     
+    <a
+      className="btn btn-active btn-view btn-thin"
+      href="https://www.google.fr"
+      rel="noopener noreferrer"
+      target="_blank"
+    >
+      <i
+        aria-hidden="true"
+        className="fa fa-search"
+      />
+      Google
+    </a>
+  </span>
+  <span
     className="version"
   >
     v
