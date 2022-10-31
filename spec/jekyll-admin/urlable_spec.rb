@@ -14,6 +14,7 @@ describe JekyllAdmin::URLable do
       expect(subject.send(:host)).to eql("foo")
       JekyllAdmin.site.config["jekyll_admin"]["host"] = nil
     end
+
     it "knows the base host" do
       expect(subject.send(:host)).to eql("localhost")
     end
@@ -23,6 +24,7 @@ describe JekyllAdmin::URLable do
       expect(subject.send(:port)).to eql(1000)
       JekyllAdmin.site.config["jekyll_admin"]["port"] = nil
     end
+
     it "knows the port" do
       expect(subject.send(:port)).to eql("4000")
     end
@@ -32,6 +34,7 @@ describe JekyllAdmin::URLable do
       expect(subject.send(:scheme)).to eql("baz")
       JekyllAdmin.site.config["jekyll_admin"]["scheme"] = nil
     end
+
     it "knows the scheme" do
       expect(subject.send(:scheme)).to eql("http")
     end
