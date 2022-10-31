@@ -8,7 +8,7 @@ describe JekyllAdmin::URLable do
   let(:prefix) { "_api" }
   let(:url_base) { "#{scheme}://#{host}:#{port}" }
 
-  context do
+  context "with custom configuration" do
     it "knows the jekyll_admin host" do
       JekyllAdmin.site.config["jekyll_admin"]["host"] = "foo"
       expect(subject.send(:host)).to eql("foo")
