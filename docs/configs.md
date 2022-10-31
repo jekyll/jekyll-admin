@@ -35,3 +35,17 @@ Valid values for `homepage`: `pages` (default), `posts`, `<collection_name>`,
 jekyll_admin:
   homepage: "posts"
 ```
+
+
+#### `force_show_drafts`
+
+On some cases you want to use multiple config files or `--drafts` command line switch that won't be properly
+detected by jekyll-admin. This flag can force jekyll-admin to display the draft section in the sidebar
+even if `show_draft: true` hasn't been detected in the config file.
+
+It will only force display, not enable drafts. So be sure to have enabled drafts on jekyll.
+
+```yaml
+jekyll_admin:
+  force_show_drafts: true
+```
