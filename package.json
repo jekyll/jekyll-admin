@@ -26,6 +26,7 @@
   "author": "Mert Kahyaoğlu",
   "license": "MIT",
   "dependencies": {
+    "@toast-ui/editor": "^3.2.1",
     "brace": "0.9.1",
     "classnames": "2.2.6",
     "highlight.js": "^9.17.1",

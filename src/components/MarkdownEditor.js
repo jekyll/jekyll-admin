@@ -1,21 +1,16 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SimpleMDE from 'simplemde';
-import hljs from '../utils/highlighter';
 import FilePicker from './FilePicker';
 import { getExtensionFromPath } from '../utils/helpers';
 
-const classNames = [
-  'editor-toolbar',
-  'CodeMirror',
-  'editor-preview-side',
-  'editor-statusbar',
-];
+import Editor from '@toast-ui/editor';
+import '@toast-ui/editor/dist/toastui-editor.css';
+
+// https://ui.toast.com/tui-editor
 
 class MarkdownEditor extends Component {
   componentDidMount() {
     this.create();
-    window.hljs = hljs; // TODO: fix this after the next release of SimpleMDE
   }
 
   shouldComponentUpdate(nextProps) {
@@ -33,98 +28,76 @@ class MarkdownEditor extends Component {
 
   create() {
     const { onChange, onSave } = this.props;
-    let opts = Object.create(this.props);
-    opts['element'] = this.refs.text;
-    opts['autoDownloadFontAwesome'] = false;
-    opts['spellChecker'] = false;
-    opts['renderingConfig'] = {
-      codeSyntaxHighlighting: true,
+
+    let opts = {
+      ...this.props,
+      el: this.refs.container, // text, // document.querySelector('#editor'),
+      // Disable Google Analytics of TUI
+      usageStatistics: false,
+
+      // Settings
+      height: '500px',
+      initialEditType: 'wysiwyg',
+      previewStyle: 'vertical',
+      previewHighlight: true,
+
+      // Customize toolbar to reorder and add filepicket
+      toolbarItems: [
+        ['heading', 'bold', 'italic', 'strike'],
+        ['code', 'codeblock', 'quote', 'ul', 'ol', 'hr'],
+        ['table', 'task', 'indent', 'outdent'],
+        [
+          'link',
+          'image',
+          {
+            name: 'filepicker',
+            tooltip: 'Insert Static File',
+            command: 'filepicker',
+            text: '📎',
+            className: 'toastui-editor-toolbar-icons first',
+            style: {
+              backgroundImage: 'none',
+              'font-size': 'x-large',
+              'line-height': '100%',
+            },
+          },
+        ],
+      ],
     };
-    opts['insertTexts'] = {
-      image: ['![', '](#url#)'],
-    };
-    let toolbarIcons = [
-      'bold',
-      'italic',
-      'heading',
-      '|',
-      'code',
-      'quote',
-      'unordered-list',
-      'ordered-list',
-      '|',
-      'link',
-      'image',
-      'table',
-      {
-        name: 'filepicker',
-        action: () => this.refs.filepicker.refs.trigger.click(),
-        className: 'fa fa-paperclip',
-        title: 'Insert Static File',
-      },
-      '|',
-      'preview',
-      'side-by-side',
-      'fullscreen',
-      '|',
-    ];
-    if (onSave) {
-      toolbarIcons.push({
-        name: 'save',
-        action: onSave,
-        className: 'fa fa-floppy-o',
-        title: 'Save',
-      });
-    }
-    opts['toolbar'] = toolbarIcons;
-    const editor = new SimpleMDE(opts);
-    if (editor.codemirror) {
-      editor.codemirror.on('change', () => {
-        onChange(editor.value());
-      });
-    }
+
+    // Create Editor
+    const editor = new Editor(opts);
     this.editor = editor;
+
+    // Define command for filepicket
+    let filepicker = (...args) => {
+      this.refs.filepicker.refs.trigger.click();
+    };
+    editor.addCommand('markdown', 'filepicker', filepicker);
+    editor.addCommand('ww', 'filepicker', filepicker);
+
+    // Add change handler to update state
+    editor.on('change', (...args) => {
+      onChange(editor.getMarkdown());
+    });
   }
 
   destroy() {
-    for (let i in classNames) {
-      let elementToRemove = this.refs.container.querySelector(
-        '.' + classNames[i]
-      );
-      elementToRemove && elementToRemove.remove();
-    }
+    if (this.editor) this.editor.off('change');
   }
 
-  // Adapted from an internal helper function within SimpleMDE package.
-  _replaceSelectedText = (cm, headNTail, url) => {
-    const startPoint = cm.getCursor('start');
-    const endPoint = cm.getCursor('end');
-    const text = cm.getSelection();
-
-    let [head, tail] = headNTail;
-    if (url) {
-      tail = tail.replace('#url#', url);
-    }
-
-    cm.replaceSelection(`${head}${text}${tail}`);
-    startPoint.ch += head.length;
-
-    if (startPoint !== endPoint) {
-      endPoint.ch += head.length;
-    }
-
-    cm.setSelection(startPoint, endPoint);
-    cm.focus();
-  };
-
   handleFilePick = path => {
-    const { codemirror, options } = this.editor;
-    const { image, link } = options.insertTexts;
-    const url = `{{ '${path}' | relative_url }}`;
+    const text = this.editor.getSelectedText();
+    // const url = `{{ '${path}' | relative_url }}`;
+    const url = '/' + path; // FIXME: TUI does not like liquid syntax, add this allows display images (if no basepath)
     const ext = getExtensionFromPath(path);
-
-    const type = /png|jpg|gif|jpeg|svg|ico/i.test(ext) ? image : link;
-    this._replaceSelectedText(codemirror, type, url);
+    const type = /png|jpg|gif|jpeg|svg|ico/i.test(ext) ? 'addImage' : 'addLink';
+    this.editor.exec(type, {
+      linkText: text,
+      altText: text,
+      linkUrl: url,
+      imageUrl: url,
+    });
   };
 
   render() {
