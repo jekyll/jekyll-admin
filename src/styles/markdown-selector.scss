@@ -1,0 +1,28 @@
+.markdown-editor-selector {
+
+  display: flex;
+  flex-direction: row;
+
+  .markdown-editor-selector-entry {
+
+    display: inline-flex;
+    border: 1px solid lightgray;
+    border-bottom: 0px;
+    border-radius: 0.25rem;
+
+    input[type="radio"] + label {
+      padding: 0.2rem 0.5rem;
+    }
+
+    input[type="radio"]:checked + label {
+      background-color: white;
+      font-weight: bold;
+    }
+
+		input[type=radio] {
+			display: none;
+		}
+
+  }
+
+}
