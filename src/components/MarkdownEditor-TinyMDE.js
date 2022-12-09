@@ -6,7 +6,7 @@ import { getExtensionFromPath } from '../utils/helpers';
 import { Editor, CommandBar } from 'tiny-markdown-editor';
 import 'tiny-markdown-editor/dist/tiny-mde.min.css';
 
-// https://ui.toast.com/tui-editor
+// https://github.com/jefago/tiny-markdown-editor/
 
 class MarkdownEditor_TinyMDE extends Component {
   specificOptions = {};

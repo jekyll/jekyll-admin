@@ -32,6 +32,7 @@ export default function CreateMarkdownPage({
       <div className="content-wrapper">
         <MarkdownPageBody
           type={type}
+          config={config}
           updatePath={updatePath}
           updateTitle={updateTitle}
           updateBody={updateBody}
