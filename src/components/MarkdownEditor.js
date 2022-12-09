@@ -8,9 +8,11 @@ import {
 } from './MarkdownEditor-TUI';
 import MarkdownEditor_TextArea from './MarkdownEditor-TextArea';
 import MarkdownEditor_SimpleMDE from './MarkdownEditor-SimpleMDE';
+import MarkdownEditor_TinyMDE from './MarkdownEditor-TinyMDE';
 
 const editors = {
   SimpleMDE: MarkdownEditor_SimpleMDE,
+  TinyMDE: MarkdownEditor_TinyMDE,
   TextArea: MarkdownEditor_TextArea,
   'TUI - WYSIWYG': MarkdownEditor_TUI_Wysisyg,
   'TUI - Double': MarkdownEditor_TUI_Double,
@@ -21,7 +23,7 @@ class MarkdownEditor extends Component {
   constructor(props) {
     super(props);
     this.editorProps = props;
-    this.state = { editor: 'TextArea', value: props.initialValue };
+    this.state = { editor: 'TinyMDE', value: props.initialValue };
     this.onEditorChange = this.onEditorChange.bind(this);
     this.onValueChange = this.onValueChange.bind(this);
   }
