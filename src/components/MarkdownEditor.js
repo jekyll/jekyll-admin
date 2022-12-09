@@ -38,8 +38,45 @@ class MarkdownEditor extends Component {
       // Settings
       height: '500px',
       initialEditType: 'wysiwyg',
-      previewStyle: 'vertical',
+      previewStyle: 'tab', // 'vertical',
       previewHighlight: true,
+
+      // TODO: Sanitization as option ; find why still sanitization in WW +  switch between editors
+      customHTMLSanitizer: html => {
+        console.log('customHTMLSanitizer', html);
+        return html;
+      },
+
+      // To avoid sanitization of details / summary
+      customHTMLRenderer: {
+        htmlBlock: {
+          iframe(node) {
+            return [
+              {
+                type: 'openTag',
+                tagName: 'iframe',
+                outerNewLine: true,
+                attributes: node.attrs,
+              },
+              { type: 'html', content: node.childrenHTML },
+              { type: 'closeTag', tagName: 'iframe', outerNewLine: true },
+            ];
+          },
+        },
+
+        htmlInline: {
+          details(node, { entering }) {
+            return entering
+              ? { type: 'openTag', tagName: 'details', attributes: node.attrs }
+              : { type: 'closeTag', tagName: 'details' };
+          },
+          summary(node, { entering }) {
+            return entering
+              ? { type: 'openTag', tagName: 'summary', attributes: node.attrs }
+              : { type: 'closeTag', tagName: 'summary' };
+          },
+        },
+      },
 
       // Customize toolbar to reorder and add filepicket
       toolbarItems: [
@@ -89,7 +126,7 @@ class MarkdownEditor extends Component {
   handleFilePick = path => {
     const text = this.editor.getSelectedText();
     // const url = `{{ '${path}' | relative_url }}`;
-    const url = '/' + path; // FIXME: TUI does not like liquid syntax, add this allows display images (if no basepath)
+    const url = '/' + path; // FIXME: TUI in WW mode does not like liquid syntax, add this allows display images (if no basepath)
     const ext = getExtensionFromPath(path);
     const type = /png|jpg|gif|jpeg|svg|ico/i.test(ext) ? 'addImage' : 'addLink';
     this.editor.exec(type, {
