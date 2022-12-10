@@ -18,6 +18,7 @@ import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
 import translations from '../../translations';
+import { PreviewButton, PreviewPanel } from '../../components/PreviewPanel';
 const { getLeaveMessage, getDeleteMessage } = translations;
 
 export class PageEdit extends Component {
@@ -110,46 +111,52 @@ export class PageEdit extends Component {
     const title = front_matter && front_matter.title ? front_matter.title : '';
     const document_title = getDocumentTitle('pages', directory, title || name);
 
+    console.log('http_url', http_url);
+
     return (
       <DocumentTitle title={document_title}>
-        <HotKeys handlers={keyboardHandlers} className="single">
+        <HotKeys handlers={keyboardHandlers} className="single" id="doctitle">
           {errors.length > 0 && <Errors errors={errors} />}
 
-          <div className="content-header">
-            <Breadcrumbs type="pages" splat={directory} />
-          </div>
+          <div className="edit-panel">
+            <div className="content-header">
+              <Breadcrumbs type="pages" splat={directory} />
+            </div>
 
-          <div className="content-wrapper">
-            <MarkdownPageBody
-              type="pages"
-              updateTitle={updateTitle}
-              updatePath={updatePath}
-              updateBody={updateBody}
-              onSave={this.handleClickSave}
-              path={name}
-              title={title}
-              body={raw_content}
-              metafields={{ title, raw_content, path: name, ...front_matter }}
-              staticmetafields={front_matter_defaults}
-            />
-            <div className="content-side">
-              <Button
-                onClick={this.handleClickSave}
-                type="save"
-                active={fieldChanged}
-                triggered={updated}
-                block
+            <div className="content-wrapper">
+              <MarkdownPageBody
+                type="pages"
+                updateTitle={updateTitle}
+                updatePath={updatePath}
+                updateBody={updateBody}
+                onSave={this.handleClickSave}
+                path={name}
+                title={title}
+                body={raw_content}
+                metafields={{ title, raw_content, path: name, ...front_matter }}
+                staticmetafields={front_matter_defaults}
               />
-              <Button to={http_url} type="view" active block />
-              <Splitter />
-              <Button
-                onClick={() => this.handleClickDelete(name)}
-                type="delete"
-                active
-                block
-              />
+              <div className="content-side">
+                <Button
+                  onClick={this.handleClickSave}
+                  type="save"
+                  active={fieldChanged}
+                  triggered={updated}
+                  block
+                />
+                <Button to={http_url} type="view" active block />
+                <PreviewButton />
+                <Splitter />
+                <Button
+                  onClick={() => this.handleClickDelete(name)}
+                  type="delete"
+                  active
+                  block
+                />
+              </div>
             </div>
           </div>
+          <PreviewPanel previewUrl={http_url} />
         </HotKeys>
       </DocumentTitle>
     );
