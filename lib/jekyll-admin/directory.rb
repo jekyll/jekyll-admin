@@ -12,9 +12,8 @@ module JekyllAdmin
     include JekyllAdmin::APIable
 
     RESOURCE_TYPES  = %w(pages data drafts static_files).freeze
-    DOT_DIRECTORIES = [".", ".."].freeze
 
-    private_constant :RESOURCE_TYPES, :DOT_DIRECTORIES
+    private_constant :RESOURCE_TYPES
 
     # Parameters:
     #   path - The full path of the directory at which its entries will be listed.
@@ -58,8 +57,7 @@ module JekyllAdmin
     end
 
     def directories
-      path.entries.map do |entry|
-        next if DOT_DIRECTORIES.include? entry.to_s
+      path.children.map do |entry|
         next unless path.join(entry).directory?
 
         self.class.new(
