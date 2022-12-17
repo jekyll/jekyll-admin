@@ -22,14 +22,14 @@ module JekyllAdmin
       File.open(path, "wb") do |file|
         file.write(content)
       end
-      site.process
+      do_process
     end
 
     # Delete the file at the given path
     def delete_file(path)
       Jekyll.logger.debug "DELETING:", path
       FileUtils.rm_f sanitized_path(path)
-      site.process
+      do_process
     end
 
     def delete_file_without_process(path)
@@ -38,6 +38,10 @@ module JekyllAdmin
     end
 
     private
+
+    def do_process
+      site.process unless site.config['watch']  # to avoid race condition between jekyll watch and this
+    end
 
     def ensure_requested_file
       ensure_file(requested_file)
