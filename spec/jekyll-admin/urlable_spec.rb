@@ -8,16 +8,36 @@ describe JekyllAdmin::URLable do
   let(:prefix) { "_api" }
   let(:url_base) { "#{scheme}://#{host}:#{port}" }
 
-  it "knows the host" do
-    expect(subject.send(:host)).to eql("localhost")
-  end
+  context "with custom configuration" do
+    it "knows the jekyll_admin host" do
+      JekyllAdmin.site.config["jekyll_admin"]["host"] = "foo"
+      expect(subject.send(:host)).to eql("foo")
+      JekyllAdmin.site.config["jekyll_admin"]["host"] = nil
+    end
 
-  it "knows the port" do
-    expect(subject.send(:port)).to eql("4000")
-  end
+    it "knows the base host" do
+      expect(subject.send(:host)).to eql("localhost")
+    end
 
-  it "knows the scheme" do
-    expect(subject.send(:scheme)).to eql("http")
+    it "knows the jekyll_admin port" do
+      JekyllAdmin.site.config["jekyll_admin"]["port"] = 1000
+      expect(subject.send(:port)).to eql(1000)
+      JekyllAdmin.site.config["jekyll_admin"]["port"] = nil
+    end
+
+    it "knows the port" do
+      expect(subject.send(:port)).to eql("4000")
+    end
+
+    it "knows the jekyll_admin scheme" do
+      JekyllAdmin.site.config["jekyll_admin"]["scheme"] = "baz"
+      expect(subject.send(:scheme)).to eql("baz")
+      JekyllAdmin.site.config["jekyll_admin"]["scheme"] = nil
+    end
+
+    it "knows the scheme" do
+      expect(subject.send(:scheme)).to eql("http")
+    end
   end
 
   context "pages" do
