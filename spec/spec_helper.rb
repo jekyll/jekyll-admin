@@ -70,6 +70,10 @@ def write_file(path, content = "---\n---\n\n# test")
   path
 end
 
+def skip_integration_condition
+  Gem.win_platform? || ENV["CI"]
+end
+
 RSpec::Matchers.define :be_an_existing_file do
   match do |path|
     path = in_source_dir(path)
