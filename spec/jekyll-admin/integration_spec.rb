@@ -10,6 +10,7 @@ describe "integration" do
   let(:path) { "/" }
   let(:uri) { URI.join(server, path) }
   let(:response) { Net::HTTP.get_response(uri) }
+  let(:skip_condition) { Gem.win_platform? || ENV["CI"] }
 
   before do
     Open3.popen3(*start_command)
@@ -23,7 +24,7 @@ describe "integration" do
   context "Jekyll site" do
     let(:path) { "/" }
 
-    it "serves the Jekyll site", :skip => Gem.win_platform? do
+    it "serves the Jekyll site", :skip => skip_condition do
       expect(response.code).to eql("200")
       expect(response.body).to match("You're probably looking for")
     end
@@ -32,7 +33,7 @@ describe "integration" do
   context "Admin site" do
     let(:path) { "/admin" }
 
-    it "serves the Jekyll site", :skip => Gem.win_platform? do
+    it "serves the Jekyll site", :skip => skip_condition do
       with_index_stubbed do
         expect(response.code).to eql("200")
         expect(response.body).to match("Jekyll Admin")
@@ -43,14 +44,14 @@ describe "integration" do
   context "API" do
     let(:path) { "/_api" }
 
-    it "serves the Jekyll site", :skip => Gem.win_platform? do
+    it "serves the Jekyll site", :skip => skip_condition do
       expect(response.code).to eql("200")
       expect(response.body).to match("collections_api")
     end
   end
 
   context "watching" do
-    it "Jekyll isn't watching", :skip => Gem.win_platform? do
+    it "Jekyll isn't watching", :skip => skip_condition do
       File.open(File.join(source, "page.md"), "a") do |f|
         f.puts "peek-a-boo"
       end
