@@ -23,7 +23,7 @@ group :test do
   gem "jekyll", ENV["JEKYLL_VERSION"] if ENV["JEKYLL_VERSION"]
   gem "kramdown-parser-gfm" if ENV["JEKYLL_VERSION"] == "~> 3.9"
 
-  gem "rack-test", "~> 1.0"
+  gem "rack-test", "~> 2.0"
   gem "rake", ">= 10.0"
   gem "rspec", "~> 3.4"
   gem "rubocop-jekyll", "~> 0.10.0"
