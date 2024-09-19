@@ -5,7 +5,7 @@ source "https://rubygems.org"
 # Specify the gem's runtime dependencies in jekyll-admin.gemspec
 gemspec
 
-gem :development do
+group :development do
   gem "gem-release", "~> 0.7"
 
   # Fixture site dependencies
