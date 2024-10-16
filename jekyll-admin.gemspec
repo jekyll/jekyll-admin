@@ -23,8 +23,8 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version     = ">= 2.3.0"
   spec.required_rubygems_version = ">= 2.7.0"
 
-  spec.add_runtime_dependency "jekyll", ">= 3.7", "< 5.0"
-  spec.add_runtime_dependency "rackup", "~> 2.0"
-  spec.add_runtime_dependency "sinatra", "~> 4.0"
-  spec.add_runtime_dependency "sinatra-contrib", "~> 4.0"
+  spec.add_dependency "jekyll", ">= 3.7", "< 5.0"
+  spec.add_dependency "rackup", "~> 2.0"
+  spec.add_dependency "sinatra", "~> 4.0"
+  spec.add_dependency "sinatra-contrib", "~> 4.0"
 end
