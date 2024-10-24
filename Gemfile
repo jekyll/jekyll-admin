@@ -26,5 +26,5 @@ group :test do
   gem "rack-test", "~> 2.0"
   gem "rake", ">= 10.0"
   gem "rspec", "~> 3.4"
-  gem "rubocop-jekyll", "~> 0.10.0"
+  gem "rubocop-jekyll", "~> 0.14.0"
 end
