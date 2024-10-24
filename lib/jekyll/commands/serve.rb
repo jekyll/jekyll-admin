@@ -20,8 +20,10 @@ module Jekyll
         end
 
         def jekyll_admin_monkey_patch
-          @server.mount "/admin", Rack::Handler::WEBrick, JekyllAdmin::StaticServer
-          @server.mount "/_api",  Rack::Handler::WEBrick, JekyllAdmin::Server
+          Jekyll::External.require_with_graceful_fail "rackup"
+
+          @server.mount "/admin", Rackup::Handler::WEBrick, JekyllAdmin::StaticServer
+          @server.mount "/_api",  Rackup::Handler::WEBrick, JekyllAdmin::Server
           Jekyll.logger.info "JekyllAdmin mode:", ENV["RACK_ENV"] || "production"
         end
       end
