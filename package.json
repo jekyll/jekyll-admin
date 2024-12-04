@@ -57,7 +57,7 @@
     "underscore": "1.9.1"
   },
   "devDependencies": {
-    "bundlesize": "^0.18.2",
+    "bundlesize2": "^0.0.31",
     "coveralls": "^3.0.9",
     "enzyme": "^2.6.0",
     "husky": "^0.14.3",
