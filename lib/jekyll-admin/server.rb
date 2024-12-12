@@ -81,8 +81,9 @@ module JekyllAdmin
 
     def request_body
       @request_body ||= begin
-        request.body.rewind
-        request.body.read
+        rq_bdy = request.body
+        rq_bdy.rewind if rq_bdy.respond_to?(:rewind)
+        rq_bdy.read
       end
     end
 
