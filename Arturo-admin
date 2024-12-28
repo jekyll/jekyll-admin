@@ -1,1 +1,17 @@
+From dd0f0d29267edc1891242172d22efac21faf74a9 Mon Sep 17 00:00:00 2001
+From: Arturo <arturochecruz@gmail.com>
+Date: Sat, 28 Dec 2024 06:46:12 -0600
+Subject: [PATCH] Create Arturo-admin
 
+---
+ Arturo-admin | 1 +
+ 1 file changed, 1 insertion(+)
+ create mode 100644 Arturo-admin
+
+diff --git a/Arturo-admin b/Arturo-admin
+new file mode 100644
+index 000000000..8b1378917
+--- /dev/null
++++ b/Arturo-admin
+@@ -0,0 +1 @@
++
