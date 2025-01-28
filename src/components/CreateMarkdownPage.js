@@ -37,6 +37,7 @@ export default function CreateMarkdownPage({
           updateBody={updateBody}
           onSave={onClickSave}
           staticmetafields={defaultFields(config, splat, metaType)}
+          metafields={config.content?.jekyll_admin?.new_meta_defaults}
         />
         <div className="content-side">
           <Button
