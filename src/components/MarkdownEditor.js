@@ -1,25 +1,64 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import SimpleMDE from 'simplemde';
-import hljs from '../utils/highlighter';
-import FilePicker from './FilePicker';
-import { getExtensionFromPath } from '../utils/helpers';
 
-const classNames = [
-  'editor-toolbar',
-  'CodeMirror',
-  'editor-preview-side',
-  'editor-statusbar',
+import {
+  MarkdownEditor_TUI_Tab,
+  MarkdownEditor_TUI_Double,
+  MarkdownEditor_TUI_Wysisyg,
+} from './MarkdownEditor-TUI';
+import MarkdownEditor_TextArea from './MarkdownEditor-TextArea';
+import MarkdownEditor_SimpleMDE from './MarkdownEditor-SimpleMDE';
+import MarkdownEditor_TinyMDE from './MarkdownEditor-TinyMDE';
+
+const editors = [
+  { key: 'SimpleMDE', label: 'Simple MDE', react: MarkdownEditor_SimpleMDE },
+  { key: 'TinyMDE', label: 'Tiny MDE', react: MarkdownEditor_TinyMDE },
+  { key: 'TextArea', label: 'Text Area', react: MarkdownEditor_TextArea },
+  { key: 'TUI_WW', label: 'TUI - WYSIWYG', react: MarkdownEditor_TUI_Wysisyg },
+  {
+    key: 'TUI_SS',
+    label: 'TUI - Side by Side',
+    react: MarkdownEditor_TUI_Double,
+  },
+  { key: 'TUI_Tab', label: 'TUI - Tab', react: MarkdownEditor_TUI_Tab },
 ];
 
 class MarkdownEditor extends Component {
-  componentDidMount() {
-    this.create();
-    window.hljs = hljs; // TODO: fix this after the next release of SimpleMDE
+  constructor(props) {
+    super(props);
+    this.editorProps = props;
+    this.onEditorChange = this.onEditorChange.bind(this);
+    this.onValueChange = this.onValueChange.bind(this);
+
+    var config = props.config;
+
+    this.state = {
+      editor: config.content?.jekyll_admin?.default_editor ?? 'SimpleMDE',
+      value: props.initialValue,
+    };
+    this.editors = editors;
+    if (
+      config.content?.jekyll_admin?.editors &&
+      Array.isArray(config.content?.jekyll_admin?.editors)
+    ) {
+      this.editors = config.content?.jekyll_admin?.editors.map(ed =>
+        editors.find(e => e.key == ed)
+      );
+    }
+    if (!this.editors.find(e => e.key === this.state.editor)) {
+      this.editors.unshift(editors.find(e => e.key === this.state.editor));
+    }
   }
 
-  shouldComponentUpdate(nextProps) {
-    return nextProps.initialValue !== this.props.initialValue;
+  componentDidMount() {
+    this.create();
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
+    return (
+      nextProps.initialValue !== this.props.initialValue ||
+      nextState.editor != this.state.editor
+    );
   }
 
   componentDidUpdate() {
@@ -31,111 +70,58 @@ class MarkdownEditor extends Component {
     this.destroy();
   }
 
-  create() {
-    const { onChange, onSave } = this.props;
-    let opts = Object.create(this.props);
-    opts['element'] = this.refs.text;
-    opts['autoDownloadFontAwesome'] = false;
-    opts['spellChecker'] = false;
-    opts['renderingConfig'] = {
-      codeSyntaxHighlighting: true,
-    };
-    opts['insertTexts'] = {
-      image: ['![', '](#url#)'],
-    };
-    let toolbarIcons = [
-      'bold',
-      'italic',
-      'heading',
-      '|',
-      'code',
-      'quote',
-      'unordered-list',
-      'ordered-list',
-      '|',
-      'link',
-      'image',
-      'table',
-      {
-        name: 'filepicker',
-        action: () => this.refs.filepicker.refs.trigger.click(),
-        className: 'fa fa-paperclip',
-        title: 'Insert Static File',
-      },
-      '|',
-      'preview',
-      'side-by-side',
-      'fullscreen',
-      '|',
-    ];
-    if (onSave) {
-      toolbarIcons.push({
-        name: 'save',
-        action: onSave,
-        className: 'fa fa-floppy-o',
-        title: 'Save',
-      });
-    }
-    opts['toolbar'] = toolbarIcons;
-    const editor = new SimpleMDE(opts);
-    if (editor.codemirror) {
-      editor.codemirror.on('change', () => {
-        onChange(editor.value());
-      });
-    }
-    this.editor = editor;
+  create() {}
+
+  destroy() {}
+
+  onValueChange(text) {
+    this.setState({
+      ...this.state,
+      value: text,
+    });
+    if (this.props.onChange) this.props.onChange(text);
   }
 
-  destroy() {
-    for (let i in classNames) {
-      let elementToRemove = this.refs.container.querySelector(
-        '.' + classNames[i]
-      );
-      elementToRemove && elementToRemove.remove();
-    }
+  onEditorChange(event) {
+    this.setState({
+      ...this.state,
+      editor: event.target.value,
+    });
   }
-
-  // Adapted from an internal helper function within SimpleMDE package.
-  _replaceSelectedText = (cm, headNTail, url) => {
-    const startPoint = cm.getCursor('start');
-    const endPoint = cm.getCursor('end');
-    const text = cm.getSelection();
-
-    let [head, tail] = headNTail;
-    if (url) {
-      tail = tail.replace('#url#', url);
-    }
-
-    cm.replaceSelection(`${head}${text}${tail}`);
-    startPoint.ch += head.length;
-
-    if (startPoint !== endPoint) {
-      endPoint.ch += head.length;
-    }
-
-    cm.setSelection(startPoint, endPoint);
-    cm.focus();
-  };
-
-  handleFilePick = path => {
-    const { codemirror, options } = this.editor;
-    const { image, link } = options.insertTexts;
-    const url = `{{ '${path}' | relative_url }}`;
-    const ext = getExtensionFromPath(path);
-
-    const type = /png|jpg|gif|jpeg|svg|ico/i.test(ext) ? image : link;
-    this._replaceSelectedText(codemirror, type, url);
-  };
 
   render() {
     return (
       <div>
-        <div style={{ display: 'none' }}>
-          <FilePicker ref="filepicker" onPick={this.handleFilePick} />
+        <div
+          className={'markdown-editor-selector'}
+          style={this.editors.length > 1 ? {} : { display: 'none' }}
+        >
+          {this.editors.map(({ key, label }, i) => {
+            var id = `mese-${i}`;
+            return (
+              <div className={'markdown-editor-selector-entry'}>
+                <input
+                  type="radio"
+                  id={id}
+                  name="markdown-editor"
+                  value={key}
+                  checked={this.state.editor === key}
+                  onChange={this.onEditorChange}
+                />
+                <label htmlFor={id}>{label}</label>
+              </div>
+            );
+          })}
         </div>
-        <div ref="container">
-          <textarea ref="text" />
-        </div>
+        {React.createElement(
+          (this.editors.find(e => e.key === this.state.editor) ?? editors[0])
+            .react,
+          {
+            ...this.editorProps,
+            initialValue: this.state.value,
+            onChange: this.onValueChange,
+          }
+        )}
       </div>
     );
   }
@@ -145,6 +131,7 @@ MarkdownEditor.propTypes = {
   initialValue: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
   onSave: PropTypes.func.isRequired,
+  config: PropTypes.object.isRequired,
 };
 
 export default MarkdownEditor;

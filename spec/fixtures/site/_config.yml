@@ -99,3 +99,5 @@ collections:
 
 jekyll_admin:
   homepage: "posts"
+#  editors: []
+  default_editor: TinyMDE
