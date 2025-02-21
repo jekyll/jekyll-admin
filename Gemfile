@@ -21,7 +21,10 @@ end
 group :test do
   # To allow testing with specific Jekyll versions
   gem "jekyll", ENV["JEKYLL_VERSION"] if ENV["JEKYLL_VERSION"]
-  gem "kramdown-parser-gfm" if ENV["JEKYLL_VERSION"] == "~> 3.9"
+  if ENV["JEKYLL_VERSION"] == "~> 3.9"
+    gem "bigdecimal" if RUBY_VERSION >= "3.4"
+    gem "kramdown-parser-gfm"
+  end
 
   gem "rack-test", "~> 2.0"
   gem "rake", ">= 10.0"
