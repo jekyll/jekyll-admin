@@ -117,7 +117,10 @@ export class Sidebar extends Component {
 
     const collectionsPanel = this.renderCollections(hiddenLinks);
     const postsPanel = !hiddenLinks.includes('posts');
-    const draftsPanel = config && config.show_drafts;
+    const draftsPanel =
+      config &&
+      (config.show_drafts ||
+        (config.jekyll_admin && config.jekyll_admin.force_show_drafts));
 
     return (
       <div className="sidebar">
