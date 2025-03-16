@@ -36,16 +36,20 @@ export class StaticIndex extends Component {
     if (files.length) {
       return (
         <div className="preview-container">
-          {files.map((file, i) => {
-            return (
-              <FilePreview
-                key={i}
-                onClick={onClickStaticFile}
-                splat="index"
-                file={file}
-              />
-            );
-          })}
+          {files
+            .sort((a, b) =>
+              (b?.modified_time ?? '').localeCompare(a.modified_time)
+            )
+            .map((file, i) => {
+              return (
+                <FilePreview
+                  key={i}
+                  onClick={onClickStaticFile}
+                  splat="index"
+                  file={file}
+                />
+              );
+            })}
         </div>
       );
     } else {
