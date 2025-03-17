@@ -1,6 +1,7 @@
 [![Gem Version](https://img.shields.io/gem/v/jekyll-admin.svg)](https://rubygems.org/gems/jekyll-admin)
 [![Continuous Integration](https://github.com/jekyll/jekyll-admin/actions/workflows/ci.yml/badge.svg)](https://github.com/jekyll/jekyll-admin/actions/workflows/ci.yml)
 [![Build status](https://ci.appveyor.com/api/projects/status/u6u9tn7rk5tln33s/branch/master?svg=true)](https://ci.appveyor.com/project/jekyll/jekyll-admin)
+[![License](https://img.shields.io/github/license/jekyll/jekyll-admin)](https://github.com/jekyll/jekyll-admin/blob/master/LICENSE)
 [![Coverage Status](https://coveralls.io/repos/github/jekyll/jekyll-admin/badge.svg?branch=master)](https://coveralls.io/github/jekyll/jekyll-admin?branch=master)
 [![NPM Dependencies](https://david-dm.org/jekyll/jekyll-admin.svg)](https://david-dm.org/jekyll/jekyll-admin)
 [![Financial Contributors on Open Collective](https://opencollective.com/jekyll-admin/all/badge.svg?label=financial+contributors)](https://opencollective.com/jekyll-admin)
