@@ -22,6 +22,7 @@ module JekyllAdmin
       File.open(path, "wb") do |file|
         file.write(content)
       end
+      JekyllAdmin.site.read
       conditionally_process_site
     end
 
