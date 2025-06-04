@@ -39,9 +39,6 @@ jobs:
       fail-fast: false
       matrix:
         node_version: ["12"]
-    permissions: 
-      contents: write 
-      actions: read
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
