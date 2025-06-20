@@ -99,3 +99,8 @@ collections:
 
 jekyll_admin:
   homepage: "posts"
+  new_meta_defaults:
+    date: ''
+    image: ''
+    tags: []
+    categories: []
