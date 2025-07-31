@@ -35,3 +35,39 @@ Valid values for `homepage`: `pages` (default), `posts`, `<collection_name>`,
 jekyll_admin:
   homepage: "posts"
 ```
+
+#### `host`
+
+For overriding `host` from the Jekyll installation.
+
+This can be useful if Jekyll Admin is behind a reverse proxy.
+
+```yaml
+host: "mydomain.com"
+jekyll_admin:
+  host: "admin.mydomain.com"
+```
+
+#### `port`
+
+For overriding `port` from the Jekyll installation.
+
+This can be useful if Jekyll Admin is behind a reverse proxy.
+
+```yaml
+port: 4000
+jekyll_admin:
+  port: 4001
+```
+
+#### `scheme`
+
+For overriding `scheme` from the Jekyll installation.
+
+This can be useful if Jekyll Admin is behind a reverse proxy.
+
+```yaml
+scheme: "https"
+jekyll_admin:
+  scheme: "http"
+```
