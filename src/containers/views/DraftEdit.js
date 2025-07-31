@@ -117,6 +117,7 @@ export class DraftEdit extends Component {
       updated,
       fieldChanged,
       params,
+      config,
     } = this.props;
 
     if (isFetching) {
@@ -152,6 +153,7 @@ export class DraftEdit extends Component {
           <div className="content-wrapper">
             <MarkdownPageBody
               type="drafts"
+              config={config}
               path={name}
               title={title}
               body={raw_content}
@@ -209,6 +211,7 @@ DraftEdit.propTypes = {
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -217,6 +220,7 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   updated: state.drafts.updated,
   errors: state.utils.errors,
+  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>

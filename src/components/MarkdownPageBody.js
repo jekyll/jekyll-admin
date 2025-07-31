@@ -17,6 +17,7 @@ export default function MarkdownPageBody({
   updateBody,
   metafields,
   staticmetafields,
+  config,
 }) {
   return (
     <div className="content-body">
@@ -27,6 +28,7 @@ export default function MarkdownPageBody({
         onSave={onSave}
         placeholder="Body"
         initialValue={body}
+        config={config}
       />
       <Splitter />
       <Metadata fields={metafields} staticFields={staticmetafields} />
@@ -53,4 +55,5 @@ MarkdownPageBody.propTypes = {
   title: PropTypes.string,
   metafields: PropTypes.object,
   staticmetafields: PropTypes.object,
+  config: PropTypes.object.isRequired,
 };

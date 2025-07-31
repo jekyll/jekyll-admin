@@ -26,6 +26,7 @@
   "author": "Mert Kahyaoğlu",
   "license": "MIT",
   "dependencies": {
+    "@toast-ui/editor": "^3.2.1",
     "brace": "0.9.1",
     "classnames": "2.2.6",
     "highlight.js": "^9.17.1",
@@ -54,6 +55,7 @@
     "rimraf": "^3.0.2",
     "simplemde": "1.11.2",
     "sortablejs": "1.8.4",
+    "tiny-markdown-editor": "^0.1.5",
     "underscore": "1.9.1"
   },
   "devDependencies": {

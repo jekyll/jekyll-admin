@@ -84,6 +84,7 @@ export class PageEdit extends Component {
       updated,
       fieldChanged,
       params,
+      config,
     } = this.props;
 
     if (isFetching) {
@@ -122,6 +123,7 @@ export class PageEdit extends Component {
           <div className="content-wrapper">
             <MarkdownPageBody
               type="pages"
+              config={config}
               updateTitle={updateTitle}
               updatePath={updatePath}
               updateBody={updateBody}
@@ -172,6 +174,7 @@ PageEdit.propTypes = {
   params: PropTypes.object.isRequired,
   router: PropTypes.object.isRequired,
   route: PropTypes.object.isRequired,
+  config: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -180,6 +183,7 @@ const mapStateToProps = state => ({
   fieldChanged: state.metadata.fieldChanged,
   updated: state.pages.updated,
   errors: state.utils.errors,
+  config: state.config.config,
 });
 
 const mapDispatchToProps = dispatch =>
