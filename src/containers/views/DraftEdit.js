@@ -23,6 +23,7 @@ import { clearErrors } from '../../ducks/utils';
 import { preventDefault, getDocumentTitle } from '../../utils/helpers';
 import { ADMIN_PREFIX } from '../../constants';
 
+import { PreviewButton, PreviewPanel } from '../../components/PreviewPanel';
 import translations from '../../translations';
 const {
   getLeaveMessage,
@@ -143,49 +144,54 @@ export class DraftEdit extends Component {
 
     return (
       <DocumentTitle title={document_title}>
-        <HotKeys handlers={keyboardHandlers} className="single">
+        <HotKeys handlers={keyboardHandlers} className="single" id="doctitle">
           {errors.length > 0 && <Errors errors={errors} />}
-          <div className="content-header">
-            <Breadcrumbs type="drafts" splat={directory} />
-          </div>
 
-          <div className="content-wrapper">
-            <MarkdownPageBody
-              type="drafts"
-              path={name}
-              title={title}
-              body={raw_content}
-              updatePath={updatePath}
-              updateBody={updateBody}
-              updateTitle={updateTitle}
-              onSave={this.handleClickSave}
-              metafields={{ title, raw_content, path: name, ...front_matter }}
-              staticmetafields={front_matter_defaults}
-            />
-            <div className="content-side">
-              <Button
-                onClick={this.handleClickSave}
-                type="save"
-                active={fieldChanged}
-                triggered={updated}
-                block
+          <div className="edit-panel">
+            <div className="content-header">
+              <Breadcrumbs type="drafts" splat={directory} />
+            </div>
+
+            <div className="content-wrapper">
+              <MarkdownPageBody
+                type="drafts"
+                path={name}
+                title={title}
+                body={raw_content}
+                updatePath={updatePath}
+                updateBody={updateBody}
+                updateTitle={updateTitle}
+                onSave={this.handleClickSave}
+                metafields={{ title, raw_content, path: name, ...front_matter }}
+                staticmetafields={front_matter_defaults}
               />
-              <Button to={http_url} type="view" active block />
-              <Splitter />
-              <Button
-                onClick={() => this.handleClickPublish(path)}
-                type="publish"
-                active
-                block
-              />
-              <Button
-                onClick={() => this.handleClickDelete(name)}
-                type="delete"
-                active
-                block
-              />
+              <div className="content-side">
+                <Button
+                  onClick={this.handleClickSave}
+                  type="save"
+                  active={fieldChanged}
+                  triggered={updated}
+                  block
+                />
+                <Button to={http_url} type="view" active block />
+                <PreviewButton />
+                <Splitter />
+                <Button
+                  onClick={() => this.handleClickPublish(path)}
+                  type="publish"
+                  active
+                  block
+                />
+                <Button
+                  onClick={() => this.handleClickDelete(name)}
+                  type="delete"
+                  active
+                  block
+                />
+              </div>
             </div>
           </div>
+          <PreviewPanel previewUrl={http_url} />
         </HotKeys>
       </DocumentTitle>
     );
